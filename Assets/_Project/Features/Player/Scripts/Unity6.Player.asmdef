@@ -1,0 +1,24 @@
+{
+    "name": "Unity6.Player",
+    "rootNamespace": "Unity6.Player",
+    "references": [
+        "Unity6.Core",
+        "Unity6.Camera",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.inputsystem",
+            "expression": "1.7.0",
+            "define": "NEW_INPUT_SYSTEM"
+        }
+    ],
+    "noEngineReferences": false
+}

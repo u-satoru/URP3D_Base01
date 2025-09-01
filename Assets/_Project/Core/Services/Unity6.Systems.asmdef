@@ -1,0 +1,22 @@
+{
+    "name": "Unity6.Systems",
+    "rootNamespace": "Unity6.Systems",
+    "references": [
+        "Unity6.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.ui",
+            "expression": "2.0.0",
+            "define": "UI_TOOLKIT_2"
+        }
+    ],
+    "noEngineReferences": false
+}
