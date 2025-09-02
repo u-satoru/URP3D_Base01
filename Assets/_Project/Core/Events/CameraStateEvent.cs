@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Unity6.Core.Events
+namespace asterivo.Unity60.Core.Events
 {
     /// <summary>
     /// カメラ状態の列挙型
@@ -23,7 +23,7 @@ namespace Unity6.Core.Events
     /// <summary>
     /// カメラ状態変更イベント
     /// </summary>
-    [CreateAssetMenu(fileName = "New Camera State Event", menuName = "Unity6/Events/Camera State Event")]
+    [CreateAssetMenu(fileName = "New Camera State Event", menuName = "asterivo.Unity60/Events/Camera State Event")]
     public class CameraStateEvent : GenericGameEvent<CameraState>
     {
         #if UNITY_EDITOR

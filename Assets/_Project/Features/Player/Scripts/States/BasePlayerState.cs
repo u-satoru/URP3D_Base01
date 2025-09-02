@@ -1,8 +1,8 @@
 using UnityEngine;
-using Unity6.Core.Player;
-using Unity6.Player;  // PlayerStateMachineクラスの参照に必要
+using asterivo.Unity60.Core.Player;
+using asterivo.Unity60.Player;  // PlayerStateMachineクラスの参照に必要
 
-namespace Unity6.Player.States
+namespace asterivo.Unity60.Player.States
 {
     /// <summary>
     /// 基底ステートクラス

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace Unity6.Core.Data
+namespace asterivo.Unity60.Core.Data
 {
     /// <summary>
     /// ゲームデータのペイロード

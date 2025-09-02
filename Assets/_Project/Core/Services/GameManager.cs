@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Unity6.Core.Events;
-using Unity6.Core.Player;
-using Unity6.Core.Data;
+using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Core.Player;
+using asterivo.Unity60.Core.Data;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Unity6.Systems
+namespace asterivo.Unity60.Systems
 {
     /// <summary>
     /// ゲームマネージャー

@@ -2,13 +2,13 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Unity6.Core.Events
+namespace asterivo.Unity60.Core.Events
 {
     /// <summary>
     /// パラメータなしの基本イベントチャネル
     /// Unity 6最適化版 - 優先度付きリスナー管理対応
     /// </summary>
-    [CreateAssetMenu(fileName = "New Game Event", menuName = "Unity6/Events/Game Event")]
+    [CreateAssetMenu(fileName = "New Game Event", menuName = "asterivo.Unity60/Events/Game Event")]
     public class GameEvent : ScriptableObject
     {
         // リスナーのHashSetによる高速管理
@@ -25,7 +25,7 @@ namespace Unity6.Core.Events
         
         // エディタ用デバッグ情報
         [Header("Runtime Info (Editor Only)")]
-        [SerializeField, Unity6.Core.Attributes.ReadOnly] private int listenerCount;
+        [SerializeField, asterivo.Unity60.Core.Attributes.ReadOnly] private int listenerCount;
         #endif
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Unity6.Core.Events
     
     #if UNITY_EDITOR
     // エディタ用のReadOnly属性
-    namespace Unity6.Core.Attributes
+    namespace asterivo.Unity60.Core.Attributes
     {
         public class ReadOnlyAttribute : PropertyAttribute { }
     }

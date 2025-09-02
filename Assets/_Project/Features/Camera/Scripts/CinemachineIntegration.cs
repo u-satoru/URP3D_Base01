@@ -1,11 +1,11 @@
 using UnityEngine;
 using Unity.Cinemachine;
-using Unity6.Core.Events;
-using Unity6.Core.Player;
+using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Core.Player;
 using System.Collections.Generic;
 using System.Collections;
 
-namespace Unity6.Camera
+namespace asterivo.Unity60.Camera
 {
     /// <summary>
     /// Cinemachine 3.1統合カメラシステム

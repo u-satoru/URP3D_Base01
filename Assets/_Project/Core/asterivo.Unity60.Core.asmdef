@@ -1,6 +1,6 @@
 {
-    "name": "Unity6.Core",
-    "rootNamespace": "Unity6.Core",
+    "name": "asterivo.Unity60.Core",
+    "rootNamespace": "asterivo.Unity60.Core",
     "references": [
         "Unity.InputSystem"
     ],

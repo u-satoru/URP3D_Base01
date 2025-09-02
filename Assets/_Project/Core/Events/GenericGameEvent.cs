@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Unity6.Core.Events
+namespace asterivo.Unity60.Core.Events
 {
     /// <summary>
     /// 型付きパラメータを持つジェネリックイベントチャネル
@@ -130,21 +130,21 @@ namespace Unity6.Core.Events
     }
     
     // 具体的な型の実装
-    [CreateAssetMenu(fileName = "New Float Event", menuName = "Unity6/Events/Float Event")]
+    [CreateAssetMenu(fileName = "New Float Event", menuName = "asterivo.Unity60/Events/Float Event")]
     public class FloatGameEvent : GenericGameEvent<float> { }
     
-    [CreateAssetMenu(fileName = "New Int Event", menuName = "Unity6/Events/Int Event")]
+    [CreateAssetMenu(fileName = "New Int Event", menuName = "asterivo.Unity60/Events/Int Event")]
     public class IntGameEvent : GenericGameEvent<int> { }
     
-    [CreateAssetMenu(fileName = "New Bool Event", menuName = "Unity6/Events/Bool Event")]
+    [CreateAssetMenu(fileName = "New Bool Event", menuName = "asterivo.Unity60/Events/Bool Event")]
     public class BoolGameEvent : GenericGameEvent<bool> { }
     
-    [CreateAssetMenu(fileName = "New String Event", menuName = "Unity6/Events/String Event")]
+    [CreateAssetMenu(fileName = "New String Event", menuName = "asterivo.Unity60/Events/String Event")]
     public class StringGameEvent : GenericGameEvent<string> { }
     
-    [CreateAssetMenu(fileName = "New Vector3 Event", menuName = "Unity6/Events/Vector3 Event")]
+    [CreateAssetMenu(fileName = "New Vector3 Event", menuName = "asterivo.Unity60/Events/Vector3 Event")]
     public class Vector3GameEvent : GenericGameEvent<Vector3> { }
     
-    [CreateAssetMenu(fileName = "New GameObject Event", menuName = "Unity6/Events/GameObject Event")]
+    [CreateAssetMenu(fileName = "New GameObject Event", menuName = "asterivo.Unity60/Events/GameObject Event")]
     public class GameObjectGameEvent : GenericGameEvent<GameObject> { }
 }

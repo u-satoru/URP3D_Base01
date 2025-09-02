@@ -1,7 +1,7 @@
 using UnityEngine;
-using Unity6.Core.Events;
+using asterivo.Unity60.Core.Events;
 
-namespace Unity6.Camera
+namespace asterivo.Unity60.Camera
 {
     /// <summary>
     /// カメラの状態
@@ -21,7 +21,7 @@ namespace Unity6.Camera
     /// <summary>
     /// カメラ状態変更イベント
     /// </summary>
-    [CreateAssetMenu(fileName = "CameraStateEvent", menuName = "Unity6/Events/Camera State Event")]
+    [CreateAssetMenu(fileName = "CameraStateEvent", menuName = "asterivo.Unity60/Events/Camera State Event")]
     public class CameraStateEvent : GenericGameEvent<CameraState> { }
     
     /// <summary>
@@ -32,7 +32,7 @@ namespace Unity6.Camera
     /// <summary>
     /// Vector2入力イベント（ルック入力用）
     /// </summary>
-    [CreateAssetMenu(fileName = "Vector2GameEvent", menuName = "Unity6/Events/Vector2 Game Event")]
+    [CreateAssetMenu(fileName = "Vector2GameEvent", menuName = "asterivo.Unity60/Events/Vector2 Game Event")]
     public class Vector2GameEvent : GenericGameEvent<Vector2> { }
     
     /// <summary>

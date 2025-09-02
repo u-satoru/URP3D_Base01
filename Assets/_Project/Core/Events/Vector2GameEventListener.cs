@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Unity6.Core.Events
+namespace asterivo.Unity60.Core.Events
 {
     /// <summary>
     /// Vector2パラメータ付きイベントリスナー

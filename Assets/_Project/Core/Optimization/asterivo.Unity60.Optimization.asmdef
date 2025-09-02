@@ -1,8 +1,8 @@
 {
-    "name": "Unity6.Optimization",
-    "rootNamespace": "Unity6.Optimization",
+    "name": "asterivo.Unity60.Optimization",
+    "rootNamespace": "asterivo.Unity60.Optimization",
     "references": [
-        "Unity6.Core"
+        "asterivo.Unity60.Core"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

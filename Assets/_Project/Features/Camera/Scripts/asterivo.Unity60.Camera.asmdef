@@ -1,8 +1,9 @@
 {
-    "name": "Unity6.Systems",
-    "rootNamespace": "Unity6.Systems",
+    "name": "asterivo.Unity60.Camera",
+    "rootNamespace": "asterivo.Unity60.Camera",
     "references": [
-        "Unity6.Core"
+        "asterivo.Unity60.Core",
+        "Unity.Cinemachine"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -13,9 +14,9 @@
     "defineConstraints": [],
     "versionDefines": [
         {
-            "name": "com.unity.ui",
-            "expression": "2.0.0",
-            "define": "UI_TOOLKIT_2"
+            "name": "com.unity.cinemachine",
+            "expression": "3.1.4",
+            "define": "CINEMACHINE_3_1_4"
         }
     ],
     "noEngineReferences": false

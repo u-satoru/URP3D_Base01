@@ -1,6 +1,6 @@
 using System;
 
-namespace Unity6.Core.Player
+namespace asterivo.Unity60.Core.Player
 {
     /// <summary>
     /// プレイヤーの状態定義（全体共通）

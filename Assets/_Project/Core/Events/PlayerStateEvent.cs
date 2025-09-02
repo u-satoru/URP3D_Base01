@@ -1,12 +1,12 @@
 using UnityEngine;
-using Unity6.Core.Player;
+using asterivo.Unity60.Core.Player;
 
-namespace Unity6.Core.Events
+namespace asterivo.Unity60.Core.Events
 {
     /// <summary>
     /// PlayerState用のイベント定義（enum値で通信）
     /// </summary>
-    [CreateAssetMenu(fileName = "PlayerStateEvent", menuName = "Unity6/Events/Player State Event")]
+    [CreateAssetMenu(fileName = "PlayerStateEvent", menuName = "asterivo.Unity60/Events/Player State Event")]
     public class PlayerStateEvent : GenericGameEvent<PlayerState> { }
     
     /// <summary>
@@ -23,7 +23,7 @@ namespace Unity6.Core.Events
     /// <summary>
     /// GameState用のイベント定義
     /// </summary>
-    [CreateAssetMenu(fileName = "GameStateEvent", menuName = "Unity6/Events/Game State Event")]
+    [CreateAssetMenu(fileName = "GameStateEvent", menuName = "asterivo.Unity60/Events/Game State Event")]
     public class GameStateEvent : GenericGameEvent<GameState> { }
     
     /// <summary>

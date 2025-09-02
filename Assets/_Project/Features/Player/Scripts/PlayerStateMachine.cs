@@ -1,8 +1,8 @@
 using UnityEngine;
-using Unity6.Core.Events;
-using Unity6.Core.Player;
+using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Core.Player;
 
-namespace Unity6.Player
+namespace asterivo.Unity60.Player
 {
     /// <summary>
     /// プレイヤーの状態管理を行うステートマシン

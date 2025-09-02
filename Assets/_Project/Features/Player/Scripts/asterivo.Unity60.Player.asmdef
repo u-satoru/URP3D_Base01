@@ -1,9 +1,9 @@
 {
-    "name": "Unity6.Player",
-    "rootNamespace": "Unity6.Player",
+    "name": "asterivo.Unity60.Player",
+    "rootNamespace": "asterivo.Unity60.Player",
     "references": [
-        "Unity6.Core",
-        "Unity6.Camera",
+        "asterivo.Unity60.Core",
+        "asterivo.Unity60.Camera",
         "Unity.InputSystem"
     ],
     "includePlatforms": [],

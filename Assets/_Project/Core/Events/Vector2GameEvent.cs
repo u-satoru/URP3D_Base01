@@ -2,13 +2,13 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Unity6.Core.Events
+namespace asterivo.Unity60.Core.Events
 {
     /// <summary>
     /// Vector2パラメータ付きイベントチャネル
     /// カメラのルック入力用に最適化
     /// </summary>
-    [CreateAssetMenu(fileName = "New Vector2 Game Event", menuName = "Unity6/Events/Vector2 Game Event")]
+    [CreateAssetMenu(fileName = "New Vector2 Game Event", menuName = "asterivo.Unity60/Events/Vector2 Game Event")]
     public class Vector2GameEvent : ScriptableObject
     {
         private readonly HashSet<Vector2GameEventListener> listeners = new HashSet<Vector2GameEventListener>();
@@ -21,8 +21,8 @@ namespace Unity6.Core.Events
         [SerializeField, TextArea(3, 5)] private string eventDescription;
         
         [Header("Runtime Info (Editor Only)")]
-        [SerializeField, Unity6.Core.Attributes.ReadOnly] private int listenerCount;
-        [SerializeField, Unity6.Core.Attributes.ReadOnly] private Vector2 lastRaisedValue;
+        [SerializeField, asterivo.Unity60.Core.Attributes.ReadOnly] private int listenerCount;
+        [SerializeField, asterivo.Unity60.Core.Attributes.ReadOnly] private Vector2 lastRaisedValue;
         #endif
         
         /// <summary>
