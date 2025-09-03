@@ -60,7 +60,35 @@ namespace asterivo.Unity60.Player.States
         public void HandleInput(DetailedPlayerStateMachine stateMachine, Vector2 moveInput, bool jumpInput)
         {
             _moveInput = moveInput;
-            // TODO: Prone状態を解除するコマンドを実装し、それに応じて状態遷移を行う
+            
+            // ジャンプ入力で匍匐解除（立ち上がり）
+            if (jumpInput)
+            {
+                if (CanStandUp(stateMachine))
+                {
+                    // 直接立ち上がりが可能な場合
+                    if (moveInput.magnitude > 0.1f)
+                    {
+                        stateMachine.TransitionToState(PlayerStateType.Walking);
+                    }
+                    else
+                    {
+                        stateMachine.TransitionToState(PlayerStateType.Idle);
+                    }
+                }
+                else
+                {
+                    // 障害物がある場合はしゃがみ状態へ
+                    stateMachine.TransitionToState(PlayerStateType.Crouching);
+                }
+                return;
+            }
+            
+            // 匍匐状態からしゃがみへの遷移（段階的な立ち上がり）
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                stateMachine.TransitionToState(PlayerStateType.Crouching);
+            }
         }
 
         private bool CanStandUp(DetailedPlayerStateMachine stateMachine)

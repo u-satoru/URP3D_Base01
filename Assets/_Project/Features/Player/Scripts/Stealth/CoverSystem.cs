@@ -196,6 +196,62 @@ namespace asterivo.Unity60.Player
         private void UpdateCoverPosition()
         {
             if (currentCoverPoint == null) return;
+            
+            // カバー状態での移動処理（カバーに沿った移動）
+            Vector3 inputDirection = GetCoverMovementInput();
+            if (inputDirection.magnitude > 0.1f)
+            {
+                MovAlongCover(inputDirection);
+            }
+        }
+        
+        /// <summary>
+        /// カバーに沿った移動を実行
+        /// </summary>
+        private void MovAlongCover(Vector3 inputDirection)
+        {
+            if (characterController == null) return;
+            
+            // カバーの法線に垂直な方向への移動のみ許可
+            Vector3 rightDirection = Vector3.Cross(coverNormal, Vector3.up).normalized;
+            float horizontalInput = Vector3.Dot(inputDirection, rightDirection);
+            
+            Vector3 moveDirection = rightDirection * horizontalInput;
+            Vector3 movement = moveDirection * coverMoveSpeed * Time.deltaTime;
+            
+            // カバーから離れないように位置を調整
+            characterController.Move(movement);
+            
+            // カバーとの距離を維持
+            MaintainCoverDistance();
+        }
+        
+        /// <summary>
+        /// カバーとの適切な距離を維持
+        /// </summary>
+        private void MaintainCoverDistance()
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(playerTransform.position, -coverNormal, out hit, snapToDistance + 0.5f, coverLayers))
+            {
+                Vector3 targetPosition = hit.point + hit.normal * snapToDistance;
+                Vector3 adjustment = targetPosition - playerTransform.position;
+                
+                // Y軸方向の調整は除外（地面との接触を維持）
+                adjustment.y = 0;
+                
+                characterController.Move(adjustment);
+            }
+        }
+        
+        /// <summary>
+        /// カバー移動用の入力を取得（仮実装）
+        /// </summary>
+        private Vector3 GetCoverMovementInput()
+        {
+            // 実際のプロジェクトでは Input System や PlayerController から取得
+            float horizontal = Input.GetAxis("Horizontal");
+            return new Vector3(horizontal, 0, 0);
         }
         
         public void PeekLeft()

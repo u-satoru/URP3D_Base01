@@ -33,8 +33,7 @@ namespace asterivo.Unity60.Player.States
         {
             if (jumpInput)
             {
-                // TODO: JumpingStateへの遷移を実装
-                // stateMachine.TransitionToState(PlayerStateType.Jumping);
+                stateMachine.TransitionToState(PlayerStateType.Jumping);
                 return;
             }
 

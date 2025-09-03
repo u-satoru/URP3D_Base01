@@ -10,6 +10,7 @@ namespace asterivo.Unity60.Player.States
         Idle,
         Walking,
         Running,
+        Jumping,
         Crouching,
         Prone,
         InCover,
@@ -69,6 +70,7 @@ namespace asterivo.Unity60.Player.States
                 { PlayerStateType.Idle, new IdleState() },
                 { PlayerStateType.Walking, new WalkingState() },
                 { PlayerStateType.Running, new RunningState() },
+                { PlayerStateType.Jumping, new JumpingState() },
                 { PlayerStateType.Crouching, new CrouchingState() },
                 { PlayerStateType.Prone, new ProneState() },
                 { PlayerStateType.InCover, new CoverState() }

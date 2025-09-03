@@ -13,23 +13,26 @@ namespace asterivo.Unity60.Player
         [Header("Command Output")]
         [SerializeField] private CommandDefinitionGameEvent onCommandDefinitionIssued;
 
-        // TODO: これらのイベントをリッスンしてmovementFrozenを制御する
-        // [SerializeField] private GameEventListener freezeMovementListener;
-        // [SerializeField] private GameEventListener unfreezeMovementListener;
+        [Header("Movement Control Events")]
+        [SerializeField] private GameEventListener freezeMovementListener;
+        [SerializeField] private GameEventListener unfreezeMovementListener;
 
         private PlayerInput playerInput;
         private InputActionMap playerActionMap;
         private bool movementFrozen = false;
+        private bool isSprintPressed = false;
 
         private void Awake()
         {
             playerInput = GetComponent<PlayerInput>();
             SetupInputCallbacks();
+            SetupMovementEventListeners();
         }
 
         private void OnDestroy()
         {
             CleanupInputCallbacks();
+            CleanupMovementEventListeners();
         }
 
         private void SetupInputCallbacks()
@@ -48,6 +51,13 @@ namespace asterivo.Unity60.Player
             {
                 jumpAction.started += OnJump;
             }
+            
+            var sprintAction = playerActionMap.FindAction("Sprint");
+            if (sprintAction != null)
+            {
+                sprintAction.started += OnSprintStarted;
+                sprintAction.canceled += OnSprintCanceled;
+            }
         }
 
         private void CleanupInputCallbacks()
@@ -63,6 +73,13 @@ namespace asterivo.Unity60.Player
             if (jumpAction != null)
             {
                 jumpAction.started -= OnJump;
+            }
+            
+            var sprintAction = playerActionMap?.FindAction("Sprint");
+            if (sprintAction != null)
+            {
+                sprintAction.started -= OnSprintStarted;
+                sprintAction.canceled -= OnSprintCanceled;
             }
         }
 
@@ -86,6 +103,77 @@ namespace asterivo.Unity60.Player
             if (movementFrozen) return;
             var definition = new asterivo.Unity60.Player.Commands.JumpCommandDefinition();
             onCommandDefinitionIssued?.Raise(definition);
+        }
+        
+        private void OnSprintStarted(InputAction.CallbackContext context)
+        {
+            if (movementFrozen) return;
+            isSprintPressed = true;
+        }
+        
+        private void OnSprintCanceled(InputAction.CallbackContext context)
+        {
+            isSprintPressed = false;
+        }
+        
+        /// <summary>
+        /// スプリント状態を取得（状態マシンから参照用）
+        /// </summary>
+        public bool IsSprintPressed => isSprintPressed;
+        
+        /// <summary>
+        /// 移動凍結状態を取得
+        /// </summary>
+        public bool IsMovementFrozen => movementFrozen;
+        
+        /// <summary>
+        /// 移動イベントリスナーの設定
+        /// </summary>
+        private void SetupMovementEventListeners()
+        {
+            if (freezeMovementListener != null)
+            {
+                freezeMovementListener.Response.AddListener(OnFreezeMovement);
+            }
+            
+            if (unfreezeMovementListener != null)
+            {
+                unfreezeMovementListener.Response.AddListener(OnUnfreezeMovement);
+            }
+        }
+        
+        /// <summary>
+        /// 移動イベントリスナーのクリーンアップ
+        /// </summary>
+        private void CleanupMovementEventListeners()
+        {
+            if (freezeMovementListener != null)
+            {
+                freezeMovementListener.Response.RemoveListener(OnFreezeMovement);
+            }
+            
+            if (unfreezeMovementListener != null)
+            {
+                unfreezeMovementListener.Response.RemoveListener(OnUnfreezeMovement);
+            }
+        }
+        
+        /// <summary>
+        /// 移動凍結イベントハンドラ
+        /// </summary>
+        private void OnFreezeMovement()
+        {
+            movementFrozen = true;
+            Debug.Log("Player movement frozen");
+        }
+        
+        /// <summary>
+        /// 移動凍結解除イベントハンドラ
+        /// </summary>
+        private void OnUnfreezeMovement()
+        {
+            movementFrozen = false;
+            Debug.Log("Player movement unfrozen");
         }
     }
 }

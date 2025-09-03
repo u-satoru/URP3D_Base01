@@ -61,13 +61,29 @@ namespace asterivo.Unity60.Player.States
         {
             _moveInput = moveInput;
 
-            // TODO: Crouchコマンドを実装し、それに応じて状態遷移を行う必要がある
+            // ジャンプ入力でしゃがみ解除（立ち上がり）
             if (jumpInput)
             {
                 if (CanStandUp(stateMachine))
                 {
-                    // stateMachine.TransitionToState(PlayerStateType.Jumping);
+                    // 立ち上がりが可能な場合、移動入力に応じて適切な状態に遷移
+                    if (moveInput.magnitude > 0.1f)
+                    {
+                        stateMachine.TransitionToState(PlayerStateType.Walking);
+                    }
+                    else
+                    {
+                        stateMachine.TransitionToState(PlayerStateType.Idle);
+                    }
+                    return;
                 }
+            }
+            
+            // しゃがみ状態での移動は低速移動として継続
+            // 他の姿勢への遷移（匍匐など）
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                stateMachine.TransitionToState(PlayerStateType.Prone);
             }
         }
 

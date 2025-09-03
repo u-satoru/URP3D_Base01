@@ -51,16 +51,24 @@ namespace asterivo.Unity60.Player.States
 
             if (jumpInput)
             {
-                // TODO: JumpingStateへの遷移を実装
+                stateMachine.TransitionToState(PlayerStateType.Jumping);
                 return;
             }
 
             if (moveInput.magnitude < 0.1f)
             {
                 stateMachine.TransitionToState(PlayerStateType.Idle);
+                return;
             }
             
-            // TODO: Sprint入力が離されたらWalkingStateへ遷移するロジックが必要
+            // スプリント入力制御：PlayerControllerからスプリント状態を取得
+            var playerController = stateMachine.GetComponent<PlayerController>();
+            if (playerController != null && !playerController.IsSprintPressed)
+            {
+                // スプリントが離されたら歩行状態に遷移
+                stateMachine.TransitionToState(PlayerStateType.Walking);
+                return;
+            }
         }
     }
 }

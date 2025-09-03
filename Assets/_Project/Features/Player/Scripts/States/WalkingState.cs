@@ -49,8 +49,7 @@ namespace asterivo.Unity60.Player.States
 
             if (jumpInput)
             {
-                // TODO: JumpingStateへの遷移を実装
-                // stateMachine.TransitionToState(PlayerStateType.Jumping);
+                stateMachine.TransitionToState(PlayerStateType.Jumping);
                 return;
             }
 
@@ -60,10 +59,12 @@ namespace asterivo.Unity60.Player.States
                 return;
             }
             
-            // State transitions
-            if (Input.GetKey(KeyCode.LeftShift))
+            // State transitions - スプリント入力でRunning状態に遷移
+            var playerController = stateMachine.GetComponent<PlayerController>();
+            if (playerController != null && playerController.IsSprintPressed)
             {
                 stateMachine.TransitionToState(PlayerStateType.Running);
+                return;
             }
             else if (Input.GetKeyDown(KeyCode.C))
             {
