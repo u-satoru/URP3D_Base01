@@ -66,11 +66,11 @@ namespace asterivo.Unity60.Core.Editor
             {
                 Selection.objects = targetListeners.Select(l => l.gameObject).ToArray();
                 EditorGUIUtility.PingObject(targetListeners[0]);
-                Debug.Log($"Found {targetListeners.Length} listeners for '{gameEvent.name}'");
+                UnityEngine.Debug.Log($"Found {targetListeners.Length} listeners for '{gameEvent.name}'");
             }
             else
             {
-                Debug.LogWarning($"No listeners found for '{gameEvent.name}'");
+                UnityEngine.Debug.LogWarning($"No listeners found for '{gameEvent.name}'");
             }
         }
         
@@ -79,18 +79,18 @@ namespace asterivo.Unity60.Core.Editor
             var listeners = FindObjectsByType<GameEventListener>(FindObjectsSortMode.None);
             var targetListeners = System.Array.FindAll(listeners, l => l.Event == gameEvent);
             
-            Debug.Log($"=== Listeners for '{gameEvent.name}' ===");
+            UnityEngine.Debug.Log($"=== Listeners for '{gameEvent.name}' ===");
             foreach (var listener in targetListeners)
             {
                 if (listener != null)
                 {
-                    Debug.Log($"  - {listener.gameObject.name} (Priority: {listener.Priority}) - {listener.gameObject.scene.name}", listener);
+                    UnityEngine.Debug.Log($"  - {listener.gameObject.name} (Priority: {listener.Priority}) - {listener.gameObject.scene.name}", listener);
                 }
             }
             
             if (targetListeners.Length == 0)
             {
-                Debug.Log("  No listeners found.");
+                UnityEngine.Debug.Log("  No listeners found.");
             }
         }
     }

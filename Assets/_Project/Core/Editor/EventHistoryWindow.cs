@@ -197,7 +197,7 @@ namespace asterivo.Unity60.Core.Editor
                     csv += $"{entry.timestamp:F2},{entry.eventName},{entry.listenerCount}\n";
                 }
                 System.IO.File.WriteAllText(path, csv);
-                Debug.Log($"Event history exported to: {path}");
+                UnityEngine.Debug.Log($"Event history exported to: {path}");
             }
         }
         

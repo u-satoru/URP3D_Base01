@@ -36,9 +36,14 @@ namespace asterivo.Unity60.Core.Events
             #if UNITY_EDITOR
             if (debugMode)
             {
-                Debug.Log($"<color=cyan>[GameEvent]</color> '{name}' raised at {Time.time:F2}s with {listeners.Count} listeners", this);
+                UnityEngine.Debug.Log($"<color=cyan>[GameEvent]</color> '{name}' raised at {Time.time:F2}s with {listeners.Count} listeners", this);
             }
             listenerCount = listeners.Count;
+            #endif
+            
+            // イベントログに記録
+            #if UNITY_EDITOR || DEVELOPMENT_BUILD
+            global::asterivo.Unity60.Core.Debug.EventLogger.LogEvent(name, listeners.Count);
             #endif
             
             // 優先度でソート（必要時のみ）
@@ -91,7 +96,7 @@ namespace asterivo.Unity60.Core.Events
                 #if UNITY_EDITOR
                 if (debugMode)
                 {
-                    Debug.Log($"<color=green>[GameEvent]</color> Listener registered to '{name}'", this);
+                    UnityEngine.Debug.Log($"<color=green>[GameEvent]</color> Listener registered to '{name}'", this);
                 }
                 #endif
             }
@@ -111,7 +116,7 @@ namespace asterivo.Unity60.Core.Events
                 #if UNITY_EDITOR
                 if (debugMode)
                 {
-                    Debug.Log($"<color=yellow>[GameEvent]</color> Listener unregistered from '{name}'", this);
+                    UnityEngine.Debug.Log($"<color=yellow>[GameEvent]</color> Listener unregistered from '{name}'", this);
                 }
                 #endif
             }
@@ -160,12 +165,12 @@ namespace asterivo.Unity60.Core.Events
         [ContextMenu("Log All Listeners")]
         private void LogListeners()
         {
-            Debug.Log($"=== Listeners for '{name}' ===");
+            UnityEngine.Debug.Log($"=== Listeners for '{name}' ===");
             foreach (var listener in listeners)
             {
                 if (listener != null)
                 {
-                    Debug.Log($"  - {listener.gameObject.name} (Priority: {listener.Priority})", listener);
+                    UnityEngine.Debug.Log($"  - {listener.gameObject.name} (Priority: {listener.Priority})", listener);
                 }
             }
         }

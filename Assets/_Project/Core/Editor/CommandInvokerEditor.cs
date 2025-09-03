@@ -233,16 +233,16 @@ namespace asterivo.Unity60.Core.Editor
                 {
                     var healCommand = new HealCommand(healthComponent, amount);
                     invoker.ExecuteCommand(healCommand);
-                    Debug.Log($"Test heal command executed: +{amount} HP");
+                    UnityEngine.Debug.Log($"Test heal command executed: +{amount} HP");
                 }
                 else
                 {
-                    Debug.LogWarning("No IHealthTarget found for test command");
+                    UnityEngine.Debug.LogWarning("No IHealthTarget found for test command");
                 }
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"Failed to execute test heal command: {e.Message}");
+                UnityEngine.Debug.LogError($"Failed to execute test heal command: {e.Message}");
             }
         }
         
@@ -264,16 +264,16 @@ namespace asterivo.Unity60.Core.Editor
                 {
                     var damageCommand = new DamageCommand(healthComponent, amount);
                     invoker.ExecuteCommand(damageCommand);
-                    Debug.Log($"Test damage command executed: -{amount} HP");
+                    UnityEngine.Debug.Log($"Test damage command executed: -{amount} HP");
                 }
                 else
                 {
-                    Debug.LogWarning("No IHealthTarget found for test command");
+                    UnityEngine.Debug.LogWarning("No IHealthTarget found for test command");
                 }
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"Failed to execute test damage command: {e.Message}");
+                UnityEngine.Debug.LogError($"Failed to execute test damage command: {e.Message}");
             }
         }
     }

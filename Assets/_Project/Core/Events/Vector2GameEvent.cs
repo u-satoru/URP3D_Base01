@@ -33,7 +33,7 @@ namespace asterivo.Unity60.Core.Events
             #if UNITY_EDITOR
             if (debugMode)
             {
-                Debug.Log($"[{name}] Vector2GameEvent Raised: {value}", this);
+                UnityEngine.Debug.Log($"[{name}] Vector2GameEvent Raised: {value}", this);
             }
             lastRaisedValue = value;
             #endif

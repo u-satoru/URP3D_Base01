@@ -96,7 +96,7 @@ namespace asterivo.Unity60.Core.Editor
             
             AddToReport("=== PROJECT VALIDATION COMPLETED ===");
             
-            Debug.Log("Project validation completed. Check the Project Validation window for details.");
+            UnityEngine.Debug.Log("Project validation completed. Check the Project Validation window for details.");
         }
         
         private void ValidateEventConnections()
@@ -379,8 +379,8 @@ namespace asterivo.Unity60.Core.Editor
                 AddToReport($"📊 Report saved to: {path}");
                 
                 // Also log to console
-                Debug.Log("=== PROJECT VALIDATION REPORT ===");
-                Debug.Log(validationReport);
+                UnityEngine.Debug.Log("=== PROJECT VALIDATION REPORT ===");
+                UnityEngine.Debug.Log(validationReport);
             }
         }
         

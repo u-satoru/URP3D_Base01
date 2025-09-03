@@ -25,14 +25,14 @@ namespace asterivo.Unity60.Core.Commands
         public void Execute()
         {
             _target.TakeDamage(_damageAmount);
-            Debug.Log($"Dealt {_damageAmount} {_elementType} damage");
+            UnityEngine.Debug.Log($"Dealt {_damageAmount} {_elementType} damage");
         }
 
         public void Undo()
         {
             // Undo damage by healing the same amount
             _target.Heal(_damageAmount);
-            Debug.Log($"Undid {_damageAmount} {_elementType} damage (healed)");
+            UnityEngine.Debug.Log($"Undid {_damageAmount} {_elementType} damage (healed)");
         }
     }
 }

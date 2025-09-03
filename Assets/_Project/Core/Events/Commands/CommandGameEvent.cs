@@ -16,7 +16,7 @@ namespace asterivo.Unity60.Core.Events
         {
             if (logCommandExecution && value != null)
             {
-                Debug.Log($"[CommandEvent] Raising command: {value.GetType().Name}");
+                UnityEngine.Debug.Log($"[CommandEvent] Raising command: {value.GetType().Name}");
             }
             
             base.Raise(value);

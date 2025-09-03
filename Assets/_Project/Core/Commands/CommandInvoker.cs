@@ -37,7 +37,7 @@ namespace asterivo.Unity60.Core.Commands
                 playerHealth = playerHealthComponent.GetComponent<IHealthTarget>();
                 if (playerHealth == null)
                 {
-                    Debug.LogError("CommandInvoker: playerHealthComponent does not implement IHealthTarget.");
+                    UnityEngine.Debug.LogError("CommandInvoker: playerHealthComponent does not implement IHealthTarget.");
                 }
             }
         }
@@ -65,7 +65,7 @@ namespace asterivo.Unity60.Core.Commands
         {
             if (command == null)
             {
-                Debug.LogWarning("CommandInvoker: Attempted to execute null command");
+                UnityEngine.Debug.LogWarning("CommandInvoker: Attempted to execute null command");
                 return;
             }
             
@@ -183,7 +183,7 @@ namespace asterivo.Unity60.Core.Commands
         {
             if (itemData == null)
             {
-                Debug.LogWarning("OnItemUsed called with null ItemData.");
+                UnityEngine.Debug.LogWarning("OnItemUsed called with null ItemData.");
                 return;
             }
 
@@ -206,7 +206,7 @@ namespace asterivo.Unity60.Core.Commands
             // Ensure we have a target for health-related commands
             if (playerHealth == null)
             {
-                Debug.LogError("CommandInvoker: playerHealth target is not set.");
+                UnityEngine.Debug.LogError("CommandInvoker: playerHealth target is not set.");
                 return null;
             }
 
@@ -215,7 +215,7 @@ namespace asterivo.Unity60.Core.Commands
             
             if (command == null)
             {
-                Debug.LogWarning($"Failed to create command from definition type: {definition.GetType()}");
+                UnityEngine.Debug.LogWarning($"Failed to create command from definition type: {definition.GetType()}");
             }
             
             return command;

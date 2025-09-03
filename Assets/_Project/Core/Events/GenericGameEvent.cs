@@ -37,8 +37,13 @@ namespace asterivo.Unity60.Core.Events
             #if UNITY_EDITOR
             if (debugMode)
             {
-                Debug.Log($"<color=cyan>[GenericEvent]</color> '{name}' raised with value: {value}", this);
+                UnityEngine.Debug.Log($"<color=cyan>[GenericEvent]</color> '{name}' raised with value: {value}", this);
             }
+            #endif
+            
+            // イベントログに記録（ペイロード付き）
+            #if UNITY_EDITOR || DEVELOPMENT_BUILD
+            global::asterivo.Unity60.Core.Debug.EventLogger.LogEventWithPayload(name, listeners.Count, value);
             #endif
             
             // ToArrayで安全なイテレーション

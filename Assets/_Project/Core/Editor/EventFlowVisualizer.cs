@@ -310,20 +310,20 @@ namespace asterivo.Unity60.Core.Editor
         
         private void ExportToConsole()
         {
-            Debug.Log("=== EVENT FLOW ANALYSIS ===");
+            UnityEngine.Debug.Log("=== EVENT FLOW ANALYSIS ===");
             foreach (var kvp in eventConnections)
             {
                 var eventName = kvp.Key != null ? kvp.Key.name : "<Missing Event>";
-                Debug.Log($"📡 {eventName} → {kvp.Value.Count} listeners");
+                UnityEngine.Debug.Log($"📡 {eventName} → {kvp.Value.Count} listeners");
                 foreach (var listener in kvp.Value)
                 {
                     if (listener != null)
                     {
-                        Debug.Log($"  └─ {listener.gameObject.name} (Priority: {listener.Priority}) [{listener.gameObject.scene.name}]", listener);
+                        UnityEngine.Debug.Log($"  └─ {listener.gameObject.name} (Priority: {listener.Priority}) [{listener.gameObject.scene.name}]", listener);
                     }
                     else
                     {
-                        Debug.Log($"  └─ <Missing Listener>");
+                        UnityEngine.Debug.Log($"  └─ <Missing Listener>");
                     }
                 }
             }
@@ -331,31 +331,31 @@ namespace asterivo.Unity60.Core.Editor
         
         private void FindPotentialIssues()
         {
-            Debug.Log("=== POTENTIAL ISSUES ANALYSIS ===");
-            
+            UnityEngine.Debug.Log("=== POTENTIAL ISSUES ANALYSIS ===");
+
             var orphanedListeners = FindObjectsByType<GameEventListener>(FindObjectsSortMode.None).Where(l => l.Event == null).ToArray();
             if (orphanedListeners.Length > 0)
             {
-                Debug.LogWarning($"Found {orphanedListeners.Length} orphaned GameEventListeners:");
+                UnityEngine.Debug.LogWarning($"Found {orphanedListeners.Length} orphaned GameEventListeners:");
                 foreach (var listener in orphanedListeners)
                 {
-                    Debug.LogWarning($"  - {listener.gameObject.name} [{listener.gameObject.scene.name}]", listener);
+                    UnityEngine.Debug.LogWarning($"  - {listener.gameObject.name} [{listener.gameObject.scene.name}]", listener);
                 }
             }
-            
+
             var unusedEvents = eventConnections.Where(kvp => kvp.Value.Count == 0).ToArray();
             if (unusedEvents.Length > 0)
             {
-                Debug.LogWarning($"Found {unusedEvents.Length} unused GameEvents:");
+                UnityEngine.Debug.LogWarning($"Found {unusedEvents.Length} unused GameEvents:");
                 foreach (var kvp in unusedEvents)
                 {
                     if (kvp.Key != null)
                     {
-                        Debug.LogWarning($"  - {kvp.Key.name}", kvp.Key);
+                        UnityEngine.Debug.LogWarning($"  - {kvp.Key.name}", kvp.Key);
                     }
                 }
             }
-            
+
             var duplicatePriorities = new Dictionary<GameEvent, List<int>>();
             foreach (var kvp in eventConnections)
             {
@@ -366,19 +366,19 @@ namespace asterivo.Unity60.Core.Editor
                     duplicatePriorities[kvp.Key] = duplicates;
                 }
             }
-            
+
             if (duplicatePriorities.Count > 0)
             {
-                Debug.LogWarning("Found events with duplicate listener priorities:");
+                UnityEngine.Debug.LogWarning("Found events with duplicate listener priorities:");
                 foreach (var kvp in duplicatePriorities)
                 {
-                    Debug.LogWarning($"  - {kvp.Key.name}: priorities {string.Join(", ", kvp.Value)}", kvp.Key);
+                    UnityEngine.Debug.LogWarning($"  - {kvp.Key.name}: priorities {string.Join(", ", kvp.Value)}", kvp.Key);
                 }
             }
-            
+
             if (orphanedListeners.Length == 0 && unusedEvents.Length == 0 && duplicatePriorities.Count == 0)
             {
-                Debug.Log("✅ No issues found in event system!");
+                UnityEngine.Debug.Log("✅ No issues found in event system!");
             }
         }
     }

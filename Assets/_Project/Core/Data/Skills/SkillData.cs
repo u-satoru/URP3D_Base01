@@ -60,7 +60,7 @@ namespace asterivo.Unity60.Core.Data
             
             if (!CanUse(context))
             {
-                Debug.LogWarning($"Cannot use skill: {skillName}");
+                UnityEngine.Debug.LogWarning($"Cannot use skill: {skillName}");
                 return commands;
             }
             
