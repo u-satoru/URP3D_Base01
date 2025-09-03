@@ -1,0 +1,19 @@
+{
+    "name": "asterivo.Unity60.Stealth",
+    "rootNamespace": "asterivo.Unity60.Stealth",
+    "references": [
+        "asterivo.Unity60.Core",
+        "asterivo.Unity60.Player",
+        "Unity.Mathematics",
+        "Unity.Collections"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

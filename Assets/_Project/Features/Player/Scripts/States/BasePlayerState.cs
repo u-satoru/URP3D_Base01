@@ -39,67 +39,6 @@ namespace asterivo.Unity60.Player.States
         }
     }
     
-    // 具体的なステート実装
-    public class IdleState : BasePlayerState
-    {
-        public IdleState(PlayerStateMachine sm, Animator anim) : base(sm, anim) { }
-        
-        public override void Enter()
-        {
-            base.Enter();
-            animator?.SetBool("IsIdle", true);
-            animator?.SetFloat("Speed", 0f);
-        }
-        
-        public override void Exit()
-        {
-            animator?.SetBool("IsIdle", false);
-        }
-    }
-    
-    public class WalkingState : BasePlayerState
-    {
-        public WalkingState(PlayerStateMachine sm, Animator anim) : base(sm, anim) { }
-        
-        public override void Enter()
-        {
-            base.Enter();
-            animator?.SetBool("IsWalking", true);
-        }
-        
-        public override void Update()
-        {
-            base.Update();
-            // 速度に応じてアニメーション速度を調整
-            if (animator != null)
-            {
-                float speed = 0.5f; // 実際の速度を取得
-                animator.SetFloat("Speed", speed);
-            }
-        }
-        
-        public override void Exit()
-        {
-            animator?.SetBool("IsWalking", false);
-        }
-    }
-    
-    public class RunningState : BasePlayerState
-    {
-        public RunningState(PlayerStateMachine sm, Animator anim) : base(sm, anim) { }
-        
-        public override void Enter()
-        {
-            base.Enter();
-            animator?.SetBool("IsRunning", true);
-        }
-        
-        public override void Exit()
-        {
-            animator?.SetBool("IsRunning", false);
-        }
-    }
-    
     public class SprintingState : BasePlayerState
     {
         public SprintingState(PlayerStateMachine sm, Animator anim) : base(sm, anim) { }
@@ -174,7 +113,7 @@ namespace asterivo.Unity60.Player.States
             // 着地アニメーション終了後、自動的にアイドルへ
             if (stateTime >= landingDuration)
             {
-                stateMachine.TransitionTo(PlayerState.Idle);
+                stateMachine.TransitionToState(PlayerStateMachine.PlayerStateType.Idle);
             }
         }
     }
