@@ -21,7 +21,8 @@
       "mcp__filesystem__read_text_file",
       "mcp__filesystem__edit_file",
       "Bash(sed:*)",
-      "mcp__UnityMCP__find_in_file"
+      "mcp__UnityMCP__find_in_file",
+      "Bash(Remove-Item -Path \"D:\\UnityProjects\\URP3D_Base01\\Assets\\_Project\\Features\\Player\\Commands\"\" -Recurse -Force)"
     ],
     "deny": [],
     "ask": []

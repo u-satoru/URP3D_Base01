@@ -2,171 +2,162 @@ using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core.Commands;
 
-namespace asterivo.Unity60.Core.Data
+/// <summary>
+/// Item data using polymorphic command serialization (ドキュメント第4章:444-452行目の実装)
+/// 
+/// ハイブリッドアーキテクチャの実装例：
+/// - SerializeReference属性によるポリモーフィックシリアライゼーション
+/// - デザイナーがInspectorでHealCommandDefinition等をリストに追加可能
+/// - 装備システム(Equip/Unequip)はプロジェクト独自の拡張機能
+/// </summary>
+[CreateAssetMenu(fileName = "NewItemData", menuName = "Data/ItemData")]
+public class ItemData : ScriptableObject
 {
+    [Header("Item Information")]
+    public string itemName;
+    [TextArea(2, 4)]
+    public string description;
+
+    [Header("Item Commands")]
+    [SerializeReference]
+    [Tooltip("Commands executed when the item is used (ドキュメント第4章対応)")]
+    public List<ICommandDefinition> commandDefinitions = new List<ICommandDefinition>();
+    
+    [Header("Equipment System (Project Extension)")]
+    [SerializeReference]
+    [Tooltip("Commands executed when the item is equipped (プロジェクト独自拡張)")]
+    public List<ICommandDefinition> equipCommandDefinitions = new List<ICommandDefinition>();
+    
+    [SerializeReference]
+    [Tooltip("Commands executed when the item is unequipped (プロジェクト独自拡張)")]
+    public List<ICommandDefinition> unequipCommandDefinitions = new List<ICommandDefinition>();
+    
     /// <summary>
-    /// ScriptableObject for item definitions using polymorphic serialization
+    /// Checks if the item can be used
     /// </summary>
-    [CreateAssetMenu(fileName = "NewItem", menuName = "asterivo.Unity60/Items/Item Data")]
-    public class ItemData : ScriptableObject
+    public bool CanUse(object context = null)
     {
-        [Header("Item Information")]
-        [SerializeField] private string itemName = "New Item";
-        [SerializeField, TextArea(3, 5)] private string description;
-        [SerializeField] private Sprite icon;
-        
-        [Header("Item Properties")]
-        [SerializeField] private ItemType itemType = ItemType.Consumable;
-        [SerializeField] private int maxStackSize = 99;
-        [SerializeField] private float weight = 1.0f;
-        [SerializeField] private int value = 10;
-        
-        [Header("Use Commands")]
-        [SerializeReference] 
-        [Tooltip("Commands executed when this item is used")]
-        private List<ICommandDefinition> useCommands = new List<ICommandDefinition>();
-        
-        [Header("Equip Commands")]
-        [SerializeReference] 
-        [Tooltip("Commands executed when this item is equipped (if equippable)")]
-        private List<ICommandDefinition> equipCommands = new List<ICommandDefinition>();
-        
-        [Header("Unequip Commands")]
-        [SerializeReference] 
-        [Tooltip("Commands executed when this item is unequipped")]
-        private List<ICommandDefinition> unequipCommands = new List<ICommandDefinition>();
-        
-        public enum ItemType
+        // Check all command definitions
+        foreach (var definition in commandDefinitions)
         {
-            Consumable,
-            Equipment,
-            Weapon,
-            Armor,
-            Quest,
-            Material,
-            Currency
-        }
-        
-        /// <summary>
-        /// Checks if the item can be used
-        /// </summary>
-        public bool CanUse(object context = null)
-        {
-            foreach (var command in useCommands)
-            {
-                if (command != null && !command.CanExecute(context))
-                    return false;
-            }
-            return useCommands.Count > 0;
-        }
-        
-        /// <summary>
-        /// Uses the item by creating and returning commands
-        /// </summary>
-        public List<ICommand> Use(object context = null)
-        {
-            var commands = new List<ICommand>();
-            
-            if (!CanUse(context))
-            {
-                Debug.LogWarning($"Cannot use item: {itemName}");
-                return commands;
-            }
-            
-            foreach (var definition in useCommands)
-            {
-                if (definition != null)
-                {
-                    var command = definition.CreateCommand(context);
-                    if (command != null)
-                    {
-                        commands.Add(command);
-                    }
-                }
-            }
-            
-            return commands;
-        }
-        
-        /// <summary>
-        /// Checks if the item can be equipped
-        /// </summary>
-        public bool CanEquip(object context = null)
-        {
-            if (itemType != ItemType.Equipment && 
-                itemType != ItemType.Weapon && 
-                itemType != ItemType.Armor)
+            if (definition != null && !definition.CanExecute(context))
                 return false;
-                
-            foreach (var command in equipCommands)
-            {
-                if (command != null && !command.CanExecute(context))
-                    return false;
-            }
-            return equipCommands.Count > 0;
         }
         
-        /// <summary>
-        /// Equips the item by creating and returning commands
-        /// </summary>
-        public List<ICommand> Equip(object context = null)
+        return true;
+    }
+    
+    /// <summary>
+    /// Uses the item by creating and returning commands
+    /// </summary>
+    public List<ICommand> Use(object context = null)
+    {
+        var commands = new List<ICommand>();
+        
+        if (!CanUse(context))
         {
-            var commands = new List<ICommand>();
-            
-            if (!CanEquip(context))
-            {
-                Debug.LogWarning($"Cannot equip item: {itemName}");
-                return commands;
-            }
-            
-            foreach (var definition in equipCommands)
-            {
-                if (definition != null)
-                {
-                    var command = definition.CreateCommand(context);
-                    if (command != null)
-                    {
-                        commands.Add(command);
-                    }
-                }
-            }
-            
+            Debug.LogWarning($"Cannot use item: {itemName}");
             return commands;
         }
         
-        /// <summary>
-        /// Unequips the item by creating and returning commands
-        /// </summary>
-        public List<ICommand> Unequip(object context = null)
+        foreach (var definition in commandDefinitions)
         {
-            var commands = new List<ICommand>();
-            
-            foreach (var definition in unequipCommands)
+            if (definition != null)
             {
-                if (definition != null)
+                var command = definition.CreateCommand(context);
+                if (command != null)
                 {
-                    var command = definition.CreateCommand(context);
-                    if (command != null)
-                    {
-                        commands.Add(command);
-                    }
+                    commands.Add(command);
                 }
             }
-            
+        }
+        
+        return commands;
+    }
+    
+    /// <summary>
+    /// Checks if the item can be equipped
+    /// </summary>
+    public bool CanEquip(object context = null)
+    {
+        // Check all equip command definitions
+        foreach (var definition in equipCommandDefinitions)
+        {
+            if (definition != null && !definition.CanExecute(context))
+                return false;
+        }
+        
+        return true;
+    }
+    
+    /// <summary>
+    /// Equips the item by creating and returning equip commands
+    /// </summary>
+    public List<ICommand> Equip(object context = null)
+    {
+        var commands = new List<ICommand>();
+        
+        if (!CanEquip(context))
+        {
+            Debug.LogWarning($"Cannot equip item: {itemName}");
             return commands;
         }
         
-        // Properties
-        public string ItemName => itemName;
-        public string Description => description;
-        public Sprite Icon => icon;
-        public ItemType Type => itemType;
-        public int MaxStackSize => maxStackSize;
-        public float Weight => weight;
-        public int Value => value;
-        public bool IsStackable => maxStackSize > 1;
-        public bool IsEquippable => itemType == ItemType.Equipment || 
-                                   itemType == ItemType.Weapon || 
-                                   itemType == ItemType.Armor;
+        foreach (var definition in equipCommandDefinitions)
+        {
+            if (definition != null)
+            {
+                var command = definition.CreateCommand(context);
+                if (command != null)
+                {
+                    commands.Add(command);
+                }
+            }
+        }
+        
+        return commands;
+    }
+    
+    /// <summary>
+    /// Checks if the item can be unequipped
+    /// </summary>
+    public bool CanUnequip(object context = null)
+    {
+        // Check all unequip command definitions
+        foreach (var definition in unequipCommandDefinitions)
+        {
+            if (definition != null && !definition.CanExecute(context))
+                return false;
+        }
+        
+        return true;
+    }
+    
+    /// <summary>
+    /// Unequips the item by creating and returning unequip commands
+    /// </summary>
+    public List<ICommand> Unequip(object context = null)
+    {
+        var commands = new List<ICommand>();
+        
+        if (!CanUnequip(context))
+        {
+            Debug.LogWarning($"Cannot unequip item: {itemName}");
+            return commands;
+        }
+        
+        foreach (var definition in unequipCommandDefinitions)
+        {
+            if (definition != null)
+            {
+                var command = definition.CreateCommand(context);
+                if (command != null)
+                {
+                    commands.Add(command);
+                }
+            }
+        }
+        
+        return commands;
     }
 }

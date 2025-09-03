@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Core.Components;
 
 namespace asterivo.Unity60.Core.Commands
 {
@@ -12,13 +13,34 @@ namespace asterivo.Unity60.Core.Commands
         [Header("Command Events")]
         [SerializeField] private CommandGameEvent onCommandReceived;
         
+        [Header("State Change Events")]
+        [SerializeField] private BoolEventChannelSO onUndoStateChanged;
+        [SerializeField] private BoolEventChannelSO onRedoStateChanged;
+        
         [Header("Command History")]
         [SerializeField] private int maxHistorySize = 100;
         [SerializeField] private bool enableUndo = true;
         [SerializeField] private bool enableRedo = true;
+
+        [Header("Command Target")]
+        [SerializeField] private Component playerHealthComponent;
+        private IHealthTarget playerHealth;
         
         private Stack<ICommand> undoStack = new Stack<ICommand>();
         private Stack<ICommand> redoStack = new Stack<ICommand>();
+        
+        private void Start()
+        {
+            // Initialize health target from component reference
+            if (playerHealthComponent != null)
+            {
+                playerHealth = playerHealthComponent.GetComponent<IHealthTarget>();
+                if (playerHealth == null)
+                {
+                    Debug.LogError("CommandInvoker: playerHealthComponent does not implement IHealthTarget.");
+                }
+            }
+        }
         
         private void OnEnable()
         {
@@ -78,6 +100,9 @@ namespace asterivo.Unity60.Core.Commands
                 {
                     redoStack.Clear();
                 }
+                
+                // Broadcast state changes
+                BroadcastHistoryChanges();
             }
         }
         
@@ -98,9 +123,9 @@ namespace asterivo.Unity60.Core.Commands
                     redoStack.Push(command);
                 }
             }
-            return true;
             
-            return false;
+            BroadcastHistoryChanges();
+            return true;
         }
         
         /// <summary>
@@ -119,6 +144,7 @@ namespace asterivo.Unity60.Core.Commands
                 undoStack.Push(command);
             }
             
+            BroadcastHistoryChanges();
             return true;
         }
         
@@ -129,6 +155,16 @@ namespace asterivo.Unity60.Core.Commands
         {
             undoStack.Clear();
             redoStack.Clear();
+            BroadcastHistoryChanges();
+        }
+        
+        /// <summary>
+        /// Broadcasts the current state of undo/redo stacks to UI and other systems
+        /// </summary>
+        private void BroadcastHistoryChanges()
+        {
+            onUndoStateChanged?.Raise(CanUndo);
+            onRedoStateChanged?.Raise(CanRedo);
         }
         
         /// <summary>
@@ -137,6 +173,52 @@ namespace asterivo.Unity60.Core.Commands
         public void OnEventRaised(ICommand value)
         {
             ExecuteCommand(value);
+        }
+
+        /// <summary>
+        /// Event listener for when an ItemData is used.
+        /// Creates and executes commands based on the item's definitions.
+        /// </summary>
+        public void OnItemUsed(ItemData itemData)
+        {
+            if (itemData == null)
+            {
+                Debug.LogWarning("OnItemUsed called with null ItemData.");
+                return;
+            }
+
+            foreach (var definition in itemData.commandDefinitions)
+            {
+                ICommand command = CreateCommandFromDefinition(definition);
+                if (command != null)
+                {
+                    ExecuteCommand(command);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Factory method for creating commands from definitions (ドキュメント第4章:481-495行目の実装)
+        /// ICommandDefinitionからICommandを生成するファクトリメソッド
+        /// </summary>
+        private ICommand CreateCommandFromDefinition(ICommandDefinition definition)
+        {
+            // Ensure we have a target for health-related commands
+            if (playerHealth == null)
+            {
+                Debug.LogError("CommandInvoker: playerHealth target is not set.");
+                return null;
+            }
+
+            // Use the definition's factory method directly (ハイブリッドアーキテクチャ)
+            var command = definition.CreateCommand(playerHealth);
+            
+            if (command == null)
+            {
+                Debug.LogWarning($"Failed to create command from definition type: {definition.GetType()}");
+            }
+            
+            return command;
         }
         
         // Properties for checking state

@@ -26,11 +26,6 @@ namespace asterivo.Unity60.Core.Events
     [CreateAssetMenu(fileName = "New Camera State Event", menuName = "asterivo.Unity60/Events/Camera State Event")]
     public class CameraStateEvent : GenericGameEvent<CameraState>
     {
-        #if UNITY_EDITOR
-        [Header("Camera State Event Settings")]
-        [SerializeField, TextArea(2, 4)] 
-        private string cameraDescription = "カメラ状態変更イベント";
-        #endif
     }
     
     /// <summary>
