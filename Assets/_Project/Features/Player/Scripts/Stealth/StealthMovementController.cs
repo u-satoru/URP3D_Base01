@@ -151,6 +151,28 @@ namespace asterivo.Unity60.Player
                 ApplyMovementMode(modeIndex);
             }
         }
+
+public void SetRunning(bool isRunning)
+        {
+            if (isRunning)
+            {
+                // Find the run mode index (typically the last one with highest speed)
+                for (int i = movementModes.Length - 1; i >= 0; i--)
+                {
+                    if (movementModes[i].moveSpeed > 6f) // Assuming run speed is > 6
+                    {
+                        ApplyMovementMode(i);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                // Return to walking mode
+                SetStance(MovementStance.Standing);
+            }
+        }
+
         
         private int FindModeIndexForStance(MovementStance stance)
         {

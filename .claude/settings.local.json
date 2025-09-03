@@ -11,7 +11,17 @@
       "mcp__UnityMCP__list_resources",
       "mcp__filesystem__create_directory",
       "mcp__UnityMCP__create_script",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "mcp__UnityMCP__read_resource",
+      "mcp__UnityMCP__script_apply_edits",
+      "mcp__UnityMCP__apply_text_edits",
+      "mcp__UnityMCP__delete_script",
+      "mcp__UnityMCP__get_sha",
+      "mcp__filesystem__search_files",
+      "mcp__filesystem__read_text_file",
+      "mcp__filesystem__edit_file",
+      "Bash(sed:*)",
+      "mcp__UnityMCP__find_in_file"
     ],
     "deny": [],
     "ask": []

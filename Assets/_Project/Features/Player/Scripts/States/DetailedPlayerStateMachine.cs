@@ -5,7 +5,24 @@ using asterivo.Unity60.Core.Data;
 
 namespace asterivo.Unity60.Player.States
 {
-    public class PlayerStateMachine : MonoBehaviour
+    public enum PlayerStateType
+    {
+        Idle,
+        Walking,
+        Running,
+        Crouching,
+        Prone,
+        InCover,
+        Climbing,
+        Swimming,
+        Dead
+    }
+
+    /// <summary>
+    /// 詳細なプレイヤー状態管理システム
+    /// ステートパターンを使用した低レベル状態制御
+    /// </summary>
+    public class DetailedPlayerStateMachine : MonoBehaviour
     {
         [Header("State Management")]
         [SerializeField] private PlayerStateType currentStateType;
@@ -22,19 +39,6 @@ namespace asterivo.Unity60.Player.States
         
         private IPlayerState currentState;
         private Dictionary<PlayerStateType, IPlayerState> states;
-        
-        public enum PlayerStateType
-        {
-            Idle,
-            Walking,
-            Running,
-            Crouching,
-            Prone,
-            InCover,
-            Climbing,
-            Swimming,
-            Dead
-        }
         
         public CharacterController CharacterController => characterController;
         public StealthMovementController StealthMovement => stealthMovement;
@@ -78,8 +82,12 @@ namespace asterivo.Unity60.Player.States
         
         private void Update()
         {
-            currentState?.HandleInput(this);
             currentState?.Update(this);
+        }
+
+        public void HandleInput(Vector2 moveInput, bool jumpInput)
+        {
+            currentState?.HandleInput(this, moveInput, jumpInput);
         }
         
         private void FixedUpdate()

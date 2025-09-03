@@ -4,10 +4,10 @@ namespace asterivo.Unity60.Player.States
 {
     public interface IPlayerState
     {
-        void Enter(PlayerStateMachine stateMachine);
-        void Exit(PlayerStateMachine stateMachine);
-        void Update(PlayerStateMachine stateMachine);
-        void FixedUpdate(PlayerStateMachine stateMachine);
-        void HandleInput(PlayerStateMachine stateMachine);
+        void Enter(DetailedPlayerStateMachine stateMachine);
+        void Exit(DetailedPlayerStateMachine stateMachine);
+        void Update(DetailedPlayerStateMachine stateMachine);
+        void FixedUpdate(DetailedPlayerStateMachine stateMachine);
+        void HandleInput(DetailedPlayerStateMachine stateMachine, Vector2 moveInput, bool jumpInput);
     }
 }

@@ -6,7 +6,7 @@ namespace asterivo.Unity60.Player.States
     {
         private float idleTime;
         
-        public void Enter(PlayerStateMachine stateMachine)
+        public void Enter(DetailedPlayerStateMachine stateMachine)
         {
             idleTime = 0f;
             
@@ -16,58 +16,32 @@ namespace asterivo.Unity60.Player.States
             }
         }
         
-        public void Exit(PlayerStateMachine stateMachine)
+        public void Exit(DetailedPlayerStateMachine stateMachine)
         {
         }
         
-        public void Update(PlayerStateMachine stateMachine)
+        public void Update(DetailedPlayerStateMachine stateMachine)
         {
             idleTime += Time.deltaTime;
         }
         
-        public void FixedUpdate(PlayerStateMachine stateMachine)
+        public void FixedUpdate(DetailedPlayerStateMachine stateMachine)
         {
         }
-        
-        public void HandleInput(PlayerStateMachine stateMachine)
+
+        public void HandleInput(DetailedPlayerStateMachine stateMachine, Vector2 moveInput, bool jumpInput)
         {
-            Vector2 moveInput = GetMovementInput();
-            
+            if (jumpInput)
+            {
+                // TODO: JumpingStateへの遷移を実装
+                // stateMachine.TransitionToState(PlayerStateType.Jumping);
+                return;
+            }
+
             if (moveInput.magnitude > 0.1f)
             {
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    stateMachine.TransitionToState(PlayerStateMachine.PlayerStateType.Running);
-                }
-                else if (Input.GetKey(KeyCode.C))
-                {
-                    stateMachine.TransitionToState(PlayerStateMachine.PlayerStateType.Crouching);
-                }
-                else
-                {
-                    stateMachine.TransitionToState(PlayerStateMachine.PlayerStateType.Walking);
-                }
+                stateMachine.TransitionToState(PlayerStateType.Walking);
             }
-            
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                stateMachine.TransitionToState(PlayerStateMachine.PlayerStateType.Prone);
-            }
-            
-            if (Input.GetKeyDown(KeyCode.Q) && stateMachine.CoverSystem != null)
-            {
-                if (stateMachine.CoverSystem.GetAvailableCovers().Count > 0)
-                {
-                    stateMachine.TransitionToState(PlayerStateMachine.PlayerStateType.InCover);
-                }
-            }
-        }
-        
-        private Vector2 GetMovementInput()
-        {
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
-            return new Vector2(horizontal, vertical);
         }
     }
 }

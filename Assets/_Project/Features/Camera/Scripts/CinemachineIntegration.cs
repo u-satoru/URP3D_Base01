@@ -4,6 +4,9 @@ using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Player;
 using System.Collections.Generic;
 using System.Collections;
+using CameraState = asterivo.Unity60.Camera.CameraState;
+using CoreCameraState = asterivo.Unity60.Core.Events.CameraState;
+using CoreCameraStateEvent = asterivo.Unity60.Core.Events.CameraStateEvent;
 
 namespace asterivo.Unity60.Camera
 {
@@ -12,7 +15,7 @@ namespace asterivo.Unity60.Camera
     /// Unity 6最適化版 - イベント駆動アーキテクチャ対応
     /// </summary>
     public class CinemachineIntegration : MonoBehaviour, 
-        IGameEventListener<CameraState>, 
+        IGameEventListener<CoreCameraState>, 
         IGameEventListener<Vector2>
     {
         private static CinemachineIntegration instance;
@@ -50,7 +53,7 @@ namespace asterivo.Unity60.Camera
         [SerializeField] private CameraState defaultCameraState = CameraState.Follow;
         
         [Header("Event Channels")]
-        [SerializeField] private CameraStateEvent cameraStateChangeEvent;
+        [SerializeField] private CoreCameraStateEvent cameraStateChangeEvent;
         [SerializeField] private Vector2GameEvent lookInputEvent;
         [SerializeField] private GameEvent aimStartedEvent;
         [SerializeField] private GameEvent aimEndedEvent;
@@ -177,10 +180,38 @@ namespace asterivo.Unity60.Camera
             }
         }
 
-        // IGameEventListener<CameraState> implementation
-        public void OnEventRaised(CameraState newState)
+        // IGameEventListener<CoreCameraState> implementation
+        public void OnEventRaised(CoreCameraState newState)
         {
-            SwitchToCamera(newState);
+            // CoreCameraState を CameraState に変換
+            CameraState localState = ConvertCoreCameraStateToLocal(newState);
+            SwitchToCamera(localState);
+        }
+
+        /// <summary>
+        /// CoreCameraStateをローカルCameraStateに変換
+        /// </summary>
+        private CameraState ConvertCoreCameraStateToLocal(CoreCameraState coreState)
+        {
+            switch (coreState)
+            {
+                case CoreCameraState.Follow:
+                    return CameraState.Follow;
+                case CoreCameraState.Aim:
+                    return CameraState.Aim;
+                case CoreCameraState.Combat:
+                    return CameraState.Combat;
+                case CoreCameraState.Cinematic:
+                    return CameraState.Cutscene;
+                case CoreCameraState.FreeLook:
+                    return CameraState.Free;
+                case CoreCameraState.FirstPerson:
+                    return CameraState.Follow; // または適切なマッピング
+                case CoreCameraState.ThirdPerson:
+                    return CameraState.Follow;
+                default:
+                    return CameraState.Follow;
+            }
         }
 
         // IGameEventListener<Vector2> implementation  

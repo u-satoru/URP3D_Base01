@@ -5,116 +5,80 @@ namespace asterivo.Unity60.Player.States
     public class ProneState : IPlayerState
     {
         private float proneSpeed = 1f;
-        private Vector3 moveDirection;
         private float originalHeight;
         private float proneHeight = 0.5f;
-        
-        public void Enter(PlayerStateMachine stateMachine)
+        private Vector2 _moveInput;
+
+        public void Enter(DetailedPlayerStateMachine stateMachine)
         {
             if (stateMachine.CharacterController != null)
             {
                 originalHeight = stateMachine.CharacterController.height;
                 stateMachine.CharacterController.height = proneHeight;
-                
+
                 Vector3 center = stateMachine.CharacterController.center;
                 center.y = proneHeight / 2f;
                 stateMachine.CharacterController.center = center;
             }
-            
+
             if (stateMachine.StealthMovement != null)
             {
                 stateMachine.StealthMovement.SetStance(Core.Data.MovementStance.Prone);
             }
         }
-        
-        public void Exit(PlayerStateMachine stateMachine)
+
+        public void Exit(DetailedPlayerStateMachine stateMachine)
         {
             if (stateMachine.CharacterController != null)
             {
                 stateMachine.CharacterController.height = originalHeight;
-                
+
                 Vector3 center = stateMachine.CharacterController.center;
                 center.y = originalHeight / 2f;
                 stateMachine.CharacterController.center = center;
             }
-            
-            moveDirection = Vector3.zero;
         }
-        
-        public void Update(PlayerStateMachine stateMachine)
+
+        public void Update(DetailedPlayerStateMachine stateMachine) { }
+
+        public void FixedUpdate(DetailedPlayerStateMachine stateMachine)
         {
+            if (stateMachine.CharacterController == null) return;
+
+            Transform transform = stateMachine.transform;
+            Vector3 moveDirection = transform.right * _moveInput.x + transform.forward * _moveInput.y;
+            moveDirection.y = 0;
+
+            if (!stateMachine.CharacterController.isGrounded)
+            {
+                moveDirection.y += Physics.gravity.y * Time.fixedDeltaTime;
+            }
+
+            stateMachine.CharacterController.Move(moveDirection.normalized * proneSpeed * Time.fixedDeltaTime);
         }
-        
-        public void FixedUpdate(PlayerStateMachine stateMachine)
+
+        public void HandleInput(DetailedPlayerStateMachine stateMachine, Vector2 moveInput, bool jumpInput)
         {
-            if (stateMachine.CharacterController != null)
-            {
-                Vector2 input = GetMovementInput();
-                Transform transform = stateMachine.transform;
-                
-                moveDirection = transform.right * input.x + transform.forward * input.y;
-                moveDirection.y = 0;
-                moveDirection.Normalize();
-                
-                if (!stateMachine.CharacterController.isGrounded)
-                {
-                    moveDirection.y = -9.81f * Time.fixedDeltaTime;
-                }
-                
-                stateMachine.CharacterController.Move(moveDirection * proneSpeed * Time.fixedDeltaTime);
-            }
+            _moveInput = moveInput;
+            // TODO: Prone状態を解除するコマンドを実装し、それに応じて状態遷移を行う
         }
-        
-        public void HandleInput(PlayerStateMachine stateMachine)
-        {
-            if (Input.GetKeyUp(KeyCode.Z) || Input.GetKeyDown(KeyCode.Z))
-            {
-                if (CanStandUp(stateMachine))
-                {
-                    Vector2 moveInput = GetMovementInput();
-                    if (moveInput.magnitude > 0.1f)
-                    {
-                        stateMachine.TransitionToState(PlayerStateMachine.PlayerStateType.Walking);
-                    }
-                    else
-                    {
-                        stateMachine.TransitionToState(PlayerStateMachine.PlayerStateType.Idle);
-                    }
-                }
-            }
-            
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                if (CanCrouch(stateMachine))
-                {
-                    stateMachine.TransitionToState(PlayerStateMachine.PlayerStateType.Crouching);
-                }
-            }
-        }
-        
-        private bool CanStandUp(PlayerStateMachine stateMachine)
+
+        private bool CanStandUp(DetailedPlayerStateMachine stateMachine)
         {
             RaycastHit hit;
             Vector3 origin = stateMachine.transform.position + Vector3.up * proneHeight;
             float checkDistance = originalHeight - proneHeight;
-            
+
             return !Physics.SphereCast(origin, 0.3f, Vector3.up, out hit, checkDistance);
         }
-        
-        private bool CanCrouch(PlayerStateMachine stateMachine)
+
+        private bool CanCrouch(DetailedPlayerStateMachine stateMachine)
         {
             RaycastHit hit;
             Vector3 origin = stateMachine.transform.position + Vector3.up * proneHeight;
-            float checkDistance = 1.2f - proneHeight;
-            
+            float checkDistance = 1.2f - proneHeight; // Assuming crouch height is 1.2f
+
             return !Physics.SphereCast(origin, 0.3f, Vector3.up, out hit, checkDistance);
-        }
-        
-        private Vector2 GetMovementInput()
-        {
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
-            return new Vector2(horizontal, vertical);
         }
     }
 }

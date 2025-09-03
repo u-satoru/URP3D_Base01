@@ -5,9 +5,10 @@ using asterivo.Unity60.Core.Player;
 namespace asterivo.Unity60.Player
 {
     /// <summary>
-    /// プレイヤーの状態管理を行うステートマシン
+    /// プレイヤーの状態管理を行うステートマシンコントローラー
+    /// イベント駆動アーキテクチャによる高レベル状態管理
     /// </summary>
-    public class PlayerStateMachine : MonoBehaviour
+    public class PlayerStateMachineController : MonoBehaviour
     {
         [Header("State Configuration")]
         [SerializeField] private PlayerState currentState = PlayerState.Idle;
@@ -30,7 +31,7 @@ namespace asterivo.Unity60.Player
         {
             // 初期化
             if (enableDebugLog)
-                Debug.Log($"PlayerStateMachine (event-driven) initialized with state: {currentState}");
+                Debug.Log($"PlayerStateMachineController initialized with state: {currentState}");
         }
         
         // イベントリスナー

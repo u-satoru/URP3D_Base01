@@ -5,71 +5,62 @@ namespace asterivo.Unity60.Player.States
     public class RunningState : IPlayerState
     {
         private float runSpeed = 7f;
-        private Vector3 moveDirection;
+        private Vector2 _moveInput;
         
-        public void Enter(PlayerStateMachine stateMachine)
+        public void Enter(DetailedPlayerStateMachine stateMachine)
         {
             if (stateMachine.StealthMovement != null)
             {
                 stateMachine.StealthMovement.SetStance(Core.Data.MovementStance.Standing);
+                stateMachine.StealthMovement.SetRunning(true);
             }
         }
         
-        public void Exit(PlayerStateMachine stateMachine)
+        public void Exit(DetailedPlayerStateMachine stateMachine)
         {
-            moveDirection = Vector3.zero;
-        }
-        
-        public void Update(PlayerStateMachine stateMachine)
-        {
-        }
-        
-        public void FixedUpdate(PlayerStateMachine stateMachine)
-        {
-            if (stateMachine.CharacterController != null)
+            if (stateMachine.StealthMovement != null)
             {
-                Vector2 input = GetMovementInput();
-                Transform transform = stateMachine.transform;
-                
-                moveDirection = transform.right * input.x + transform.forward * input.y;
-                moveDirection.y = 0;
-                moveDirection.Normalize();
-                
-                if (!stateMachine.CharacterController.isGrounded)
-                {
-                    moveDirection.y = -9.81f * Time.fixedDeltaTime;
-                }
-                
-                stateMachine.CharacterController.Move(moveDirection * runSpeed * Time.fixedDeltaTime);
+                stateMachine.StealthMovement.SetRunning(false);
             }
+            _moveInput = Vector2.zero;
         }
         
-        public void HandleInput(PlayerStateMachine stateMachine)
+        public void Update(DetailedPlayerStateMachine stateMachine)
         {
-            Vector2 moveInput = GetMovementInput();
-            
-            if (moveInput.magnitude < 0.1f)
+        }
+        
+        public void FixedUpdate(DetailedPlayerStateMachine stateMachine)
+        {
+            if (stateMachine.CharacterController == null) return;
+
+            Transform transform = stateMachine.transform;
+            Vector3 moveDirection = transform.right * _moveInput.x + transform.forward * _moveInput.y;
+            moveDirection.y = 0;
+
+            if (!stateMachine.CharacterController.isGrounded)
             {
-                stateMachine.TransitionToState(PlayerStateMachine.PlayerStateType.Idle);
+                moveDirection.y += Physics.gravity.y * Time.fixedDeltaTime;
+            }
+
+            stateMachine.CharacterController.Move(moveDirection.normalized * runSpeed * Time.fixedDeltaTime);
+        }
+
+        public void HandleInput(DetailedPlayerStateMachine stateMachine, Vector2 moveInput, bool jumpInput)
+        {
+            _moveInput = moveInput;
+
+            if (jumpInput)
+            {
+                // TODO: JumpingStateへの遷移を実装
                 return;
             }
-            
-            if (!Input.GetKey(KeyCode.LeftShift))
+
+            if (moveInput.magnitude < 0.1f)
             {
-                stateMachine.TransitionToState(PlayerStateMachine.PlayerStateType.Walking);
+                stateMachine.TransitionToState(PlayerStateType.Idle);
             }
             
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                stateMachine.TransitionToState(PlayerStateMachine.PlayerStateType.Crouching);
-            }
-        }
-        
-        private Vector2 GetMovementInput()
-        {
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
-            return new Vector2(horizontal, vertical);
+            // TODO: Sprint入力が離されたらWalkingStateへ遷移するロジックが必要
         }
     }
 }
