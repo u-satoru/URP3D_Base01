@@ -9,18 +9,18 @@
 以下は、ユーザーがキーを押してから、ゲーム内で何らかのアクションが実行されるまでの一連の流れを示す図です。
 
 ```mermaid
-graph TD
-    A["1. ユーザー入力"] --> B["2. Unity Input System"]
-    B --> C["3. Input Action Asset"]
-    C --> D["4. PlayerInputコンポーネント"]
-    D --> E["5. InputReader"]
-    E --> F["6. GameEvent発行"]
-    F --> G["7. イベントリスナー"]
-    G --> H["8. CommandInvoker"]
-    H --> I["9. 具体的なCommand"]
-    I --> J["10. ゲームオブジェクト状態変更"]
+flowchart TD
+    A[User Input] --> B[Unity Input System]
+    B --> C[Input Action Asset]
+    C --> D[PlayerInput Component]
+    D --> E[InputReader Script]
+    E --> F[GameEvent Raised]
+    F --> G[Event Listeners]
+    G --> H[CommandInvoker]
+    H --> I[Concrete Commands]
+    I --> J[GameObject State Change]
 
-    subgraph InputLayer ["入力レイヤー"]
+    subgraph input [Input Layer]
         A
         B
         C
@@ -28,16 +28,20 @@ graph TD
         E
     end
 
-    subgraph EventLayer ["イベントレイヤー"]
+    subgraph event [Event Layer]
         F
     end
 
-    subgraph LogicLayer ["ロジックレイヤー"]
+    subgraph logic [Logic Layer]
         G
         H
         I
         J
     end
+
+    style input fill:#e1f5fe
+    style event fill:#fff3e0
+    style logic fill:#f3e5f5
 ```
 
 ## 各ステップの詳細解説
