@@ -185,15 +185,21 @@ public class PlayerDashController : MonoBehaviour
         _dashEvent.RegisterListener(OnDashRequested);
     }
 
-
-
     private void OnDisable()
     {
         _dashEvent.UnregisterListener(OnDashRequested);
     }
 
-    private void OnDashRequested()
+    // Editorからテスト実行するためにpublicに変更
+    public void OnDashRequested()
     {
+        // 実行中ではない場合、Rigidbodyが取得できない等のエラーを防ぐ
+        if (!Application.isPlaying || _rigidbody == null)
+        {
+            Debug.LogWarning("Dash can only be requested in Play Mode.");
+            return;
+        }
+
         Debug.Log("Dash event received!");
         var dashCommand = new DashCommand(_rigidbody, transform.forward, _dashForce);
         _commandInvoker.ExecuteCommand(dashCommand);
@@ -202,12 +208,77 @@ public class PlayerDashController : MonoBehaviour
 ```
 > **Note**: `CommandInvoker`への参照は、インスペクターから設定する代わりに、Singletonパターン（例: `CommandInvoker.Instance`）や、Zenject/VContainerのようなDI（Dependency Injection）コンテナ経由で取得することもできます。プロジェクトの設計規約に合わせて実装してください。
 
+## カスタムエディタとの連携
+
+このアーキテクチャは、Unityエディタの拡張と非常に相性が良いです。カスタムエディタを利用することで、テストやデバッグを効率化できます。
+
+### 例1: `GameEvent` のインスペクター拡張
+
+`Assets/_Project/Core/Editor/GameEventEditor.cs` に見られるように、`GameEvent`のScriptableObjectアセット自体にカスタムエディタを実装するのは非常に強力です。
+
+典型的な実装として、インスペクターに「Raise Event」ボタンを追加します。これにより、ゲームを再生中にこのボタンを押すだけで、このイベントを購読している全てのリスナーの動作をテストできます。ユーザー入力をエミュレートする必要はありません。
+
+```csharp
+// Assets/_Project/Core/Editor/GameEventEditor.cs （実装例）
+using UnityEngine;
+using UnityEditor;
+using asterivo.Unity60.Core.Events;
+
+[CustomEditor(typeof(GameEvent))]
+public class GameEventEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        GUI.enabled = Application.isPlaying;
+
+        GameEvent e = target as GameEvent;
+        if (GUILayout.Button("Raise Event"))
+        {
+            e.Raise();
+        }
+    }
+}
+```
+
+### 例2: `PlayerDashController` のデバッグ機能
+
+特定の機能コンポーネントにデバッグ用のボタンを追加することも簡単です。`PlayerDashController`のインスペクターに「ダッシュ実行」ボタンを追加してみましょう。
+
+*   **パス**: `Assets/_Project/Features/Player/Editor/PlayerDashControllerEditor.cs` （Editorフォルダ内に作成）
+*   **内容**:
+
+```csharp
+// Assets/_Project/Features/Player/Editor/PlayerDashControllerEditor.cs
+using UnityEngine;
+using UnityEditor;
+
+[CustomEditor(typeof(PlayerDashController))]
+public class PlayerDashControllerEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI(); // デフォルトのインスペクターを表示
+
+        // 再生中のみボタンを有効化
+        GUI.enabled = Application.isPlaying;
+
+        PlayerDashController controller = (PlayerDashController)target;
+        if (GUILayout.Button("Execute Dash"))
+        {
+            // Controllerのメソッドを直接呼び出す
+            controller.OnDashRequested();
+        }
+    }
+}
+```
+
+このエディタスクリプトを追加すると、`PlayerDashController`がアタッチされたGameObjectのインスペクターにボタンが表示され、再生中にクリックするだけでダッシュ機能をテストできるようになります。
+
 ## このアーキテクチャの利点
 
 *   **疎結合**: 入力処理、イベント、UI、ゲームロジックが完全に分離しているため、お互いに依存しません。
 *   **拡張性**: 新しい機能を追加する際、既存のコードをほとんど変更する必要がありません。新しいイベント、コマンド、リスナーを追加するだけで済みます。
-*   **テスト容易性**: 各機能が単一の責任を持っているため、個別にテストするのが非常に簡単です。
-    *   `InputReader`のテスト：`GameEvent`が発行されたかだけを確認。
-    *   `DashCommand`のテスト：`Execute`を呼んで`Rigidbody`に力が加わったかを確認。
-    *   `PlayerDashController`のテスト：イベントを発行して`CommandInvoker`が呼ばれたかを確認。
-*   **再利用性と柔軟性**: `DashCommand`は他の場所（例: AIやカットシーン）からも再利用できます。入力起因である必要はありません。
+*   **テスト容易性**: 各機能が単一の責任を持っているため、個別にテストするのが非常に簡単です。カスタムエディタを使えば、再生中に直接イベントやコマンドを叩いてテストできます。
+*   **再利用性と柔軟性**: `DashCommand`は他の場所（例: AIやカットシーン、エディタボタン）からも再利用できます。入力起因である必要はありません。
