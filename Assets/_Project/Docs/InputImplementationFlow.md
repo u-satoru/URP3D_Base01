@@ -94,54 +94,116 @@ graph TD
     *   Projectウィンドウで右クリックし、`Create > Events > GameEvent`を選択して`OnPlayerDash`という名前の`GameEvent`アセットを作成します。
     *   `InputReader`のインスペクターで、`_dashEvent`フィールドにこのアセットをセットします。
 
-4.  **ダッシュ機能の実装 (イベントリスナー)**:
-    *   プレイヤーをダッシュさせるための新しいスクリプト`PlayerDashController.cs`を作成します。
-
-    ```csharp
-    // Assets/_Project/Features/Player/PlayerDashController.cs (と仮定)
-    using UnityEngine;
-
-    public class PlayerDashController : MonoBehaviour
-    {
-        [SerializeField] private GameEvent _dashEvent; // リッスンするイベント
-        [SerializeField] private float _dashForce = 10f;
-        private Rigidbody _rigidbody;
-
-        private void Awake()
-        {
-            _rigidbody = GetComponent<Rigidbody>();
-        }
-
-        private void OnEnable()
-        {
-            _dashEvent.RegisterListener(OnDashRequested);
-        }
-
-        private void OnDisable()
-        {
-            _dashEvent.UnregisterListener(OnDashRequested);
-        }
-
-        private void OnDashRequested()
-        {
-            // ここでコマンドを発行するのがこのプロジェクトの流儀
-            // 例: var dashCommand = new DashCommand(transform, _dashForce);
-            //     CommandInvoker.Instance.ExecuteCommand(dashCommand);
-
-            // もしくは単純に直接処理を書いても良い
-            Debug.Log("Dash event received!");
-            _rigidbody.AddForce(transform.forward * _dashForce, ForceMode.Impulse);
-        }
-    }
-    ```
+4.  **ダッシュ機能の実装 (イベントリスナーとコマンド)**:
+    *   イベントを受け取り、コマンドを発行する`PlayerDashController.cs`を作成します。
+    *   ロジックをカプセル化する`DashCommand.cs`を作成します。
 
 5.  **GameObjectへのアタッチ**:
-    *   PlayerのGameObjectに`PlayerDashController`をアタッチし、インスペクターで`_dashEvent`に`OnPlayerDash`アセットをセットします。
+    *   PlayerのGameObjectに`PlayerDashController`をアタッチし、インスペクターで必要な参照（`_dashEvent`, `_commandInvoker`など）を設定します。
 
-これで、ユーザーが左Shiftキーを押すと、`InputReader`がイベントを発行し、それを`PlayerDashController`が受信してプレイヤーをダッシュさせる、という一連の流れが完成します。
+これで、ユーザーが左Shiftキーを押すと、`InputReader` -> `GameEvent` -> `PlayerDashController` -> `CommandInvoker` -> `DashCommand` という一連の流れが完成し、プレイヤーがダッシュします。
+
+### ステップ4.1: `DashCommand` の作成
+
+まず、ダッシュのロジックをカプセル化するコマンドを作成します。このプロジェクトの`ICommand`インターフェースを実装します。
+
+*   **パス**: `Assets/_Project/Features/Player/Commands/DashCommand.cs` （推奨）
+*   **内容**:
+
+```csharp
+// Assets/_Project/Features/Player/Commands/DashCommand.cs
+using UnityEngine;
+using asterivo.Unity60.Core.Commands; // ICommandのnamespace
+
+public class DashCommand : ICommand
+{
+    private readonly Rigidbody _rigidbody;
+    private readonly Vector3 _dashDirection;
+    private readonly float _dashForce;
+
+    public DashCommand(Rigidbody rigidbody, Vector3 dashDirection, float dashForce)
+    {
+        _rigidbody = rigidbody;
+        _dashDirection = dashDirection;
+        _dashForce = dashForce;
+    }
+
+    public void Execute()
+    {
+        if (_rigidbody != null)
+        {
+            // 実際のダッシュ処理
+            _rigidbody.AddForce(_dashDirection * _dashForce, ForceMode.Impulse);
+            Debug.Log($"Dash executed with force {_dashForce}");
+        }
+    }
+}
+```
+
+### ステップ4.2: `PlayerDashController` の修正
+
+次に、イベントリスナーである`PlayerDashController`が、直接処理を行う代わりに`DashCommand`を作成して`CommandInvoker`に渡すように修正します。
+
+*   **パス**: `Assets/_Project/Features/Player/PlayerDashController.cs`
+*   **内容**:
+
+```csharp
+// Assets/_Project/Features/Player/PlayerDashController.cs
+using UnityEngine;
+using asterivo.Unity60.Core.Commands; // CommandInvokerのnamespace
+using asterivo.Unity60.Core.Events;   // GameEventのnamespace
+
+public class PlayerDashController : MonoBehaviour
+{
+    [Header("Events")]
+    [SerializeField] private GameEvent _dashEvent; // リッスンするイベント
+
+    [Header("Command")]
+    [SerializeField] private CommandInvoker _commandInvoker; // CommandInvokerへの参照
+
+    [Header("Dash Settings")]
+    [SerializeField] private float _dashForce = 10f;
+
+    private Rigidbody _rigidbody;
+
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+        // CommandInvokerはSingletonやDIコンテナから取得する設計も考えられる
+        if (_commandInvoker == null)
+        {
+            Debug.LogError("CommandInvoker is not set.", this);
+        }
+    }
+
+    private void OnEnable()
+    {
+        _dashEvent.RegisterListener(OnDashRequested);
+    }
+
+
+
+    private void OnDisable()
+    {
+        _dashEvent.UnregisterListener(OnDashRequested);
+    }
+
+    private void OnDashRequested()
+    {
+        Debug.Log("Dash event received!");
+        var dashCommand = new DashCommand(_rigidbody, transform.forward, _dashForce);
+        _commandInvoker.ExecuteCommand(dashCommand);
+    }
+}
+```
+> **Note**: `CommandInvoker`への参照は、インスペクターから設定する代わりに、Singletonパターン（例: `CommandInvoker.Instance`）や、Zenject/VContainerのようなDI（Dependency Injection）コンテナ経由で取得することもできます。プロジェクトの設計規約に合わせて実装してください。
 
 ## このアーキテクチャの利点
 
-*   **疎結合**: 入力処理、イベント、ゲームロジックが完全に分離しているため、お互いに依存しません。
-*   **拡張性**: 新しい機能を追加する際、既存のコードをほとんど変更する必要がありません。新しいイベントとリスナーを追加するだけで済みます。
-*   **テスト容易性**: 各機能が単一の責任を持っているため、個別にテストするのが非常に簡単です。例えば、`PlayerDashController`の`OnDashRequested()`を直接呼び出すだけでダッシュ機能の単体テストができます。
+*   **疎結合**: 入力処理、イベント、UI、ゲームロジックが完全に分離しているため、お互いに依存しません。
+*   **拡張性**: 新しい機能を追加する際、既存のコードをほとんど変更する必要がありません。新しいイベント、コマンド、リスナーを追加するだけで済みます。
+*   **テスト容易性**: 各機能が単一の責任を持っているため、個別にテストするのが非常に簡単です。
+    *   `InputReader`のテスト：`GameEvent`が発行されたかだけを確認。
+    *   `DashCommand`のテスト：`Execute`を呼んで`Rigidbody`に力が加わったかを確認。
+    *   `PlayerDashController`のテスト：イベントを発行して`CommandInvoker`が呼ばれたかを確認。
+*   **再利用性と柔軟性**: `DashCommand`は他の場所（例: AIやカットシーン）からも再利用できます。入力起因である必要はありません。
