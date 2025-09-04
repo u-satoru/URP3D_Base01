@@ -1,109 +1,44 @@
-# Unity 6 3Dゲーム基盤 - 修正済みコード
+# URP3D_Base01
 
-## 📁 フォルダ構造
+これはUnity 6で作成された3Dゲームプロジェクトのベーステンプレートです。Universal Render Pipeline (URP) を使用しています。
 
-```
-Unity6_Fixed/
-├── Core/
-│   └── Events/
-│       ├── GameEvent.cs              // 基本イベントチャネル
-│       ├── GenericGameEvent.cs       // ジェネリック型付きイベント
-│       ├── GameEventListener.cs      // イベントリスナー（修正済み）
-│       ├── IGameEventListener.cs     // 型付きリスナーインターフェース
-│       └── GameData.cs               // データペイロード定義（新規）
-├── Player/
-│   ├── PlayerController.cs           // プレイヤー制御（修正済み）
-│   └── PlayerStateMachine.cs         // ステートマシン（修正済み）
-├── Systems/
-│   └── GameManager.cs                // ゲーム管理（修正済み）
-└── Assembly_Definitions/
-    ├── Unity6.Core.asmdef
-    ├── Unity6.Player.asmdef
-    ├── Unity6.Systems.asmdef
-    └── Unity6.Optimization.asmdef
+## 概要
 
-```
+このプロジェクトは、イベント駆動型アーキテクチャとコマンドパターンを組み合わせた、拡張性の高い3Dゲームの基盤を提供します。Scriptable Objectを活用し、データとロジックの分離を促進することで、効率的な開発とメンテナンスを目的としています。
 
-## 🔧 主な修正内容
+## 主な機能
 
-### 1. **名前空間の統一**
-すべてのコードで一貫した名前空間構造を採用：
-- `Unity6.Core.Events` - イベントシステム
-- `Unity6.Core.Player` - プレイヤー関連
-- `Unity6.Core.Systems` - システム管理
-- `Unity6.Core.Optimization` - 最適化
+- **イベント駆動型アーキテクチャ**: `GameEvent` を介したコンポーネント間の疎結合な連携。
+- **コマンドパターン**: ゲーム内のアクション（例：ダメージ、回復）をオブジェクトとしてカプセル化し、再利用と管理を容易にします。
+- **Scriptable Objectベースのデータ管理**: キャラクターのステータスやアイテム情報などをアセットとして管理。
+- **基本的なプレイヤー機能**: 移動やインタラクションの基盤。
+- **エディタ拡張**: コマンドの発行やイベントの流れを視覚化するカスタムウィンドウ。
 
-### 2. **GameEventListener.csの修正**
-- `Response`プロパティを追加（publicアクセサ）
-- UnityEventへの適切なアクセスを提供
+## 技術仕様
 
-### 3. **PlayerControllerの簡素化**
-- 内部クラス（GenericEventListener、BasicEventListener）を削除
-- IGameEventListenerインターフェースの重複定義を削除
-- イベントリスナー管理を簡素化
-- メモリリーク対策（OnDisableでの適切な解放）
+- **Unity Version**: `6000.0.42f1`
+- **Render Pipeline**: Universal Render Pipeline (URP)
+- **Scripting Backend**: Mono
+- **API Compatibility Level**: .NET Standard 2.1
 
-### 4. **GameData関連クラスの追加**
-新規ファイル`GameData.cs`に以下を定義：
-- `GameData` - ゲームデータペイロード
-- `PlayerDataPayload` - プレイヤーデータ
-- `GameDataEvent` - GameData用イベント
-- `GameDataResponseEvent` - レスポンス用イベント
-- `PlayerDataEvent` - プレイヤーデータイベント
+## セットアップ手順
 
-### 5. **PlayerStateMachineの改善**
-- イベントリスナー登録処理を追加
-- StringGameEventからの状態変更リクエスト受信
-- 文字列からPlayerState enumへの変換処理
+1.  このリポジトリをクローンします。
+2.  Unity Editor `6000.0.42f1` 以降でプロジェクトを開きます。
+3.  必要なパッケージが自動的にインポートされます。
+4.  `Assets/_Project/Scenes/System/` 内のシーンから開発を開始してください。
 
-### 6. **Assembly定義の修正**
-- rootNamespaceを統一された構造に合わせて更新
-- 依存関係の明確化
+## ディレクトリ構成
 
-## 🚀 使用方法
+-   `Assets/_Project/Core`: ゲームのコアロジック（イベント、コマンド、データ構造など）。
+-   `Assets/_Project/Features`: 各機能（プレイヤー、AI、カメラなど）の実装。
+-   `Assets/_Project/Scenes`: ゲームシーン。
+-   `Assets/_Project/Docs`: プロジェクト関連のドキュメント。
 
-### 1. Unityプロジェクトへの導入
-1. Unity 6（6000.0.42f1）で新規プロジェクトを作成
-2. `Unity6_Fixed`フォルダの内容を`Assets/_Project/Scripts/`にコピー
-3. Assembly定義ファイルを適切な場所に配置
+## 主要なパッケージ
 
-### 2. 必要なパッケージのインストール
-Package Managerから以下をインストール：
-```json
-{
-  "dependencies": {
-    "com.unity.inputsystem": "1.7.0+",
-    "com.unity.cinemachine": "3.1",
-    "com.unity.addressables": "2.0+",
-    "com.unity.ui": "2.0+"
-  }
-}
-```
-
-### 3. ScriptableObjectイベントの作成
-1. Project windowで右クリック
-2. Create > Unity6 > Events から各種イベントを作成
-3. PlayerControllerやStateMachineのInspectorでイベントを設定
-
-## ✅ 修正により解決された問題
-
-1. **名前空間の不一致** - 統一された構造に修正
-2. **依存関係の問題** - 重複定義を削除し、適切な参照に修正
-3. **StateMachine連携** - イベント経由での状態変更を実装
-4. **GameManager関連** - 必要なイベント定義を追加
-5. **メモリリーク** - 適切なリスナー解放処理を実装
-6. **循環参照** - コンポーネント間の直接参照を排除
-
-## 📝 注意事項
-
-- すべてのコンポーネントは疎結合を維持
-- ScriptableObjectイベントを介した通信
-- Inspector上でイベントの接続が必要
-- Unity 6の新機能（インクリメンタルGC、SRP Batcher等）に最適化
-
-## 🔍 次のステップ
-
-1. PlayerControllerとPlayerStateMachineの実装を完成させる
-2. UIManagerやAudioManagerなどのシステムを追加
-3. 最適化システム（ObjectPool、PerformanceManager）を実装
-4. 実際のゲームロジックを実装
+-   `com.unity.render-pipelines.universal`: Universal Render Pipeline
+-   `com.unity.inputsystem`: 新しい入力システム
+-   `com.unity.cinemachine`: 高度なカメラ制御
+-   `com.unity.ai.navigation`: ナビゲーションと経路探索
+-   `com.unity.test-framework`: ユニットテストとプレイモードテスト
