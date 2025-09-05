@@ -2,27 +2,13 @@
   "permissions": {
     "allow": [
       "mcp__UnityMCP__read_console",
-      "mcp__UnityMCP__manage_editor",
-      "mcp__UnityMCP__execute_menu_item",
-      "WebSearch",
-      "Bash(tree:*)",
-      "mcp__filesystem__directory_tree",
-      "mcp__filesystem__list_directory",
-      "mcp__UnityMCP__list_resources",
-      "mcp__filesystem__create_directory",
-      "mcp__UnityMCP__create_script",
-      "Bash(find:*)",
       "mcp__UnityMCP__read_resource",
-      "mcp__UnityMCP__script_apply_edits",
       "mcp__UnityMCP__apply_text_edits",
+      "mcp__UnityMCP__create_script",
       "mcp__UnityMCP__delete_script",
-      "mcp__UnityMCP__get_sha",
-      "mcp__filesystem__search_files",
-      "mcp__filesystem__read_text_file",
-      "mcp__filesystem__edit_file",
-      "Bash(sed:*)",
+      "mcp__filesystem__move_file",
       "mcp__UnityMCP__find_in_file",
-      "Bash(Remove-Item -Path \"D:\\UnityProjects\\URP3D_Base01\\Assets\\_Project\\Features\\Player\\Commands\"\" -Recurse -Force)"
+      "mcp__UnityMCP__manage_editor"
     ],
     "deny": [],
     "ask": []
