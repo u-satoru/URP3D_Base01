@@ -2,12 +2,20 @@ using UnityEngine;
 
 namespace asterivo.Unity60.Player.States
 {
+    /// <summary>
+    /// プレイヤーがカバー（物陰に隠れている）状態を管理するクラス。
+    /// </summary>
     public class CoverState : IPlayerState
     {
         private float coverMoveSpeed = 2f;
         private bool isPeeking = false;
         private Vector2 _moveInput;
 
+        /// <summary>
+        /// 状態が開始されたときに呼び出されます。
+        /// カバーシステムにカバー開始を通知し、姿勢を更新します。
+        /// </summary>
+        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
         public void Enter(DetailedPlayerStateMachine stateMachine)
         {
             if (stateMachine.CoverSystem != null)
@@ -21,6 +29,11 @@ namespace asterivo.Unity60.Player.States
             }
         }
 
+        /// <summary>
+        /// 状態が終了したときに呼び出されます。
+        /// カバーシステムにカバー終了を通知します。
+        /// </summary>
+        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
         public void Exit(DetailedPlayerStateMachine stateMachine)
         {
             if (stateMachine.CoverSystem != null)
@@ -30,8 +43,17 @@ namespace asterivo.Unity60.Player.States
             isPeeking = false;
         }
 
+        /// <summary>
+        /// 毎フレーム呼び出されます。
+        /// </summary>
+        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
         public void Update(DetailedPlayerStateMachine stateMachine) { }
 
+        /// <summary>
+        /// 固定フレームレートで呼び出されます。
+        /// カバー中の左右移動を処理します。
+        /// </summary>
+        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
         public void FixedUpdate(DetailedPlayerStateMachine stateMachine)
         {
             if (stateMachine.CharacterController == null || stateMachine.CoverSystem == null) return;
@@ -47,6 +69,12 @@ namespace asterivo.Unity60.Player.States
             }
         }
 
+        /// <summary>
+        /// プレイヤーの入力を処理し、カバー解除や覗き見などのアクションを実行します。
+        /// </summary>
+        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+        /// <param name="moveInput">移動入力。</param>
+        /// <param name="jumpInput">ジャンプ入力（この状態ではカバー解除に使用）。</param>
         public void HandleInput(DetailedPlayerStateMachine stateMachine, Vector2 moveInput, bool jumpInput)
         {
             _moveInput = moveInput;
@@ -98,8 +126,10 @@ namespace asterivo.Unity60.Player.States
         }
         
         /// <summary>
-        /// 覗き見を開始
+        /// 指定された方向に覗き見を開始します。
         /// </summary>
+        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+        /// <param name="direction">覗き見する方向。</param>
         private void StartPeeking(DetailedPlayerStateMachine stateMachine, Commands.PeekDirection direction)
         {
             if (isPeeking) return; // 既に覗き見中の場合は無視
@@ -117,8 +147,9 @@ namespace asterivo.Unity60.Player.States
         }
         
         /// <summary>
-        /// 覗き見を終了
+        /// 覗き見を終了し、元のカバー位置に戻ります。
         /// </summary>
+        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
         private void StopPeeking(DetailedPlayerStateMachine stateMachine)
         {
             if (!isPeeking) return; // 覗き見中でない場合は無視
@@ -136,7 +167,7 @@ namespace asterivo.Unity60.Player.States
         }
         
         /// <summary>
-        /// 現在覗き見中かどうかを取得
+        /// 現在、プレイヤーが覗き見中かどうかを取得します。
         /// </summary>
         public bool IsPeeking => isPeeking;
     }

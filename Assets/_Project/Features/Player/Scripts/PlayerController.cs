@@ -5,22 +5,36 @@ using asterivo.Unity60.Core.Events;
 namespace asterivo.Unity60.Player
 {
     /// <summary>
-    /// プレイヤーの入力を検知し、対応するコマンド定義を発行する責務を持つ
+    /// プレイヤーの入力を処理し、対応するコマンド定義をイベントとして発行します。
+    /// このクラスはUnityのInput Systemと連携し、移動、ジャンプ、スプリントなどのアクションを検知します。
     /// </summary>
     [RequireComponent(typeof(PlayerInput))]
     public class PlayerController : MonoBehaviour
     {
         [Header("Command Output")]
+        [Tooltip("プレイヤーのアクションに基づいて発行されるコマンド定義イベント")]
         [SerializeField] private CommandDefinitionGameEvent onCommandDefinitionIssued;
 
         [Header("Movement Control Events")]
+        [Tooltip("プレイヤーの移動を一時的に無効化するイベントリスナー")]
         [SerializeField] private GameEventListener freezeMovementListener;
+        [Tooltip("プレイヤーの移動無効化を解除するイベントリスナー")]
         [SerializeField] private GameEventListener unfreezeMovementListener;
 
         private PlayerInput playerInput;
         private InputActionMap playerActionMap;
         private bool movementFrozen = false;
         private bool isSprintPressed = false;
+
+        /// <summary>
+        /// スプリントボタンが現在押されているかどうかを取得します。
+        /// </summary>
+        public bool IsSprintPressed => isSprintPressed;
+
+        /// <summary>
+        /// プレイヤーの移動が現在凍結（無効化）されているかどうかを取得します。
+        /// </summary>
+        public bool IsMovementFrozen => movementFrozen;
 
         private void Awake()
         {
@@ -35,6 +49,9 @@ namespace asterivo.Unity60.Player
             CleanupMovementEventListeners();
         }
 
+        /// <summary>
+        /// Input Systemのアクションにコールバックメソッドを登録します。
+        /// </summary>
         private void SetupInputCallbacks()
         {
             playerActionMap = playerInput.currentActionMap;
@@ -60,6 +77,9 @@ namespace asterivo.Unity60.Player
             }
         }
 
+        /// <summary>
+        /// 登録したInput Systemのコールバックを解除します。
+        /// </summary>
         private void CleanupInputCallbacks()
         {
             var moveAction = playerActionMap?.FindAction("Move");
@@ -83,6 +103,9 @@ namespace asterivo.Unity60.Player
             }
         }
 
+        /// <summary>
+        /// 移動入力が検出されたときに呼び出されます。
+        /// </summary>
         private void OnMove(InputAction.CallbackContext context)
         {
             if (movementFrozen) return;
@@ -91,6 +114,9 @@ namespace asterivo.Unity60.Player
             onCommandDefinitionIssued?.Raise(definition);
         }
 
+        /// <summary>
+        /// 移動入力がキャンセルされたときに呼び出されます。
+        /// </summary>
         private void OnMoveCanceled(InputAction.CallbackContext context)
         {
             if (movementFrozen) return;
@@ -98,6 +124,9 @@ namespace asterivo.Unity60.Player
             onCommandDefinitionIssued?.Raise(definition);
         }
 
+        /// <summary>
+        /// ジャンプ入力が検出されたときに呼び出されます。
+        /// </summary>
         private void OnJump(InputAction.CallbackContext context)
         {
             if (movementFrozen) return;
@@ -105,29 +134,25 @@ namespace asterivo.Unity60.Player
             onCommandDefinitionIssued?.Raise(definition);
         }
         
+        /// <summary>
+        /// スプリント入力が開始されたときに呼び出されます。
+        /// </summary>
         private void OnSprintStarted(InputAction.CallbackContext context)
         {
             if (movementFrozen) return;
             isSprintPressed = true;
         }
         
+        /// <summary>
+        /// スプリント入力がキャンセルされたときに呼び出されます。
+        /// </summary>
         private void OnSprintCanceled(InputAction.CallbackContext context)
         {
             isSprintPressed = false;
         }
         
         /// <summary>
-        /// スプリント状態を取得（状態マシンから参照用）
-        /// </summary>
-        public bool IsSprintPressed => isSprintPressed;
-        
-        /// <summary>
-        /// 移動凍結状態を取得
-        /// </summary>
-        public bool IsMovementFrozen => movementFrozen;
-        
-        /// <summary>
-        /// 移動イベントリスナーの設定
+        /// 移動凍結を制御するイベントリスナーを設定します。
         /// </summary>
         private void SetupMovementEventListeners()
         {
@@ -143,7 +168,7 @@ namespace asterivo.Unity60.Player
         }
         
         /// <summary>
-        /// 移動イベントリスナーのクリーンアップ
+        /// 設定した移動凍結イベントリスナーを解除します。
         /// </summary>
         private void CleanupMovementEventListeners()
         {
@@ -159,7 +184,7 @@ namespace asterivo.Unity60.Player
         }
         
         /// <summary>
-        /// 移動凍結イベントハンドラ
+        /// プレイヤーの移動を凍結（無効化）するイベントハンドラです。
         /// </summary>
         private void OnFreezeMovement()
         {
@@ -168,7 +193,7 @@ namespace asterivo.Unity60.Player
         }
         
         /// <summary>
-        /// 移動凍結解除イベントハンドラ
+        /// プレイヤーの移動凍結を解除するイベントハンドラです。
         /// </summary>
         private void OnUnfreezeMovement()
         {

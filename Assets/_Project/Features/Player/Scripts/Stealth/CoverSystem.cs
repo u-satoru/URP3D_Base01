@@ -5,34 +5,54 @@ using asterivo.Unity60.Core.Data;
 
 namespace asterivo.Unity60.Player
 {
+    /// <summary>
+    /// プレイヤーのカバーアクション（物陰に隠れる）を管理するシステムです。
+    /// 周囲のカバーポイントを検出し、カバーへの出入りやカバー中の移動を処理します。
+    /// </summary>
     public class CoverSystem : MonoBehaviour
     {
         [Header("Detection Settings")]
+        [Tooltip("カバーを検出する範囲")]
         [SerializeField] private float coverDetectionRange = 2f;
+        [Tooltip("カバーとして認識するオブジェクトのレイヤー")]
         [SerializeField] private LayerMask coverLayers = -1;
+        [Tooltip("カバーの再検出を行う間隔（秒）")]
         [SerializeField] private float coverCheckInterval = 0.2f;
         
         [Header("Cover Settings")]
+        [Tooltip("カバーポイントに吸着する際の距離")]
         [SerializeField] private float snapToDistance = 0.3f;
+        [Tooltip("カバー中の移動速度")]
         [SerializeField] private float coverMoveSpeed = 2f;
+        [Tooltip("覗き見（Peek）を行う際のオフセット距離")]
         [SerializeField] private float peekOffset = 0.5f;
         
         [Header("Components")]
+        [Tooltip("プレイヤーのTransform")]
         [SerializeField] private Transform playerTransform;
+        [Tooltip("プレイヤーのCharacterController")]
         [SerializeField] private CharacterController characterController;
         
         [Header("Events")]
+        [Tooltip("カバーに入った時に発行されるイベント")]
         [SerializeField] private CoverEnterEvent onCoverEnter;
+        [Tooltip("カバーから出た時に発行されるイベント")]
         [SerializeField] private CoverExitEvent onCoverExit;
         
         [Header("Debug")]
+        [Tooltip("現在カバー状態かどうか")]
         [SerializeField] private bool isInCover = false;
+        [Tooltip("現在使用しているカバーポイントのTransform")]
         [SerializeField] private Transform currentCoverPoint;
+        [Tooltip("現在使用しているカバーの法線ベクトル")]
         [SerializeField] private Vector3 coverNormal;
         
         private float nextCheckTime;
         private List<CoverPoint> availableCoverPoints = new List<CoverPoint>();
         
+        /// <summary>
+        /// カバーポイントの情報を格納するクラスです。
+        /// </summary>
         [System.Serializable]
         public class CoverPoint
         {
@@ -45,11 +65,14 @@ namespace asterivo.Unity60.Player
             public bool canPeekOver;
         }
         
+        /// <summary>
+        /// カバーの種類を定義します。
+        /// </summary>
         public enum CoverType
         {
-            Low,
-            High,
-            Corner
+            Low,    // 低い遮蔽物（乗り越え可能）
+            High,   // 高い遮蔽物
+            Corner  // 角
         }
         
         private void Awake()
@@ -75,6 +98,9 @@ namespace asterivo.Unity60.Player
             }
         }
         
+        /// <summary>
+        /// プレイヤーの周囲にあるカバーポイントを検出します。
+        /// </summary>
         private void DetectNearbyCovers()
         {
             availableCoverPoints.Clear();
@@ -92,6 +118,11 @@ namespace asterivo.Unity60.Player
             }
         }
         
+        /// <summary>
+        /// 検出したコライダーを分析し、カバーポイント情報を生成します。
+        /// </summary>
+        /// <param name="collider">分析対象のコライダー。</param>
+        /// <returns>生成されたカバーポイント情報。不適切な場合はnull。</returns>
         private CoverPoint AnalyzeCoverPoint(Collider collider)
         {
             Vector3 closestPoint = collider.ClosestPoint(playerTransform.position);
@@ -122,6 +153,11 @@ namespace asterivo.Unity60.Player
             return null;
         }
         
+        /// <summary>
+        /// 遮蔽物の高さに基づいてカバーの種類を決定します。
+        /// </summary>
+        /// <param name="height">遮蔽物の高さ。</param>
+        /// <returns>決定されたカバーの種類。</returns>
         private CoverType DetermineCoverType(float height)
         {
             if (height < 1.2f)
@@ -132,12 +168,21 @@ namespace asterivo.Unity60.Player
                 return CoverType.High;
         }
         
+        /// <summary>
+        /// 指定された方向への覗き見が可能かどうかをチェックします。
+        /// </summary>
+        /// <param name="cover">チェック対象のカバーポイント。</param>
+        /// <param name="direction">チェックする方向。</param>
+        /// <returns>覗き見可能であればtrue。</returns>
         private bool CheckPeekDirection(CoverPoint cover, Vector3 direction)
         {
             Vector3 peekPosition = cover.position + direction * peekOffset;
             return !Physics.Raycast(peekPosition, -cover.normal, 1f, coverLayers);
         }
         
+        /// <summary>
+        /// 利用可能な最も近いカバーポイントに入ります。
+        /// </summary>
         public void TryEnterCover()
         {
             if (isInCover || availableCoverPoints.Count == 0) return;
@@ -149,6 +194,9 @@ namespace asterivo.Unity60.Player
             }
         }
         
+        /// <summary>
+        /// 現在のカバー状態から離脱します。
+        /// </summary>
         public void ExitCover()
         {
             if (!isInCover) return;
@@ -159,6 +207,10 @@ namespace asterivo.Unity60.Player
             onCoverExit?.Raise();
         }
         
+        /// <summary>
+        /// 指定されたカバーポイントに入り、プレイヤーの位置と向きを調整します。
+        /// </summary>
+        /// <param name="coverPoint">入るカバーポイント。</param>
         private void EnterCover(CoverPoint coverPoint)
         {
             isInCover = true;
@@ -173,6 +225,10 @@ namespace asterivo.Unity60.Player
             onCoverEnter?.Raise();
         }
         
+        /// <summary>
+        /// 利用可能なカバーポイントの中から最も近いものを取得します。
+        /// </summary>
+        /// <returns>最も近いカバーポイント。なければnull。</returns>
         private CoverPoint GetNearestCoverPoint()
         {
             if (availableCoverPoints.Count == 0) return null;
@@ -193,6 +249,9 @@ namespace asterivo.Unity60.Player
             return nearest;
         }
         
+        /// <summary>
+        /// カバー状態でのプレイヤーの位置を更新します。
+        /// </summary>
         private void UpdateCoverPosition()
         {
             if (currentCoverPoint == null) return;
@@ -206,8 +265,9 @@ namespace asterivo.Unity60.Player
         }
         
         /// <summary>
-        /// カバーに沿った移動を実行
+        /// 入力に基づいてカバーに沿った移動を実行します。
         /// </summary>
+        /// <param name="inputDirection">移動入力方向。</param>
         private void MovAlongCover(Vector3 inputDirection)
         {
             if (characterController == null) return;
@@ -227,7 +287,7 @@ namespace asterivo.Unity60.Player
         }
         
         /// <summary>
-        /// カバーとの適切な距離を維持
+        /// プレイヤーがカバーから離れすぎないように、適切な距離を維持します。
         /// </summary>
         private void MaintainCoverDistance()
         {
@@ -245,8 +305,9 @@ namespace asterivo.Unity60.Player
         }
         
         /// <summary>
-        /// カバー移動用の入力を取得（仮実装）
+        /// カバー中の移動入力を取得します（この実装は仮です）。
         /// </summary>
+        /// <returns>水平方向の移動入力。</returns>
         private Vector3 GetCoverMovementInput()
         {
             // 実際のプロジェクトでは Input System や PlayerController から取得
@@ -254,22 +315,38 @@ namespace asterivo.Unity60.Player
             return new Vector3(horizontal, 0, 0);
         }
         
+        /// <summary>
+        /// 左への覗き見を実行します。
+        /// </summary>
         public void PeekLeft()
         {
             if (!isInCover) return;
         }
         
+        /// <summary>
+        /// 右への覗き見を実行します。
+        /// </summary>
         public void PeekRight()
         {
             if (!isInCover) return;
         }
         
+        /// <summary>
+        /// 上への覗き見を実行します。
+        /// </summary>
         public void PeekOver()
         {
             if (!isInCover) return;
         }
         
+        /// <summary>
+        /// 現在カバー状態かどうかを返します。
+        /// </summary>
         public bool IsInCover() => isInCover;
+
+        /// <summary>
+        /// 現在利用可能なカバーポイントのリストを返します。
+        /// </summary>
         public List<CoverPoint> GetAvailableCovers() => availableCoverPoints;
         
         private void OnDrawGizmosSelected()

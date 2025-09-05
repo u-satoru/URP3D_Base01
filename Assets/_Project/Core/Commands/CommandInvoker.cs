@@ -6,38 +6,63 @@ using asterivo.Unity60.Core.Components;
 namespace asterivo.Unity60.Core.Commands
 {
     /// <summary>
-    /// Invokes commands and manages command history for undo/redo functionality
+    /// コマンドパターンの中核をなすクラスです。
+    /// コマンドの実行、およびUndo/Redoのためのコマンド履歴管理を担当します。
     /// </summary>
     public class CommandInvoker : MonoBehaviour, IGameEventListener<ICommand>
     {
         [Header("Command Events")]
+        [Tooltip("実行すべきコマンドを受け取るためのイベント")]
         [SerializeField] private CommandGameEvent onCommandReceived;
         
         [Header("State Change Events")]
+        [Tooltip("Undoの可否状態が変化した際に発行されるイベント")]
         [SerializeField] private BoolEventChannelSO onUndoStateChanged;
+        [Tooltip("Redoの可否状態が変化した際に発行されるイベント")]
         [SerializeField] private BoolEventChannelSO onRedoStateChanged;
         
         [Header("Command History")]
+        [Tooltip("保持するコマンド履歴の最大数")]
         [SerializeField] private int maxHistorySize = 100;
+        [Tooltip("Undo機能を有効にするか")]
         [SerializeField] private bool enableUndo = true;
+        [Tooltip("Redo機能を有効にするか")]
         [SerializeField] private bool enableRedo = true;
 
         [Header("Command Target")]
+        [Tooltip("コマンドの実行対象となるHealthコンポーネント")]
         [SerializeField] private Component playerHealthComponent;
         private IHealthTarget playerHealth;
         
         private Stack<ICommand> undoStack = new Stack<ICommand>();
         private Stack<ICommand> redoStack = new Stack<ICommand>();
         
+        /// <summary>
+        /// Undoが可能かどうかを示します。
+        /// </summary>
+        public bool CanUndo => enableUndo && undoStack.Count > 0;
+        /// <summary>
+        /// Redoが可能かどうかを示します。
+        /// </summary>
+        public bool CanRedo => enableRedo && redoStack.Count > 0;
+        /// <summary>
+        /// 現在Undoスタックに積まれているコマンドの数を取得します。
+        /// </summary>
+        public int UndoStackCount => undoStack.Count;
+        /// <summary>
+        /// 現在Redoスタックに積まれているコマンドの数を取得します。
+        /// </summary>
+        public int RedoStackCount => redoStack.Count;
+
         private void Start()
         {
-            // Initialize health target from component reference
+            // コンポーネント参照からHealthターゲットを初期化
             if (playerHealthComponent != null)
             {
                 playerHealth = playerHealthComponent.GetComponent<IHealthTarget>();
                 if (playerHealth == null)
                 {
-                    UnityEngine.Debug.LogError("CommandInvoker: playerHealthComponent does not implement IHealthTarget.");
+                    UnityEngine.Debug.LogError("CommandInvoker: playerHealthComponentがIHealthTargetを実装していません。");
                 }
             }
         }
@@ -59,30 +84,31 @@ namespace asterivo.Unity60.Core.Commands
         }
         
         /// <summary>
-        /// Executes a command directly
+        /// 指定されたコマンドを実行し、Undo履歴に追加します。
         /// </summary>
+        /// <param name="command">実行するコマンド。</param>
         public void ExecuteCommand(ICommand command)
         {
             if (command == null)
             {
-                UnityEngine.Debug.LogWarning("CommandInvoker: Attempted to execute null command");
+                UnityEngine.Debug.LogWarning("CommandInvoker: nullのコマンドを実行しようとしました。");
                 return;
             }
             
             command.Execute();
             
-            // Add to undo stack if undo is enabled and command supports it
+            // Undoが有効かつコマンドがUndoをサポートしている場合、Undoスタックに追加
             if (enableUndo && command.CanUndo)
             {
                 undoStack.Push(command);
                 
-                // Limit history size
+                // 履歴サイズを制限
                 while (undoStack.Count > maxHistorySize)
                 {
                     var tempStack = new Stack<ICommand>();
                     var items = undoStack.ToArray();
                     
-                    // Skip the oldest item
+                    // 最も古いアイテムを除外
                     for (int i = 0; i < items.Length - 1; i++)
                     {
                         tempStack.Push(items[i]);
@@ -95,33 +121,30 @@ namespace asterivo.Unity60.Core.Commands
                     }
                 }
                 
-                // Clear redo stack when a new command is executed
+                // 新しいコマンドが実行されたらRedoスタックをクリア
                 if (enableRedo)
                 {
                     redoStack.Clear();
                 }
                 
-                // Broadcast state changes
                 BroadcastHistoryChanges();
             }
         }
         
         /// <summary>
-        /// Undoes the last command
+        /// 最後に行ったコマンドを元に戻します（Undo）。
         /// </summary>
+        /// <returns>Undoが成功した場合はtrue。</returns>
         public bool Undo()
         {
-            if (!enableUndo || undoStack.Count == 0)
-                return false;
+            if (!CanUndo) return false;
                 
             var command = undoStack.Pop();
             command.Undo();
-            if (command.CanUndo)
+
+            if (command.CanUndo && enableRedo)
             {
-                if (enableRedo)
-                {
-                    redoStack.Push(command);
-                }
+                redoStack.Push(command);
             }
             
             BroadcastHistoryChanges();
@@ -129,12 +152,12 @@ namespace asterivo.Unity60.Core.Commands
         }
         
         /// <summary>
-        /// Redoes the last undone command
+        /// Undoしたコマンドを再度実行します（Redo）。
         /// </summary>
+        /// <returns>Redoが成功した場合はtrue。</returns>
         public bool Redo()
         {
-            if (!enableRedo || redoStack.Count == 0)
-                return false;
+            if (!CanRedo) return false;
                 
             var command = redoStack.Pop();
             command.Execute();
@@ -149,7 +172,7 @@ namespace asterivo.Unity60.Core.Commands
         }
         
         /// <summary>
-        /// Clears all command history
+        /// すべてのコマンド履歴（Undo/Redo）を消去します。
         /// </summary>
         public void ClearHistory()
         {
@@ -159,7 +182,7 @@ namespace asterivo.Unity60.Core.Commands
         }
         
         /// <summary>
-        /// Broadcasts the current state of undo/redo stacks to UI and other systems
+        /// Undo/Redoスタックの状態変化をUIや他のシステムに通知します。
         /// </summary>
         private void BroadcastHistoryChanges()
         {
@@ -168,22 +191,24 @@ namespace asterivo.Unity60.Core.Commands
         }
         
         /// <summary>
-        /// Event listener implementation
+        /// ゲームイベント経由でコマンドを受け取った際のリスナー処理です。
         /// </summary>
+        /// <param name="value">受信したコマンド。</param>
         public void OnEventRaised(ICommand value)
         {
             ExecuteCommand(value);
         }
 
         /// <summary>
-        /// Event listener for when an ItemData is used.
-        /// Creates and executes commands based on the item's definitions.
+        /// アイテムが使用されたイベントのリスナーです。
+        /// アイテムデータに含まれるコマンド定義からコマンドを生成し、実行します。
         /// </summary>
+        /// <param name="itemData">使用されたアイテムのデータ。</param>
         public void OnItemUsed(ItemData itemData)
         {
             if (itemData == null)
             {
-                UnityEngine.Debug.LogWarning("OnItemUsed called with null ItemData.");
+                UnityEngine.Debug.LogWarning("OnItemUsedがnullのItemDataで呼び出されました。");
                 return;
             }
 
@@ -198,33 +223,27 @@ namespace asterivo.Unity60.Core.Commands
         }
 
         /// <summary>
-        /// Factory method for creating commands from definitions (ドキュメント第4章:481-495行目の実装)
-        /// ICommandDefinitionからICommandを生成するファクトリメソッド
+        /// コマンド定義（ICommandDefinition）から具体的なコマンド（ICommand）を生成するファクトリメソッドです。
         /// </summary>
+        /// <param name="definition">コマンドを生成するための定義。</param>
+        /// <returns>生成されたコマンド。生成に失敗した場合はnull。</returns>
         private ICommand CreateCommandFromDefinition(ICommandDefinition definition)
         {
-            // Ensure we have a target for health-related commands
             if (playerHealth == null)
             {
-                UnityEngine.Debug.LogError("CommandInvoker: playerHealth target is not set.");
+                UnityEngine.Debug.LogError("CommandInvoker: コマンド実行対象（playerHealth）が設定されていません。");
                 return null;
             }
 
-            // Use the definition's factory method directly (ハイブリッドアーキテクチャ)
+            // 定義のファクトリメソッドを直接使用
             var command = definition.CreateCommand(playerHealth);
             
             if (command == null)
             {
-                UnityEngine.Debug.LogWarning($"Failed to create command from definition type: {definition.GetType()}");
+                UnityEngine.Debug.LogWarning($"定義タイプからのコマンド生成に失敗しました: {definition.GetType()}");
             }
             
             return command;
         }
-        
-        // Properties for checking state
-        public bool CanUndo => enableUndo && undoStack.Count > 0;
-        public bool CanRedo => enableRedo && redoStack.Count > 0;
-        public int UndoStackCount => undoStack.Count;
-        public int RedoStackCount => redoStack.Count;
     }
 }
