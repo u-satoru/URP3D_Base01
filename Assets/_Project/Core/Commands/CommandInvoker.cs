@@ -61,11 +61,6 @@ namespace asterivo.Unity60.Core.Commands
         public int RedoStackCount => redoStack.Count;
 
         /// <summary>
-        /// コマンドの実行対象となるIHealthTargetインターフェースを実装したオブジェクト。
-        /// </summary>
-        private IHealthTarget playerHealth;
-
-        /// <summary>
         /// スクリプトが最初に有効になったときに呼び出されます。
         /// Healthターゲットを初期化します。
         /// </summary>
