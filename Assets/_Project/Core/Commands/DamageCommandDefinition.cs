@@ -25,7 +25,13 @@ namespace asterivo.Unity60.Core.Commands
         {
             if (context is IHealthTarget healthTarget)
             {
-                return new DamageCommand(healthTarget, damageAmount, elementType);
+                // プール化対応: CommandPoolから取得して初期化
+                var command = CommandPool.Instance != null 
+                    ? CommandPool.Instance.GetCommand<DamageCommand>()
+                    : new DamageCommand();
+                    
+                command.Initialize(healthTarget, damageAmount, elementType);
+                return command;
             }
             
             UnityEngine.Debug.LogWarning("DamageCommandDefinition: Invalid context provided. Expected IHealthTarget.");

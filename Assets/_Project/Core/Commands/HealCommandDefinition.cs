@@ -25,7 +25,13 @@ namespace asterivo.Unity60.Core.Commands
         {
             if (context is IHealthTarget healthTarget)
             {
-                return new HealCommand(healthTarget, healAmount);
+                // プール化対応: CommandPoolから取得して初期化
+                var command = CommandPool.Instance != null 
+                    ? CommandPool.Instance.GetCommand<HealCommand>()
+                    : new HealCommand();
+                    
+                command.Initialize(healthTarget, healAmount);
+                return command;
             }
             
             UnityEngine.Debug.LogWarning("HealCommandDefinition: Invalid context provided. Expected IHealthTarget.");

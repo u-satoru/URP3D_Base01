@@ -7,13 +7,18 @@ namespace asterivo.Unity60.Core.Commands
     /// Command for dealing damage to health targets (ドキュメント第4章:419-432行目の実装)
     /// ダメージを与えるコマンドクラス
     /// </summary>
-    public class DamageCommand : ICommand
+    public class DamageCommand : IResettableCommand
     {
-        private readonly IHealthTarget _target;
-        private readonly int _damageAmount;
-        private readonly string _elementType;
+        private IHealthTarget _target;
+        private int _damageAmount;
+        private string _elementType;
 
         public bool CanUndo => true;
+
+        public DamageCommand()
+        {
+            // プール化対応：パラメーターなしコンストラクタ
+        }
 
         public DamageCommand(IHealthTarget target, int damageAmount, string elementType = "physical")
         {
@@ -33,6 +38,43 @@ namespace asterivo.Unity60.Core.Commands
             // Undo damage by healing the same amount
             _target.Heal(_damageAmount);
             UnityEngine.Debug.Log($"Undid {_damageAmount} {_elementType} damage (healed)");
+        }
+
+        public void Reset()
+        {
+            _target = null;
+            _damageAmount = 0;
+            _elementType = null;
+        }
+
+        public void Initialize(params object[] parameters)
+        {
+            if (parameters.Length < 2)
+            {
+                UnityEngine.Debug.LogError("DamageCommand.Initialize: 最低2つのパラメータ（target, damageAmount）が必要です。");
+                return;
+            }
+
+            _target = parameters[0] as IHealthTarget;
+            if (_target == null)
+            {
+                UnityEngine.Debug.LogError("DamageCommand.Initialize: 最初のパラメータはIHealthTargetである必要があります。");
+                return;
+            }
+
+            if (parameters[1] is int damage)
+            {
+                _damageAmount = damage;
+            }
+            else
+            {
+                UnityEngine.Debug.LogError("DamageCommand.Initialize: 2番目のパラメータはint（ダメージ量）である必要があります。");
+                return;
+            }
+
+            _elementType = parameters.Length > 2 && parameters[2] is string elementType
+                ? elementType
+                : "physical";
         }
     }
 }

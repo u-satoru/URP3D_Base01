@@ -9,7 +9,10 @@
       "mcp__filesystem__move_file",
       "mcp__UnityMCP__find_in_file",
       "mcp__UnityMCP__manage_editor",
-      "mcp__filesystem__search_files"
+      "mcp__filesystem__search_files",
+      "mcp__UnityMCP__script_apply_edits",
+      "mcp__UnityMCP__execute_menu_item",
+      "mcp__filesystem__list_directory"
     ],
     "deny": [],
     "ask": []

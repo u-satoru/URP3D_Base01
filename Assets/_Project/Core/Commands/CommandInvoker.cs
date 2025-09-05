@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Components;
+using System.Linq;
 
 namespace asterivo.Unity60.Core.Commands
 {
