@@ -34,7 +34,13 @@ namespace asterivo.Unity60.Core.Commands
         [SerializeField] private Component playerHealthComponent;
         private IHealthTarget playerHealth;
         
+        /// <summary>
+        /// 実行されたコマンドをUndoするために保持するスタック。
+        /// </summary>
         private Stack<ICommand> undoStack = new Stack<ICommand>();
+        /// <summary>
+        /// UndoされたコマンドをRedoするために保持するスタック。
+        /// </summary>
         private Stack<ICommand> redoStack = new Stack<ICommand>();
         
         /// <summary>
@@ -54,6 +60,15 @@ namespace asterivo.Unity60.Core.Commands
         /// </summary>
         public int RedoStackCount => redoStack.Count;
 
+        /// <summary>
+        /// コマンドの実行対象となるIHealthTargetインターフェースを実装したオブジェクト。
+        /// </summary>
+        private IHealthTarget playerHealth;
+
+        /// <summary>
+        /// スクリプトが最初に有効になったときに呼び出されます。
+        /// Healthターゲットを初期化します。
+        /// </summary>
         private void Start()
         {
             // コンポーネント参照からHealthターゲットを初期化
@@ -67,6 +82,10 @@ namespace asterivo.Unity60.Core.Commands
             }
         }
         
+        /// <summary>
+        /// オブジェクトが有効になったときに呼び出されます。
+        /// コマンド受信イベントのリスナーを登録します。
+        /// </summary>
         private void OnEnable()
         {
             if (onCommandReceived != null)
@@ -75,6 +94,10 @@ namespace asterivo.Unity60.Core.Commands
             }
         }
         
+        /// <summary>
+        /// オブジェクトが無効になったときに呼び出されます。
+        /// コマンド受信イベントのリスナーを解除します。
+        /// </summary>
         private void OnDisable()
         {
             if (onCommandReceived != null)

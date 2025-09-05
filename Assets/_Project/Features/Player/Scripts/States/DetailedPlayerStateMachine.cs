@@ -30,16 +30,37 @@ namespace asterivo.Unity60.Player.States
     public class DetailedPlayerStateMachine : MonoBehaviour
     {
         [Header("State Management")]
+        /// <summary>
+        /// 現在のプレイヤーの状態タイプ。
+        /// </summary>
         [SerializeField] private PlayerStateType currentStateType;
+        /// <summary>
+        /// 直前のプレイヤーの状態タイプ。
+        /// </summary>
         [SerializeField] private PlayerStateType previousStateType;
         
         [Header("Components")]
+        /// <summary>
+        /// プレイヤーのCharacterControllerコンポーネント。
+        /// </summary>
         [SerializeField] private CharacterController characterController;
+        /// <summary>
+        /// プレイヤーのステルス移動を制御するコントローラー。
+        /// </summary>
         [SerializeField] private StealthMovementController stealthMovement;
+        /// <summary>
+        /// プレイヤーのカバーシステムを制御するコンポーネント。
+        /// </summary>
         [SerializeField] private CoverSystem coverSystem;
         
         [Header("Events")]
+        /// <summary>
+        /// プレイヤーの状態が変更されたときに発行されるイベント。
+        /// </summary>
         [SerializeField] private GenericGameEvent<PlayerStateType> onStateChanged;
+        /// <summary>
+        /// プレイヤーの移動姿勢（立位、しゃがみなど）が変更されたときに発行されるイベント。
+        /// </summary>
         [SerializeField] private MovementStanceEvent onStanceChanged;
         
         private IPlayerState currentState;
@@ -60,6 +81,9 @@ namespace asterivo.Unity60.Player.States
         /// </summary>
         public CoverSystem CoverSystem => coverSystem;
         
+        /// <summary>
+        /// スクリプトインスタンスがロードされたときに呼び出され、コンポーネントと状態を初期化します。
+        /// </summary>
         private void Awake()
         {
             InitializeComponents();
@@ -99,11 +123,17 @@ namespace asterivo.Unity60.Player.States
             };
         }
         
+        /// <summary>
+        /// 最初のフレーム更新の前に呼び出され、初期状態に遷移します。
+        /// </summary>
         private void Start()
         {
             TransitionToState(PlayerStateType.Idle);
         }
         
+        /// <summary>
+        /// フレームごとに呼び出され、現在の状態のUpdateロジックを実行します。
+        /// </summary>
         private void Update()
         {
             currentState?.Update(this);
@@ -119,6 +149,10 @@ namespace asterivo.Unity60.Player.States
             currentState?.HandleInput(this, moveInput, jumpInput);
         }
         
+        /// <summary>
+        /// 固定フレームレートで呼び出され、現在の状態のFixedUpdateロジックを実行します。
+        /// 主に物理演算の更新に使用されます。
+        /// </summary>
         private void FixedUpdate()
         {
             currentState?.FixedUpdate(this);

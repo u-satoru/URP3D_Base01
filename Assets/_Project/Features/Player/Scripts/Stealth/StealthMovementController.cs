@@ -11,42 +11,93 @@ namespace asterivo.Unity60.Player
     public class StealthMovementController : MonoBehaviour
     {
         [Header("Movement Modes")]
+        /// <summary>
+        /// 定義済みの移動モードの配列。各モードは移動速度、騒音レベル、視認性、キャラクターの高さなどを定義します。
+        /// </summary>
         [Tooltip("定義済みの移動モードの配列")]
         [SerializeField] private MovementMode[] movementModes;
+        /// <summary>
+        /// 現在選択されている移動モードのインデックス。
+        /// </summary>
         [Tooltip("現在選択されている移動モードのインデックス")]
         [SerializeField] private int currentModeIndex = 1;
         
         [Header("Components")]
+        /// <summary>
+        /// プレイヤーのCharacterControllerコンポーネント。
+        /// </summary>
         [SerializeField] private CharacterController characterController;
+        /// <summary>
+        /// プレイヤーのTransformコンポーネント。
+        /// </summary>
         [SerializeField] private Transform playerTransform;
         
         [Header("Current State")]
+        /// <summary>
+        /// 現在のプレイヤーの姿勢（例: Standing, Crouching, Prone）。
+        /// </summary>
         [Tooltip("現在のプレイヤーの姿勢")]
         [SerializeField] private MovementStance currentStance = MovementStance.Standing;
+        /// <summary>
+        /// 現在の騒音レベル。移動速度や姿勢によって変化します。
+        /// </summary>
         [Tooltip("現在の騒音レベル")]
         [SerializeField] private float currentNoiseLevel = 0.5f;
+        /// <summary>
+        /// 現在の視認性。姿勢、影、光源レベルによって変化します。
+        /// </summary>
         [Tooltip("現在の視認性")]
         [SerializeField] private float currentVisibility = 1.0f;
+        /// <summary>
+        /// プレイヤーが影の中にいるかどうか。
+        /// </summary>
         [Tooltip("影の中にいるかどうか")]
         [SerializeField] private bool isInShadow = false;
         
         [Header("Events")]
+        /// <summary>
+        /// プレイヤーの姿勢が変更された時に発行されるイベント。
+        /// </summary>
         [Tooltip("姿勢が変更された時に発行されるイベント")]
         [SerializeField] private MovementStanceEvent onStanceChanged;
+        /// <summary>
+        /// 移動情報（騒音、視認性など）が更新された時に発行されるイベント。
+        /// </summary>
         [Tooltip("移動情報（騒音、視認性など）が更新された時に発行されるイベント")]
         [SerializeField] private MovementInfoEvent onMovementInfoChanged;
         
         [Header("Settings")]
+        /// <summary>
+        /// 姿勢を変更する際のキャラクターの高さの遷移速度。
+        /// </summary>
         [Tooltip("姿勢を変更する際のキャラクターの高さの遷移速度")]
         [SerializeField] private float stanceTransitionSpeed = 2f;
+        /// <summary>
+        /// 影を検出するためのレイヤーマスク。
+        /// </summary>
         [Tooltip("影を検出するためのレイヤーマスク")]
         [SerializeField] private LayerMask shadowCheckLayers = -1;
+        /// <summary>
+        /// 影を検出する際の球体の半径。
+        /// </summary>
         [Tooltip("影を検出する際の球体の半径")]
         [SerializeField] private float shadowCheckRadius = 0.5f;
         
+        /// <summary>
+        /// 現在のステルス移動情報。イベントで発行されます。
+        /// </summary>
         private StealthMovementInfo currentMovementInfo;
+        /// <summary>
+        /// キャラクターの現在の高さ。
+        /// </summary>
         private float currentHeight;
+        /// <summary>
+        /// キャラクターの目標の高さ。
+        /// </summary>
         private float targetHeight;
+        /// <summary>
+        /// キャラクターの現在の速度。
+        /// </summary>
         private Vector3 currentVelocity;
         
         /// <summary>
@@ -64,6 +115,12 @@ namespace asterivo.Unity60.Player
             public Vector3 cameraOffset = Vector3.zero;
         }
         
+        /// <summary>
+        /// スクリプトインスタンスがロードされたときに呼び出され、必要なコンポーネントを初期化し、移動モードを設定します。
+        /// </summary>
+        /// <summary>
+        /// スクリプトインスタンスがロードされたときに呼び出され、必要なコンポーネントを初期化し、移動モードを設定します。
+        /// </summary>
         private void Awake()
         {
             if (characterController == null)
@@ -126,11 +183,86 @@ namespace asterivo.Unity60.Player
             currentHeight = targetHeight = movementModes[currentModeIndex].characterHeight;
         }
         
+        /// <summary>
+        /// 最初のフレーム更新の前に呼び出され、初期の移動モードを適用します。
+        /// </summary>
         private void Start()
         {
             ApplyMovementMode(currentModeIndex);
         }
         
+        /// <summary>
+        /// フレームごとに呼び出され、キャラクターの高さ、影の検出、移動情報を更新します。
+        /// </summary>
+        private void Update()
+        {
+            UpdateCharacterHeight();
+            UpdateShadowDetection();
+            UpdateMovementInfo();
+        }
+        
+        /// <summary>
+        /// Inspectorで移動モードが設定されていない場合に、デフォルト値を設定します。
+        /// </summary>
+        private void InitializeMovementModes()
+        {
+            if (movementModes == null || movementModes.Length == 0)
+            {
+                movementModes = new MovementMode[]
+                {
+                    new MovementMode 
+                    { 
+                        name = "Prone", 
+                        stance = MovementStance.Prone,
+                        moveSpeed = 1f, 
+                        noiseLevel = 0.1f, 
+                        visibilityMultiplier = 0.3f,
+                        characterHeight = 0.5f
+                    },
+                    new MovementMode 
+                    { 
+                        name = "Crouch", 
+                        stance = MovementStance.Crouching,
+                        moveSpeed = 2.5f, 
+                        noiseLevel = 0.3f, 
+                        visibilityMultiplier = 0.6f,
+                        characterHeight = 1.2f
+                    },
+                    new MovementMode 
+                    { 
+                        name = "Walk", 
+                        stance = MovementStance.Standing,
+                        moveSpeed = 4f, 
+                        noiseLevel = 0.5f, 
+                        visibilityMultiplier = 1f,
+                        characterHeight = 2f
+                    },
+                    new MovementMode 
+                    { 
+                        name = "Run", 
+                        stance = MovementStance.Standing,
+                        moveSpeed = 7f, 
+                        noiseLevel = 1.0f, 
+                        visibilityMultiplier = 1.2f,
+                        characterHeight = 2f
+                    }
+                };
+            }
+            
+            currentHeight = targetHeight = movementModes[currentModeIndex].characterHeight;
+        }
+        
+        /// <summary>
+        /// 最初のフレーム更新の前に呼び出され、初期の移動モードを適用します。
+        /// </summary>
+        private void Start()
+        {
+            ApplyMovementMode(currentModeIndex);
+        }
+        
+        /// <summary>
+        /// フレームごとに呼び出され、キャラクターの高さ、影の検出、移動情報を更新します。
+        /// </summary>
         private void Update()
         {
             UpdateCharacterHeight();
@@ -242,6 +374,7 @@ namespace asterivo.Unity60.Player
         
         /// <summary>
         /// キャラクターの高さを目標の高さに滑らかに更新します。
+        /// CharacterControllerの高さと中心を調整します。
         /// </summary>
         private void UpdateCharacterHeight()
         {
@@ -262,6 +395,7 @@ namespace asterivo.Unity60.Player
         
         /// <summary>
         /// プレイヤーが影の中にいるかどうかを検出します。
+        /// 頭上から下向きにSphereCastを行い、ヒットがなければ影とみなします。
         /// </summary>
         private void UpdateShadowDetection()
         {
@@ -274,7 +408,8 @@ namespace asterivo.Unity60.Player
         }
         
         /// <summary>
-        /// 現在の移動情報を更新し、イベントを発行します。
+        /// 現在の移動情報（騒音レベル、視認性など）を計算し、イベントを発行します。
+        /// 影や光源レベルに応じて視認性を調整します。
         /// </summary>
         private void UpdateMovementInfo()
         {
@@ -304,6 +439,7 @@ namespace asterivo.Unity60.Player
         
         /// <summary>
         /// 現在の光源レベルを計算します（この実装は仮です）。
+        /// 将来的には周囲のライトを考慮した正確な計算を実装する必要があります。
         /// </summary>
         /// <returns>計算された光源レベル。</returns>
         private float CalculateLightLevel()
@@ -314,6 +450,7 @@ namespace asterivo.Unity60.Player
         
         /// <summary>
         /// 現在の移動速度の大きさを取得します。
+        /// CharacterControllerの速度を現在の移動モードの速度で正規化します。
         /// </summary>
         /// <returns>正規化された速度の大きさ。</returns>
         private float GetVelocityMagnitude()
