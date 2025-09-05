@@ -47,6 +47,10 @@
 - **Scripting Backend**: Mono
 - **API Compatibility Level**: .NET Standard 2.1
 
+## アーキテクチャ制約
+
+- **DOTS/ECS 非対応**: このプロジェクトでは Data-Oriented Technology Stack (DOTS) や Entity Component System (ECS) は使用しません。全て従来のMonoBehaviourベースのオブジェクト指向アーキテクチャで構築されています。
+
 ## セットアップ手順
 
 1.  このリポジトリをクローンします。
