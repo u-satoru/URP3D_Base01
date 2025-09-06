@@ -10,8 +10,6 @@
 - iOS
 - Android
 - Windows
-- macOS
-- Linux
 
 ## 主な機能
 
