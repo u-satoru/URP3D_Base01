@@ -28,7 +28,7 @@ namespace asterivo.Unity60.Core.Audio
         [SerializeField] private float maxOcclusionReduction = 0.8f;
         
         [Header("Environment Reverb")]
-        [SerializeField] private bool enableEnvironmentReverb = true;
+                // [SerializeField] private bool enableEnvironmentReverb = true;e;
         [SerializeField] private AudioReverbZone[] reverbZones;
         
         // オーディオソースプール
