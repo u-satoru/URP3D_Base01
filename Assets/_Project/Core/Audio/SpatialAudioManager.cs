@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Core.Shared;
 
 namespace asterivo.Unity60.Core.Audio
 {
@@ -15,17 +16,17 @@ namespace asterivo.Unity60.Core.Audio
     {
         [Header("Audio Manager Settings")]
         [SerializeField] private AudioMixer mainMixer;
-        [SerializeField] private int maxConcurrentSounds = 32;
+        [SerializeField] private int maxConcurrentSounds = AudioConstants.MAX_CONCURRENT_SOUNDS;
         [SerializeField] private LayerMask obstacleLayerMask = -1;
         
         [Header("Distance Attenuation")]
         [SerializeField] private AnimationCurve distanceAttenuationCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
-        [SerializeField] private float globalHearingMultiplier = 1f;
+        [SerializeField] private float globalHearingMultiplier = AudioConstants.DEFAULT_MASTER_VOLUME;
         
         [Header("Occlusion System")]
         [SerializeField] private bool enableOcclusion = true;
-        [SerializeField] private float occlusionCheckInterval = 0.1f;
-        [SerializeField] private float maxOcclusionReduction = 0.8f;
+        [SerializeField] private float occlusionCheckInterval = AudioConstants.OCCLUSION_CHECK_INTERVAL;
+        [SerializeField] private float maxOcclusionReduction = AudioConstants.MAX_OCCLUSION_REDUCTION;
         
         [Header("Environment Reverb")]
         [SerializeField] private AudioReverbZone[] reverbZones;

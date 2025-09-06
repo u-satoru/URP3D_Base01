@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using asterivo.Unity60.Core.Shared;
 
 namespace asterivo.Unity60.Core.Commands
 {
@@ -12,9 +13,9 @@ namespace asterivo.Unity60.Core.Commands
     {
         [Header("Pool Settings")]
         [Tooltip("各コマンドタイプの初期プールサイズ")]
-        [SerializeField] private int defaultPoolSize = 10;
+        [SerializeField] private int defaultPoolSize = AudioConstants.DEFAULT_COMMAND_POOL_SIZE;
         [Tooltip("プールの最大サイズ")]
-        [SerializeField] private int maxPoolSize = 100;
+        [SerializeField] private int maxPoolSize = AudioConstants.MAX_COMMAND_POOL_SIZE;
         [Tooltip("プール統計を表示する")]
         [SerializeField] private bool showDebugStats = false;
         

@@ -3,6 +3,7 @@ using UnityEngine.Audio;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Shared;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio
@@ -29,11 +30,11 @@ namespace asterivo.Unity60.Core.Audio
 
         [TabGroup("Audio Managers", "Volume Controls")]
         [Header("Master Volume Controls")]
-        [Range(0f, 1f), SerializeField] private float masterVolume = 1f;
-        [Range(0f, 1f), SerializeField] private float bgmVolume = 0.8f;
-        [Range(0f, 1f), SerializeField] private float ambientVolume = 0.6f;
-        [Range(0f, 1f), SerializeField] private float effectVolume = 1f;
-        [Range(0f, 1f), SerializeField] private float stealthAudioVolume = 1f;
+        [Range(0f, 1f), SerializeField] private float masterVolume = AudioConstants.DEFAULT_MASTER_VOLUME;
+        [Range(0f, 1f), SerializeField] private float bgmVolume = AudioConstants.DEFAULT_BGM_VOLUME;
+        [Range(0f, 1f), SerializeField] private float ambientVolume = AudioConstants.DEFAULT_AMBIENT_VOLUME;
+        [Range(0f, 1f), SerializeField] private float effectVolume = AudioConstants.DEFAULT_EFFECT_VOLUME;
+        [Range(0f, 1f), SerializeField] private float stealthAudioVolume = AudioConstants.DEFAULT_STEALTH_VOLUME;
 
         [TabGroup("Audio Managers", "Stealth Integration")]
         [Header("Stealth Integration")]
@@ -42,11 +43,11 @@ namespace asterivo.Unity60.Core.Audio
         [TabGroup("Audio Managers", "Audio Mixer")]
         [Header("Audio Mixer Configuration")]
         [SerializeField] private AudioMixer mainMixer;
-        [SerializeField] private string masterVolumeParam = "MasterVolume";
-        [SerializeField] private string bgmVolumeParam = "BGMVolume";
-        [SerializeField] private string ambientVolumeParam = "AmbientVolume";
-        [SerializeField] private string effectVolumeParam = "EffectVolume";
-        [SerializeField] private string stealthVolumeParam = "StealthVolume";
+        [SerializeField] private string masterVolumeParam = AudioConstants.MIXER_MASTER_VOLUME;
+        [SerializeField] private string bgmVolumeParam = AudioConstants.MIXER_BGM_VOLUME;
+        [SerializeField] private string ambientVolumeParam = AudioConstants.MIXER_AMBIENT_VOLUME;
+        [SerializeField] private string effectVolumeParam = AudioConstants.MIXER_EFFECT_VOLUME;
+        [SerializeField] private string stealthVolumeParam = AudioConstants.MIXER_STEALTH_VOLUME;
 
         [TabGroup("Audio Managers", "Events")]
         [Header("Audio Events")]
@@ -244,7 +245,7 @@ namespace asterivo.Unity60.Core.Audio
             if (string.IsNullOrEmpty(paramName)) return;
 
             // 音量を dB に変換 (0-1 の range を -80dB - 0dB に変換)
-            float dbValue = volume > 0.0001f ? Mathf.Log10(volume) * 20f : -80f;
+            float dbValue = volume > AudioConstants.MIN_VOLUME_FOR_DB ? Mathf.Log10(volume) * 20f : AudioConstants.MIN_DB_VALUE;
             mainMixer.SetFloat(paramName, dbValue);
         }
 
