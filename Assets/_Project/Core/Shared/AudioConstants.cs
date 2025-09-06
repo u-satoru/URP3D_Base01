@@ -198,5 +198,22 @@ namespace asterivo.Unity60.Core.Shared
         /// </summary>
         public const float MIN_VOLUME_FOR_DB = 0.0001f;
         #endregion
+        
+        #region Update and Performance
+        /// <summary>
+        /// オーディオシステムの更新間隔（秒）
+        /// </summary>
+        public const float AUDIO_UPDATE_INTERVAL = 0.1f;
+        
+        /// <summary>
+        /// 空間キャッシュの更新間隔（秒）
+        /// </summary>
+        public const float SPATIAL_CACHE_UPDATE_INTERVAL = 5f;
+        
+        /// <summary>
+        /// 1回の更新で処理する最大AudioSource数
+        /// </summary>
+        public const int MAX_AUDIOSOURCES_PER_UPDATE = 5;
+        #endregion
     }
 }

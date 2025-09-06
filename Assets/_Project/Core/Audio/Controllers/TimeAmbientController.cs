@@ -65,7 +65,17 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             
             if (enableAutomaticTimeUpdates)
             {
-                InvokeRepeating(nameof(CheckTimeOfDay), 0f, timeUpdateInterval);
+                // AudioUpdateCoordinatorが有効な場合は協調更新を使用
+                if (AudioUpdateCoordinator.Instance != null && AudioUpdateCoordinator.Instance.enabled)
+                {
+                    AudioUpdateCoordinator.Instance.OnAudioSystemSync += OnAudioSystemSync;
+                    EventLogger.Log("<color=cyan>[TimeAmbientController]</color> Registered with AudioUpdateCoordinator for time updates");
+                }
+                else
+                {
+                    // フォールバック：従来のInvokeRepeating
+                    InvokeRepeating(nameof(CheckTimeOfDay), 0f, timeUpdateInterval);
+                }
             }
         }
 
@@ -471,6 +481,26 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             public AudioSource audioSource;
             public float targetVolume;
             public float fadeSpeed;
+        }
+
+        /// <summary>
+        /// AudioUpdateCoordinatorからの同期コールバック
+        /// </summary>
+        private void OnAudioSystemSync(AudioSystemSyncData syncData)
+        {
+            // 時間変更が検出された場合のみ処理
+            if (syncData.timeChanged && syncData.currentTimeOfDay != currentTimeOfDay)
+            {
+                EventLogger.Log($"<color=cyan>[TimeAmbientController]</color> Time change detected via coordinator: {currentTimeOfDay} -> {syncData.currentTimeOfDay}");
+                ChangeTimeOfDay(syncData.currentTimeOfDay);
+            }
+            
+            // ステルス状態に応じた音量調整
+            if (syncData.stealthStateChanged)
+            {
+                float volumeMultiplier = syncData.isStealthActive ? 0.6f : 1f;
+                SetMasterVolume(syncData.ambientVolume * volumeMultiplier);
+            }
         }
 
         #endregion

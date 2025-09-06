@@ -237,6 +237,16 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         /// </summary>
         private void StartMaskingDetection()
         {
+            // AudioUpdateCoordinatorが有効な場合は協調更新を使用
+            if (AudioUpdateCoordinator.Instance != null && AudioUpdateCoordinator.Instance.enabled)
+            {
+                // 協調更新システムに登録（イベント駆動）
+                AudioUpdateCoordinator.Instance.OnAudioSystemSync += OnAudioSystemSync;
+                EventLogger.Log("<color=cyan>[MaskingEffectController]</color> Registered with AudioUpdateCoordinator");
+                return;
+            }
+            
+            // フォールバック：従来の検出システム
             if (maskingUpdateCoroutine == null)
             {
                 maskingUpdateCoroutine = StartCoroutine(MaskingDetectionCoroutine());
@@ -248,6 +258,13 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         /// </summary>
         private void StopMaskingDetection()
         {
+            // AudioUpdateCoordinatorからの登録解除
+            if (AudioUpdateCoordinator.Instance != null)
+            {
+                AudioUpdateCoordinator.Instance.OnAudioSystemSync -= OnAudioSystemSync;
+            }
+            
+            // 従来のコルーチンの停止
             if (maskingUpdateCoroutine != null)
             {
                 StopCoroutine(maskingUpdateCoroutine);
@@ -444,6 +461,44 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             public AudioSource audioSource;
             public float distance;
             public float maskingStrength;
+        }
+
+        /// <summary>
+        /// AudioUpdateCoordinatorからの同期コールバック
+        /// </summary>
+        private void OnAudioSystemSync(AudioSystemSyncData syncData)
+        {
+            // 効率的なマスキング処理（既に最適化されたデータを使用）
+            if (syncData.nearbyAudioSources.Count > 0)
+            {
+                currentMaskingStrength = syncData.currentMaskingStrength;
+                
+                // バッチ処理でマスキング効果を適用
+                foreach (var audioSource in syncData.nearbyAudioSources)
+                {
+                    if (audioSource != null && audioSource.isPlaying)
+                    {
+                        ApplyMaskingToAudioSource(audioSource, currentMaskingStrength);
+                    }
+                }
+
+                // 状態更新
+                isMaskingActive = currentMaskingStrength > AudioConstants.MIN_AUDIBLE_VOLUME;
+                activeMaskingSources = syncData.nearbyAudioSources.Count;
+                lastMaskingPosition = syncData.playerPosition;
+
+                // ステルス系システムに通知
+                if (stealthCoordinator != null)
+                {
+                    stealthCoordinator.NotifyMaskingEffect(lastMaskingPosition, currentMaskingStrength, maskingRadius);
+                }
+            }
+            else
+            {
+                isMaskingActive = false;
+                activeMaskingSources = 0;
+                currentMaskingStrength = 0f;
+            }
         }
 
         #endregion

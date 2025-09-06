@@ -84,6 +84,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             ValidateComponents();
             ApplyVolumeSettings();
+            InitializeAudioUpdateCoordinator();
             
             if (audioSystemInitializedEvent != null)
             {
@@ -144,6 +145,28 @@ namespace asterivo.Unity60.Core.Audio
             if (hasErrors)
             {
                 EventLogger.LogError("[AudioManager] Critical components missing! Audio system may not function properly.");
+            }
+        }
+
+        /// <summary>
+        /// AudioUpdateCoordinatorの初期化
+        /// </summary>
+        private void InitializeAudioUpdateCoordinator()
+        {
+            // AudioUpdateCoordinatorの検索または作成
+            var coordinator = AudioUpdateCoordinator.Instance;
+            if (coordinator == null)
+            {
+                // 専用のGameObjectを作成してAudioUpdateCoordinatorを追加
+                GameObject coordinatorObject = new GameObject("AudioUpdateCoordinator");
+                coordinatorObject.transform.SetParent(transform);
+                coordinator = coordinatorObject.AddComponent<AudioUpdateCoordinator>();
+                
+                EventLogger.Log("<color=cyan>[AudioManager]</color> Created AudioUpdateCoordinator for optimized updates");
+            }
+            else
+            {
+                EventLogger.Log("<color=cyan>[AudioManager]</color> Found existing AudioUpdateCoordinator");
             }
         }
 

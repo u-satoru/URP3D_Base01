@@ -78,6 +78,13 @@ namespace asterivo.Unity60.Core.Audio
 
         private void Update()
         {
+            // AudioUpdateCoordinatorが有効な場合は、そちらに処理を委譲
+            if (AudioUpdateCoordinator.Instance != null && AudioUpdateCoordinator.Instance.enabled)
+            {
+                return; // 協調更新システムが処理するためスキップ
+            }
+            
+            // フォールバック：従来の更新処理
             UpdateVolumeForStealthState();
         }
 
