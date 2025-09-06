@@ -6,11 +6,12 @@ using asterivo.Unity60.Core.Player;
 using asterivo.Unity60.Core.Data;
 using System.Collections;
 using System.Collections.Generic;
+using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Commands;
 // using asterivo.Unity60.Player.Commands; // asmdef参照エラーのため一時的にコメントアウト
 // using asterivo.Unity60.Player.States; // asmdef参照エラーのため一時的にコメントアウト
 
-namespace asterivo.Unity60.Systems
+namespace asterivo.Unity60.Core.Services
 {
     public class GameManager : MonoBehaviour, IGameEventListener<ICommandDefinition>
     {
@@ -118,9 +119,9 @@ namespace asterivo.Unity60.Systems
             }
             return isValid;
         }
-        private void LogError(string message) { if (enableDebugLog) Debug.LogError($"[GameManager] {message}", this); }
-        private void LogWarning(string message) { if (enableDebugLog) Debug.LogWarning($"[GameManager] {message}", this); }
-        private void Log(string message) { if (enableDebugLog) Debug.Log($"[GameManager] {message}", this); }
+        private void LogError(string message) { if (enableDebugLog) EventLogger.LogError($"[GameManager] {message}"); }
+        private void LogWarning(string message) { if (enableDebugLog) EventLogger.LogWarning($"[GameManager] {message}"); }
+        private void Log(string message) { if (enableDebugLog) EventLogger.Log($"[GameManager] {message}"); }
         #endregion
 
         private void InitializeGameManager()

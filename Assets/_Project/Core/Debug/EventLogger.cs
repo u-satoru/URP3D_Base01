@@ -113,7 +113,45 @@ namespace asterivo.Unity60.Core.Debug
         /// <summary>
         /// 基本的なイベントログを記録
         /// </summary>
-        public static void LogEvent(string eventName, int listenerCount, string payload = "")
+                /// <summary>
+        /// 簡潔なログメソッド - Unity標準Debug.Logの代替
+        /// </summary>
+        public static void Log(string message)
+        {
+            if (!IsEnabled) return;
+            
+            Instance.AddLogEntry(new EventLogEntry("General", 0, message, LogLevel.Info));
+            
+            if (Instance.settings?.logToConsole ?? true)
+            {
+                UnityEngine.Debug.Log($"<color=cyan>[EventLogger]</color> {message}");
+            }
+        }
+        
+        /// <summary>
+        /// 簡潔なエラーログメソッド - Unity標準Debug.LogErrorの代替
+        /// </summary>
+        /// <summary>
+        /// 簡潔な警告ログメソッド - Unity標準Debug.LogWarningの代替
+        /// </summary>
+        public static void LogWarning(string message)
+        {
+            LogWarning("General", 0, message);
+        }
+        
+        public static void LogError(string message)
+        {
+            if (!IsEnabled) return;
+            
+            Instance.AddLogEntry(new EventLogEntry("Error", 0, message, LogLevel.Error));
+            
+            if (Instance.settings?.logToConsole ?? true)
+            {
+                UnityEngine.Debug.LogError($"[EventLogger] {message}");
+            }
+        }
+        
+public static void LogEvent(string eventName, int listenerCount, string payload = "")
         {
             if (!IsEnabled) return;
             
