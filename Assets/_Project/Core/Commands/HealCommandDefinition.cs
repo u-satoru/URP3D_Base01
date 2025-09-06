@@ -1,4 +1,5 @@
 using asterivo.Unity60.Core.Components;
+using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Commands
 {
@@ -12,7 +13,11 @@ namespace asterivo.Unity60.Core.Commands
     [System.Serializable]
     public class HealCommandDefinition : ICommandDefinition
     {
+        [BoxGroup("Healing Parameters")]
+        [PropertyRange(1, 500)]
+        [LabelText("Heal Amount")]
         [UnityEngine.Tooltip("Amount of health to restore")]
+        [SuffixLabel("HP", overlay: true)]
         public int healAmount = 10;
 
         public bool CanExecute(object context = null)

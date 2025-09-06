@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using asterivo.Unity60.Core.Events;
+using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Player
 {
@@ -11,19 +12,39 @@ namespace asterivo.Unity60.Player
     [RequireComponent(typeof(PlayerInput))]
     public class PlayerController : MonoBehaviour
     {
-        [Header("Command Output")]
+        [TabGroup("Player Control", "Command Output")]
+        [LabelText("Command Definition Event")]
         [Tooltip("プレイヤーのアクションに基づいて発行されるコマンド定義イベント")]
         [SerializeField] private CommandDefinitionGameEvent onCommandDefinitionIssued;
+        
+        [TabGroup("Player Control", "Animation")]
+        [LabelText("Movement Animator")]
+        [Tooltip("DOTweenアニメーション管理コンポーネント")]
+        [SerializeField] private PlayerMovementAnimator movementAnimator;
 
-        [Header("Movement Control Events")]
+        [TabGroup("Player Control", "Movement Events")]
+        [LabelText("Freeze Movement Listener")]
         [Tooltip("プレイヤーの移動を一時的に無効化するイベントリスナー")]
         [SerializeField] private GameEventListener freezeMovementListener;
+        
+        [TabGroup("Player Control", "Movement Events")]
+        [LabelText("Unfreeze Movement Listener")]
         [Tooltip("プレイヤーの移動無効化を解除するイベントリスナー")]
         [SerializeField] private GameEventListener unfreezeMovementListener;
 
         private PlayerInput playerInput;
         private InputActionMap playerActionMap;
+        
+        [TabGroup("Player Control", "Debug Info")]
+        [ReadOnly]
+        [ShowInInspector]
+        [LabelText("Movement Frozen")]
         private bool movementFrozen = false;
+        
+        [TabGroup("Player Control", "Debug Info")]
+        [ReadOnly]
+        [ShowInInspector]
+        [LabelText("Sprint Pressed")]
         private bool isSprintPressed = false;
 
         /// <summary>
@@ -39,6 +60,11 @@ namespace asterivo.Unity60.Player
         private void Awake()
         {
             playerInput = GetComponent<PlayerInput>();
+            
+            // MovementAnimatorを自動取得していない場合は取得
+            if (movementAnimator == null)
+                movementAnimator = GetComponent<PlayerMovementAnimator>();
+                
             SetupInputCallbacks();
             SetupMovementEventListeners();
         }
@@ -130,6 +156,13 @@ namespace asterivo.Unity60.Player
         private void OnJump(InputAction.CallbackContext context)
         {
             if (movementFrozen) return;
+            
+            // DOTweenアニメーションがある場合は実行
+            if (movementAnimator != null)
+            {
+                movementAnimator.AnimateJump();
+            }
+            
             var definition = new asterivo.Unity60.Player.Commands.JumpCommandDefinition();
             onCommandDefinitionIssued?.Raise(definition);
         }
@@ -200,5 +233,27 @@ namespace asterivo.Unity60.Player
             movementFrozen = false;
             Debug.Log("Player movement unfrozen");
         }
+        
+        #if UNITY_EDITOR
+        [TabGroup("Player Control", "Debug Controls")]
+        [Button("Test Jump Animation")]
+        private void TestJumpAnimation()
+        {
+            if (Application.isPlaying && movementAnimator != null)
+            {
+                movementAnimator.AnimateJump();
+            }
+        }
+        
+        [TabGroup("Player Control", "Debug Controls")]
+        [Button("Test Damage Animation")]
+        private void TestDamageAnimation()
+        {
+            if (Application.isPlaying && movementAnimator != null)
+            {
+                movementAnimator.AnimateDamageShake();
+            }
+        }
+        #endif
     }
 }

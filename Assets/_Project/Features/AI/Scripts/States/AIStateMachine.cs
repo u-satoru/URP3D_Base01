@@ -3,36 +3,96 @@ using UnityEngine.AI;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Data;
+using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.AI.States
 {
     public class AIStateMachine : MonoBehaviour
     {
-        [Header("State Management")]
+        [TabGroup("AI Control", "State Management")]
+        [ReadOnly]
+        [LabelText("Current State")]
         [SerializeField] private AIStateType currentStateType;
+        
+        [TabGroup("AI Control", "State Management")]
+        [ReadOnly]
+        [LabelText("Previous State")]
         [SerializeField] private AIStateType previousStateType;
+        
+        [TabGroup("AI Control", "State Management")]
+        [ReadOnly]
+        [LabelText("Alert Level")]
         [SerializeField] private AlertLevel currentAlertLevel = AlertLevel.Unaware;
         
-        [Header("AI Components")]
+        [TabGroup("AI Control", "Components")]
+        [Required]
+        [LabelText("Navigation Agent")]
         [SerializeField] private NavMeshAgent navAgent;
+        
+        [TabGroup("AI Control", "Components")]
+        [LabelText("Eye Position")]
         [SerializeField] private Transform eyePosition;
+        
+        [TabGroup("AI Control", "Senses")]
+        [PropertyRange(5f, 50f)]
+        [LabelText("Sight Range")]
+        [SuffixLabel("m", overlay: true)]
         [SerializeField] private float sightRange = 15f;
+        
+        [TabGroup("AI Control", "Senses")]
+        [PropertyRange(30f, 180f)]
+        [LabelText("Sight Angle")]
+        [SuffixLabel("°", overlay: true)]
         [SerializeField] private float sightAngle = 110f;
+        
+        [TabGroup("AI Control", "Senses")]
+        [PropertyRange(3f, 25f)]
+        [LabelText("Hearing Range")]
+        [SuffixLabel("m", overlay: true)]
         [SerializeField] private float hearingRange = 10f;
         
-        [Header("Detection")]
+        [TabGroup("AI Control", "Detection")]
+        [ReadOnly]
+        [LabelText("Current Target")]
         [SerializeField] private Transform currentTarget;
+        
+        [TabGroup("AI Control", "Detection")]
+        [ReadOnly]
+        [LabelText("Last Known Position")]
         [SerializeField] private Vector3 lastKnownPosition;
+        
+        [TabGroup("AI Control", "Detection")]
+        [ProgressBar(0f, 1f, ColorGetter = "GetSuspicionColor")]
+        [LabelText("Suspicion Level")]
         [SerializeField] private float suspicionLevel = 0f;
+        
+        [TabGroup("AI Control", "Detection")]
+        [PropertyRange(0.5f, 3f)]
+        [LabelText("Detection Speed")]
         [SerializeField] private float detectionSpeed = 1f;
         
-        [Header("Patrol Settings")]
+        [TabGroup("AI Control", "Patrol")]
+        [ListDrawerSettings(ShowIndexLabels = true, ListElementLabelName = "name")]
+        [LabelText("Patrol Points")]
         [SerializeField] private Transform[] patrolPoints;
+        
+        [TabGroup("AI Control", "Patrol")]
+        [ReadOnly]
+        [LabelText("Current Patrol Index")]
         [SerializeField] private int currentPatrolIndex = 0;
+        
+        [TabGroup("AI Control", "Patrol")]
+        [PropertyRange(0.5f, 10f)]
+        [LabelText("Wait Time at Points")]
+        [SuffixLabel("s", overlay: true)]
         [SerializeField] private float patrolWaitTime = 2f;
         
-        [Header("Events")]
+        [TabGroup("AI Control", "Events")]
+        [LabelText("Alert Level Changed")]
         [SerializeField] private AlertLevelEvent onAlertLevelChanged;
+        
+        [TabGroup("AI Control", "Events")]
+        [LabelText("Target Detected")]
         [SerializeField] private DetectionEvent onTargetDetected;
         
         private IAIState currentState;
@@ -229,5 +289,16 @@ namespace asterivo.Unity60.AI.States
         
         public AIStateType GetCurrentStateType() => currentStateType;
         public bool IsInState(AIStateType stateType) => currentStateType == stateType;
+        
+        // Odin Inspector用のカラーゲッター
+        private UnityEngine.Color GetSuspicionColor()
+        {
+            return suspicionLevel switch
+            {
+                < 0.3f => UnityEngine.Color.green,
+                < 0.7f => UnityEngine.Color.yellow,
+                _ => UnityEngine.Color.red
+            };
+        }
     }
 }
