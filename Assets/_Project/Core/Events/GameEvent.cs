@@ -43,7 +43,10 @@ namespace asterivo.Unity60.Core.Events
             
             // イベントログに記録
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            global::asterivo.Unity60.Core.Debug.EventLogger.LogEvent(name, listeners.Count);
+            if (global::asterivo.Unity60.Core.Debug.EventLogger.IsEnabled)
+            {
+                global::asterivo.Unity60.Core.Debug.EventLogger.LogEvent(name, listeners.Count);
+            }
             #endif
             
             // 優先度でソート（必要時のみ）
