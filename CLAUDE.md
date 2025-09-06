@@ -57,6 +57,7 @@
 -   `Assets/_Project/Features`: 各機能（プレイヤー、AI、カメラなど）の実装。
 -   `Assets/_Project/Scenes`: ゲームシーン。
 -   `Assets/_Project/Docs`: プロジェクト関連のドキュメント。
+-   `Assets/_ThirdParty`: サードパーティ製アセット/ライブラリのラッパークラスまたは適応層を作成する場合に使用。
 -   `Assets/Plugins`: サードパーティ製アセット。 **直接編集しないでください**。
 
 ## **MCPサーバー優先順位付けのための戦略的フレームワーク**
