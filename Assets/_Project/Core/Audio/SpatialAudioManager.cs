@@ -28,8 +28,13 @@ namespace asterivo.Unity60.Core.Audio
         [SerializeField] private float maxOcclusionReduction = 0.8f;
         
         [Header("Environment Reverb")]
-                // [SerializeField] private bool enableEnvironmentReverb = true;e;
         [SerializeField] private AudioReverbZone[] reverbZones;
+        
+        [Header("Audio Categories")]
+        [SerializeField] private AudioMixerGroup bgmMixerGroup;
+        [SerializeField] private AudioMixerGroup ambientMixerGroup;
+        [SerializeField] private AudioMixerGroup effectMixerGroup;
+        [SerializeField] private AudioMixerGroup stealthMixerGroup;
         
         // オーディオソースプール
         private Queue<AudioSource> audioSourcePool = new Queue<AudioSource>();
@@ -113,7 +118,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (soundData == null) return null;
             
-            var audioSource = PlaySoundAtPosition(soundData, eventData.worldPosition, eventData.volume);
+            var audioSource = PlayCategorizedSound(soundData, eventData.worldPosition, eventData.category, eventData.volume);
             
             if (audioSource != null)
             {
@@ -122,9 +127,90 @@ namespace asterivo.Unity60.Core.Audio
                 
                 // 表面材質による調整
                 ApplySurfaceModifications(audioSource, eventData, soundData);
+                
+                // 優先度に応じた処理
+                ApplyPrioritySettings(audioSource, eventData);
             }
             
             return audioSource;
+        }
+        
+        /// <summary>
+        /// カテゴリ対応の音響再生システム
+        /// </summary>
+        public AudioSource PlayCategorizedSound(SoundDataSO soundData, Vector3 position, 
+            AudioCategory category, float volumeMultiplier = 1f)
+        {
+            if (soundData == null) return null;
+            
+            var audioSource = GetPooledAudioSource();
+            if (audioSource == null) return null;
+            
+            // カテゴリに応じたミキサーグループ設定
+            SetupCategorySettings(audioSource, category, soundData);
+            SetupAudioSource(audioSource, soundData, position, volumeMultiplier);
+            
+            var clip = soundData.GetRandomClip();
+            if (clip != null)
+            {
+                audioSource.clip = clip;
+                audioSource.Play();
+                
+                StartCoroutine(ReturnToPoolWhenFinished(audioSource, clip.length));
+            }
+            
+            return audioSource;
+        }
+        
+        /// <summary>
+        /// カテゴリに応じた音響設定
+        /// </summary>
+        private void SetupCategorySettings(AudioSource audioSource, AudioCategory category, SoundDataSO soundData)
+        {
+            switch (category)
+            {
+                case AudioCategory.BGM:
+                    audioSource.outputAudioMixerGroup = bgmMixerGroup;
+                    audioSource.spatialBlend = 0f; // BGMは2D音響
+                    audioSource.loop = true; // BGMは基本的にループ
+                    break;
+                    
+                case AudioCategory.Ambient:
+                    audioSource.outputAudioMixerGroup = ambientMixerGroup;
+                    audioSource.spatialBlend = soundData.Is3D ? soundData.SpatialBlend : 0f;
+                    break;
+                    
+                case AudioCategory.Effect:
+                    audioSource.outputAudioMixerGroup = effectMixerGroup;
+                    audioSource.spatialBlend = soundData.Is3D ? soundData.SpatialBlend : 0f;
+                    break;
+                    
+                case AudioCategory.Stealth:
+                    audioSource.outputAudioMixerGroup = stealthMixerGroup;
+                    audioSource.spatialBlend = soundData.Is3D ? soundData.SpatialBlend : 1f;
+                    break;
+                    
+                case AudioCategory.UI:
+                    // UIはミキサーグループを使わない場合が多い
+                    audioSource.spatialBlend = 0f; // UI音響は常に2D
+                    break;
+            }
+        }
+        
+        /// <summary>
+        /// 優先度設定の適用
+        /// </summary>
+        private void ApplyPrioritySettings(AudioSource audioSource, AudioEventData eventData)
+        {
+            // Unity AudioSource の priority は 0-256 の範囲（低い値ほど高優先度）
+            int unityPriority = Mathf.RoundToInt((1f - eventData.priority) * 256f);
+            audioSource.priority = Mathf.Clamp(unityPriority, 0, 256);
+            
+            // レイヤー優先度による追加調整
+            if (eventData.layerPriority > 50)
+            {
+                audioSource.priority = Mathf.Max(0, audioSource.priority - 50);
+            }
         }
         
         /// <summary>
