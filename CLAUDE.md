@@ -57,13 +57,6 @@
 
 - **DOTS/ECS 非対応**: このプロジェクトでは Data-Oriented Technology Stack (DOTS) や Entity Component System (ECS) は使用しません。全て従来のMonoBehaviourベースのオブジェクト指向アーキテクチャで構築されています。
 
-## セットアップ手順
-
-1.  このリポジトリをクローンします。
-2.  Unity Editor `6000.0.42f1` 以降でプロジェクトを開きます。
-3.  必要なパッケージが自動的にインポートされます。
-4.  `Assets/_Project/Scenes/System/` 内のシーンから開発を開始してください。
-
 ## ディレクトリ構成
 
 -   `Assets/_Project/Core`: ゲームのコアロジック（イベント、コマンド、オーディオシステム、データ構造など）。
@@ -199,4 +192,3 @@
 -   `Odin Serializer`: 高度なシリアライゼーション（[Sirenix](https://odininspector.com/)）
 -   `Odin Validator`: データ検証ツール（[Sirenix](https://odininspector.com/)）
 -   `TextMeshPro`: 高品質なテキストレンダリング（Unity公式）
-
