@@ -1,4 +1,5 @@
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 using Unity.Cinemachine;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Player;

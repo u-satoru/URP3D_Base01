@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 using asterivo.Unity60.Core.Commands;
 
 /// <summary>

@@ -1,4 +1,5 @@
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 using UnityEngine.AI;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Events;
