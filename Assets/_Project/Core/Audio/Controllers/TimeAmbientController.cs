@@ -279,7 +279,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             int hour = time.Hour;
             
             if (hour >= 6 && hour < 12)
-                return TimeOfDay.Morning;
+                return TimeOfDay.Day; // Morning is mapped to Day
             else if (hour >= 12 && hour < 18)
                 return TimeOfDay.Day;
             else if (hour >= 18 && hour < 22)

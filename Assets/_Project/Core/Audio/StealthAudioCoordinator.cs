@@ -54,6 +54,7 @@ namespace asterivo.Unity60.Core.Audio
         private List<Transform> nearbyAI = new List<Transform>();
         private Dictionary<AudioCategory, float> categoryVolumeMultipliers = new Dictionary<AudioCategory, float>();
         private bool previousStealthModeState = false;
+        private float globalMaskingStrength = 0f;
 
         // システム連携
         private AudioManager audioManager;
@@ -399,6 +400,27 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
+        /// マスキング効果の通知を受ける
+        /// </summary>
+        public void NotifyMaskingEffect(Vector3 position, float strength, float radius)
+        {
+            if (playerTransform == null) return;
+            
+            float distance = Vector3.Distance(playerTransform.position, position);
+            if (distance > radius) return;
+            
+            // プレイヤー周辺のマスキング効果として記録
+            // この情報は音響システムのマスキング計算に使用される
+            float normalizedDistance = distance / radius;
+            float effectiveStrength = strength * (1f - normalizedDistance);
+            
+            // グローバルマスキング強度を一時的に増加
+            globalMaskingStrength = Mathf.Max(globalMaskingStrength, effectiveStrength * 0.5f);
+            
+            EventLogger.Log($"<color=purple>[StealthAudioCoordinator]</color> Masking effect applied: strength={effectiveStrength:F2}, distance={distance:F1}m");
+        }
+
+        /// <summary>
         /// マスキング効果の更新
         /// </summary>
         private void UpdateMaskingEffects()
@@ -573,4 +595,3 @@ namespace asterivo.Unity60.Core.Audio
 
     #endregion
 }
-// Force recompile

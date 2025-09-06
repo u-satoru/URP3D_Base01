@@ -526,7 +526,7 @@ namespace asterivo.Unity60.Core.Audio
             {
                 if (layer?.audioSource != null)
                 {
-                    var collection = environmentSoundLookup.GetValueOrDefault(layer.environmentType);
+                    environmentSoundLookup.TryGetValue(layer.environmentType, out var collection);
                     if (collection != null)
                     {
                         layer.targetVolume = collection.baseVolume * masterVolume;

@@ -38,6 +38,9 @@ namespace asterivo.Unity60.Core.Audio.Data
         public bool canBeDuckedByTension;          // 緊張状態で音量を下げるか
         public int layerPriority;                  // レイヤー内での優先度（高い値ほど優先）
         
+        [Header("オーディオクリップ")]
+        public AudioClip audioClip;                // 再生するオーディオクリップ
+        
         /// <summary>
         /// デフォルト値でデータを初期化（既存互換性維持）
         /// </summary>

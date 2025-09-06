@@ -140,7 +140,7 @@ namespace asterivo.Unity60.Core.Audio
         /// カテゴリ対応の音響再生システム
         /// </summary>
         public AudioSource PlayCategorizedSound(SoundDataSO soundData, Vector3 position, 
-            AudioCategory category, float volumeMultiplier = 1f)
+            Audio.Data.AudioCategory category, float volumeMultiplier = 1f)
         {
             if (soundData == null) return null;
             
@@ -166,32 +166,32 @@ namespace asterivo.Unity60.Core.Audio
         /// <summary>
         /// カテゴリに応じた音響設定
         /// </summary>
-        private void SetupCategorySettings(AudioSource audioSource, AudioCategory category, SoundDataSO soundData)
+        private void SetupCategorySettings(AudioSource audioSource, Audio.Data.AudioCategory category, SoundDataSO soundData)
         {
             switch (category)
             {
-                case AudioCategory.BGM:
+                case Audio.Data.AudioCategory.BGM:
                     audioSource.outputAudioMixerGroup = bgmMixerGroup;
                     audioSource.spatialBlend = 0f; // BGMは2D音響
                     audioSource.loop = true; // BGMは基本的にループ
                     break;
                     
-                case AudioCategory.Ambient:
+                case Audio.Data.AudioCategory.Ambient:
                     audioSource.outputAudioMixerGroup = ambientMixerGroup;
                     audioSource.spatialBlend = soundData.Is3D ? soundData.SpatialBlend : 0f;
                     break;
                     
-                case AudioCategory.Effect:
+                case Audio.Data.AudioCategory.Effect:
                     audioSource.outputAudioMixerGroup = effectMixerGroup;
                     audioSource.spatialBlend = soundData.Is3D ? soundData.SpatialBlend : 0f;
                     break;
                     
-                case AudioCategory.Stealth:
+                case Audio.Data.AudioCategory.Stealth:
                     audioSource.outputAudioMixerGroup = stealthMixerGroup;
                     audioSource.spatialBlend = soundData.Is3D ? soundData.SpatialBlend : 1f;
                     break;
                     
-                case AudioCategory.UI:
+                case Audio.Data.AudioCategory.UI:
                     // UIはミキサーグループを使わない場合が多い
                     audioSource.spatialBlend = 0f; // UI音響は常に2D
                     break;

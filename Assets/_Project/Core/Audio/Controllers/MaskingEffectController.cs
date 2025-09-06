@@ -336,7 +336,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                 // ステルス系システムに通知
                 if (stealthCoordinator != null)
                 {
-                    stealthCoordinator.NotifyMaskingEffect(currentMaskingStrength, lastMaskingPosition);
+                    stealthCoordinator.NotifyMaskingEffect(lastMaskingPosition, currentMaskingStrength, maskingRadius);
                 }
             }
             else

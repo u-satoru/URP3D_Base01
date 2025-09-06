@@ -412,6 +412,60 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             public float fadeSpeed;
         }
 
+        /// <summary>
+        /// 天気別環境音コレクション（WeatherAmbientController専用）
+        /// </summary>
+        [System.Serializable]
+        private class WeatherAmbientCollection
+        {
+            [Header("基本設定")]
+            public string collectionName = "Weather Ambient";
+            public WeatherType weatherType = WeatherType.Clear;
+            public float baseVolume = 0.7f;
+            public bool enableRandomization = true;
+            
+            [Header("オーディオクリップ")]
+            public AudioClip[] ambientClips = new AudioClip[0];
+            
+            [Header("音響パラメータ")]
+            [Range(0.5f, 2f)] public float pitchVariation = 0.1f;
+            [Range(0f, 1f)] public float volumeVariation = 0.2f;
+            [Range(0f, 10f)] public float fadeInTime = 2f;
+            [Range(0f, 10f)] public float fadeOutTime = 2f;
+            
+            /// <summary>
+            /// ランダムなオーディオクリップを取得
+            /// </summary>
+            public AudioClip GetRandomClip()
+            {
+                if (ambientClips == null || ambientClips.Length == 0)
+                    return null;
+                    
+                return ambientClips[Random.Range(0, ambientClips.Length)];
+            }
+            
+            /// <summary>
+            /// バリエーション付きの音量を取得
+            /// </summary>
+            public float GetRandomVolume()
+            {
+                if (!enableRandomization) return baseVolume;
+                
+                float variation = Random.Range(-volumeVariation, volumeVariation);
+                return Mathf.Clamp01(baseVolume + variation);
+            }
+            
+            /// <summary>
+            /// バリエーション付きのピッチを取得
+            /// </summary>
+            public float GetRandomPitch()
+            {
+                if (!enableRandomization) return 1f;
+                
+                return 1f + Random.Range(-pitchVariation, pitchVariation);
+            }
+        }
+
         #endregion
 
         #region Editor Helpers
