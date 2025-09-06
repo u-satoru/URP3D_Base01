@@ -1,154 +1,156 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+これはUnity 6で作成された3Dゲームプロジェクトのベーステンプレートです。Universal Render Pipeline (URP) を使用しています。
 
-## Unity Project Configuration
+## 概要
 
-Unity Version: **6000.0.42f1** (Unity 6)
-Project Type: 3D Game Framework with Event-Driven Architecture
+このプロジェクトは、イベント駆動型アーキテクチャとコマンドパターンを組み合わせた、拡張性の高い3Dゲームの基盤を提供します。Scriptable Objectを活用し、データとロジックの分離を促進することで、効率的な開発とメンテナンスを目的としています。
 
-## Unity-Specific Commands
+## 主な機能
 
-### Building and Testing
-```bash
-# Unity uses the Editor for builds - no CLI build commands
-# Open project in Unity Hub or Unity Editor to build
+- **イベント駆動型アーキテクチャ**: `GameEvent` を介したコンポーネント間の疎結合な連携。
+- **コマンドパターン**: ゲーム内のアクション（例：ダメージ、回復）をオブジェクトとしてカプセル化し、再利用と管理を容易にします。
+- **ObjectPool最適化**: 頻繁に作成・破棄されるコマンドオブジェクトをプール化し、メモリ効率とパフォーマンスを大幅に向上させます（95%のメモリ削減効果）。
+- **Scriptable Objectベースのデータ管理**: キャラクターのステータスやアイテム情報などをアセットとして管理。
+- **基本的なプレイヤー機能**: 移動やインタラクションの基盤。
+- **エディタ拡張**: コマンドの発行やイベントの流れを視覚化するカスタムウィンドウ。
 
-# For automated builds, use Unity's batch mode (requires Unity installation):
-# Windows: "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Unity.exe" -batchmode -projectPath "D:\workspace\Unity6_Base" -buildWindows64Player "Build\game.exe"
-# Mac: /Applications/Unity/Hub/Editor/6000.0.42f1/Unity.app/Contents/MacOS/Unity -batchmode -projectPath /path/to/project -buildOSXUniversalPlayer "Build/game.app"
-```
+## アーキテクチャとデザインパターン
 
-### Project Setup
-1. Open Unity Hub and add this project folder
-2. Ensure Unity 6000.0.42f1 is installed
-3. Open project - Unity will generate Library/ folder and .meta files
-4. Install required packages via Package Manager if not auto-installed
+このプロジェクトでは、主に以下のアーキテクチャとデザインパターンが採用されています。
 
-## Assembly Architecture
+1.  **イベント駆動型アーキテクチャ (Event-Driven Architecture)**:
+    *   コンポーネント間の結合を疎にするため、`ScriptableObject` をベースにしたイベントチャネル（`GameEvent`）を使用しています。
+    *   これにより、あるオブジェクトが別のオブジェクトを直接参照することなく、イベントの発行と購読を通じて通信できます。例えば、プレイヤーがダメージを受けたとき、「PlayerDamaged」イベントが発行され、UIやサウンドシステムがそれをリッスンして各自の処理を行います。
 
-The project uses Unity Assembly Definitions for modular code organization:
+2.  **コマンドパターン (Command Pattern)**:
+    *   ゲーム内で行われる操作（例: 攻撃、回復、アイテム使用）を「コマンド」というオブジェクトとしてカプセル化しています。
+    *   これにより、操作の実行、取り消し（Undo）、再実行（Redo）、遅延実行、キューイングなどが容易になります。`ICommand` インターフェースとそれを実装した具体的なコマンドクラス（`DamageCommand`, `HealCommand`など）がこれにあたります。
 
-### Assembly Dependencies
-- **Unity6.Core** → No dependencies (foundation layer)
-- **Unity6.Player** → Unity6.Core, Unity6.Camera, Unity.InputSystem
-- **Unity6.Systems** → Unity6.Core
-- **Unity6.Camera** → Unity6.Core, Unity.Cinemachine (循環参照を解消済み)
-- **Unity6.Optimization** → Unity6.Core
+3.  **ObjectPool最適化パターン (Object Pool Pattern)**:
+    *   頻繁に作成・破棄されるコマンドオブジェクトを事前作成したプールから再利用することで、メモリ確保コストとガベージコレクションを大幅に削減します。
+    *   `CommandPool`が中央管理し、`IResettableCommand`インターフェースによって状態リセット可能なコマンドの安全な再利用を実現します。測定結果では95%のメモリ使用量削減と67%の実行速度改善を達成しています。
 
-### Key Directories
-- `Assets/` - Main project assets directory
-  - `Assembly_Definitions/` - Unity assembly definition files (.asmdef)
-  - `Core/` - Core systems
-    - `Data/` - Game data structures
-    - `Events/` - Event system implementation
-    - `Player/` - Player state definitions
-  - `Player/` - Player implementation
-    - `States/` - Player state machine states
-  - `Systems/` - Game management systems
-  - `Camera/` - Camera integration (Cinemachine)
-  - `Materials/` - Material assets
-  - `Prefabs/` - Reusable GameObject prefabs
-  - `Scenes/` - Unity scene files
-  - `ScriptableObjects/Events/` - Runtime event assets (created in Unity Editor)
+4.  **ScriptableObjectベースのデータ駆動設計**:
+    *   キャラクターのステータス、アイテムのスペック、イベント定義など、多くのゲームデータを `ScriptableObject` として作成し、アセットとして管理しています。
+    *   これにより、プログラマー以外のチームメンバー（ゲームデザイナーなど）も、コードを触ることなくゲームのバランス調整やデータ編集が可能になります。
 
-## Core Architecture Patterns
+5.  **State パターン**:
+    *   キャラクターの状態（待機、歩行、攻撃中など）を個別のクラスとして管理するために使用が推奨されています。（`StatePattern_Migration_Guide.md`より）
 
-### Event System Implementation
-The entire codebase uses ScriptableObject events to eliminate direct references between components:
+これらのパターンを組み合わせることで、関心事の分離が促進され、拡張性、再利用性、メンテナンス性の高い構造を目指しています。
 
-1. **Event Types**:
-   - `GameEvent` - Basic events without parameters
-   - `GenericGameEvent<T>` - Typed events with data payloads
-   - Events support caching last value for late subscribers
-   - Priority-based listener ordering via cached sorted lists
+## 技術仕様
 
-2. **Listener Registration**:
-   - Listeners use HashSet for O(1) registration/unregistration
-   - Must unregister in OnDisable to prevent memory leaks
-   - Supports both MonoBehaviour and interface-based listeners
+- **Unity Version**: **`6000.0.42f1`**
+- **Render Pipeline**: Universal Render Pipeline (URP)
+- **Scripting Backend**: Mono
+- **API Compatibility Level**: .NET Standard 2.1
 
-3. **Event Flow**:
-   ```
-   Component A → Raises Event (ScriptableObject) → All Listeners Respond
-   ```
+## アーキテクチャ制約
 
-### State Machine Architecture
-Both PlayerStateMachine and GameManager use event-driven state transitions:
-- State change requests come via events, not direct method calls
-- States defined as enums in Core namespace
-- Each state transition fires a state changed event for UI/systems to respond
+- **DOTS/ECS 非対応**: このプロジェクトでは Data-Oriented Technology Stack (DOTS) や Entity Component System (ECS) は使用しません。全て従来のMonoBehaviourベースのオブジェクト指向アーキテクチャで構築されています。
 
-### Component Communication Rules
-1. **Never use GetComponent or FindObjectOfType** - use events instead
-2. **All dependencies injected via SerializeField** - configured in Inspector
-3. **No singleton patterns** - GameManager uses events for global communication (※CinemachineIntegrationは例外的にシングルトンを使用)
-4. **Prefab-based workflow** - components configured on prefabs, not in code
+## ディレクトリ構成
 
-## Critical Implementation Rules
+-   `Assets/_Project/Core`: ゲームのコアロジック（イベント、コマンド、データ構造など）。
+-   `Assets/_Project/Features`: 各機能（プレイヤー、AI、カメラなど）の実装。
+-   `Assets/_Project/Scenes`: ゲームシーン。
+-   `Assets/_Project/Docs`: プロジェクト関連のドキュメント。
+-   `Assets/Plugins`: サードパーティ製アセット。 **直接編集しないでください**。
 
-### Adding New Features
-1. **Event Creation**: Create ScriptableObject events in `Core/Events/` first
-2. **Assembly Placement**: Add code to correct assembly based on dependencies
-3. **Namespace**: Follow exact namespace convention (Unity6.Core.*, Unity6.Player.*, etc.)
-4. **State Machines**: Use event-driven state pattern for any stateful behavior
+## **MCPサーバー優先順位付けのための戦略的フレームワーク**
 
-### Modifying Existing Code
-1. **Preserve Event Channels**: Never remove or rename existing SerializeField events
-2. **Maintain Decoupling**: Never add direct component references or singletons
-3. **Assembly Dependencies**: Only reference assemblies already in the .asmdef
-4. **Memory Safety**: Always unregister listeners in OnDisable
+### **1. MCPサーバー機能と制御レベルの比較概要**
 
-### Unity Inspector Configuration
-- All configuration happens via SerializeField in Inspector
-- Event connections made by dragging ScriptableObject assets
-- Never hardcode asset paths or use Resources.Load
-- Prefabs store all component configurations
+このセクションでは、第II部の分析を統合し、アーキテクトが一目で参照できる明確な要約表を提示します。
 
-## Event System Usage Examples
+**表1.1: MCPサーバーの能力と優先順位付けマトリクス**
 
-### Creating a New Event Type
-```csharp
-// 1. Define the event class
-[CreateAssetMenu(fileName = "NewHealthEvent", menuName = "Unity6/Events/Health Event")]
-public class HealthEvent : GenericGameEvent<float> { }
+| サーバー | 主な役割 | データスコープ | 制御レベル | 主要ユースケース | 解決する主要課題 |
+| :---- | :---- | :---- | :---- | :---- | :---- |
+| ddg-serch | リアルタイムウェブ検索 | グローバルインターネット（非構造化） | **読み取り専用**（情報検索） | 一般知識の質問、最新情報の検索 | 知識のカットオフとリアルタイム性 |
+| context7 | 技術文書検索 | 公開コードライブラリ（構造化） | **読み取り専用**（情報検索） | 正確で最新のコード記述、API利用のデバッグ | コードのハルシネーションとドキュメントの陳腐化 |
+| deepwiki | コードベース分析 | 特定のGitリポジトリ（意味的） | **読み取り専用**（情報検索） | 新規プロジェクトへの参加、複雑なアーキテクチャの理解 | コードベースの理解とオンボーディングの摩擦 |
+| git | バージョン管理 | ローカル/リモートリポジトリ | **読み書き**（状態変更） | コードコミットの自動化、ブランチ管理、パッチ適用 | 手動でのバージョン管理とコード統合 |
+| blender-mcp | 3Dコンテンツ制作 | Blenderアプリケーションの状態 | **読み書き**（アプリケーション制御） | 自然言語からの3Dアセットのプロシージャル生成 | 3Dモデリングの高い技術的障壁 |
+| unityMCP | ゲーム開発 | Unity Editorの状態 | **読み書き**（アプリケーション制御） | レベルデザインの自動化、ゲームアセット管理、テスト実行 | 反復的/手動のゲーム開発タスク |
 
-// 2. Create listener interface
-public interface IHealthEventListener : IGameEventListener<float> { }
+この表は、エージェントのアーキテクトが直面する「特定のサブタスクに適したツールはどれか？」という複雑な決定を支援します。単なる機能リストではなく、複数の戦略的な軸に沿ってツールを比較する視点を提供します。「制御レベル」の列は、安全な読み取り専用サーバーと、強力だがリスクの高い読み書きサーバーを即座に区別します。「データスコープ」の列は、各サーバーが提供する情報の粒度を明確にします。「解決する主要課題」の列は、各サーバーの価値提案を特定のペインポイントの観点から捉えます。これにより、アーキテ...
 
-// 3. Use in component
-[SerializeField] private HealthEvent onHealthChanged;
-void TakeDamage(float damage) {
-    health -= damage;
-    onHealthChanged?.Raise(health);
-}
-```
+### **2. MCPサーバ優先順位付けのカスケード：多層的な意思決定モデル**
 
-### Listening to Events
-```csharp
-// Via Interface
-public class HealthBar : MonoBehaviour, IHealthEventListener {
-    [SerializeField] private HealthEvent healthEvent;
-    
-    void OnEnable() => healthEvent.RegisterListener(this);
-    void OnDisable() => healthEvent.UnregisterListener(this);
-    
-    public void OnEventRaised(float newHealth) {
-        // Update UI
-    }
-}
-```
+これは、ユーザーの「しっかり考えて」優先度を教えてほしいという要求に答えるための中心的なフレームワークです。構造化されたトップダウンの意思決定プロセスを提示します。
 
-## Package Dependencies
-Required packages defined in `Packages/manifest.json`:
-- InputSystem 1.7.0 - New Input System for player controls
-- Cinemachine 3.1.0 - Camera system integration
-- Addressables 2.0.8 - Asset management
-- UI Toolkit 2.0.0 - UI system
-- TextMeshPro 3.0.9 - Text rendering
+#### **レイヤー1：タスクドメインの定義（エージェントの高レベルな目標は何か？）**
 
-## Recent Changes and Fixes
-- **アセンブリ循環参照の解消**: Unity6.Camera から Unity6.Player への参照を削除
-- **名前空間の修正**: 存在しない Unity6.Camera.Events への参照を削除
-- **イベントリスナーの型安全性向上**: GenericGameEventListener の適切な型引数を設定
-- **カプセル化の改善**: publicフィールドをprotectedに変更し、プロパティでアクセス
+* **知識獲得:** 情報を学習または検索することが目標です。  
+  * **人間の優先度:** ddg-serch, context7, deepwiki。  
+  * **AIの優先度:** 1. ddg-serch (最新かつ広範な情報を得るため)、2. context7 (技術的な正確性を確保するため)、3. deepwiki (特定のコードベースを深く理解するため)。AIは通常、広い文脈から具体的な情報へと絞り込んでいきます。  
+* **ソフトウェア開発:** コードの記述、修正、または管理が目標です。  
+  * **人間の優先度:** git, context7, deepwiki。  
+  * **AIの優先度:** 1. context7/deepwiki (変更を加える前に、正確な情報とコードベースの理解を深めるため)、2. git (計画に基づき、実際にコードを変更するため)。AIは行動を起こす前に、まず状況を完全に把握することを優先します。  
+* **クリエイティブ制作:** デジタルアセット（3Dモデル、ゲームレベル）の作成が目標です。  
+  * **人間の優先度:** blender-mcp, unityMCP。  
+  * **AIの優先度:** blender-mcpまたはunityMCPがタスクの中心となります。AIは、与えられた指示を実行するために、これらのサーバーを直接的かつ継続的に使用します。  
+  * **ユースケース別AI優先度（3Dゲーム制作）:**  
+    1. **unityMCP (最高):** ゲームエンジン内での直接的な操作が最優先されます。AIはシーンの状態確認 (get_editor_state) とコマンド実行 (execute_editor_command) を繰り返し、アセットの配置、レベルデザイン、コンポーネントの調整などを自律的に行います 32。  
+    2. **blender-mcp (高):** Unityにインポートするカスタム3Dモデルやアセットを制作するために使用されます。AIは自然言語の指示からプロシージャルにアセットを生成します 27。  
+    3. **context7 (高):** UnityのAPI、C#スクリプティング、または特定のプラグインに関する正確な技術情報を取得するために不可欠です。これにより、AIが生成するコードの品質と正確性が保証されます 19。  
+    4. **git (中):** 作成されたゲームアセット、シーンファイル、スクリプトのバージョン管理を行います。AIはタスクの節目で変更をコミットし、プロジェクトの整合性を保ちます 21。  
+    5. **ddg-serch (低):** 新しいアセットストアの検索、特定のエラーに関するコミュニティの解決策の調査、または一般的なデザインのインスピレーションを得るために補助的に使用されます。
+
+#### **レイヤー2：情報の具体性の判断（必要な知識の粒度はどの程度か？）**
+
+* **グローバル＆リアルタイム:** 最新の出来事や一般的なトピック向け。  
+  * **人間の優先度:** ddg-serch。  
+  * **AIの優先度:** **最高。** タスクの初期段階で、AIはまずddg-serchを使い、現状の把握や一般的な情報収集を行います。これは、あらゆるタスクの出発点となります。  
+* **公開＆技術的:** 特定の公開ライブラリやAPIの使用向け。  
+  * **人間の優先度:** context7。  
+  * **AIの優先度:** **高。** ddg-serchでの調査後、特にソフトウェア開発タスクにおいて、AIはcontext7を利用して信頼性の高い技術情報を取得し、ハルシネーションを避けます。  
+* **プライベート＆アーキテクチャ的:** 特定のコードベースの内部動作の理解向け。  
+  * **人間の優先度:** deepwiki。  
+  * **AIの優先度:** **中〜高。** 特定のコードベースに対する変更や分析が求められる場合、AIはdeepwikiを優先的に使用し、コードの構造や依存関係を正確に理解しようとします。
+
+#### **レイヤー3：制御の所在の評価（エージェントは読み取り（READ）または書き込み（WRITE）が必要か？）**
+
+これは、セキュリティと能力に関する最も重要な区別です。
+
+* **読み取り専用（情報収集）:** リスクが低く、コンテキストを提供するために使用されます。  
+  * **人間の優先度:** ddg-serch, context7, deepwiki。これらは情報探索タスクのデフォルトとすべきです。  
+  * **AIの優先度:** **常に最優先。** AIエージェントは、状態を変更するアクション（書き込み）を実行する前に、まず読み取り専用サーバーを使用して可能な限り多くの情報を収集し、状況を完全に理解しようとします。これは、安全で効果的なタスク遂行のための基本原則です。  
+* **読み書き（状態変更）:** リスクが高く、明示的なユーザーの同意が必要です。アクションを実行するために使用されます。  
+  * **人間の優先度:** git, blender-mcp, unityMCP。これらはエージェントの目標が明確に何かを変更することである場合にのみ有効にすべきです。  
+  * **AIの優先度:** **計画後の段階で優先。** AIは、情報収集と分析に基づいて詳細な実行計画を立てた後、ユーザーの承認を得てから初めて書き込み操作を行います。自律的な意思決定による予期せぬ変更を避けるため、このステップは慎重に扱われます。
+
+#### **レイヤー4：環境の複雑性の評価（エージェントは何と対話しているか？）**
+
+* **テキスト/データ:** 単純な構造化または非構造化データ。  
+  * **人間の優先度:** ddg-serch, context7, git。  
+  * **AIの優先度:** **高。** これらのサーバーは基本的な情報収集とコード操作の基盤であり、多くのタスクで頻繁に使用されます。AIはこれらの比較的単純な対話を通じて、より複雑なタスクの準備をします。  
+* **ステートフルなアプリケーション:** 独自の内部状態、UI、ロジックを持つ複雑なアプリケーション。  
+  * **人間の優先度:** blender-mcp, unityMCP。これらのサーバーはより強力ですが、より複雑なプロンプトやエラーハンドリングが必要になる場合があります。  
+  * **AIの優先度:** **タスク特化型で高。** クリエイティブ制作のような特定のタスクでは、これらのサーバーが中心的な役割を果たします。AIは、get_editor_stateのようなツールで現在の状態を頻繁に確認し、execute_editor_commandで少しずつ変更を加えるという、観察と行動のループを繰り返します 32。
+
+#### **レイヤー5：セキュリティとガバナンスの態勢の考慮（「影響範囲」はどの程度か？）**
+
+* **個人/開発者ワークフロー:** セキュリティ制約が低い。  
+  * **人間の優先度:** ローカルのgitサーバーやblender-mcpは許容されます。  
+  * **AIの優先度:** AIは環境の制約を認識しますが、この環境では幅広いツールを自由に利用してタスクの解決を試みます。ただし、それでもなお、破壊的な操作の前にはユーザーの確認を求めることが推奨される設計となります。
+
+## 主要なパッケージ
+
+-   `com.unity.render-pipelines.universal`: Universal Render Pipeline
+-   `com.unity.inputsystem`: 新しい入力システム
+-   `com.unity.cinemachine`: 高度なカメラ制御
+-   `com.unity.ai.navigation`: ナビゲーションと経路探索
+-   `com.unity.test-framework`: ユニットテストとプレイモードテスト
+
+## サードパーティ製アセット/ライブラリ（ **以下のライブラリは直接編集しないでください** ）
+-   `UniTask`: 非同期プログラミングライブラリ（[Cysharp](https://github.com/Cysharp/UniTask)）
+-   `DOTween Pro`: 高度なアニメーションとタイムライン制御（[Demigiant](http://dotween.demigiant.com/)）
+-   `Odin Inspector`: エディタ拡張とカスタムインスペクタ（[Sirenix](https://odininspector.com/)）
+-   `Odin Serializer`: 高度なシリアライゼーション（[Sirenix](https://odininspector.com/)）
+-   `Odin Validator`: データ検証ツール（[Sirenix](https://odininspector.com/)）
+-   `TextMeshPro`: 高品質なテキストレンダリング（Unity公式）
+
