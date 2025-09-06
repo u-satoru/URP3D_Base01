@@ -48,7 +48,7 @@
 
 ## 技術仕様
 
-- **Unity Version**: **`6000.0.42f1`**
+- **Unity Version**: `6000.0.42f1`
 - **Render Pipeline**: Universal Render Pipeline (URP)
 - **Scripting Backend**: Mono
 - **API Compatibility Level**: .NET Standard 2.1
@@ -57,14 +57,53 @@
 
 - **DOTS/ECS 非対応**: このプロジェクトでは Data-Oriented Technology Stack (DOTS) や Entity Component System (ECS) は使用しません。全て従来のMonoBehaviourベースのオブジェクト指向アーキテクチャで構築されています。
 
+## セットアップ手順
+
+1.  このリポジトリをクローンします。
+2.  Unity Editor `6000.0.42f1` 以降でプロジェクトを開きます。
+3.  必要なパッケージが自動的にインポートされます。
+4.  `Assets/_Project/Scenes/System/` 内のシーンから開発を開始してください。
+
 ## ディレクトリ構成
 
--   `Assets/_Project/Core`: ゲームのコアロジック（イベント、コマンド、データ構造など）。
+-   `Assets/_Project/Core`: ゲームのコアロジック（イベント、コマンド、オーディオシステム、データ構造など）。
 -   `Assets/_Project/Features`: 各機能（プレイヤー、AI、カメラなど）の実装。
 -   `Assets/_Project/Scenes`: ゲームシーン。
--   `Assets/_Project/Docs`: プロジェクト関連のドキュメント。
--   `Assets/_ThirdParty`: サードパーティ製アセット/ライブラリのラッパークラスまたは適応層を作成する場合に使用。
+-   `Assets/_Project/Docs`: プロジェクト関連のドキュメント（ステルスオーディオシステム仕様書、SDD実践ガイドを含む）。
+    -   `Assets/_Project/Docs/Work`: 作業用ドキュメント（tasks.md, todo.md, WorkLogsなど）。
 -   `Assets/Plugins`: サードパーティ製アセット。 **直接編集しないでください**。
+
+## スペック駆動開発（SDD）の実践
+
+このプロジェクトでは、AIツールと連携したスペック駆動開発（SDD）を推奨しています。SDDは人間の意図を段階的に機械実行可能な命令に変換するパイプラインとして機能します。
+
+### SDD Markdownファイル構成
+
+#### プロジェクトルート配置（基盤仕様書）
+- `spec.md` - 初期構想・要件定義（人間作成）
+- `requirements.md` - 形式化された要件（AI生成）
+- `design.md` - 技術設計書（AI生成）
+
+#### 作業ディレクトリ配置（実装管理）
+- `Assets/_Project/Docs/Work/tasks.md` - 実装タスク一覧
+- `Assets/_Project/Docs/Work/todo.md` - 進行中タスク管理
+- `Assets/_Project/Docs/Work/WorkLogs/` - 作業ログ保管庫（日時フォルダでスナップショット管理）
+
+### SDD 5つのフェーズ
+1. **構想**（spec.md） - 高レベルビジョンの定義
+2. **形式化**（requirements.md） - 構造化された要件定義
+3. **設計**（design.md） - 技術的実装戦略
+4. **分解**（tasks.md） - 実行可能なタスクリスト
+5. **実装・検証** - AIによるコード生成と品質保証
+
+### Claude Code連携
+各フェーズでClaude Codeと効果的に連携し、以下のようなワークフローを実現：
+- `/spec-create` - spec.mdからrequirements.mdを生成
+- `/design-create` - requirements.mdからdesign.mdを生成
+- `/tasks-create` - design.mdからtasks.mdを生成
+- `/todo-execute` - todo.mdの最高優先度タスクを実行
+
+詳細は [`Assets/_Project/Docs/SDD_Markdown作成実践ガイド.md`](Assets/_Project/Docs/SDD_Markdown作成実践ガイド.md) を参照してください。
 
 ## **MCPサーバー優先順位付けのための戦略的フレームワーク**
 
@@ -153,7 +192,7 @@
 -   `com.unity.ai.navigation`: ナビゲーションと経路探索
 -   `com.unity.test-framework`: ユニットテストとプレイモードテスト
 
-## サードパーティ製アセット/ライブラリ（ **以下のライブラリは直接編集しないでください** ）
+## サードパーティ製アセット/ライブラリ
 -   `UniTask`: 非同期プログラミングライブラリ（[Cysharp](https://github.com/Cysharp/UniTask)）
 -   `DOTween Pro`: 高度なアニメーションとタイムライン制御（[Demigiant](http://dotween.demigiant.com/)）
 -   `Odin Inspector`: エディタ拡張とカスタムインスペクタ（[Sirenix](https://odininspector.com/)）
