@@ -237,26 +237,173 @@ Parameters:
    - Damage Shake Intensity: 0.3
 ```
 
-### 6-3. アニメーション統合コード例
+### 6-3. BlendTreeを使用したスムーズなアニメーション
+
+BlendTreeを使用することで、移動速度に応じて自然にアニメーションが切り替わります。
+
+#### BlendTree の設定手順
+
+**1. MovementステートをBlendTreeに変更**
+```
+1. Animation Controller で Movement ステートを右クリック → Delete
+2. 空いた場所で右クリック → Create State → From New Blend Tree
+3. 新しいステートを "Movement" にリネーム
+4. Movement ステートをダブルクリックして編集モード
+```
+
+**2. BlendTree の詳細設定**
+```
+Blend Tree Inspector で設定:
+- Blend Type: 1D
+- Parameter: MoveSpeed
+- Motion の追加:
+  - Threshold: 0.0 → Idle Animation
+  - Threshold: 0.3 → Walk Animation  
+  - Threshold: 0.7 → Jog Animation
+  - Threshold: 1.0 → Run Animation
+```
+
+**3. 2D BlendTree（方向性を含む）の設定**
+より高度な制御が必要な場合：
+```
+Blend Tree Inspector で設定:
+- Blend Type: 2D Freeform Directional
+- Parameters: MoveX, MoveZ
+- Motion Field で各方向のアニメーションを配置:
+  - (0, 1): Walk Forward
+  - (1, 0): Walk Right
+  - (0, -1): Walk Backward
+  - (-1, 0): Walk Left
+  - (0.7, 0.7): Walk Forward-Right
+  - (その他の対角線方向も同様に設定)
+```
+
+#### PlayerController のアニメーション統合コード
 
 ```csharp
 // PlayerController.cs での実装例
 [Header("Animation")]
 [SerializeField] private Animator animator;
+[SerializeField] private bool use2DBlendTree = false; // Inspector で選択可能
+[SerializeField] private float animationSmoothTime = 0.1f; // スムージング時間
+
+// パフォーマンス向上のためパラメータをハッシュ化
+private static readonly int MoveSpeedHash = Animator.StringToHash("MoveSpeed");
+private static readonly int MoveXHash = Animator.StringToHash("MoveX");
+private static readonly int MoveZHash = Animator.StringToHash("MoveZ");
+private static readonly int IsGroundedHash = Animator.StringToHash("IsGrounded");
+
+// スムーズなアニメーション遷移用
+private Vector2 animationVelocity;
+private Vector2 animationSmoothVelocity;
+
+private void Awake()
+{
+    // 既存の初期化処理...
+    
+    // Animator の自動取得
+    if (animator == null)
+        animator = GetComponent<Animator>();
+}
 
 private void OnMove(InputAction.CallbackContext context)
 {
     var moveInput = context.ReadValue<Vector2>();
     
-    // 1. アニメーション更新
-    animator.SetFloat("MoveSpeed", moveInput.magnitude);
-    animator.SetBool("IsMoving", moveInput.magnitude > 0.1f);
-    animator.SetBool("IsRunning", IsSprintPressed && moveInput.magnitude > 0.1f);
+    // スムーズなアニメーション遷移（急激な変化を防ぐ）
+    animationVelocity = Vector2.SmoothDamp(
+        animationVelocity, 
+        moveInput, 
+        ref animationSmoothVelocity, 
+        animationSmoothTime
+    );
+    
+    // 1. BlendTree アニメーション更新
+    if (use2DBlendTree)
+    {
+        Update2DBlendTree(animationVelocity);
+    }
+    else
+    {
+        Update1DBlendTree(animationVelocity.magnitude);
+    }
     
     // 2. コマンド発行（既存システム）
     var definition = new MoveCommandDefinition(moveInput);
     onCommandDefinitionIssued?.Raise(definition);
 }
+
+private void Update1DBlendTree(float speed)
+{
+    // スプリント状態を考慮した速度計算
+    float finalSpeed = speed;
+    if (IsSprintPressed && speed > 0.1f)
+    {
+        finalSpeed = Mathf.Lerp(0.7f, 1.0f, speed); // スプリント時は0.7-1.0の範囲
+    }
+    
+    animator.SetFloat(MoveSpeedHash, finalSpeed);
+}
+
+private void Update2DBlendTree(Vector2 velocity)
+{
+    // 2D方向を考慮したBlendTree制御
+    animator.SetFloat(MoveXHash, velocity.x);
+    animator.SetFloat(MoveZHash, velocity.y);
+    animator.SetFloat(MoveSpeedHash, velocity.magnitude);
+}
+
+private void OnJump(InputAction.CallbackContext context)
+{
+    // 1. BlendTreeでキャラクターアニメーション（縦軸の速度制御）
+    animator.SetTrigger("JumpTrigger");
+    animator.SetBool(IsGroundedHash, false);
+    
+    // 2. DOTweenで追加演出（既存システム）
+    if (movementAnimator != null)
+    {
+        movementAnimator.AnimateJump();
+    }
+    
+    // 3. コマンドパターンでゲームロジック
+    var definition = new JumpCommandDefinition();
+    onCommandDefinitionIssued?.Raise(definition);
+}
+
+private void Update()
+{
+    // 縦方向速度をジャンプ・落下アニメーションに反映
+    if (GetComponent<Rigidbody>() != null)
+    {
+        float verticalVelocity = GetComponent<Rigidbody>().velocity.y;
+        animator.SetFloat("VerticalVelocity", verticalVelocity);
+        
+        // 接地状態の更新
+        bool isGrounded = CheckGroundContact();
+        animator.SetBool(IsGroundedHash, isGrounded);
+    }
+}
+
+private bool CheckGroundContact()
+{
+    // 接地判定の実装（レイキャストなどを使用）
+    return Physics.Raycast(transform.position, Vector3.down, 1.1f);
+}
+```
+
+#### 空中動作用のBlendTree設定
+
+ジャンプ・落下をスムーズにするための追加設定：
+```
+空中動作用BlendTree作成:
+1. 新しいBlendTree "AirMovement" を作成
+2. Blend Type: 1D
+3. Parameter: VerticalVelocity
+4. Motion設定:
+   - Threshold: -20.0 → Fast Fall Animation
+   - Threshold: -5.0 → Normal Fall Animation
+   - Threshold: 0.0 → Float/Hover Animation
+   - Threshold: 15.0 → Jump Rise Animation
 ```
 
 ---
