@@ -6,6 +6,27 @@ using asterivo.Unity60.Core.Events;
 
 namespace asterivo.Unity60.Core.Editor
 {
+    /// <summary>
+    /// イベント履歴管理ウィンドウ
+    /// ゲーム実行中に発生したイベントの履歴を記録・表示するデバッグツール
+    /// 
+    /// 主な機能：
+    /// - イベント発生履歴の時系列表示
+    /// - タイムスタンプ、リスナー数の表示
+    /// - イベント名による検索フィルター
+    /// - 特定イベントのフィルタリング表示
+    /// - スタックトレース表示の切り替え
+    /// - CSVエクスポート機能
+    /// - イベント名に基づいた自動色分け
+    /// 
+    /// 使用シーン：
+    /// - イベントの発生順序と頻度の分析
+    /// - イベントタイミングのデバッグ
+    /// - パフォーマンス問題の特定
+    /// - GameEventエディターからの特定イベント履歴表示
+    /// 
+    /// アクセス方法：Unity メニュー > asterivo.Unity60/Tools/Event History
+    /// </summary>
     public class EventHistoryWindow : EditorWindow
     {
         private static List<EventLogEntry> eventHistory = new List<EventLogEntry>();
@@ -15,6 +36,13 @@ namespace asterivo.Unity60.Core.Editor
         private string searchFilter = "";
         private bool showStackTrace = false;
         
+        /// <summary>
+        /// イベントログエントリ
+        /// イベントの発生情報を記録するデータクラス
+        /// </summary>
+        /// <remarks>
+        /// イベント名のHashCodeを使用してHSVカラースペースで一意な色を生成
+        /// </remarks>
         [System.Serializable]
         public class EventLogEntry
         {
@@ -24,6 +52,12 @@ namespace asterivo.Unity60.Core.Editor
             public string stackTrace;
             public Color color;
             
+            /// <summary>
+            /// イベントログエントリのコンストラクタ
+            /// </summary>
+            /// <param name="name">イベント名</param>
+            /// <param name="time">タイムスタンプ（秒）</param>
+            /// <param name="listeners">リスナー数</param>
             public EventLogEntry(string name, float time, int listeners)
             {
                 eventName = name;
@@ -37,12 +71,21 @@ namespace asterivo.Unity60.Core.Editor
             }
         }
         
+        /// <summary>
+        /// イベント履歴ウィンドウを表示（フィルターなし）
+        /// Unityメニューから呼び出されるエディタ拡張メニューアイテム
+        /// </summary>
         [MenuItem("asterivo.Unity60/Tools/Event History")]
         public static void ShowWindow()
         {
             ShowWindow(null);
         }
         
+        /// <summary>
+        /// イベント履歴ウィンドウを表示（特定イベントフィルター付き）
+        /// GameEventEditorから呼び出され、特定のイベントのみを表示
+        /// </summary>
+        /// <param name="gameEvent">フィルター対象のGameEvent。nullの場合は全イベントを表示</param>
         public static void ShowWindow(GameEvent gameEvent = null)
         {
             var window = GetWindow<EventHistoryWindow>("Event History");
@@ -50,6 +93,16 @@ namespace asterivo.Unity60.Core.Editor
             window.Show();
         }
         
+        /// <summary>
+        /// イベントの発生を履歴に記録
+        /// GameEventの発生時に呼び出される静的メソッド
+        /// </summary>
+        /// <param name="eventName">発生したイベントの名前</param>
+        /// <param name="listenerCount">その時点でのリスナー数</param>
+        /// <remarks>
+        /// 履歴は最大1000エントリまで保持され、古いエントリから順次削除されます。
+        /// Time.realtimeSinceStartupをタイムスタンプとして使用しています。
+        /// </remarks>
         public static void LogEvent(string eventName, int listenerCount)
         {
             eventHistory.Add(new EventLogEntry(eventName, Time.realtimeSinceStartup, listenerCount));

@@ -8,6 +8,27 @@ using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Editor
 {
+    /// <summary>
+    /// プロジェクトアーキテクチャ検証ツール
+    /// Unity 6プロジェクトのイベントシステム、コマンドシステム、アセンブリ構造の整合性をチェック
+    /// 
+    /// 主な機能：
+    /// - イベント接続の検証（孤立リスナー、未使用イベントの発見）
+    /// - コマンドシステムの構成検証（Invoker, Poolサービスの確認）
+    /// - アセンブリ定義ファイルの存在チェック
+    /// - SerializeReferenceの使用状況監視
+    /// - プロジェクトフォルダ構造の検証
+    /// - 自動修正機能（フォルダ作成等）
+    /// - 詳細レポートの生成とエクスポート
+    /// 
+    /// 使用シーン：
+    /// - プロジェクトの品質管理
+    /// - 新メンバーのオンボーディング時の組織チェック
+    /// - CI/CDパイプラインでの自動品質ゲート
+    /// - リファクタリング後の整合性検証
+    /// 
+    /// アクセス方法：Unity メニュー > asterivo.Unity60/Tools/Project Validation
+    /// </summary>
     public class ProjectValidationWindow : EditorWindow
     {
         private Vector2 scrollPosition;
@@ -15,6 +36,14 @@ namespace asterivo.Unity60.Core.Editor
         private string validationReport = "";
         private bool hasRunValidation = false;
         
+        /// <summary>
+        /// プロジェクト検証ウィンドウを表示
+        /// Unityメニューから呼び出されるエディタ拡張メニューアイテム
+        /// </summary>
+        /// <remarks>
+        /// ウィンドウの最小サイズは500x400に設定され、
+        /// 包括的なプロジェクト検証とレポート機能を提供します。
+        /// </remarks>
         [MenuItem("asterivo.Unity60/Tools/Project Validation")]
         public static void ShowWindow()
         {
@@ -23,6 +52,16 @@ namespace asterivo.Unity60.Core.Editor
             window.Show();
         }
         
+        /// <summary>
+        /// ウィンドウのGUI描画処理
+        /// タイトル、ツールバー、検証結果表示を順次描画
+        /// </summary>
+        /// <remarks>
+        /// GUIの構成順序：
+        /// 1. ヘッダー（プロジェクトアーキテクチャ検証タイトル）
+        /// 2. ツールバー（検証実行、自動修正、レポート生成ボタン）
+        /// 3. 検証結果（スクロール可能なテキストエリア）
+        /// </remarks>
         void OnGUI()
         {
             EditorGUILayout.LabelField("Unity 6 Project Architecture Validation", EditorStyles.boldLabel);
@@ -76,6 +115,21 @@ namespace asterivo.Unity60.Core.Editor
             EditorGUILayout.EndScrollView();
         }
         
+        /// <summary>
+        /// 包括的なプロジェクト検証の実行
+        /// イベント、コマンド、アセンブリ、フォルダ構造等を順次チェック
+        /// </summary>
+        /// <remarks>
+        /// 検証項目：
+        /// 1. イベント接続検証（ValidateEventConnections）
+        /// 2. コマンド定義検証（ValidateCommandDefinitions）
+        /// 3. アセンブリ構造検証（ValidateAssemblyStructure）
+        /// 4. SerializeReference使用状況チェック（ValidateSerializeReferenceUsage）
+        /// 5. ScriptableObjectアセット検証（ValidateScriptableObjectAssets）
+        /// 6. プロジェクト構造検証（ValidateProjectStructure）
+        /// 
+        /// 各検証結果はvalidationReportに記録され、GUIで表示されます。
+        /// </remarks>
         private void RunValidation()
         {
             validationReport = "";

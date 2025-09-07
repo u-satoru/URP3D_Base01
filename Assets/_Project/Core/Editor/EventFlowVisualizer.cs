@@ -6,6 +6,26 @@ using asterivo.Unity60.Core.Events;
 
 namespace asterivo.Unity60.Core.Editor
 {
+    /// <summary>
+    /// イベントフロー視覚化ツール
+    /// GameEventとGameEventListenerの関係性を可視化し、イベントシステムの整合性をチェック
+    /// 
+    /// 主な機能：
+    /// - イベントとリスナーの接続関係表示
+    /// - アクティブなリスナーのフィルタリング
+    /// - シーン別のグループ化表示
+    /// - 統計情報と問題検出
+    /// - リアルタイムイベントテスト
+    /// - レポートエクスポート
+    /// 
+    /// 使用シーン：
+    /// - イベントシステムのデバッグ
+    /// - 孤立したリスナーの発見
+    /// - 未使用イベントの特定
+    /// - 優先度の重複チェック
+    /// 
+    /// アクセス方法：Unity メニュー > asterivo.Unity60/Tools/Event Flow Visualizer
+    /// </summary>
     public class EventFlowVisualizer : EditorWindow
     {
         private Dictionary<GameEvent, List<GameEventListener>> eventConnections;
@@ -15,17 +35,39 @@ namespace asterivo.Unity60.Core.Editor
         private bool showStatistics = true;
         private bool groupByScene = false;
         
+        /// <summary>
+        /// イベントフロー視覚化ウィンドウを表示
+        /// Unityメニューから呼び出されるエディタ拡張メニューアイテム
+        /// </summary>
+        /// <remarks>
+        /// ウィンドウが開かれると自動的にイベント接続情報が更新されます。
+        /// </remarks>
         [MenuItem("asterivo.Unity60/Tools/Event Flow Visualizer")]
         public static void ShowWindow()
         {
             GetWindow<EventFlowVisualizer>("Event Flow Visualizer").Show();
         }
         
+        /// <summary>
+        /// ウィンドウが有効になった時の初期化処理
+        /// イベントとリスナーの接続情報を更新する
+        /// </summary>
         void OnEnable()
         {
             RefreshConnections();
         }
         
+        /// <summary>
+        /// ウィンドウのGUI描画処理
+        /// ツールバー、フィルター、統計情報、イベント接続表示を順次描画
+        /// </summary>
+        /// <remarks>
+        /// GUIの構成順序：
+        /// 1. ツールバー（リフレッシュ、エクスポート、問題検出ボタン）
+        /// 2. フィルター（検索、アクティブのみ表示）
+        /// 3. 統計情報（表示設定に応じて）
+        /// 4. イベント接続一覧（スクロール可能）
+        /// </remarks>
         void OnGUI()
         {
             DrawToolbar();
@@ -39,6 +81,18 @@ namespace asterivo.Unity60.Core.Editor
             DrawEventConnections();
         }
         
+        /// <summary>
+        /// ウィンドウ上部のツールバー描画
+        /// リフレッシュ、レポートエクスポート、問題検出、表示オプションボタンを含む
+        /// </summary>
+        /// <remarks>
+        /// ツールバーボタン：
+        /// - 🔄 Refresh: イベント接続情報の手動更新
+        /// - 📋 Export Report: コンソールへの詳細レポート出力
+        /// - 🔍 Find Issues: 孤立リスナーや未使用イベントの検出
+        /// - Statistics: 統計情報表示の切り替え
+        /// - Group by Scene: シーン別グループ化表示
+        /// </remarks>
         private void DrawToolbar()
         {
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
@@ -286,6 +340,19 @@ namespace asterivo.Unity60.Core.Editor
             return filtered;
         }
         
+        /// <summary>
+        /// シーン内の全GameEventListenerを検索し、GameEventとの接続情報を更新
+        /// Resourcesから全GameEventを取得し、未使用イベントも追加
+        /// </summary>
+        /// <remarks>
+        /// 処理フロー：
+        /// 1. eventConnections辞書のクリア
+        /// 2. 全GameEventListenerの検索とEventプロパティのチェック
+        /// 3. 各リスナーを対応するGameEventのリストに追加
+        /// 4. Resourcesから全GameEventを取得し、未登録のイベントを空リストで追加
+        /// 
+        /// 注意：この処理はシーンの変更やオブジェクトの追加/削除時に手動で実行する必要があります
+        /// </remarks>
         void RefreshConnections()
         {
             eventConnections = new Dictionary<GameEvent, List<GameEventListener>>();

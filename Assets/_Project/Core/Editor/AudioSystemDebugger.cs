@@ -14,11 +14,35 @@ namespace asterivo.Unity60.Core.Editor
     /// <summary>
     /// オーディオシステム専用デバッガー・モニタリングツール
     /// 統合オーディオシステムの状態監視、デバッグ、テスト機能を提供
+    /// 
+    /// 主な機能：
+    /// - リアルタイムオーディオシステム状態監視
+    /// - ボリュームレベルの動的制御とテスト
+    /// - ステルスモードのデバッグとテスト環境制御
+    /// - パフォーマンス監視とグラフ表示
+    /// - オーディオイベントのリアルタイム追跡
+    /// 
+    /// 使用シーン：
+    /// - オーディオシステムの動作確認
+    /// - ゲーム中のオーディオバランス調整
+    /// - ステルス機能のテストとデバッグ
+    /// - パフォーマンス問題の特定
+    /// 
+    /// アクセス方法：Unity メニュー > asterivo.Unity60/Audio/Audio System Debugger
+    /// 注意：プレイモード中のみ利用可能
     /// </summary>
     public class AudioSystemDebugger : EditorWindow
     {
         #region Window Management
         
+        /// <summary>
+        /// オーディオシステムデバッガーウィンドウを表示する
+        /// Unity メニューから呼び出されるエディタ拡張メニューアイテム
+        /// </summary>
+        /// <remarks>
+        /// ウィンドウの最小サイズは800x600に設定され、
+        /// リアルタイムでオーディオシステムの状態を監視できます。
+        /// </remarks>
         [MenuItem("asterivo.Unity60/Audio/Audio System Debugger")]
         public static void ShowWindow()
         {
@@ -69,6 +93,10 @@ namespace asterivo.Unity60.Core.Editor
         
         #region Unity Editor Callbacks
         
+        /// <summary>
+        /// ウィンドウが有効になった時の初期化処理
+        /// エディタの更新イベントに登録し、オーディオシステムの参照を取得する
+        /// </summary>
         private void OnEnable()
         {
             EditorApplication.update += OnEditorUpdate;
@@ -76,11 +104,22 @@ namespace asterivo.Unity60.Core.Editor
             InitializeMonitoring();
         }
         
+        /// <summary>
+        /// ウィンドウが無効になった時のクリーンアップ処理
+        /// エディタの更新イベントから登録解除を行う
+        /// </summary>
         private void OnDisable()
         {
             EditorApplication.update -= OnEditorUpdate;
         }
         
+        /// <summary>
+        /// エディタの更新ループでオーディオシステムデータを定期的に更新
+        /// 自動リフレッシュが有効な場合、指定された間隔でデータを更新してウィンドウを再描画する
+        /// </summary>
+        /// <remarks>
+        /// プレイモード中のみ実行され、refreshInterval（デフォルト0.5秒）ごとに更新される
+        /// </remarks>
         private void OnEditorUpdate()
         {
             if (!Application.isPlaying) return;
@@ -93,6 +132,18 @@ namespace asterivo.Unity60.Core.Editor
             }
         }
         
+        /// <summary>
+        /// ウィンドウのGUI描画処理
+        /// プレイモード中のみ利用可能で、タブベースのインターフェースを提供
+        /// </summary>
+        /// <remarks>
+        /// 以下の5つのタブで構成されています：
+        /// 0: System Monitor - システム状態表示と基本操作
+        /// 1: Volume Control - 各カテゴリのボリューム制御
+        /// 2: Stealth Debug - ステルスシステムのデバッグ
+        /// 3: Performance - パフォーマンス監視とグラフ表示
+        /// 4: Audio Events - オーディオイベントの履歴表示
+        /// </remarks>
         private void OnGUI()
         {
             if (!Application.isPlaying)
@@ -122,6 +173,10 @@ namespace asterivo.Unity60.Core.Editor
         
         #region GUI Drawing Methods
         
+        /// <summary>
+        /// ウィンドウヘッダー部分のGUI描画
+        /// タイトル表示、自動リフレッシュ切り替え、手動リフレッシュボタンを含む
+        /// </summary>
         private void DrawHeader()
         {
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
@@ -140,6 +195,10 @@ namespace asterivo.Unity60.Core.Editor
             EditorGUILayout.EndHorizontal();
         }
         
+        /// <summary>
+        /// タブバーのGUI描画
+        /// 5つのタブ（System Monitor, Volume Control, Stealth Debug, Performance, Audio Events）を表示
+        /// </summary>
         private void DrawTabBar()
         {
             selectedTab = GUILayout.Toolbar(selectedTab, tabNames);
@@ -444,6 +503,13 @@ namespace asterivo.Unity60.Core.Editor
         
         #region Utility Methods
         
+        /// <summary>
+        /// シーン内のオーディオシステム関連コンポーネントの参照を取得
+        /// AudioManager、StealthAudioCoordinator、SpatialAudioManager、DynamicAudioEnvironmentを検索
+        /// </summary>
+        /// <remarks>
+        /// これらのコンポーネントが見つからない場合、該当する機能は利用できません
+        /// </remarks>
         private void FindAudioSystemReferences()
         {
             audioManager = FindFirstObjectByType<AudioManager>();
@@ -452,6 +518,10 @@ namespace asterivo.Unity60.Core.Editor
             dynamicEnvironment = FindFirstObjectByType<DynamicAudioEnvironment>();
         }
         
+        /// <summary>
+        /// モニタリング用データの初期化
+        /// 各オーディオカテゴリのデフォルトボリューム値を設定
+        /// </summary>
         private void InitializeMonitoring()
         {
             categoryVolumes[AudioCategory.BGM] = AudioConstants.DEFAULT_BGM_VOLUME;
@@ -461,6 +531,14 @@ namespace asterivo.Unity60.Core.Editor
             categoryVolumes[AudioCategory.UI] = AudioConstants.DEFAULT_MASTER_VOLUME;
         }
         
+        /// <summary>
+        /// オーディオシステムの現在の状態データを更新
+        /// AudioManagerとStealthAudioCoordinatorから最新の状態を取得し、
+        /// パフォーマンス履歴データも更新する
+        /// </summary>
+        /// <remarks>
+        /// ボリューム履歴とテンション履歴は最大100ポイントまで保持される
+        /// </remarks>
         private void RefreshAudioSystemData()
         {
             if (audioManager != null)
@@ -498,6 +576,11 @@ namespace asterivo.Unity60.Core.Editor
             }
         }
         
+        /// <summary>
+        /// オーディオイベントログにエントリを追加
+        /// タイムスタンプ付きでイベントを記録し、最大100件まで履歴を保持
+        /// </summary>
+        /// <param name="eventText">記録するイベントの説明文</param>
         private void AddEvent(string eventText)
         {
             string timestampedEvent = $"[{System.DateTime.Now:HH:mm:ss}] {eventText}";
@@ -509,6 +592,17 @@ namespace asterivo.Unity60.Core.Editor
             }
         }
         
+        /// <summary>
+        /// パフォーマンス監視用のグラフを描画
+        /// データの履歴を線グラフとして表示し、現在値もラベル表示する
+        /// </summary>
+        /// <param name="rect">グラフを描画する矩形領域</param>
+        /// <param name="data">グラフに表示するデータのリスト</param>
+        /// <param name="color">グラフの線の色</param>
+        /// <param name="label">グラフのラベル名</param>
+        /// <remarks>
+        /// データが2点未満の場合は描画されない。最小値と最大値に基づいて自動スケーリングされる
+        /// </remarks>
         private void DrawGraph(Rect rect, List<float> data, Color color, string label)
         {
             if (data.Count < 2) return;

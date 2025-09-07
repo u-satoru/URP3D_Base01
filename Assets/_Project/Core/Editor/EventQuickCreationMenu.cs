@@ -9,12 +9,37 @@ namespace asterivo.Unity60.Core.Editor
     /// <summary>
     /// イベントアセットをクイック作成するためのメニューアイテム
     /// プロジェクトウィンドウから右クリックで素早く作成可能
+    /// 
+    /// 主な機能：
+    /// - Assets/Create メニューへのイベント作成メニュー追加
+    /// - 基本イベント（GameEvent）から専用イベントまで幅幅いタイプをサポート
+    /// - 現在選択中のフォルダへの自動保存
+    /// - ファイル名の重複チェックと自動リネーム
+    /// - よく使用されるイベントのテンプレートとバッチ作成
+    /// - ショートカットキー対応（Ctrl+Shift+E）
+    /// 
+    /// サポートされるイベントタイプ：
+    /// - 基本タイプ: GameEvent, String/Int/Float/Bool/Vector2/Vector3イベント
+    /// - 専用タイプ: PlayerState/CameraState/GameState/Commandイベント
+    /// - テンプレート: Health/Level/Item/Damageイベント
+    /// - デバッグ用: DebugLog/PerformanceWarningイベント
+    /// 
+    /// アクセス方法：
+    /// 1. プロジェクトウィンドウで右クリック > Create > Unity6 Events > ...
+    /// 2. Unity メニュー > Assets > Create > Unity6 Events > ...
     /// </summary>
     public static class EventQuickCreationMenu
     {
         private const string BaseMenuPath = "Assets/Create/Unity6 Events/";
         private const string DefaultEventPath = "Assets/_Project/Core/ScriptableObjects/Events/Core/";
         
+        /// <summary>
+        /// パラメーターなしの基本GameEventアセットを作成
+        /// シンプルな通知イベントに最適
+        /// </summary>
+        /// <remarks>
+        /// 使用例：ゲーム開始、ポーズ、レベルクリア等のシンプルな状態変化
+        /// </remarks>
         // 基本的なGameEvent
         [MenuItem(BaseMenuPath + "Game Event")]
         public static void CreateGameEvent()

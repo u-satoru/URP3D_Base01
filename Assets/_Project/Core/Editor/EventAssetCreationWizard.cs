@@ -8,6 +8,22 @@ namespace asterivo.Unity60.Core.Editor
     /// <summary>
     /// イベントアセット作成ウィザード
     /// ScriptableObjectベースのイベントアセットを簡単に作成できるエディタツール
+    /// 
+    /// 主な機能：
+    /// - イベントの種類選択（GameEvent, GenericGameEvent, 専用イベント）
+    /// - ペイロードタイプの指定（GenericGameEventの場合）
+    /// - 保存先フォルダの指定とクイック選択
+    /// - ファイル名の重複チェックと自動リネーム
+    /// - 作成前のプレビュー表示
+    /// 
+    /// 対応イベントタイプ：
+    /// - GameEvent: パラメーターなしの基本イベント
+    /// - GenericGameEvent: 型付きデータを持つイベント
+    /// - PlayerStateEvent: プレイヤー状態専用イベント
+    /// - CameraStateEvent: カメラ状態専用イベント
+    /// - CommandGameEvent: コマンドパターン統合イベント
+    /// 
+    /// アクセス方法：Unity メニュー > asterivo.Unity60/Tools/Event Asset Creation Wizard
     /// </summary>
     public class EventAssetCreationWizard : EditorWindow
     {
@@ -31,6 +47,14 @@ namespace asterivo.Unity60.Core.Editor
             CommandGameEvent
         }
         
+        /// <summary>
+        /// イベントアセット作成ウィザードウィンドウを表示
+        /// Unityメニューから呼び出されるエディタ拡張メニューアイテム
+        /// </summary>
+        /// <remarks>
+        /// ウィンドウの最小サイズは450x500に設定され、
+        /// 直感的なインターフェースでイベントアセットを作成できます。
+        /// </remarks>
         [MenuItem("asterivo.Unity60/Tools/Event Asset Creation Wizard")]
         public static void ShowWindow()
         {
@@ -39,6 +63,19 @@ namespace asterivo.Unity60.Core.Editor
             window.Show();
         }
         
+        /// <summary>
+        /// ウィザードウィンドウのGUI描画処理
+        /// ウィザード形式でイベントアセット作成の設定とプレビューを表示
+        /// </summary>
+        /// <remarks>
+        /// GUI構成：
+        /// 1. タイトルと説明
+        /// 2. 基本設定（イベント名、説明）
+        /// 3. イベントタイプ設定
+        /// 4. 出力先フォルダ設定
+        /// 5. プレビュー
+        /// 6. 作成ボタン
+        /// </remarks>
         private void OnGUI()
         {
             EditorGUILayout.Space(10);
@@ -61,6 +98,13 @@ namespace asterivo.Unity60.Core.Editor
             DrawCreateButton();
         }
         
+        /// <summary>
+        /// 基本設定部分のGUI描画
+        /// イベント名と説明の入力フィールドを表示
+        /// </summary>
+        /// <remarks>
+        /// イベント名が空の場合は警告メッセージを表示
+        /// </remarks>
         private void DrawBasicSettings()
         {
             EditorGUILayout.LabelField("基本設定", EditorStyles.boldLabel);
@@ -74,6 +118,15 @@ namespace asterivo.Unity60.Core.Editor
             }
         }
         
+        /// <summary>
+        /// イベントタイプ設定部分のGUI描画
+        /// イベントの種類とペイロードタイプの選択インターフェースを表示
+        /// </summary>
+        /// <remarks>
+        /// GenericGameEvent選択時はペイロードタイプの選択が可能になる：
+        /// - 一般的なタイプのプルダウン選択
+        /// - カスタムタイプのテキスト入力
+        /// </remarks>
         private void DrawEventTypeSettings()
         {
             EditorGUILayout.LabelField("イベントタイプ設定", EditorStyles.boldLabel);

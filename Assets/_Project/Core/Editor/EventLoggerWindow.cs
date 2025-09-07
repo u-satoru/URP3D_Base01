@@ -10,6 +10,24 @@ namespace asterivo.Unity60.Core.Editor
     /// <summary>
     /// EventLogger専用のデバッグウィンドウ
     /// リアルタイムでイベントログを表示し、フィルタリング・分析機能を提供
+    /// 
+    /// 主な機能：
+    /// - リアルタイムイベントログ表示
+    /// - ログレベル別フィルタリング（Info/Warning/Error）
+    /// - イベント名による検索フィルター
+    /// - イベントタイプ別フィルタリング
+    /// - ペイロードデータとスタックトレース表示
+    /// - 統計情報（総イベント数、レベル別カウント等）
+    /// - CSVエクスポート機能
+    /// - クリップボードコピー機能
+    /// 
+    /// 使用シーン：
+    /// - イベントの発生状況監視
+    /// - イベントシステムのデバッグ
+    /// - パフォーマンス問題の特定
+    /// - イベントの連続発生やループの検出
+    /// 
+    /// アクセス方法：Unity メニュー > asterivo.Unity60/Debug/Event Logger
     /// </summary>
     public class EventLoggerWindow : EditorWindow
     {
@@ -31,6 +49,14 @@ namespace asterivo.Unity60.Core.Editor
         private HashSet<string> selectedEventTypes = new HashSet<string>();
         private bool showEventTypeFilter = false;
         
+        /// <summary>
+        /// イベントロガーウィンドウを表示
+        /// Unityメニューから呼び出されるエディタ拡張メニューアイテム
+        /// </summary>
+        /// <remarks>
+        /// ウィンドウの最小サイズは600x400に設定され、
+        /// エディタの更新イベントに登録して自動リフレッシュを行います。
+        /// </remarks>
         [MenuItem("asterivo.Unity60/Debug/Event Logger")]
         public static void ShowWindow()
         {
@@ -39,12 +65,20 @@ namespace asterivo.Unity60.Core.Editor
             window.Show();
         }
         
+        /// <summary>
+        /// ウィンドウが有効になった時の初期化処理
+        /// エディタの更新イベントに登録し、統計情報を初期化
+        /// </summary>
         void OnEnable()
         {
             EditorApplication.update += OnEditorUpdate;
             lastStatistics = new EventLogger.LogStatistics();
         }
         
+        /// <summary>
+        /// ウィンドウが無効になった時のクリーンアップ処理
+        /// エディタの更新イベントから登録解除
+        /// </summary>
         void OnDisable()
         {
             EditorApplication.update -= OnEditorUpdate;
