@@ -54,7 +54,9 @@ namespace asterivo.Unity60.Core.Audio.Commands
         {
             if (audioSource == null || soundData == null)
             {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 UnityEngine.Debug.LogWarning("[PlaySoundCommand] AudioSource または SoundData が null です");
+#endif
                 return;
             }
             

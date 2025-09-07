@@ -1,6 +1,7 @@
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Player;
 using asterivo.Unity60.Core.Data;
@@ -8,8 +9,8 @@ using System.Collections;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Commands;
-// using asterivo.Unity60.Player.Commands; // asmdef参照エラーのため一時的にコメントアウト
-// using asterivo.Unity60.Player.States; // asmdef参照エラーのため一時的にコメントアウト
+using asterivo.Unity60.Core.Components;
+using asterivo.Unity60.Core.Validation;
 
 namespace asterivo.Unity60.Core.Services
 {
@@ -21,7 +22,7 @@ namespace asterivo.Unity60.Core.Services
 
         [Header("Command System")]
         [SerializeField] private CommandDefinitionGameEvent onCommandDefinitionReceived;
-        // [SerializeField] private PlayerStateMachine playerStateMachine; // asmdef参照エラーのため一時的にコメントアウト
+        [SerializeField] private CommandInvoker commandInvoker;
 
         private readonly Stack<ICommand> _undoStack = new Stack<ICommand>();
         private readonly Stack<ICommand> _redoStack = new Stack<ICommand>();
@@ -56,6 +57,7 @@ namespace asterivo.Unity60.Core.Services
         [Header("Scene Management")]
         [SerializeField] private string mainMenuSceneName = "MainMenu";
         [SerializeField] private string gameplaySceneName = "Gameplay";
+        // TODO: LoadGameplayScene内で最小読み込み時間を保証する機能の実装予定
         [SerializeField] private float minLoadingTime = 1f;
 
         [Header("Game Data")]
@@ -67,7 +69,12 @@ namespace asterivo.Unity60.Core.Services
         [Header("Settings")]
         [SerializeField] private bool enableDebugLog = true;
         [SerializeField] private bool validateEventConnections = true;
+        // TODO: 一時停止時にTime.timeScaleを制御する機能の実装予定
         [SerializeField] private bool pauseTimeOnPause = true;
+        
+        [Header("Input")]
+        [SerializeField] private InputActionAsset inputActions;
+        private InputAction pauseAction;
 
         public GameState CurrentGameState => currentGameState;
         public GameState PreviousGameState => previousGameState;
@@ -102,21 +109,40 @@ namespace asterivo.Unity60.Core.Services
             {
                 gameTime += Time.deltaTime;
             }
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                HandlePauseInput();
-            }
         }
 
         #region Validation & Logging
         private bool ValidateSetup()
         {
             bool isValid = true;
-            if (validateEventConnections && gameStateChangedEvent == null)
+            
+            if (validateEventConnections)
             {
-                LogError("Game State Changed Event is not assigned!");
-                isValid = false;
+                // 基本的な重要イベントの検証
+                if (gameStateChangedEvent == null)
+                {
+                    LogError("Game State Changed Event is not assigned!");
+                    isValid = false;
+                }
+                
+                // 包括的なイベント接続検証
+                var validationResult = EventConnectionValidator.ValidateAllEventConnections(true);
+                
+                if (validationResult.HasErrors)
+                {
+                    LogError($"Event connection validation failed: {validationResult.GetSummary()}");
+                    isValid = false;
+                }
+                else if (validationResult.HasWarnings && enableDebugLog)
+                {
+                    LogWarning($"Event connection validation completed with warnings: {validationResult.GetSummary()}");
+                }
+                else if (enableDebugLog)
+                {
+                    Log($"Event connection validation passed: {validationResult.GetSummary()}");
+                }
             }
+            
             return isValid;
         }
         private void LogError(string message) { if (enableDebugLog) EventLogger.LogError($"[GameManager] {message}"); }
@@ -127,7 +153,25 @@ namespace asterivo.Unity60.Core.Services
         private void InitializeGameManager()
         {
             if (gameData == null) gameData = new GameData();
+            InitializeInput();
             Log("GameManager initialized");
+        }
+        
+        private void InitializeInput()
+        {
+            if (inputActions != null)
+            {
+                pauseAction = inputActions.FindAction("Pause");
+                if (pauseAction != null)
+                {
+                    pauseAction.performed += OnPauseInputPerformed;
+                    pauseAction.Enable();
+                }
+            }
+            else
+            {
+                LogWarning("InputActionAsset not assigned, using fallback input handling");
+            }
         }
 
         #region Event Registration
@@ -155,6 +199,13 @@ namespace asterivo.Unity60.Core.Services
             if (gameOverListener != null) gameOverListener.Response.RemoveListener(HandleGameOver);
             if (victoryListener != null) victoryListener.Response.RemoveListener(HandleVictory);
             if (onCommandDefinitionReceived != null) onCommandDefinitionReceived.UnregisterListener(this);
+            
+            // Input actions cleanup
+            if (pauseAction != null)
+            {
+                pauseAction.performed -= OnPauseInputPerformed;
+                pauseAction.Disable();
+            }
         }
         #endregion
 
@@ -162,14 +213,48 @@ namespace asterivo.Unity60.Core.Services
         public void OnEventRaised(ICommandDefinition definition)
         {
             Log($"Command definition received: {definition.GetType().Name}");
-            // ICommand command = CreateCommandFromDefinition(definition);
-            // if (command != null) ExecuteCommand(command);
+            ICommand command = CreateCommandFromDefinition(definition);
+            if (command != null) 
+            {
+                if (commandInvoker != null)
+                {
+                    commandInvoker.ExecuteCommand(command);
+                }
+                else
+                {
+                    ExecuteCommand(command);
+                }
+            }
         }
 
         private ICommand CreateCommandFromDefinition(ICommandDefinition definition)
         {
-            // NOTE: This logic is disabled until the assembly reference issue is resolved.
-            return null;
+            if (commandInvoker == null)
+            {
+                LogError("CommandInvoker is not assigned!");
+                return null;
+            }
+
+            // IHealthTargetを実装するコンポーネントを検索
+            var healthTargetComponents = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None);
+            IHealthTarget playerHealth = null;
+            
+            foreach (var component in healthTargetComponents)
+            {
+                if (component is IHealthTarget healthTarget)
+                {
+                    playerHealth = healthTarget;
+                    break;
+                }
+            }
+            
+            if (playerHealth == null)
+            {
+                LogError("IHealthTarget implementation not found in scene!");
+                return null;
+            }
+
+            return definition.CreateCommand(playerHealth);
         }
 
         public void ExecuteCommand(ICommand command)
@@ -217,7 +302,13 @@ namespace asterivo.Unity60.Core.Services
         }
         #endregion
 
-        private void HandlePauseInput() { if (currentGameState == GameState.Playing || currentGameState == GameState.Paused) onPauseGameCommand?.Raise(); }
+        private void OnPauseInputPerformed(InputAction.CallbackContext context)
+        {
+            if (currentGameState == GameState.Playing || currentGameState == GameState.Paused)
+            {
+                onPauseGameCommand?.Raise();
+            }
+        }
 
         #region Coroutine Management
         private void StartCoroutineManaged(string name, IEnumerator routine)

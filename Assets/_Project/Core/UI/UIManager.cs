@@ -182,7 +182,9 @@ namespace asterivo.Unity60.Core.UI
         {
             if (!panelDictionary.ContainsKey(panelName))
             {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 UnityEngine.Debug.LogWarning($"UIManager: Panel '{panelName}' not found!");
+#endif
                 return;
             }
             
@@ -217,7 +219,9 @@ namespace asterivo.Unity60.Core.UI
                 isVisible = true 
             });
             
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"UIManager: Showed panel '{panel.panelName}'");
+#endif
         }
         
         /// <summary>
@@ -270,7 +274,9 @@ namespace asterivo.Unity60.Core.UI
                 }
             }
             
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"UIManager: Hidden panel '{panel.panelName}'");
+#endif
         }
         
         /// <summary>
@@ -290,7 +296,9 @@ namespace asterivo.Unity60.Core.UI
             currentActivePanelName = "None";
             panelHistory.Clear();
             
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log("UIManager: Hidden all panels");
+#endif
         }
         
         /// <summary>

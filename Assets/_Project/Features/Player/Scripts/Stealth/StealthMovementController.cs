@@ -369,14 +369,69 @@ namespace asterivo.Unity60.Player
         }
         
         /// <summary>
-        /// 現在の光源レベルを計算します（この実装は仮です）。
-        /// 将来的には周囲のライトを考慮した正確な計算を実装する必要があります。
+        /// 現在の光源レベルを計算します。
+        /// プレイヤーの周囲にあるライトソースの影響を総合して光量を計算します。
         /// </summary>
-        /// <returns>計算された光源レベル。</returns>
+        /// <returns>計算された光源レベル（0.0-1.0）。</returns>
         private float CalculateLightLevel()
         {
-            // TODO: 周囲のライトを考慮した光源レベル計算を実装
-            return 0.7f;
+            float totalLightIntensity = 0.0f;
+            Vector3 playerPosition = transform.position;
+            
+            // 周囲のライトを検出して光量を計算
+            Light[] nearbyLights = FindObjectsByType<Light>(FindObjectsSortMode.None);
+            
+            foreach (Light light in nearbyLights)
+            {
+                if (light == null || !light.enabled || !light.gameObject.activeInHierarchy)
+                    continue;
+                    
+                float distance = Vector3.Distance(playerPosition, light.transform.position);
+                
+                // ライトタイプに応じた影響範囲チェック
+                float lightInfluence = 0.0f;
+                
+                switch (light.type)
+                {
+                    case LightType.Directional:
+                        // 太陽光などの方向光は距離に関係なく影響
+                        lightInfluence = light.intensity * 0.3f; // 基準値として30%
+                        break;
+                        
+                    case LightType.Point:
+                        // 点光源は距離の二乗に反比例
+                        if (distance <= light.range)
+                        {
+                            float attenuation = 1.0f - (distance * distance) / (light.range * light.range);
+                            lightInfluence = light.intensity * attenuation * 0.8f;
+                        }
+                        break;
+                        
+                    case LightType.Spot:
+                        // スポットライトは方向と距離の両方を考慮
+                        if (distance <= light.range)
+                        {
+                            Vector3 directionToPlayer = (playerPosition - light.transform.position).normalized;
+                            float angle = Vector3.Angle(light.transform.forward, directionToPlayer);
+                            
+                            if (angle <= light.spotAngle * 0.5f)
+                            {
+                                float attenuation = 1.0f - (distance / light.range);
+                                float spotAttenuation = 1.0f - (angle / (light.spotAngle * 0.5f));
+                                lightInfluence = light.intensity * attenuation * spotAttenuation * 0.9f;
+                            }
+                        }
+                        break;
+                }
+                
+                totalLightIntensity += lightInfluence;
+            }
+            
+            // 環境光の基準値を追加（完全な暗闇を避けるため）
+            totalLightIntensity += RenderSettings.ambientIntensity * 0.2f;
+            
+            // 0.0-1.0の範囲にクランプ
+            return Mathf.Clamp01(totalLightIntensity);
         }
         
         /// <summary>

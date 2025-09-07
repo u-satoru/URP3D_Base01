@@ -112,8 +112,8 @@ namespace asterivo.Unity60.Player
             Vector3 jumpTarget = transform.position + Vector3.up * jumpHeight;
             
             currentMovementSequence
-                .Append(transform.DOMove(jumpTarget, jumpAnimationDuration * 0.6f).SetEase(Ease.OutQuad))
-                .Append(transform.DOMove(transform.position, jumpAnimationDuration * 0.4f).SetEase(Ease.InQuad))
+                .Append(transform.DOMove(jumpTarget, jumpAnimationDuration * 0.6f).SetEase(jumpEasing))
+                .Append(transform.DOMove(transform.position, jumpAnimationDuration * 0.4f).SetEase(jumpEasing))
                 .OnComplete(() => {
                     isAnimating = false;
                     PlayLandingEffect();

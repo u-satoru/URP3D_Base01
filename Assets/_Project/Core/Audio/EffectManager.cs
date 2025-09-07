@@ -31,6 +31,7 @@ namespace asterivo.Unity60.Core.Audio
         [SerializeField] private float stealthEffectVolume = 0.7f;
         
         [Header("Priority Settings")]
+        // TODO: ApplyEffectTypeSettings内でAudioSource.priorityの設定に使用予定
         [SerializeField] private int uiEffectPriority = 64;
         [SerializeField] private int interactionEffectPriority = 128;
         [SerializeField] private int combatEffectPriority = 32;
@@ -195,8 +196,30 @@ namespace asterivo.Unity60.Core.Audio
             {
                 if (source != null && source.isPlaying)
                 {
-                    // TODO: 効果音タイプによる判定ロジックを実装
-                    ReturnToPool(source);
+                    // 効果音タイプによる判定（AudioSourceの名前またはタグで識別）
+                    string sourceId = source.gameObject.name;
+                    bool shouldStop = false;
+                    
+                    switch (effectType)
+                    {
+                        case EffectType.UI:
+                            shouldStop = sourceId.Contains("UI") || source.spatialBlend == 0f;
+                            break;
+                        case EffectType.Combat:
+                            shouldStop = sourceId.Contains("Combat") || source.priority < 64;
+                            break;
+                        case EffectType.Interaction:
+                            shouldStop = sourceId.Contains("Interaction");
+                            break;
+                        case EffectType.Stealth:
+                            shouldStop = sourceId.Contains("Stealth") || source.maxDistance > 20f;
+                            break;
+                    }
+                    
+                    if (shouldStop)
+                    {
+                        ReturnToPool(source);
+                    }
                 }
             }
         }
@@ -226,18 +249,113 @@ namespace asterivo.Unity60.Core.Audio
         
         /// <summary>
         /// 効果音データベースの読み込み
+        /// 複数のパスから効果音データを収集し、カテゴリ別に整理します
         /// </summary>
         private void LoadEffectDatabase()
         {
-            // TODO: Resourcesフォルダまたはアドレサブルアセットから効果音データを読み込む
-            // 現在は仮実装
-            var effectSounds = Resources.LoadAll<SoundDataSO>("Audio/Effects");
-            foreach (var sound in effectSounds)
+            effectDatabase.Clear();
+            
+            // 複数のResourcesパスから効果音を読み込み
+            string[] resourcePaths = {
+                "Audio/Effects",
+                "Audio/Effects/UI",
+                "Audio/Effects/Combat",
+                "Audio/Effects/Interaction",
+                "Audio/Effects/Stealth",
+                "Audio/Effects/Environment"
+            };
+            
+            int totalLoaded = 0;
+            
+            foreach (string path in resourcePaths)
             {
-                effectDatabase[sound.name] = sound;
+                var effectSounds = Resources.LoadAll<SoundDataSO>(path);
+                foreach (var sound in effectSounds)
+                {
+                    if (sound != null)
+                    {
+                        // 重複チェック（異なるパスに同名ファイルがある場合の処理）
+                        if (effectDatabase.ContainsKey(sound.name))
+                        {
+                            EventLogger.LogWarning($"[EffectManager] Duplicate effect sound found: {sound.name} in {path}");
+                            continue;
+                        }
+                        
+                        effectDatabase[sound.name] = sound;
+                        totalLoaded++;
+                    }
+                }
             }
             
-            EventLogger.Log($"[EffectManager] Loaded {effectDatabase.Count} effect sounds");
+            // ScriptableObjectsフォルダからも検索（プロジェクト固有のサウンドデータ）
+            var customEffects = Resources.LoadAll<SoundDataSO>("ScriptableObjects/Audio/Effects");
+            foreach (var effect in customEffects)
+            {
+                if (effect != null && !effectDatabase.ContainsKey(effect.name))
+                {
+                    effectDatabase[effect.name] = effect;
+                    totalLoaded++;
+                }
+            }
+            
+            // デフォルト効果音の作成（必要最小限のサウンド）
+            CreateDefaultEffectsIfNeeded();
+            
+            EventLogger.Log($"[EffectManager] Loaded {totalLoaded} effect sounds from Resources. " +
+                          $"Total effects in database: {effectDatabase.Count}");
+                          
+            // デバッグ情報：利用可能な効果音リストを出力
+            #if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (Application.isEditor)
+            {
+                System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                sb.AppendLine("[EffectManager] Available Effects:");
+                foreach (var kvp in effectDatabase)
+                {
+                    sb.AppendLine($"  - {kvp.Key}");
+                }
+                EventLogger.Log(sb.ToString());
+            }
+            #endif
+        }
+        
+        /// <summary>
+        /// 基本的な効果音が見つからない場合にデフォルトを作成
+        /// </summary>
+        private void CreateDefaultEffectsIfNeeded()
+        {
+            // 必須の効果音IDリスト
+            string[] requiredEffects = {
+                "ui_click",
+                "ui_hover",
+                "footstep_default",
+                "item_pickup",
+                "door_open",
+                "door_close"
+            };
+            
+            int created = 0;
+            foreach (string effectId in requiredEffects)
+            {
+                if (!effectDatabase.ContainsKey(effectId))
+                {
+                    // デフォルトのSoundDataSOを動的作成（実行時のみ）
+                    var defaultSound = ScriptableObject.CreateInstance<SoundDataSO>();
+                    defaultSound.name = effectId;
+                    // 他のデフォルト設定は SoundDataSO の初期値を使用
+                    
+                    effectDatabase[effectId] = defaultSound;
+                    created++;
+                    
+                    EventLogger.LogWarning($"[EffectManager] Created default effect: {effectId}");
+                }
+            }
+            
+            if (created > 0)
+            {
+                EventLogger.LogWarning($"[EffectManager] Created {created} default effects. " +
+                                     "Consider adding proper SoundDataSO assets for these effects.");
+            }
         }
         
         /// <summary>
@@ -335,7 +453,9 @@ namespace asterivo.Unity60.Core.Audio
                 return audioSource;
             }
             
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.LogWarning("[EffectManager] Effect source pool exhausted");
+#endif
             return null;
         }
         

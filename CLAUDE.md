@@ -44,6 +44,15 @@
 5.  **State パターン**:
     *   キャラクターの状態（待機、歩行、攻撃中など）を個別のクラスとして管理するために使用が推奨されています。（`StatePattern_Migration_Guide.md`より）
 
+6.  **Strategy パターン**:
+    *   アルゴリズムのファミリーを定義し、それぞれをカプセル化して相互に置き換え可能にするために使用されます。これにより、アルゴリズムの変更が容易になり、クライアントコードは具体的なアルゴリズムに依存しなくなります。
+
+7.  **Factory+Registry パターン**:
+    *   オブジェクトの生成を担当するファクトリーと、生成されたオブジェクトを管理するレジストリを組み合わせることで、柔軟で拡張性のあるシステムを構築します。これにより、新しいオブジェクトタイプの追加が容易になり、依存関係の管理が改善されます。
+
+8.  **Lifecycle Management パターン**:
+    *   オブジェクトのライフサイクル（生成、使用、破棄）を管理するためのパターンです。これにより、リソースの効率的な使用とメモリリークの防止が可能になります。
+
 これらのパターンを組み合わせることで、関心事の分離が促進され、拡張性、再利用性、メンテナンス性の高い構造を目指しています。
 
 ## 技術仕様
@@ -56,6 +65,7 @@
 ## アーキテクチャ制約
 
 - **DOTS/ECS 非対応**: このプロジェクトでは Data-Oriented Technology Stack (DOTS) や Entity Component System (ECS) は使用しません。全て従来のMonoBehaviourベースのオブジェクト指向アーキテクチャで構築されています。
+- **現時点ではDependency Injection (DI) フレームワークは使用していません。将来的に導入する可能性がありますが、現状はシンプルな設計を維持しています。**
 
 ## ディレクトリ構成
 
@@ -73,28 +83,28 @@
 ### SDD Markdownファイル構成
 
 #### プロジェクトルート配置（基盤仕様書）
-- `spec.md` - 初期構想・要件定義（人間作成）
-- `requirements.md` - 形式化された要件（AI生成）
-- `design.md` - 技術設計書（AI生成）
+- `SPEC.md` - 初期構想・要件定義（人間作成）
+- `REQUIREMENTS.md` - 形式化された要件（AI生成）
+- `DESIGN.md` - 技術設計書（AI生成）
 
 #### 作業ディレクトリ配置（実装管理）
-- `Assets/_Project/Docs/Work/tasks.md` - 実装タスク一覧
-- `Assets/_Project/Docs/Work/todo.md` - 進行中タスク管理
+- `Assets/_Project/Docs/Work/TASKS.md` - 実装タスク一覧
+- `Assets/_Project/Docs/Work/TODO.md` - 進行中タスク管理
 - `Assets/_Project/Docs/Work/WorkLogs/` - 作業ログ保管庫（日時フォルダでスナップショット管理）
 
 ### SDD 5つのフェーズ
-1. **構想**（spec.md） - 高レベルビジョンの定義
-2. **形式化**（requirements.md） - 構造化された要件定義
-3. **設計**（design.md） - 技術的実装戦略
-4. **分解**（tasks.md） - 実行可能なタスクリスト
+1. **構想**（SPEC.md） - 高レベルビジョンの定義
+2. **形式化**（REQUIREMENTS.md） - 構造化された要件定義
+3. **設計**（DESIGN.md） - 技術的実装戦略
+4. **分解**（TASKS.md） - 実行可能なタスクリスト
 5. **実装・検証** - AIによるコード生成と品質保証
 
 ### Claude Code連携
 各フェーズでClaude Codeと効果的に連携し、以下のようなワークフローを実現：
-- `/spec-create` - spec.mdからrequirements.mdを生成
-- `/design-create` - requirements.mdからdesign.mdを生成
-- `/tasks-create` - design.mdからtasks.mdを生成
-- `/todo-execute` - todo.mdの最高優先度タスクを実行
+- `/spec-create` - SPEC.mdからREQUIREMENTS.mdを生成
+- `/design-create` - REQUIREMENTS.mdからDESIGN.mdを生成
+- `/tasks-create` - DESIGN.mdからTASKS.mdを生成
+- `/todo-execute` - TODO.mdの最高優先度タスクを実行
 
 詳細は [`Assets/_Project/Docs/SDD_Markdown作成実践ガイド.md`](Assets/_Project/Docs/SDD_Markdown作成実践ガイド.md) を参照してください。
 

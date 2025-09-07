@@ -1,10 +1,13 @@
 using UnityEngine;
+using System.Collections;
 using asterivo.Unity60.Core.Components;
 using asterivo.Unity60.Core.Events;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 
-public class HealthComponent : MonoBehaviour, IHealthTarget
+namespace asterivo.Unity60.Player
+{
+    public class HealthComponent : MonoBehaviour, IHealthTarget
 {
     [TabGroup("Health", "Settings")]
     [ProgressBar(0, "maxHealth", ColorGetter = "GetHealthColor")]
@@ -43,9 +46,17 @@ public class HealthComponent : MonoBehaviour, IHealthTarget
     [PropertyRange(0.1f, 1f)]
     [SuffixLabel("s", overlay: true)]
     [SerializeField] private float damageShakeDuration = 0.3f;
+    
+    [TabGroup("Health", "Settings")]
+    [LabelText("Invulnerable")]
+    [ShowInInspector, ReadOnly]
+    private bool isInvulnerable = false;
+    
+    private Coroutine invulnerabilityCoroutine;
 
     public int CurrentHealth => currentHealth;
     public int MaxHealth => maxHealth;
+    public bool IsInvulnerable => isInvulnerable;
 
     public void Heal(int amount)
     {
@@ -57,11 +68,27 @@ public class HealthComponent : MonoBehaviour, IHealthTarget
         onHealed?.Raise();
         onHealthChanged?.Raise();
         
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         Debug.Log($"Healed {amount}. Current health: {currentHealth}");
+#endif
     }
 
     public void TakeDamage(int amount)
     {
+        TakeDamage(amount, "physical");
+    }
+
+    public void TakeDamage(int amount, string elementType)
+    {
+        // 無敵状態の場合はダメージを受けない
+        if (isInvulnerable)
+        {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            Debug.Log($"Damage blocked due to invulnerability: {amount} {elementType}");
+#endif
+            return;
+        }
+        
         currentHealth = Mathf.Max(currentHealth - amount, 0);
         
         // DOTweenでダメージアニメーション
@@ -75,7 +102,9 @@ public class HealthComponent : MonoBehaviour, IHealthTarget
             onDeath?.Raise();
         }
         
-        Debug.Log($"Took {amount} damage. Current health: {currentHealth}");
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        Debug.Log($"Took {amount} {elementType} damage. Current health: {currentHealth}");
+#endif
     }
     
     private void PlayDamageAnimation()
@@ -111,6 +140,47 @@ public class HealthComponent : MonoBehaviour, IHealthTarget
             .OnComplete(() => transform.DOScale(originalScale, 0.2f).SetEase(Ease.OutBounce));
     }
     
+    /// <summary>
+    /// 無敵状態を設定します
+    /// </summary>
+    /// <param name="invulnerable">無敵状態にするかどうか</param>
+    /// <param name="duration">無敵時間（秒）。0以下の場合は手動で解除するまで継続</param>
+    public void SetInvulnerable(bool invulnerable, float duration = 0f)
+    {
+        isInvulnerable = invulnerable;
+        
+        // 既存の無敵時間コルーチンがあればストップ
+        if (invulnerabilityCoroutine != null)
+        {
+            StopCoroutine(invulnerabilityCoroutine);
+            invulnerabilityCoroutine = null;
+        }
+        
+        // 無敵状態で継続時間が指定されている場合
+        if (invulnerable && duration > 0f)
+        {
+            invulnerabilityCoroutine = StartCoroutine(InvulnerabilityTimer(duration));
+        }
+        
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        Debug.Log($"Invulnerability set to: {invulnerable}" + (duration > 0f ? $" for {duration} seconds" : ""));
+#endif
+    }
+    
+    /// <summary>
+    /// 無敵時間の管理コルーチン
+    /// </summary>
+    private System.Collections.IEnumerator InvulnerabilityTimer(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isInvulnerable = false;
+        invulnerabilityCoroutine = null;
+        
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        Debug.Log("Invulnerability expired");
+#endif
+    }
+    
     // Odin Inspector用のカラーゲッター
     private Color GetHealthColor()
     {
@@ -122,4 +192,5 @@ public class HealthComponent : MonoBehaviour, IHealthTarget
             _ => Color.red
         };
     }
+}
 }

@@ -252,7 +252,7 @@ namespace asterivo.Unity60.Core.Audio
                 ambientManager.SetMasterVolume(ambientVolume);
 
             // Effect volume is controlled by the AudioMixer
-            SetMixerVolume("EffectVolume", effectVolume);
+            SetMixerVolume(effectVolumeParam, effectVolume);
 
             if (volumeSettingsChangedEvent != null)
             {

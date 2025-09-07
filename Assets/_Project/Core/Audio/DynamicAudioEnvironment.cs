@@ -276,7 +276,9 @@ namespace asterivo.Unity60.Core.Audio
             OnEnvironmentChanged?.Invoke(newEnvironment);
             
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"<color=blue>[DynamicAudioEnvironment]</color> Environment changed: {previousEnvironment} → {newEnvironment}");
+#endif
             #endif
         }
         
@@ -297,7 +299,9 @@ namespace asterivo.Unity60.Core.Audio
             weatherChangeEvent?.RaiseAtPosition("WeatherChange", transform.position);
             
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"<color=blue>[DynamicAudioEnvironment]</color> Weather changed: {previousWeather} → {newWeather}");
+#endif
             #endif
         }
         
@@ -317,7 +321,9 @@ namespace asterivo.Unity60.Core.Audio
             OnTimeOfDayChanged?.Invoke(newTimeOfDay);
             
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"<color=blue>[DynamicAudioEnvironment]</color> Time of day changed: {previousTime} → {newTimeOfDay}");
+#endif
             #endif
         }
         

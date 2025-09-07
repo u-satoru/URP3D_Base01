@@ -110,6 +110,7 @@ namespace asterivo.Unity60.Core.UI
         [ReadOnly]
         [ShowInInspector]
         [LabelText("Current Menu")]
+        // NOTE: デバッグ表示用フィールド（実際は内部で使用されている）
         private string currentMenu = "None";
         
         [TabGroup("Menu Debug", "Current State")]

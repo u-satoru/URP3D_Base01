@@ -290,7 +290,9 @@ namespace asterivo.Unity60.Core.Audio
                 return audioSource;
             }
             
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.LogWarning("[SpatialAudioManager] オーディオソースプールが枯渇しました");
+#endif
             return null;
         }
         

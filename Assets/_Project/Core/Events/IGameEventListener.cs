@@ -66,7 +66,9 @@ namespace asterivo.Unity60.Core.Events
             
             if (logOnReceive)
             {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 UnityEngine.Debug.Log($"<color=lime>[Listener]</color> {gameObject.name} received: {value}", this);
+#endif
             }
             
             if (responseDelay > 0)

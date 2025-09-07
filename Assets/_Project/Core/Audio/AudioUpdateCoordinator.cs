@@ -19,6 +19,7 @@ namespace asterivo.Unity60.Core.Audio
         [Header("Update Settings")]
         [SerializeField, Range(0.05f, 1f)] private float updateInterval = AudioConstants.AUDIO_UPDATE_INTERVAL;
         [SerializeField] private bool enableCoordinatedUpdates = true;
+        // TODO: バッチ処理での一度に更新するAudioSourceの最大数制限（パフォーマンス最適化用）
         [SerializeField, Range(1, 10)] private int maxAudioSourcesPerUpdate = 5;
 
         [Header("Spatial Optimization")]

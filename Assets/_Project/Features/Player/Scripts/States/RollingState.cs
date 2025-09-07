@@ -1,6 +1,7 @@
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using System.Collections;
+using asterivo.Unity60.Player;
 
 namespace asterivo.Unity60.Player.States
 {
@@ -20,9 +21,25 @@ namespace asterivo.Unity60.Player.States
         /// <param name="stateMachine">プレイヤーのステートマシン。</param>
         public void Enter(DetailedPlayerStateMachine stateMachine)
         {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log("Entering Rolling State");
+#endif
             stateMachine.StartCoroutine(RollTimer(stateMachine));
-            // TODO: Trigger rolling animation
+            
+            // アニメーターを取得してローリングアニメーションを再生
+            Animator animator = stateMachine.GetComponent<Animator>();
+            if (animator != null)
+            {
+                animator.SetTrigger("Roll");
+                animator.SetBool("IsRolling", true);
+            }
+            
+            // ローリング中は無敵時間を設定（例：ダメージを受けない）
+            var healthComponent = stateMachine.GetComponent<HealthComponent>();
+            if (healthComponent != null)
+            {
+                healthComponent.SetInvulnerable(true, rollDuration);
+            }
         }
 
         /// <summary>
@@ -31,7 +48,16 @@ namespace asterivo.Unity60.Player.States
         /// <param name="stateMachine">プレイヤーのステートマシン。</param>
         public void Exit(DetailedPlayerStateMachine stateMachine)
         {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log("Exiting Rolling State");
+#endif
+            
+            // アニメーションフラグをリセット
+            Animator animator = stateMachine.GetComponent<Animator>();
+            if (animator != null)
+            {
+                animator.SetBool("IsRolling", false);
+            }
         }
 
         /// <summary>

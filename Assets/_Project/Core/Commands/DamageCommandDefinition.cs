@@ -37,16 +37,30 @@ namespace asterivo.Unity60.Core.Commands
         {
             if (context is IHealthTarget healthTarget)
             {
-                // プール化対応: CommandPoolから取得して初期化
-                var command = CommandPool.Instance != null 
-                    ? CommandPool.Instance.GetCommand<DamageCommand>()
-                    : new DamageCommand();
-                    
+                // 新しいCommandPoolServiceを使用
+                DamageCommand command = null;
+                var poolService = CommandPoolService.Instance;
+                
+                if (poolService != null)
+                {
+                    command = poolService.GetCommand<DamageCommand>();
+                }
+                else
+                {
+                    // フォールバック：直接作成
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                    UnityEngine.Debug.LogWarning("CommandPoolService not available, creating DamageCommand directly");
+#endif
+                    command = new DamageCommand();
+                }
+                
                 command.Initialize(healthTarget, damageAmount, elementType);
                 return command;
             }
             
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.LogWarning("DamageCommandDefinition: Invalid context provided. Expected IHealthTarget.");
+#endif
             return null;
         }
     }

@@ -251,8 +251,6 @@ namespace asterivo.Unity60.Core.Editor
         
         private static void SetEventDescription(ScriptableObject eventAsset, string description)
         {
-            // ScriptableObjectに説明を設定する方法は限定的だが、
-            // 将来的にカスタムフィールドを追加する際の拡張ポイント
             // 現在はログに記録
             UnityEngine.Debug.Log($"{eventAsset.name}: {description}");
         }

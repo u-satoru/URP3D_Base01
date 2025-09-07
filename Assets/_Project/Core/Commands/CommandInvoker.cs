@@ -73,7 +73,9 @@ namespace asterivo.Unity60.Core.Commands
                 playerHealth = playerHealthComponent.GetComponent<IHealthTarget>();
                 if (playerHealth == null)
                 {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                     UnityEngine.Debug.LogError("CommandInvoker: playerHealthComponentがIHealthTargetを実装していません。");
+#endif
                 }
             }
         }
@@ -110,7 +112,9 @@ namespace asterivo.Unity60.Core.Commands
         {
             if (command == null)
             {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 UnityEngine.Debug.LogWarning("CommandInvoker: nullのコマンドを実行しようとしました。");
+#endif
                 return;
             }
             
@@ -227,7 +231,9 @@ namespace asterivo.Unity60.Core.Commands
         {
             if (itemData == null)
             {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 UnityEngine.Debug.LogWarning("OnItemUsedがnullのItemDataで呼び出されました。");
+#endif
                 return;
             }
 
@@ -250,7 +256,9 @@ namespace asterivo.Unity60.Core.Commands
         {
             if (playerHealth == null)
             {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 UnityEngine.Debug.LogError("CommandInvoker: コマンド実行対象（playerHealth）が設定されていません。");
+#endif
                 return null;
             }
 
@@ -259,7 +267,9 @@ namespace asterivo.Unity60.Core.Commands
             
             if (command == null)
             {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 UnityEngine.Debug.LogWarning($"定義タイプからのコマンド生成に失敗しました: {definition.GetType()}");
+#endif
             }
             
             return command;

@@ -10,12 +10,20 @@ namespace asterivo.Unity60.Core.Commands
     /// </summary>
     public class CommandPoolTester : MonoBehaviour
     {
+        // テスト設定の定数
+        private const int DEFAULT_TEST_COMMAND_COUNT = 100;
+        private const float DEFAULT_COMMAND_INTERVAL = 0.1f;
+        private const int DEFAULT_DAMAGE_AMOUNT = 10;
+        private const int DEFAULT_HEAL_AMOUNT = 5;
+        private const int STATS_DISPLAY_INTERVAL = 10;
+        private const float POOL_INITIALIZATION_DELAY = 1f;
+        
         [Header("Test Settings")]
         [Tooltip("テストで作成するコマンドの数")]
-        [SerializeField] private int testCommandCount = 100;
+        [SerializeField] private int testCommandCount = DEFAULT_TEST_COMMAND_COUNT;
         
         [Tooltip("コマンド実行間隔（秒）")]
-        [SerializeField] private float commandInterval = 0.1f;
+        [SerializeField] private float commandInterval = DEFAULT_COMMAND_INTERVAL;
         
         [Header("Test Controls")]
         [Tooltip("自動テストを開始する")]
@@ -45,7 +53,7 @@ namespace asterivo.Unity60.Core.Commands
         private IEnumerator DelayedTestStart()
         {
             // CommandPoolの初期化を待つ
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(POOL_INITIALIZATION_DELAY);
             StartPoolTest();
         }
         
@@ -61,9 +69,9 @@ namespace asterivo.Unity60.Core.Commands
                 return;
             }
             
-            if (CommandPool.Instance == null)
+            if (CommandPoolService.Instance == null)
             {
-                UnityEngine.Debug.LogError("CommandPoolが見つかりません。シーンにCommandPoolを配置してください。");
+                UnityEngine.Debug.LogError("CommandPoolServiceが見つかりません。シーンにCommandPoolServiceを配置してください。");
                 return;
             }
             
@@ -87,19 +95,15 @@ namespace asterivo.Unity60.Core.Commands
         [ContextMenu("Show Pool Stats")]
         public void ShowPoolStats()
         {
-            if (CommandPool.Instance == null)
+            if (CommandPoolService.Instance == null)
             {
-                UnityEngine.Debug.LogWarning("CommandPoolが見つかりません。");
+                UnityEngine.Debug.LogWarning("CommandPoolServiceが見つかりません。");
                 return;
             }
             
-            var stats = CommandPool.Instance.GetPoolStats();
+            var service = CommandPoolService.Instance;
             UnityEngine.Debug.Log("=== CommandPool統計 ===");
-            
-            foreach (var kvp in stats)
-            {
-                UnityEngine.Debug.Log($"{kvp.Key.Name}: プール内オブジェクト数 = {kvp.Value}");
-            }
+            service.LogDebugInfo();
             
             UnityEngine.Debug.Log($"実行したコマンド数: {commandsExecuted}");
             if (testStartTime > 0)
@@ -116,16 +120,16 @@ namespace asterivo.Unity60.Core.Commands
                 // ダメージとヒールを交互に実行
                 if (i % 2 == 0)
                 {
-                    ExecuteDamageCommand(10);
+                    ExecuteDamageCommand(DEFAULT_DAMAGE_AMOUNT);
                 }
                 else
                 {
-                    ExecuteHealCommand(5);
+                    ExecuteHealCommand(DEFAULT_HEAL_AMOUNT);
                 }
                 
                 commandsExecuted++;
                 
-                if (showDetailedStats && commandsExecuted % 10 == 0)
+                if (showDetailedStats && commandsExecuted % STATS_DISPLAY_INTERVAL == 0)
                 {
                     UnityEngine.Debug.Log($"コマンド実行中... ({commandsExecuted}/{testCommandCount})");
                 }
@@ -158,7 +162,7 @@ namespace asterivo.Unity60.Core.Commands
                 command.Execute();
                 
                 // テストなのですぐにプールに返却（通常はCommandInvokerが管理）
-                CommandPool.Instance?.ReturnCommand((DamageCommand)command);
+                CommandPoolService.Instance?.ReturnCommand((DamageCommand)command);
             }
         }
         
@@ -175,7 +179,7 @@ namespace asterivo.Unity60.Core.Commands
                 command.Execute();
                 
                 // テストなのですぐにプールに返却（通常はCommandInvokerが管理）
-                CommandPool.Instance?.ReturnCommand((HealCommand)command);
+                CommandPoolService.Instance?.ReturnCommand((HealCommand)command);
             }
         }
     }
@@ -185,15 +189,23 @@ namespace asterivo.Unity60.Core.Commands
     /// </summary>
     public class DummyHealthTarget : MonoBehaviour, IHealthTarget
     {
-        private int currentHealth = 100;
-        private int maxHealth = 100;
+        private const int DEFAULT_MAX_HEALTH = 100;
+        
+        private int currentHealth = DEFAULT_MAX_HEALTH;
+        private int maxHealth = DEFAULT_MAX_HEALTH;
         
         public int CurrentHealth => currentHealth;
         public int MaxHealth => maxHealth;
         
         public void TakeDamage(int damage)
         {
+            TakeDamage(damage, "physical");
+        }
+        
+        public void TakeDamage(int damage, string elementType)
+        {
             currentHealth = Mathf.Max(0, currentHealth - damage);
+            UnityEngine.Debug.Log($"[DummyTarget] Took {damage} {elementType} damage. Health: {currentHealth}/{maxHealth}");
         }
         
         public void Heal(int healAmount)

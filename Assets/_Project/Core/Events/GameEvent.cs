@@ -33,11 +33,13 @@ namespace asterivo.Unity60.Core.Events
         /// </summary>
         public void Raise()
         {
-            #if UNITY_EDITOR
+            #if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (debugMode)
             {
                 UnityEngine.Debug.Log($"<color=cyan>[GameEvent]</color> '{name}' raised at {Time.time:F2}s with {listeners.Count} listeners", this);
             }
+            #endif
+            #if UNITY_EDITOR
             listenerCount = listeners.Count;
             #endif
             
@@ -96,7 +98,7 @@ namespace asterivo.Unity60.Core.Events
             {
                 isDirty = true;
                 
-                #if UNITY_EDITOR
+                #if UNITY_EDITOR || DEVELOPMENT_BUILD
                 if (debugMode)
                 {
                     UnityEngine.Debug.Log($"<color=green>[GameEvent]</color> Listener registered to '{name}'", this);
@@ -116,7 +118,7 @@ namespace asterivo.Unity60.Core.Events
             {
                 isDirty = true;
                 
-                #if UNITY_EDITOR
+                #if UNITY_EDITOR || DEVELOPMENT_BUILD
                 if (debugMode)
                 {
                     UnityEngine.Debug.Log($"<color=yellow>[GameEvent]</color> Listener unregistered from '{name}'", this);

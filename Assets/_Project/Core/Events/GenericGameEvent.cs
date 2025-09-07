@@ -34,7 +34,7 @@ namespace asterivo.Unity60.Core.Events
                 hasValue = true;
             }
             
-            #if UNITY_EDITOR
+            #if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (debugMode)
             {
                 UnityEngine.Debug.Log($"<color=cyan>[GenericEvent]</color> '{name}' raised with value: {value}", this);

@@ -60,7 +60,7 @@ namespace asterivo.Unity60.Player.Commands
             var playerController = _stateMachine.GetComponent<PlayerController>();
             
             // 現在移動入力があるかチェック（簡易実装）
-            // より正確な実装では、PlayerStateMachineControllerから入力情報を取得する
+            // DetailedPlayerStateMachineに統合されたため、直接状態遷移を実行
             if (playerController != null)
             {
                 // 現在の移動状態に基づいて決定（実装に応じて調整）

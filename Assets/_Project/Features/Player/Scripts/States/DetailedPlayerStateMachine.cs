@@ -3,6 +3,7 @@ using Debug = UnityEngine.Debug;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Data;
+using asterivo.Unity60.Core.Player;
 
 namespace asterivo.Unity60.Player.States
 {
@@ -27,6 +28,8 @@ namespace asterivo.Unity60.Player.States
     /// <summary>
     /// プレイヤーの詳細な状態を管理するステートマシンです。
     /// ステートパターンを利用して、各状態（歩行、ジャンプ、カバーなど）の振る舞いをカプセル化し、状態遷移を制御します。
+    /// 
+    /// レガシーPlayerStateMachineとの互換性を提供し、段階的な移行をサポートします。
     /// </summary>
     public class DetailedPlayerStateMachine : MonoBehaviour
     {
@@ -64,8 +67,31 @@ namespace asterivo.Unity60.Player.States
         /// </summary>
         [SerializeField] private MovementStanceEvent onStanceChanged;
         
+        [Header("Legacy Event Compatibility")]
+        /// <summary>
+        /// レガシーPlayerStateイベント（enum値）との互換性用。
+        /// </summary>
+        [SerializeField] private PlayerStateEvent legacyStateChangeRequestEvent;
+        /// <summary>
+        /// レガシーPlayerState変更通知（enum値）。
+        /// </summary>
+        [SerializeField] private PlayerStateEvent legacyStateChangedEvent;
+        
+        [Header("Debug")]
+        [SerializeField] private bool enableDebugLog = true;
+        
         private IPlayerState currentState;
         private Dictionary<PlayerStateType, IPlayerState> states;
+        
+        // レガシー互換性のためのPlayerState追跡
+        private PlayerState legacyCurrentState = PlayerState.Idle;
+        private PlayerState legacyPreviousState = PlayerState.Idle;
+        
+        // イベントリスナー管理
+        private PlayerStateEventListener stateChangeListener;
+        
+        // 状態変更イベント
+        public event System.Action<PlayerState, PlayerState> OnLegacyStateChanged;
         
         /// <summary>
         /// プレイヤーのCharacterControllerコンポーネント。
@@ -89,6 +115,22 @@ namespace asterivo.Unity60.Player.States
         {
             InitializeComponents();
             InitializeStates();
+        }
+        
+        /// <summary>
+        /// オブジェクトが有効になったときにイベントリスナーを登録します。
+        /// </summary>
+        private void OnEnable()
+        {
+            RegisterEventListeners();
+        }
+        
+        /// <summary>
+        /// オブジェクトが無効になったときにイベントリスナーを解除します。
+        /// </summary>
+        private void OnDisable()
+        {
+            UnregisterEventListeners();
         }
         
         /// <summary>
@@ -181,9 +223,18 @@ namespace asterivo.Unity60.Player.States
             currentState = states[newStateType];
             currentState.Enter(this);
             
+            // 新しいイベントシステム
             onStateChanged?.Raise(currentStateType);
             
+            // レガシー互換性の状態変更
+            UpdateLegacyState(newStateType);
+            
             UpdateMovementStance(newStateType);
+            
+            if (enableDebugLog)
+            {
+                Debug.Log($"State transitioned: {previousStateType} -> {currentStateType}");
+            }
         }
         
         /// <summary>
@@ -248,5 +299,175 @@ namespace asterivo.Unity60.Player.States
                 _ => true
             };
         }
+        
+        #region Legacy Compatibility Methods
+        
+        /// <summary>
+        /// イベントリスナーを登録します。
+        /// </summary>
+        private void RegisterEventListeners()
+        {
+            if (legacyStateChangeRequestEvent != null)
+            {
+                stateChangeListener = gameObject.GetComponent<PlayerStateEventListener>();
+                if (stateChangeListener == null)
+                {
+                    stateChangeListener = gameObject.AddComponent<PlayerStateEventListener>();
+                }
+                stateChangeListener.GameEvent = legacyStateChangeRequestEvent;
+                stateChangeListener.Response.AddListener(OnLegacyStateChangeRequested);
+            }
+        }
+        
+        /// <summary>
+        /// イベントリスナーを解除します。
+        /// </summary>
+        private void UnregisterEventListeners()
+        {
+            if (stateChangeListener != null)
+            {
+                stateChangeListener.Response.RemoveListener(OnLegacyStateChangeRequested);
+                Destroy(stateChangeListener);
+                stateChangeListener = null;
+            }
+        }
+        
+        /// <summary>
+        /// レガシー状態変更リクエストを受信します。
+        /// </summary>
+        /// <param name="newState">変更先の状態</param>
+        private void OnLegacyStateChangeRequested(PlayerState newState)
+        {
+            PlayerStateType newStateType = ConvertLegacyToNewState(newState);
+            TransitionToState(newStateType);
+        }
+        
+        /// <summary>
+        /// PlayerStateTypeの変更に応じてレガシーPlayerStateを更新します。
+        /// </summary>
+        /// <param name="newStateType">新しい状態タイプ</param>
+        private void UpdateLegacyState(PlayerStateType newStateType)
+        {
+            PlayerState newLegacyState = ConvertNewToLegacyState(newStateType);
+            
+            if (legacyCurrentState != newLegacyState)
+            {
+                PlayerState oldLegacyState = legacyCurrentState;
+                legacyPreviousState = legacyCurrentState;
+                legacyCurrentState = newLegacyState;
+                
+                OnLegacyStateChanged?.Invoke(oldLegacyState, legacyCurrentState);
+                legacyStateChangedEvent?.Raise(legacyCurrentState);
+                
+                if (enableDebugLog)
+                {
+                    Debug.Log($"Legacy state updated: {oldLegacyState} -> {legacyCurrentState}");
+                }
+            }
+        }
+        
+        /// <summary>
+        /// PlayerStateをPlayerStateTypeに変換します。
+        /// </summary>
+        /// <param name="legacyState">レガシー状態</param>
+        /// <returns>対応する新しい状態タイプ</returns>
+        private PlayerStateType ConvertLegacyToNewState(PlayerState legacyState)
+        {
+            return legacyState switch
+            {
+                PlayerState.Idle => PlayerStateType.Idle,
+                PlayerState.Walking => PlayerStateType.Walking,
+                PlayerState.Running => PlayerStateType.Running,
+                PlayerState.Sprinting => PlayerStateType.Running, // スプリントは走行に統合
+                PlayerState.Jumping => PlayerStateType.Jumping,
+                PlayerState.Falling => PlayerStateType.Jumping, // 落下はジャンプに統合
+                PlayerState.Landing => PlayerStateType.Idle, // 着地は待機に遷移
+                PlayerState.Combat => PlayerStateType.Idle, // 戦闘は待機に統合
+                PlayerState.CombatAttacking => PlayerStateType.Idle,
+                PlayerState.Interacting => PlayerStateType.Idle,
+                PlayerState.Dead => PlayerStateType.Dead,
+                _ => PlayerStateType.Idle
+            };
+        }
+        
+        /// <summary>
+        /// PlayerStateTypeをPlayerStateに変換します。
+        /// </summary>
+        /// <param name="newStateType">新しい状態タイプ</param>
+        /// <returns>対応するレガシー状態</returns>
+        private PlayerState ConvertNewToLegacyState(PlayerStateType newStateType)
+        {
+            return newStateType switch
+            {
+                PlayerStateType.Idle => PlayerState.Idle,
+                PlayerStateType.Walking => PlayerState.Walking,
+                PlayerStateType.Running => PlayerState.Running,
+                PlayerStateType.Jumping => PlayerState.Jumping,
+                PlayerStateType.Crouching => PlayerState.Idle, // しゃがみは待機として扱う
+                PlayerStateType.Prone => PlayerState.Idle, // 伏せは待機として扱う
+                PlayerStateType.InCover => PlayerState.Idle, // カバーは待機として扱う
+                PlayerStateType.Climbing => PlayerState.Idle,
+                PlayerStateType.Swimming => PlayerState.Idle,
+                PlayerStateType.Rolling => PlayerState.Idle,
+                PlayerStateType.Dead => PlayerState.Dead,
+                _ => PlayerState.Idle
+            };
+        }
+        
+        /// <summary>
+        /// レガシーAPIのサポート: 現在のPlayerState（enum）を取得します。
+        /// </summary>
+        public PlayerState GetLegacyCurrentState() => legacyCurrentState;
+        
+        /// <summary>
+        /// レガシーAPIのサポート: 直前のPlayerState（enum）を取得します。
+        /// </summary>
+        public PlayerState GetLegacyPreviousState() => legacyPreviousState;
+        
+        /// <summary>
+        /// レガシーAPIのサポート: 指定された状態かどうかを確認します。
+        /// </summary>
+        /// <param name="state">確認するレガシー状態</param>
+        /// <returns>現在の状態が指定した状態と一致するかどうか</returns>
+        public bool IsInLegacyState(PlayerState state)
+        {
+            return legacyCurrentState == state;
+        }
+        
+        /// <summary>
+        /// レガシーAPIのサポート: 複数の状態のいずれかに該当するかを確認します。
+        /// </summary>
+        /// <param name="states">確認する状態の配列</param>
+        /// <returns>現在の状態が指定した状態のいずれかと一致するかどうか</returns>
+        public bool IsInAnyLegacyState(params PlayerState[] states)
+        {
+            foreach (var state in states)
+            {
+                if (legacyCurrentState == state)
+                    return true;
+            }
+            return false;
+        }
+        
+        /// <summary>
+        /// レガシーAPIのサポート: 前の状態に戻ります。
+        /// </summary>
+        public void RevertToLegacyPreviousState()
+        {
+            PlayerStateType targetState = ConvertLegacyToNewState(legacyPreviousState);
+            TransitionToState(targetState);
+        }
+        
+        /// <summary>
+        /// レガシーAPIのサポート: PlayerState経由で状態遷移を行います。
+        /// </summary>
+        /// <param name="newState">遷移先のレガシー状態</param>
+        public void TransitionToLegacyState(PlayerState newState)
+        {
+            PlayerStateType newStateType = ConvertLegacyToNewState(newState);
+            TransitionToState(newStateType);
+        }
+        
+        #endregion
     }
 }

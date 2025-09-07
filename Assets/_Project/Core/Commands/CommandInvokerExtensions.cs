@@ -9,26 +9,26 @@ namespace asterivo.Unity60.Core.Commands
     {
         /// <summary>
         /// コマンドを適切なプールに返却します。
+        /// 新しいCommandPoolServiceを使用してタイプ安全な返却を行います。
         /// </summary>
         /// <param name="invoker">CommandInvokerのインスタンス</param>
         /// <param name="command">返却するコマンド</param>
         public static void ReturnCommandToPool(this CommandInvoker invoker, ICommand command)
         {
-            if (command == null || CommandPool.Instance == null) return;
+            if (command == null) return;
             
-            // タイプ別にプールに返却
-            switch (command)
+            // 新しいCommandPoolServiceを使用
+            var poolService = CommandPoolService.Instance;
+            if (poolService != null)
             {
-                case DamageCommand damageCommand:
-                    CommandPool.Instance.ReturnCommand(damageCommand);
-                    break;
-                case HealCommand healCommand:
-                    CommandPool.Instance.ReturnCommand(healCommand);
-                    break;
-                default:
-                    // 他のコマンドタイプの処理が必要な場合はここに追加
-                    UnityEngine.Debug.Log($"CommandInvoker: {command.GetType().Name}はプール化に対応していません。");
-                    break;
+                poolService.PoolManager.ReturnCommand(command);
+            }
+            else
+            {
+                // フォールバック：CommandPoolServiceが利用できない場合
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                UnityEngine.Debug.LogWarning($"CommandPoolService not available, cannot return {command.GetType().Name} to pool");
+#endif
             }
         }
         
@@ -41,7 +41,9 @@ namespace asterivo.Unity60.Core.Commands
         {
             if (command == null)
             {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 UnityEngine.Debug.LogWarning("CommandInvoker: nullのコマンドを実行しようとしました。");
+#endif
                 return;
             }
             

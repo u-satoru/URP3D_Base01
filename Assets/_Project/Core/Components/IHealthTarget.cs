@@ -19,6 +19,13 @@ namespace asterivo.Unity60.Core.Components
         void TakeDamage(int amount);
         
         /// <summary>
+        /// Damages the target by the specified amount with element type
+        /// </summary>
+        /// <param name="amount">Amount of damage to deal</param>
+        /// <param name="elementType">Type of elemental damage (e.g., "fire", "ice", "physical")</param>
+        void TakeDamage(int amount, string elementType);
+        
+        /// <summary>
         /// Current health of the target
         /// </summary>
         int CurrentHealth { get; }
