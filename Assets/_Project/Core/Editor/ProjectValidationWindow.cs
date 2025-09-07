@@ -181,6 +181,21 @@ namespace asterivo.Unity60.Core.Editor
                 }
             }
             
+            // Find CommandPoolServices
+            var poolServices = FindObjectsByType<CommandPoolService>(FindObjectsSortMode.None);
+            if (poolServices.Length == 0)
+            {
+                AddToReport("⚠️ No CommandPoolService found in scene - command pooling may not be active");
+            }
+            else
+            {
+                AddToReport($"✅ Found {poolServices.Length} CommandPoolService(s)");
+                foreach (var service in poolServices)
+                {
+                    AddToReport($"  - {service.gameObject.name} [{service.gameObject.scene.name}]");
+                }
+            }
+            
             AddToReport("");
         }
         

@@ -60,17 +60,30 @@ namespace asterivo.Unity60.Core.Editor
             CreateEventAsset<Vector3GameEvent>("NewVector3Event");
         }
         
+        // GameObject型イベント
+        [MenuItem(BaseMenuPath + "Object Events/GameObject Event")]
+        public static void CreateGameObjectEvent()
+        {
+            CreateEventAsset<GameObjectGameEvent>("NewGameObjectEvent");
+        }
+        
         // 専用イベント
         [MenuItem(BaseMenuPath + "Specialized Events/Player State Event")]
         public static void CreatePlayerStateEvent()
         {
-            CreateEventAsset<PlayerStateEvent>("NewPlayerStateEvent");
+            CreateEventAsset<PlayerStateEvent>("PlayerStateEvent");
         }
         
         [MenuItem(BaseMenuPath + "Specialized Events/Camera State Event")]
         public static void CreateCameraStateEvent()
         {
-            CreateEventAsset<CameraStateEvent>("NewCameraStateEvent");
+            CreateEventAsset<CameraStateEvent>("CameraStateEvent");
+        }
+        
+        [MenuItem(BaseMenuPath + "Specialized Events/Game State Event")]
+        public static void CreateGameStateEvent()
+        {
+            CreateEventAsset<GameStateEvent>("GameStateEvent");
         }
         
         [MenuItem(BaseMenuPath + "Specialized Events/Command Event")]
@@ -80,11 +93,22 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         // Unity Input System統合
-        [MenuItem(BaseMenuPath + "Input Events/Input Action Event")]
-        public static void CreateInputActionEvent()
+        [MenuItem(BaseMenuPath + "Input Events/Input Vector2 Event")]
+        public static void CreateInputVector2Event()
         {
-            // InputActionに対応したカスタムイベント
-            CreateEventAsset<Vector2GameEvent>("NewInputActionEvent");
+            CreateEventAsset<Vector2GameEvent>("InputVector2Event");
+        }
+        
+        [MenuItem(BaseMenuPath + "Input Events/Input Float Event")]
+        public static void CreateInputFloatEvent()
+        {
+            CreateEventAsset<FloatGameEvent>("InputFloatEvent");
+        }
+        
+        [MenuItem(BaseMenuPath + "Input Events/Input Bool Event")]
+        public static void CreateInputBoolEvent()
+        {
+            CreateEventAsset<BoolGameEvent>("InputBoolEvent");
         }
         
         // よく使用されるイベントのテンプレート

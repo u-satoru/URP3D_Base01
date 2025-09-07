@@ -94,7 +94,13 @@ namespace asterivo.Unity60.Core.Editor
             var orphanedListeners = FindObjectsByType<GameEventListener>(FindObjectsSortMode.None).Where(l => l.Event == null).Count();
             var unusedEvents = eventConnections.Where(kvp => kvp.Value.Count == 0).Count();
             
+            // Command event statistics
+            var commandEvents = eventConnections.Keys.OfType<CommandGameEvent>().Count();
+            var genericEvents = totalEvents - commandEvents;
+            
             EditorGUILayout.LabelField($"Total Events: {totalEvents}");
+            EditorGUILayout.LabelField($"  - Generic Events: {genericEvents}");
+            EditorGUILayout.LabelField($"  - Command Events: {commandEvents}");
             EditorGUILayout.LabelField($"Total Listeners: {totalListeners}");
             
             if (orphanedListeners > 0)
