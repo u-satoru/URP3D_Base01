@@ -2,6 +2,7 @@ using UnityEngine;
 using Debug = UnityEngine.Debug;
 using UnityEngine.InputSystem;
 using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Core.Commands.Definitions;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Player
@@ -22,6 +23,23 @@ namespace asterivo.Unity60.Player
         [LabelText("Movement Animator")]
         [Tooltip("DOTweenアニメーション管理コンポーネント")]
         [SerializeField] private PlayerMovementAnimator movementAnimator;
+        
+        [TabGroup("Player Control", "Animation")]
+        [LabelText("Animator")]
+        [Tooltip("キャラクターのAnimatorコンポーネント")]
+        [SerializeField] private Animator animator;
+        
+        [TabGroup("Player Control", "Animation")]
+        [LabelText("Use 2D BlendTree")]
+        [Tooltip("2D BlendTree（方向性あり）を使用するかどうか")]
+        [SerializeField] private bool use2DBlendTree = false;
+        
+        [TabGroup("Player Control", "Animation")]
+        [LabelText("Animation Smooth Time")]
+        [PropertyRange(0.05f, 0.5f)]
+        [SuffixLabel("s", overlay: true)]
+        [Tooltip("アニメーション遷移のスムージング時間")]
+        [SerializeField] private float animationSmoothTime = 0.1f;
 
         [TabGroup("Player Control", "Movement Events")]
         [LabelText("Freeze Movement Listener")]
@@ -57,6 +75,24 @@ namespace asterivo.Unity60.Player
         /// プレイヤーの移動が現在凍結（無効化）されているかどうかを取得します。
         /// </summary>
         public bool IsMovementFrozen => movementFrozen;
+        
+        // パフォーマンス向上のためパラメータをハッシュ化
+        private static readonly int MoveSpeedHash = Animator.StringToHash("MoveSpeed");
+        private static readonly int MoveXHash = Animator.StringToHash("MoveX");
+        private static readonly int MoveZHash = Animator.StringToHash("MoveZ");
+        private static readonly int IsGroundedHash = Animator.StringToHash("IsGrounded");
+        private static readonly int IsJumpingHash = Animator.StringToHash("IsJumping");
+        private static readonly int IsCrouchingHash = Animator.StringToHash("IsCrouching");
+        private static readonly int VerticalVelocityHash = Animator.StringToHash("VerticalVelocity");
+        private static readonly int JumpTriggerHash = Animator.StringToHash("JumpTrigger");
+        private static readonly int LandTriggerHash = Animator.StringToHash("LandTrigger");
+        
+        // スムーズなアニメーション遷移用
+        private Vector2 animationVelocity;
+        private Vector2 animationSmoothVelocity;
+        
+        // 接地判定用
+        private Rigidbody playerRigidbody;
 
         private void Awake()
         {
@@ -65,6 +101,13 @@ namespace asterivo.Unity60.Player
             // MovementAnimatorを自動取得していない場合は取得
             if (movementAnimator == null)
                 movementAnimator = GetComponent<PlayerMovementAnimator>();
+                
+            // Animator の自動取得
+            if (animator == null)
+                animator = GetComponent<Animator>();
+                
+            // Rigidbody の取得
+            playerRigidbody = GetComponent<Rigidbody>();
                 
             SetupInputCallbacks();
             SetupMovementEventListeners();
@@ -137,7 +180,27 @@ namespace asterivo.Unity60.Player
         {
             if (movementFrozen) return;
             var moveInput = context.ReadValue<Vector2>();
-            var definition = new asterivo.Unity60.Player.Commands.MoveCommandDefinition(moveInput);
+            
+            // スムーズなアニメーション遷移（急激な変化を防ぐ）
+            animationVelocity = Vector2.SmoothDamp(
+                animationVelocity, 
+                moveInput, 
+                ref animationSmoothVelocity, 
+                animationSmoothTime
+            );
+            
+            // 1. BlendTree アニメーション更新
+            if (use2DBlendTree)
+            {
+                Update2DBlendTree(animationVelocity);
+            }
+            else
+            {
+                Update1DBlendTree(animationVelocity.magnitude);
+            }
+            
+            // 2. コマンド発行（既存システム）
+            var definition = new MoveCommandDefinition(MoveCommandDefinition.MoveType.Walk, new Vector3(moveInput.x, 0, moveInput.y));
             onCommandDefinitionIssued?.Raise(definition);
         }
 
@@ -147,7 +210,26 @@ namespace asterivo.Unity60.Player
         private void OnMoveCanceled(InputAction.CallbackContext context)
         {
             if (movementFrozen) return;
-            var definition = new asterivo.Unity60.Player.Commands.MoveCommandDefinition(Vector2.zero);
+            
+            // アニメーション停止のためのスムージング
+            animationVelocity = Vector2.SmoothDamp(
+                animationVelocity, 
+                Vector2.zero, 
+                ref animationSmoothVelocity, 
+                animationSmoothTime
+            );
+            
+            // BlendTree アニメーション更新
+            if (use2DBlendTree)
+            {
+                Update2DBlendTree(Vector2.zero);
+            }
+            else
+            {
+                Update1DBlendTree(0f);
+            }
+            
+            var definition = new MoveCommandDefinition(MoveCommandDefinition.MoveType.Walk, Vector3.zero);
             onCommandDefinitionIssued?.Raise(definition);
         }
 
@@ -158,13 +240,21 @@ namespace asterivo.Unity60.Player
         {
             if (movementFrozen) return;
             
-            // DOTweenアニメーションがある場合は実行
+            // 1. BlendTreeでキャラクターアニメーション（縦軸の速度制御）
+            if (animator != null)
+            {
+                animator.SetTrigger(JumpTriggerHash);
+                animator.SetBool(IsGroundedHash, false);
+            }
+            
+            // 2. DOTweenで追加演出（既存システム）
             if (movementAnimator != null)
             {
                 movementAnimator.AnimateJump();
             }
             
-            var definition = new asterivo.Unity60.Player.Commands.JumpCommandDefinition();
+            // 3. コマンドパターンでゲームロジック
+            var definition = new JumpCommandDefinition();
             onCommandDefinitionIssued?.Raise(definition);
         }
         
@@ -256,5 +346,68 @@ namespace asterivo.Unity60.Player
             }
         }
         #endif
+        
+        /// <summary>
+        /// Update処理で継続的にアニメーション状態を更新
+        /// </summary>
+        private void Update()
+        {
+            UpdateAnimationStates();
+        }
+        
+        /// <summary>
+        /// アニメーション状態の更新処理
+        /// </summary>
+        private void UpdateAnimationStates()
+        {
+            if (animator == null || playerRigidbody == null) return;
+            
+            // 縦方向速度をジャンプ・落下アニメーションに反映
+            float verticalVelocity = playerRigidbody.linearVelocity.y;
+            animator.SetFloat(VerticalVelocityHash, verticalVelocity);
+            
+            // 接地状態の更新
+            bool isGrounded = CheckGroundContact();
+            animator.SetBool(IsGroundedHash, isGrounded);
+        }
+        
+        /// <summary>
+        /// 1D BlendTreeの更新処理
+        /// </summary>
+        private void Update1DBlendTree(float speed)
+        {
+            if (animator == null) return;
+            
+            // スプリント状態を考慮した速度計算
+            float finalSpeed = speed;
+            if (IsSprintPressed && speed > 0.1f)
+            {
+                finalSpeed = Mathf.Lerp(0.7f, 1.0f, speed); // スプリント時は0.7-1.0の範囲
+            }
+            
+            animator.SetFloat(MoveSpeedHash, finalSpeed);
+        }
+        
+        /// <summary>
+        /// 2D BlendTreeの更新処理
+        /// </summary>
+        private void Update2DBlendTree(Vector2 velocity)
+        {
+            if (animator == null) return;
+            
+            // 2D方向を考慮したBlendTree制御
+            animator.SetFloat(MoveXHash, velocity.x);
+            animator.SetFloat(MoveZHash, velocity.y);
+            animator.SetFloat(MoveSpeedHash, velocity.magnitude);
+        }
+        
+        /// <summary>
+        /// 接地判定の実装
+        /// </summary>
+        private bool CheckGroundContact()
+        {
+            // レイキャストによる接地判定（キャラクターの足元から下向きにレイを飛ばす）
+            return Physics.Raycast(transform.position, Vector3.down, 1.1f);
+        }
     }
 }

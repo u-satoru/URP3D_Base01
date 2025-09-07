@@ -1,6 +1,8 @@
 # CLAUDE.md
 
-これはUnity 6で作成された3Dゲームプロジェクトのベーステンプレートです。Universal Render Pipeline (URP) を使用しています。
+ ** ultra think**  
+
+これは **Unity 6で作成された3Dゲームプロジェクトのベーステンプレート** です。 Universal Render Pipeline (URP) を使用しています。
 
 ## 概要
 
@@ -211,3 +213,6 @@
 -   `Odin Serializer`: 高度なシリアライゼーション（[Sirenix](https://odininspector.com/)）
 -   `Odin Validator`: データ検証ツール（[Sirenix](https://odininspector.com/)）
 -   `TextMeshPro`: 高品質なテキストレンダリング（Unity公式）
+
+## **GitHub Actions設定**
+- **設定しない**  

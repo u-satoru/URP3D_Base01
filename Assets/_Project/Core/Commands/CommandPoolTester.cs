@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using asterivo.Unity60.Core.Components;
+using asterivo.Unity60.Core.Commands.Definitions;
 
 namespace asterivo.Unity60.Core.Commands
 {
@@ -153,7 +154,7 @@ namespace asterivo.Unity60.Core.Commands
             var definition = new DamageCommandDefinition
             {
                 damageAmount = damage,
-                elementType = "test"
+                damageType = DamageCommandDefinition.DamageType.Physical
             };
             
             var command = definition.CreateCommand(healthTarget);

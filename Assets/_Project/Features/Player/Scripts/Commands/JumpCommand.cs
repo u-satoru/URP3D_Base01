@@ -1,5 +1,6 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Commands;
+using asterivo.Unity60.Core.Commands.Definitions;
 using asterivo.Unity60.Player.States;
 
 namespace asterivo.Unity60.Player.Commands

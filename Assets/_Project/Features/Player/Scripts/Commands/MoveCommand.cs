@@ -1,5 +1,6 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Commands;
+using asterivo.Unity60.Core.Commands.Definitions;
 using asterivo.Unity60.Player.States;
 
 namespace asterivo.Unity60.Player.Commands
@@ -14,7 +15,7 @@ namespace asterivo.Unity60.Player.Commands
         public MoveCommand(DetailedPlayerStateMachine stateMachine, MoveCommandDefinition definition)
         {
             _stateMachine = stateMachine;
-            _direction = definition.Direction;
+            _direction = new Vector2(definition.direction.x, definition.direction.z);
         }
 
         public void Execute()

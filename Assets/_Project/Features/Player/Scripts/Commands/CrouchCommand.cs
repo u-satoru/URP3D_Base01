@@ -1,6 +1,7 @@
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using asterivo.Unity60.Core.Commands;
+using asterivo.Unity60.Core.Commands.Definitions;
 using asterivo.Unity60.Player.States;
 
 namespace asterivo.Unity60.Player.Commands
@@ -27,11 +28,19 @@ namespace asterivo.Unity60.Player.Commands
             // 現在の状態を保存（Undo用）
             _previousState = _stateMachine.GetCurrentStateType();
             
-            if (_definition.toCrouchState)
+            if (_definition.toggleMode)
             {
-                // しゃがみ状態に遷移
-                _stateMachine.TransitionToState(PlayerStateType.Crouching);
-                Debug.Log("Player crouched");
+                // トグルモードの場合、現在の状態に応じて切り替え
+                if (_stateMachine.GetCurrentStateType() == PlayerStateType.Crouching)
+                {
+                    _stateMachine.TransitionToState(PlayerStateType.Idle);
+                    Debug.Log("Player stood up");
+                }
+                else
+                {
+                    _stateMachine.TransitionToState(PlayerStateType.Crouching);
+                    Debug.Log("Player crouched");
+                }
             }
             else
             {
