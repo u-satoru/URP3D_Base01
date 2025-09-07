@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -110,7 +111,6 @@ namespace asterivo.Unity60.Core.UI
         [ReadOnly]
         [ShowInInspector]
         [LabelText("Current Menu")]
-        // NOTE: デバッグ表示用フィールド（実際は内部で使用されている）
         private string currentMenu = "None";
         
         [TabGroup("Menu Debug", "Current State")]
@@ -118,6 +118,12 @@ namespace asterivo.Unity60.Core.UI
         [ShowInInspector]
         [LabelText("Is Game Paused")]
         private bool isGamePaused = false;
+        
+        // メニューの履歴を保持（戻る機能用）
+        private Stack<string> menuHistory = new Stack<string>();
+        
+        public string CurrentMenu => currentMenu;
+        public bool HasMenuHistory => menuHistory.Count > 0;
         
         private void Awake()
         {
@@ -281,7 +287,7 @@ namespace asterivo.Unity60.Core.UI
             {
                 mainMenuPanel.SetActive(true);
                 AnimateMenuIn(mainMenuPanel);
-                currentMenu = "MainMenu";
+                ChangeMenuState("MainMenu");
             }
         }
         
@@ -294,7 +300,8 @@ namespace asterivo.Unity60.Core.UI
             {
                 pauseMenuPanel.SetActive(true);
                 AnimateMenuIn(pauseMenuPanel);
-                currentMenu = "PauseMenu";
+                ChangeMenuState("Pause");
+                isGamePaused = true;
             }
         }
         
@@ -307,7 +314,7 @@ namespace asterivo.Unity60.Core.UI
             {
                 settingsPanel.SetActive(true);
                 AnimateMenuIn(settingsPanel);
-                currentMenu = "Settings";
+                ChangeMenuState("Settings");
             }
         }
         
@@ -338,7 +345,8 @@ namespace asterivo.Unity60.Core.UI
             if (mainMenuPanel != null) mainMenuPanel.SetActive(false);
             if (pauseMenuPanel != null) pauseMenuPanel.SetActive(false);
             if (settingsPanel != null) settingsPanel.SetActive(false);
-            currentMenu = "None";
+            ChangeMenuState("None", false);
+            isGamePaused = false;
         }
         
         /// <summary>
@@ -517,5 +525,129 @@ namespace asterivo.Unity60.Core.UI
                 ResumeGame();
         }
         #endif
+        
+        #region Menu State Management System
+        /// <summary>
+        /// メニューの状態を変更し、履歴に記録
+        /// </summary>
+        private void ChangeMenuState(string newMenu, bool addToHistory = true)
+        {
+            if (currentMenu == newMenu) return;
+            
+            // 現在のメニューを履歴に追加
+            if (addToHistory && currentMenu != "None")
+            {
+                menuHistory.Push(currentMenu);
+            }
+            
+            string previousMenu = currentMenu;
+            currentMenu = newMenu;
+            
+            UnityEngine.Debug.Log($"Menu changed: {previousMenu} -> {newMenu}");
+        }
+        
+        
+        /// <summary>
+        /// 指定したメニュー以外をすべて非表示
+        /// </summary>
+        private void HideAllOtherMenus(string exceptMenu)
+        {
+            if (exceptMenu != "MainMenu" && mainMenuPanel != null)
+                mainMenuPanel.SetActive(false);
+                
+            if (exceptMenu != "Settings" && settingsPanel != null)
+                settingsPanel.SetActive(false);
+                
+            if (exceptMenu != "Pause" && pauseMenuPanel != null)
+            {
+                pauseMenuPanel.SetActive(false);
+                if (exceptMenu != "Pause")
+                    isGamePaused = false;
+            }
+        }
+        
+        /// <summary>
+        /// 前のメニューに戻る
+        /// </summary>
+        public void GoBackToPreviousMenu()
+        {
+            if (menuHistory.Count > 0)
+            {
+                string previousMenu = menuHistory.Pop();
+                
+                switch (previousMenu)
+                {
+                    case "MainMenu":
+                        ShowMainMenuWithoutHistory();
+                        break;
+                    case "Settings":
+                        ShowSettingsMenuWithoutHistory();
+                        break;
+                    case "Pause":
+                        ShowPauseMenuWithoutHistory();
+                        break;
+                    default:
+                        HideAllMenus();
+                        break;
+                }
+            }
+            else
+            {
+                HideAllMenus();
+            }
+        }
+        
+        /// <summary>
+        /// 履歴に追加せずにメニューを表示
+        /// </summary>
+        private void ShowMainMenuWithoutHistory()
+        {
+            if (mainMenuPanel != null)
+            {
+                mainMenuPanel.SetActive(true);
+                ChangeMenuState("MainMenu", false);
+                HideAllOtherMenus("MainMenu");
+            }
+        }
+        
+        private void ShowSettingsMenuWithoutHistory()
+        {
+            if (settingsPanel != null)
+            {
+                settingsPanel.SetActive(true);
+                ChangeMenuState("Settings", false);
+                HideAllOtherMenus("Settings");
+            }
+        }
+        
+        private void ShowPauseMenuWithoutHistory()
+        {
+            if (pauseMenuPanel != null)
+            {
+                pauseMenuPanel.SetActive(true);
+                ChangeMenuState("Pause", false);
+                HideAllOtherMenus("Pause");
+                isGamePaused = true;
+            }
+        }
+        
+        
+        /// <summary>
+        /// メニュー履歴をクリア
+        /// </summary>
+        public void ClearMenuHistory()
+        {
+            menuHistory.Clear();
+            UnityEngine.Debug.Log("Menu history cleared");
+        }
+        
+        /// <summary>
+        /// 現在のメニュー階層の深さを取得
+        /// </summary>
+        public int GetMenuDepth()
+        {
+            return menuHistory.Count;
+        }
+        #endregion
     }
 }

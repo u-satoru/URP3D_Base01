@@ -20,7 +20,9 @@ namespace asterivo.Unity60.Core.Audio
         [SerializeField, Range(0.05f, 1f)] private float updateInterval = AudioConstants.AUDIO_UPDATE_INTERVAL;
         [SerializeField] private bool enableCoordinatedUpdates = true;
         // TODO: バッチ処理での一度に更新するAudioSourceの最大数制限（パフォーマンス最適化用）
+#pragma warning disable CS0414 // Field assigned but never used - planned for performance batch processing
         [SerializeField, Range(1, 10)] private int maxAudioSourcesPerUpdate = 5;
+#pragma warning restore CS0414
 
         [Header("Spatial Optimization")]
         [SerializeField] private LayerMask audioSourceLayerMask = -1;

@@ -3,6 +3,12 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Events;
 using Sirenix.OdinInspector;
+using DG.Tweening;
+
+using DG.Tweening.Plugins.Options;
+using DG.Tweening.Core;
+
+
 
 namespace asterivo.Unity60.Core.UI
 {
@@ -58,6 +64,10 @@ namespace asterivo.Unity60.Core.UI
         [TabGroup("UI Control", "Settings")]
         [LabelText("Use Fade Transitions")]
         [SerializeField] private bool useFadeTransitions = true;
+        
+        [TabGroup("UI Control", "Settings")]
+        [LabelText("Fade Canvas Group")]
+        [SerializeField] private CanvasGroup fadeCanvasGroup;
         
         [TabGroup("UI Control", "Debug")]
         [ReadOnly]
@@ -368,5 +378,91 @@ namespace asterivo.Unity60.Core.UI
                 HideAllPanels();
         }
         #endif
+        
+        #region Fade System
+        /// <summary>
+        /// フェードインを実行
+        /// </summary>
+        public void FadeIn(System.Action onComplete = null)
+        {
+            if (!useFadeTransitions || fadeCanvasGroup == null)
+            {
+                onComplete?.Invoke();
+                return;
+            }
+
+            fadeCanvasGroup.gameObject.SetActive(true);
+            fadeCanvasGroup.alpha = 1f;
+            DOTween.To(() => fadeCanvasGroup.alpha, x => fadeCanvasGroup.alpha = x, 0f, fadeDuration)
+                .SetUpdate(true) // ポーズ中でも動作
+                .OnComplete(() => {
+                    fadeCanvasGroup.gameObject.SetActive(false);
+                    onComplete?.Invoke();
+                });
+        }
+
+        /// <summary>
+        /// フェードアウトを実行
+        /// </summary>
+        public void FadeOut(System.Action onComplete = null)
+        {
+            if (!useFadeTransitions || fadeCanvasGroup == null)
+            {
+                onComplete?.Invoke();
+                return;
+            }
+
+            fadeCanvasGroup.gameObject.SetActive(true);
+            fadeCanvasGroup.alpha = 0f;
+            DOTween.To(() => fadeCanvasGroup.alpha, x => fadeCanvasGroup.alpha = x, 1f, fadeDuration)
+                .SetUpdate(true) // ポーズ中でも動作
+                .OnComplete(() => {
+                    onComplete?.Invoke();
+                });
+        }
+
+        /// <summary>
+        /// フェードアウト → アクション実行 → フェードインの組み合わせ
+        /// </summary>
+        public void FadeTransition(System.Action transitionAction)
+        {
+            if (!useFadeTransitions)
+            {
+                transitionAction?.Invoke();
+                return;
+            }
+
+            FadeOut(() => {
+                transitionAction?.Invoke();
+                FadeIn();
+            });
+        }
+
+        /// <summary>
+        /// UIパネル切り替えをフェード付きで実行
+        /// </summary>
+        public void ShowPanelWithFade(string panelName)
+        {
+            FadeTransition(() => ShowPanel(panelName));
+        }
+
+        /// <summary>
+        /// UIパネルをフェード付きで非表示
+        /// </summary>
+        public void HidePanelWithFade(string panelName)
+        {
+            FadeTransition(() => HidePanel(panelName));
+        }
+
+        /// <summary>
+        /// シーン切り替えをフェード付きで実行
+        /// </summary>
+        public void ChangeSceneWithFade(string sceneName)
+        {
+            FadeOut(() => {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+            });
+        }
+        #endregion
     }
 }

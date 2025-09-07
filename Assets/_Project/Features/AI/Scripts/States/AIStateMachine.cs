@@ -38,19 +38,28 @@ namespace asterivo.Unity60.AI.States
         [PropertyRange(5f, 50f)]
         [LabelText("Sight Range")]
         [SuffixLabel("m", overlay: true)]
+        // TODO: AI視覚検知システムの実装予定（LineOfSight、Raycast使用）
+#pragma warning disable CS0414 // Field assigned but never used - planned for AI sight detection system
         [SerializeField] private float sightRange = 15f;
+#pragma warning restore CS0414
         
         [TabGroup("AI Control", "Senses")]
         [PropertyRange(30f, 180f)]
         [LabelText("Sight Angle")]
         [SuffixLabel("°", overlay: true)]
+        // TODO: AI視野角による検知判定システムの実装予定
+#pragma warning disable CS0414 // Field assigned but never used - planned for AI sight angle detection
         [SerializeField] private float sightAngle = 110f;
+#pragma warning restore CS0414
         
         [TabGroup("AI Control", "Senses")]
         [PropertyRange(3f, 25f)]
         [LabelText("Hearing Range")]
         [SuffixLabel("m", overlay: true)]
+        // TODO: AI聴覚検知システムの実装予定（StealthMovementController連携）
+#pragma warning disable CS0414 // Field assigned but never used - planned for AI hearing detection system
         [SerializeField] private float hearingRange = 10f;
+#pragma warning restore CS0414
         
         [TabGroup("AI Control", "Detection")]
         [ReadOnly]

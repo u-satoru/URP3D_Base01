@@ -65,7 +65,10 @@ namespace asterivo.Unity60.Camera
         [SerializeField] private bool invertYAxis = false;
         
         [Header("Transition Settings")]
+        // TODO: CinemachineBrain.m_DefaultBlendの設定に使用予定
+#pragma warning disable CS0414 // Field assigned but never used - planned for camera blend configuration
         [SerializeField] private float defaultBlendTime = 1f;
+#pragma warning restore CS0414
         [SerializeField] private AnimationCurve transitionCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
         #endregion
         

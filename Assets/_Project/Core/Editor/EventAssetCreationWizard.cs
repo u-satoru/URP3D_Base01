@@ -31,7 +31,7 @@ namespace asterivo.Unity60.Core.Editor
             CommandGameEvent
         }
         
-        [MenuItem("Unity6/Event System/Event Asset Creation Wizard")]
+        [MenuItem("asterivo.Unity60/Tools/Event Asset Creation Wizard")]
         public static void ShowWindow()
         {
             var window = GetWindow<EventAssetCreationWizard>("Event Asset Creation Wizard");

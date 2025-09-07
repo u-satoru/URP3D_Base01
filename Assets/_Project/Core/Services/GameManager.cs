@@ -57,7 +57,6 @@ namespace asterivo.Unity60.Core.Services
         [Header("Scene Management")]
         [SerializeField] private string mainMenuSceneName = "MainMenu";
         [SerializeField] private string gameplaySceneName = "Gameplay";
-        // TODO: LoadGameplayScene内で最小読み込み時間を保証する機能の実装予定
         [SerializeField] private float minLoadingTime = 1f;
 
         [Header("Game Data")]
@@ -65,12 +64,18 @@ namespace asterivo.Unity60.Core.Services
         [SerializeField] private float gameTime = 0f;
         [SerializeField] private int gameScore = 0;
         [SerializeField] private int playerLives = 3;
+        [SerializeField] private int maxLives = 5;
 
         [Header("Settings")]
         [SerializeField] private bool enableDebugLog = true;
         [SerializeField] private bool validateEventConnections = true;
-        // TODO: 一時停止時にTime.timeScaleを制御する機能の実装予定
         [SerializeField] private bool pauseTimeOnPause = true;
+        
+        [Header("Game Events")]
+        [SerializeField] private IntGameEvent onScoreChanged;
+        [SerializeField] private IntGameEvent onLivesChanged;
+        [SerializeField] private GameEvent onGameOver;
+        [SerializeField] private BoolGameEvent onPauseStateChanged;
         
         [Header("Input")]
         [SerializeField] private InputActionAsset inputActions;
@@ -78,6 +83,10 @@ namespace asterivo.Unity60.Core.Services
 
         public GameState CurrentGameState => currentGameState;
         public GameState PreviousGameState => previousGameState;
+        public int CurrentScore => gameScore;
+        public int CurrentLives => playerLives;
+        public bool IsPaused { get; private set; }
+        public bool IsGameOver => playerLives <= 0;
 
         private Dictionary<string, Coroutine> activeCoroutines = new Dictionary<string, Coroutine>();
         private bool isTransitioning = false;
@@ -309,6 +318,156 @@ namespace asterivo.Unity60.Core.Services
                 onPauseGameCommand?.Raise();
             }
         }
+
+        #region Score and Lives System
+        /// <summary>
+        /// スコアを追加
+        /// </summary>
+        public void AddScore(int points)
+        {
+            if (points <= 0) return;
+            
+            gameScore += points;
+            onScoreChanged?.Raise(gameScore);
+            Log($"Score increased by {points}. Total score: {gameScore}");
+        }
+
+        /// <summary>
+        /// スコアを設定
+        /// </summary>
+        public void SetScore(int newScore)
+        {
+            if (newScore < 0) newScore = 0;
+            
+            gameScore = newScore;
+            onScoreChanged?.Raise(gameScore);
+            Log($"Score set to: {gameScore}");
+        }
+
+        /// <summary>
+        /// ライフを失う
+        /// </summary>
+        public void LoseLife()
+        {
+            if (playerLives <= 0) return;
+
+            playerLives--;
+            onLivesChanged?.Raise(playerLives);
+            Log($"Life lost. Remaining lives: {playerLives}");
+
+            if (playerLives <= 0)
+            {
+                TriggerGameOver();
+            }
+        }
+
+        /// <summary>
+        /// ライフを追加
+        /// </summary>
+        public void AddLife()
+        {
+            if (playerLives >= maxLives) return;
+
+            playerLives++;
+            onLivesChanged?.Raise(playerLives);
+            Log($"Life gained. Current lives: {playerLives}");
+        }
+
+        /// <summary>
+        /// ライフを設定
+        /// </summary>
+        public void SetLives(int lives)
+        {
+            lives = Mathf.Clamp(lives, 0, maxLives);
+            playerLives = lives;
+            onLivesChanged?.Raise(playerLives);
+            Log($"Lives set to: {playerLives}");
+
+            if (playerLives <= 0)
+            {
+                TriggerGameOver();
+            }
+        }
+
+        /// <summary>
+        /// ゲームオーバーをトリガー
+        /// </summary>
+        private void TriggerGameOver()
+        {
+            Log("Game Over triggered!");
+            ChangeGameState(GameState.GameOver);
+            onGameOver?.Raise();
+        }
+        #endregion
+
+        #region Pause System
+        /// <summary>
+        /// ポーズ状態を切り替え
+        /// </summary>
+        public void TogglePause()
+        {
+            SetPauseState(!IsPaused);
+        }
+
+        /// <summary>
+        /// ポーズ状態を設定
+        /// </summary>
+        public void SetPauseState(bool paused)
+        {
+            if (IsPaused == paused) return;
+
+            IsPaused = paused;
+
+            if (pauseTimeOnPause)
+            {
+                Time.timeScale = paused ? 0f : 1f;
+            }
+
+            ChangeGameState(paused ? GameState.Paused : GameState.Playing);
+            onPauseStateChanged?.Raise(IsPaused);
+            Log($"Game {(paused ? "paused" : "unpaused")}");
+        }
+
+        /// <summary>
+        /// ゲームを再開
+        /// </summary>
+        public void ResumeGame()
+        {
+            SetPauseState(false);
+        }
+        #endregion
+
+        #region Loading System  
+        /// <summary>
+        /// 最小ロード時間を保証したシーンロード
+        /// </summary>
+        private IEnumerator LoadSceneWithMinTime(string sceneName)
+        {
+            isTransitioning = true;
+            ChangeGameState(GameState.Loading);
+            
+            float startTime = Time.realtimeSinceStartup;
+            var asyncOperation = SceneManager.LoadSceneAsync(sceneName);
+            
+            // 最小ロード時間を待機
+            while (Time.realtimeSinceStartup - startTime < minLoadingTime || !asyncOperation.isDone)
+            {
+                yield return null;
+            }
+            
+            isTransitioning = false;
+            ChangeGameState(GameState.Playing);
+            Log($"Scene '{sceneName}' loaded with minimum load time guarantee");
+        }
+        
+        /// <summary>
+        /// 最小ロード時間保証付きでゲームプレイシーンをロード
+        /// </summary>
+        public void LoadGameplaySceneWithMinTime()
+        {
+            StartCoroutineManaged("LoadGameplayScene", LoadSceneWithMinTime(gameplaySceneName));
+        }
+        #endregion
 
         #region Coroutine Management
         private void StartCoroutineManaged(string name, IEnumerator routine)

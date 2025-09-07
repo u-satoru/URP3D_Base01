@@ -9,6 +9,16 @@ using asterivo.Unity60.Core.Events;
 namespace asterivo.Unity60.Core.Audio
 {
     /// <summary>
+    /// エフェクト種別の列挙型
+    /// </summary>
+    public enum EffectType
+    {
+        UI,
+        Interaction, 
+        Combat,
+        Stealth
+    }
+    /// <summary>
     /// 効果音システムの管理クラス
     /// 一般的な効果音とステルスゲーム用効果音の統合管理
     /// </summary>
@@ -31,7 +41,6 @@ namespace asterivo.Unity60.Core.Audio
         [SerializeField] private float stealthEffectVolume = 0.7f;
         
         [Header("Priority Settings")]
-        // TODO: ApplyEffectTypeSettings内でAudioSource.priorityの設定に使用予定
         [SerializeField] private int uiEffectPriority = 64;
         [SerializeField] private int interactionEffectPriority = 128;
         [SerializeField] private int combatEffectPriority = 32;
@@ -508,17 +517,106 @@ namespace asterivo.Unity60.Core.Audio
             ReturnToPool(audioSource);
         }
         
+        
+        /// <summary>
+        /// エフェクトタイプに基づいて設定を適用
+        /// </summary>
+        private void ApplyEffectTypeSettings(AudioSource audioSource, EffectType effectType)
+        {
+            switch (effectType)
+            {
+                case EffectType.UI:
+                    audioSource.priority = uiEffectPriority;
+                    audioSource.volume *= uiEffectVolume;
+                    break;
+                case EffectType.Interaction:
+                    audioSource.priority = interactionEffectPriority;
+                    audioSource.volume *= interactionEffectVolume;
+                    break;
+                case EffectType.Combat:
+                    audioSource.priority = combatEffectPriority;
+                    audioSource.volume *= combatEffectVolume;
+                    break;
+                case EffectType.Stealth:
+                    audioSource.priority = stealthEffectPriority;
+                    audioSource.volume *= stealthEffectVolume;
+                    break;
+            }
+        }
+        
+        /// <summary>
+        /// エフェクトタイプ指定で効果音を再生
+        /// </summary>
+        public void PlayEffect(string effectName, EffectType effectType, Vector3 position = default)
+        {
+            if (!effectDatabase.TryGetValue(effectName, out SoundDataSO soundData))
+            {
+                EventLogger.LogError($"Effect '{effectName}' not found in database");
+                return;
+            }
+
+            var audioSource = GetPooledEffectSource();
+            if (audioSource == null) return;
+
+            // 基本設定を適用
+            audioSource.clip = soundData.GetRandomClip();
+            audioSource.volume = soundData.GetRandomVolume();
+            audioSource.pitch = soundData.GetRandomPitch();
+
+            // エフェクトタイプ固有の設定を適用
+            ApplyEffectTypeSettings(audioSource, effectType);
+
+            // 位置設定
+            if (position != default)
+            {
+                audioSource.transform.position = position;
+                audioSource.spatialBlend = 1f; // 3D音響
+            }
+            else
+            {
+                audioSource.spatialBlend = 0f; // 2D音響
+            }
+
+            audioSource.Play();
+            StartCoroutine(ReturnToPoolWhenFinished(audioSource, soundData.GetRandomClip().length));
+
+            #if UNITY_EDITOR || DEVELOPMENT_BUILD
+            EventLogger.Log($"Playing effect: {effectName} ({effectType}) with priority: {audioSource.priority}");
+            #endif
+        }
+        
+        /// <summary>
+        /// UIサウンド再生のショートカット
+        /// </summary>
+        public void PlayUIEffect(string effectName)
+        {
+            PlayEffect(effectName, EffectType.UI);
+        }
+        
+        /// <summary>
+        /// インタラクションサウンド再生のショートカット
+        /// </summary>
+        public void PlayInteractionEffect(string effectName, Vector3 position = default)
+        {
+            PlayEffect(effectName, EffectType.Interaction, position);
+        }
+        
+        /// <summary>
+        /// 戦闘サウンド再生のショートカット
+        /// </summary>
+        public void PlayCombatEffect(string effectName, Vector3 position = default)
+        {
+            PlayEffect(effectName, EffectType.Combat, position);
+        }
+        
+        /// <summary>
+        /// ステルスサウンド再生のショートカット
+        /// </summary>
+        public void PlayStealthEffect(string effectName, Vector3 position = default)
+        {
+            PlayEffect(effectName, EffectType.Stealth, position);
+        }
+        
         #endregion
-    }
-    
-    /// <summary>
-    /// 効果音の種類を定義
-    /// </summary>
-    public enum EffectType
-    {
-        UI,           // UIサウンド
-        Interaction,  // インタラクション音
-        Combat,       // 戦闘音
-        Stealth       // ステルス音
     }
 }

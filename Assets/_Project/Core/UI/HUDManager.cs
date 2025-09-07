@@ -3,8 +3,11 @@ using UnityEngine.UI;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Components;
 using DG.Tweening;
-using DG.Tweening.Core;
+
 using DG.Tweening.Plugins.Options;
+using DG.Tweening.Core;
+
+
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.UI
@@ -430,5 +433,98 @@ namespace asterivo.Unity60.Core.UI
                 notificationPanel.SetActive(false);
             }
         }
+        
+        #region Health Animation System
+        /// <summary>
+        /// ヘルス値をアニメーション付きで更新
+        /// </summary>
+        private void AnimateHealthChange(int newHealth, int maxHealth)
+        {
+            if (healthBar != null)
+            {
+                float targetValue = (float)newHealth / maxHealth;
+                
+                // DOTweenを使用してスムーズなアニメーション（Slider用）
+                DOTween.To(() => healthBar.value, x => healthBar.value = x, targetValue, healthAnimationDuration)
+                    .SetEase(Ease.OutQuart);
+            }
+            
+            if (healthBarFill != null)
+            {
+                float targetFillAmount = (float)newHealth / maxHealth;
+                    
+                // 色の変化も追加（体力が低くなると赤くなる）
+                Color healthColor = GetHealthColor(targetFillAmount);
+                DOTween.To(() => healthBarFill.color, x => healthBarFill.color = x, healthColor, healthAnimationDuration);
+            }
+
+            if (healthText != null)
+            {
+                // 数値のアニメーション
+                DOTween.To(() => currentDisplayedHealth, x => currentDisplayedHealth = x, newHealth, healthAnimationDuration)
+                    .OnUpdate(() => {
+                        healthText.text = $"{Mathf.RoundToInt(currentDisplayedHealth)}/{maxHealth}";
+                    })
+                    .SetEase(Ease.OutQuart);
+            }
+        }
+        
+        /// <summary>
+        /// 体力の残量に応じた色を取得
+        /// </summary>
+        private Color GetHealthColor(float healthPercentage)
+        {
+            if (healthPercentage > 0.6f)
+                return Color.green;
+            else if (healthPercentage > 0.3f)
+                return Color.yellow;
+            else
+                return Color.red;
+        }
+        
+        private float currentDisplayedHealth = 100f; // 現在表示中の体力値（アニメーション用）
+        
+        /// <summary>
+        /// ヘルス変更イベントのハンドラー（外部から呼び出し用）
+        /// </summary>
+        public void OnHealthChanged(int newHealth, int maxHealth)
+        {
+            AnimateHealthChange(newHealth, maxHealth);
+            
+            // 体力が危険域に入った場合の演出
+            if (newHealth <= maxHealth * 0.25f)
+            {
+                TriggerLowHealthEffect();
+            }
+        }
+        
+        /// <summary>
+        /// 低体力時の演出
+        /// </summary>
+        private void TriggerLowHealthEffect()
+        {
+            if (healthBarFill != null)
+            {
+                // 点滅効果
+                DOTween.To(() => healthBarFill.color.a, x => { var c = healthBarFill.color; c.a = x; healthBarFill.color = c; }, 0.3f, 0.5f)
+                    .SetLoops(-1, LoopType.Yoyo)
+                    .SetId("LowHealthBlink");
+            }
+        }
+        
+        /// <summary>
+        /// 低体力演出を停止
+        /// </summary>
+        public void StopLowHealthEffect()
+        {
+            DOTween.Kill("LowHealthBlink");
+            if (healthBarFill != null)
+            {
+                Color currentColor = healthBarFill.color;
+                currentColor.a = 1f;
+                healthBarFill.color = currentColor;
+            }
+        }
+        #endregion
     }
 }
