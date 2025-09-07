@@ -1,0 +1,307 @@
+name: Documentation Update
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'Assets/_Project/**/*.cs'
+      - 'Assets/_Project/Docs/**/*.md'
+      - 'CLAUDE.md'
+      - 'README.md'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'Assets/_Project/**/*.cs'
+      - 'Assets/_Project/Docs/**/*.md'
+      - 'CLAUDE.md'
+      - 'README.md'
+  workflow_dispatch:
+    inputs:
+      force_regenerate:
+        description: 'Force regenerate all documentation'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  update-documentation:
+    name: Update Project Documentation
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Setup Unity Environment
+      uses: game-ci/unity-builder@v4
+      env:
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+        UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      with:
+        unityVersion: '6000.0.42f1'
+        targetPlatform: StandaloneWindows64
+        customParameters: |
+          -quit
+          -batchmode
+          -executeMethod DocumentationGenerator.GenerateAllDocumentation
+    
+    - name: Generate API Documentation
+      run: |
+        echo "Generating API documentation..."
+        
+        # Create API docs directory
+        mkdir -p docs/api
+        
+        # Generate C# XML documentation
+        echo "# API Documentation" > docs/api/README.md
+        echo "Generated on: $(date)" >> docs/api/README.md
+        echo "" >> docs/api/README.md
+        
+        # Find all public classes and methods in the project
+        find Assets/_Project -name "*.cs" -exec grep -l "public class\|public interface" {} \; > /tmp/public_classes.txt
+        
+        echo "## Core Classes" >> docs/api/README.md
+        echo "" >> docs/api/README.md
+        
+        while IFS= read -r file; do
+          if [ -f "$file" ]; then
+            # Extract class names and basic info
+            CLASS_NAME=$(grep -o "public class [A-Za-z0-9_]*" "$file" | head -1 | sed 's/public class //')
+            if [ ! -z "$CLASS_NAME" ]; then
+              echo "### $CLASS_NAME" >> docs/api/README.md
+              echo "**File:** \`$file\`" >> docs/api/README.md
+              echo "" >> docs/api/README.md
+              
+              # Extract XML documentation comments if available
+              grep -A 3 "/// <summary>" "$file" | head -3 | sed 's/.*\/\/\/ //' >> docs/api/README.md || echo "No documentation available." >> docs/api/README.md
+              echo "" >> docs/api/README.md
+            fi
+          fi
+        done < /tmp/public_classes.txt
+    
+    - name: Update Architecture Diagrams
+      run: |
+        echo "Updating architecture diagrams..."
+        
+        # Create diagrams directory
+        mkdir -p docs/diagrams
+        
+        # Generate system architecture overview
+        cat > docs/diagrams/system-architecture.md << 'EOF'
+        # System Architecture
+        
+        ## Event-Driven Architecture
+        ```mermaid
+        graph TB
+            A[Player Input] --> B[Input System]
+            B --> C[Command System]
+            C --> D[Game Events]
+            D --> E[Event Listeners]
+            E --> F[Game Systems]
+            F --> G[Audio System]
+            F --> H[UI System]
+            F --> I[Animation System]
+        ```
+        
+        ## Command Pattern Flow
+        ```mermaid
+        sequenceDiagram
+            participant UI as UI System
+            participant CMD as Command System
+            participant POOL as Command Pool
+            participant EXEC as Command Executor
+            participant EVT as Event System
+            
+            UI->>CMD: Request Action
+            CMD->>POOL: Get Command
+            POOL->>CMD: Return Pooled Command
+            CMD->>EXEC: Execute Command
+            EXEC->>EVT: Fire Event
+            EVT->>UI: Update UI
+            EXEC->>POOL: Return Command
+        ```
+        
+        ## ScriptableObject Data Flow
+        ```mermaid
+        graph LR
+            A[ScriptableObject Assets] --> B[Runtime Systems]
+            B --> C[Game State]
+            C --> D[Event Triggers]
+            D --> E[System Responses]
+            E --> F[Data Updates]
+            F --> A
+        ```
+        EOF
+    
+    - name: Generate Component Documentation
+      run: |
+        echo "Generating component documentation..."
+        
+        # Create component docs
+        mkdir -p docs/components
+        
+        # Find all MonoBehaviour components
+        find Assets/_Project -name "*.cs" -exec grep -l "MonoBehaviour\|ScriptableObject" {} \; > /tmp/components.txt
+        
+        echo "# Component Reference" > docs/components/README.md
+        echo "Generated on: $(date)" >> docs/components/README.md
+        echo "" >> docs/components/README.md
+        
+        echo "## MonoBehaviour Components" >> docs/components/README.md
+        echo "" >> docs/components/README.md
+        
+        while IFS= read -r file; do
+          if grep -q "MonoBehaviour" "$file"; then
+            COMPONENT_NAME=$(grep -o "class [A-Za-z0-9_]* : MonoBehaviour" "$file" | head -1 | sed 's/class \([A-Za-z0-9_]*\) : MonoBehaviour/\1/')
+            if [ ! -z "$COMPONENT_NAME" ]; then
+              echo "### $COMPONENT_NAME" >> docs/components/README.md
+              echo "**Location:** \`$file\`" >> docs/components/README.md
+              echo "" >> docs/components/README.md
+              
+              # Extract public fields and methods
+              echo "**Public Fields:**" >> docs/components/README.md
+              grep -o "public [^(]*[^;]*;" "$file" | head -5 >> docs/components/README.md || echo "None" >> docs/components/README.md
+              echo "" >> docs/components/README.md
+            fi
+          fi
+        done < /tmp/components.txt
+    
+    - name: Update Setup Guides
+      run: |
+        echo "Updating setup guides..."
+        
+        # Verify all setup guide links are valid
+        if [ -f "Assets/_Project/Docs/Unity_Player_Setup_Guide.md" ]; then
+          echo "✓ Player setup guide exists"
+        else
+          echo "⚠ Player setup guide missing"
+        fi
+        
+        # Generate quick setup checklist
+        cat > docs/QUICK_SETUP.md << 'EOF'
+        # Quick Setup Checklist
+        
+        ## Prerequisites
+        - [ ] Unity 6000.0.42f1 or later
+        - [ ] Universal Render Pipeline (URP) installed
+        - [ ] Input System package installed
+        
+        ## Setup Steps
+        1. [ ] Import the project
+        2. [ ] Open the main scene: `Assets/_Project/Scenes/Main.unity`
+        3. [ ] Follow the [Player Setup Guide](Assets/_Project/Docs/Unity_Player_Setup_Guide.md)
+        4. [ ] Test player movement with WASD keys
+        5. [ ] Verify audio system is working
+        
+        ## Verification
+        - [ ] No console errors
+        - [ ] Player responds to input
+        - [ ] Audio plays correctly
+        - [ ] UI system functions
+        
+        For detailed setup instructions, see [CLAUDE.md](CLAUDE.md)
+        EOF
+    
+    - name: Validate Documentation Links
+      run: |
+        echo "Validating documentation links..."
+        
+        # Check for broken internal links in markdown files
+        find . -name "*.md" -not -path "./.github/*" | while read -r file; do
+          echo "Checking $file..."
+          
+          # Extract markdown links and check if files exist
+          grep -o '\[.*\]([^)]*\.md)' "$file" | while read -r link; do
+            LINK_PATH=$(echo "$link" | sed 's/.*(\([^)]*\)).*/\1/')
+            if [ ! -f "$LINK_PATH" ] && [ ! -f "$(dirname "$file")/$LINK_PATH" ]; then
+              echo "⚠ Broken link in $file: $LINK_PATH"
+            fi
+          done
+        done
+    
+    - name: Check for Documentation Updates
+      id: check_changes
+      run: |
+        # Check if any documentation files were modified
+        git add docs/ || true
+        
+        if git diff --cached --quiet; then
+          echo "No documentation changes to commit"
+          echo "changes_made=false" >> $GITHUB_OUTPUT
+        else
+          echo "Documentation changes detected"
+          echo "changes_made=true" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Commit Documentation Updates
+      if: steps.check_changes.outputs.changes_made == 'true' && github.event_name != 'pull_request'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add docs/
+        git commit -m "📚 Auto-update documentation
+        
+        - Generated API documentation
+        - Updated component reference
+        - Refreshed architecture diagrams
+        - Validated documentation links
+        
+        Generated by GitHub Actions on $(date)"
+        git push
+    
+    - name: Create Documentation PR Comment
+      if: github.event_name == 'pull_request' && steps.check_changes.outputs.changes_made == 'true'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '📚 **Documentation Updated**\n\nThis PR includes automatically generated documentation updates:\n- API reference\n- Component documentation\n- Architecture diagrams\n\nPlease review the documentation changes in the `docs/` directory.'
+          })
+    
+    - name: Upload Documentation Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: generated-documentation
+        path: |
+          docs/
+          !docs/**/.git*
+        retention-days: 30
+    
+    - name: Generate Documentation Report
+      run: |
+        echo "# Documentation Generation Report" > doc-report.md
+        echo "Generated on: $(date)" >> doc-report.md
+        echo "" >> doc-report.md
+        
+        echo "## Files Generated" >> doc-report.md
+        find docs/ -type f -name "*.md" | wc -l >> doc-report.md
+        echo "" >> doc-report.md
+        
+        echo "## API Classes Documented" >> doc-report.md
+        find Assets/_Project -name "*.cs" -exec grep -l "public class" {} \; | wc -l >> doc-report.md
+        echo "" >> doc-report.md
+        
+        echo "## Component Count" >> doc-report.md
+        find Assets/_Project -name "*.cs" -exec grep -l "MonoBehaviour" {} \; | wc -l >> doc-report.md
+        echo "" >> doc-report.md
+        
+        echo "## Status" >> doc-report.md
+        if [ "${{ steps.check_changes.outputs.changes_made }}" == "true" ]; then
+          echo "✅ Documentation updated successfully" >> doc-report.md
+        else
+          echo "ℹ️ No documentation changes required" >> doc-report.md
+        fi
+    
+    - name: Upload Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: documentation-report
+        path: doc-report.md
+        retention-days: 7

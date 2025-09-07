@@ -1,0 +1,112 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build-and-test:
+    name: Build and Test Unity Project
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        unity-version: ['2023.3.42f1', '6000.0.42f1']
+        target-platform: [StandaloneWindows64, StandaloneOSX, iOS, Android]
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        lfs: true
+    
+    - name: Cache Unity Library
+      uses: actions/cache@v3
+      with:
+        path: Library
+        key: Library-${{ matrix.target-platform }}-${{ matrix.unity-version }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+        restore-keys: |
+          Library-${{ matrix.target-platform }}-${{ matrix.unity-version }}-
+          Library-${{ matrix.target-platform }}-
+    
+    - name: Setup Unity License
+      uses: game-ci/unity-request-activation-file@v2
+      id: getManualLicenseFile
+      with:
+        unityVersion: ${{ matrix.unity-version }}
+    
+    - name: Build Unity Project
+      uses: game-ci/unity-builder@v4
+      env:
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+        UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      with:
+        unityVersion: ${{ matrix.unity-version }}
+        targetPlatform: ${{ matrix.target-platform }}
+        buildName: URP3D_Base01
+        buildsPath: builds
+        customParameters: |
+          -Development
+          -EnableCodeCoverage
+          -CodeCoverageOptions generateAdditionalMetrics
+    
+    - name: Run Unity Tests
+      uses: game-ci/unity-test-runner@v4
+      env:
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+        UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      with:
+        unityVersion: ${{ matrix.unity-version }}
+        testMode: all
+        artifactsPath: test-results
+        githubToken: ${{ secrets.GITHUB_TOKEN }}
+        checkName: Test Results (${{ matrix.unity-version }}-${{ matrix.target-platform }})
+        coverageOptions: |
+          generateAdditionalMetrics;
+          generateHtmlReport;
+          generateBadgeReport;
+          assemblyFilters:+Assets._Project.*
+    
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: test-results-${{ matrix.unity-version }}-${{ matrix.target-platform }}
+        path: test-results
+        retention-days: 7
+    
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: build-${{ matrix.unity-version }}-${{ matrix.target-platform }}
+        path: builds
+        retention-days: 14
+    
+    - name: Upload Code Coverage
+      uses: codecov/codecov-action@v3
+      if: matrix.unity-version == '6000.0.42f1' && matrix.target-platform == 'StandaloneWindows64'
+      with:
+        file: test-results/coverage/Report/coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+    
+    - name: Performance Benchmark
+      if: matrix.unity-version == '6000.0.42f1' && matrix.target-platform == 'StandaloneWindows64'
+      run: |
+        echo "Running performance benchmarks..."
+        # Unity Performance Testing Package would be executed here
+        # This is a placeholder for actual performance testing implementation
+    
+    - name: Memory Leak Detection
+      if: matrix.unity-version == '6000.0.42f1' && matrix.target-platform == 'StandaloneWindows64'
+      run: |
+        echo "Checking for memory leaks..."
+        # Memory profiling and leak detection logic would be implemented here
+        # This could use Unity's Memory Profiler API or custom solutions

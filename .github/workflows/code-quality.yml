@@ -1,0 +1,210 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    - cron: '0 2 * * 1' # Run every Monday at 2 AM UTC
+
+jobs:
+  code-analysis:
+    name: Static Code Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
+    
+    - name: Install SonarCloud Scanner
+      run: dotnet tool install --global dotnet-sonarscanner
+    
+    - name: Begin SonarCloud Analysis
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: |
+        dotnet-sonarscanner begin \
+          /k:"urp3d-base01" \
+          /o:"your-org" \
+          /d:sonar.host.url="https://sonarcloud.io" \
+          /d:sonar.login="${{ secrets.SONAR_TOKEN }}" \
+          /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" \
+          /d:sonar.cs.unity.reportsPaths="**/coverage.xml" \
+          /d:sonar.exclusions="Assets/Plugins/**,**/Third Party/**,**/*.meta"
+    
+    - name: Build Unity Project for Analysis
+      uses: game-ci/unity-builder@v4
+      env:
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+        UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      with:
+        unityVersion: '6000.0.42f1'
+        targetPlatform: StandaloneWindows64
+        buildName: CodeAnalysis
+        buildsPath: builds
+        customParameters: |
+          -Development
+          -EnableCodeCoverage
+          -CodeCoverageOptions generateAdditionalMetrics
+    
+    - name: End SonarCloud Analysis
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+    
+    - name: Run CodeQL Analysis
+      uses: github/codeql-action/init@v2
+      with:
+        languages: csharp
+        queries: security-and-quality
+    
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
+    
+    - name: Unity Code Formatter Check
+      uses: game-ci/unity-builder@v4
+      env:
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+        UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      with:
+        unityVersion: '6000.0.42f1'
+        targetPlatform: StandaloneWindows64
+        customParameters: |
+          -quit
+          -batchmode
+          -executeMethod CodeFormatterCI.CheckFormatting
+    
+  dependency-check:
+    name: Dependency Security Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+    
+    - name: Run Dependency Check
+      uses: dependency-check/Dependency-Check_Action@main
+      with:
+        project: 'URP3D_Base01'
+        path: '.'
+        format: 'ALL'
+        args: |
+          --enableRetired
+          --enableExperimental
+          --suppression suppression.xml
+    
+    - name: Upload Dependency Check Results
+      uses: actions/upload-artifact@v3
+      with:
+        name: dependency-check-report
+        path: reports
+        retention-days: 7
+  
+  license-compliance:
+    name: License Compliance Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+    
+    - name: Check License Compatibility
+      run: |
+        echo "Checking license compatibility for Unity project..."
+        # This would check package licenses in Packages/manifest.json
+        # and verify they're compatible with project license
+        
+        # Check for GPL, AGPL or other restrictive licenses that might conflict
+        if find . -name "*.cs" -exec grep -l "GPL\|AGPL" {} \; | head -1; then
+          echo "Warning: Found potential GPL/AGPL licensed code"
+          exit 1
+        fi
+        
+        echo "License compatibility check passed"
+    
+    - name: Generate License Report
+      run: |
+        echo "# License Report" > license-report.md
+        echo "Generated on: $(date)" >> license-report.md
+        echo "" >> license-report.md
+        echo "## Unity Packages" >> license-report.md
+        
+        # Parse package licenses from manifest
+        if [ -f "Packages/manifest.json" ]; then
+          echo "Analyzing Unity package licenses..." >> license-report.md
+        fi
+        
+        echo "## Third Party Assets" >> license-report.md
+        find Assets/Plugins -name "*.txt" -o -name "LICENSE*" | head -10 >> license-report.md
+    
+    - name: Upload License Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: license-report
+        path: license-report.md
+        retention-days: 30
+
+  performance-analysis:
+    name: Performance Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+    
+    - name: Analyze Code Performance
+      run: |
+        echo "Running performance analysis..."
+        
+        # Check for common performance anti-patterns
+        echo "Checking for performance anti-patterns..."
+        
+        # Look for potential memory leaks
+        if grep -r "new.*\[\]" Assets/_Project --include="*.cs" | wc -l > /tmp/array_allocations; then
+          ALLOCATIONS=$(cat /tmp/array_allocations)
+          echo "Found $ALLOCATIONS potential array allocations"
+        fi
+        
+        # Check for GameObject.Find usage (performance issue)
+        if grep -r "GameObject\.Find\|FindObjectOfType" Assets/_Project --include="*.cs"; then
+          echo "Warning: Found GameObject.Find or FindObjectOfType calls - consider caching references"
+        fi
+        
+        # Check for Update method complexity
+        echo "Analyzing Update method complexity..."
+        grep -n "void Update()" Assets/_Project --include="*.cs" -A 20 | wc -l > /tmp/update_complexity
+    
+    - name: Generate Performance Report
+      run: |
+        echo "# Performance Analysis Report" > performance-report.md
+        echo "Generated on: $(date)" >> performance-report.md
+        echo "" >> performance-report.md
+        
+        echo "## Potential Issues Found" >> performance-report.md
+        echo "- Array allocations: $(cat /tmp/array_allocations || echo 'N/A')" >> performance-report.md
+        echo "- Update methods analyzed: $(grep -r "void Update()" Assets/_Project --include="*.cs" | wc -l)" >> performance-report.md
+        
+        echo "" >> performance-report.md
+        echo "## Recommendations" >> performance-report.md
+        echo "- Use object pooling for frequently instantiated objects" >> performance-report.md
+        echo "- Cache GameObject references instead of using Find methods" >> performance-report.md
+        echo "- Consider using Unity Job System for CPU-intensive tasks" >> performance-report.md
+    
+    - name: Upload Performance Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: performance-report
+        path: performance-report.md
+        retention-days: 14
