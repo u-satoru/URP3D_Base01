@@ -61,12 +61,13 @@ graph TD
 
 現在のプロジェクトには以下の主要システムが実装されています：
 
-- **イベントシステム**: 23種類のイベントタイプ（GameEvent, PlayerStateEvent, CameraStateEvent等）
-- **コマンドシステム**: 12種類のコマンド（DamageCommand, HealCommand, MoveCommand等）とObjectPool最適化
-- **ステートマシン**: Player, Camera, AIの3つの主要ステートマシン
-- **オーディオシステム**: ステルスゲーム特化の3D空間オーディオとNPC聴覚センサー
-- **カメラシステム**: Cinemachine 3.1統合による高度なカメラ制御
-- **AI行動システム**: 7つの状態を持つ高度なAI行動制御
+- **イベントシステム**: 多様なイベントタイプ（GameEvent, PlayerStateEvent, CameraStateEvent, AudioEvent等）とGenericGameEvent対応
+- **コマンドシステム**: CommandPoolManager中心の最新式プール最適化システム（DamageCommand, HealCommand等）
+- **ステートマシン**: Camera（4状態）、AI（7状態）が完全実装、Player（実装予定）
+- **オーディオシステム**: StealthAudioCoordinator中心のステルス特化型統合音響システム
+- **カメラシステム**: Cinemachine 3.1統合システムとSingleton化されたCinemachineIntegration
+- **AI行動システム**: 7つの状態（Idle, Patrol, Suspicious, Investigating, Searching, Alert, Combat）を持つ高度なAI行動制御
+- **デザインパターン統合**: Factory+Registry+ObjectPool統合実装による高度なメモリ管理
 
 ---
 
@@ -80,9 +81,9 @@ graph TD
     各システムが互いを直接参照して命令を出すのではなく、「イベント」という名の通知を送信（Raise）したり、受信（Listen）したりすることでお互いに連携します。これにより、例えば「プレイヤーがダメージを受けた」というイベントが発生した際に、UIシステムもサウンドシステムも、プレイヤーのことを直接知らなくてもそれぞれが「HPバーを減らす」「ダメージ音を鳴らす」という自身の役割を果たすことができます。
 *   **このプロジェクトでの実装:**
     *   **`ScriptableObject`をイベントチャネルとして利用しています。**
-    *   `Assets/_Project/Core/Events/` 配下にある `GameEvent` や `PlayerStateEvent` などのアセットが、具体的なイベントチャネルです。
-    *   各コンポーネントは、Inspector上でこれらのイベントアセットを購読（参照）し、`Raise()` メソッドを呼び出すことでイベントを発行したり、UnityEventを通じて処理を紐づけたりします。
-    *   `GameEvent`クラスは優先度付きリスナー管理と非同期イベント実行をサポートしています。
+    *   `Assets/_Project/Core/Events/` 配下にある `GameEvent`、`PlayerStateEvent`、`CameraStateEvent`、`AudioEvent`、`GenericGameEvent<T>` などのアセットが、具体的なイベントチャネルです。
+    *   各コンポーネントは、Inspector上でこれらのイベントアセットを購読（参照）し、`Raise()` メソッドを呼び出すことでイベントを発行したり、`IGameEventListener<T>`インターフェースを通じて処理を紐づけたりします。
+    *   `GameEvent`クラスは優先度付きリスナー管理（`HashSet<GameEventListener>`による高速管理）、非同期イベント実行（`RaiseAsync()`）、デバッグ機能をサポートしています。
 
 ```mermaid
 sequenceDiagram
@@ -105,12 +106,14 @@ sequenceDiagram
 *   **説明:**
     オブジェクトが取りうる様々な状態（例: プレイヤーの「待機状態」「歩行状態」「走行状態」）を、それぞれ独立したクラスとして実装します。状態遷移のロジックや、各状態での振る舞いを状態クラス内にカプセル化することで、巨大なif文やswitch文による分岐を防ぎ、コードを整理します。
 *   **このプロジェクトでの実装:**
-    *   `PlayerStateMachine.cs`, `CameraStateMachine.cs`, `AIStateMachine.cs` が状態を管理する本体（ステートマシン）です。
+    *   **カメラシステム**: `CameraStateMachine.cs` が4つの状態（FirstPerson, ThirdPerson, Aim, Cover）を管理。
+    *   **AIシステム**: `AIStateMachine.cs` が7つの状態（Idle, Patrol, Suspicious, Investigating, Searching, Alert, Combat）を管理し、NavMeshAgentと統合。
+    *   **プレイヤーシステム**: 基盤クラス（`BasePlayerState.cs`, `IPlayerState.cs`）は実装済みだが、`PlayerStateMachine.cs`は今後の実装予定。
     *   各機能フォルダの `States/` ディレクトリに、具体的な状態クラスが配置されています：
-        - **Player States**: `IdleState`, `WalkingState`, `CrouchingState`, `JumpingState` など
-        - **Camera States**: `ThirdPersonCameraState`, `AimCameraState`, `FirstPersonCameraState` など
-        - **AI States**: `AIIdleState`, `AIPatrolState`, `AIAlertState`, `AICombatState` など
-    *   各ステートマシンは、現在の状態クラスに処理を委譲し、状態クラスからの要求に応じて別の状態クラスに切り替えることで、複雑な振る舞いを実現しています。
+        - **Camera States**: `FirstPersonCameraState`, `ThirdPersonCameraState`, `AimCameraState`, `CoverCameraState`
+        - **AI States**: `AIIdleState`, `AIPatrolState`, `AISuspiciousState`, `AIInvestigatingState`, `AISearchingState`, `AIAlertState`, `AICombatState`
+        - **Player States**: 基盤実装済み（`IdleState`, `WalkingState`, `CrouchingState`, `JumpingState`, `ProneState`, `RunningState`等）
+    *   各ステートマシンは、`Dictionary<StateType, IState>`による高速状態検索と、状態クラス内での`Enter()`, `Update()`, `Exit()`メソッドによる明確なライフサイクル管理を実現しています。
 
 ```mermaid
 stateDiagram-v2
@@ -127,21 +130,26 @@ stateDiagram-v2
     Prone --> Crouching: Stand Input
 ```
 
-#### c. シングルトン パターン (Singleton Pattern)
+#### c. シングルトンパターン (Singleton Pattern) の改良版実装
 
 *   **説明:**
-    あるクラスがプロジェクト内にただ一つしか存在しないことを保証し、そのインスタンスへのグローバルなアクセスポイントを提供します。
+    あるクラスがプロジェクト内にただ一つしか存在しないことを保証し、そのインスタンスへのグローバルなアクセスポイントを提供します。このプロジェクトでは、従来のシングルトンの問題点を軽減した改良版を採用。
 *   **このプロジェクトでの実装:**
-    *   `CinemachineIntegration.cs` が静的な `Instance` プロパティを持っています。これにより、他のどのスクリプトからでも `CinemachineIntegration.Instance.SwitchToCamera(...)` のように呼び出すことができ、カメラシステムへのアクセスが容易になっています。
+    *   **`CinemachineIntegration.Instance`**: Cinemachine 3.1統合カメラシステムのシングルトン。イベント駆動アーキテクチャと組み合わせて疎結合を維持。
+    *   **`StealthAudioCoordinator.Instance`**: ステルスオーディオシステムの中央制御。AIシステムとの連携で聴覚センサーシステムを統合管理。
+    *   **`AudioManager.Instance`**: オーディオシステムの基盤管理（実装参照による）。
+    *   **改良点**: `DontDestroyOnLoad()`による永続化、二重初期化防止、イベントシステムとの統合により直接的な依存を回避。
 
-#### d. コマンドパターン (Command Pattern) with ObjectPool最適化
+#### d. コマンドパターン (Command Pattern) with Factory+Registry+ObjectPool統合最適化
 
 *   **説明:**
     ゲーム内で行われる操作（例: 攻撃、回復、移動）を「コマンド」というオブジェクトとしてカプセル化します。これにより、操作の実行、取り消し（Undo）、再実行（Redo）、遅延実行、キューイングなどが容易になります。
 *   **このプロジェクトでの実装:**
-    *   `ICommand` インターフェースとそれを実装した具体的なコマンドクラス（`DamageCommand`, `HealCommand`, `MoveCommand`など）が実装されています。
-    *   `CommandPool`によってコマンドオブジェクトを再利用し、メモリ確保コストとGCを大幅に削減（95%のメモリ削減効果）。
-    *   `CommandInvoker`がコマンドの実行とUndoスタックを管理します。
+    *   `ICommand` インターフェースとそれを実装した具体的なコマンドクラス（`DamageCommand`, `HealCommand`等）が実装されています。
+    *   **`CommandPoolManager`による最新式統合管理**: Factory + Registry + ObjectPool パターンを統合し、型安全なコマンド管理を実現。
+    *   **高度なプール最適化**: `ITypeRegistry<IObjectPool<ICommand>>`による型ベースのプール管理と`IResettableCommand`によるコマンド状態リセット。
+    *   **統計情報とデバッグ機能**: `CommandStatistics`による詳細な使用状況の追跡とパフォーマンス分析。
+    *   `CommandInvoker`がコマンドの実行とUndoスタック管理を担当。
 
 ```mermaid
 classDiagram
@@ -183,13 +191,6 @@ classDiagram
     *   `GameManager` や `PlayerController` などのクラスが、`[SerializeField]` 属性を使ってイベントチャネル等のフィールドをInspectorに公開しています。
     *   開発者は、コードを変更することなく、Inspector上で `ScriptableObject` アセットをドラッグ＆ドロップするだけでコンポーネントの振る舞いを設定・変更できます。
 
-#### f. シングルトンパターン (Singleton Pattern) の改良版実装
-
-*   **説明:**
-    このプロジェクトでは、従来のシングルトンパターンの問題点（テストの困難さ、強い結合など）を軽減した改良版を採用しています。
-*   **このプロジェクトでの実装:**
-    *   `CinemachineIntegration` が静的な `Instance` プロパティを持ちつつ、イベント駆動アーキテクチャと組み合わせることで疎結合を維持しています。
-    *   `CommandPool` もシングルトンですが、イベントシステムを通じてアクセスすることで直接的な依存を避けています。
 
 ```mermaid
 classDiagram
@@ -207,14 +208,14 @@ classDiagram
     CinemachineIntegration --> GameEvent : listens to
 ```
 
-#### g. アセンブリ定義 (Assembly Definitions)
+#### f. アセンブリ定義 (Assembly Definitions)
 
 これは古典的なデザインパターンではありませんが、プロジェクトのアーキテクチャを支える重要な仕組みです。
 
 *   **説明:**
     プロジェクト内のスクリプト群を、機能ごとに小さなライブラリ（アセンブリ）に分割します。これにより、スクリプトの変更があった際のコンパイル時間を大幅に短縮できるほか、アセンブリ間の参照関係を定義することで、意図しない依存関係が生まれるのを防ぎます。
 *   **このプロジェクトでの実装:**
-    *   `asterivo.Unity60.Core`, `asterivo.Unity60.Player`, `asterivo.Unity60.Camera`, `asterivo.Unity60.AI`, `asterivo.Unity60.Stealth` のように、機能フォルダごとにアセンブリ定義ファイル（`.asmdef`）が作成されています。
+    *   `asterivo.Unity60.Core`, `asterivo.Unity60.Player`, `asterivo.Unity60.Camera`, `asterivo.Unity60.AI`, `asterivo.Unity60.Stealth`, `asterivo.Unity60.Optimization` のように、機能フォルダごとにアセンブリ定義ファイル（`.asmdef`）が作成されています。
     *   これにより、明確な依存関係のルールを強制し、例えば`Player`は`Core`を参照できますが、`Core`が`Player`を参照することはできません。
 
 ```mermaid
@@ -236,6 +237,24 @@ graph LR
 ```
 
 ---
+
+### 7. ステルスオーディオシステムの統合実装
+
+現在のプロジェクトには、ステルスゲームに特化した包括的なオーディオシステムが実装されています：
+
+#### 主要コンポーネント
+- **StealthAudioCoordinator**: ステルスゲームプレイと音響の中央制御（Singleton）
+- **NPCAuditorySensor**: AI NPCの聴覚センサーシステム
+- **PlayerAudioSystem**: プレイヤーの音響フィードバック
+- **DynamicAudioEnvironment**: 環境による音響マスキング効果
+- **SpatialAudioManager**: 3D空間音響制御
+
+#### システム間連携
+- AIStateMachineとの警戒レベル連動
+- プレイヤーステート（隠れモード）による音響抑制
+- 環境マスキング効果による聴覚検知の動的調整
+- リアルタイムオーディオダッキング（背景音の自動減衰）
+- NPCの聴覚センサーとの音響イベント連携
 
 ## システム間相互作用図
 
@@ -381,17 +400,17 @@ graph LR
     GE --> Analytics
 ```
 
-## AI行動ステートマシン
+## AI行動ステートマシン（実装済み）
 
 ```mermaid
 stateDiagram-v2
     [*] --> Idle
     Idle --> Patrol: Has Patrol Points
-    Patrol --> Suspicious: Minor Disturbance
-    Patrol --> Investigating: Investigate Trigger
+    Patrol --> Suspicious: Suspicion Level >= 0.3
+    Patrol --> Investigating: OnHearNoise
     
     Suspicious --> Patrol: No Threat Found
-    Suspicious --> Alert: Threat Confirmed
+    Suspicious --> Alert: Suspicion Level >= 0.7
     
     Investigating --> Patrol: Investigation Complete
     Investigating --> Searching: Lost Target
