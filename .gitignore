@@ -81,6 +81,7 @@ crashlytics-build.properties
 # Windows
 Thumbs.db
 Desktop.ini.claude/settings.local.json
-Assets/_Project/Docs/*.meta
+
+# .meta
+Assets/_Project/Docs/**/*.meta
 .claude/settings.local.json
-nul
