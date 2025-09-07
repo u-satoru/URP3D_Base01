@@ -1,6 +1,6 @@
 # CLAUDE.md
 
- ** ultra think**  
+ **じっくり考える**  
 
 これは **Unity 6で作成された3Dゲームプロジェクトのベーステンプレート** です。 Universal Render Pipeline (URP) を使用しています。
 
