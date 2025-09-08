@@ -84,6 +84,7 @@
 -   `Assets/_Project/Scenes`: ゲームシーン。
 -   `Assets/_Project/Docs`: プロジェクト関連のドキュメント（ステルスオーディオシステム仕様書、SDD実践ガイドを含む）。
     -   `Assets/_Project/Docs/Work`: 作業用ドキュメント（tasks.md, todo.md, WorkLogsなど）。
+-   `Assets/_Project/Tests`: テスト関連のファイル。
 -   `Assets/Plugins`: サードパーティ製アセット。 **直接編集しないでください**。
 
 ## スペック駆動開発（SDD）の実践

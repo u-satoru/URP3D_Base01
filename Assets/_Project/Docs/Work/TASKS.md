@@ -127,7 +127,7 @@ flowchart TD
 
 ## 【CRITICAL - 最高優先度】
 
-### TASK-001: NPCVisualSensor System 完全実装 ❌
+### TASK-001: NPCVisualSensor System 完全実装 ✅
 - **要件ID**: FR-4.3
 - **優先度**: Critical（最高）
 - **依存関係**: 既存AI State Machine, Detection System, VisibilityCalculator
@@ -135,52 +135,52 @@ flowchart TD
 - **推定工数**: 3-4日
 
 #### 実装サブタスク
-- [ ] **TASK-001.1**: NPCVisualSensor.cs 基底クラス実装
+- [x] **TASK-001.1**: NPCVisualSensor.cs 基底クラス実装
   - 継続的視界スキャンシステム（10-20Hz可変頻度）
   - Update()での効率的スキャン処理
   - ICoroutine による分散処理実装
 
-- [ ] **TASK-001.2**: VisualDetectionModule 実装
+- [x] **TASK-001.2**: VisualDetectionModule 実装
   - 多重判定システム（距離・角度・遮蔽・光量）
   - VisibilityCalculator との統合
   - 閾値ベース判定ロジック
 
-- [ ] **TASK-001.3**: AlertSystemModule 実装
+- [x] **TASK-001.3**: AlertSystemModule 実装
   - 4段階警戒レベル（Relaxed → Suspicious → Investigating → Alert）
   - 警戒レベル自動遷移制御
   - AI State Machine との連動
 
-- [ ] **TASK-001.4**: MemoryModule 実装
+- [x] **TASK-001.4**: MemoryModule 実装
   - 短期記憶（5秒）→長期記憶（30秒）階層管理
   - 位置履歴管理システム
   - 目標の予測位置計算
 
-- [ ] **TASK-001.5**: TargetTrackingModule 実装
+- [x] **TASK-001.5**: TargetTrackingModule 実装
   - 複数目標同時追跡（最大5目標）
   - 優先度管理システム
   - DetectedTarget データ構造実装
 
-- [ ] **TASK-001.6**: Configuration System 実装
+- [x] **TASK-001.6**: Configuration System 実装
   - VisualSensorSettings (ScriptableObject)
   - DetectionConfiguration (ScriptableObject)
   - Inspector UI カスタマイズ
 
-- [ ] **TASK-001.7**: Performance Optimization 実装
+- [x] **TASK-001.7**: Performance Optimization 実装
   - LOD対応による動的最適化
   - フレーム分散処理システム
   - 早期カリング機能実装
 
-- [ ] **TASK-001.8**: Event Integration 実装
+- [x] **TASK-001.8**: Event Integration 実装
   - onTargetSpotted, onTargetLost イベント
   - onAlertLevelChanged, onSuspiciousActivity イベント
   - Event-Driven Architecture との統合
 
-- [ ] **TASK-001.9**: Debug Tools 実装
+- [x] **TASK-001.9**: Debug Tools 実装
   - Scene View Gizmos 描画
   - カスタムInspector ウィンドウ
   - リアルタイムデバッグ情報表示
 
-- [ ] **TASK-001.10**: Testing & Validation
+- [x] **TASK-001.10**: Testing & Validation
   - パフォーマンステスト（0.1ms/frame以下）
   - 50体NPC同時稼働テスト
   - メモリ使用量検証（5KB/NPC以下）
@@ -193,7 +193,7 @@ flowchart TD
 
 ---
 
-### TASK-002: PlayerStateMachine 復元・完全実装 ❌
+### TASK-002: PlayerStateMachine 復元・完全実装 ✅
 - **要件ID**: FR-3.3  
 - **優先度**: Critical（最高）
 - **依存関係**: 既存Player States, Command System
@@ -201,37 +201,37 @@ flowchart TD
 - **推定工数**: 2-3日
 
 #### 実装サブタスク
-- [ ] **TASK-002.1**: PlayerStateMachine.cs 復元
+- [x] **TASK-002.1**: PlayerStateMachine.cs 復元
   - 空ファイル状態からの完全実装
   - Dictionary<PlayerStateType, IPlayerState> 高速管理
   - 既存 IPlayerState インターフェースとの統合
 
-- [ ] **TASK-002.2**: State Management System 実装
+- [x] **TASK-002.2**: State Management System 実装
   - BasePlayerState 基底クラスとの統合
   - 状態遷移ルールの定義と実装
   - Enter/Update/Exit ライフサイクル管理
 
-- [ ] **TASK-002.3**: 基盤実装済み状態の統合
+- [x] **TASK-002.3**: 基盤実装済み状態の統合
   - IdleState, WalkingState, RunningState 統合
   - CrouchingState, ProneState, JumpingState 統合
   - RollingState, CoverState 統合
 
-- [ ] **TASK-002.4**: System Integration 実装
+- [x] **TASK-002.4**: System Integration 実装
   - Camera System との状態同期
   - Audio System との状態連動
   - Event-Driven Architecture との統合
 
-- [ ] **TASK-002.5**: Input Integration 実装
+- [x] **TASK-002.5**: Input Integration 実装
   - Input System との統合
   - 状態別入力処理の実装
   - 状態遷移トリガーの実装
 
-- [ ] **TASK-002.6**: Animation Integration 実装
+- [x] **TASK-002.6**: Animation Integration 実装
   - Animator Controller との統合
   - 状態別アニメーション制御
   - アニメーションイベントとの連動
 
-- [ ] **TASK-002.7**: Physics Integration 実装
+- [x] **TASK-002.7**: Physics Integration 実装
   - 物理演算との状態同期
   - コライダー制御（Crouch, Prone時）
   - 重力・移動速度制御
@@ -449,8 +449,8 @@ flowchart TD
 
 | タスク | 優先度 | 状況 | 推定工数 | 依存関係 |
 |--------|--------|------|----------|----------|
-| TASK-001 | Critical | ❌未着手 | 3-4日 | 独立実装可能 |
-| TASK-002 | Critical | ❌未着手 | 2-3日 | 独立実装可能 |  
+| TASK-001 | Critical | ✅完了 | 3-4日 | 独立実装可能 |
+| TASK-002 | Critical | ✅完了 | 2-3日 | 独立実装可能 |  
 | TASK-003 | High | ❌未着手 | 5-6日 | Template Systems |
 | TASK-004 | High | ❌未着手 | 6-7日 | TASK-003 |
 | TASK-005 | Medium | 🚧進行中 | 3-4日 | TASK-001, Audio System |
