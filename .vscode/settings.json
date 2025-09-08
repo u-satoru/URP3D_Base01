@@ -66,5 +66,13 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj",
     },
-    "dotnet.defaultSolution": "URP3D_Base01.sln"
+    "dotnet.defaultSolution": "URP3D_Base01.sln",
+    "terminal.integrated.shellArgs.windows": ["-NoExit", "-Command", "chcp 65001"],
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "args": ["-NoExit", "-Command", "chcp 65001 > $null; Clear-Host"]
+        }
+    }
 }
