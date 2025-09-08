@@ -35,25 +35,40 @@ namespace asterivo.Unity60.Features.AI.Visual.Tests
         [BoxGroup("Test Setup/Scenario Configuration/Waypoints")]
         [LabelText("Player Movement Speed")]
         [PropertyRange(1f, 10f)]
+        // TODO: Used in MovePlayerToPosition for dynamic speed calculation
+        #pragma warning disable CS0414 // Field assigned but never used - planned for player movement optimization
         [SerializeField] private float playerMovementSpeed = 3f;
+        #pragma warning restore CS0414
         
         [TabGroup("Test Setup", "Test Parameters")]
         [BoxGroup("Test Setup/Test Parameters/Duration")]
         [LabelText("Scenario Duration")]
         [SuffixLabel("s")]
+        // TODO: Future enhancement for time-bounded testing
+#pragma warning disable CS0414 // Field assigned but never used - planned for timeout functionality
         [SerializeField] private float scenarioDuration = 60f;
+#pragma warning restore CS0414
         
         [BoxGroup("Test Setup/Test Parameters/Success Criteria")]
         [LabelText("Required Detections")]
+        // TODO: Future enhancement for criteria-based validation
+#pragma warning disable CS0414 // Field assigned but never used - planned for success criteria validation
         [SerializeField] private int requiredDetections = 5;
+#pragma warning restore CS0414
         
         [BoxGroup("Test Setup/Test Parameters/Success Criteria")]
         [LabelText("Required Alert Transitions")]
+        // TODO: Future enhancement for criteria-based validation  
+#pragma warning disable CS0414 // Field assigned but never used - planned for success criteria validation
         [SerializeField] private int requiredAlertTransitions = 3;
+#pragma warning restore CS0414
         
         [BoxGroup("Test Setup/Test Parameters/Success Criteria")]
         [LabelText("Max Memory Leaks")]
+        // TODO: Future enhancement for memory leak detection
+#pragma warning disable CS0414 // Field assigned but never used - planned for memory validation
         [SerializeField] private int maxAllowedMemoryLeaks = 0;
+#pragma warning restore CS0414
         
         [TabGroup("Test Results", "Current Status")]
         [ShowInInspector, ReadOnly]
@@ -62,12 +77,18 @@ namespace asterivo.Unity60.Features.AI.Visual.Tests
         
         [ShowInInspector, ReadOnly]
         [LabelText("Current Scenario")]
+        // TODO: Used for dynamic scenario switching and validation
+        #pragma warning disable CS0414 // Field assigned but never used - planned for scenario management
         private string currentScenario = "None";
+        #pragma warning restore CS0414
         
         [ShowInInspector, ReadOnly]
         [LabelText("Test Progress")]
         [ProgressBar(0, 1)]
+        // TODO: Used to show test completion progress in inspector - planned for progress monitoring
+        #pragma warning disable CS0414 // Field assigned but never used - planned for progress tracking
         private float testProgress = 0f;
+        #pragma warning restore CS0414
         
         [TabGroup("Test Results", "Statistics")]
         [ShowInInspector, ReadOnly]

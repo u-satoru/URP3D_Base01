@@ -249,7 +249,7 @@ namespace asterivo.Unity60.Core.Editor
             // デフォルトのライトとカメラが既に存在する場合はそのまま使用
             
             // Directional Lightの設定を最適化
-            Light[] lights = Object.FindObjectsOfType<Light>();
+            Light[] lights = Object.FindObjectsByType<Light>(FindObjectsSortMode.None);
             foreach (Light light in lights.Where(l => l.type == LightType.Directional))
             {
                 light.shadows = LightShadows.Soft;
@@ -257,7 +257,7 @@ namespace asterivo.Unity60.Core.Editor
             }
             
             // Cameraの設定を最適化
-            Camera[] cameras = Object.FindObjectsOfType<Camera>();
+            Camera[] cameras = Object.FindObjectsByType<Camera>(FindObjectsSortMode.None);
             foreach (Camera cam in cameras)
             {
                 cam.allowMSAA = true;

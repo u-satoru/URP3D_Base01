@@ -220,7 +220,6 @@ namespace asterivo.Unity60.Features.AI.Visual
         
         // Event optimization fields
         private VisualSensorEventManager eventManager;
-        private float lastEventTime = 0f;
         private const float eventCooldownTime = 0.1f; // イベント発行の最小間隔
         
         private VisualDetectionModule detectionModule;

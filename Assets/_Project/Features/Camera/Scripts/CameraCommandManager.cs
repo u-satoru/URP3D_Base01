@@ -39,11 +39,11 @@ namespace asterivo.Unity60.Features.Camera
         {
             // カメラシステムを自動検出
             if (cameraStateMachine == null)
-                cameraStateMachine = FindObjectOfType<CameraStateMachine>();
+                cameraStateMachine = FindFirstObjectByType<CameraStateMachine>();
             
             // コマンドInvokerを自動検出
             if (commandInvoker == null)
-                commandInvoker = FindObjectOfType<CommandInvoker>();
+                commandInvoker = FindFirstObjectByType<CommandInvoker>();
             
             if (cameraStateMachine == null)
                 Debug.LogError("CameraCommandManager: CameraStateMachine が見つかりません");

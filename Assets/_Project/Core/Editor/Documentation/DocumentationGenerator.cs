@@ -4,9 +4,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using UnityEditor;
+using UnityEditor.Build;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Core.Commands;using asterivo.Unity60.Core.Commands;
+using asterivo.Unity60.Core.Commands;
 using Debug = UnityEngine.Debug;
 
 
@@ -335,8 +336,11 @@ namespace asterivo.Unity60.Core.Editor.Documentation
             sb.AppendLine("### Project Settings");
             
             sb.AppendLine($"- **Color Space**: {PlayerSettings.colorSpace} {(PlayerSettings.colorSpace == ColorSpace.Linear ? "✅" : "⚠️ (Recommended: Linear)")}");
-            sb.AppendLine($"- **Scripting Backend**: {PlayerSettings.GetScriptingBackend(EditorUserBuildSettings.selectedBuildTargetGroup)}");
-            sb.AppendLine($"- **API Compatibility**: {PlayerSettings.GetApiCompatibilityLevel(EditorUserBuildSettings.selectedBuildTargetGroup)}");
+
+// Unity 6 compatible approach with NamedBuildTarget
+            var namedBuildTarget = NamedBuildTarget.FromBuildTargetGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
+            sb.AppendLine($"- **Scripting Backend**: {PlayerSettings.GetScriptingBackend(namedBuildTarget)}");
+            sb.AppendLine($"- **API Compatibility**: {PlayerSettings.GetApiCompatibilityLevel(namedBuildTarget)}");
             
             if (PlayerSettings.colorSpace == ColorSpace.Linear) successes++; else warnings++;
             

@@ -27,7 +27,10 @@ namespace asterivo.Unity60.Features.AI.Visual.Tests
         [BoxGroup("Test Settings/Performance Targets/Thresholds")]
         [LabelText("Test Duration")]
         [SuffixLabel("s")]
+        // TODO: Future enhancement for configurable test duration
+#pragma warning disable CS0414 // Field assigned but never used - planned for dynamic test duration
         [SerializeField] private float testDuration = 30f;
+#pragma warning restore CS0414
         
         [TabGroup("Test Settings", "Test Configuration")]
         [BoxGroup("Test Settings/Test Configuration/NPC Setup")]
