@@ -52,6 +52,25 @@ namespace asterivo.Unity60.Core.Editor
             }
         }
         
+        [System.Serializable]
+        public class IDEInfo
+        {
+            public string Name;
+            public string Version;
+            public string Path;
+            public bool HasUnitySupport;
+            public List<string> Extensions;
+            
+            public IDEInfo(string name, string version, string path, bool hasUnitySupport = false)
+            {
+                Name = name;
+                Version = version ?? "Unknown";
+                Path = path ?? "Unknown";
+                HasUnitySupport = hasUnitySupport;
+                Extensions = new List<string>();
+            }
+        }
+        
         public enum RequirementSeverity
         {
             Required,    // 必須（失敗するとセットアップ不可）
@@ -162,30 +181,43 @@ namespace asterivo.Unity60.Core.Editor
         {
             try
             {
-                var detectedIDEs = new List<string>();
+                var detectedIDEs = new List<IDEInfo>();
                 
                 // VS Code Check
-                if (IsCommandAvailable("code"))
+                var vscodeInfo = DetectVSCode();
+                if (vscodeInfo != null)
                 {
-                    detectedIDEs.Add("Visual Studio Code");
+                    detectedIDEs.Add(vscodeInfo);
                 }
                 
                 // Visual Studio Check
-                if (IsCommandAvailable("devenv"))
+                var vsInfo = DetectVisualStudio();
+                if (vsInfo != null)
                 {
-                    detectedIDEs.Add("Visual Studio");
+                    detectedIDEs.Add(vsInfo);
                 }
                 
                 // Rider Check (optional)
-                if (IsCommandAvailable("rider64"))
+                var riderInfo = DetectRider();
+                if (riderInfo != null)
                 {
-                    detectedIDEs.Add("JetBrains Rider");
+                    detectedIDEs.Add(riderInfo);
                 }
                 
                 bool hasIDE = detectedIDEs.Count > 0;
-                string message = hasIDE ? 
-                    $"Detected IDEs: {string.Join(", ", detectedIDEs)}" :
-                    "No supported IDEs detected";
+                
+                string message;
+                if (hasIDE)
+                {
+                    var ideDescriptions = detectedIDEs.Select(ide => 
+                        $"{ide.Name} {ide.Version} ({ide.Path})"
+                    );
+                    message = $"Detected IDEs:\n{string.Join("\n", ideDescriptions)}";
+                }
+                else
+                {
+                    message = "No supported IDEs detected";
+                }
                 
                 string recommendation = hasIDE ?
                     "IDE environment is properly configured." :
@@ -378,6 +410,197 @@ namespace asterivo.Unity60.Core.Editor
         
         #region Helper Methods
         
+        #region IDE Detection Methods
+        
+        /// <summary>
+        /// Visual Studio Code の詳細検出
+        /// </summary>
+        private static IDEInfo DetectVSCode()
+        {
+            try
+            {
+                // コマンドライン検出
+                if (IsCommandAvailable("code"))
+                {
+                    var version = GetVSCodeVersion();
+                    var path = GetCommandPath("code");
+                    var hasUnitySupport = CheckVSCodeUnityExtensions();
+                    
+                    return new IDEInfo("Visual Studio Code", version, path, hasUnitySupport);
+                }
+                
+                // インストールパス直接チェック（Windows）
+                if (Application.platform == RuntimePlatform.WindowsEditor)
+                {
+                    var vscPaths = new string[]
+                    {
+                        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), 
+                            "Programs", "Microsoft VS Code", "Code.exe"),
+                        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), 
+                            "Microsoft VS Code", "Code.exe"),
+                        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), 
+                            "Microsoft VS Code", "Code.exe")
+                    };
+                    
+                    foreach (var vscPath in vscPaths)
+                    {
+                        if (File.Exists(vscPath))
+                        {
+                            var version = GetFileVersion(vscPath);
+                            var hasUnitySupport = CheckVSCodeUnityExtensions();
+                            return new IDEInfo("Visual Studio Code", version, vscPath, hasUnitySupport);
+                        }
+                    }
+                }
+                
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        
+        /// <summary>
+        /// Visual Studio の詳細検出（複数エディション対応）
+        /// </summary>
+        private static IDEInfo DetectVisualStudio()
+        {
+            try
+            {
+                // コマンドライン検出
+                if (IsCommandAvailable("devenv"))
+                {
+                    var path = GetCommandPath("devenv");
+                    var version = GetFileVersion(path);
+                    return new IDEInfo("Visual Studio", version, path, true);
+                }
+                
+                // インストールパス直接チェック（Windows）
+                if (Application.platform == RuntimePlatform.WindowsEditor)
+                {
+                    var vsInfo = DetectVisualStudioInstallations();
+                    if (vsInfo != null && vsInfo.Count > 0)
+                    {
+                        // 最新バージョンを返す
+                        return vsInfo.OrderByDescending(vs => vs.Version).First();
+                    }
+                }
+                
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        
+        /// <summary>
+        /// JetBrains Rider の検出
+        /// </summary>
+        private static IDEInfo DetectRider()
+        {
+            try
+            {
+                // コマンドライン検出
+                var commands = new string[] { "rider64", "rider" };
+                
+                foreach (var cmd in commands)
+                {
+                    if (IsCommandAvailable(cmd))
+                    {
+                        var path = GetCommandPath(cmd);
+                        var version = GetFileVersion(path);
+                        return new IDEInfo("JetBrains Rider", version, path, true);
+                    }
+                }
+                
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        
+        /// <summary>
+        /// Visual Studio のインストール情報を検出（Windows専用）
+        /// </summary>
+        private static List<IDEInfo> DetectVisualStudioInstallations()
+        {
+            var installations = new List<IDEInfo>();
+            
+            try
+            {
+                // Visual Studio 2019以降の検出（VS Installer API使用）
+                var vsWherePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
+                    "Microsoft Visual Studio", "Installer", "vswhere.exe");
+                
+                if (File.Exists(vsWherePath))
+                {
+                    var vsWhereOutput = RunCommand(vsWherePath, "-products * -requires Microsoft.VisualStudio.Component.Unity -property installationPath,displayName,installationVersion -format value");
+                    
+                    if (!string.IsNullOrEmpty(vsWhereOutput))
+                    {
+                        var lines = vsWhereOutput.Split('\n');
+                        for (int i = 0; i < lines.Length; i += 3)
+                        {
+                            if (i + 2 < lines.Length)
+                            {
+                                var installPath = lines[i].Trim();
+                                var displayName = lines[i + 1].Trim();
+                                var version = lines[i + 2].Trim();
+                                
+                                var devenvPath = Path.Combine(installPath, "Common7", "IDE", "devenv.exe");
+                                if (File.Exists(devenvPath))
+                                {
+                                    installations.Add(new IDEInfo(displayName, version, devenvPath, true));
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                // 従来の検出方法（VS 2017以前）
+                if (installations.Count == 0)
+                {
+                    var legacyPaths = new string[]
+                    {
+                        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), 
+                            "Microsoft Visual Studio", "2019", "Community", "Common7", "IDE", "devenv.exe"),
+                        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), 
+                            "Microsoft Visual Studio", "2019", "Professional", "Common7", "IDE", "devenv.exe"),
+                        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), 
+                            "Microsoft Visual Studio", "2019", "Enterprise", "Common7", "IDE", "devenv.exe"),
+                        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), 
+                            "Microsoft Visual Studio", "2017", "Community", "Common7", "IDE", "devenv.exe"),
+                        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), 
+                            "Microsoft Visual Studio", "2017", "Professional", "Common7", "IDE", "devenv.exe"),
+                        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), 
+                            "Microsoft Visual Studio", "2017", "Enterprise", "Common7", "IDE", "devenv.exe")
+                    };
+                    
+                    foreach (var vsPath in legacyPaths)
+                    {
+                        if (File.Exists(vsPath))
+                        {
+                            var version = GetFileVersion(vsPath);
+                            var editionName = Path.GetFileName(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(vsPath))));
+                            installations.Add(new IDEInfo($"Visual Studio {editionName}", version, vsPath, true));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogWarning($"Failed to detect Visual Studio installations: {ex.Message}");
+            }
+            
+            return installations;
+        }
+        
+        #endregion
+        
         /// <summary>
         /// Unity バージョンの互換性チェック
         /// </summary>
@@ -432,6 +655,147 @@ namespace asterivo.Unity60.Core.Editor
                     process.WaitForExit();
                     return process.ExitCode == 0;
                 }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        
+        /// <summary>
+        /// コマンドのフルパスを取得
+        /// </summary>
+        private static string GetCommandPath(string commandName)
+        {
+            try
+            {
+                var processStartInfo = new ProcessStartInfo()
+                {
+                    FileName = "where", // Windows
+                    Arguments = commandName,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
+                };
+                
+                // Linux/Mac の場合は "which" を使用
+                if (Application.platform == RuntimePlatform.OSXEditor || 
+                    Application.platform == RuntimePlatform.LinuxEditor)
+                {
+                    processStartInfo.FileName = "which";
+                }
+                
+                using (var process = Process.Start(processStartInfo))
+                {
+                    string output = process.StandardOutput.ReadToEnd().Trim();
+                    process.WaitForExit();
+                    return process.ExitCode == 0 ? output.Split('\n')[0].Trim() : "Unknown";
+                }
+            }
+            catch
+            {
+                return "Unknown";
+            }
+        }
+        
+        /// <summary>
+        /// 汎用コマンド実行メソッド
+        /// </summary>
+        private static string RunCommand(string fileName, string arguments)
+        {
+            try
+            {
+                var processStartInfo = new ProcessStartInfo()
+                {
+                    FileName = fileName,
+                    Arguments = arguments,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
+                };
+                
+                using (var process = Process.Start(processStartInfo))
+                {
+                    string output = process.StandardOutput.ReadToEnd();
+                    process.WaitForExit();
+                    return process.ExitCode == 0 ? output : "";
+                }
+            }
+            catch
+            {
+                return "";
+            }
+        }
+        
+        /// <summary>
+        /// VS Code のバージョン情報を取得
+        /// </summary>
+        private static string GetVSCodeVersion()
+        {
+            try
+            {
+                var versionOutput = RunCommand("code", "--version");
+                if (!string.IsNullOrEmpty(versionOutput))
+                {
+                    var lines = versionOutput.Split('\n');
+                    if (lines.Length > 0)
+                    {
+                        return lines[0].Trim();
+                    }
+                }
+                return "Unknown";
+            }
+            catch
+            {
+                return "Unknown";
+            }
+        }
+        
+        /// <summary>
+        /// 実行ファイルのバージョン情報を取得
+        /// </summary>
+        private static string GetFileVersion(string filePath)
+        {
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    var versionInfo = FileVersionInfo.GetVersionInfo(filePath);
+                    if (!string.IsNullOrEmpty(versionInfo.ProductVersion))
+                    {
+                        return versionInfo.ProductVersion;
+                    }
+                    if (!string.IsNullOrEmpty(versionInfo.FileVersion))
+                    {
+                        return versionInfo.FileVersion;
+                    }
+                }
+                return "Unknown";
+            }
+            catch
+            {
+                return "Unknown";
+            }
+        }
+        
+        /// <summary>
+        /// VS CodeのUnity関連拡張機能のチェック
+        /// </summary>
+        private static bool CheckVSCodeUnityExtensions()
+        {
+            try
+            {
+                // VS Codeの拡張機能リストを取得
+                var extensionsOutput = RunCommand("code", "--list-extensions");
+                if (!string.IsNullOrEmpty(extensionsOutput))
+                {
+                    var extensions = extensionsOutput.ToLower();
+                    // Unity関連の主要拡張機能をチェック
+                    return extensions.Contains("ms-dotnettools.csharp") || 
+                           extensions.Contains("visualstudiotoolsforunity") ||
+                           extensions.Contains("unity");
+                }
+                return false;
             }
             catch
             {
