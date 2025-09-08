@@ -300,6 +300,28 @@ namespace asterivo.Unity60.AI.States
         public AIStateType GetCurrentStateType() => currentStateType;
         public bool IsInState(AIStateType stateType) => currentStateType == stateType;
         
+        // NavMeshAgentのセーフティメソッド
+        public void SafeStopAgent()
+        {
+            if (navAgent != null && navAgent.isOnNavMesh)
+            {
+                navAgent.isStopped = true;
+            }
+        }
+        
+        public void SafeStartAgent()
+        {
+            if (navAgent != null && navAgent.isOnNavMesh)
+            {
+                navAgent.isStopped = false;
+            }
+        }
+        
+        public bool CanUseNavAgent()
+        {
+            return navAgent != null && navAgent.isOnNavMesh;
+        }
+        
         // Odin Inspector用のカラーゲッター
         private UnityEngine.Color GetSuspicionColor()
         {

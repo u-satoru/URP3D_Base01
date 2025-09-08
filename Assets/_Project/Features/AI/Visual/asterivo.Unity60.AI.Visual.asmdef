@@ -1,0 +1,18 @@
+{
+    "name": "asterivo.Unity60.AI.Visual",
+    "rootNamespace": "asterivo.Unity60.Features.AI.Visual",
+    "references": [
+        "GUID:a4197e50c07fd624c8c8292fce72d2e3",
+        "GUID:5fb0e08955813f648bec38dc5c4c806b",
+        "GUID:fb788cfc3e3fdc84f833eaed49133127"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

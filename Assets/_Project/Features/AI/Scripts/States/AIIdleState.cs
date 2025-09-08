@@ -50,7 +50,7 @@ namespace asterivo.Unity60.AI.States
         /// </remarks>
         public void Enter(AIStateMachine stateMachine)
         {
-            stateMachine.NavAgent.isStopped = true;
+            stateMachine.SafeStopAgent();
             idleTimer = 0f;
         }
         
@@ -67,7 +67,7 @@ namespace asterivo.Unity60.AI.States
         /// </remarks>
         public void Exit(AIStateMachine stateMachine)
         {
-            stateMachine.NavAgent.isStopped = false;
+            stateMachine.SafeStartAgent();
         }
         
         /// <summary>
