@@ -5,7 +5,7 @@
 - **ドキュメント種別**: 技術設計書
 - **生成元**: REQUIREMENTS.md - Unity 6 3Dゲーム基盤プロジェクト 形式化された要件定義
 - **対象読者**: アーキテクト、シニア開発者、技術リード
-- **更新日**: 2025年1月（REQUIREMENTS.md v2.0 対応設計）
+- **更新日**: 2025年9月（REQUIREMENTS.md v3.0 究極テンプレート対応設計更新）
 
 ## 設計原則とアーキテクチャビジョン
 
@@ -185,6 +185,133 @@ Stealth Audio Architecture:
 - **距離関数**: Custom曲線による現実的な音響減衰
 - **Event Integration**: プレイヤー行動イベントとの即座連動
 
+#### 2.3 AI Visual Sensor System Design（新規追加）
+
+```
+Visual Sensor Architecture:
+┌─────────────────────────────────────────────┐
+│            NPCVisualSensor Core              │
+├─────────────────────────────────────────────┤
+│ NPCVisualSensor (MonoBehaviour)             │
+│ - 継続的視界スキャン    │ - 多重判定システム   │
+│ - 段階的検出制御       │ - 記憶システム      │
+└─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│           Detection Module Layer             │
+├─────────────────────────────────────────────┤
+│ VisualDetectionModule │ TargetTrackingModule │
+│ - 距離・角度・遮蔽・光量│ - 複数目標同時追跡   │
+│ - 閾値ベース判定       │ - 優先度管理        │
+├─────────────────────────────────────────────┤
+│ AlertSystemModule     │ MemoryModule         │
+│ - 4段階警戒レベル      │ - 短期・長期記憶     │
+│ - 自動遷移制御        │ - 位置履歴管理       │
+└─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│           Configuration Layer                │
+├─────────────────────────────────────────────┤
+│ VisualSensorSettings  │ DetectionConfiguration│
+│ (ScriptableObject)    │ (ScriptableObject)   │
+│ - スキャンパラメータ    │ - 検出閾値設定      │
+│ - 記憶設定           │ - 環境設定          │
+└─────────────────────────────────────────────┘
+```
+
+**視覚センサー実装戦略**:
+- **継続的スキャンシステム**: Update()での10-20Hz可変頻度スキャン
+- **多重判定統合**: VisibilityCalculator拡張による総合評価
+- **警戒レベル管理**: AlertLevel.Relaxed → Suspicious → Investigating → Alert
+- **記憶システム**: 短期記憶（5秒）→長期記憶（30秒）の階層管理
+- **パフォーマンス最適化**: LOD、フレーム分散、早期カリング
+
+##### Visual Sensor Data Structures
+
+```csharp
+// 検出目標情報の詳細構造
+public class DetectedTarget
+{
+    public Transform target;
+    public float detectionStrength;      // 0.0f - 1.0f
+    public TargetThreatLevel threatLevel; // Low/Medium/High
+    public float firstSeenTime;
+    public float lastSeenTime;
+    public Vector3 lastKnownPosition;
+    public Vector3 predictedPosition;
+    public bool isCurrentlyVisible;
+    public bool isInvestigating;
+}
+
+// 警戒レベル定義
+public enum AlertLevel
+{
+    Relaxed,        // 0.0f - 0.2f: 通常状態
+    Suspicious,     // 0.2f - 0.5f: 疑念状態  
+    Investigating,  // 0.5f - 0.8f: 調査状態
+    Alert          // 0.8f - 1.0f: 警戒状態
+}
+
+// 視覚イベントデータ
+public class VisualEventData
+{
+    public Transform observer;
+    public Transform target;
+    public float detectionStrength;
+    public Vector3 detectionPosition;
+    public AlertLevel alertLevel;
+    public VisualEventType eventType;
+}
+```
+
+##### Visual Sensor Performance Architecture
+
+```
+Performance Optimization Strategy:
+┌─────────────────────────────────────────────┐
+│            Frame Distribution System         │
+├─────────────────────────────────────────────┤
+│ DistributedScanCoroutine                    │
+│ - Basic Scan (Frame 1)                     │
+│ - Detailed Detection (Frame 2)             │
+│ - Memory Update (Frame 3)                  │
+│ - Prediction System (Frame 4)              │
+└─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│              LOD System                     │
+├─────────────────────────────────────────────┤
+│ Distance-Based Quality Scaling:             │
+│ - Near (<15m): 1.0x quality                │
+│ - Medium (<30m): 0.7x quality              │
+│ - Far (>30m): 0.4x quality                 │
+└─────────────────────────────────────────────┘
+```
+
+**性能要件実装**:
+- **メモリ効率**: NPCあたり最大5KB使用量
+- **CPU効率**: 1フレームあたり0.1ms以下
+- **スケーラビリティ**: 50体NPC同時稼働対応
+- **早期カリング**: 視界外目標の処理スキップ
+
+##### AI Sensor Integration Architecture
+
+```
+Sensor Fusion System:
+┌─────────────────────────────────────────────┐
+│         Integrated Sensor Coordinator       │
+├─────────────────────────────────────────────┤
+│ NPCVisualSensor + NPCAuditorySensor         │
+│ - 情報統合処理        │ - 相互補完機能      │
+│ - 統合警戒レベル      │ - 協調検出システム   │
+└─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│            AIStateMachine Integration        │
+├─────────────────────────────────────────────┤
+│ Visual Detection → AI State Transition:    │
+│ - Detection Events → Suspicious State      │
+│ - Target Lost → Searching State            │
+│ - Alert Level → Combat State               │
+└─────────────────────────────────────────────┘
+```
+
 ### Layer 3: Integration Layer（統合層）
 
 #### 3.1 Cinemachine Integration Design
@@ -340,6 +467,29 @@ Event Flow Visualization:
 - **Reference Checker**: 参照関係の依存性分析
 - **Performance Audit**: システム設定の最適化提案
 
+#### AI Visual Sensor Debugger（新規追加）
+```
+Visual Sensor Debug Tools:
+┌─────────────────────────────────────────────┐
+│           Scene View Visualization           │
+├─────────────────────────────────────────────┤
+│ - 視界範囲の表示        │ - 検出目標の表示     │
+│ - 記憶位置の表示        │ - 予測軌道の表示     │
+└─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│         Custom Inspector Window             │
+├─────────────────────────────────────────────┤
+│ - リアルタイムデバッグ情報│ - 警戒レベル表示    │
+│ - アクティブ目標リスト    │ - メモリ使用状況    │
+└─────────────────────────────────────────────┘
+```
+
+**デバッグ機能実装**:
+- **Gizmos描画**: OnDrawGizmosSelectedでの視覚的表示
+- **リアルタイム監視**: Play Mode中の状態更新表示
+- **パフォーマンス測定**: Unity Profiler統合
+- **ログ出力**: 構造化ログによる詳細トレース
+
 ## セキュリティ・品質保証設計
 
 ### Code Quality Assurance
@@ -435,6 +585,83 @@ Build Configuration:
 - **Fragment Management**: 多様な解像度対応
 - **Performance Scaling**: デバイス性能に応じた品質調整
 
+## 究極テンプレートロードマップ設計（新規追加）
+
+### Ultimate Template 5-Phase Architecture
+
+#### Phase A: 新規開発者対応機能設計（最高優先度）
+
+##### Interactive Setup Wizard System Architecture
+```
+Setup Wizard Architecture:
+┌─────────────────────────────────────────────┐
+│            Environment Diagnostics           │
+├─────────────────────────────────────────────┤
+│ SystemRequirementChecker                    │
+│ - Unity Version Validation                  │
+│ - VS/VSCode Detection                       │
+│ - Git Configuration Check                   │
+└─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│            Genre Selection System            │
+├─────────────────────────────────────────────┤
+│ 6-Genre Template Configuration:             │
+│ - FPS/TPS/Platformer/Stealth               │
+│ - Adventure/Strategy Templates             │
+│ - Scene/Camera/Input Presets               │
+└─────────────────────────────────────────────┘
+```
+
+**実装戦略**:
+- **1分セットアップ**: 自動化されたプロジェクト初期化
+- **エラー予防**: 事前診断による問題回避
+- **学習支援**: 段階的チュートリアル統合
+
+##### Game Genre Templates System Architecture
+```
+Genre Template System:
+┌─────────────────────────────────────────────┐
+│          Template Configuration Layer        │
+├─────────────────────────────────────────────┤
+│ GenreTemplateConfig (ScriptableObject)      │
+│ - Scene Presets       │ - Camera Settings   │
+│ - Input Maps         │ - Gameplay Samples   │
+└─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│            Runtime Template Switcher        │
+├─────────────────────────────────────────────┤
+│ TemplateManager (Singleton)                │
+│ - Dynamic Switching   │ - State Preservation│
+│ - Asset Management   │ - Configuration Sync │
+└─────────────────────────────────────────────┘
+```
+
+#### Phase B-E: 高度機能設計概要
+
+##### Advanced Save/Load System Architecture
+```
+Save System Architecture:
+┌─────────────────────────────────────────────┐
+│           Modular Save Management            │
+├─────────────────────────────────────────────┤
+│ SaveSystemManager (ScriptableObject-based)  │
+│ - Multi-slot Support  │ - Auto-save System  │
+│ - Cloud Integration   │ - Encryption Layer   │
+└─────────────────────────────────────────────┘
+```
+
+##### Comprehensive Settings System
+- **Graphics Settings**: URP固有設定の動的調整
+- **Audio Settings**: カテゴリ別音量制御
+- **Input Settings**: Runtime キーバインド変更
+- **Gameplay Settings**: アクセシビリティ対応
+
+##### Localization Support System  
+- **4言語対応**: 日本語/English/中文/한국어
+- **Runtime Language Switching**: 再起動不要
+- **Dynamic Font Loading**: 言語別フォント管理
+- **Audio Localization**: 多言語音声対応
+
 ## 将来拡張設計
 
 ### Phase 2 Extension Architecture
@@ -468,4 +695,61 @@ Future Multiplayer Architecture:
 - **Balance Tuning**: ゲームバランスの自動調整AI
 - **Player Analytics**: プレイヤー行動分析とコンテンツ最適化
 
-この技術設計書は、REQUIREMENTS.mdで定義された要件を、具体的な実装可能な技術仕様に変換し、後続のTASKS.md生成とコード実装の基盤となります。
+## SDD（スペック駆動開発）統合設計
+
+### SDD Workflow Integration Architecture
+
+```
+SDD Integration System:
+┌─────────────────────────────────────────────┐
+│            Document Management Layer         │
+├─────────────────────────────────────────────┤
+│ MarkdownDocumentManager                     │
+│ - SPEC → REQUIREMENTS → DESIGN → TASKS     │
+│ - Version Control Integration               │
+│ - Automated Phase Transition               │
+└─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│              AI Integration Layer            │
+├─────────────────────────────────────────────┤
+│ Claude Code MCP Server Integration:         │
+│ - unityMCP: Direct Unity manipulation      │
+│ - context7: Technical documentation search │
+│ - git: Version control management          │
+└─────────────────────────────────────────────┘
+```
+
+**SDD実装戦略**:
+- **5段階フェーズ管理**: 構想→形式化→設計→分解→実装・検証
+- **AI連携コマンド**: `/spec-create`, `/design-create`, `/tasks-create`, `/todo-execute`
+- **トレーサビリティ**: 要件から実装までの完全追跡
+- **品質保証**: 各フェーズでの整合性検証
+
+### MCPサーバー統合戦略
+
+#### 戦略的優先順位フレームワーク
+1. **情報収集フェーズ**: ddg-search → context7 → deepwiki
+2. **実装フェーズ**: context7 → unityMCP → git
+3. **3Dコンテンツ制作**: blender-mcp → unityMCP → git
+
+**AI+人間ハイブリッド開発**:
+- **AI責任範囲**: コード生成、技術調査、ドキュメント作成
+- **人間責任範囲**: アーキテクチャ判断、品質検証、戦略決定
+- **相互連携**: MCPサーバー活用による効率化
+
+## まとめ
+
+この技術設計書は、REQUIREMENTS.mdで定義された要件を、具体的な実装可能な技術仕様に変換し、以下の価値を提供します：
+
+### 核心価値実現のための設計基盤
+- **Clone & Create**: 1分セットアップの技術的実現方法
+- **Learn & Grow**: 段階的学習システムの設計アーキテクチャ  
+- **Ship & Scale**: プロダクション対応の最適化戦略
+- **Community & Ecosystem**: 拡張可能なエコシステム設計
+
+### 次フェーズへの橋渡し
+- **TASKS.md生成**: 実装タスクの詳細分解基盤
+- **コード実装**: アーキテクチャに基づく実装ガイドライン
+- **品質保証**: テスト戦略とパフォーマンス要件の実現
+
+この設計により、Unity 6を活用した究極の3Dゲーム開発基盤テンプレートの技術的実現が可能になります。
