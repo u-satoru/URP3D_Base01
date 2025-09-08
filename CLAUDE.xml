@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document title="CLAUDE.md">
+    <ctrl3347>
+        じっくり考える
+    <ctrl3348>
+    <introduction>
+        これは <strong>Unity 6で作成された3Dゲームプロジェクトのベーステンプレート</strong> です。 Universal Render Pipeline (URP) を使用しています。
+    </introduction>
+
+    <section title="概要">
+        <paragraph>
+            このプロジェクトは、イベント駆動型アーキテクチャとコマンドパターンを組み合わせた、拡張性の高い3Dゲームの基盤を提供します。Scriptable Objectを活用し、データとロジックの分離を促進することで、効率的な開発とメンテナンスを目的としています。
+        </paragraph>
+    </section>
+
+    <section title="制作想定ゲーム">
+        <ul>
+            <li>シングルプレイゲーム</li>
+            <li>ステルスアクションゲーム</li>
+            <li>3Dプラットフォーマー</li>
+            <li>アドベンチャーゲーム</li>
+            <li>ストラテジーゲーム</li>
+            <li>TPS/FPSゲーム(一人称視点/三人称視点)</li>
+        </ul>
+    </section>
+
+    <section title="対応プラットフォーム">
+        <ul>
+            <li>iOS</li>
+            <li>Android</li>
+            <li>Windows</li>
+        </ul>
+    </section>
+
+    <section title="主な機能">
+        <ul>
+            <li><strong>イベント駆動型アーキテクチャ</strong>: <code>GameEvent</code> を介したコンポーネント間の疎結合な連携。</li>
+            <li><strong>コマンドパターン</strong>: ゲーム内のアクション（例：ダメージ、回復）をオブジェクトとしてカプセル化し、再利用と管理を容易にします。</li>
+            <li><strong>ObjectPool最適化</strong>: 頻繁に作成・破棄されるコマンドオブジェクトをプール化し、メモリ効率とパフォーマンスを大幅に向上させます（95%のメモリ削減効果）。</li>
+            <li><strong>Scriptable Objectベースのデータ管理</strong>: キャラクターのステータスやアイテム情報などをアセットとして管理。</li>
+            <li><strong>ステルスゲーム用サウンドシステム</strong>: 3D空間オーディオ、NPCの聴覚センサー、動的環境サウンド、オーディオマスキング機能を含む包括的な音響システム。</li>
+            <li><strong>基本的なプレイヤー機能</strong>: 移動やインタラクションの基盤。</li>
+            <li><strong>エディタ拡張</strong>: コマンドの発行やイベントの流れを視覚化するカスタムウィンドウ。</li>
+        </ul>
+    </section>
+
+    <section title="アーキテクチャとデザインパターン">
+        <paragraph>
+            このプロジェクトでは、主に以下のアーキテクチャとデザインパターンが採用されています。
+        </paragraph>
+        <ol>
+            <li>
+                <strong>イベント駆動型アーキテクチャ (Event-Driven Architecture)</strong>:
+                <description>
+                    コンポーネント間の結合を疎にするため、<code>ScriptableObject</code> をベースにしたイベントチャネル（<code>GameEvent</code>）を使用しています。
+                    これにより、あるオブジェクトが別のオブジェクトを直接参照することなく、イベントの発行と購読を通じて通信できます。例えば、プレイヤーがダメージを受けたとき、「PlayerDamaged」イベントが発行され、UIやサウンドシステムがそれをリッスンして各自の処理を行います。
+                </description>
+            </li>
+            <li>
+                <strong>コマンドパターン (Command Pattern)</strong>:
+                <description>
+                    ゲーム内で行われる操作（例: 攻撃、回復、アイテム使用）を「コマンド」というオブジェクトとしてカプセル化しています。
+                    これにより、操作の実行、取り消し（Undo）、再実行（Redo）、遅延実行、キューイングなどが容易になります。<code>ICommand</code> インターフェースとそれを実装した具体的なコマンドクラス（<code>DamageCommand</code>, <code>HealCommand</code>など）がこれにあたります。
+                </description>
+            </li>
+            <li>
+                <strong>ObjectPool最適化パターン (Object Pool Pattern)</strong>:
+                <description>
+                    頻繁に作成・破棄されるコマンドオブジェクトを事前作成したプールから再利用することで、メモリ確保コストとガベージコレクションを大幅に削減します。
+                    <code>CommandPool</code>が中央管理し、<code>IResettableCommand</code>インターフェースによって状態リセット可能なコマンドの安全な再利用を実現します。測定結果では95%のメモリ使用量削減と67%の実行速度改善を達成しています。
+                </description>
+            </li>
+            <li>
+                <strong>ScriptableObjectベースのデータ駆動設計</strong>:
+                <description>
+                    キャラクターのステータス、アイテムのスペック、イベント定義など、多くのゲームデータを <code>ScriptableObject</code> として作成し、アセットとして管理しています。
+                    これにより、プログラマー以外のチームメンバー（ゲームデザイナーなど）も、コードを触ることなくゲームのバランス調整やデータ編集が可能になります。
+                </description>
+            </li>
+            <li>
+                <strong>State パターン</strong>:
+                <description>
+                    キャラクターの状態（待機、歩行、攻撃中など）を個別のクラスとして管理するために使用が推奨されています。（<code>StatePattern_Migration_Guide.md</code>より）
+                </description>
+            </li>
+            <li>
+                <strong>Strategy パターン</strong>:
+                <description>
+                    アルゴリズムのファミリーを定義し、それぞれをカプセル化して相互に置き換え可能にするために使用されます。これにより、アルゴリズムの変更が容易になり、クライアントコードは具体的なアルゴリズムに依存しなくなります。
+                </description>
+            </li>
+            <li>
+                <strong>Factory+Registry パターン</strong>:
+                <description>
+                    オブジェクトの生成を担当するファクトリーと、生成されたオブジェクトを管理するレジストリを組み合わせることで、柔軟で拡張性のあるシステムを構築します。これにより、新しいオブジェクトタイプの追加が容易になり、依存関係の管理が改善されます。
+                </description>
+            </li>
+            <li>
+                <strong>Lifecycle Management パターン</strong>:
+                <description>
+                    オブジェクトのライフサイクル（生成、使用、破棄）を管理するためのパターンです。これにより、リソースの効率的な使用とメモリリークの防止が可能になります。
+                </description>
+            </li>
+        </ol>
+        <paragraph>
+            これらのパターンを組み合わせることで、関心事の分離が促進され、拡張性、再利用性、メンテナンス性の高い構造を目指しています。
+        </paragraph>
+    </section>
+
+    <section title="技術仕様">
+        <ul>
+            <li><strong>Unity Version</strong>: <code>6000.0.42f1</code></li>
+            <li><strong>Render Pipeline</strong>: Universal Render Pipeline (URP)</li>
+            <li><strong>Scripting Backend</strong>: Mono</li>
+            <li><strong>API Compatibility Level</strong>: .NET Standard 2.1</li>
+        </ul>
+    </section>
+    
+    <section title="アーキテクチャ制約">
+        <paragraph>
+            <strong>現時点ではDependency Injection (DI) フレームワークは使用していません。将来的に導入する可能性がありますが、現状はシンプルな設計を維持しています。</strong>
+        </paragraph>
+    </section>
+
+    <section title="ディレクトリ構成">
+        <ul>
+            <li><code>Assets/_Project/Core</code>: ゲームのコアロジック（イベント、コマンド、オーディオシステム、データ構造など）。</li>
+            <li><code>Assets/_Project/Features</code>: 各機能（プレイヤー、AI、カメラなど）の実装。</li>
+            <li><code>Assets/_Project/Scenes</code>: ゲームシーン。</li>
+            <li><code>Assets/_Project/Docs</code>: プロジェクト関連のドキュメント（ステルスオーディオシステム仕様書、SDD実践ガイドを含む）。
+                <ul>
+                    <li><code>Assets/_Project/Docs/Work</code>: 作業用ドキュメント（tasks.md, todo.md, WorkLogsなど）。</li>
+                </ul>
+            </li>
+            <li><code>Assets/Plugins</code>: サードパーティ製アセット。 <strong>直接編集しないでください</strong>。</li>
+        </ul>
+    </section>
+    
+    <section title="スペック駆動開発（SDD）の実践">
+        <paragraph>
+            このプロジェクトでは、AIツールと連携したスペック駆動開発（SDD）を推奨しています。SDDは人間の意図を段階的に機械実行可能な命令に変換するパイプラインとして機能します。
+        </paragraph>
+        <subsection title="SDD Markdownファイル構成">
+            <subsubsection title="プロジェクトルート配置（基盤仕様書）">
+                <ul>
+                    <li><code>SPEC.md</code> - 初期構想・要件定義（人間作成）</li>
+                    <li><code>REQUIREMENTS.md</code> - 形式化された要件（AI生成）</li>
+                    <li><code>DESIGN.md</code> - 技術設計書（AI生成）</li>
+                </ul>
+            </subsubsection>
+            <subsubsection title="作業ディレクトリ配置（実装管理）">
+                <ul>
+                    <li><code>Assets/_Project/Docs/Work/TASKS.md</code> - 実装タスク一覧</li>
+                    <li><code>Assets/_Project/Docs/Work/TODO.md</code> - 進行中タスク管理</li>
+                    <li><code>Assets/_Project/Docs/Work/WorkLogs/</code> - 作業ログ保管庫（日時フォルダでスナップショット管理）</li>
+                </ul>
+            </subsubsection>
+        </subsection>
+        <subsection title="SDD 5つのフェーズ">
+            <ol>
+                <li><strong>構想</strong>（SPEC.md） - 高レベルビジョンの定義</li>
+                <li><strong>形式化</strong>（REQUIREMENTS.md） - 構造化された要件定義</li>
+                <li><strong>設計</strong>（DESIGN.md） - 技術的実装戦略</li>
+                <li><strong>分解</strong>（TASKS.md） - 実行可能なタスクリスト</li>
+                <li><strong>実装・検証</strong> - AIによるコード生成と品質保証</li>
+            </ol>
+        </subsection>
+        <subsection title="Claude Code連携">
+            <paragraph>
+                各フェーズでClaude Codeと効果的に連携し、以下のようなワークフローを実現：
+            </paragraph>
+            <ul>
+                <li><code>/spec-create</code> - SPEC.mdからREQUIREMENTS.mdを生成</li>
+                <li><code>/design-create</code> - REQUIREMENTS.mdからDESIGN.mdを生成</li>
+                <li><code>/tasks-create</code> - DESIGN.mdからTASKS.mdを生成</li>
+                <li><code>/todo-execute</code> - TODO.mdの最高優先度タスクを実行</li>
+            </ul>
+            <paragraph>
+                詳細は <code>Assets/_Project/Docs/SDD_Markdown作成実践ガイド.md</code> を参照してください。
+            </paragraph>
+        </subsection>
+    </section>
+
+    <section title="MCPサーバー優先順位付けのための戦略的フレームワーク">
+        <subsection title="1. MCPサーバー機能と制御レベルの比較概要">
+            <paragraph>
+                このセクションでは、第II部の分析を統合し、アーキテクトが一目で参照できる明確な要約表を提示します。
+            </paragraph>
+            <table>
+                <caption>MCPサーバーの能力と優先順位付けマトリクス</caption>
+                <thead>
+                    <tr>
+                        <th>サーバー</th>
+                        <th>主な役割</th>
+                        <th>データスコープ</th>
+                        <th>制御レベル</th>
+                        <th>主要ユースケース</th>
+                        <th>解決する主要課題</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ddg-serch</td>
+                        <td>リアルタイムウェブ検索</td>
+                        <td>グローバルインターネット（非構造化）</td>
+                        <td><strong>読み取り専用</strong>（情報検索）</td>
+                        <td>一般知識の質問、最新情報の検索</td>
+                        <td>知識のカットオフとリアルタイム性</td>
+                    </tr>
+                    <tr>
+                        <td>context7</td>
+                        <td>技術文書検索</td>
+                        <td>公開コードライブラリ（構造化）</td>
+                        <td><strong>読み取り専用</strong>（情報検索）</td>
+                        <td>正確で最新のコード記述、API利用のデバッグ</td>
+                        <td>コードのハルシネーションとドキュメントの陳腐化</td>
+                    </tr>
+                    <tr>
+                        <td>deepwiki</td>
+                        <td>コードベース分析</td>
+                        <td>特定のGitリポジトリ（意味的）</td>
+                        <td><strong>読み取り専用</strong>（情報検索）</td>
+                        <td>新規プロジェクトへの参加、複雑なアーキテクチャの理解</td>
+                        <td>コードベースの理解とオンボーディングの摩擦</td>
+                    </tr>
+                    <tr>
+                        <td>git</td>
+                        <td>バージョン管理</td>
+                        <td>ローカル/リモートリポジトリ</td>
+                        <td><strong>読み書き</strong>（状態変更）</td>
+                        <td>コードコミットの自動化、ブランチ管理、パッチ適用</td>
+                        <td>手動でのバージョン管理とコード統合</td>
+                    </tr>
+                    <tr>
+                        <td>blender-mcp</td>
+                        <td>3Dコンテンツ制作</td>
+                        <td>Blenderアプリケーションの状態</td>
+                        <td><strong>読み書き</strong>（アプリケーション制御）</td>
+                        <td>自然言語からの3Dアセットのプロシージャル生成</td>
+                        <td>3Dモデリングの高い技術的障壁</td>
+                    </tr>
+                    <tr>
+                        <td>unityMCP</td>
+                        <td>ゲーム開発</td>
+                        <td>Unity Editorの状態</td>
+                        <td><strong>読み書き</strong>（アプリケーション制御）</td>
+                        <td>レベルデザインの自動化、ゲームアセット管理、テスト実行</td>
+                        <td>反復的/手動のゲーム開発タスク</td>
+                    </tr>
+                </tbody>
+            </table>
+            <paragraph>
+                この表は、エージェントのアーキテクトが直面する「特定のサブタスクに適したツールはどれか？」という複雑な決定を支援します。単なる機能リストではなく、複数の戦略的な軸に沿ってツールを比較する視点を提供します。「制御レベル」の列は、安全な読み取り専用サーバーと、強力だがリスクの高い読み書きサーバーを即座に区別します。「データスコープ」の列は、各サーバーが提供する情報の粒度を明確にします。「解決する主要課題」の列は、各サーバーの価値提案を特定のペインポイントの観点から捉えます。これにより、アーキテ...
+            </paragraph>
+        </subsection>
+
+        <subsection title="2. MCPサーバ優先順位付けのカスケード：多層的な意思決定モデル">
+            <paragraph>
+                これは、ユーザーの「しっかり考えて」優先度を教えてほしいという要求に答えるための中心的なフレームワークです。構造化されたトップダウンの意思決定プロセスを提示します。
+            </paragraph>
+            <subsubsection title="レイヤー1：タスクドメインの定義（エージェントの高レベルな目標は何か？）">
+                <ul>
+                    <li>
+                        <strong>知識獲得:</strong> 情報を学習または検索することが目標です。
+                        <ul>
+                            <li><strong>人間の優先度:</strong> ddg-serch, context7, deepwiki。</li>
+                            <li><strong>AIの優先度:</strong> 1. ddg-serch (最新かつ広範な情報を得るため)、2. context7 (技術的な正確性を確保するため)、3. deepwiki (特定のコードベースを深く理解するため)。AIは通常、広い文脈から具体的な情報へと絞り込んでいきます。</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>ソフトウェア開発:</strong> コードの記述、修正、または管理が目標です。
+                        <ul>
+                            <li><strong>人間の優先度:</strong> git, context7, deepwiki。</li>
+                            <li><strong>AIの優先度:</strong> 1. context7/deepwiki (変更を加える前に、正確な情報とコードベースの理解を深めるため)、2. git (計画に基づき、実際にコードを変更するため)。AIは行動を起こす前に、まず状況を完全に把握することを優先します。</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>クリエイティブ制作:</strong> デジタルアセット（3Dモデル、ゲームレベル）の作成が目標です。
+                        <ul>
+                            <li><strong>人間の優先度:</strong> blender-mcp, unityMCP。</li>
+                            <li><strong>AIの優先度:</strong> blender-mcpまたはunityMCPがタスクの中心となります。AIは、与えられた指示を実行するために、これらのサーバーを直接的かつ継続的に使用します。</li>
+                            <li>
+                                <strong>ユースケース別AI優先度（3Dゲーム制作）:</strong>
+                                <ol>
+                                    <li><strong>unityMCP (最高):</strong> ゲームエンジン内での直接的な操作が最優先されます。AIはシーンの状態確認 (get_editor_state) とコマンド実行 (execute_editor_command) を繰り返し、アセットの配置、レベルデザイン、コンポーネントの調整などを自律的に行います 32。</li>
+                                    <li><strong>blender-mcp (高):</strong> Unityにインポートするカスタム3Dモデルやアセットを制作するために使用されます。AIは自然言語の指示からプロシージャルにアセットを生成します 27。</li>
+                                    <li><strong>context7 (高):</strong> UnityのAPI、C#スクリプティング、または特定のプラグインに関する正確な技術情報を取得するために不可欠です。これにより、AIが生成するコードの品質と正確性が保証されます 19。</li>
+                                    <li><strong>git (中):</strong> 作成されたゲームアセット、シーンファイル、スクリプトのバージョン管理を行います。AIはタスクの節目で変更をコミットし、プロジェクトの整合性を保ちます 21。</li>
+                                    <li><strong>ddg-serch (低):</strong> 新しいアセットストアの検索、特定のエラーに関するコミュニティの解決策の調査、または一般的なデザインのインスピレーションを得るために補助的に使用されます。</li>
+                                </ol>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </subsubsection>
+            
+            <subsubsection title="レイヤー2：情報の具体性の判断（必要な知識の粒度はどの程度か？）">
+                <ul>
+                    <li>
+                        <strong>グローバル＆リアルタイム:</strong> 最新の出来事や一般的なトピック向け。
+                        <ul>
+                            <li><strong>人間の優先度:</strong> ddg-serch。</li>
+                            <li><strong>AIの優先度:</strong> <strong>最高。</strong> タスクの初期段階で、AIはまずddg-serchを使い、現状の把握や一般的な情報収集を行います。これは、あらゆるタスクの出発点となります。</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>公開＆技術的:</strong> 特定の公開ライブラリやAPIの使用向け。
+                        <ul>
+                            <li><strong>人間の優先度:</strong> context7。</li>
+                            <li><strong>AIの優先度:</strong> <strong>高。</strong> ddg-serchでの調査後、特にソフトウェア開発タスクにおいて、AIはcontext7を利用して信頼性の高い技術情報を取得し、ハルシネーションを避けます。</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>プライベート＆アーキテクチャ的:</strong> 特定のコードベースの内部動作の理解向け。
+                        <ul>
+                            <li><strong>人間の優先度:</strong> deepwiki。</li>
+                            <li><strong>AIの優先度:</strong> <strong>中〜高。</strong> 特定のコードベースに対する変更や分析が求められる場合、AIはdeepwikiを優先的に使用し、コードの構造や依存関係を正確に理解しようとします。</li>
+                        </ul>
+                    </li>
+                </ul>
+            </subsubsection>
+
+            <subsubsection title="レイヤー3：制御の所在の評価（エージェントは読み取り（READ）または書き込み（WRITE）が必要か？）">
+                <paragraph>
+                    これは、セキュリティと能力に関する最も重要な区別です。
+                </paragraph>
+                <ul>
+                    <li>
+                        <strong>読み取り専用（情報収集）:</strong> リスクが低く、コンテキストを提供するために使用されます。
+                        <ul>
+                            <li><strong>人間の優先度:</strong> ddg-serch, context7, deepwiki。これらは情報探索タスクのデフォルトとすべきです。</li>
+                            <li><strong>AIの優先度:</strong> <strong>常に最優先。</strong> AIエージェントは、状態を変更するアクション（書き込み）を実行する前に、まず読み取り専用サーバーを使用して可能な限り多くの情報を収集し、状況を完全に理解しようとします。これは、安全で効果的なタスク遂行のための基本原則です。</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>読み書き（状態変更）:</strong> リスクが高く、明示的なユーザーの同意が必要です。アクションを実行するために使用されます。
+                        <ul>
+                            <li><strong>人間の優先度:</strong> git, blender-mcp, unityMCP。これらはエージェントの目標が明確に何かを変更することである場合にのみ有効にすべきです。</li>
+                            <li><strong>AIの優先度:</strong> <strong>計画後の段階で優先。</strong> AIは、情報収集と分析に基づいて詳細な実行計画を立てた後、ユーザーの承認を得てから初めて書き込み操作を行います。自律的な意思決定による予期せぬ変更を避けるため、このステップは慎重に扱われます。</li>
+                        </ul>
+                    </li>
+                </ul>
+            </subsubsection>
+            
+            <subsubsection title="レイヤー4：環境の複雑性の評価（エージェントは何と対話しているか？）">
+                <ul>
+                    <li>
+                        <strong>テキスト/データ:</strong> 単純な構造化または非構造化データ。
+                        <ul>
+                            <li><strong>人間の優先度:</strong> ddg-serch, context7, git。</li>
+                            <li><strong>AIの優先度:</strong> <strong>高。</strong> これらのサーバーは基本的な情報収集とコード操作の基盤であり、多くのタスクで頻繁に使用されます。AIはこれらの比較的単純な対話を通じて、より複雑なタスクの準備をします。</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>ステートフルなアプリケーション:</strong> 独自の内部状態、UI、ロジックを持つ複雑なアプリケーション。
+                        <ul>
+                            <li><strong>人間の優先度:</strong> blender-mcp, unityMCP。これらのサーバーはより強力ですが、より複雑なプロンプトやエラーハンドリングが必要になる場合があります。</li>
+                            <li><strong>AIの優先度:</strong> <strong>タスク特化型で高。</strong> クリエイティブ制作のような特定のタスクでは、これらのサーバーが中心的な役割を果たします。AIは、get_editor_stateのようなツールで現在の状態を頻繁に確認し、execute_editor_commandで少しずつ変更を加えるという、観察と行動のループを繰り返します 32。</li>
+                        </ul>
+                    </li>
+                </ul>
+            </subsubsection>
+            
+            <subsubsection title="レイヤー5：セキュリティとガバナンスの態勢の考慮（「影響範囲」はどの程度か？）">
+                <ul>
+                    <li>
+                        <strong>個人/開発者ワークフロー:</strong> セキュリティ制約が低い。
+                        <ul>
+                            <li><strong>人間の優先度:</strong> ローカルのgitサーバーやblender-mcpは許容されます。</li>
+                            <li><strong>AIの優先度:</strong> AIは環境の制約を認識しますが、この環境では幅広いツールを自由に利用してタスクの解決を試みます。ただし、それでもなお、破壊的な操作の前にはユーザーの確認を求めることが推奨される設計となります。</li>
+                        </ul>
+                    </li>
+                </ul>
+            </subsubsection>
+        </subsection>
+    </section>
+
+    <section title="主要なパッケージ">
+        <ul>
+            <li><code>com.unity.render-pipelines.universal</code>: Universal Render Pipeline</li>
+            <li><code>com.unity.inputsystem</code>: 新しい入力システム</li>
+            <li><code>com.unity.cinemachine</code>: 高度なカメラ制御</li>
+            <li><code>com.unity.ai.navigation</code>: ナビゲーションと経路探索</li>
+            <li><code>com.unity.test-framework</code>: ユニットテストとプレイモードテスト</li>
+        </ul>
+    </section>
+
+    <section title="サードパーティ製アセット/ライブラリ">
+        <ul>
+            <li><code>UniTask</code>: 非同期プログラミングライブラリ（Cysharp）</li>
+            <li><code>DOTween Pro</code>: 高度なアニメーションとタイムライン制御（Demigiant）</li>
+            <li><code>Odin Inspector</code>: エディタ拡張とカスタムインスペクタ（Sirenix）</li>
+            <li><code>Odin Serializer</code>: 高度なシリアライゼーション（Sirenix）</li>
+            <li><code>Odin Validator</code>: データ検証ツール（Sirenix）</li>
+            <li><code>TextMeshPro</code>: 高品質なテキストレンダリング（Unity公式）</li>
+        </ul>
+    </section>
+
+    <section title="GitHub Actions設定">
+        <paragraph>設定しない</paragraph>
+    </section>
+</document>
