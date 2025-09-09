@@ -80,6 +80,42 @@ private string environmentCheckStatus = "";
         }
         
         /// <summary>
+        /// GenreManagerを初期化します
+        /// </summary>
+        private void InitializeGenreManager()
+        {
+            try
+            {
+                // GenreManager インスタンスを取得または作成
+                if (genreManager == null)
+                {
+                    // GenreManagerはScriptableObjectなので、アセットから読み込むか作成する
+                    var genreManagers = Resources.FindObjectsOfTypeAll<GenreManager>();
+                    if (genreManagers.Length > 0)
+                    {
+                        genreManager = genreManagers[0];
+                    }
+                    else
+                    {
+                        genreManager = ScriptableObject.CreateInstance<GenreManager>();
+                    }
+                }
+                
+                // 不足しているジャンルを作成
+                GenreManager.CreateMissingGenres();
+                
+                // GenreManagerを初期化
+                genreManager.Initialize();
+                
+                UnityEngine.Debug.Log("[SetupWizard] GenreManager initialized successfully");
+            }
+            catch (System.Exception ex)
+            {
+                UnityEngine.Debug.LogError($"[SetupWizard] Failed to initialize GenreManager: {ex.Message}");
+            }
+        }
+        
+        /// <summary>
         /// ステップ状態管理
         /// </summary>
         [Serializable]
@@ -189,7 +225,7 @@ private string environmentCheckStatus = "";
         /// <summary>
         /// ウィザードの初期化
         /// </summary>
-        private void InitializeWizard()
+private void InitializeWizard()
         {
             if (isInitialized) return;
             
@@ -210,39 +246,11 @@ private string environmentCheckStatus = "";
                         
             // GenreManager初期化
             InitializeGenreManager();
-setupStartTime = DateTime.Now;
+            setupStartTime = DateTime.Now;
             
             isInitialized = true;
             
             UnityEngine.Debug.Log("[SetupWizard] Interactive Setup Wizard initialized - Starting Clone & Create value realization");
-        
-        /// <summary>
-        /// GenreManager初期化
-        /// </summary>
-        private void InitializeGenreManager()
-        {
-            if (genreManager == null)
-            {
-                string[] guids = AssetDatabase.FindAssets("t:GenreManager");
-                if (guids.Length > 0)
-                {
-                    string path = AssetDatabase.GUIDToAssetPath(guids[0]);
-                    genreManager = AssetDatabase.LoadAssetAtPath<GenreManager>(path);
-                }
-                else
-                {
-                    genreManager = CreateInstance<GenreManager>();
-                    AssetDatabase.CreateAsset(genreManager, "Assets/_Project/Core/Setup/GenreManager.asset");
-                    AssetDatabase.SaveAssets();
-                }
-                
-                if (genreManager != null)
-                {
-                    genreManager.Initialize();
-                    UnityEngine.Debug.Log("[SetupWizard] GenreManager initialized successfully");
-                }
-            }
-        }
         }
         
         /// <summary>

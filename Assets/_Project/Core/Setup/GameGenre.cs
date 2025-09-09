@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 namespace asterivo.Unity60.Core.Setup
 {
@@ -67,8 +68,8 @@ namespace asterivo.Unity60.Core.Setup
         public IReadOnlyList<string> RequiredModules => requiredModules.AsReadOnly();
         public IReadOnlyList<string> RecommendedModules => recommendedModules.AsReadOnly();
         public IReadOnlyList<string> OptionalModules => optionalModules.AsReadOnly();
-        public PerformanceProfile PerformanceProfile => performanceProfile;
-        public ProjectSettings ProjectSettings => projectSettings;
+        public PerformanceProfile PerformanceData => performanceProfile;
+        public ProjectSettings ProjectData => projectSettings;
         
         #endregion
         
@@ -329,19 +330,19 @@ namespace asterivo.Unity60.Core.Setup
         {
             if (string.IsNullOrEmpty(displayName))
             {
-                Debug.LogError($"GameGenre {name}: DisplayName is required");
+                UnityEngine.Debug.LogError($"GameGenre {name}: DisplayName is required");
                 return false;
             }
             
             if (string.IsNullOrEmpty(description))
             {
-                Debug.LogError($"GameGenre {name}: Description is required");
+                UnityEngine.Debug.LogError($"GameGenre {name}: Description is required");
                 return false;
             }
             
             if (previewImage == null)
             {
-                Debug.LogWarning($"GameGenre {name}: Preview image is recommended");
+                UnityEngine.Debug.LogWarning($"GameGenre {name}: Preview image is recommended");
             }
             
             return true;
@@ -354,12 +355,12 @@ namespace asterivo.Unity60.Core.Setup
         /// </summary>
         public void LogConfiguration()
         {
-            Debug.Log($"=== Game Genre Configuration: {displayName} ===");
-            Debug.Log($"Type: {genreType}");
-            Debug.Log($"Required Modules: {string.Join(", ", requiredModules)}");
-            Debug.Log($"Camera: {(cameraConfig.firstPersonView ? "FPS" : "TPS")}, FOV: {cameraConfig.defaultFOV}");
-            Debug.Log($"Movement: Walk {movementConfig.walkSpeed}, Run {movementConfig.runSpeed}");
-            Debug.Log($"AI: Max NPCs {aiConfig.maxNPCCount}, Detection Range {aiConfig.defaultDetectionRange}");
+            UnityEngine.Debug.Log($"=== Game Genre Configuration: {displayName} ===");
+            UnityEngine.Debug.Log($"Type: {genreType}");
+            UnityEngine.Debug.Log($"Required Modules: {string.Join(", ", requiredModules)}");
+            UnityEngine.Debug.Log($"Camera: {(cameraConfig.firstPersonView ? "FPS" : "TPS")}, FOV: {cameraConfig.defaultFOV}");
+            UnityEngine.Debug.Log($"Movement: Walk {movementConfig.walkSpeed}, Run {movementConfig.runSpeed}");
+            UnityEngine.Debug.Log($"AI: Max NPCs {aiConfig.maxNPCCount}, Detection Range {aiConfig.defaultDetectionRange}");
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.Video;
 
 namespace asterivo.Unity60.Core.Setup
 {
@@ -80,7 +81,7 @@ namespace asterivo.Unity60.Core.Setup
             // ジャンル種別でソート
             availableGenres = availableGenres.OrderBy(g => g.GenreType).ToList();
             
-            Debug.Log($"[GenreManager] Loaded {availableGenres.Count} genres");
+            UnityEngine.Debug.Log($"[GenreManager] Loaded {availableGenres.Count} genres");
             #endif
         }
         
@@ -252,14 +253,14 @@ namespace asterivo.Unity60.Core.Setup
             {
                 if (genre == null)
                 {
-                    Debug.LogError("[GenreManager] Null genre found in available genres list");
+                    UnityEngine.Debug.LogError("[GenreManager] Null genre found in available genres list");
                     isValid = false;
                     continue;
                 }
                 
                 if (!genre.ValidateConfiguration())
                 {
-                    Debug.LogError($"[GenreManager] Invalid configuration for genre: {genre.name}");
+                    UnityEngine.Debug.LogError($"[GenreManager] Invalid configuration for genre: {genre.name}");
                     isValid = false;
                 }
             }
@@ -270,7 +271,7 @@ namespace asterivo.Unity60.Core.Setup
             {
                 if (!HasGenre(expectedGenre))
                 {
-                    Debug.LogWarning($"[GenreManager] Missing genre: {expectedGenre}");
+                    UnityEngine.Debug.LogWarning($"[GenreManager] Missing genre: {expectedGenre}");
                 }
             }
             
@@ -282,18 +283,18 @@ namespace asterivo.Unity60.Core.Setup
         /// </summary>
         public void LogGenreStatistics()
         {
-            Debug.Log("=== Genre Manager Statistics ===");
-            Debug.Log($"Total Genres: {availableGenres.Count}");
-            Debug.Log($"Cached Genres: {genreCache.Count}");
-            Debug.Log($"Default Genre: {defaultGenre}");
+            UnityEngine.Debug.Log("=== Genre Manager Statistics ===");
+            UnityEngine.Debug.Log($"Total Genres: {availableGenres.Count}");
+            UnityEngine.Debug.Log($"Cached Genres: {genreCache.Count}");
+            UnityEngine.Debug.Log($"Default Genre: {defaultGenre}");
             
             foreach (var kvp in genreCache)
             {
                 var genre = kvp.Value;
-                Debug.Log($"Genre: {kvp.Key} - {genre.DisplayName}");
-                Debug.Log($"  Required Modules: {genre.RequiredModules.Count}");
-                Debug.Log($"  Has Preview Image: {(genre.PreviewImage != null)}");
-                Debug.Log($"  Has Preview Video: {(genre.PreviewVideo != null)}");
+                UnityEngine.Debug.Log($"Genre: {kvp.Key} - {genre.DisplayName}");
+                UnityEngine.Debug.Log($"  Required Modules: {genre.RequiredModules.Count}");
+                UnityEngine.Debug.Log($"  Has Preview Image: {(genre.PreviewImage != null)}");
+                UnityEngine.Debug.Log($"  Has Preview Video: {(genre.PreviewVideo != null)}");
             }
         }
         
@@ -334,7 +335,7 @@ namespace asterivo.Unity60.Core.Setup
                 string path = $"Assets/_Project/Core/Setup/GenreTemplates/GameGenre_{genreType}.asset";
                 AssetDatabase.CreateAsset(newGenre, path);
                 
-                Debug.Log($"[GenreManager] Created genre template: {path}");
+                UnityEngine.Debug.Log($"[GenreManager] Created genre template: {path}");
             }
             
             AssetDatabase.SaveAssets();
