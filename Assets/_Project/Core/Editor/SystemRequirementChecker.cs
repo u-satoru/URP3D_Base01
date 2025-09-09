@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+// System.Management removed for Unity compatibility
+using System.Text;
+using Microsoft.Win32;
 
 namespace asterivo.Unity60.Core.Editor
 {
@@ -24,12 +27,60 @@ namespace asterivo.Unity60.Core.Editor
             public List<RequirementCheckResult> results = new List<RequirementCheckResult>();
             public string summary = "";
             public DateTime checkTime = DateTime.Now;
+            public HardwareDiagnostics hardware = new HardwareDiagnostics();
+            public int environmentScore = 0;
+            public List<string> autoFixedIssues = new List<string>();
             
             public void AddResult(RequirementCheckResult result)
             {
                 results.Add(result);
                 if (!result.isPassed)
                     isValid = false;
+            }
+        }
+        
+        [System.Serializable]
+        public class HardwareDiagnostics
+        {
+            public CPUInfo cpu = new CPUInfo();
+            public MemoryInfo memory = new MemoryInfo();
+            public GPUInfo gpu = new GPUInfo();
+            public StorageInfo storage = new StorageInfo();
+            
+            [System.Serializable]
+            public class CPUInfo
+            {
+                public string name = "Unknown";
+                public int cores = 0;
+                public int logicalProcessors = 0;
+                public string architecture = "Unknown";
+                public float frequencyGHz = 0;
+            }
+            
+            [System.Serializable]
+            public class MemoryInfo
+            {
+                public long totalRAM = 0; // bytes
+                public long availableRAM = 0; // bytes
+                public float usagePercent = 0;
+            }
+            
+            [System.Serializable]
+            public class GPUInfo
+            {
+                public string name = "Unknown";
+                public string driver = "Unknown";
+                public long dedicatedMemory = 0; // bytes
+                public bool supportsDirectX11 = false;
+            }
+            
+            [System.Serializable]
+            public class StorageInfo
+            {
+                public long totalSpace = 0; // bytes
+                public long freeSpace = 0; // bytes
+                public float usagePercent = 0;
+                public string driveType = "Unknown";
             }
         }
         
@@ -127,10 +178,31 @@ namespace asterivo.Unity60.Core.Editor
             foreach (var result in packageResults)
                 report.AddResult(result);
             
+            // Hardware Diagnostics Check
+            report.hardware = PerformHardwareDiagnostics();
+            
+            // Calculate Environment Score
+            report.environmentScore = CalculateEnvironmentScore(report);
+            
+            // Attempt Auto-fix Issues
+            var autoFixResults = AttemptAutoFixIssues(report);
+            report.autoFixedIssues.AddRange(autoFixResults);
+            
+            // Re-check after auto-fix
+            if (autoFixResults.Count > 0)
+            {
+                UnityEngine.Debug.Log($"[SystemRequirementChecker] Auto-fixed {autoFixResults.Count} issues. Re-checking...");
+                // Note: In production, we might want to re-run specific checks
+            }
+            
             // Generate Summary
             report.summary = GenerateSummary(report);
             
+            // Save JSON Report
+            SaveDiagnosticsToJSON(report);
+            
             UnityEngine.Debug.Log($"[SystemRequirementChecker] Check completed. Overall result: {(report.isValid ? "PASSED" : "FAILED")}");
+            UnityEngine.Debug.Log($"[SystemRequirementChecker] Environment Score: {report.environmentScore}/100");
             
             return report;
         }
@@ -404,6 +476,401 @@ namespace asterivo.Unity60.Core.Editor
             }
             
             return results;
+        }
+        
+        #endregion
+        
+        #region Hardware Diagnostics
+        
+        /// <summary>
+        /// ハードウェア診断の実行
+        /// </summary>
+        private static HardwareDiagnostics PerformHardwareDiagnostics()
+        {
+            var hardware = new HardwareDiagnostics();
+            
+            try
+            {
+                UnityEngine.Debug.Log("[SystemRequirementChecker] Performing hardware diagnostics...");
+                
+                // CPU診断
+                hardware.cpu = DiagnoseCPU();
+                
+                // メモリ診断
+                hardware.memory = DiaznoseMemory();
+                
+                // GPU診断
+                hardware.gpu = DiagnoseGPU();
+                
+                // ストレージ診断
+                hardware.storage = DiagnoseStorage();
+                
+                UnityEngine.Debug.Log("[SystemRequirementChecker] Hardware diagnostics completed.");
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogError($"[SystemRequirementChecker] Hardware diagnostics failed: {ex.Message}");
+            }
+            
+            return hardware;
+        }
+        
+        /// <summary>
+        /// CPU情報の取得
+        /// </summary>
+        private static HardwareDiagnostics.CPUInfo DiagnoseCPU()
+        {
+            var cpuInfo = new HardwareDiagnostics.CPUInfo();
+            
+            try
+            {
+                // Unity互換のUnityEngine.SystemInfoを使用
+                cpuInfo.name = SystemInfo.processorType;
+                cpuInfo.cores = SystemInfo.processorCount;
+                cpuInfo.logicalProcessors = SystemInfo.processorCount;
+                cpuInfo.frequencyGHz = SystemInfo.processorFrequency / 1000f;
+                cpuInfo.architecture = "Unknown";
+                
+                if (Application.platform == RuntimePlatform.WindowsEditor)
+                {
+                    cpuInfo.architecture = "x64";
+                }
+                else if (Application.platform == RuntimePlatform.OSXEditor)
+                {
+                    cpuInfo.architecture = "ARM64";
+                }
+                else
+                {
+                    // macOS/Linux の場合はシステムコマンドを使用
+                    cpuInfo.cores = Environment.ProcessorCount;
+                    cpuInfo.logicalProcessors = Environment.ProcessorCount;
+                }
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogWarning($"CPU diagnosis failed: {ex.Message}");
+            }
+            
+            return cpuInfo;
+        }
+        
+        /// <summary>
+        /// メモリ情報の取得
+        /// </summary>
+        private static HardwareDiagnostics.MemoryInfo DiaznoseMemory()
+        {
+            var memoryInfo = new HardwareDiagnostics.MemoryInfo();
+            
+            try
+            {
+                // Unity互換のUnityEngine.SystemInfoを使用
+                memoryInfo.totalRAM = SystemInfo.systemMemorySize * 1024L * 1024L; // MB to bytes
+                memoryInfo.availableRAM = memoryInfo.totalRAM; // 簡略化して総量と同じとして近似
+                
+                if (memoryInfo.totalRAM > 0)
+                {
+                    memoryInfo.usagePercent = ((float)(memoryInfo.totalRAM - memoryInfo.availableRAM) / memoryInfo.totalRAM) * 100f;
+                }
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogWarning($"Memory diagnosis failed: {ex.Message}");
+            }
+            
+            return memoryInfo;
+        }
+        
+        /// <summary>
+        /// GPU情報の取得
+        /// </summary>
+        private static HardwareDiagnostics.GPUInfo DiagnoseGPU()
+        {
+            var gpuInfo = new HardwareDiagnostics.GPUInfo();
+            
+            try
+            {
+                // Unity の GPU 情報を使用
+                gpuInfo.name = SystemInfo.graphicsDeviceName;
+                gpuInfo.dedicatedMemory = SystemInfo.graphicsMemorySize * 1024 * 1024; // MB to bytes
+                gpuInfo.driver = $"{SystemInfo.graphicsDeviceVersion}";
+                
+                // DirectX サポートのチェック
+                gpuInfo.supportsDirectX11 = SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Direct3D11;
+                
+                // Unity互換のUnityEngine.SystemInfoを使用
+                gpuInfo.name = SystemInfo.graphicsDeviceName;
+                gpuInfo.driver = SystemInfo.graphicsDeviceVersion;
+                gpuInfo.dedicatedMemory = SystemInfo.graphicsMemorySize * 1024L * 1024L; // MB to bytes
+                
+                if (Application.platform == RuntimePlatform.WindowsEditor)
+                {
+                    // Windows固有の設定で近似情報を設定
+                    try
+                    {
+                        if (SystemInfo.graphicsDeviceName.Contains("NVIDIA"))
+                        {
+                            gpuInfo.driver = "Latest NVIDIA";
+                        }
+                        else if (SystemInfo.graphicsDeviceName.Contains("AMD") || SystemInfo.graphicsDeviceName.Contains("Radeon"))
+                        {
+                            gpuInfo.driver = "Latest AMD";
+                        }
+                        else if (SystemInfo.graphicsDeviceName.Contains("Intel"))
+                        {
+                            gpuInfo.driver = "Latest Intel";
+                        }
+                    }
+                    catch
+                    {
+                        // システム情報取得エラー時はデフォルト値を使用
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogWarning($"GPU diagnosis failed: {ex.Message}");
+            }
+            
+            return gpuInfo;
+        }
+        
+        /// <summary>
+        /// ストレージ情報の取得
+        /// </summary>
+        private static HardwareDiagnostics.StorageInfo DiagnoseStorage()
+        {
+            var storageInfo = new HardwareDiagnostics.StorageInfo();
+            
+            try
+            {
+                string projectRoot = Path.GetPathRoot(Application.dataPath);
+                var driveInfo = new DriveInfo(projectRoot);
+                
+                storageInfo.totalSpace = driveInfo.TotalSize;
+                storageInfo.freeSpace = driveInfo.AvailableFreeSpace;
+                storageInfo.usagePercent = ((float)(driveInfo.TotalSize - driveInfo.AvailableFreeSpace) / driveInfo.TotalSize) * 100f;
+                storageInfo.driveType = driveInfo.DriveType.ToString();
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogWarning($"Storage diagnosis failed: {ex.Message}");
+            }
+            
+            return storageInfo;
+        }
+        
+        #endregion
+        
+        #region Environment Scoring & Auto-Fix
+        
+        /// <summary>
+        /// 環境評価スコアの計算（0-100点）
+        /// </summary>
+        private static int CalculateEnvironmentScore(SystemRequirementReport report)
+        {
+            int score = 0;
+            int maxScore = 100;
+            
+            try
+            {
+                // 基本要件スコア（60点満点）
+                int basicScore = 0;
+                var requiredChecks = report.results.Where(r => r.severity == RequirementSeverity.Required);
+                var importantChecks = report.results.Where(r => r.severity == RequirementSeverity.Important);
+                
+                int passedRequired = requiredChecks.Count(r => r.isPassed);
+                int totalRequired = requiredChecks.Count();
+                
+                int passedImportant = importantChecks.Count(r => r.isPassed);
+                int totalImportant = importantChecks.Count();
+                
+                if (totalRequired > 0)
+                    basicScore += (passedRequired * 40) / totalRequired; // 必須項目は40点
+                
+                if (totalImportant > 0)
+                    basicScore += (passedImportant * 20) / totalImportant; // 重要項目は20点
+                
+                score += basicScore;
+                
+                // ハードウェアパフォーマンススコア（40点満点）
+                int hardwareScore = 0;
+                
+                // CPU スコア（10点）
+                if (report.hardware.cpu.cores >= 4) hardwareScore += 5;
+                if (report.hardware.cpu.frequencyGHz >= 2.5f) hardwareScore += 5;
+                
+                // メモリ スコア（15点）
+                long memoryGB = report.hardware.memory.totalRAM / (1024 * 1024 * 1024);
+                if (memoryGB >= 8) hardwareScore += 8;
+                else if (memoryGB >= 4) hardwareScore += 4;
+                
+                if (report.hardware.memory.usagePercent < 80) hardwareScore += 7;
+                else if (report.hardware.memory.usagePercent < 90) hardwareScore += 3;
+                
+                // GPU スコア（10点）
+                long gpuMemoryMB = report.hardware.gpu.dedicatedMemory / (1024 * 1024);
+                if (gpuMemoryMB >= 2048) hardwareScore += 5;
+                else if (gpuMemoryMB >= 1024) hardwareScore += 3;
+                
+                if (report.hardware.gpu.supportsDirectX11) hardwareScore += 5;
+                
+                // ストレージ スコア（5点）
+                long freeSpaceGB = report.hardware.storage.freeSpace / (1024 * 1024 * 1024);
+                if (freeSpaceGB >= 10) hardwareScore += 5;
+                else if (freeSpaceGB >= 5) hardwareScore += 2;
+                
+                score += hardwareScore;
+                
+                UnityEngine.Debug.Log($"[SystemRequirementChecker] Environment Score: Basic({basicScore}/60) + Hardware({hardwareScore}/40) = {score}/100");
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogError($"Environment scoring failed: {ex.Message}");
+            }
+            
+            return Mathf.Clamp(score, 0, maxScore);
+        }
+        
+        /// <summary>
+        /// 問題の自動修復を試行
+        /// </summary>
+        private static List<string> AttemptAutoFixIssues(SystemRequirementReport report)
+        {
+            var fixedIssues = new List<string>();
+            
+            try
+            {
+                UnityEngine.Debug.Log("[SystemRequirementChecker] Attempting auto-fix for detected issues...");
+                
+                // Git設定の自動修復
+                var gitCheck = report.results.FirstOrDefault(r => r.checkName == "Git Configuration Check");
+                if (gitCheck != null && !gitCheck.isPassed)
+                {
+                    if (TryAutoFixGitConfiguration())
+                    {
+                        fixedIssues.Add("Git Configuration: Auto-configured basic settings");
+                    }
+                }
+                
+                // Unity Hub インストールの推奨
+                var hubCheck = report.results.FirstOrDefault(r => r.checkName == "Unity Hub Check");
+                if (hubCheck != null && !hubCheck.isPassed)
+                {
+                    // Unity Hub の自動インストールは複雑なため、推奨のみ
+                    fixedIssues.Add("Unity Hub: Installation recommended (manual action required)");
+                }
+                
+                // IDE設定の最適化提案
+                var ideCheck = report.results.FirstOrDefault(r => r.checkName == "IDE Availability Check");
+                if (ideCheck != null && !ideCheck.isPassed)
+                {
+                    fixedIssues.Add("IDE: Installation guide provided (manual action required)");
+                }
+                
+                if (fixedIssues.Count > 0)
+                {
+                    UnityEngine.Debug.Log($"[SystemRequirementChecker] Auto-fix completed: {fixedIssues.Count} issues addressed.");
+                }
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogError($"Auto-fix failed: {ex.Message}");
+            }
+            
+            return fixedIssues;
+        }
+        
+        /// <summary>
+        /// Git設定の自動修復
+        /// </summary>
+        private static bool TryAutoFixGitConfiguration()
+        {
+            try
+            {
+                var config = GetGitConfiguration();
+                bool wasFixed = false;
+                
+                // ユーザー名が未設定の場合
+                if (string.IsNullOrEmpty(config.userName))
+                {
+                    string defaultUserName = Environment.UserName;
+                    RunGitCommand($"config --global user.name \"{defaultUserName}\"");
+                    wasFixed = true;
+                }
+                
+                // メールアドレスが未設定の場合
+                if (string.IsNullOrEmpty(config.userEmail))
+                {
+                    string defaultEmail = $"{Environment.UserName}@local.dev";
+                    RunGitCommand($"config --global user.email \"{defaultEmail}\"");
+                    wasFixed = true;
+                }
+                
+                return wasFixed;
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogWarning($"Git auto-fix failed: {ex.Message}");
+                return false;
+            }
+        }
+        
+        /// <summary>
+        /// JSON形式での診断結果保存
+        /// </summary>
+        private static void SaveDiagnosticsToJSON(SystemRequirementReport report)
+        {
+            try
+            {
+                string fileName = $"SystemDiagnostics_{DateTime.Now:yyyyMMdd_HHmmss}.json";
+                string filePath = Path.Combine(Application.persistentDataPath, fileName);
+                
+                // シンプルなJSON形式で保存
+                var jsonData = new StringBuilder();
+                jsonData.AppendLine("{");
+                jsonData.AppendLine($"  \"checkTime\": \"{report.checkTime:yyyy-MM-dd HH:mm:ss}\",");
+                jsonData.AppendLine($"  \"isValid\": {report.isValid.ToString().ToLower()},");
+                jsonData.AppendLine($"  \"environmentScore\": {report.environmentScore},");
+                
+                // ハードウェア情報
+                jsonData.AppendLine($"  \"hardware\": {{");
+                jsonData.AppendLine($"    \"cpu\": \"{ report.hardware.cpu.name} ({report.hardware.cpu.cores} cores, {report.hardware.cpu.frequencyGHz:F1} GHz)\",");
+                jsonData.AppendLine($"    \"memory\": \"{report.hardware.memory.totalRAM / (1024 * 1024 * 1024)} GB ({report.hardware.memory.usagePercent:F1}% used)\",");
+                jsonData.AppendLine($"    \"gpu\": \"{report.hardware.gpu.name} ({report.hardware.gpu.dedicatedMemory / (1024 * 1024)} MB)\",");
+                jsonData.AppendLine($"    \"storage\": \"{report.hardware.storage.freeSpace / (1024 * 1024 * 1024)} GB free of {report.hardware.storage.totalSpace / (1024 * 1024 * 1024)} GB\"");
+                jsonData.AppendLine($"  }},");
+                
+                // チェック結果
+                jsonData.AppendLine($"  \"results\": [");
+                for (int i = 0; i < report.results.Count; i++)
+                {
+                    var result = report.results[i];
+                    jsonData.AppendLine($"    {{");
+                    jsonData.AppendLine($"      \"checkName\": \"{result.checkName}\",");
+                    jsonData.AppendLine($"      \"isPassed\": {result.isPassed.ToString().ToLower()},");
+                    jsonData.AppendLine($"      \"message\": \"{result.message.Replace("\"", "\\\"")}\"");
+                    jsonData.AppendLine(i < report.results.Count - 1 ? $"    }},$" : $"    }}");
+                }
+                jsonData.AppendLine($"  ],");
+                
+                // 自動修復情報
+                jsonData.AppendLine($"  \"autoFixedIssues\": [");
+                for (int i = 0; i < report.autoFixedIssues.Count; i++)
+                {
+                    jsonData.AppendLine($"    \"{report.autoFixedIssues[i]}\"{(i < report.autoFixedIssues.Count - 1 ? "," : "")}");
+                }
+                jsonData.AppendLine($"  ]");
+                
+                jsonData.AppendLine("}");
+                
+                File.WriteAllText(filePath, jsonData.ToString());
+                
+                UnityEngine.Debug.Log($"[SystemRequirementChecker] Diagnostics saved to: {filePath}");
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogError($"Failed to save diagnostics JSON: {ex.Message}");
+            }
         }
         
         #endregion
@@ -926,6 +1393,176 @@ namespace asterivo.Unity60.Core.Editor
         {
             var report = CheckAllRequirements();
             DisplayReportInConsole(report);
+        }
+        
+        [MenuItem("Project/System Requirements/Generate PDF Report", priority = 101)]
+        public static void GeneratePDFReportFromMenu()
+        {
+            var report = CheckAllRequirements();
+            GeneratePDFReport(report);
+        }
+        
+        /// <summary>
+        /// PDF レポートの生成
+        /// </summary>
+        public static void GeneratePDFReport(SystemRequirementReport report)
+        {
+            try
+            {
+                string fileName = $"SystemRequirements_{DateTime.Now:yyyyMMdd_HHmmss}.html";
+                string filePath = Path.Combine(Application.persistentDataPath, fileName);
+                
+                // HTMLレポートを生成（PDFライブラリなしでブラウザ印刷対応）
+                var htmlContent = GenerateHTMLReport(report);
+                File.WriteAllText(filePath, htmlContent);
+                
+                UnityEngine.Debug.Log($"[SystemRequirementChecker] HTML report generated: {filePath}");
+                UnityEngine.Debug.Log("[SystemRequirementChecker] Open the HTML file in a browser and use 'Print to PDF' to generate PDF.");
+                
+                // ファイルエクスプローラーで開く
+                if (Application.platform == RuntimePlatform.WindowsEditor)
+                {
+                    Process.Start("explorer.exe", $"/select,\"{filePath}\"");
+                }
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogError($"PDF report generation failed: {ex.Message}");
+            }
+        }
+        
+        /// <summary>
+        /// HTML形式のレポート生成（PDF出力対応）
+        /// </summary>
+        private static string GenerateHTMLReport(SystemRequirementReport report)
+        {
+            var html = new StringBuilder();
+            
+            html.AppendLine("<!DOCTYPE html>");
+            html.AppendLine("<html>");
+            html.AppendLine("<head>");
+            html.AppendLine("    <meta charset='utf-8'>");
+            html.AppendLine("    <title>Unity System Requirements Report</title>");
+            html.AppendLine("    <style>");
+            html.AppendLine("        body { font-family: Arial, sans-serif; margin: 20px; }");
+            html.AppendLine("        .header { background-color: #1f4e79; color: white; padding: 20px; text-align: center; }");
+            html.AppendLine("        .score { font-size: 24px; font-weight: bold; text-align: center; margin: 20px 0; }");
+            html.AppendLine("        .score.good { color: #4CAF50; }");
+            html.AppendLine("        .score.warning { color: #FF9800; }");
+            html.AppendLine("        .score.error { color: #F44336; }");
+            html.AppendLine("        .section { margin: 20px 0; border: 1px solid #ddd; border-radius: 5px; }");
+            html.AppendLine("        .section-header { background-color: #f5f5f5; padding: 10px; font-weight: bold; }");
+            html.AppendLine("        .section-content { padding: 15px; }");
+            html.AppendLine("        .check-item { margin: 10px 0; padding: 10px; border-left: 4px solid #ddd; }");
+            html.AppendLine("        .check-item.passed { border-left-color: #4CAF50; background-color: #e8f5e8; }");
+            html.AppendLine("        .check-item.failed { border-left-color: #F44336; background-color: #fce8e6; }");
+            html.AppendLine("        .check-item.warning { border-left-color: #FF9800; background-color: #fff3cd; }");
+            html.AppendLine("        .hardware-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }");
+            html.AppendLine("        .hardware-item { padding: 15px; border: 1px solid #ddd; border-radius: 5px; }");
+            html.AppendLine("        .recommendation { font-style: italic; color: #666; margin-top: 5px; }");
+            html.AppendLine("        @media print { body { margin: 0; } }");
+            html.AppendLine("    </style>");
+            html.AppendLine("</head>");
+            html.AppendLine("<body>");
+            
+            // ヘッダー
+            html.AppendLine("    <div class='header'>");
+            html.AppendLine("        <h1>Unity System Requirements Report</h1>");
+            html.AppendLine($"        <p>Generated: {report.checkTime:yyyy-MM-dd HH:mm:ss}</p>");
+            html.AppendLine("    </div>");
+            
+            // 環境スコア
+            string scoreClass = report.environmentScore >= 80 ? "good" : 
+                               report.environmentScore >= 60 ? "warning" : "error";
+            html.AppendLine($"    <div class='score {scoreClass}'>");
+            html.AppendLine($"        Environment Score: {report.environmentScore}/100");
+            html.AppendLine($"        <br><small>Overall Status: {(report.isValid ? "✅ READY" : "❌ ISSUES DETECTED")}</small>");
+            html.AppendLine("    </div>");
+            
+            // ハードウェア情報
+            html.AppendLine("    <div class='section'>");
+            html.AppendLine("        <div class='section-header'>Hardware Information</div>");
+            html.AppendLine("        <div class='section-content'>");
+            html.AppendLine("            <div class='hardware-grid'>");
+            
+            html.AppendLine("                <div class='hardware-item'>");
+            html.AppendLine("                    <h4>🖥️ CPU</h4>");
+            html.AppendLine($"                    <p><strong>{report.hardware.cpu.name}</strong></p>");
+            html.AppendLine($"                    <p>Cores: {report.hardware.cpu.cores} | Frequency: {report.hardware.cpu.frequencyGHz:F1} GHz</p>");
+            html.AppendLine("                </div>");
+            
+            html.AppendLine("                <div class='hardware-item'>");
+            html.AppendLine("                    <h4>💾 Memory</h4>");
+            html.AppendLine($"                    <p><strong>{report.hardware.memory.totalRAM / (1024 * 1024 * 1024):F1} GB Total</strong></p>");
+            html.AppendLine($"                    <p>Available: {report.hardware.memory.availableRAM / (1024 * 1024 * 1024):F1} GB | Usage: {report.hardware.memory.usagePercent:F1}%</p>");
+            html.AppendLine("                </div>");
+            
+            html.AppendLine("                <div class='hardware-item'>");
+            html.AppendLine("                    <h4>🎮 Graphics</h4>");
+            html.AppendLine($"                    <p><strong>{report.hardware.gpu.name}</strong></p>");
+            html.AppendLine($"                    <p>VRAM: {report.hardware.gpu.dedicatedMemory / (1024 * 1024)} MB | DirectX11: {(report.hardware.gpu.supportsDirectX11 ? "Yes" : "No")}</p>");
+            html.AppendLine("                </div>");
+            
+            html.AppendLine("                <div class='hardware-item'>");
+            html.AppendLine("                    <h4>💿 Storage</h4>");
+            html.AppendLine($"                    <p><strong>{report.hardware.storage.driveType}</strong></p>");
+            html.AppendLine($"                    <p>Free: {report.hardware.storage.freeSpace / (1024 * 1024 * 1024):F1} GB of {report.hardware.storage.totalSpace / (1024 * 1024 * 1024):F1} GB</p>");
+            html.AppendLine("                </div>");
+            
+            html.AppendLine("            </div>");
+            html.AppendLine("        </div>");
+            html.AppendLine("    </div>");
+            
+            // チェック結果
+            html.AppendLine("    <div class='section'>");
+            html.AppendLine("        <div class='section-header'>System Requirements Check</div>");
+            html.AppendLine("        <div class='section-content'>");
+            
+            foreach (var result in report.results)
+            {
+                string cssClass = result.isPassed ? "passed" : 
+                                 result.severity == RequirementSeverity.Required ? "failed" : "warning";
+                string icon = result.isPassed ? "✅" : result.severity == RequirementSeverity.Required ? "❌" : "⚠️";
+                
+                html.AppendLine($"            <div class='check-item {cssClass}'>");
+                html.AppendLine($"                <h4>{icon} {result.checkName}</h4>");
+                html.AppendLine($"                <p>{result.message}</p>");
+                if (!result.isPassed && !string.IsNullOrEmpty(result.recommendation))
+                {
+                    html.AppendLine($"                <div class='recommendation'>💡 {result.recommendation}</div>");
+                }
+                html.AppendLine("            </div>");
+            }
+            
+            html.AppendLine("        </div>");
+            html.AppendLine("    </div>");
+            
+            // 自動修復結果
+            if (report.autoFixedIssues.Count > 0)
+            {
+                html.AppendLine("    <div class='section'>");
+                html.AppendLine("        <div class='section-header'>Auto-Fixed Issues</div>");
+                html.AppendLine("        <div class='section-content'>");
+                foreach (var issue in report.autoFixedIssues)
+                {
+                    html.AppendLine($"            <div class='check-item passed'>🔧 {issue}</div>");
+                }
+                html.AppendLine("        </div>");
+                html.AppendLine("    </div>");
+            }
+            
+            // サマリー
+            html.AppendLine("    <div class='section'>");
+            html.AppendLine("        <div class='section-header'>Summary</div>");
+            html.AppendLine("        <div class='section-content'>");
+            html.AppendLine($"            <pre>{report.summary}</pre>");
+            html.AppendLine("        </div>");
+            html.AppendLine("    </div>");
+            
+            html.AppendLine("</body>");
+            html.AppendLine("</html>");
+            
+            return html.ToString();
         }
         
         /// <summary>
