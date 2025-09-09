@@ -340,11 +340,6 @@ namespace asterivo.Unity60.Core.Setup
                 return false;
             }
             
-            if (previewImage == null)
-            {
-                UnityEngine.Debug.LogWarning($"GameGenre {name}: Preview image is recommended");
-            }
-            
             return true;
         }
         

@@ -97,6 +97,7 @@ namespace asterivo.Unity60.Tests.Core.Editor
             Debug.Log("[Test] ✅ Window size constraints test passed");
         }
         
+        #endregion
         
         #region Wizard Step Management Tests
         

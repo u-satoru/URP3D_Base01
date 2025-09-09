@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using asterivo.Unity60.Core.Editor.Setup;
 
 namespace asterivo.Unity60.Core.Editor
 {
@@ -646,35 +647,142 @@ private void InitializeWizard()
         /// <summary>
         /// モジュール選択ステップの描画
         /// </summary>
+        /// <summary>
+        /// モジュール選択ステップの描画
+        /// </summary>
         private void DrawModuleSelectionStep()
         {
             EditorGUILayout.BeginVertical(cardStyle);
             
             EditorGUILayout.LabelField("Module Selection", EditorStyles.boldLabel);
-            EditorGUILayout.LabelField("プロジェクトに含めるモジュールを選択してください", statusStyle);
+            EditorGUILayout.LabelField("プロジェクトに含める追加モジュールを選択してください", statusStyle);
             EditorGUILayout.Space();
-            
-            // モジュール選択UI（プロトタイプ）
-            string[] availableModules = { "Audio System", "Localization", "Analytics", "Save/Load System" };
-            
-            foreach (var module in availableModules)
+
+            var genre = genreManager.GetGenre(wizardConfig.selectedGenre);
+            if (genre == null)
             {
-                bool isSelected = wizardConfig.selectedModules.Contains(module);
-                bool newSelection = EditorGUILayout.Toggle(module, isSelected);
-                
-                if (newSelection && !isSelected)
+                EditorGUILayout.HelpBox("ジャンルが選択されていません。前のステップに戻ってください。", MessageType.Warning);
+                EditorGUILayout.EndVertical();
+                return;
+            }
+
+            // 必須モジュール
+            EditorGUILayout.LabelField("必須モジュール", EditorStyles.boldLabel);
+            if (genre.RequiredModules.Count > 0)
+            {
+                foreach (var module in genre.RequiredModules)
                 {
-                    wizardConfig.selectedModules.Add(module);
-                }
-                else if (!newSelection && isSelected)
-                {
-                    wizardConfig.selectedModules.Remove(module);
+                    EditorGUI.BeginDisabledGroup(true);
+                    EditorGUILayout.Toggle(module, true);
+                    EditorGUI.EndDisabledGroup();
                 }
             }
+            else
+            {
+                EditorGUILayout.LabelField("なし", statusStyle);
+            }
+
+            EditorGUILayout.Space();
+
+            // 推奨モジュール
+            EditorGUILayout.LabelField("推奨モジュール", EditorStyles.boldLabel);
+            if (genre.RecommendedModules.Count > 0)
+            {
+                foreach (var module in genre.RecommendedModules)
+                {
+                    bool isSelected = wizardConfig.selectedModules.Contains(module);
+                    bool newSelection = EditorGUILayout.Toggle(module, isSelected);
+                    UpdateModuleSelection(module, isSelected, newSelection);
+                }
+            }
+            else
+            {
+                EditorGUILayout.LabelField("なし", statusStyle);
+            }
+
+            EditorGUILayout.Space();
+
+            // オプションモジュール
+            EditorGUILayout.LabelField("オプションモジュール", EditorStyles.boldLabel);
+            if (genre.OptionalModules.Count > 0)
+            {
+                foreach (var module in genre.OptionalModules)
+                {
+                    bool isSelected = wizardConfig.selectedModules.Contains(module);
+                    bool newSelection = EditorGUILayout.Toggle(module, isSelected);
+                    UpdateModuleSelection(module, isSelected, newSelection);
+                }
+            }
+            else
+            {
+                EditorGUILayout.LabelField("なし", statusStyle);
+            }
+
+            EditorGUILayout.Space();
             
+            // 追加モジュール選択
+            DrawAdditionalModules();
+
             EditorGUILayout.EndVertical();
         }
+
+        /// <summary>
+        /// モジュール選択状態を更新するヘルパーメソッド
+        /// </summary>
+        private void UpdateModuleSelection(string module, bool isSelected, bool newSelection)
+        {
+            if (newSelection && !isSelected)
+            {
+                wizardConfig.selectedModules.Add(module);
+            }
+            else if (!newSelection && isSelected)
+            {
+                wizardConfig.selectedModules.Remove(module);
+            }
+        }
+
+        /// <summary>
+        /// 追加モジュール選択の描画
+        /// </summary>
+        private void DrawAdditionalModules()
+        {
+            EditorGUILayout.LabelField("追加システムモジュール", EditorStyles.boldLabel);
+            
+            var additionalModules = new Dictionary<string, string>
+            {
+                { "Audio System", "高度なオーディオ管理システム（Timeline、Cinemachine統合）" },
+                { "Localization", "多言語対応システム（Unity Localization Package）" },
+                { "Analytics", "ゲーム分析・統計システム（Unity Analytics）" },
+                { "Input System", "新しいInput Systemの統合" },
+                { "Addressables", "動的アセット管理システム" },
+                { "Visual Scripting", "ビジュアルスクリプティングサポート" },
+                { "AI Navigation", "AI・ナビゲーションシステム" },
+                { "Multiplayer", "マルチプレイヤー対応システム" }
+            };
+
+            foreach (var module in additionalModules)
+            {
+                EditorGUILayout.BeginHorizontal();
+                
+                bool isSelected = wizardConfig.selectedModules.Contains(module.Key);
+                bool newSelection = EditorGUILayout.Toggle(isSelected, GUILayout.Width(20));
+                
+                EditorGUILayout.BeginVertical();
+                EditorGUILayout.LabelField(module.Key, EditorStyles.boldLabel);
+                EditorGUILayout.LabelField(module.Value, statusStyle);
+                EditorGUILayout.EndVertical();
+                
+                EditorGUILayout.EndHorizontal();
+                
+                UpdateModuleSelection(module.Key, isSelected, newSelection);
+                
+                EditorGUILayout.Space(5);
+            }
+        }
         
+        /// <summary>
+        /// プロジェクト生成ステップの描画
+        /// </summary>
         /// <summary>
         /// プロジェクト生成ステップの描画
         /// </summary>
@@ -694,6 +802,7 @@ private void InitializeWizard()
             // 生成ボタン
             if (GUILayout.Button("Generate Project", GUILayout.Height(40f)))
             {
+                // ProjectGenerationEngineを呼び出す
                 StartProjectGeneration();
             }
             
@@ -813,20 +922,34 @@ private void InitializeWizard()
         /// <summary>
         /// プロジェクト生成の開始
         /// </summary>
-        private void StartProjectGeneration()
+        /// <summary>
+        /// プロジェクト生成の開始
+        /// </summary>
+        private async void StartProjectGeneration()
         {
-            UnityEngine.Debug.Log($"[SetupWizard] Starting project generation for {wizardConfig.selectedGenre} project");
+            UnityEngine.Debug.Log($"[SetupWizard] Starting project generation for {wizardConfig.selectedGenre} project with modules: {string.Join(", ", wizardConfig.selectedModules)}");
             
-            // プロジェクト生成のシミュレーション（プロトタイプ）
-            stepStates[WizardStep.ProjectGeneration].isCompleted = true;
-            stepStates[WizardStep.Verification].isCurrentStep = true;
-            currentStep = WizardStep.Verification;
-            
-            // セットアップ完了時間記録
-            totalSetupTime = DateTime.Now - setupStartTime;
-            isSetupComplete = true;
-            
-            UnityEngine.Debug.Log($"[SetupWizard] Project generation completed in {totalSetupTime:mm\\:ss}");
+            var engine = new ProjectGenerationEngine(wizardConfig, (progress, status) => 
+            {
+                stepStates[WizardStep.ProjectGeneration].progressPercent = progress;
+                stepStates[WizardStep.ProjectGeneration].statusMessage = status;
+                Repaint();
+            });
+
+            bool success = await engine.GenerateProjectAsync();
+
+            if (success)
+            {
+                stepStates[WizardStep.ProjectGeneration].isCompleted = true;
+                GoToNextStep();
+                totalSetupTime = DateTime.Now - setupStartTime;
+                isSetupComplete = true;
+                UnityEngine.Debug.Log($"[SetupWizard] Project generation completed in {totalSetupTime:mm\\:ss}");
+            }
+            else
+            {
+                EditorUtility.DisplayDialog("Project Generation Failed", "Project generation failed. Check the console for more details.", "OK");
+            }
         }
         
         /// <summary>
@@ -953,6 +1076,22 @@ private void InitializeWizard()
         {
             if (CanGoToNextStep())
             {
+                // ジャンル選択からモジュール選択へ移行する際に、推奨モジュールをデフォルトで選択状態にする
+                if (currentStep == WizardStep.GenreSelection)
+                {
+                    var genre = genreManager.GetGenre(wizardConfig.selectedGenre);
+                    if (genre != null)
+                    {
+                        wizardConfig.selectedModules.Clear();
+                        // 必須モジュールは常に含まれる
+                        wizardConfig.selectedModules.AddRange(genre.RequiredModules);
+                        // 推奨モジュールをデフォルトで追加
+                        wizardConfig.selectedModules.AddRange(genre.RecommendedModules);
+                        // 重複を削除
+                        wizardConfig.selectedModules = wizardConfig.selectedModules.Distinct().ToList();
+                    }
+                }
+
                 var nextStep = (WizardStep)((int)currentStep + 1);
                 NavigateToStep(nextStep);
             }

@@ -1,6 +1,6 @@
 {
-    "name": "asterivo.Unity60.Tests.Core.Editor",
-    "rootNamespace": "asterivo.Unity60.Tests.Core.Editor",
+    "name": "asterivo.Unity60.Tests.Core.Editor.Setup",
+    "rootNamespace": "asterivo.Unity60.Tests.Core.Editor.Setup",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
