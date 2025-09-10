@@ -7,7 +7,6 @@ using asterivo.Unity60.Core.Audio.Services;
 using asterivo.Unity60.Core.Audio.Interfaces;
 
 using asterivo.Unity60.Core.Audio;
-
 using asterivo.Unity60.Core.Audio.Data;
 
 namespace asterivo.Unity60.Tests.Core.Services
@@ -280,9 +279,9 @@ namespace asterivo.Unity60.Tests.Core.Services
         {
             // Arrange
             audioService.Initialize();
-            var environment = asterivo.Unity60.Core.Audio.EnvironmentType.Urban;
-            var weather = asterivo.Unity60.Core.Audio.WeatherType.Clear;
-            var timeOfDay = asterivo.Unity60.Core.Audio.TimeOfDay.Day;
+            var environment = EnvironmentType.Urban;
+            var weather = WeatherType.Clear;
+            var timeOfDay = TimeOfDay.Day;
 
             // Act
             audioService.UpdateAmbient(environment, weather, timeOfDay);
