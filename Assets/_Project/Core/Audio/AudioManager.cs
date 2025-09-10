@@ -24,7 +24,30 @@ namespace asterivo.Unity60.Core.Audio
         /// ServiceLocator.GetService<IAudioService>()を使用してください
         /// </summary>
         [System.Obsolete("Use ServiceLocator.GetService<IAudioService>() instead")]
-        public static AudioManager Instance => instance;
+        public static AudioManager Instance 
+        {
+            get 
+            {
+                // Legacy Singleton完全無効化フラグの確認
+                if (FeatureFlags.DisableLegacySingletons) 
+                {
+                    EventLogger.LogError("[DEPRECATED] AudioManager.Instance is disabled. Use ServiceLocator.GetService<IAudioService>() instead.");
+                    return null;
+                }
+                
+                // 移行警告の表示
+                if (FeatureFlags.EnableMigrationWarnings) 
+                {
+                    EventLogger.LogWarning("[DEPRECATED] AudioManager.Instance usage detected. Consider migrating to ServiceLocator.");
+                    
+                    // MigrationMonitorに使用状況を記録
+                    var monitor = FindFirstObjectByType<MigrationMonitor>();
+                    monitor?.LogSingletonUsage(typeof(AudioManager), "Instance");
+                }
+                
+                return instance;
+            }
+        }
 
         [TabGroup("Audio Managers", "System Integration")]
         [Header("New Audio Systems")]

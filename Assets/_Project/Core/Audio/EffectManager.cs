@@ -69,7 +69,30 @@ namespace asterivo.Unity60.Core.Audio
         /// ServiceLocator.GetService<IEffectService>()を使用してください
         /// </summary>
         [System.Obsolete("Use ServiceLocator.GetService<IEffectService>() instead")]
-        public static EffectManager Instance => instance;
+        public static EffectManager Instance 
+        {
+            get 
+            {
+                // Legacy Singleton完全無効化フラグの確認
+                if (FeatureFlags.DisableLegacySingletons) 
+                {
+                    EventLogger.LogError("[DEPRECATED] EffectManager.Instance is disabled. Use ServiceLocator.GetService<IEffectService>() instead.");
+                    return null;
+                }
+                
+                // 移行警告の表示
+                if (FeatureFlags.EnableMigrationWarnings) 
+                {
+                    EventLogger.LogWarning("[DEPRECATED] EffectManager.Instance usage detected. Consider migrating to ServiceLocator.");
+                    
+                    // MigrationMonitorに使用状況を記録
+                    var monitor = FindFirstObjectByType<MigrationMonitor>();
+                    monitor?.LogSingletonUsage(typeof(EffectManager), "Instance");
+                }
+                
+                return instance;
+            }
+        }
         
         // IInitializable実装
         public int Priority => 15; // オーディオサービスの後に初期化

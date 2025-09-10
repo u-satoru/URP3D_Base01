@@ -4,7 +4,7 @@ using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Audio.Interfaces;
-// using _Project.Core.Services; // 一時的にコメントアウト
+using _Project.Core;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio
@@ -90,13 +90,23 @@ namespace asterivo.Unity60.Core.Audio
             instance = this;
             DontDestroyOnLoad(gameObject);
             
-            // ServiceLocatorに登録 (一時的に無効化)
-            // TODO: ServiceLocator機能を復活させる
-            // if (FeatureFlags.UseServiceLocator)
-            // {
-            //     ServiceLocator.RegisterService<IStealthAudioService>(this);
-            //     EventLogger.Log("[StealthAudioCoordinator] Registered to ServiceLocator as IStealthAudioService");
-            // }
+            // ServiceLocatorに登録 (コメントアウト解除 + エラーハンドリング強化)
+            if (FeatureFlags.UseServiceLocator)
+            {
+                try
+                {
+                    ServiceLocator.RegisterService<IStealthAudioService>(this);
+                    
+                    if (FeatureFlags.EnableDebugLogging)
+                    {
+                        EventLogger.Log("[StealthAudioCoordinator] Successfully registered to ServiceLocator as IStealthAudioService");
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    EventLogger.LogError($"[StealthAudioCoordinator] Failed to register to ServiceLocator: {ex.Message}");
+                }
+            }
             
             InitializeCoordinator();
         }
@@ -120,12 +130,23 @@ namespace asterivo.Unity60.Core.Audio
                 instance = null;
             }
             
-            // ServiceLocatorから登録解除 (一時的に無効化)
-            // TODO: ServiceLocator機能を復活させる
-            // if (FeatureFlags.UseServiceLocator)
-            // {
-            //     ServiceLocator.UnregisterService<IStealthAudioService>();
-            // }
+            // ServiceLocatorから登録解除 (コメントアウト解除 + エラーハンドリング強化)
+            if (FeatureFlags.UseServiceLocator)
+            {
+                try
+                {
+                    ServiceLocator.UnregisterService<IStealthAudioService>();
+                    
+                    if (FeatureFlags.EnableDebugLogging)
+                    {
+                        EventLogger.Log("[StealthAudioCoordinator] Unregistered from ServiceLocator");
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    EventLogger.LogError($"[StealthAudioCoordinator] Failed to unregister from ServiceLocator: {ex.Message}");
+                }
+            }
         }
 
         #endregion
@@ -154,12 +175,23 @@ namespace asterivo.Unity60.Core.Audio
         /// </summary>
         private void FindSystemReferences()
         {
-            // ServiceLocator経由でAudioServiceを取得 (一時的に無効化)
-            // TODO: ServiceLocator機能を復活させる
-            // if (FeatureFlags.UseServiceLocator && audioService == null)
-            // {
-            //     audioService = ServiceLocator.GetService<IAudioService>();
-            // }
+            // ServiceLocator経由でAudioServiceを取得 (コメントアウト解除 + エラーハンドリング強化)
+            if (FeatureFlags.UseServiceLocator && audioService == null)
+            {
+                try
+                {
+                    audioService = ServiceLocator.GetService<IAudioService>();
+                    
+                    if (FeatureFlags.EnableDebugLogging && audioService != null)
+                    {
+                        EventLogger.Log("[StealthAudioCoordinator] Successfully retrieved AudioService from ServiceLocator");
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    EventLogger.LogError($"[StealthAudioCoordinator] Failed to retrieve AudioService from ServiceLocator: {ex.Message}");
+                }
+            }
             
             // 後方互換性のためAudioManagerも取得
             if (audioManager == null)

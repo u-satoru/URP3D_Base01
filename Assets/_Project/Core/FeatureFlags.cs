@@ -57,7 +57,63 @@ namespace _Project.Core
             set => SetFlag("FeatureFlag_EnableDebugLogging", value);
         }
         
-        // ========== Phase 3 新規移行管理フラグ ==========
+                
+        /// <summary>
+        /// 新しいAudioServiceを使用するか（Step 3.7用）
+        /// </summary>
+        public static bool UseNewAudioService
+        {
+            get => PlayerPrefs.GetInt("FeatureFlag_UseNewAudioService", 0) == 1;
+            set => SetFlag("FeatureFlag_UseNewAudioService", value);
+        }
+        
+        /// <summary>
+        /// 新しいSpatialAudioServiceを使用するか（Step 3.7用）
+        /// </summary>
+        public static bool UseNewSpatialService
+        {
+            get => PlayerPrefs.GetInt("FeatureFlag_UseNewSpatialService", 0) == 1;
+            set => SetFlag("FeatureFlag_UseNewSpatialService", value);
+        }
+        
+        /// <summary>
+        /// 新しいStealthAudioServiceを使用するか（Step 3.7用）
+        /// </summary>
+        public static bool UseNewStealthService
+        {
+            get => PlayerPrefs.GetInt("FeatureFlag_UseNewStealthService", 0) == 1;
+            set => SetFlag("FeatureFlag_UseNewStealthService", value);
+        }
+        
+        /// <summary>
+        /// パフォーマンス監視を有効にするか（Step 3.7用）
+        /// </summary>
+        public static bool EnablePerformanceMonitoring
+        {
+            get => PlayerPrefs.GetInt("FeatureFlag_EnablePerformanceMonitoring", 1) == 1;
+            set => SetFlag("FeatureFlag_EnablePerformanceMonitoring", value);
+        }
+// ========== Step 3.9 Legacy Singleton警告システム ==========
+        
+        /// <summary>
+        /// Legacy Singleton使用時に警告を表示するか
+        /// </summary>
+        public static bool EnableMigrationWarnings
+        {
+            get => PlayerPrefs.GetInt("FeatureFlag_EnableMigrationWarnings", 1) == 1;
+            set => SetFlag("FeatureFlag_EnableMigrationWarnings", value);
+        }
+        
+        /// <summary>
+        /// Legacy Singletonへのアクセスを完全に禁止するか
+        /// </summary>
+        public static bool DisableLegacySingletons
+        {
+            get => PlayerPrefs.GetInt("FeatureFlag_DisableLegacySingletons", 0) == 1;
+            set => SetFlag("FeatureFlag_DisableLegacySingletons", value);
+        }
+        
+// ========== Phase 3 新規移行管理フラグ ==========
         
         /// <summary>
         /// 移行プロセス監視を有効にするか
@@ -138,7 +194,7 @@ namespace _Project.Core
         /// </summary>
         public static bool MigrateStealthAudioCoordinator
         {
-            get => PlayerPrefs.GetInt("FeatureFlag_MigrateStealthAudioCoordinator", 0) == 1;
+            get => PlayerPrefs.GetInt("FeatureFlag_MigrateStealthA1) == 1; // Step 3.4で有効化 - StealthAudioCoordinator移行完了dioCoordinator", 0) == 1;
             set => SetFlag("FeatureFlag_MigrateStealthAudioCoordinator", value);
         }
         

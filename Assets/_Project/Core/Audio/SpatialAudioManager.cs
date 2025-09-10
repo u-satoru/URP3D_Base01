@@ -60,7 +60,30 @@ namespace asterivo.Unity60.Core.Audio
         /// ServiceLocator.GetService<ISpatialAudioService>()を使用してください
         /// </summary>
         [System.Obsolete("Use ServiceLocator.GetService<ISpatialAudioService>() instead")]
-        public static SpatialAudioManager Instance => instance;
+        public static SpatialAudioManager Instance 
+        {
+            get 
+            {
+                // Legacy Singleton完全無効化フラグの確認
+                if (FeatureFlags.DisableLegacySingletons) 
+                {
+                    EventLogger.LogError("[DEPRECATED] SpatialAudioManager.Instance is disabled. Use ServiceLocator.GetService<ISpatialAudioService>() instead.");
+                    return null;
+                }
+                
+                // 移行警告の表示
+                if (FeatureFlags.EnableMigrationWarnings) 
+                {
+                    EventLogger.LogWarning("[DEPRECATED] SpatialAudioManager.Instance usage detected. Consider migrating to ServiceLocator.");
+                    
+                    // MigrationMonitorに使用状況を記録
+                    var monitor = FindFirstObjectByType<MigrationMonitor>();
+                    monitor?.LogSingletonUsage(typeof(SpatialAudioManager), "Instance");
+                }
+                
+                return instance;
+            }
+        }
         
         // IInitializable実装
         public int Priority => 20; // 空間音響は基本オーディオシステムの後に初期化
