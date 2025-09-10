@@ -5,14 +5,19 @@ using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Shared;
+using asterivo.Unity60.Core.Audio.Interfaces;
+using asterivo.Unity60.Core.Debug;
+using _Project.Core;
 
 namespace asterivo.Unity60.Core.Audio
 {
     /// <summary>
-    /// 空間音響システムの中央管理クラス
+    /// 空間音響システムの中央管理クラス（レガシー）
     /// ステルスゲーム用の高度な3D音響処理を担当
+    /// 新しいSpatialAudioServiceへの移行を推奨
     /// </summary>
-    public class SpatialAudioManager : MonoBehaviour
+    [System.Obsolete("Use SpatialAudioService instead. This class will be removed in future versions.")]
+    public class SpatialAudioManager : MonoBehaviour, ISpatialAudioService, IInitializable
     {
         [Header("Audio Manager Settings")]
         [SerializeField] private AudioMixer mainMixer;
@@ -49,7 +54,17 @@ namespace asterivo.Unity60.Core.Audio
         private Dictionary<AudioSource, float> occlusionValues = new Dictionary<AudioSource, float>();
         
         private static SpatialAudioManager instance;
+        
+        /// <summary>
+        /// 後方互換性のためのInstance（非推奨）
+        /// ServiceLocator.GetService<ISpatialAudioService>()を使用してください
+        /// </summary>
+        [System.Obsolete("Use ServiceLocator.GetService<ISpatialAudioService>() instead")]
         public static SpatialAudioManager Instance => instance;
+        
+        // IInitializable実装
+        public int Priority => 20; // 空間音響は基本オーディオシステムの後に初期化
+        public bool IsInitialized { get; private set; }
         
         #region Unity Lifecycle
         
@@ -64,16 +79,24 @@ namespace asterivo.Unity60.Core.Audio
             instance = this;
             DontDestroyOnLoad(gameObject);
             
+            // ServiceLocatorに登録（レガシーサポート）
+            if (FeatureFlags.UseServiceLocator)
+            {
+                ServiceLocator.RegisterService<ISpatialAudioService>(this);
+                
+                if (FeatureFlags.EnableDebugLogging)
+                {
+                    EventLogger.Log("[SpatialAudioManager] Registered to ServiceLocator as ISpatialAudioService (Legacy)");
+                }
+            }
+            
             InitializeAudioSourcePool();
             FindAudioListener();
         }
         
         private void Start()
         {
-            if (enableOcclusion)
-            {
-                InvokeRepeating(nameof(UpdateOcclusion), 0f, occlusionCheckInterval);
-            }
+            Initialize();
         }
         
         private void OnDestroy()
@@ -82,10 +105,139 @@ namespace asterivo.Unity60.Core.Audio
             {
                 instance = null;
             }
+            
+            // ServiceLocatorから登録解除
+            if (FeatureFlags.UseServiceLocator)
+            {
+                ServiceLocator.UnregisterService<ISpatialAudioService>();
+            }
         }
         
         #endregion
         
+        #region IInitializable Implementation
+        
+        /// <summary>
+        /// IInitializable実装 - 空間音響システムの初期化
+        /// </summary>
+        public void Initialize()
+        {
+            if (IsInitialized) return;
+            
+            if (enableOcclusion)
+            {
+                InvokeRepeating(nameof(UpdateOcclusion), 0f, occlusionCheckInterval);
+            }
+            
+            IsInitialized = true;
+            
+            if (FeatureFlags.EnableDebugLogging)
+            {
+                EventLogger.Log("[SpatialAudioManager] Initialization complete (Legacy)");
+            }
+        }
+        
+        #endregion
+        
+        #region ISpatialAudioService Implementation
+        
+        /// <summary>
+        /// 3D空間でサウンドを再生
+        /// </summary>
+        public void Play3DSound(string soundId, Vector3 position, float maxDistance = 50f, float volume = 1f)
+        {
+            if (!IsInitialized)
+            {
+                EventLogger.LogWarning("[SpatialAudioManager] System not initialized");
+                return;
+            }
+            
+            // 既存の機能を使用（SoundDataSOを作成して使用）
+            var soundData = CreateDefaultSoundData(soundId);
+            if (soundData != null)
+            {
+                PlaySoundAtPosition(soundData, position, volume);
+            }
+        }
+        
+        /// <summary>
+        /// 移動する音源を作成
+        /// </summary>
+        public void CreateMovingSound(string soundId, Transform source, float maxDistance = 50f)
+        {
+            if (!IsInitialized || source == null) return;
+            
+            // TODO: 移動する音源の実装
+            EventLogger.Log($"[SpatialAudioManager] Creating moving sound: {soundId}");
+        }
+        
+        /// <summary>
+        /// 環境音を設定
+        /// </summary>
+        public void SetAmbientSound(string soundId, float volume = 0.5f)
+        {
+            if (!IsInitialized) return;
+            
+            // TODO: 環境音の実装
+            EventLogger.Log($"[SpatialAudioManager] Setting ambient sound: {soundId}");
+        }
+        
+        /// <summary>
+        /// オクルージョン（遮蔽）を更新
+        /// </summary>
+        public void UpdateOcclusion(Vector3 listenerPosition, Vector3 sourcePosition, float occlusionLevel)
+        {
+            // 既存のオクルージョン機能を使用して更新
+            // 実装は既存のUpdateOcclusionメソッドで行われている
+        }
+        
+        /// <summary>
+        /// リバーブゾーンを設定
+        /// </summary>
+        public void SetReverbZone(string zoneId, float reverbLevel)
+        {
+            if (!IsInitialized) return;
+            
+            // TODO: リバーブゾーンの実装
+            EventLogger.Log($"[SpatialAudioManager] Setting reverb zone: {zoneId}, level: {reverbLevel}");
+        }
+        
+        /// <summary>
+        /// ドップラー効果の強度を設定
+        /// </summary>
+        public void SetDopplerLevel(float level)
+        {
+            if (!IsInitialized) return;
+            
+            // TODO: ドップラーレベルの実装
+            EventLogger.Log($"[SpatialAudioManager] Setting Doppler level: {level}");
+        }
+        
+        /// <summary>
+        /// リスナーの位置を更新
+        /// </summary>
+        public void UpdateListenerPosition(Vector3 position, Vector3 forward)
+        {
+            if (audioListener != null)
+            {
+                audioListener.transform.position = position;
+                audioListener.transform.forward = forward;
+            }
+        }
+        
+        /// <summary>
+        /// デフォルトのSoundDataSOを作成
+        /// </summary>
+        private SoundDataSO CreateDefaultSoundData(string soundId)
+        {
+            // 簡略実装: 実際はリソース管理システムから取得
+            var soundData = ScriptableObject.CreateInstance<SoundDataSO>();
+            // TODO: soundIdからAudioClipを取得して設定
+            return soundData;
+        }
+        
+        #endregion
+
         #region Public Interface
         
         /// <summary>

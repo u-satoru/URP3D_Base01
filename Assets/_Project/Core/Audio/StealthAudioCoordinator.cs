@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Audio.Interfaces;
+// using _Project.Core.Services; // 一時的にコメントアウト
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio
@@ -10,8 +12,9 @@ namespace asterivo.Unity60.Core.Audio
     /// <summary>
     /// ステルスゲームプレイと一般オーディオの協調制御
     /// NPCの聴覚センサーシステムとの連携を管理
+    /// ServiceLocator対応版
     /// </summary>
-    public class StealthAudioCoordinator : MonoBehaviour
+    public class StealthAudioCoordinator : MonoBehaviour, IStealthAudioService
     {
         [TabGroup("Stealth Coordinator", "AI Integration")]
         [Header("AI Integration Settings")]
@@ -56,13 +59,23 @@ namespace asterivo.Unity60.Core.Audio
         private bool previousStealthModeState = false;
         private float globalMaskingStrength = 0f;
 
-        // システム連携
+        // システム連携（ServiceLocator経由）
+        private IAudioService audioService;
         private AudioManager audioManager;
         private DynamicAudioEnvironment dynamicEnvironment;
         
-        // Singleton パターン
+        // Singleton パターン（後方互換性）
         private static StealthAudioCoordinator instance;
+        
+        /// <summary>
+        /// 後方互換性のためのInstance（非推奨）
+        /// ServiceLocator.GetService<IStealthAudioService>()を使用してください
+        /// </summary>
+        [System.Obsolete("Use ServiceLocator.GetService<IStealthAudioService>() instead")]
         public static StealthAudioCoordinator Instance => instance;
+        
+        // 初期化状態管理
+        public bool IsInitialized { get; private set; }
 
         #region Unity Lifecycle
 
@@ -77,13 +90,20 @@ namespace asterivo.Unity60.Core.Audio
             instance = this;
             DontDestroyOnLoad(gameObject);
             
+            // ServiceLocatorに登録 (一時的に無効化)
+            // TODO: ServiceLocator機能を復活させる
+            // if (FeatureFlags.UseServiceLocator)
+            // {
+            //     ServiceLocator.RegisterService<IStealthAudioService>(this);
+            //     EventLogger.Log("[StealthAudioCoordinator] Registered to ServiceLocator as IStealthAudioService");
+            // }
+            
             InitializeCoordinator();
         }
 
         private void Start()
         {
-            FindSystemReferences();
-            InitializeCategoryMultipliers();
+            Initialize();
         }
 
         private void Update()
@@ -99,6 +119,13 @@ namespace asterivo.Unity60.Core.Audio
             {
                 instance = null;
             }
+            
+            // ServiceLocatorから登録解除 (一時的に無効化)
+            // TODO: ServiceLocator機能を復活させる
+            // if (FeatureFlags.UseServiceLocator)
+            // {
+            //     ServiceLocator.UnregisterService<IStealthAudioService>();
+            // }
         }
 
         #endregion
@@ -127,8 +154,20 @@ namespace asterivo.Unity60.Core.Audio
         /// </summary>
         private void FindSystemReferences()
         {
+            // ServiceLocator経由でAudioServiceを取得 (一時的に無効化)
+            // TODO: ServiceLocator機能を復活させる
+            // if (FeatureFlags.UseServiceLocator && audioService == null)
+            // {
+            //     audioService = ServiceLocator.GetService<IAudioService>();
+            // }
+            
+            // 後方互換性のためAudioManagerも取得
             if (audioManager == null)
+            {
+#pragma warning disable CS0618 // 廃止予定の警告を抑制
                 audioManager = AudioManager.Instance;
+#pragma warning restore CS0618
+            }
 
             if (dynamicEnvironment == null)
                 dynamicEnvironment = FindFirstObjectByType<DynamicAudioEnvironment>();
@@ -144,6 +183,154 @@ namespace asterivo.Unity60.Core.Audio
             categoryVolumeMultipliers[AudioCategory.Effect] = 1f;
             categoryVolumeMultipliers[AudioCategory.Stealth] = 1f;
             categoryVolumeMultipliers[AudioCategory.UI] = 1f;
+        }
+        
+        /// <summary>
+        /// IInitializable実装 - ステルスオーディオコーディネーターの初期化
+        /// </summary>
+        public void Initialize()
+        {
+            if (IsInitialized) return;
+            
+            FindSystemReferences();
+            InitializeCategoryMultipliers();
+            
+            IsInitialized = true;
+            
+            // デバッグログ (一時的に簡素化)
+            EventLogger.Log("[StealthAudioCoordinator] Initialization complete");
+        }
+
+        #endregion
+        
+        #region IStealthAudioService Implementation
+        
+        /// <summary>
+        /// 足音を生成
+        /// </summary>
+        public void CreateFootstep(Vector3 position, float intensity, string surfaceType)
+        {
+            if (!IsInitialized)
+            {
+                EventLogger.LogWarning("[StealthAudioCoordinator] System not initialized");
+                return;
+            }
+            
+            // TODO: 表面タイプに応じた足音の生成
+            // デバッグログ出力
+            EventLogger.Log($"[StealthAudioCoordinator] Creating footstep at {position}, intensity: {intensity}, surface: {surfaceType}");
+        }
+        
+        /// <summary>
+        /// 環境ノイズレベルを設定（マスキング効果用）
+        /// </summary>
+        public void SetEnvironmentNoiseLevel(float level)
+        {
+            if (!IsInitialized) return;
+            
+            globalMaskingStrength = Mathf.Clamp01(level);
+            
+            // デバッグログ出力
+            EventLogger.Log($"[StealthAudioCoordinator] Environment noise level set to: {level}");
+        }
+        
+        /// <summary>
+        /// NPCに聞こえる音を生成
+        /// </summary>
+        public void EmitDetectableSound(Vector3 position, float radius, float intensity, string soundType)
+        {
+            if (!IsInitialized) return;
+            
+            // TODO: NPCの聴覚センサーへの通知
+            NotifyAuditorySensors(position, radius, intensity);
+            
+            // デバッグログ出力
+            EventLogger.Log($"[StealthAudioCoordinator] Detectable sound emitted: {soundType} at {position}");
+        }
+        
+        /// <summary>
+        /// 注意を引く音を再生
+        /// </summary>
+        public void PlayDistraction(Vector3 position, float radius)
+        {
+            if (!IsInitialized) return;
+            
+            EmitDetectableSound(position, radius, 0.8f, "Distraction");
+        }
+        
+        /// <summary>
+        /// 警戒レベルに応じたBGMを設定
+        /// </summary>
+        public void SetAlertLevelMusic(AlertLevel level)
+        {
+            if (!IsInitialized || audioService == null) return;
+            
+            // TODO: 警戒レベルに応じたBGM切り替え
+            string bgmName = level switch
+            {
+                AlertLevel.None => "Normal",
+                AlertLevel.Low => "Suspicious",
+                AlertLevel.Medium => "Alert",
+                AlertLevel.High => "Combat",
+                AlertLevel.Combat => "Combat",
+                _ => "Normal"
+            };
+            
+            // audioService.PlayBGM(bgmName); // TODO: IBGMServiceが必要
+            
+            // デバッグログ出力
+            EventLogger.Log($"[StealthAudioCoordinator] Alert level music set: {level} -> {bgmName}");
+        }
+        
+        /// <summary>
+        /// オーディオマスキング効果を適用
+        /// </summary>
+        public void ApplyAudioMasking(float maskingLevel)
+        {
+            if (!IsInitialized) return;
+            
+            currentMaskingLevel = Mathf.Clamp01(maskingLevel);
+            
+            // 既存のマスキングシステムを使用
+            UpdateMaskingEffects();
+            
+            if (maskingLevelChangedEvent != null)
+            {
+                maskingLevelChangedEvent.Raise();
+            }
+        }
+        
+        /// <summary>
+        /// NPCの聴覚センサーにサウンドイベントを通知
+        /// </summary>
+        public void NotifyAuditorySensors(Vector3 origin, float radius, float intensity)
+        {
+            if (!IsInitialized) return;
+            
+            // TODO: AIシステムとの連携実装
+            // デバッグログ出力
+            EventLogger.Log($"[StealthAudioCoordinator] Notifying auditory sensors: origin={origin}, radius={radius}, intensity={intensity}");
+        }
+        
+        /// <summary>
+        /// プレイヤーの隠密度に応じた音響調整
+        /// </summary>
+        public void AdjustStealthAudio(float stealthLevel)
+        {
+            if (!IsInitialized) return;
+            
+            // ステルスレベルに応じて音量を調整
+            float volumeReduction = 1f - (stealthLevel * 0.3f); // 最大30%減音
+            
+            if (audioService != null)
+            {
+                audioService.SetCategoryVolume("bgm", bgmReductionAmount * volumeReduction);
+                audioService.SetCategoryVolume("ambient", ambientReductionAmount * volumeReduction);
+                audioService.SetCategoryVolume("effect", effectReductionAmount * volumeReduction);
+            }
+            
+            // デバッグログ出力
+            EventLogger.Log($"[StealthAudioCoordinator] Stealth audio adjusted: level={stealthLevel}, reduction={volumeReduction}");
         }
 
         #endregion
@@ -174,7 +361,7 @@ namespace asterivo.Unity60.Core.Audio
                     nearbyAI.Add(collider.transform);
 
                     // AI の警戒レベルを確認
-                    var aiController = collider.GetComponent<IAIStateProvider>();
+                    var aiController = collider.GetComponent<IGameStateProvider>();
                     if (aiController != null && aiController.GetAlertLevel() > aiAlertThreshold)
                     {
                         nearbyAlertAICount++;
@@ -327,7 +514,7 @@ namespace asterivo.Unity60.Core.Audio
             if (playerTransform == null) return false;
 
             // プレイヤーコントローラーからの状態取得を試みる
-            var playerController = playerTransform.GetComponent<IPlayerStateProvider>();
+            var playerController = playerTransform.GetComponent<IGameStateProvider>();
             if (playerController != null)
             {
                 return playerController.IsInHidingMode();
@@ -363,7 +550,7 @@ namespace asterivo.Unity60.Core.Audio
                     if (obj.CompareTag(tag))
                     {
                         // オブジェクトがアクティブ状態かを確認
-                        var interactable = obj.GetComponent<IInteractable>();
+                        var interactable = obj.GetComponent<IGameStateProvider>();
                         if (interactable != null && interactable.IsBeingUsed())
                         {
                             return true;
@@ -562,36 +749,4 @@ namespace asterivo.Unity60.Core.Audio
 
         #endregion
     }
-
-    #region Supporting Interfaces
-
-    /// <summary>
-    /// AIの状態情報を提供するインターフェース
-    /// </summary>
-    public interface IAIStateProvider
-    {
-        float GetAlertLevel();
-        bool IsAwareOfPlayer();
-    }
-
-    /// <summary>
-    /// プレイヤーの状態情報を提供するインターフェース
-    /// </summary>
-    public interface IPlayerStateProvider
-    {
-        bool IsInHidingMode();
-        bool IsCrouching();
-        bool IsPerformingStealthAction();
-    }
-
-    /// <summary>
-    /// インタラクション可能オブジェクトのインターフェース
-    /// </summary>
-    public interface IInteractable
-    {
-        bool IsBeingUsed();
-        float GetInteractionProgress();
-    }
-
-    #endregion
 }

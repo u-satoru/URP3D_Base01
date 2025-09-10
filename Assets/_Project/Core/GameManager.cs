@@ -12,7 +12,7 @@ using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Components;
 using asterivo.Unity60.Core.Validation;
 
-namespace asterivo.Unity60.Core.Services
+namespace asterivo.Unity60.Core
 {
     public class GameManager : MonoBehaviour, IGameEventListener<ICommandDefinition>
     {

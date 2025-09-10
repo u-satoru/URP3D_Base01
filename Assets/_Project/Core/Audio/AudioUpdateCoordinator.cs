@@ -6,15 +6,20 @@ using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Shared;
+using asterivo.Unity60.Core.Audio.Interfaces;
+using asterivo.Unity60.Core.Audio.Services;
+using asterivo.Unity60.Core.Audio.Interfaces;
+using _Project.Core;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio
 {
     /// <summary>
-    /// オーディオシステム全体の統一更新コーディネーター
+    /// オーディオシステム全体の統一更新コーディネーター（ServiceLocator対応）
     /// リアルタイム同期の最適化とパフォーマンス向上を担当
+    /// Service Locatorパターンを使用して他のサービスと連携
     /// </summary>
-    public class AudioUpdateCoordinator : MonoBehaviour
+    public class AudioUpdateCoordinator : MonoBehaviour, IAudioUpdateService, IInitializable
     {
         [Header("Update Settings")]
         [SerializeField, Range(0.05f, 1f)] private float updateInterval = AudioConstants.AUDIO_UPDATE_INTERVAL;
@@ -46,18 +51,64 @@ namespace asterivo.Unity60.Core.Audio
         private HashSet<AudioSource> trackedAudioSources;
         private Queue<AudioSource> updateQueue;
         private Coroutine coordinatedUpdateCoroutine;
+        
+        // IAudioUpdatable管理
+        private HashSet<IAudioUpdatable> registeredUpdatables;
 
-        // 同期イベント
-        public System.Action<AudioSystemSyncData> OnAudioSystemSync;
+        // 削除: 同期イベントはインターフェースで定義済み
 
-        // Singleton パターン
+        // IInitializable実装
+        public int Priority => 15; // オーディオ更新コーディネーターは基本サービスの後に初期化
+        public bool IsInitialized { get; private set; }
+
+        // Singleton パターン（後方互換性のため維持）
         private static AudioUpdateCoordinator instance;
-        public static AudioUpdateCoordinator Instance => instance;
+        
+        [System.Obsolete("Use ServiceLocator.GetService<IAudioUpdateService>() instead")]
+        public static AudioUpdateCoordinator Instance 
+        {
+            get 
+            {
+                if (FeatureFlags.UseServiceLocator)
+                {
+                    var service = ServiceLocator.GetService<IAudioUpdateService>();
+                    if (service is AudioUpdateCoordinator coordinator)
+                    {
+                        return coordinator;
+                    }
+                }
+                return instance;
+            }
+        }
+        
+        // IAudioUpdateService interface properties
+        public float UpdateInterval 
+        { 
+            get => updateInterval; 
+            set => SetUpdateInterval(value); 
+        }
+        
+        public bool IsCoordinatedUpdateEnabled => enableCoordinatedUpdates;
+        
+        // イベント
+        public event System.Action<AudioSystemSyncData> OnAudioSystemSync;
 
         #region Unity Lifecycle
 
         private void Awake()
         {
+            // ServiceLocatorに登録
+            if (FeatureFlags.UseServiceLocator)
+            {
+                ServiceLocator.RegisterService<IAudioUpdateService>(this);
+                
+                if (FeatureFlags.EnableDebugLogging)
+                {
+                    EventLogger.Log("[AudioUpdateCoordinator] Registered to ServiceLocator");
+                }
+            }
+            
+            // Singleton の初期化（後方互換性のため）
             if (instance != null && instance != this)
             {
                 Destroy(gameObject);
@@ -72,6 +123,33 @@ namespace asterivo.Unity60.Core.Audio
 
         private void Start()
         {
+            Initialize();
+        }
+
+        private void OnDestroy()
+        {
+            // ServiceLocatorから登録解除
+            if (FeatureFlags.UseServiceLocator)
+            {
+                ServiceLocator.UnregisterService<IAudioUpdateService>();
+            }
+            
+            if (instance == this)
+            {
+                instance = null;
+            }
+            
+            StopCoordinatedUpdates();
+        }
+
+        #endregion
+
+        #region IInitializable Implementation
+
+        public void Initialize()
+        {
+            if (IsInitialized) return;
+
             FindSystemReferences();
             InitializeSpatialCache();
             
@@ -79,16 +157,13 @@ namespace asterivo.Unity60.Core.Audio
             {
                 StartCoordinatedUpdates();
             }
-        }
 
-        private void OnDestroy()
-        {
-            if (instance == this)
-            {
-                instance = null;
-            }
+            IsInitialized = true;
             
-            StopCoordinatedUpdates();
+            if (FeatureFlags.EnableDebugLogging)
+            {
+                EventLogger.Log("[AudioUpdateCoordinator] Initialization complete");
+            }
         }
 
         #endregion
@@ -103,6 +178,7 @@ namespace asterivo.Unity60.Core.Audio
             spatialAudioCache = new Dictionary<Vector3Int, List<AudioSource>>();
             trackedAudioSources = new HashSet<AudioSource>();
             updateQueue = new Queue<AudioSource>();
+            registeredUpdatables = new HashSet<IAudioUpdatable>();
             
             EventLogger.Log("<color=green>[AudioUpdateCoordinator]</color> Audio update coordinator initialized");
         }
@@ -134,6 +210,42 @@ namespace asterivo.Unity60.Core.Audio
         {
             spatialAudioCache.Clear();
             RebuildSpatialCache();
+        }
+
+        #endregion
+
+        #region IAudioUpdateService Implementation
+
+        /// <summary>
+        /// 更新可能なコンポーネントを登録
+        /// </summary>
+        public void RegisterUpdatable(IAudioUpdatable updatable)
+        {
+            if (updatable != null)
+            {
+                registeredUpdatables.Add(updatable);
+                
+                if (FeatureFlags.EnableDebugLogging)
+                {
+                    EventLogger.Log($"[AudioUpdateCoordinator] Registered updatable: {updatable.GetType().Name}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 更新可能なコンポーネントの登録解除
+        /// </summary>
+        public void UnregisterUpdatable(IAudioUpdatable updatable)
+        {
+            if (updatable != null)
+            {
+                registeredUpdatables.Remove(updatable);
+                
+                if (FeatureFlags.EnableDebugLogging)
+                {
+                    EventLogger.Log($"[AudioUpdateCoordinator] Unregistered updatable: {updatable.GetType().Name}");
+                }
+            }
         }
 
         #endregion
@@ -188,6 +300,9 @@ namespace asterivo.Unity60.Core.Audio
 
                 // 同期イベントの発火
                 OnAudioSystemSync?.Invoke(syncData);
+                
+                // 登録されたIAudioUpdatableの更新
+                UpdateRegisteredUpdatables(syncData);
 
                 // パフォーマンス計測
                 currentUpdateTime = (Time.realtimeSinceStartup - updateStartTime) * 1000f; // ms
@@ -223,6 +338,27 @@ namespace asterivo.Unity60.Core.Audio
             if (stealthCoordinator != null)
             {
                 NotifyStealthCoordinator(syncData);
+            }
+        }
+        
+        /// <summary>
+        /// 登録されたIAudioUpdatableの更新
+        /// </summary>
+        private void UpdateRegisteredUpdatables(AudioSystemSyncData syncData)
+        {
+            foreach (var updatable in registeredUpdatables)
+            {
+                if (updatable != null)
+                {
+                    try
+                    {
+                        updatable.UpdateAudio(syncData.deltaTime);;
+                    }
+                    catch (System.Exception ex)
+                    {
+                        EventLogger.LogError($"[AudioUpdateCoordinator] Error updating {updatable.GetType().Name}: {ex.Message}");
+                    }
+                }
             }
         }
 
@@ -403,6 +539,7 @@ namespace asterivo.Unity60.Core.Audio
             var syncData = new AudioSystemSyncData();
 
             // 基本情報
+            syncData.deltaTime = Time.deltaTime;
             syncData.currentTime = Time.time;
             syncData.playerPosition = playerTransform?.position ?? Vector3.zero;
 
@@ -633,6 +770,7 @@ namespace asterivo.Unity60.Core.Audio
     {
         [Header("基本情報")]
         public float currentTime;
+        public float deltaTime;
         public Vector3 playerPosition;
 
         [Header("状態変更フラグ")]

@@ -79,7 +79,7 @@ namespace asterivo.Unity60.Core.Editor
         public static void CreateGameManager()
         {
             // GameManagerが既に存在するかチェック
-            GameObject existingGameManager = GameObject.FindFirstObjectByType<asterivo.Unity60.Core.Services.GameManager>()?.gameObject;
+            GameObject existingGameManager = GameObject.FindFirstObjectByType<asterivo.Unity60.Core.GameManager>()?.gameObject;
             if (existingGameManager != null)
             {
                 UnityEngine.Debug.LogWarning("⚠️ GameManager already exists in the scene");
@@ -268,7 +268,7 @@ namespace asterivo.Unity60.Core.Editor
         private static void CreateEmptyGameManager()
         {
             GameObject gameManager = new GameObject("GameManager");
-            gameManager.AddComponent<asterivo.Unity60.Core.Services.GameManager>();
+            gameManager.AddComponent<asterivo.Unity60.Core.GameManager>();
             Selection.activeGameObject = gameManager;
         }
 

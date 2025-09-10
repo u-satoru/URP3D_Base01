@@ -1,10 +1,12 @@
 # Set default behavior for all files to handle line endings automatically.  
-* text=auto
+* text=auto eol=lf
 # Specify files that should always have LF line endings (e.g., shell scripts)  
 *.sh eol=lf
 # Specify files that should always have CRLF line endings (e.g., Windows batch files)  
-*.bat eol=crlf  
-*.cmd eol=crlf
+*.{cmd,[cC][mM][dD]} text eol=crlf
+*.{bat,[bB][aA][tT]} text eol=crlf
+
+
 #  
 # Git LFS Tracking  
 # Define all large binary assets to be tracked by Git LFS.  

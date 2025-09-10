@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using System.Linq;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Core.Audio.Interfaces;
+using _Project.Core;
 
 namespace asterivo.Unity60.Core.Audio
 {
@@ -21,8 +24,9 @@ namespace asterivo.Unity60.Core.Audio
     /// <summary>
     /// 効果音システムの管理クラス
     /// 一般的な効果音とステルスゲーム用効果音の統合管理
+    /// ServiceLocator対応版
     /// </summary>
-    public class EffectManager : MonoBehaviour
+    public class EffectManager : MonoBehaviour, IEffectService, IInitializable
     {
         [Header("Effect Manager Settings")]
         [SerializeField] private int maxConcurrentEffects = 16;
@@ -53,13 +57,23 @@ namespace asterivo.Unity60.Core.Audio
         // 効果音データベース
         private Dictionary<string, SoundDataSO> effectDatabase = new Dictionary<string, SoundDataSO>();
         
-        // 他のオーディオシステムとの連携
-        private AudioManager audioManager;
-        private SpatialAudioManager spatialAudioManager;
-        private StealthAudioCoordinator stealthCoordinator;
+        // 他のオーディオシステムとの連携（ServiceLocator経由）
+        private IAudioService audioService;
+        private ISpatialAudioService spatialAudioService;
+        private IStealthAudioService stealthAudioService;
         
         private static EffectManager instance;
+        
+        /// <summary>
+        /// 後方互換性のためのInstance（非推奨）
+        /// ServiceLocator.GetService<IEffectService>()を使用してください
+        /// </summary>
+        [System.Obsolete("Use ServiceLocator.GetService<IEffectService>() instead")]
         public static EffectManager Instance => instance;
+        
+        // IInitializable実装
+        public int Priority => 15; // オーディオサービスの後に初期化
+        public bool IsInitialized { get; private set; }
         
         #region Unity Lifecycle
         
@@ -74,17 +88,23 @@ namespace asterivo.Unity60.Core.Audio
             instance = this;
             DontDestroyOnLoad(gameObject);
             
+            // ServiceLocatorに登録
+            if (FeatureFlags.UseServiceLocator)
+            {
+                ServiceLocator.RegisterService<IEffectService>(this);
+                
+                if (FeatureFlags.EnableDebugLogging)
+                {
+                    EventLogger.Log("[EffectManager] Registered to ServiceLocator as IEffectService");
+                }
+            }
+            
             InitializeEffectSourcePool();
         }
         
         private void Start()
         {
-            // 他のオーディオシステムとの連携を確立
-            audioManager = AudioManager.Instance;
-            spatialAudioManager = SpatialAudioManager.Instance;
-            stealthCoordinator = StealthAudioCoordinator.Instance;
-            
-            LoadEffectDatabase();
+            Initialize();
         }
         
         private void OnDestroy()
@@ -93,16 +113,171 @@ namespace asterivo.Unity60.Core.Audio
             {
                 instance = null;
             }
+            
+            // ServiceLocatorから登録解除
+            if (FeatureFlags.UseServiceLocator)
+            {
+                ServiceLocator.UnregisterService<IEffectService>();
+            }
         }
         
         #endregion
         
+        #region IInitializable Implementation
+        
+        /// <summary>
+        /// IInitializable実装 - 効果音システムの初期化
+        /// </summary>
+        public void Initialize()
+        {
+            if (IsInitialized) return;
+            
+            // 他のオーディオサービスをServiceLocatorから取得
+            if (FeatureFlags.UseServiceLocator)
+            {
+                audioService = ServiceLocator.GetService<IAudioService>();
+                spatialAudioService = ServiceLocator.GetService<ISpatialAudioService>();
+                // TODO: StealthAudioServiceが実装されたら有効化
+                // stealthAudioService = ServiceLocator.GetService<IStealthAudioService>();
+            }
+            
+            // フォールバック: 既存の方法
+            if (audioService == null)
+            {
+                var audioManager = FindFirstObjectByType<AudioManager>();
+                if (audioManager != null)
+                {
+                    audioService = audioManager;
+                }
+            }
+            
+            LoadEffectDatabase();
+            
+            IsInitialized = true;
+            
+            if (FeatureFlags.EnableDebugLogging)
+            {
+                EventLogger.Log("[EffectManager] Initialization complete");
+            }
+        }
+        
+        #endregion
+        
+        #region IEffectService Implementation
+        
+        /// <summary>
+        /// 効果音を再生
+        /// </summary>
+        public void PlayEffect(string effectId, Vector3 position = default, float volume = 1f)
+        {
+            if (!IsInitialized)
+            {
+                EventLogger.LogWarning("[EffectManager] System not initialized");
+                return;
+            }
+            
+            // 既存のPlayEffectメソッドを呼び出し
+            if (HasMethod("PlayEffect", typeof(string), typeof(Vector3), typeof(float)))
+            {
+                // 既存の実装を使用（リフレクションで呼び出しまたは直接実装）
+                // TODO: 既存のPlayEffectメソッドと統合
+                PlayEffectWithSource(effectId, position, volume); //ventLogger.Log($"[EffectManager] Playing effect: {effectId} at {position} with volume {volume}");
+            }
+        }
+        
+        /// <summary>
+        /// ループ効果音を開始
+        /// </summary>
+        public int StartLoopingEffect(string effectId, Vector3 position, float volume = 1f)
+        {
+            if (!IsInitialized) return -1;
+            
+            // TODO: ループ効果音の実装
+            EventLogger.Log($"[EffectManager] Starting looping effect: {effectId}");
+            return 0; // 仮のID
+        }
+        
+        /// <summary>
+        /// ループ効果音を停止
+        /// </summary>
+        public void StopLoopingEffect(int loopId)
+        {
+            if (!IsInitialized) return;
+            
+            // TODO: ループ効果音の停止実装
+            EventLogger.Log($"[EffectManager] Stopping looping effect: {loopId}");
+        }
+        
+        /// <summary>
+        /// 一度だけ再生する効果音（重複防止）
+        /// </summary>
+        public void PlayOneShot(string effectId, Vector3 position = default, float volume = 1f)
+        {
+            PlayEffect(effectId, position, volume);
+        }
+        
+        /// <summary>
+        /// ランダムな効果音を再生
+        /// </summary>
+        public void PlayRandomEffect(string[] effectIds, Vector3 position = default, float volume = 1f)
+        {
+            if (effectIds != null && effectIds.Length > 0)
+            {
+                var randomId = effectIds[Random.Range(0, effectIds.Length)];
+                PlayEffect(randomId, position, volume);
+            }
+        }
+        
+        /// <summary>
+        /// 効果音のピッチを設定
+        /// </summary>
+        public void SetEffectPitch(string effectId, float pitch)
+        {
+            // TODO: ピッチ設定の実装
+            EventLogger.Log($"[EffectManager] Setting pitch for {effectId}: {pitch}");
+        }
+        
+        /// <summary>
+        /// 効果音プールをプリロード
+        /// </summary>
+        public void PreloadEffects(string[] effectIds)
+        {
+            // TODO: プリロード機能の実装
+            if (FeatureFlags.EnableDebugLogging)
+            {
+                EventLogger.Log($"[EffectManager] Preloading {effectIds?.Length ?? 0} effects");
+            }
+        }
+        
+        /// <summary>
+        /// 効果音プールをクリア
+        /// </summary>
+        public void ClearEffectPool()
+        {
+            // TODO: プールクリア機能の実装
+            if (FeatureFlags.EnableDebugLogging)
+            {
+                EventLogger.Log("[EffectManager] Clearing effect pool");
+            }
+        }
+        
+        /// <summary>
+        /// メソッドの存在チェック用ヘルパー
+        /// </summary>
+        private bool HasMethod(string methodName, params System.Type[] parameterTypes)
+        {
+            var method = GetType().GetMethod(methodName, parameterTypes);
+            return method != null;
+        }
+        
+        #endregion
+
         #region Public Interface
         
         /// <summary>
         /// 効果音を再生（一般的なインターフェース）
         /// </summary>
-        public AudioSource PlayEffect(string effectID, Vector3 position = default, float volumeMultiplier = 1f)
+        public AudioSource PlayEffectWithSource(string effectID, Vector3 position = default, float volumeMultiplier = 1f)
         {
             if (!effectDatabase.ContainsKey(effectID))
             {
@@ -392,9 +567,10 @@ namespace asterivo.Unity60.Core.Audio
         private AudioSource PlayEffectInternal(SoundDataSO soundData, AudioEventData eventData)
         {
             // ステルス音響システムがある場合は、そちらに委譲
-            if (spatialAudioManager != null && eventData.affectsStealthGameplay)
+            if (spatialAudioService != null && eventData.affectsStealthGameplay)
             {
-                return spatialAudioManager.PlaySoundFromEvent(eventData, soundData);
+                spatialAudioService.Play3DSound(eventData.soundID, eventData.worldPosition, eventData.hearingRadius, eventData.volume);
+                return null; // Spatial audio service doesn't return AudioSourceioSource);
             }
             
             // 通常の効果音再生処理
@@ -615,6 +791,111 @@ namespace asterivo.Unity60.Core.Audio
         public void PlayStealthEffect(string effectName, Vector3 position = default)
         {
             PlayEffect(effectName, EffectType.Stealth, position);
+        }
+        
+        #endregion
+        
+        #region Public Status API
+        
+        /// <summary>
+        /// 任意の効果音が再生中か確認
+        /// </summary>
+        public bool IsPlaying()
+        {
+            return activeEffectSources.Any(source => source != null && source.isPlaying);
+        }
+        
+        /// <summary>
+        /// 指定した効果音が再生中か確認（簡略実装）
+        /// </summary>
+        public bool IsPlaying(string effectId)
+        {
+            if (string.IsNullOrEmpty(effectId))
+                return false;
+                
+            return activeEffectSources.Any(source => 
+                source != null && 
+                source.isPlaying && 
+                (source.clip?.name.Contains(effectId) == true || 
+                 source.gameObject.name.Contains(effectId)));
+        }
+        
+        /// <summary>
+        /// 指定したタイプの効果音が再生中か確認
+        /// </summary>
+        public bool IsPlayingType(EffectType effectType)
+        {
+            return activeEffectSources.Any(source =>
+            {
+                if (source == null || !source.isPlaying)
+                    return false;
+                    
+                string sourceId = source.gameObject.name;
+                
+                return effectType switch
+                {
+                    EffectType.UI => sourceId.Contains("UI") || source.spatialBlend == 0f,
+                    EffectType.Combat => sourceId.Contains("Combat") || source.priority < 64,
+                    EffectType.Interaction => sourceId.Contains("Interaction"),
+                    EffectType.Stealth => sourceId.Contains("Stealth") || source.maxDistance > 20f,
+                    _ => false
+                };
+            });
+        }
+        
+        /// <summary>
+        /// アクティブな効果音の数を取得
+        /// </summary>
+        public int GetActiveEffectCount()
+        {
+            return activeEffectSources.Count(source => source != null && source.isPlaying);
+        }
+        
+        /// <summary>
+        /// アクティブな効果音の最大数を取得
+        /// </summary>
+        public int GetMaxConcurrentEffects()
+        {
+            return maxConcurrentEffects;
+        }
+        
+        /// <summary>
+        /// 効果音プールの利用可能数を取得
+        /// </summary>
+        public int GetAvailableEffectSourceCount()
+        {
+            return effectSourcePool.Count;
+        }
+        
+        /// <summary>
+        /// 指定した効果音IDがデータベースに登録されているか確認
+        /// </summary>
+        public bool HasEffectData(string effectId)
+        {
+            return !string.IsNullOrEmpty(effectId) && effectDatabase.ContainsKey(effectId);
+        }
+        
+        /// <summary>
+        /// 登録されている効果音IDの一覧を取得
+        /// </summary>
+        public string[] GetRegisteredEffectIds()
+        {
+            return effectDatabase.Keys.ToArray();
+        }
+        
+        /// <summary>
+        /// カテゴリ別の効果音有効状態を取得
+        /// </summary>
+        public bool IsCategoryEnabled(EffectType effectType)
+        {
+            return effectType switch
+            {
+                EffectType.UI => enableUIEffects,
+                EffectType.Interaction => enableInteractionEffects,
+                EffectType.Combat => enableCombatEffects,
+                EffectType.Stealth => enableStealthEffects,
+                _ => false
+            };
         }
         
         #endregion

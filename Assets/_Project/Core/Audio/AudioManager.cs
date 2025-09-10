@@ -4,6 +4,8 @@ using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Shared;
+using asterivo.Unity60.Core.Audio.Interfaces;
+using _Project.Core;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio
@@ -11,10 +13,17 @@ namespace asterivo.Unity60.Core.Audio
     /// <summary>
     /// 最上位のオーディオ制御システム
     /// 既存のステルスオーディオシステムと新規システムを統合管理
+    /// ServiceLocator対応版
     /// </summary>
-    public class AudioManager : MonoBehaviour
+    public class AudioManager : MonoBehaviour, IAudioService, IInitializable
     {
         private static AudioManager instance;
+        
+        /// <summary>
+        /// 後方互換性のためのInstance（非推奨）
+        /// ServiceLocator.GetService<IAudioService>()を使用してください
+        /// </summary>
+        [System.Obsolete("Use ServiceLocator.GetService<IAudioService>() instead")]
         public static AudioManager Instance => instance;
 
         [TabGroup("Audio Managers", "System Integration")]
@@ -62,17 +71,31 @@ namespace asterivo.Unity60.Core.Audio
 
         // 内部状態
         private bool isInitialized = false;
+        
+        // IInitializable実装
+        public int Priority => 5; // 早期に初期化
+        public bool IsInitialized => isInitialized;
 
         #region Unity Lifecycle
 
         private void Awake()
         {
-            // Singleton パターン
+            // Singleton パターン（後方互換性のため維持）
             if (instance == null)
             {
                 instance = this;
                 DontDestroyOnLoad(gameObject);
-                InitializeAudioManager();
+                
+                // ServiceLocatorに登録
+                if (FeatureFlags.UseServiceLocator)
+                {
+                    ServiceLocator.RegisterService<IAudioService>(this);
+                    
+                    if (FeatureFlags.EnableDebugLogging)
+                    {
+                        EventLogger.Log("[AudioManager] Registered to ServiceLocator as IAudioService");
+                    }
+                }
             }
             else if (instance != this)
             {
@@ -82,14 +105,7 @@ namespace asterivo.Unity60.Core.Audio
 
         private void Start()
         {
-            ValidateComponents();
-            ApplyVolumeSettings();
-            InitializeAudioUpdateCoordinator();
-            
-            if (audioSystemInitializedEvent != null)
-            {
-                audioSystemInitializedEvent.Raise();
-            }
+            Initialize();
         }
 
         private void OnDestroy()
@@ -98,6 +114,12 @@ namespace asterivo.Unity60.Core.Audio
             {
                 instance = null;
             }
+            
+            // ServiceLocatorから登録解除
+            if (FeatureFlags.UseServiceLocator)
+            {
+                ServiceLocator.UnregisterService<IAudioService>();
+            }
         }
 
         #endregion
@@ -105,22 +127,48 @@ namespace asterivo.Unity60.Core.Audio
         #region Initialization
 
         /// <summary>
-        /// オーディオマネージャーの初期化
+        /// IInitializable実装 - オーディオマネージャーの初期化
         /// </summary>
-        private void InitializeAudioManager()
+        public void Initialize()
         {
-            // コンポーネントの自動検索（Inspector で設定されていない場合）
+            if (isInitialized) return;
+            
+            // コンポーネントの自動検索（ServiceLocator経由での取得を優先）
             if (spatialAudio == null)
-                spatialAudio = SpatialAudioManager.Instance;
+            {
+                if (FeatureFlags.UseServiceLocator)
+                {
+                    spatialAudio = ServiceLocator.GetService<ISpatialAudioService>() as SpatialAudioManager;
+                }
+                
+                // フォールバック: 既存のSingletonアクセス
+                if (spatialAudio == null)
+                {
+                    spatialAudio = FindFirstObjectByType<SpatialAudioManager>();
+                }
+            }
 
             if (dynamicEnvironment == null)
                 dynamicEnvironment = FindFirstObjectByType<DynamicAudioEnvironment>();
 
             if (stealthCoordinator == null)
                 stealthCoordinator = GetComponent<StealthAudioCoordinator>();
+            
+            ValidateComponents();
+            ApplyVolumeSettings();
+            InitializeAudioUpdateCoordinator();
+            
+            if (audioSystemInitializedEvent != null)
+            {
+                audioSystemInitializedEvent.Raise();
+            }
 
             isInitialized = true;
-            EventLogger.Log("<color=cyan>[AudioManager]</color> Audio system initialized successfully");
+            
+            if (FeatureFlags.EnableDebugLogging)
+            {
+                EventLogger.Log("<color=cyan>[AudioManager]</color> Audio system initialized successfully");
+            }
         }
 
         /// <summary>
@@ -153,8 +201,21 @@ namespace asterivo.Unity60.Core.Audio
         /// </summary>
         private void InitializeAudioUpdateCoordinator()
         {
-            // AudioUpdateCoordinatorの検索または作成
-            var coordinator = AudioUpdateCoordinator.Instance;
+            // ServiceLocatorからAudioUpdateCoordinatorを取得を試みる
+            AudioUpdateCoordinator coordinator = null;
+            
+            if (FeatureFlags.UseServiceLocator)
+            {
+                // TODO: AudioUpdateCoordinator用のインターフェースを作成後に有効化
+                // coordinator = ServiceLocator.GetService<IAudioUpdateService>() as AudioUpdateCoordinator;
+            }
+            
+            // フォールバック: 既存の検索方法
+            if (coordinator == null)
+            {
+                coordinator = FindFirstObjectByType<AudioUpdateCoordinator>();
+            }
+            
             if (coordinator == null)
             {
                 // 専用のGameObjectを作成してAudioUpdateCoordinatorを追加
@@ -162,9 +223,12 @@ namespace asterivo.Unity60.Core.Audio
                 coordinatorObject.transform.SetParent(transform);
                 coordinator = coordinatorObject.AddComponent<AudioUpdateCoordinator>();
                 
-                EventLogger.Log("<color=cyan>[AudioManager]</color> Created AudioUpdateCoordinator for optimized updates");
+                if (FeatureFlags.EnableDebugLogging)
+                {
+                    EventLogger.Log("<color=cyan>[AudioManager]</color> Created AudioUpdateCoordinator for optimized updates");
+                }
             }
-            else
+            else if (FeatureFlags.EnableDebugLogging)
             {
                 EventLogger.Log("<color=cyan>[AudioManager]</color> Found existing AudioUpdateCoordinator");
             }
@@ -379,6 +443,134 @@ namespace asterivo.Unity60.Core.Audio
             // Effects resume automatically when new sounds are played
         }
 
+        #endregion
+        
+        #region IAudioService Implementation
+        
+        /// <summary>
+        /// サウンドを再生
+        /// </summary>
+        public void PlaySound(string soundId, Vector3 position = default, float volume = 1f)
+        {
+            if (!isInitialized)
+            {
+                EventLogger.LogWarning("[AudioManager] System not initialized");
+                return;
+            }
+            
+            // 効果音として再生
+            if (effectManager != null)
+            {
+                effectManager.PlayEffect(soundId, position, volume * effectVolume * masterVolume);
+            }
+        }
+        
+        /// <summary>
+        /// サウンドを停止
+        /// </summary>
+        public void StopSound(string soundId)
+        {
+            if (effectManager != null)
+            {
+                // 個別停止機能がないため、全て停止
+                effectManager.StopAllEffects();
+            }
+        }
+        
+        /// <summary>
+        /// すべてのサウンドを停止
+        /// </summary>
+        public void StopAllSounds()
+        {
+            PauseAllAudio();
+        }
+        
+        /// <summary>
+        /// マスターボリュームを取得
+        /// </summary>
+        public float GetMasterVolume()
+        {
+            return masterVolume;
+        }
+        
+        /// <summary>
+        /// BGMボリュームを取得
+        /// </summary>
+        public float GetBGMVolume()
+        {
+            return bgmVolume;
+        }
+        
+        /// <summary>
+        /// アンビエントボリュームを取得
+        /// </summary>
+        public float GetAmbientVolume()
+        {
+            return ambientVolume;
+        }
+        
+        /// <summary>
+        /// エフェクトボリュームを取得
+        /// </summary>
+        public float GetEffectVolume()
+        {
+            return effectVolume;
+        }
+        
+        /// <summary>
+        /// カテゴリ別のボリュームを設定
+        /// </summary>
+        public void SetCategoryVolume(string category, float volume)
+        {
+            volume = Mathf.Clamp01(volume);
+            
+            switch (category.ToLower())
+            {
+                case "bgm":
+                    SetBGMVolume(volume);
+                    break;
+                case "ambient":
+                    SetAmbientVolume(volume);
+                    break;
+                case "effect":
+                case "sfx":
+                    SetEffectVolume(volume);
+                    break;
+                case "stealth":
+                    SetStealthAudioVolume(volume);
+                    break;
+                default:
+                    EventLogger.LogWarning($"[AudioManager] Unknown category: {category}");
+                    break;
+            }
+        }
+        
+        /// <summary>
+        /// サウンドが再生中か確認
+        /// </summary>
+        public bool IsPlaying(string soundId)
+        {
+            // EffectManagerには個別の状態チェック機能がないため、仮実装
+            // TODO: 個別サウンドの再生状態トラッキング機能を追加
+            return false;
+        }
+        
+        /// <summary>
+        /// 一時停止
+        /// </summary>
+        public void Pause()
+        {
+            PauseAllAudio();
+        }
+        
+        /// <summary>
+        /// 再開
+        /// </summary>
+        public void Resume()
+        {
+            ResumeAllAudio();
+        }
+        
         #endregion
 
         #region Editor Helpers

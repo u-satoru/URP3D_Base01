@@ -591,6 +591,86 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         #endregion
+        
+        #region Public Status API
+        
+        /// <summary>
+        /// 現在のBGMが再生中か確認
+        /// </summary>
+        public bool IsPlaying()
+        {
+            return primaryBGMSource != null && primaryBGMSource.isPlaying;
+        }
+        
+        /// <summary>
+        /// 指定したBGM名が現在再生中か確認
+        /// </summary>
+        public bool IsPlaying(string bgmName)
+        {
+            if (!IsPlaying() || currentTrack == null)
+                return false;
+                
+            // BGM名でのマッチング（簡略実装）
+            return currentTrack.clip != null && 
+                   (currentTrack.clip.name.Contains(bgmName) || 
+                    currentTrack.trackName.Contains(bgmName));
+        }
+        
+        /// <summary>
+        /// 指定したBGMカテゴリが現在再生中か確認
+        /// </summary>
+        public bool IsPlayingCategory(BGMCategory category)
+        {
+            return IsPlaying() && currentCategory == category;
+        }
+        
+        /// <summary>
+        /// 現在のBGMトラック情報を取得
+        /// </summary>
+        public BGMTrack GetCurrentTrack()
+        {
+            return currentTrack;
+        }
+        
+        /// <summary>
+        /// 現在のBGMカテゴリを取得
+        /// </summary>
+        public BGMCategory GetCurrentCategory()
+        {
+            return currentCategory;
+        }
+        
+        /// <summary>
+        /// 現在の緑張レベルを取得
+        /// </summary>
+        public float GetCurrentTensionLevel()
+        {
+            return currentTensionLevel;
+        }
+        
+        /// <summary>
+        /// BGM名からBGMカテゴリへの変換
+        /// </summary>
+        public BGMCategory GetCategoryFromName(string bgmName)
+        {
+            if (string.IsNullOrEmpty(bgmName))
+                return BGMCategory.Ambient;
+                
+            string lowerName = bgmName.ToLower();
+            
+            return lowerName switch
+            {
+                var name when name.Contains("menu") || name.Contains("title") => BGMCategory.Menu,
+                var name when name.Contains("combat") || name.Contains("battle") || name.Contains("fight") => BGMCategory.Combat,
+                var name when name.Contains("tension") || name.Contains("alert") || name.Contains("suspicious") => BGMCategory.Tension,
+                var name when name.Contains("stealth") || name.Contains("success") => BGMCategory.StealthSuccess,
+                var name when name.Contains("exploration") || name.Contains("explore") => BGMCategory.Exploration,
+                var name when name.Contains("ambient") || name.Contains("normal") || name.Contains("calm") => BGMCategory.Ambient,
+                _ => BGMCategory.Ambient
+            };
+        }
+        
+        #endregion
 
         #region Editor Helpers
 

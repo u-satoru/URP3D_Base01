@@ -429,6 +429,8 @@ namespace asterivo.Unity60.Core.Audio
     {
         Indoor,      // 室内
         Outdoor,     // 屋外
+        Urban,       // 都市部
+
         Cave,        // 洞窟
         Forest,      // 森林
         Underwater   // 水中
