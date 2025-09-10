@@ -290,29 +290,34 @@
 
 ## 🚀 Phase 4: 長期改善（1ヶ月以降）
 
-### 4.1 DIフレームワーク導入検討
+### 4.1 アーキテクチャ継続改善
 
-- [ ] **[P3]** DIフレームワーク選定
-  - 候補: Zenject, VContainer, Unity DI
-  - 見積: 1週間（調査・POC）
+- [ ] **[P3]** Service Locatorの性能最適化
+  - 対象: 現在のServiceLocatorクラス
+  - 見積: 1週間（プロファイリング・最適化）
+  - 成果物: ServiceLocator_Performance_Report.md
   
-- [ ] **[P3]** DIへの段階的移行計画
+- [ ] **[P3]** イベント駆動パターンの強化
+  - 対象: GameEventシステムの拡張
   - 見積: 2週間
-  - 成果物: DI_Migration_Plan.md
+  - 成果物: Enhanced_Event_System.md
 
-### 4.2 Clean Architecture導入
+### 4.2 既存パターンの完成度向上
 
-- [ ] **[P3]** ドメイン層の設計
-  - Unity非依存のビジネスロジック
+- [ ] **[P3]** ObjectPoolパターンの拡張
+  - 対象: コマンドプール以外のゲームオブジェクト
   - 見積: 2週間
+  - 目標: 既存95%メモリ削減効果の維持・向上
 
-- [ ] **[P3]** ユースケース層の実装
-  - アプリケーションロジック
+- [ ] **[P3]** ScriptableObjectベースデータ管理の強化
+  - 対象: ゲームバランス調整システム
   - 見積: 2週間
+  - 成果物: Enhanced_Data_Management.md
 
-- [ ] **[P3]** プレゼンテーション層の再構築
-  - MVP/MVVMパターン適用
+- [ ] **[P3]** Service Locator + Event駆動ハイブリッドの最適化
+  - Unity特化アーキテクチャの完成
   - 見積: 3週間
+  - 成果物: Hybrid_Architecture_Guide.md
 
 ---
 
@@ -367,5 +372,5 @@
 
 **最終更新**: 2025年9月10日  
 **次回レビュー**: 2025年9月17日  
-**承認者**: [プロジェクトリード名]  
+**承認者**: [UECHI,Satoru]  
 **実施チーム**: [開発チーム名]
