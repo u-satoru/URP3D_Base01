@@ -61,25 +61,7 @@ namespace asterivo.Unity60.Core.Audio
         public int Priority => 15; // オーディオ更新コーディネーターは基本サービスの後に初期化
         public bool IsInitialized { get; private set; }
 
-        // Singleton パターン（後方互換性のため維持）
-        private static AudioUpdateCoordinator instance;
         
-        [System.Obsolete("Use ServiceLocator.GetService<IAudioUpdateService>() instead")]
-        public static AudioUpdateCoordinator Instance 
-        {
-            get 
-            {
-                if (FeatureFlags.UseServiceLocator)
-                {
-                    var service = ServiceLocator.GetService<IAudioUpdateService>();
-                    if (service is AudioUpdateCoordinator coordinator)
-                    {
-                        return coordinator;
-                    }
-                }
-                return instance;
-            }
-        }
         
         // IAudioUpdateService interface properties
         public float UpdateInterval 
@@ -97,26 +79,18 @@ namespace asterivo.Unity60.Core.Audio
 
         private void Awake()
         {
-            // ServiceLocatorに登録
+            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
+            DontDestroyOnLoad(gameObject);
+            
             if (FeatureFlags.UseServiceLocator)
             {
                 ServiceLocator.RegisterService<IAudioUpdateService>(this);
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.Log("[AudioUpdateCoordinator] Registered to ServiceLocator");
+                    EventLogger.Log("[AudioUpdateCoordinator] Registered to ServiceLocator as IAudioUpdateService");
                 }
             }
-            
-            // Singleton の初期化（後方互換性のため）
-            if (instance != null && instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            
-            instance = this;
-            DontDestroyOnLoad(gameObject);
             
             InitializeCoordinator();
         }
@@ -128,15 +102,15 @@ namespace asterivo.Unity60.Core.Audio
 
         private void OnDestroy()
         {
-            // ServiceLocatorから登録解除
+            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
             if (FeatureFlags.UseServiceLocator)
             {
                 ServiceLocator.UnregisterService<IAudioUpdateService>();
-            }
-            
-            if (instance == this)
-            {
-                instance = null;
+                
+                if (FeatureFlags.EnableDebugLogging)
+                {
+                    EventLogger.Log("[AudioUpdateCoordinator] Unregistered from ServiceLocator");
+                }
             }
             
             StopCoordinatedUpdates();
@@ -564,15 +538,47 @@ namespace asterivo.Unity60.Core.Audio
                 syncData.currentEnvironmentType = env;
             }
 
-            // 音量設定
-            var audioManager = AudioManager.Instance;
-            if (audioManager != null)
+            // 音量設定: ServiceLocator優先、Singletonフォールバック
+            var audioService = GetAudioService();
+            if (audioService != null)
             {
-                var audioState = audioManager.GetCurrentAudioState();
-                syncData.masterVolume = audioState.masterVolume;
-                syncData.bgmVolume = audioState.bgmVolume;
-                syncData.ambientVolume = audioState.ambientVolume;
-                syncData.effectVolume = audioState.effectVolume;
+                try
+                {
+                    syncData.masterVolume = audioService.GetMasterVolume();
+                    syncData.bgmVolume = audioService.GetBGMVolume();
+                    syncData.ambientVolume = audioService.GetAmbientVolume();
+                    syncData.effectVolume = audioService.GetEffectVolume();
+                }
+                catch (System.Exception ex)
+                {
+                    EventLogger.LogError($"[AudioUpdateCoordinator] Failed to get audio state from service: {ex.Message}");
+                }
+            }
+            else
+            {
+                // フォールバック: FindFirstObjectByType (ServiceLocator専用実装)
+                // ✅ ServiceLocator専用実装 - 直接AudioManagerを検索
+                var audioManager = FindFirstObjectByType<AudioManager>();
+                if (audioManager != null)
+                {
+                    try
+                    {
+                        var audioState = audioManager.GetCurrentAudioState();
+                        syncData.masterVolume = audioState.masterVolume;
+                        syncData.bgmVolume = audioState.bgmVolume;
+                        syncData.ambientVolume = audioState.ambientVolume;
+                        syncData.effectVolume = audioState.effectVolume;
+                        
+                        if (FeatureFlags.EnableDebugLogging)
+                        {
+                            EventLogger.Log("[AudioUpdateCoordinator] Found AudioManager via FindFirstObjectByType");
+                        }
+                    }
+                    catch (System.Exception ex)
+                    {
+                        EventLogger.LogError($"[AudioUpdateCoordinator] Failed to get audio state from AudioManager: {ex.Message}");
+                    }
+                }
             }
 
             // 近傍AudioSource（空間キャッシュを活用）
@@ -686,6 +692,30 @@ namespace asterivo.Unity60.Core.Audio
                 spatialCacheSize = spatialAudioCache.Count,
                 trackedAudioSources = trackedAudioSources.Count
             };
+        }
+
+        #endregion
+        
+        #region Service Access Methods
+
+        /// <summary>
+        /// ServiceLocator優先でIAudioServiceを取得
+        /// Phase 3移行パターンの実装
+        /// </summary>
+        private IAudioService GetAudioService()
+        {
+            if (FeatureFlags.UseServiceLocator)
+            {
+                try
+                {
+                    return ServiceLocator.GetService<IAudioService>();
+                }
+                catch (System.Exception ex)
+                {
+                    EventLogger.LogError($"[AudioUpdateCoordinator] Failed to get IAudioService from ServiceLocator: {ex.Message}");
+                }
+            }
+            return null;
         }
 
         #endregion

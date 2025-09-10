@@ -62,37 +62,7 @@ namespace asterivo.Unity60.Core.Audio
         private ISpatialAudioService spatialAudioService;
         private IStealthAudioService stealthAudioService;
         
-        private static EffectManager instance;
         
-        /// <summary>
-        /// 後方互換性のためのInstance（非推奨）
-        /// ServiceLocator.GetService<IEffectService>()を使用してください
-        /// </summary>
-        [System.Obsolete("Use ServiceLocator.GetService<IEffectService>() instead")]
-        public static EffectManager Instance 
-        {
-            get 
-            {
-                // Legacy Singleton完全無効化フラグの確認
-                if (FeatureFlags.DisableLegacySingletons) 
-                {
-                    EventLogger.LogError("[DEPRECATED] EffectManager.Instance is disabled. Use ServiceLocator.GetService<IEffectService>() instead.");
-                    return null;
-                }
-                
-                // 移行警告の表示
-                if (FeatureFlags.EnableMigrationWarnings) 
-                {
-                    EventLogger.LogWarning("[DEPRECATED] EffectManager.Instance usage detected. Consider migrating to ServiceLocator.");
-                    
-                    // MigrationMonitorに使用状況を記録
-                    var monitor = FindFirstObjectByType<MigrationMonitor>();
-                    monitor?.LogSingletonUsage(typeof(EffectManager), "Instance");
-                }
-                
-                return instance;
-            }
-        }
         
         // IInitializable実装
         public int Priority => 15; // オーディオサービスの後に初期化
@@ -102,16 +72,9 @@ namespace asterivo.Unity60.Core.Audio
         
         private void Awake()
         {
-            if (instance != null && instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            
-            instance = this;
+            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
             DontDestroyOnLoad(gameObject);
             
-            // ServiceLocatorに登録
             if (FeatureFlags.UseServiceLocator)
             {
                 ServiceLocator.RegisterService<IEffectService>(this);
@@ -132,15 +95,15 @@ namespace asterivo.Unity60.Core.Audio
         
         private void OnDestroy()
         {
-            if (instance == this)
-            {
-                instance = null;
-            }
-            
-            // ServiceLocatorから登録解除
+            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
             if (FeatureFlags.UseServiceLocator)
             {
                 ServiceLocator.UnregisterService<IEffectService>();
+                
+                if (FeatureFlags.EnableDebugLogging)
+                {
+                    EventLogger.Log("[EffectManager] Unregistered from ServiceLocator");
+                }
             }
         }
         

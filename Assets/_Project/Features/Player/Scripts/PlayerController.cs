@@ -3,6 +3,10 @@ using Debug = UnityEngine.Debug;
 using UnityEngine.InputSystem;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Commands.Definitions;
+using asterivo.Unity60.Core.Audio.Interfaces;
+using _Project.Core;
+using _Project.Core.Services;
+using asterivo.Unity60.Core.Debug;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Player
@@ -51,8 +55,27 @@ namespace asterivo.Unity60.Player
         [Tooltip("プレイヤーの移動無効化を解除するイベントリスナー")]
         [SerializeField] private GameEventListener unfreezeMovementListener;
 
+        [TabGroup("Player Control", "Audio Integration")]
+        [Header("Service Dependencies")]
+        [Tooltip("ServiceLocatorを優先的に使用するか")]
+        [SerializeField] private bool useServiceLocator = true;
+        [Tooltip("ステルスオーディオ機能を有効にするか")]
+        [SerializeField] private bool enableStealthAudio = true;
+        [Tooltip("足音再生を有効にするか")]
+        [SerializeField] private bool enableFootsteps = true;
+
         private PlayerInput playerInput;
         private InputActionMap playerActionMap;
+        
+        // ✅ Task 2: Service References (移行パターン実装)
+        private IAudioService audioService;
+        private IStealthAudioService stealthAudioService;
+        
+        [TabGroup("Player Control", "Debug Info")]
+        [ReadOnly]
+        [ShowInInspector]
+        [LabelText("Audio Service Status")]
+        private string audioServiceStatus = "Not Initialized";
         
         [TabGroup("Player Control", "Debug Info")]
         [ReadOnly]
@@ -113,11 +136,143 @@ namespace asterivo.Unity60.Player
             SetupMovementEventListeners();
         }
 
+        /// <summary>
+        /// ✅ Task 2: Step 3.6 移行パターン実装
+        /// オーディオサービスの初期化（ServiceLocator優先、Singleton フォールバック）
+        /// </summary>
+        private void Start() 
+        {
+            InitializeAudioServices();
+        }
+
         private void OnDestroy()
         {
             CleanupInputCallbacks();
             CleanupMovementEventListeners();
         }
+
+        #region Audio Service Integration (Task 2: Step 3.6)
+
+        /// <summary>
+        /// オーディオサービスの初期化（移行パターン実装）
+        /// </summary>
+        private void InitializeAudioServices()
+        {
+            audioServiceStatus = "Initializing...";
+            
+            // 新しい方法での取得 (推奨) - ServiceLocator優先
+            if (useServiceLocator && FeatureFlags.UseServiceLocator) 
+            {
+                try
+                {
+                    audioService = ServiceLocator.GetService<IAudioService>();
+                    
+                    if (enableStealthAudio)
+                    {
+                        stealthAudioService = ServiceLocator.GetService<IStealthAudioService>();
+                    }
+                    
+                    if (audioService != null)
+                    {
+                        audioServiceStatus = "ServiceLocator: Success";
+                        
+                        if (FeatureFlags.EnableDebugLogging)
+                        {
+                            EventLogger.Log("[PlayerController] Using ServiceLocator for audio services");
+                        }
+                        return; // 正常に取得できたので終了
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    EventLogger.LogWarning($"[PlayerController] ServiceLocator audio service failed: {ex.Message}");
+                }
+            }
+            
+            // 従来の方法 (後方互換性) - Singleton フォールバック
+            if (!FeatureFlags.DisableLegacySingletons)
+            {
+                try 
+                {
+#pragma warning disable CS0618 // Obsolete warning suppression during migration
+                    var audioManager = FindFirstObjectByType<asterivo.Unity60.Core.Audio.AudioManager>();
+                    if (audioManager != null)
+                    {
+                        audioService = audioManager;
+                        audioServiceStatus = "Legacy Singleton: Success";
+                    }
+                    
+                    if (enableStealthAudio)
+                    {
+                        var stealthCoordinator = FindFirstObjectByType<asterivo.Unity60.Core.Audio.StealthAudioCoordinator>();
+                        if (stealthCoordinator != null)
+                        {
+                            stealthAudioService = stealthCoordinator;
+                        }
+                    }
+#pragma warning restore CS0618
+                    
+                    if (FeatureFlags.EnableMigrationWarnings)
+                    {
+                        EventLogger.LogWarning("[PlayerController] Using legacy Singleton access");
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    EventLogger.LogError($"[PlayerController] Legacy audio service fallback failed: {ex.Message}");
+                }
+            }
+            
+            // サービス取得の検証
+            if (audioService == null)
+            {
+                audioServiceStatus = "Failed: No Audio Service";
+                EventLogger.LogError("[PlayerController] Failed to get IAudioService");
+            }
+            
+            if (enableStealthAudio && stealthAudioService == null)
+            {
+                EventLogger.LogWarning("[PlayerController] Failed to get IStealthAudioService");
+            }
+        }
+        
+        /// <summary>
+        /// 足音再生（移行パターン実装例）
+        /// </summary>
+        private void PlayFootstep() 
+        {
+            if (!enableFootsteps || audioService == null) return;
+            
+            // 基本足音再生
+            audioService.PlaySound("footstep", transform.position, 0.7f);
+            
+            // ステルスオーディオとの連携
+            if (enableStealthAudio && stealthAudioService != null)
+            {
+                // 足音の強度を動的に計算（スプリント時は強く）
+                float intensity = isSprintPressed ? 0.8f : 0.4f;
+                
+                stealthAudioService.CreateFootstep(transform.position, intensity, "concrete");
+            }
+        }
+        
+        /// <summary>
+        /// ランディング音再生
+        /// </summary>
+        private void PlayLandingSound()
+        {
+            if (!enableFootsteps || audioService == null) return;
+            
+            audioService.PlaySound("landing", transform.position, 0.9f);
+            
+            if (enableStealthAudio && stealthAudioService != null)
+            {
+                // ランディングは比較的大きな音
+                stealthAudioService.CreateFootstep(transform.position, 0.9f, "concrete");
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// Input Systemのアクションにコールバックメソッドを登録します。

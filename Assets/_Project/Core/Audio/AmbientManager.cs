@@ -6,6 +6,8 @@ using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Audio.Interfaces;
+using _Project.Core;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio
@@ -132,13 +134,20 @@ namespace asterivo.Unity60.Core.Audio
         /// <summary>
         /// システム参照の検索
         /// </summary>
+        /// <summary>
+        /// システム参照の検索
+        /// Phase 3移行パターン: ServiceLocator優先、Singletonフォールバック
+        /// </summary>
         private void FindSystemReferences()
         {
             if (stealthCoordinator == null)
                 stealthCoordinator = FindFirstObjectByType<StealthAudioCoordinator>();
 
+            // SpatialAudioManager取得: ServiceLocator優先、Singletonフォールバック
             if (spatialAudioManager == null)
-                spatialAudioManager = SpatialAudioManager.Instance;
+            {
+                spatialAudioManager = GetSpatialAudioManager();
+            }
 
             // リスナーの検索
             var audioListener = FindFirstObjectByType<AudioListener>();
@@ -146,6 +155,51 @@ namespace asterivo.Unity60.Core.Audio
             {
                 listenerTransform = audioListener.transform;
             }
+        }
+        
+        /// <summary>
+        /// ServiceLocator優先でSpatialAudioManagerを取得
+        /// Phase 3移行パターンの実装
+        /// </summary>
+        private SpatialAudioManager GetSpatialAudioManager()
+        {
+            // ServiceLocator経由での取得を試みる
+            if (FeatureFlags.UseServiceLocator)
+            {
+                try
+                {
+                    var spatialService = ServiceLocator.GetService<ISpatialAudioService>();
+                    if (spatialService is SpatialAudioManager manager)
+                    {
+                        if (FeatureFlags.EnableDebugLogging)
+                        {
+                            EventLogger.Log("[AmbientManager] Successfully retrieved SpatialAudioManager from ServiceLocator");
+                        }
+                        return manager;
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    EventLogger.LogError($"[AmbientManager] Failed to get SpatialAudioManager from ServiceLocator: {ex.Message}");
+                }
+            }
+            
+            // ✅ ServiceLocator専用実装 - 直接SpatialAudioManagerを検索
+            var spatialAudioManager = FindFirstObjectByType<SpatialAudioManager>();
+            if (spatialAudioManager != null)
+            {
+                if (FeatureFlags.EnableDebugLogging)
+                {
+                    EventLogger.Log("[AmbientManager] Found SpatialAudioManager via FindFirstObjectByType");
+                }
+                return spatialAudioManager;
+            }
+            else
+            {
+                EventLogger.LogError("[AmbientManager] No SpatialAudioManager available and legacy singletons are disabled");
+            }
+            
+            return null;
         }
 
         /// <summary>

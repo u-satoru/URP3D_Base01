@@ -64,15 +64,7 @@ namespace asterivo.Unity60.Core.Audio
         private AudioManager audioManager;
         private DynamicAudioEnvironment dynamicEnvironment;
         
-        // Singleton パターン（後方互換性）
-        private static StealthAudioCoordinator instance;
-        
-        /// <summary>
-        /// 後方互換性のためのInstance（非推奨）
-        /// ServiceLocator.GetService<IStealthAudioService>()を使用してください
-        /// </summary>
-        [System.Obsolete("Use ServiceLocator.GetService<IStealthAudioService>() instead")]
-        public static StealthAudioCoordinator Instance => instance;
+        // ✅ Singleton パターンを完全削除 - ServiceLocator専用実装
         
         // 初期化状態管理
         public bool IsInitialized { get; private set; }
@@ -81,16 +73,10 @@ namespace asterivo.Unity60.Core.Audio
 
         private void Awake()
         {
-            if (instance != null && instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            
-            instance = this;
+            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
             DontDestroyOnLoad(gameObject);
             
-            // ServiceLocatorに登録 (コメントアウト解除 + エラーハンドリング強化)
+            // ServiceLocatorに登録
             if (FeatureFlags.UseServiceLocator)
             {
                 try
@@ -106,6 +92,10 @@ namespace asterivo.Unity60.Core.Audio
                 {
                     EventLogger.LogError($"[StealthAudioCoordinator] Failed to register to ServiceLocator: {ex.Message}");
                 }
+            }
+            else
+            {
+                EventLogger.LogWarning("[StealthAudioCoordinator] ServiceLocator is disabled - service not registered");
             }
             
             InitializeCoordinator();
@@ -125,12 +115,8 @@ namespace asterivo.Unity60.Core.Audio
         
         private void OnDestroy()
         {
-            if (instance == this)
-            {
-                instance = null;
-            }
-            
-            // ServiceLocatorから登録解除 (コメントアウト解除 + エラーハンドリング強化)
+            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
+            // ServiceLocatorから登録解除
             if (FeatureFlags.UseServiceLocator)
             {
                 try
@@ -172,19 +158,30 @@ namespace asterivo.Unity60.Core.Audio
 
         /// <summary>
         /// システム参照の検索
+        /// Phase 3 移行パターン: ServiceLocator優先、Singleton フォールバック
         /// </summary>
         private void FindSystemReferences()
         {
-            // ServiceLocator経由でAudioServiceを取得 (コメントアウト解除 + エラーハンドリング強化)
+            // ServiceLocator経由でAudioServiceを取得
             if (FeatureFlags.UseServiceLocator && audioService == null)
             {
                 try
                 {
                     audioService = ServiceLocator.GetService<IAudioService>();
                     
-                    if (FeatureFlags.EnableDebugLogging && audioService != null)
+                    if (audioService != null)
                     {
-                        EventLogger.Log("[StealthAudioCoordinator] Successfully retrieved AudioService from ServiceLocator");
+                        if (FeatureFlags.EnableDebugLogging)
+                        {
+                            EventLogger.Log("[StealthAudioCoordinator] Successfully retrieved AudioService from ServiceLocator");
+                        }
+                    }
+                    else
+                    {
+                        if (FeatureFlags.EnableMigrationMonitoring)
+                        {
+                            EventLogger.LogWarning("[StealthAudioCoordinator] ServiceLocator returned null for IAudioService, falling back to legacy approach");
+                        }
                     }
                 }
                 catch (System.Exception ex)
@@ -193,12 +190,25 @@ namespace asterivo.Unity60.Core.Audio
                 }
             }
             
-            // 後方互換性のためAudioManagerも取得
+            // ✅ ServiceLocator専用実装 - 直接AudioManagerを検索
             if (audioManager == null)
             {
-#pragma warning disable CS0618 // 廃止予定の警告を抑制
-                audioManager = AudioManager.Instance;
-#pragma warning restore CS0618
+                try
+                {
+                    audioManager = FindFirstObjectByType<AudioManager>();
+                    if (audioManager != null && FeatureFlags.EnableDebugLogging)
+                    {
+                        EventLogger.Log("[StealthAudioCoordinator] Found AudioManager via FindFirstObjectByType");
+                    }
+                    else if (audioManager == null)
+                    {
+                        EventLogger.LogError("[StealthAudioCoordinator] No AudioManager found");
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    EventLogger.LogError($"[StealthAudioCoordinator] Failed to get AudioManager: {ex.Message}");
+                }
             }
 
             if (dynamicEnvironment == null)

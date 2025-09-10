@@ -65,11 +65,31 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             
             if (enableAutomaticTimeUpdates)
             {
-                // AudioUpdateCoordinatorが有効な場合は協調更新を使用
-                if (AudioUpdateCoordinator.Instance != null && AudioUpdateCoordinator.Instance.enabled)
+                // ✅ ServiceLocator専用実装 - IAudioUpdateServiceを取得
+                if (_Project.Core.FeatureFlags.UseServiceLocator)
                 {
-                    AudioUpdateCoordinator.Instance.OnAudioSystemSync += OnAudioSystemSync;
-                    EventLogger.Log("<color=cyan>[TimeAmbientController]</color> Registered with AudioUpdateCoordinator for time updates");
+                    try
+                    {
+                        var audioUpdateService = _Project.Core.ServiceLocator.GetService<asterivo.Unity60.Core.Audio.Interfaces.IAudioUpdateService>();
+                        if (audioUpdateService is AudioUpdateCoordinator coordinator && coordinator.enabled)
+                        {
+                            coordinator.OnAudioSystemSync += OnAudioSystemSync;
+                            EventLogger.Log("<color=cyan>[TimeAmbientController]</color> Registered with AudioUpdateCoordinator via ServiceLocator");
+                            return; // 登録成功のため終了
+                        }
+                    }
+                    catch (System.Exception ex)
+                    {
+                        EventLogger.LogError($"[TimeAmbientController] Failed to get IAudioUpdateService from ServiceLocator: {ex.Message}");
+                    }
+                }
+                
+                // フォールバック: 直接検索
+                var fallbackCoordinator = FindFirstObjectByType<AudioUpdateCoordinator>();
+                if (fallbackCoordinator != null && fallbackCoordinator.enabled)
+                {
+                    fallbackCoordinator.OnAudioSystemSync += OnAudioSystemSync;
+                    EventLogger.Log("<color=cyan>[TimeAmbientController]</color> Registered with AudioUpdateCoordinator via fallback");
                 }
                 else
                 {

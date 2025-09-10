@@ -63,7 +63,7 @@ namespace _Project.Core
         /// </summary>
         public static bool UseNewAudioService
         {
-            get => PlayerPrefs.GetInt("FeatureFlag_UseNewAudioService", 0) == 1;
+            get => PlayerPrefs.GetInt("FeatureFlag_UseNewAudioService", 1) == 1; // ✅ Task1: デフォルト値を1に変更
             set => SetFlag("FeatureFlag_UseNewAudioService", value);
         }
         
@@ -72,7 +72,7 @@ namespace _Project.Core
         /// </summary>
         public static bool UseNewSpatialService
         {
-            get => PlayerPrefs.GetInt("FeatureFlag_UseNewSpatialService", 0) == 1;
+            get => PlayerPrefs.GetInt("FeatureFlag_UseNewSpatialService", 1) == 1; // ✅ Task1: デフォルト値を1に変更
             set => SetFlag("FeatureFlag_UseNewSpatialService", value);
         }
         
@@ -81,7 +81,7 @@ namespace _Project.Core
         /// </summary>
         public static bool UseNewStealthService
         {
-            get => PlayerPrefs.GetInt("FeatureFlag_UseNewStealthService", 0) == 1;
+            get => PlayerPrefs.GetInt("FeatureFlag_UseNewStealthService", 1) == 1; // ✅ Task1: デフォルト値を1に変更
             set => SetFlag("FeatureFlag_UseNewStealthService", value);
         }
         
@@ -298,6 +298,10 @@ namespace _Project.Core
                     UseNewAudioSystem = true;
                     UseEventDrivenAudio = true;
                     UseNewAudioUpdateSystem = true;
+                    // ✅ Task1: Phase 3新フラグを追加
+                    UseNewAudioService = true;
+                    UseNewSpatialService = true;
+                    UseNewStealthService = true;
                     EnableAllMigrationFlags();
                     AllowSingletonFallback = false;
                     break;
@@ -475,6 +479,27 @@ namespace _Project.Core
         }
         
         /// <summary>
+        /// Task 1専用: Phase 3フラグの確実な有効化
+        /// </summary>
+        public static void EnablePhase3Flags()
+        {
+            // 既存のPlayerPrefsキーを削除して新しいデフォルト値を適用
+            PlayerPrefs.DeleteKey("FeatureFlag_UseNewAudioService");
+            PlayerPrefs.DeleteKey("FeatureFlag_UseNewSpatialService");
+            PlayerPrefs.DeleteKey("FeatureFlag_UseNewStealthService");
+            
+            // 明示的に設定（確実にするため）
+            UseNewAudioService = true;
+            UseNewSpatialService = true;
+            UseNewStealthService = true;
+            
+            PlayerPrefs.Save();
+            
+            Debug.Log("[FeatureFlags] Phase 3 flags enabled successfully");
+            LogCurrentFlags(); // 設定確認
+        }
+        
+        /// <summary>
         /// 設定の整合性を検証
         /// </summary>
         public static void ValidateConfiguration()
@@ -491,6 +516,73 @@ namespace _Project.Core
             {
                 Debug.LogWarning("[FeatureFlags] EnablePerformanceMeasurement requires EnableMigrationMonitoring");
             }
+        }
+        
+        // ========== Task 4: DisableLegacySingletons段階的有効化 ==========
+        
+        /// <summary>
+        /// Task 4: Day 1 - テスト環境で警告システム有効化
+        /// EnableMigrationWarningsとMigrationMonitoringを確実に有効化
+        /// </summary>
+        public static void EnableDay1TestWarnings()
+        {
+            PlayerPrefs.DeleteKey("FeatureFlag_EnableMigrationWarnings");
+            PlayerPrefs.DeleteKey("FeatureFlag_EnableMigrationMonitoring");
+            
+            EnableMigrationWarnings = true;
+            EnableMigrationMonitoring = true;
+            EnableDebugLogging = true;
+            
+            PlayerPrefs.Save();
+            Debug.Log("[FeatureFlags] Day 1: Test warnings enabled successfully");
+            LogCurrentFlags();
+        }
+        
+        /// <summary>
+        /// Task 4: Day 4 - 本番環境でSingleton段階的無効化
+        /// DisableLegacySingletons を有効化（最終段階）
+        /// </summary>
+        public static void EnableDay4SingletonDisabling()
+        {
+            PlayerPrefs.DeleteKey("FeatureFlag_DisableLegacySingletons");
+            
+            DisableLegacySingletons = true;
+            
+            PlayerPrefs.Save();
+            Debug.Log("[FeatureFlags] Day 4: Legacy Singletons disabled successfully");
+            LogCurrentFlags();
+            
+            // MigrationValidator実行を推奨
+            Debug.Log("[FeatureFlags] RECOMMENDATION: Run MigrationValidator to verify migration completion");
+        }
+        
+        /// <summary>
+        /// Task 4の安全な実行チェック
+        /// </summary>
+        public static bool IsTask4Safe()
+        {
+            // ServiceLocator基盤が整っているかチェック
+            if (!UseServiceLocator)
+            {
+                Debug.LogError("[FeatureFlags] Task 4 requires UseServiceLocator = true");
+                return false;
+            }
+            
+            // Phase 3の新サービスが有効かチェック  
+            if (!UseNewAudioService || !UseNewSpatialService || !UseNewStealthService)
+            {
+                Debug.LogError("[FeatureFlags] Task 4 requires all Phase 3 services enabled");
+                return false;
+            }
+            
+            // 移行監視システムが有効かチェック
+            if (!EnableMigrationMonitoring)
+            {
+                Debug.LogError("[FeatureFlags] Task 4 requires EnableMigrationMonitoring = true");
+                return false;
+            }
+            
+            return true;
         }
     public static void LogFlagHistory()
         {

@@ -6,63 +6,38 @@ using _Project.Core;
 namespace asterivo.Unity60.Core.Audio
 {
     /// <summary>
-    /// 既存のAudioManager.Instanceを使用しているコードとの後方互換性を保つアダプター
-    /// 段階的移行期間中に使用
+    /// ✅ ServiceLocator専用実装のAudioManagerアダプター
+    /// ServiceLocatorパターンを使用したオーディオサービスへのアクセスを提供
     /// </summary>
     public class AudioManagerAdapter : MonoBehaviour
     {
-        private static AudioManagerAdapter instance;
         
-        /// <summary>
-        /// 後方互換性のためのInstance（非推奨）
-        /// </summary>
-        [System.Obsolete("Use ServiceLocator.GetService<IAudioService>() instead")]
-        public static AudioManagerAdapter Instance
-        {
-            get
-            {
-                if (instance == null && FeatureFlags.UseServiceLocator)
-                {
-                    // ServiceLocatorから取得を試みる
-                    var service = ServiceLocator.GetService<IAudioService>();
-                    if (service is AudioManagerAdapter adapter)
-                    {
-                        instance = adapter;
-                    }
-                    else if (service != null)
-                    {
-                        // AudioServiceをラップするアダプターを作成
-                        var go = new GameObject("AudioManagerAdapter");
-                        instance = go.AddComponent<AudioManagerAdapter>();
-                        DontDestroyOnLoad(go);
-                    }
-                }
-                return instance;
-            }
-        }
         
         private IAudioService audioService;
         
         private void Awake()
         {
-            if (instance == null)
-            {
-                instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else if (instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
+            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
+            DontDestroyOnLoad(gameObject);
             
             // ServiceLocatorからオーディオサービスを取得
             if (FeatureFlags.UseServiceLocator)
             {
-                audioService = ServiceLocator.GetService<IAudioService>();
-                if (audioService == null && FeatureFlags.EnableDebugLogging)
+                try
                 {
-                    EventLogger.LogWarning("[AudioManagerAdapter] AudioService not found in ServiceLocator");
+                    audioService = ServiceLocator.GetService<IAudioService>();
+                    if (audioService != null && FeatureFlags.EnableDebugLogging)
+                    {
+                        EventLogger.Log("[AudioManagerAdapter] Successfully retrieved AudioService from ServiceLocator");
+                    }
+                    else if (audioService == null && FeatureFlags.EnableDebugLogging)
+                    {
+                        EventLogger.LogWarning("[AudioManagerAdapter] AudioService not found in ServiceLocator");
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    EventLogger.LogError($"[AudioManagerAdapter] Failed to get AudioService from ServiceLocator: {ex.Message}");
                 }
             }
         }
@@ -76,14 +51,17 @@ namespace asterivo.Unity60.Core.Audio
             {
                 audioService.PlaySound(soundId, position, volume);
             }
-            else if (AudioManager.Instance != null)
+            else
             {
-                // フォールバック：古いAudioManagerを使用
-                // EffectManagerを直接使用
-                var effectManager = FindFirstObjectByType<EffectManager>();
-                if (effectManager != null)
+                // ✅ ServiceLocator専用実装 - 直接EffectManagerを使用
+                var effectService = ServiceLocator.GetService<IEffectService>();
+                if (effectService != null)
                 {
-                    effectManager.PlayEffect(soundId, position, volume);
+                    effectService.PlayEffect(soundId, position, volume);
+                }
+                else
+                {
+                    EventLogger.LogError("[AudioManagerAdapter] IEffectService not found in ServiceLocator");
                 }
             }
         }
@@ -94,9 +72,9 @@ namespace asterivo.Unity60.Core.Audio
             {
                 audioService.SetMasterVolume(volume);
             }
-            else if (AudioManager.Instance != null)
+            else
             {
-                AudioManager.Instance.SetMasterVolume(volume);
+                EventLogger.LogError("[AudioManagerAdapter] No audio service available and legacy singletons are disabled");
             }
         }
         
@@ -106,15 +84,19 @@ namespace asterivo.Unity60.Core.Audio
             {
                 service.PlayBGM(bgmName, fadeTime);
             }
-            else if (AudioManager.Instance != null)
+            else
             {
-                // BGMManagerを直接使用
+                // ✅ ServiceLocator専用実装 - BGMManagerをServiceLocator経由で取得
                 var bgmManager = FindFirstObjectByType<BGMManager>();
                 if (bgmManager != null)
                 {
                     // TODO: bgmNameからBGMCategoryへの変換ロジックが必要
                     // 現在はデフォルトカテゴリを使用
                     bgmManager.PlayBGMCategory(BGMCategory.Exploration, fadeTime <= 0);
+                }
+                else
+                {
+                    EventLogger.LogError("[AudioManagerAdapter] BGMManager not found");
                 }
             }
         }
@@ -126,13 +108,17 @@ namespace asterivo.Unity60.Core.Audio
                 // IAudioServiceには直接StopBGMがないので、StopAllSoundsを使用
                 audioService.StopAllSounds();
             }
-            else if (AudioManager.Instance != null)
+            else
             {
-                // BGMManagerを直接使用
+                // ✅ ServiceLocator専用実装 - BGMManagerを直接取得
                 var bgmManager = FindFirstObjectByType<BGMManager>();
                 if (bgmManager != null)
                 {
                     bgmManager.StopBGM(fadeTime);
+                }
+                else
+                {
+                    EventLogger.LogError("[AudioManagerAdapter] BGMManager not found");
                 }
             }
         }
@@ -144,9 +130,10 @@ namespace asterivo.Unity60.Core.Audio
         
         private void OnDestroy()
         {
-            if (instance == this)
+            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
+            if (FeatureFlags.EnableDebugLogging)
             {
-                instance = null;
+                EventLogger.Log("[AudioManagerAdapter] Adapter destroyed");
             }
         }
     }

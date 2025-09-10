@@ -52,57 +52,57 @@ namespace asterivo.Unity60.Tests.Core.Services
         #region 基本移行互換性テスト
         
         [Test]
-        public void AudioService_BothMethods_ProduceSameResult() 
+        public void AudioService_ServiceLocator_ReturnsValidInstance() 
         {
             // Arrange
             var audioManager = testGameObject.AddComponent<AudioManager>();
             audioManager.gameObject.SetActive(true);
             
-            // Act
-            var legacyAudio = AudioManager.Instance;
-            var newAudio = ServiceLocator.GetService<IAudioService>();
+            // Act - ✅ ServiceLocator専用実装テスト
+            var serviceLocatorAudio = ServiceLocator.GetService<IAudioService>();
+            var directAudio = Object.FindFirstObjectByType<AudioManager>();
             
             // Assert
-            Assert.IsNotNull(legacyAudio, "Legacy AudioManager.Instance should not be null");
-            Assert.IsNotNull(newAudio, "ServiceLocator AudioService should not be null");
-            Assert.AreSame(legacyAudio, newAudio, "Both methods should return the same instance during migration");
+            Assert.IsNotNull(serviceLocatorAudio, "ServiceLocator AudioService should not be null");
+            Assert.IsNotNull(directAudio, "Direct AudioManager should not be null");
+            Assert.AreSame(directAudio, serviceLocatorAudio, "ServiceLocator should return the same instance as direct access");
             
             // MigrationMonitorの記録確認
             Assert.IsNotNull(migrationMonitor, "MigrationMonitor should be present");
         }
         
         [Test]
-        public void SpatialAudio_MigrationCompatibility_Success() 
+        public void SpatialAudio_ServiceLocator_ReturnsValidInstance() 
         {
             // Arrange
             var spatialManager = testGameObject.AddComponent<SpatialAudioManager>();
             spatialManager.gameObject.SetActive(true);
             
-            // Act
-            var legacySpatial = SpatialAudioManager.Instance;
-            var newSpatial = ServiceLocator.GetService<ISpatialAudioService>();
+            // Act - ✅ ServiceLocator専用実装テスト
+            var serviceLocatorSpatial = ServiceLocator.GetService<ISpatialAudioService>();
+            var directSpatial = Object.FindFirstObjectByType<SpatialAudioManager>();
             
             // Assert
-            Assert.IsNotNull(legacySpatial, "Legacy SpatialAudioManager.Instance should not be null");
-            Assert.IsNotNull(newSpatial, "ServiceLocator SpatialAudioService should not be null");
-            Assert.AreSame(legacySpatial, newSpatial, "Both methods should return the same instance during migration");
+            Assert.IsNotNull(serviceLocatorSpatial, "ServiceLocator SpatialAudioService should not be null");
+            Assert.IsNotNull(directSpatial, "Direct SpatialAudioManager should not be null");
+            Assert.AreSame(directSpatial, serviceLocatorSpatial, "ServiceLocator should return the same instance as direct access");
         }
         
         [Test]
-        public void EffectManager_MigrationCompatibility_Success() 
+        public void EffectManager_ServiceLocator_ReturnsValidInstance() 
         {
             // Arrange
             var effectManager = testGameObject.AddComponent<EffectManager>();
             effectManager.gameObject.SetActive(true);
             
-            // Act
-            var legacyEffect = EffectManager.Instance;
-            var newEffect = ServiceLocator.GetService<IEffectService>();
+            // Act - ✅ ServiceLocator専用実装テスト
+            var serviceLocatorEffect = ServiceLocator.GetService<IEffectService>();
+            var directEffect = Object.FindFirstObjectByType<EffectManager>();
             
             // Assert
-            Assert.IsNotNull(legacyEffect, "Legacy EffectManager.Instance should not be null");
-            Assert.IsNotNull(newEffect, "ServiceLocator EffectService should not be null");
-            Assert.AreSame(legacyEffect, newEffect, "Both methods should return the same instance during migration");
+            Assert.IsNotNull(serviceLocatorEffect, "ServiceLocator EffectService should not be null");
+            Assert.IsNotNull(directEffect, "Direct EffectManager should not be null");
+            Assert.AreSame(directEffect, serviceLocatorEffect, "ServiceLocator should return the same instance as direct access");
         }
         
         [Test]
@@ -183,7 +183,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         #region パフォーマンステスト
         
         [UnityTest]
-        public IEnumerator Performance_ServiceLocator_NotSlowerThanSingleton() 
+        public IEnumerator Performance_ServiceLocator_AcceptablePerformance() 
         {
             // Arrange
             var audioManager = testGameObject.AddComponent<AudioManager>();
@@ -191,14 +191,6 @@ namespace asterivo.Unity60.Tests.Core.Services
             yield return null;
             
             const int iterations = 1000;
-            
-            // Measure Singleton access time
-            var singletonStopwatch = System.Diagnostics.Stopwatch.StartNew();
-            for (int i = 0; i < iterations; i++)
-            {
-                var _ = AudioManager.Instance;
-            }
-            singletonStopwatch.Stop();
             
             // Measure ServiceLocator access time
             var serviceStopwatch = System.Diagnostics.Stopwatch.StartNew();
@@ -208,14 +200,13 @@ namespace asterivo.Unity60.Tests.Core.Services
             }
             serviceStopwatch.Stop();
             
-            // Assert
-            float singletonTimePerCall = singletonStopwatch.ElapsedMilliseconds / (float)iterations;
+            // Assert - ✅ ServiceLocator専用パフォーマンステスト
             float serviceTimePerCall = serviceStopwatch.ElapsedMilliseconds / (float)iterations;
             
-            Assert.Less(serviceTimePerCall, singletonTimePerCall * 3f, 
-                       "ServiceLocator should not be more than 3x slower than Singleton");
+            Assert.Less(serviceTimePerCall, 0.1f, 
+                       "ServiceLocator should be faster than 0.1ms per call");
             
-            Debug.Log($"Performance: Singleton={singletonTimePerCall:F4}ms, ServiceLocator={serviceTimePerCall:F4}ms per call");
+            Debug.Log($"Performance: ServiceLocator={serviceTimePerCall:F4}ms per call");
         }
         
         [UnityTest]
@@ -428,28 +419,26 @@ namespace asterivo.Unity60.Tests.Core.Services
         }
         
         [UnityTest]
-        public IEnumerator Integration_EmergencyRollbackScenario_RecoverySuccess()
+        public IEnumerator Integration_ServiceLocator_ContinuesWorking()
         {
-            // Arrange - 完全移行状態を作成
+            // Arrange - ServiceLocator実装状態を作成
             var audioManager = testGameObject.AddComponent<AudioManager>();
             audioManager.gameObject.SetActive(true);
             
             FeatureFlags.SetMigrationPhase(3); // Complete migration
             yield return null;
             
-            // Act - 緊急ロールバック実行
-            FeatureFlags.EmergencyRollback();
+            // Act - ✅ ServiceLocator専用実装テスト
             yield return null;
             
-            // Assert - ロールバック状態確認
-            Assert.IsTrue(FeatureFlags.AllowSingletonFallback, "Singleton fallback should be enabled after rollback");
-            Assert.IsFalse(FeatureFlags.UseNewAudioSystem, "New audio system should be disabled after rollback");
+            // Assert - ServiceLocator状態確認
+            Assert.IsTrue(FeatureFlags.UseServiceLocator, "ServiceLocator should be enabled");
             
             // システムが正常動作することを確認
-            var legacyAudio = AudioManager.Instance;
-            Assert.IsNotNull(legacyAudio, "Legacy system should work after rollback");
+            var serviceLocatorAudio = ServiceLocator.GetService<IAudioService>();
+            Assert.IsNotNull(serviceLocatorAudio, "ServiceLocator system should work");
             
-            Assert.DoesNotThrow(() => legacyAudio.SetMasterVolume(1f), "Legacy system should function after rollback");
+            Assert.DoesNotThrow(() => serviceLocatorAudio.SetMasterVolume(1f), "ServiceLocator system should function properly");
             
             yield return new WaitForSeconds(0.1f);
         }

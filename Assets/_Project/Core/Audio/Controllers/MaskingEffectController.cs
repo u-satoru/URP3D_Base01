@@ -237,12 +237,32 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         /// </summary>
         private void StartMaskingDetection()
         {
-            // AudioUpdateCoordinatorが有効な場合は協調更新を使用
-            if (AudioUpdateCoordinator.Instance != null && AudioUpdateCoordinator.Instance.enabled)
+            // ✅ ServiceLocator専用実装 - IAudioUpdateServiceを取得
+            if (_Project.Core.FeatureFlags.UseServiceLocator)
             {
-                // 協調更新システムに登録（イベント駆動）
-                AudioUpdateCoordinator.Instance.OnAudioSystemSync += OnAudioSystemSync;
-                EventLogger.Log("<color=cyan>[MaskingEffectController]</color> Registered with AudioUpdateCoordinator");
+                try
+                {
+                    var audioUpdateService = _Project.Core.ServiceLocator.GetService<asterivo.Unity60.Core.Audio.Interfaces.IAudioUpdateService>();
+                    if (audioUpdateService is AudioUpdateCoordinator coordinator && coordinator.enabled)
+                    {
+                        // 協調更新システムに登録（イベント駆動）
+                        coordinator.OnAudioSystemSync += OnAudioSystemSync;
+                        EventLogger.Log("<color=cyan>[MaskingEffectController]</color> Registered with AudioUpdateCoordinator via ServiceLocator");
+                        return;
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    EventLogger.LogError($"[MaskingEffectController] Failed to get IAudioUpdateService from ServiceLocator: {ex.Message}");
+                }
+            }
+            
+            // フォールバック: 直接検索
+            var fallbackCoordinator = FindFirstObjectByType<AudioUpdateCoordinator>();
+            if (fallbackCoordinator != null && fallbackCoordinator.enabled)
+            {
+                fallbackCoordinator.OnAudioSystemSync += OnAudioSystemSync;
+                EventLogger.Log("<color=cyan>[MaskingEffectController]</color> Registered with AudioUpdateCoordinator via fallback");
                 return;
             }
             
@@ -258,10 +278,28 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         /// </summary>
         private void StopMaskingDetection()
         {
-            // AudioUpdateCoordinatorからの登録解除
-            if (AudioUpdateCoordinator.Instance != null)
+            // ✅ ServiceLocator専用実装 - IAudioUpdateServiceからの登録解除
+            if (_Project.Core.FeatureFlags.UseServiceLocator)
             {
-                AudioUpdateCoordinator.Instance.OnAudioSystemSync -= OnAudioSystemSync;
+                try
+                {
+                    var audioUpdateService = _Project.Core.ServiceLocator.GetService<asterivo.Unity60.Core.Audio.Interfaces.IAudioUpdateService>();
+                    if (audioUpdateService is AudioUpdateCoordinator coordinator)
+                    {
+                        coordinator.OnAudioSystemSync -= OnAudioSystemSync;
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    EventLogger.LogError($"[MaskingEffectController] Failed to unregister from IAudioUpdateService: {ex.Message}");
+                }
+            }
+            
+            // フォールバック: 直接検索での登録解除
+            var fallbackCoordinator = FindFirstObjectByType<AudioUpdateCoordinator>();
+            if (fallbackCoordinator != null)
+            {
+                fallbackCoordinator.OnAudioSystemSync -= OnAudioSystemSync;
             }
             
             // 従来のコルーチンの停止

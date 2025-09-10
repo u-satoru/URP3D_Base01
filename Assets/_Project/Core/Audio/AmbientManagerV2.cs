@@ -78,8 +78,9 @@ namespace asterivo.Unity60.Core.Audio
 
         private void Update()
         {
-            // AudioUpdateCoordinatorが有効な場合は、そちらに処理を委譲
-            if (AudioUpdateCoordinator.Instance != null && AudioUpdateCoordinator.Instance.enabled)
+            // ✅ ServiceLocator専用実装 - AudioUpdateServiceを取得
+            var audioUpdateService = GetAudioUpdateService();
+            if (audioUpdateService != null && audioUpdateService.IsCoordinatedUpdateEnabled)
             {
                 return; // 協調更新システムが処理するためスキップ
             }
@@ -543,6 +544,51 @@ namespace asterivo.Unity60.Core.Audio
             }
 
             activeEnvironmentSources = activeEnvironmentLayers.Count;
+        }
+
+        #endregion
+        
+        #region Service Access Methods
+
+        /// <summary>
+        /// ServiceLocator優先でIAudioUpdateServiceを取得
+        /// Phase 3移行パターンの実装
+        /// </summary>
+        private asterivo.Unity60.Core.Audio.Interfaces.IAudioUpdateService GetAudioUpdateService()
+        {
+            if (_Project.Core.FeatureFlags.UseServiceLocator)
+            {
+                try
+                {
+                    return _Project.Core.ServiceLocator.GetService<asterivo.Unity60.Core.Audio.Interfaces.IAudioUpdateService>();
+                }
+                catch (System.Exception ex)
+                {
+                    EventLogger.LogError($"[AmbientManagerV2] Failed to get IAudioUpdateService from ServiceLocator: {ex.Message}");
+                }
+            }
+            
+            // フォールバック: FindFirstObjectByType (ServiceLocator専用実装)
+            if (_Project.Core.FeatureFlags.AllowSingletonFallback)
+            {
+                try
+                {
+                    // ✅ ServiceLocator専用実装 - 直接AudioUpdateCoordinatorを検索
+                    var coordinator = FindFirstObjectByType<AudioUpdateCoordinator>();
+                    if (coordinator != null && _Project.Core.FeatureFlags.EnableDebugLogging)
+                    {
+                        EventLogger.Log("[AmbientManagerV2] Found AudioUpdateCoordinator via FindFirstObjectByType");
+                    }
+                    
+                    return coordinator;
+                }
+                catch (System.Exception ex)
+                {
+                    EventLogger.LogError($"[AmbientManagerV2] Failed to get AudioUpdateCoordinator: {ex.Message}");
+                }
+            }
+            
+            return null;
         }
 
         #endregion

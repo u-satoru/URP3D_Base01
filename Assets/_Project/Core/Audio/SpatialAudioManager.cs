@@ -53,37 +53,7 @@ namespace asterivo.Unity60.Core.Audio
         // オクルージョンチェック用
         private Dictionary<AudioSource, float> occlusionValues = new Dictionary<AudioSource, float>();
         
-        private static SpatialAudioManager instance;
-        
-        /// <summary>
-        /// 後方互換性のためのInstance（非推奨）
-        /// ServiceLocator.GetService<ISpatialAudioService>()を使用してください
-        /// </summary>
-        [System.Obsolete("Use ServiceLocator.GetService<ISpatialAudioService>() instead")]
-        public static SpatialAudioManager Instance 
-        {
-            get 
-            {
-                // Legacy Singleton完全無効化フラグの確認
-                if (FeatureFlags.DisableLegacySingletons) 
-                {
-                    EventLogger.LogError("[DEPRECATED] SpatialAudioManager.Instance is disabled. Use ServiceLocator.GetService<ISpatialAudioService>() instead.");
-                    return null;
-                }
-                
-                // 移行警告の表示
-                if (FeatureFlags.EnableMigrationWarnings) 
-                {
-                    EventLogger.LogWarning("[DEPRECATED] SpatialAudioManager.Instance usage detected. Consider migrating to ServiceLocator.");
-                    
-                    // MigrationMonitorに使用状況を記録
-                    var monitor = FindFirstObjectByType<MigrationMonitor>();
-                    monitor?.LogSingletonUsage(typeof(SpatialAudioManager), "Instance");
-                }
-                
-                return instance;
-            }
-        }
+        // ✅ Singleton パターンを完全削除 - ServiceLocator専用実装
         
         // IInitializable実装
         public int Priority => 20; // 空間音響は基本オーディオシステムの後に初期化
@@ -93,24 +63,22 @@ namespace asterivo.Unity60.Core.Audio
         
         private void Awake()
         {
-            if (instance != null && instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            
-            instance = this;
+            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
             DontDestroyOnLoad(gameObject);
             
-            // ServiceLocatorに登録（レガシーサポート）
+            // ServiceLocatorに登録
             if (FeatureFlags.UseServiceLocator)
             {
                 ServiceLocator.RegisterService<ISpatialAudioService>(this);
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.Log("[SpatialAudioManager] Registered to ServiceLocator as ISpatialAudioService (Legacy)");
+                    EventLogger.Log("[SpatialAudioManager] Registered to ServiceLocator as ISpatialAudioService");
                 }
+            }
+            else
+            {
+                EventLogger.LogWarning("[SpatialAudioManager] ServiceLocator is disabled - service not registered");
             }
             
             InitializeAudioSourcePool();
@@ -124,15 +92,16 @@ namespace asterivo.Unity60.Core.Audio
         
         private void OnDestroy()
         {
-            if (instance == this)
-            {
-                instance = null;
-            }
-            
+            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
             // ServiceLocatorから登録解除
             if (FeatureFlags.UseServiceLocator)
             {
                 ServiceLocator.UnregisterService<ISpatialAudioService>();
+                
+                if (FeatureFlags.EnableDebugLogging)
+                {
+                    EventLogger.Log("[SpatialAudioManager] Unregistered from ServiceLocator");
+                }
             }
         }
         
