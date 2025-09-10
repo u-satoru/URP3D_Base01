@@ -1,11 +1,12 @@
+using _Project.Core;
 using UnityEngine;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Audio.Interfaces;
-using _Project.Core;
 using Sirenix.OdinInspector;
+using asterivo.Unity60.Core.Helpers;
 
 namespace asterivo.Unity60.Core.Audio
 {
@@ -195,7 +196,7 @@ namespace asterivo.Unity60.Core.Audio
             {
                 try
                 {
-                    audioManager = FindFirstObjectByType<AudioManager>();
+                    audioManager = ServiceHelper.GetServiceWithFallback<AudioManager>();
                     if (audioManager != null && FeatureFlags.EnableDebugLogging)
                     {
                         EventLogger.Log("[StealthAudioCoordinator] Found AudioManager via FindFirstObjectByType");
@@ -212,7 +213,7 @@ namespace asterivo.Unity60.Core.Audio
             }
 
             if (dynamicEnvironment == null)
-                dynamicEnvironment = FindFirstObjectByType<DynamicAudioEnvironment>();
+                dynamicEnvironment = ServiceHelper.GetServiceWithFallback<DynamicAudioEnvironment>();
         }
 
         /// <summary>

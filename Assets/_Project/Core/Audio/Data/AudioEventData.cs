@@ -1,4 +1,5 @@
 using UnityEngine;
+using asterivo.Unity60.Core.Audio;
 
 namespace asterivo.Unity60.Core.Audio.Data
 {
@@ -185,17 +186,6 @@ namespace asterivo.Unity60.Core.Audio.Data
         }
     }
     
-    /// <summary>
-    /// 音響カテゴリの定義
-    /// </summary>
-    public enum AudioCategory
-    {
-        Stealth,        // 既存のステルス音響（最高優先度）
-        BGM,            // バックグラウンドミュージック
-        Ambient,        // 環境音（マスキング効果あり）
-        Effect,         // 効果音
-        UI              // UIサウンド
-    }
 
     /// <summary>
     /// 音源の種類を定義

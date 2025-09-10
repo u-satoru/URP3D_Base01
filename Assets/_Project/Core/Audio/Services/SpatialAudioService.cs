@@ -15,7 +15,7 @@ namespace asterivo.Unity60.Core.Audio.Services
     /// 空間音響サービス（イベント駆動型）
     /// Singletonパターンを使わず、イベント経由で制御
     /// </summary>
-    public class SpatialAudioService : MonoBehaviour, ISpatialAudioService, IInitializable
+    public class SpatialAudioService : MonoBehaviour, ISpatialAudioService, _Project.Core.IInitializable
     {
         [Header("Audio Configuration")]
         [SerializeField] private AudioMixerGroup spatialMixerGroup;

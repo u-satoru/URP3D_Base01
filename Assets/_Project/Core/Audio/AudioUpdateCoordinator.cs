@@ -8,7 +8,7 @@ using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Shared;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Audio.Services;
-using asterivo.Unity60.Core.Audio.Interfaces;
+using asterivo.Unity60.Core.Helpers;
 using _Project.Core;
 using Sirenix.OdinInspector;
 
@@ -19,7 +19,7 @@ namespace asterivo.Unity60.Core.Audio
     /// リアルタイム同期の最適化とパフォーマンス向上を担当
     /// Service Locatorパターンを使用して他のサービスと連携
     /// </summary>
-    public class AudioUpdateCoordinator : MonoBehaviour, IAudioUpdateService, IInitializable
+    public class AudioUpdateCoordinator : MonoBehaviour, IAudioUpdateService, _Project.Core.IInitializable
     {
         [Header("Update Settings")]
         [SerializeField, Range(0.05f, 1f)] private float updateInterval = AudioConstants.AUDIO_UPDATE_INTERVAL;
@@ -162,13 +162,13 @@ namespace asterivo.Unity60.Core.Audio
         /// </summary>
         private void FindSystemReferences()
         {
-            weatherController = FindFirstObjectByType<WeatherAmbientController>();
-            timeController = FindFirstObjectByType<TimeAmbientController>();
-            maskingController = FindFirstObjectByType<MaskingEffectController>();
-            stealthCoordinator = FindFirstObjectByType<StealthAudioCoordinator>();
+            weatherController = ServiceHelper.GetServiceWithFallback<WeatherAmbientController>();
+            timeController = ServiceHelper.GetServiceWithFallback<TimeAmbientController>();
+            maskingController = ServiceHelper.GetServiceWithFallback<MaskingEffectController>();
+            stealthCoordinator = ServiceHelper.GetServiceWithFallback<StealthAudioCoordinator>();
 
             // プレイヤーTransformの検索
-            var audioListener = FindFirstObjectByType<AudioListener>();
+                        var audioListener = ServiceHelper.GetServiceWithFallback<AudioListener>();;
             if (audioListener != null)
             {
                 playerTransform = audioListener.transform;
@@ -529,7 +529,7 @@ namespace asterivo.Unity60.Core.Audio
             syncData.currentTimeOfDay = newTimeOfDay;
 
             // 天気情報（DynamicAudioEnvironmentから取得）
-            var dynamicEnvironment = FindFirstObjectByType<DynamicAudioEnvironment>();
+            var dynamicEnvironment = ServiceHelper.GetServiceWithFallback<DynamicAudioEnvironment>();
             if (dynamicEnvironment != null)
             {
                 var (env, weather, time) = dynamicEnvironment.GetCurrentState();
@@ -558,7 +558,7 @@ namespace asterivo.Unity60.Core.Audio
             {
                 // フォールバック: FindFirstObjectByType (ServiceLocator専用実装)
                 // ✅ ServiceLocator専用実装 - 直接AudioManagerを検索
-                var audioManager = FindFirstObjectByType<AudioManager>();
+                var audioManager = ServiceHelper.GetServiceWithFallback<AudioManager>();
                 if (audioManager != null)
                 {
                     try

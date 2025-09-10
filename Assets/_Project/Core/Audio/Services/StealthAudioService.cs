@@ -1,10 +1,10 @@
+using _Project.Core;
 using UnityEngine;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
 // using _Project.Core.Audio.Interfaces; // 不要 - 正しいnamespaceは asterivo.Unity60.Core.Audio.Interfaces
-using _Project.Core;
 using Sirenix.OdinInspector;
 using asterivo.Unity60.Core.Audio.Interfaces;
 

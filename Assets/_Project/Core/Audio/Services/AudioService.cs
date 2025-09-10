@@ -14,7 +14,7 @@ namespace asterivo.Unity60.Core.Audio.Services
     /// AudioManagerのService化実装
     /// Singletonパターンを使わず、ServiceLocator経由でアクセス
     /// </summary>
-    public class AudioService : MonoBehaviour, IAudioService, IInitializable
+    public class AudioService : MonoBehaviour, IAudioService, _Project.Core.IInitializable
     {
         [TabGroup("Audio Managers", "System Integration")]
         [Header("New Audio Systems")]

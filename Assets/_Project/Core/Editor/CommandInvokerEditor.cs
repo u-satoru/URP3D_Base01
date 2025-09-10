@@ -3,6 +3,9 @@ using UnityEditor;
 using System.Linq;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Components;
+using asterivo.Unity60.Core.Constants;
+
+using asterivo.Unity60.Core.Components;
 
 namespace asterivo.Unity60.Core.Editor
 {
@@ -263,26 +266,26 @@ namespace asterivo.Unity60.Core.Editor
             EditorGUILayout.BeginVertical("box");
             
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("❤️ Test Heal (10)"))
+            if (GUILayout.Button($"❤️ Test Heal ({GameConstants.TEST_HEAL_SMALL})"))
             {
-                TestHealCommand(10);
+                TestHealCommand(GameConstants.TEST_HEAL_SMALL);
             }
             
-            if (GUILayout.Button("💔 Test Damage (10)"))
+            if (GUILayout.Button($"💔 Test Damage ({GameConstants.TEST_DAMAGE_SMALL})"))
             {
-                TestDamageCommand(10);
+                TestDamageCommand(GameConstants.TEST_DAMAGE_SMALL);
             }
             EditorGUILayout.EndHorizontal();
             
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("❤️ Test Heal (25)"))
+            if (GUILayout.Button($"❤️ Test Heal ({GameConstants.TEST_HEAL_LARGE})"))
             {
-                TestHealCommand(25);
+                TestHealCommand(GameConstants.TEST_HEAL_LARGE);
             }
             
-            if (GUILayout.Button("💔 Test Damage (25)"))
+            if (GUILayout.Button($"💔 Test Damage ({GameConstants.TEST_DAMAGE_LARGE})"))
             {
-                TestDamageCommand(25);
+                TestDamageCommand(GameConstants.TEST_DAMAGE_LARGE);
             }
             EditorGUILayout.EndHorizontal();
             

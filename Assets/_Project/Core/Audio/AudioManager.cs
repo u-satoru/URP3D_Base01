@@ -5,6 +5,7 @@ using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Shared;
 using asterivo.Unity60.Core.Audio.Interfaces;
+using asterivo.Unity60.Core.Helpers;
 using _Project.Core;
 using Sirenix.OdinInspector;
 
@@ -15,7 +16,7 @@ namespace asterivo.Unity60.Core.Audio
     /// 既存のステルスオーディオシステムと新規システムを統合管理
     /// ServiceLocator対応版
     /// </summary>
-    public class AudioManager : MonoBehaviour, IAudioService, IInitializable
+    public class AudioManager : MonoBehaviour, IAudioService, _Project.Core.IInitializable
     {
         // ✅ Task 3: Legacy Singleton警告システム（後方互換性のため）
         private static AudioManager instance;
@@ -44,7 +45,7 @@ namespace asterivo.Unity60.Core.Audio
                     // MigrationMonitorに使用状況を記録 (LogSingletonUsage method)
                     if (FeatureFlags.EnableMigrationMonitoring)
                     {
-                        var migrationMonitor = FindFirstObjectByType<MigrationMonitor>();
+                        var migrationMonitor = ServiceHelper.GetServiceWithFallback<MigrationMonitor>();
                         migrationMonitor?.LogSingletonUsage(typeof(AudioManager), "AudioManager.Instance");
                     }
                 }
@@ -172,15 +173,15 @@ namespace asterivo.Unity60.Core.Audio
                     spatialAudio = ServiceLocator.GetService<ISpatialAudioService>() as SpatialAudioManager;
                 }
                 
-                // フォールバック: 既存のSingletonアクセス
+                // フォールバック: ServiceHelper経由で検索
                 if (spatialAudio == null)
                 {
-                    spatialAudio = FindFirstObjectByType<SpatialAudioManager>();
+                    spatialAudio = ServiceHelper.GetServiceWithFallback<SpatialAudioManager>();
                 }
             }
 
             if (dynamicEnvironment == null)
-                dynamicEnvironment = FindFirstObjectByType<DynamicAudioEnvironment>();
+                dynamicEnvironment = ServiceHelper.GetServiceWithFallback<DynamicAudioEnvironment>();
 
             if (stealthCoordinator == null)
                 stealthCoordinator = GetComponent<StealthAudioCoordinator>();
@@ -241,10 +242,10 @@ namespace asterivo.Unity60.Core.Audio
                 // coordinator = ServiceLocator.GetService<IAudioUpdateService>() as AudioUpdateCoordinator;
             }
             
-            // フォールバック: 既存の検索方法
+            // フォールバック: ServiceHelper経由で検索
             if (coordinator == null)
             {
-                coordinator = FindFirstObjectByType<AudioUpdateCoordinator>();
+                coordinator = ServiceHelper.GetServiceWithFallback<AudioUpdateCoordinator>();
             }
             
             if (coordinator == null)

@@ -1,3 +1,4 @@
+using _Project.Core;
 using UnityEngine;
 using UnityEngine.Audio;
 using System.Collections;
@@ -7,7 +8,6 @@ using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Audio.Interfaces;
-using _Project.Core;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio

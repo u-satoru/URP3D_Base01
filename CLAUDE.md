@@ -90,7 +90,10 @@
 -   `Assets/_Project/Works`: 作業ログ保管庫（日時フォルダ（YYYYMMDD_HHMM）で、各ファイルのスナップショットを保管します）。
 -   `Assets/_Project/Docs`: プロジェクト関連のドキュメント。 **ドキュメントは必ずここに配置してください**。
 -   `Assets/_Project/Tests`: テスト関連のファイル。 **テストコードは必ずここに配置してください**。 **テストコードはCoreやFeaturesに混在させないでください**。
+-   `Assets/_Project/Logs` : ログファイル。
+-   `Assets/_Project/ThirdParty`: サードパーティ製アセットのラッピング。
 -   `Assets/Plugins`: サードパーティ製アセット。 **直接編集しないでください**。
+-   `Assets/_Project/Docs/Works/` - 作業ログ保管庫（日時フォルダ（YYYYMMDD_HHMM）で、`SPEC.md`、`REQUIREMENTS.md`、`DESIGN.md`、`TASKS.md`、`TODO.md`など、各ファイルのスナップショットを保管します）。
 
 ## スペック駆動開発（SDD）の実践
 
@@ -219,7 +222,6 @@
 -   `Odin Inspector`: エディタ拡張とカスタムインスペクタ（[Sirenix](https://odininspector.com/)）
 -   `Odin Serializer`: 高度なシリアライゼーション（[Sirenix](https://odininspector.com/)）
 -   `Odin Validator`: データ検証ツール（[Sirenix](https://odininspector.com/)）
--   `TextMeshPro`: 高品質なテキストレンダリング（Unity公式）
 
 ## **注意点**
 - **テストケースを必ず作成**: 新しい機能や修正を加える際には、必ず対応するユニットテストとプレイモードテストを `Assets/_Project/Tests` に作成してください。これにより、コードの品質と安定性が維持されます。
@@ -230,6 +232,21 @@
 - **ソースコードファイル(.cs)とアセンブリ定義ファイル(.asmdef)の命名規則**: ソースコードファイルとアセンブリ定義ファイルは、PascalCase（例: `PlayerController.cs`, `GameEvents.asmdef`）を使用してください。これにより、コードベースの一貫性と可読性が向上します。
 - **ソースコードファイル(.cs)とアセンブリ定義ファイル(.asmdef)とmetaファイルの一貫性確保**: ソースコードファイル、アセンブリ定義ファイル、metaファイルの名前は常に一致させてください。これにより、Unityエディタ内での参照の整合性が保たれ、ビルドエラーや参照エラーを防止します。
 - **SDDドキュメントのバージョン管理**: SDD関連のMarkdownファイル（`SPEC.md`, `REQUIREMENTS.md`, `DESIGN.md`, `TASKS.md`, `TODO.md`）は、`Assets/_Project/Docs/Works/` フォルダ内の日時フォルダにスナップショットを保管し、変更履歴を明確に管理してください。これにより、プロジェクトの進行状況と意思決定の背景を追跡できます。
+
+## **制約**
+- **実行する前に、必ずコンパイルエラーを解消してください。** コンパイルエラーが存在する場合、Unityエディタの動作が不安定になる可能性があります。
+
+## 名前空間規約
+
+### 基本規則
+- Root: `asterivo.Unity60`
+- Core機能: `asterivo.Unity60.Core.*`
+- 機能実装: `asterivo.Unity60.Features.*`
+- テスト: `asterivo.Unity60.Tests.*`
+
+### 禁止事項
+- Core層からFeatures層への参照禁止
+- _Project.* の新規使用禁止（段階的削除）
 
 ## **GitHub Actions設定**
 - **設定しない**  

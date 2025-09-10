@@ -57,6 +57,15 @@ namespace _Project.Core
             set => SetFlag("FeatureFlag_EnableDebugLogging", value);
         }
         
+        /// <summary>
+        /// リファクタリング後のアーキテクチャを使用するか（段階的移行用）
+        /// </summary>
+        public static bool UseRefactoredArchitecture
+        {
+            get => PlayerPrefs.GetInt("FeatureFlag_UseRefactoredArchitecture", 0) == 1;
+            set => SetFlag("FeatureFlag_UseRefactoredArchitecture", value);
+        }
+        
                 
         /// <summary>
         /// 新しいAudioServiceを使用するか（Step 3.7用）

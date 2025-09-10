@@ -7,7 +7,7 @@ using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Shared;
 using asterivo.Unity60.Core.Debug;
 using System.Reflection;
-using AudioCategory = asterivo.Unity60.Core.Audio.Data.AudioCategory;
+using AudioCategory = asterivo.Unity60.Core.Audio.AudioCategory;
 
 namespace asterivo.Unity60.Core.Editor
 {

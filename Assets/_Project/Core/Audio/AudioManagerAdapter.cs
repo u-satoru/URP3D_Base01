@@ -2,6 +2,7 @@ using UnityEngine;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using _Project.Core;
+using asterivo.Unity60.Core.Helpers;
 
 namespace asterivo.Unity60.Core.Audio
 {
@@ -87,7 +88,7 @@ namespace asterivo.Unity60.Core.Audio
             else
             {
                 // ✅ ServiceLocator専用実装 - BGMManagerをServiceLocator経由で取得
-                var bgmManager = FindFirstObjectByType<BGMManager>();
+                var bgmManager = ServiceHelper.GetServiceWithFallback<BGMManager>();
                 if (bgmManager != null)
                 {
                     // TODO: bgmNameからBGMCategoryへの変換ロジックが必要
@@ -111,7 +112,7 @@ namespace asterivo.Unity60.Core.Audio
             else
             {
                 // ✅ ServiceLocator専用実装 - BGMManagerを直接取得
-                var bgmManager = FindFirstObjectByType<BGMManager>();
+                var bgmManager = ServiceHelper.GetServiceWithFallback<BGMManager>();
                 if (bgmManager != null)
                 {
                     bgmManager.StopBGM(fadeTime);

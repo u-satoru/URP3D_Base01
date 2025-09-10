@@ -1,3 +1,4 @@
+using _Project.Core;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +9,6 @@ using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Shared;
 using asterivo.Unity60.Core.Audio.Interfaces;
-using _Project.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;  // IAudioService, IAudioUpdatable の参照用
 using Sirenix.OdinInspector;
 
