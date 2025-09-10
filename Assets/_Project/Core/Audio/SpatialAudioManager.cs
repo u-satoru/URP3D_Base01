@@ -19,6 +19,42 @@ namespace asterivo.Unity60.Core.Audio
     [System.Obsolete("Use SpatialAudioService instead. This class will be removed in future versions.")]
     public class SpatialAudioManager : MonoBehaviour, ISpatialAudioService, IInitializable
     {
+        // ✅ Task 3: Legacy Singleton警告システム（後方互換性のため）
+        private static SpatialAudioManager instance;
+
+        /// <summary>
+        /// 後方互換性のためのInstance（非推奨）
+        /// ServiceLocator.GetService<ISpatialAudioService>()を使用してください
+        /// </summary>
+        [System.Obsolete("Use ServiceLocator.GetService<ISpatialAudioService>() instead")]
+        public static SpatialAudioManager Instance 
+        {
+            get 
+            {
+                // Legacy Singleton完全無効化フラグの確認
+                if (FeatureFlags.DisableLegacySingletons) 
+                {
+                    EventLogger.LogError("[DEPRECATED] SpatialAudioManager.Instance is disabled. Use ServiceLocator.GetService<ISpatialAudioService>() instead");
+                    return null;
+                }
+                
+                // 移行警告の表示
+                if (FeatureFlags.EnableMigrationWarnings) 
+                {
+                    EventLogger.LogWarning("[DEPRECATED] SpatialAudioManager.Instance usage detected. Please migrate to ServiceLocator.GetService<ISpatialAudioService>()");
+                    
+                    // MigrationMonitorに使用状況を記録
+                    if (FeatureFlags.EnableMigrationMonitoring)
+                    {
+                        var migrationMonitor = FindFirstObjectByType<MigrationMonitor>();
+                        migrationMonitor?.LogSingletonUsage(typeof(SpatialAudioManager), "SpatialAudioManager.Instance");
+                    }
+                }
+                
+                return instance;
+            }
+        }
+
         [Header("Audio Manager Settings")]
         [SerializeField] private AudioMixer mainMixer;
         [SerializeField] private int maxConcurrentSounds = AudioConstants.MAX_CONCURRENT_SOUNDS;
@@ -63,7 +99,9 @@ namespace asterivo.Unity60.Core.Audio
         
         private void Awake()
         {
-            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
+            // ✅ Task 3: Legacy Singleton警告システム用のinstance設定
+            instance = this;
+            
             DontDestroyOnLoad(gameObject);
             
             // ServiceLocatorに登録

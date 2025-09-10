@@ -98,7 +98,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             if (IsInitialized) return;
             
-            mainListener = FindObjectOfType<AudioListener>();
+            mainListener = FindFirstObjectByType<AudioListener>();
             if (mainListener == null)
             {
                 EventLogger.LogWarning("[SpatialAudioService] No AudioListener found in scene");

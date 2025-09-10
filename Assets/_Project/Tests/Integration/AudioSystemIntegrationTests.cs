@@ -5,6 +5,7 @@ using System.Collections;
 using _Project.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Audio;
+using asterivo.Unity60.Core.Shared;
 
 namespace asterivo.Unity60.Tests.Integration
 {
@@ -94,17 +95,20 @@ namespace asterivo.Unity60.Tests.Integration
             var audioService = ServiceLocator.GetService<IAudioService>();
             var spatialService = ServiceLocator.GetService<ISpatialAudioService>();
             var effectService = ServiceLocator.GetService<IEffectService>();
+            var updateService = ServiceLocator.GetService<IAudioUpdateService>();
             
             // Assert
             Assert.IsNotNull(audioService, "AudioService should be resolved");
             Assert.IsNotNull(spatialService, "SpatialAudioService should be resolved");
             Assert.IsNotNull(effectService, "EffectService should be resolved");
+            Assert.IsNotNull(updateService, "AudioUpdateService should be resolved");
             
             // サービス間の依存関係が正しく動作することを確認
             Assert.DoesNotThrow(() => {
                 audioService.SetMasterVolume(0.5f);
                 spatialService.Play3DSound("test_sound", Vector3.zero);
                 effectService.PlayEffect("test_effect");
+                updateService.StartCoordinatedUpdates();
             }, "Service operations should not throw exceptions");
         }
         
@@ -216,17 +220,310 @@ namespace asterivo.Unity60.Tests.Integration
             }, "Volume management operations should not throw exceptions");
         }
         
+        [Test]
+        public void AudioSystem_FeatureFlagsEnabled_AllServicesRegistered()
+        {
+            // Arrange - 移行完了状態のFeatureFlags確認
+            Assert.IsTrue(FeatureFlags.UseServiceLocator, "UseServiceLocator should be enabled");
+            Assert.IsTrue(FeatureFlags.UseNewAudioService, "UseNewAudioService should be enabled");
+            Assert.IsTrue(FeatureFlags.UseNewSpatialService, "UseNewSpatialService should be enabled");
+            Assert.IsTrue(FeatureFlags.UseNewStealthService, "UseNewStealthService should be enabled");
+            Assert.IsTrue(FeatureFlags.DisableLegacySingletons, "DisableLegacySingletons should be enabled");
+            
+            SetupAllAudioServices();
+            
+            // Act & Assert - 全サービスが期待通り登録されていることを確認
+            Assert.IsTrue(ServiceLocator.HasService<IAudioService>(), "IAudioService should be registered");
+            Assert.IsTrue(ServiceLocator.HasService<ISpatialAudioService>(), "ISpatialAudioService should be registered");
+            Assert.IsTrue(ServiceLocator.HasService<IEffectService>(), "IEffectService should be registered");
+            Assert.IsTrue(ServiceLocator.HasService<IAudioUpdateService>(), "IAudioUpdateService should be registered");
+            
+            // サービスが実際に機能することを確認
+            var audioService = ServiceLocator.GetService<IAudioService>();
+            var spatialService = ServiceLocator.GetService<ISpatialAudioService>();
+            var effectService = ServiceLocator.GetService<IEffectService>();
+            var updateService = ServiceLocator.GetService<IAudioUpdateService>();
+            
+            Assert.IsNotNull(audioService, "AudioService instance should be available");
+            Assert.IsNotNull(spatialService, "SpatialAudioService instance should be available");
+            Assert.IsNotNull(effectService, "EffectService instance should be available");
+            Assert.IsNotNull(updateService, "AudioUpdateService instance should be available");
+            
+            // 各サービスが IInitializable を実装していることを確認
+            if (audioService is IInitializable audioInit) Assert.IsTrue(audioInit.IsInitialized, "AudioService should be initialized");
+            if (spatialService is IInitializable spatialInit) Assert.IsTrue(spatialInit.IsInitialized, "SpatialService should be initialized");
+            if (effectService is IInitializable effectInit) Assert.IsTrue(effectInit.IsInitialized, "EffectService should be initialized");
+            if (updateService is IInitializable updateInit) Assert.IsTrue(updateInit.IsInitialized, "UpdateService should be initialized");
+        }
+        
+        [UnityTest]
+        public IEnumerator AudioSystem_ServiceLocatorIntegration_WorksInPlayMode()
+        {
+            // Arrange
+            SetupAllAudioServices();
+            
+            yield return null; // フレーム待機で初期化完了を確保
+            
+            // Act - 実際のプレイモードでの統合テスト
+            var audioService = ServiceLocator.GetService<IAudioService>();
+            var spatialService = ServiceLocator.GetService<ISpatialAudioService>();
+            var effectService = ServiceLocator.GetService<IEffectService>();
+            var updateService = ServiceLocator.GetService<IAudioUpdateService>();
+            
+            // Assert - 全サービスがプレイモードで正常動作
+            Assert.IsNotNull(audioService, "AudioService should be available in play mode");
+            Assert.IsNotNull(spatialService, "SpatialAudioService should be available in play mode");
+            Assert.IsNotNull(effectService, "EffectService should be available in play mode");
+            Assert.IsNotNull(updateService, "AudioUpdateService should be available in play mode");
+            
+            // 実際のゲーム使用シナリオをシミュレート
+            bool operationsSuccessful = true;
+            
+            // Volume control
+            try
+            {
+                audioService.SetMasterVolume(0.7f);
+            }
+            catch (System.Exception ex)
+            {
+                operationsSuccessful = false;
+                Debug.LogError($"Volume control failed: {ex.Message}");
+            }
+            yield return new WaitForSeconds(0.1f);
+            
+            // 3D sound playback
+            try
+            {
+                spatialService.Play3DSound("test_3d_sound", Vector3.zero);
+                spatialService.UpdateListenerPosition(Vector3.zero, Vector3.forward);
+            }
+            catch (System.Exception ex)
+            {
+                operationsSuccessful = false;
+                Debug.LogError($"3D sound playback failed: {ex.Message}");
+            }
+            yield return new WaitForSeconds(0.1f);
+            
+            // Effect playback
+            try
+            {
+                effectService.PlayEffect("test_effect", Vector3.zero);
+                effectService.PlayOneShot("oneshot_test");
+            }
+            catch (System.Exception ex)
+            {
+                operationsSuccessful = false;
+                Debug.LogError($"Effect playback failed: {ex.Message}");
+            }
+            yield return new WaitForSeconds(0.1f);
+            
+            // Update coordination
+            try
+            {
+                updateService.StartCoordinatedUpdates();
+            }
+            catch (System.Exception ex)
+            {
+                operationsSuccessful = false;
+                Debug.LogError($"Update coordination start failed: {ex.Message}");
+            }
+            yield return new WaitForSeconds(0.2f);
+            
+            try
+            {
+                updateService.StopCoordinatedUpdates();
+            }
+            catch (System.Exception ex)
+            {
+                operationsSuccessful = false;
+                Debug.LogError($"Update coordination stop failed: {ex.Message}");
+            }
+            
+            // Pause and resume
+            try
+            {
+                audioService.Pause();
+            }
+            catch (System.Exception ex)
+            {
+                operationsSuccessful = false;
+                Debug.LogError($"Audio pause failed: {ex.Message}");
+            }
+            yield return new WaitForSeconds(0.1f);
+            
+            try
+            {
+                audioService.Resume();
+            }
+            catch (System.Exception ex)
+            {
+                operationsSuccessful = false;
+                Debug.LogError($"Audio resume failed: {ex.Message}");
+            }
+            
+            Assert.IsTrue(operationsSuccessful, "All audio system operations should complete successfully in play mode");
+        }
+        
+        [Test]
+        public void AudioSystem_ErrorHandling_RobustBehavior()
+        {
+            // Arrange
+            SetupAllAudioServices();
+            var audioService = ServiceLocator.GetService<IAudioService>();
+            var spatialService = ServiceLocator.GetService<ISpatialAudioService>();
+            var effectService = ServiceLocator.GetService<IEffectService>();
+            
+            // Act & Assert - エラー処理のテスト
+            Assert.DoesNotThrow(() => {
+                // 無効な引数でのテスト
+                audioService.PlaySound(null); // null soundId
+                audioService.PlaySound(""); // empty soundId
+                audioService.SetMasterVolume(-1f); // 無効な音量値
+                audioService.SetMasterVolume(2f); // 無効な音量値
+                
+                spatialService.Play3DSound(null, Vector3.zero); // null soundId
+                spatialService.UpdateListenerPosition(Vector3.zero, Vector3.zero); // zero forward vector
+                
+                effectService.PlayEffect(null); // null effectId
+                effectService.PlayRandomEffect(null); // null array
+                effectService.PlayRandomEffect(new string[0]); // empty array
+                
+            }, "Audio services should handle invalid inputs gracefully");
+        }
+        
+        [Test]
+        public void AudioSystem_ServicePersistence_MaintainedAcrossOperations()
+        {
+            // Arrange
+            SetupAllAudioServices();
+            
+            // 初回取得
+            var audioService1 = ServiceLocator.GetService<IAudioService>();
+            var spatialService1 = ServiceLocator.GetService<ISpatialAudioService>();
+            var effectService1 = ServiceLocator.GetService<IEffectService>();
+            var updateService1 = ServiceLocator.GetService<IAudioUpdateService>();
+            
+            // 操作の実行
+            audioService1.SetMasterVolume(0.5f);
+            spatialService1.SetAmbientSound("ambient_test");
+            effectService1.PlayEffect("effect_test");
+            updateService1.ForceRebuildSpatialCache();
+            
+            // 再取得
+            var audioService2 = ServiceLocator.GetService<IAudioService>();
+            var spatialService2 = ServiceLocator.GetService<ISpatialAudioService>();
+            var effectService2 = ServiceLocator.GetService<IEffectService>();
+            var updateService2 = ServiceLocator.GetService<IAudioUpdateService>();
+            
+            // Assert - 同じインスタンスが返されることを確認
+            Assert.AreSame(audioService1, audioService2, "AudioService instance should be persistent");
+            Assert.AreSame(spatialService1, spatialService2, "SpatialAudioService instance should be persistent");
+            Assert.AreSame(effectService1, effectService2, "EffectService instance should be persistent");
+            Assert.AreSame(updateService1, updateService2, "AudioUpdateService instance should be persistent");
+            
+            // 状態が維持されていることを確認
+            Assert.AreEqual(0.5f, audioService2.GetMasterVolume(), 0.01f, "Master volume should be maintained");
+        }
+        
         private void SetupAllAudioServices()
         {
+            // 実際のマネージャーコンポーネントをセットアップ
             var audioManager = testGameObject.AddComponent<AudioManager>();
             var spatialManager = testGameObject.AddComponent<SpatialAudioManager>();
             var effectManager = testGameObject.AddComponent<EffectManager>();
             var updateCoordinator = testGameObject.AddComponent<AudioUpdateCoordinator>();
             
+            // ゲームオブジェクトをアクティブにして初期化を促す
             audioManager.gameObject.SetActive(true);
             spatialManager.gameObject.SetActive(true);
             effectManager.gameObject.SetActive(true);
             updateCoordinator.gameObject.SetActive(true);
+            
+            // ServiceLocatorへの登録を確実にするため少し待つ
+            System.Threading.Thread.Sleep(50);
+        }
+        
+        [UnityTest]
+        public IEnumerator AudioSystem_StressTest_HighConcurrency()
+        {
+            // Arrange
+            SetupAllAudioServices();
+            var audioService = ServiceLocator.GetService<IAudioService>();
+            var spatialService = ServiceLocator.GetService<ISpatialAudioService>();
+            var effectService = ServiceLocator.GetService<IEffectService>();
+            
+            bool stressTestPassed = true;
+            
+            // Act - 高負荷同時実行テスト
+            for (int frame = 0; frame < 10; frame++)
+            {
+                try
+                {
+                    // 同フレーム内で大量のサービス呼び出し
+                    for (int i = 0; i < 50; i++)
+                    {
+                        audioService.PlaySound($"stress_sound_{i}", Vector3.zero, 0.1f);
+                        spatialService.Play3DSound($"stress_3d_{i}", Vector3.one * i);
+                        effectService.PlayEffect($"stress_effect_{i}");
+                    }
+                    
+                    // 音量変更の同時実行
+                    for (int i = 0; i < 10; i++)
+                    {
+                        audioService.SetMasterVolume(0.1f + i * 0.1f);
+                        audioService.SetCategoryVolume("BGM", 0.1f + i * 0.05f);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    stressTestPassed = false;
+                    Debug.LogError($"Stress test failed at frame {frame}: {ex.Message}");
+                    break;
+                }
+                
+                yield return null;
+            }
+            
+            // Assert
+            Assert.IsTrue(stressTestPassed, "Audio system should handle high concurrency stress test");
+            
+            // サービスが依然として動作することを確認
+            Assert.IsNotNull(ServiceLocator.GetService<IAudioService>(), "AudioService should remain available after stress test");
+            Assert.IsNotNull(ServiceLocator.GetService<ISpatialAudioService>(), "SpatialAudioService should remain available after stress test");
+            Assert.IsNotNull(ServiceLocator.GetService<IEffectService>(), "EffectService should remain available after stress test");
+        }
+        
+        [Test]
+        public void AudioSystem_ConfigurationChanges_DynamicBehavior()
+        {
+            // Arrange
+            SetupAllAudioServices();
+            var audioService = ServiceLocator.GetService<IAudioService>();
+            var updateService = ServiceLocator.GetService<IAudioUpdateService>();
+            
+            // Act & Assert - 設定変更の動的処理テスト
+            
+            // 初期状態の確認
+            float initialInterval = updateService.UpdateInterval;
+            bool initialCoordinated = updateService.IsCoordinatedUpdateEnabled;
+            
+            Assert.Greater(initialInterval, 0f, "Initial update interval should be positive");
+            
+            // 設定変更テスト
+            Assert.DoesNotThrow(() => {
+                // Update interval の変更
+                updateService.UpdateInterval = 0.2f;
+                Assert.AreEqual(0.2f, updateService.UpdateInterval, 0.01f, "Update interval should be updated");
+                
+                // 音量設定の動的変更
+                audioService.SetMasterVolume(0.3f);
+                audioService.SetCategoryVolume("BGM", 0.4f);
+                audioService.SetCategoryVolume("Effect", 0.5f);
+                
+                // 変更が反映されていることを確認
+                Assert.AreEqual(0.3f, audioService.GetMasterVolume(), 0.01f, "Master volume should be updated");
+                
+            }, "Configuration changes should be handled dynamically");
         }
     }
 }

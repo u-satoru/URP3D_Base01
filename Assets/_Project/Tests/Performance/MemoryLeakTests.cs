@@ -3,8 +3,10 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 using _Project.Core;
+using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core.Audio.Interfaces;
 
 namespace asterivo.Unity60.Tests.Performance
@@ -350,6 +352,29 @@ namespace asterivo.Unity60.Tests.Performance
         public void SetReverbZone(string zoneId, float reverbLevel) { }
         public void SetDopplerLevel(float level) { }
         public void UpdateListenerPosition(Vector3 position, Vector3 forward) { }
+    }
+    
+    /// <summary>
+    /// テスト用ダミーオーディオアップデートサービス
+    /// </summary>
+    public class DummyAudioUpdateService : MonoBehaviour, IAudioUpdateService, IInitializable
+    {
+        public int Priority => 0;
+        public bool IsInitialized => true;
+        
+        public float UpdateInterval { get; set; } = 0.1f;
+        public bool IsCoordinatedUpdateEnabled => true;
+        
+        public event System.Action<AudioSystemSyncData> OnAudioSystemSync;
+        
+        public void Initialize() { }
+        public void RegisterUpdatable(IAudioUpdatable updatable) { }
+        public void UnregisterUpdatable(IAudioUpdatable updatable) { }
+        public void StartCoordinatedUpdates() { }
+        public void StopCoordinatedUpdates() { }
+        public List<AudioSource> GetNearbyAudioSources(Vector3 center, float radius) => new List<AudioSource>();
+        public void ForceRebuildSpatialCache() { }
+        public AudioCoordinatorStats GetPerformanceStats() => new AudioCoordinatorStats();
     }
     
     /// <summary>

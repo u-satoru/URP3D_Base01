@@ -50,7 +50,43 @@ namespace asterivo.Unity60.Core.Audio
         [SerializeField] private int combatEffectPriority = 32;
         [SerializeField] private int stealthEffectPriority = 16;
         
-        // 効果音プール管理
+                
+        // Legacy Singleton support (Deprecated - 段階的移行用)
+        private static EffectManager instance;
+        
+        /// <summary>
+        /// 後方互換性のためのInstance（非推奨）
+        /// ServiceLocator.GetService<IEffectService>()を使用してください
+        /// </summary>
+        [System.Obsolete("Use ServiceLocator.GetService<IEffectService>() instead")]
+        public static EffectManager Instance 
+        {
+            get 
+            {
+                // Legacy Singleton完全無効化フラグの確認
+                if (FeatureFlags.DisableLegacySingletons) 
+                {
+                    EventLogger.LogError("[DEPRECATED] EffectManager.Instance is disabled. Use ServiceLocator.GetService<IEffectService>() instead");
+                    return null;
+                }
+                
+                // 移行警告の表示
+                if (FeatureFlags.EnableMigrationWarnings) 
+                {
+                    EventLogger.LogWarning("[DEPRECATED] EffectManager.Instance usage detected. Please migrate to ServiceLocator.GetService<IEffectService>()");
+                    
+                    // MigrationMonitorに使用状況を記録
+                    if (FeatureFlags.EnableMigrationMonitoring)
+                    {
+                        var migrationMonitor = FindFirstObjectByType<MigrationMonitor>();
+                        migrationMonitor?.LogSingletonUsage(typeof(EffectManager), "EffectManager.Instance");
+                    }
+                }
+                
+                return instance;
+            }
+        }
+// 効果音プール管理
         private Queue<AudioSource> effectSourcePool = new Queue<AudioSource>();
         private List<AudioSource> activeEffectSources = new List<AudioSource>();
         
@@ -72,6 +108,15 @@ namespace asterivo.Unity60.Core.Audio
         
         private void Awake()
         {
+            // Legacy Singleton初期化（段階的移行用）
+            if (instance != null && instance != this) 
+            {
+                EventLogger.LogWarning("[EffectManager] Multiple instances detected. Destroying duplicate.");
+                Destroy(gameObject);
+                return;
+            }
+            instance = this;
+            
             // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
             DontDestroyOnLoad(gameObject);
             
@@ -95,6 +140,12 @@ namespace asterivo.Unity60.Core.Audio
         
         private void OnDestroy()
         {
+            // Legacy Singletonクリーンアップ（段階的移行用）
+            if (instance == this)
+            {
+                instance = null;
+            }
+            
             // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
             if (FeatureFlags.UseServiceLocator)
             {

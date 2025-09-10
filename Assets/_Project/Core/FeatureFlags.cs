@@ -539,6 +539,23 @@ namespace _Project.Core
         }
         
         /// <summary>
+        /// Task 4: Day 1実行 - テスト環境で警告システムを実際に実行
+        /// </summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        public static void ExecuteDay1TestWarnings()
+        {
+            // Day 1の実行は一度だけ行う
+            if (PlayerPrefs.GetInt("Task4_Day1_Executed", 0) == 1)
+                return;
+                
+            EnableDay1TestWarnings();
+            PlayerPrefs.SetInt("Task4_Day1_Executed", 1);
+            PlayerPrefs.Save();
+            
+            Debug.Log("[Task 4 - Day 1] 警告システムがテスト環境で有効化されました。Legacy Singletonの使用が監視されています。");
+        }
+        
+        /// <summary>
         /// Task 4: Day 4 - 本番環境でSingleton段階的無効化
         /// DisableLegacySingletons を有効化（最終段階）
         /// </summary>
@@ -554,6 +571,35 @@ namespace _Project.Core
             
             // MigrationValidator実行を推奨
             Debug.Log("[FeatureFlags] RECOMMENDATION: Run MigrationValidator to verify migration completion");
+        }
+        
+        /// <summary>
+        /// Task 4: Day 4実行 - 本番環境でSingleton段階的無効化を実際に実行
+        /// </summary>
+        public static void ExecuteDay4SingletonDisabling()
+        {
+            // Day 4の実行は一度だけ行う
+            if (PlayerPrefs.GetInt("Task4_Day4_Executed", 0) == 1)
+            {
+                Debug.Log("[Task 4 - Day 4] Already executed. Legacy Singletons are disabled.");
+                return;
+            }
+            
+            // 安全性チェック
+            if (!IsTask4Safe())
+            {
+                Debug.LogError("[Task 4 - Day 4] Safety check failed. Cannot disable Legacy Singletons.");
+                return;
+            }
+            
+            EnableDay4SingletonDisabling();
+            PlayerPrefs.SetInt("Task4_Day4_Executed", 1);
+            PlayerPrefs.Save();
+            
+            Debug.Log("[Task 4 - Day 4] Legacy Singletonが本番環境で無効化されました。ServiceLocator完全移行完了。");
+            
+            // 完了状況をレポート
+            Debug.Log($"[Task 4 Complete] Migration Progress: {GetMigrationProgress()}%, Safety Status: {(IsMigrationSafe() ? "SAFE" : "UNSAFE")}");
         }
         
         /// <summary>
