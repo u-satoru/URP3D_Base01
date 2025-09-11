@@ -62,7 +62,8 @@ namespace asterivo.Unity60.Core.Audio
 
         [TabGroup("Audio Managers", "System Integration")]
         [Header("Existing Systems Integration")]
-        [SerializeField, Required] private SpatialAudioManager spatialAudio;
+        // SpatialAudioServiceはServiceLocator経由で取得 (Obsolete SpatialAudioManagerから移行)
+        private ISpatialAudioService spatialAudioService;
         [SerializeField, Required] private DynamicAudioEnvironment dynamicEnvironment;
 
         [TabGroup("Audio Managers", "Volume Controls")]
@@ -165,18 +166,18 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (isInitialized) return;
             
-            // コンポーネントの自動検索（ServiceLocator経由での取得を優先）
-            if (spatialAudio == null)
+            // SpatialAudioServiceの取得（ServiceLocator優先）
+            if (spatialAudioService == null)
             {
                 if (FeatureFlags.UseServiceLocator)
                 {
-                    spatialAudio = ServiceLocator.GetService<ISpatialAudioService>() as SpatialAudioManager;
+                    spatialAudioService = ServiceLocator.GetService<ISpatialAudioService>();
                 }
                 
                 // フォールバック: ServiceHelper経由で検索
-                if (spatialAudio == null)
+                if (spatialAudioService == null)
                 {
-                    spatialAudio = ServiceHelper.GetServiceWithFallback<SpatialAudioManager>();
+                    spatialAudioService = ServiceHelper.GetServiceWithFallback<ISpatialAudioService>();
                 }
             }
 
@@ -210,9 +211,9 @@ namespace asterivo.Unity60.Core.Audio
         {
             bool hasErrors = false;
 
-            if (spatialAudio == null)
+            if (spatialAudioService == null)
             {
-                EventLogger.LogError("[AudioManager] SpatialAudioManager is required but not assigned!");
+                EventLogger.LogError("[AudioManager] SpatialAudioService is required but not available!");
                 hasErrors = true;
             }
 

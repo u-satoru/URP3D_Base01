@@ -1,25 +1,29 @@
 using UnityEngine;
+using asterivo.Unity60.Core.Helpers;
+using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core;
 using Debug = UnityEngine.Debug;
 
 namespace asterivo.Unity60.Core.Commands
 {
     /// <summary>
     /// CommandPoolManagerのサービスラッパークラス
-    /// Singletonパターンでコマンドプールへのグローバルアクセスを提供する
+    /// ServiceLocatorパターンでコマンドプールへのアクセスを提供する
     /// 
     /// 設計思想:
     /// - ObjectPoolパターンによるメモリ効率化（95%のメモリ削減効果）
     /// - コマンドオブジェクトの再利用でガベージコレクションを削減
     /// - Unity MonoBehaviourのライフサイクルに統合された安全なサービス管理
-    /// - レガシーコードとの互換性を維持
+    /// - ServiceLocatorパターンによる依存性注入対応
+    /// - 後方互換性を維持しながら段階的移行を支援
     /// 
-    /// 使用例:
-    /// var service = CommandPoolService.Instance;
+    /// 推奨使用例:
+    /// var service = ServiceLocator.GetService&lt;ICommandPoolService&gt;();
     /// var damageCommand = service.GetCommand&lt;DamageCommand&gt;();
     /// // コマンド使用後
     /// service.ReturnCommand(damageCommand);
     /// </summary>
-    public class CommandPoolService : MonoBehaviour
+    public class CommandPoolService : MonoBehaviour, ICommandPoolService, IInitializable
     {
         [Header("Pool Service Settings")]
         /// <summary>デバッグ統計情報の有効化フラグ</summary>
@@ -31,15 +35,44 @@ namespace asterivo.Unity60.Core.Commands
         /// <summary>コマンドプールの実際の管理を行うマネージャー</summary>
         private CommandPoolManager _poolManager;
         
-        /// <summary>シングルトンインスタンスの保持</summary>
-        private static CommandPoolService _instance;
+        /// <summary>初期化状態フラグ</summary>
+        private bool _isInitialized = false;
         
+        // ✅ ServiceLocator移行: Legacy Singleton警告システム（後方互換性のため）
+        private static CommandPoolService instance;
+
         /// <summary>
-        /// シングルトンインスタンスへのアクセスプロパティ（レガシー互換性用）
-        /// Unityのライフサイクルに統合されたサービス管理を提供
+        /// 後方互換性のためのInstance（非推奨）
+        /// ServiceLocator.GetService&lt;ICommandPoolService&gt;()を使用してください
         /// </summary>
-        /// <remarks>nullチェックが必要。サービスが初期化されていない場合はnullを返す</remarks>
-        public static CommandPoolService Instance => _instance;
+        [System.Obsolete("Use ServiceLocator.GetService<ICommandPoolService>() instead")]
+        public static CommandPoolService Instance 
+        {
+            get 
+            {
+                // Legacy Singleton完全無効化フラグの確認
+                if (FeatureFlags.DisableLegacySingletons) 
+                {
+                    EventLogger.LogError("[DEPRECATED] CommandPoolService.Instance is disabled. Use ServiceLocator.GetService<ICommandPoolService>() instead");
+                    return null;
+                }
+                
+                // 移行警告の表示
+                if (FeatureFlags.EnableMigrationWarnings) 
+                {
+                    EventLogger.LogWarning("[DEPRECATED] CommandPoolService.Instance usage detected. Please migrate to ServiceLocator.GetService<ICommandPoolService>()");
+                    
+                    // MigrationMonitorに使用状況を記録
+                    if (FeatureFlags.EnableMigrationMonitoring)
+                    {
+                        var migrationMonitor = ServiceHelper.GetServiceWithFallback<MigrationMonitor>();
+                        migrationMonitor?.LogSingletonUsage(typeof(CommandPoolService), "CommandPoolService.Instance");
+                    }
+                }
+                
+                return instance;
+            }
+        }
         
         /// <summary>
         /// CommandPoolManagerへの直接アクセス
@@ -48,15 +81,28 @@ namespace asterivo.Unity60.Core.Commands
         /// <returns>内部で管理されているCommandPoolManagerのインスタンス</returns>
         public CommandPoolManager PoolManager => _poolManager;
         
+        /// <summary>
+        /// 初期化優先度（IInitializableインターフェース実装）
+        /// CommandPoolServiceは基盤サービスなので早期初期化を設定
+        /// </summary>
+        public int Priority => 10;
+        
+        /// <summary>
+        /// 初期化が完了したかどうか（IInitializableインターフェース実装）
+        /// </summary>
+        public bool IsInitialized => _isInitialized;
+        
         private void Awake()
         {
-            if (_instance == null)
+            if (instance == null)
             {
-                _instance = this;
+                instance = this;
                 InitializeService();
                 
+                // ServiceLocatorへの登録
                 if (autoRegisterOnAwake)
                 {
+                    RegisterToServiceLocator();
                     LogServiceStatus();
                 }
                 
@@ -80,27 +126,13 @@ namespace asterivo.Unity60.Core.Commands
         {
             _poolManager = new CommandPoolManager(enableDebugStats);
             _poolManager.Initialize();
+            _isInitialized = true;
             
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log("CommandPoolService initialized with modern CommandPoolManager");
 #endif
         }
         
-        /// <summary>
-        /// サービスを手動で初期化します
-        /// 通常はAwakeで自動初期化されるため、このメソッドの呼び出しは不要
-        /// </summary>
-        /// <remarks>
-        /// レガシー互換性のために提供されているメソッド
-        /// 既にAwakeで初期化済みのため、実際の処理は行わない
-        /// </remarks>
-        public void Initialize()
-        {
-            // 既にAwakeで初期化済み
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-            UnityEngine.Debug.Log("CommandPoolService.Initialize() called");
-#endif
-        }
         
         /// <summary>
         /// サービスのクリーンアップ処理を実行します
@@ -113,12 +145,47 @@ namespace asterivo.Unity60.Core.Commands
         public void Cleanup()
         {
             _poolManager?.Cleanup();
+            _isInitialized = false;
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log("CommandPoolService cleaned up");
 #endif
         }
         
         #region Service Registration
+        
+        /// <summary>
+        /// IInitializable実装: サービスの初期化処理
+        /// ServiceLocatorから呼び出される標準的な初期化メソッド
+        /// </summary>
+        public void Initialize()
+        {
+            if (_poolManager == null)
+            {
+                InitializeService();
+            }
+            RegisterToServiceLocator();
+            _isInitialized = true;
+        }
+
+        /// <summary>
+        /// ServiceLocatorへのサービス登録
+        /// ICommandPoolServiceインターフェースとして自身を登録
+        /// </summary>
+        private void RegisterToServiceLocator()
+        {
+            try
+            {
+                ServiceLocator.RegisterService<ICommandPoolService>(this);
+                
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                UnityEngine.Debug.Log("CommandPoolService registered to ServiceLocator as ICommandPoolService");
+#endif
+            }
+            catch (System.Exception ex)
+            {
+                EventLogger.LogError($"Failed to register CommandPoolService: {ex.Message}");
+            }
+        }
         
         /// <summary>
         /// サービスの状態確認とデバッグ情報をログに出力します
@@ -132,6 +199,8 @@ namespace asterivo.Unity60.Core.Commands
         {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"CommandPoolService is active. Pool manager initialized: {_poolManager != null}");
+            var isRegistered = ServiceLocator.IsServiceRegistered<ICommandPoolService>();
+            UnityEngine.Debug.Log($"CommandPoolService ServiceLocator registration: {isRegistered}");
 #endif
         }
         
@@ -216,13 +285,14 @@ namespace asterivo.Unity60.Core.Commands
         /// <remarks>
         /// サービスが初期化されていない場合は新しいインスタンスを作成
         /// この場合はプール機能は利用されないため、パフォーマンス上の利点は得られない
-        /// 可能な限りInstance経由でのアクセスを推奨
+        /// 可能な限りServiceLocator経由でのアクセスを推奨
         /// </remarks>
+        [System.Obsolete("Use ServiceLocator.GetService<ICommandPoolService>().GetCommand<T>() instead")]
         public static T GetCommandStatic<T>() where T : class, ICommand, new()
         {
-            if (_instance != null)
+            if (instance != null)
             {
-                return _instance.GetCommand<T>();
+                return instance.GetCommand<T>();
             }
             
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -241,11 +311,12 @@ namespace asterivo.Unity60.Core.Commands
         /// サービスが初期化されていない場合はコマンドを破棄
         /// 警告ログが出力されるため、開発時に問題を特定可能
         /// </remarks>
+        [System.Obsolete("Use ServiceLocator.GetService<ICommandPoolService>().ReturnCommand<T>() instead")]
         public static void ReturnCommandStatic<T>(T command) where T : ICommand
         {
-            if (_instance != null)
+            if (instance != null)
             {
-                _instance.ReturnCommand(command);
+                instance.ReturnCommand(command);
             }
             else
             {
@@ -259,10 +330,23 @@ namespace asterivo.Unity60.Core.Commands
         
         private void OnDestroy()
         {
-            if (_instance == this)
+            if (instance == this)
             {
+                // ServiceLocatorからの登録解除
+                try
+                {
+                    ServiceLocator.UnregisterService<ICommandPoolService>();
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                    UnityEngine.Debug.Log("CommandPoolService unregistered from ServiceLocator");
+#endif
+                }
+                catch (System.Exception ex)
+                {
+                    EventLogger.LogError($"Failed to unregister CommandPoolService: {ex.Message}");
+                }
+                
                 Cleanup();
-                _instance = null;
+                instance = null;
             }
         }
     }

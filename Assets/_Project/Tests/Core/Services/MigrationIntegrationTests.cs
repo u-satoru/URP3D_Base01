@@ -11,6 +11,7 @@ using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core.Audio.Services;
 using asterivo.Unity60.Core.Audio.Interfaces;
+using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Tests.Core.Services
 {
@@ -26,6 +27,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         private List<IAudioService> audioServices;
         private List<ISpatialAudioService> spatialServices;
         private List<IEffectService> effectServices;
+        private List<ICommandPoolService> commandPoolServices;
         
         [SetUp]
         public void SetUp()
@@ -38,6 +40,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             audioServices = new List<IAudioService>();
             spatialServices = new List<ISpatialAudioService>();
             effectServices = new List<IEffectService>();
+            commandPoolServices = new List<ICommandPoolService>();
         }
         
         [TearDown]
@@ -539,6 +542,186 @@ namespace asterivo.Unity60.Tests.Core.Services
             Assert.Less(maxFrameTime, 0.02f, "Max frame time should not spike significantly");
             Assert.IsTrue(progressStability, "Progress should remain stable over long periods");
             Assert.IsTrue(safetyConsistency, "Safety checks should remain consistent");
+        }
+        
+        #endregion
+        
+        #region CommandPoolService Migration Tests
+        
+        [Test]
+        public void Migration_CommandPoolService_ServiceLocatorIntegration()
+        {
+            // Setup CommandPoolService migration
+            FeatureFlags.UseServiceLocator = true;
+            FeatureFlags.EnableMigrationMonitoring = true;
+            
+            var commandPoolService = testGameObject.AddComponent<CommandPoolService>();
+            
+            // Test ServiceLocator registration
+            ServiceLocator.RegisterService<ICommandPoolService>(commandPoolService);
+            
+            var retrievedService = ServiceLocator.GetService<ICommandPoolService>();
+            Assert.IsNotNull(retrievedService, "CommandPoolService should be accessible via ServiceLocator");
+            Assert.AreEqual(commandPoolService, retrievedService, "Retrieved service should be the same instance");
+            
+            // Test interface functionality
+            var testCommand = retrievedService.GetCommand<DamageCommand>();
+            Assert.IsNotNull(testCommand, "Should be able to get commands via interface");
+            
+            retrievedService.ReturnCommand(testCommand);
+            Assert.DoesNotThrow(() => retrievedService.LogServiceStatus(), "Service status logging should work");
+            
+            // Test MigrationMonitor integration
+            migrationMonitor.LogServiceLocatorUsage(typeof(ICommandPoolService), "command_pool_test");
+            
+            var serviceStats = migrationMonitor.GetServiceLocatorUsageStats();
+            Assert.Greater(serviceStats.Count, 0, "Should record ServiceLocator usage");
+        }
+        
+        [Test]
+        public void Migration_CommandPoolService_LegacySingletonWarnings()
+        {
+            // Enable migration warnings
+            FeatureFlags.EnableMigrationWarnings = true;
+            FeatureFlags.EnableMigrationMonitoring = true;
+            FeatureFlags.DisableLegacySingletons = false; // Allow legacy access for testing
+            
+            var commandPoolService = testGameObject.AddComponent<CommandPoolService>();
+            var loggedWarnings = new List<string>();
+            
+            // Capture log output (simplified for test)
+            Application.logMessageReceived += (condition, stackTrace, type) =>
+            {
+                if (type == LogType.Warning && condition.Contains("DEPRECATED"))
+                {
+                    loggedWarnings.Add(condition);
+                }
+            };
+            
+            // Access via deprecated Instance property
+            #pragma warning disable CS0618 // Type or member is obsolete
+            var instance = CommandPoolService.Instance;
+            #pragma warning restore CS0618 // Type or member is obsolete
+            
+            Application.logMessageReceived -= (condition, stackTrace, type) => { };
+            
+            // Verify warning was logged
+            Assert.Greater(loggedWarnings.Count, 0, "Should log deprecation warning");
+            Assert.IsTrue(loggedWarnings.Any(w => w.Contains("ServiceLocator")), 
+                "Warning should mention ServiceLocator alternative");
+        }
+        
+        [Test] 
+        public void Migration_CommandPoolService_FeatureFlagDisabling()
+        {
+            // Setup service
+            var commandPoolService = testGameObject.AddComponent<CommandPoolService>();
+            
+            // Test with legacy singletons disabled
+            FeatureFlags.DisableLegacySingletons = true;
+            FeatureFlags.EnableMigrationMonitoring = true;
+            
+            var loggedErrors = new List<string>();
+            Application.logMessageReceived += (condition, stackTrace, type) =>
+            {
+                if (type == LogType.Error && condition.Contains("DEPRECATED"))
+                {
+                    loggedErrors.Add(condition);
+                }
+            };
+            
+            // Try to access disabled Instance
+            #pragma warning disable CS0618 // Type or member is obsolete
+            var instance = CommandPoolService.Instance;
+            #pragma warning restore CS0618 // Type or member is obsolete
+            
+            Application.logMessageReceived -= (condition, stackTrace, type) => { };
+            
+            // Verify instance is null and error logged
+            Assert.IsNull(instance, "Instance should be null when legacy singletons are disabled");
+            Assert.Greater(loggedErrors.Count, 0, "Should log error when accessing disabled singleton");
+        }
+        
+        [UnityTest]
+        public IEnumerator Migration_CommandPoolService_ConcurrentUsage()
+        {
+            // Setup
+            FeatureFlags.UseServiceLocator = true;
+            FeatureFlags.EnableMigrationMonitoring = true;
+            
+            var commandPoolService = testGameObject.AddComponent<CommandPoolService>();
+            ServiceLocator.RegisterService<ICommandPoolService>(commandPoolService);
+            
+            var operations = 0;
+            var errors = 0;
+            var endTime = Time.realtimeSinceStartup + 2.0f;
+            
+            // Simulate concurrent command pool usage
+            while (Time.realtimeSinceStartup < endTime)
+            {
+                try
+                {
+                    var service = ServiceLocator.GetService<ICommandPoolService>();
+                    if (service != null)
+                    {
+                        var command = service.GetCommand<DamageCommand>();
+                        operations++;
+                        
+                        if (command != null)
+                        {
+                            service.ReturnCommand(command);
+                        }
+                        
+                        // Record usage for monitoring
+                        if (operations % 10 == 0)
+                        {
+                            migrationMonitor.LogServiceLocatorUsage(typeof(ICommandPoolService), $"concurrent_{operations}");
+                        }
+                    }
+                }
+                catch (System.Exception)
+                {
+                    errors++;
+                }
+                
+                yield return null;
+            }
+            
+            // Verify performance and reliability
+            Assert.Greater(operations, 100, "Should complete many operations");
+            Assert.AreEqual(0, errors, "Should not have any errors during concurrent usage");
+            
+            var statistics = commandPoolService.GetStatistics<DamageCommand>();
+            Assert.IsNotNull(statistics, "Should be able to get command statistics");
+            
+            UnityEngine.Debug.Log($"CommandPoolService Concurrent Test: {operations} operations, {errors} errors");
+        }
+        
+        [Test]
+        public void Migration_CommandPoolService_AllMethodsAccessible()
+        {
+            // Setup
+            var commandPoolService = testGameObject.AddComponent<CommandPoolService>();
+            ServiceLocator.RegisterService<ICommandPoolService>(commandPoolService);
+            
+            var service = ServiceLocator.GetService<ICommandPoolService>();
+            Assert.IsNotNull(service, "Service should be accessible");
+            
+            // Test all interface methods
+            Assert.IsNotNull(service.PoolManager, "PoolManager should be accessible");
+            Assert.DoesNotThrow(() => service.LogServiceStatus(), "LogServiceStatus should work");
+            Assert.DoesNotThrow(() => service.LogDebugInfo(), "LogDebugInfo should work");
+            Assert.DoesNotThrow(() => service.Cleanup(), "Cleanup should work");
+            
+            // Test command operations
+            var command = service.GetCommand<HealCommand>();
+            Assert.IsNotNull(command, "Should get command instance");
+            
+            var statistics = service.GetStatistics<HealCommand>();
+            Assert.IsNotNull(statistics, "Should get statistics");
+            
+            service.ReturnCommand(command);
+            Assert.Pass("All methods should be accessible via interface");
         }
         
         #endregion
