@@ -1,4 +1,4 @@
-using _Project.Core;
+using asterivo.Unity60.Core;
 using UnityEngine;
 using UnityEngine.Audio;
 using System.Collections;
@@ -164,14 +164,14 @@ namespace asterivo.Unity60.Core.Audio
         private SpatialAudioManager GetSpatialAudioManager()
         {
             // ServiceLocator経由での取得を試みる
-            if (FeatureFlags.UseServiceLocator)
+            if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator)
             {
                 try
                 {
                     var spatialService = ServiceLocator.GetService<ISpatialAudioService>();
                     if (spatialService is SpatialAudioManager manager)
                     {
-                        if (FeatureFlags.EnableDebugLogging)
+                        if (asterivo.Unity60.Core.FeatureFlags.EnableDebugLogging)
                         {
                             EventLogger.Log("[AmbientManager] Successfully retrieved SpatialAudioManager from ServiceLocator");
                         }

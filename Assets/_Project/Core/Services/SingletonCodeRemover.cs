@@ -1,7 +1,8 @@
 using UnityEngine;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Debug;
 
-namespace _Project.Core.Services
+namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
     /// Step 3.11: 最終クリーンアップ - Singletonコード完全削除システム

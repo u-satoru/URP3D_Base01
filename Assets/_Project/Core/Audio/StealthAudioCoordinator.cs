@@ -1,4 +1,4 @@
-using _Project.Core;
+using asterivo.Unity60.Core;
 using UnityEngine;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Audio.Data;
@@ -78,13 +78,13 @@ namespace asterivo.Unity60.Core.Audio
             DontDestroyOnLoad(gameObject);
             
             // ServiceLocatorに登録
-            if (FeatureFlags.UseServiceLocator)
+            if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator)
             {
                 try
                 {
                     ServiceLocator.RegisterService<IStealthAudioService>(this);
                     
-                    if (FeatureFlags.EnableDebugLogging)
+                    if (asterivo.Unity60.Core.FeatureFlags.EnableDebugLogging)
                     {
                         EventLogger.Log("[StealthAudioCoordinator] Successfully registered to ServiceLocator as IStealthAudioService");
                     }
@@ -118,13 +118,13 @@ namespace asterivo.Unity60.Core.Audio
         {
             // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
             // ServiceLocatorから登録解除
-            if (FeatureFlags.UseServiceLocator)
+            if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator)
             {
                 try
                 {
                     ServiceLocator.UnregisterService<IStealthAudioService>();
                     
-                    if (FeatureFlags.EnableDebugLogging)
+                    if (asterivo.Unity60.Core.FeatureFlags.EnableDebugLogging)
                     {
                         EventLogger.Log("[StealthAudioCoordinator] Unregistered from ServiceLocator");
                     }
@@ -164,7 +164,7 @@ namespace asterivo.Unity60.Core.Audio
         private void FindSystemReferences()
         {
             // ServiceLocator経由でAudioServiceを取得
-            if (FeatureFlags.UseServiceLocator && audioService == null)
+            if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator && audioService == null)
             {
                 try
                 {
@@ -172,14 +172,14 @@ namespace asterivo.Unity60.Core.Audio
                     
                     if (audioService != null)
                     {
-                        if (FeatureFlags.EnableDebugLogging)
+                        if (asterivo.Unity60.Core.FeatureFlags.EnableDebugLogging)
                         {
                             EventLogger.Log("[StealthAudioCoordinator] Successfully retrieved AudioService from ServiceLocator");
                         }
                     }
                     else
                     {
-                        if (FeatureFlags.EnableMigrationMonitoring)
+                        if (asterivo.Unity60.Core.FeatureFlags.EnableMigrationMonitoring)
                         {
                             EventLogger.LogWarning("[StealthAudioCoordinator] ServiceLocator returned null for IAudioService, falling back to legacy approach");
                         }
@@ -197,7 +197,7 @@ namespace asterivo.Unity60.Core.Audio
                 try
                 {
                     audioManager = ServiceHelper.GetServiceWithFallback<AudioManager>();
-                    if (audioManager != null && FeatureFlags.EnableDebugLogging)
+                    if (audioManager != null && asterivo.Unity60.Core.FeatureFlags.EnableDebugLogging)
                     {
                         EventLogger.Log("[StealthAudioCoordinator] Found AudioManager via FindFirstObjectByType");
                     }

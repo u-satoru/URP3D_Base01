@@ -238,7 +238,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         private void StartMaskingDetection()
         {
             // ✅ ServiceLocator専用実装 - IAudioUpdateServiceを取得
-            if (_Project.Core.FeatureFlags.UseServiceLocator)
+            if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator)
             {
                 try
                 {
@@ -279,7 +279,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         private void StopMaskingDetection()
         {
             // ✅ ServiceLocator専用実装 - IAudioUpdateServiceからの登録解除
-            if (_Project.Core.FeatureFlags.UseServiceLocator)
+            if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator)
             {
                 try
                 {

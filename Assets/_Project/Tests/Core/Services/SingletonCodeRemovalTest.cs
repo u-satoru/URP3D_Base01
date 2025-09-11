@@ -2,10 +2,10 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
-using _Project.Core;
-using _Project.Core.Services;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Services;
 
-namespace _Project.Tests.Core.Services
+namespace asterivo.Unity60.Tests.Core.Services
 {
     /// <summary>
     /// Step 3.11: 最終クリーンアップ システムのテスト
@@ -95,12 +95,12 @@ namespace _Project.Tests.Core.Services
         public IEnumerator SingletonCodeRemover_CleanupValidation_ShouldVerifySystemState()
         {
             // Arrange - システムを完全移行状態にセットアップ
-            FeatureFlags.UseServiceLocator = true;
-            FeatureFlags.DisableLegacySingletons = true;
-            FeatureFlags.EnableMigrationWarnings = false;
-            FeatureFlags.UseNewAudioService = true;
-            FeatureFlags.UseNewSpatialService = true;
-            FeatureFlags.UseNewStealthService = true;
+            asterivo.Unity60.Core.FeatureFlags.UseServiceLocator = true;
+            asterivo.Unity60.Core.FeatureFlags.DisableLegacySingletons = true;
+            asterivo.Unity60.Core.FeatureFlags.EnableMigrationWarnings = false;
+            asterivo.Unity60.Core.FeatureFlags.UseNewAudioService = true;
+            asterivo.Unity60.Core.FeatureFlags.UseNewSpatialService = true;
+            asterivo.Unity60.Core.FeatureFlags.UseNewStealthService = true;
 
             // Act
             remover.ExecuteCleanupConfirmed();

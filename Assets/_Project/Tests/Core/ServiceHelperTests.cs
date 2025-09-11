@@ -2,7 +2,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using asterivo.Unity60.Core.Helpers;
-using _Project.Core;
+using asterivo.Unity60.Core;
 
 namespace asterivo.Unity60.Tests.Core
 {
@@ -20,7 +20,7 @@ namespace asterivo.Unity60.Tests.Core
         public void SetUp()
         {
             // テスト前にFeatureFlagの状態を保存
-            originalUseServiceLocator = FeatureFlags.UseServiceLocator;
+            originalUseServiceLocator = asterivo.Unity60.Core.FeatureFlags.UseServiceLocator;
             originalEnableDebugLogging = FeatureFlags.EnableDebugLogging;
             
             // テスト用にデバッグログを無効化（ログスパム防止）

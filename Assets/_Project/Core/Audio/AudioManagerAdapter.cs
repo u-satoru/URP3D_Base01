@@ -1,7 +1,7 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Audio.Interfaces;
-using _Project.Core;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Helpers;
 
 namespace asterivo.Unity60.Core.Audio

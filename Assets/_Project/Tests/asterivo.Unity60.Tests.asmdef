@@ -2,10 +2,7 @@
     "name": "asterivo.Unity60.Tests",
     "rootNamespace": "asterivo.Unity60.Tests",
     "references": [
-        "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner",
         "asterivo.Unity60.Core",
-        "asterivo.Unity60.Features",
         "asterivo.Unity60.Core.Editor"
     ],
     "includePlatforms": [
@@ -13,14 +10,15 @@
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": true,
-    "precompiledReferences": [
-        "nunit.framework.dll"
-    ],
+    "overrideReferences": false,
+    "precompiledReferences": [],
     "autoReferenced": false,
     "defineConstraints": [
         "UNITY_INCLUDE_TESTS"
     ],
     "versionDefines": [],
-    "noEngineReferences": false
+    "noEngineReferences": false,
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ]
 }

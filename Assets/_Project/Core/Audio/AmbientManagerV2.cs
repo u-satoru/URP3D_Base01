@@ -556,7 +556,7 @@ namespace asterivo.Unity60.Core.Audio
         /// </summary>
         private asterivo.Unity60.Core.Audio.Interfaces.IAudioUpdateService GetAudioUpdateService()
         {
-            if (_Project.Core.FeatureFlags.UseServiceLocator)
+            if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator)
             {
                 try
                 {
@@ -569,13 +569,13 @@ namespace asterivo.Unity60.Core.Audio
             }
             
             // フォールバック: FindFirstObjectByType (ServiceLocator専用実装)
-            if (_Project.Core.FeatureFlags.AllowSingletonFallback)
+            if (asterivo.Unity60.Core.FeatureFlags.AllowSingletonFallback)
             {
                 try
                 {
                     // ✅ ServiceLocator専用実装 - 直接AudioUpdateCoordinatorを検索
                     var coordinator = FindFirstObjectByType<AudioUpdateCoordinator>();
-                    if (coordinator != null && _Project.Core.FeatureFlags.EnableDebugLogging)
+                    if (coordinator != null && asterivo.Unity60.Core.FeatureFlags.EnableDebugLogging)
                     {
                         EventLogger.Log("[AmbientManagerV2] Found AudioUpdateCoordinator via FindFirstObjectByType");
                     }

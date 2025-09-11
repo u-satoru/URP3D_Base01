@@ -27,7 +27,12 @@ namespace asterivo.Unity60.Core.Debug
                 {
                     var go = new GameObject("EventLogger");
                     instance = go.AddComponent<EventLogger>();
-                    DontDestroyOnLoad(go);
+                    
+                    // Editor環境ではDontDestroyOnLoadは使用不可のため条件チェック
+                    if (Application.isPlaying)
+                    {
+                        DontDestroyOnLoad(go);
+                    }
                 }
                 return instance;
             }
@@ -91,7 +96,13 @@ namespace asterivo.Unity60.Core.Debug
             if (instance == null)
             {
                 instance = this;
-                DontDestroyOnLoad(gameObject);
+                
+                // Editor環境ではDontDestroyOnLoadは使用不可のため条件チェック
+                if (Application.isPlaying)
+                {
+                    DontDestroyOnLoad(gameObject);
+                }
+                
                 LoadSettings();
             }
             else if (instance != this)

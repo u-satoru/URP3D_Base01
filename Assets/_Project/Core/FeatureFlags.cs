@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-namespace _Project.Core
+namespace asterivo.Unity60.Core
 {
     /// <summary>
     /// Phase 3 強化版 Feature Flag システム
@@ -203,7 +203,7 @@ namespace _Project.Core
         /// </summary>
         public static bool MigrateStealthAudioCoordinator
         {
-            get => PlayerPrefs.GetInt("FeatureFlag_MigrateStealthA1) == 1; // Step 3.4で有効化 - StealthAudioCoordinator移行完了dioCoordinator", 0) == 1;
+            get => PlayerPrefs.GetInt("FeatureFlag_MigrateStealthAudioCoordinator", 0) == 1;
             set => SetFlag("FeatureFlag_MigrateStealthAudioCoordinator", value);
         }
         
@@ -229,7 +229,7 @@ namespace _Project.Core
                 PlayerPrefs.SetInt(key, value ? 1 : 0);
                 if (EnableDebugLogging)
                 {
-                    Debug.Log($"[FeatureFlags] {key}: {oldValue} -> {value}");
+                    UnityEngine.Debug.Log($"[FeatureFlags] {key}: {oldValue} -> {value}");
                 }
                 
                 // 変更履歴を記録（移行監視用）
@@ -316,12 +316,12 @@ namespace _Project.Core
                     break;
                     
                 default:
-                    Debug.LogWarning($"[FeatureFlags] Unknown migration phase: {phase}");
+                    UnityEngine.Debug.LogWarning($"[FeatureFlags] Unknown migration phase: {phase}");
                     return;
             }
             
             PlayerPrefs.Save();
-            Debug.Log($"[FeatureFlags] Migration phase set to: {phase}");
+            UnityEngine.Debug.Log($"[FeatureFlags] Migration phase set to: {phase}");
             LogCurrentFlags();
         }
         
@@ -354,7 +354,7 @@ namespace _Project.Core
         /// </summary>
         public static void EmergencyRollback()
         {
-            Debug.LogWarning("[FeatureFlags] EMERGENCY ROLLBACK - Reverting to Singleton mode");
+            UnityEngine.Debug.LogWarning("[FeatureFlags] EMERGENCY ROLLBACK - Reverting to Singleton mode");
             
             SetMigrationPhase(0); // 完全リセット
             
@@ -363,7 +363,7 @@ namespace _Project.Core
             PlayerPrefs.SetString("FeatureFlag_LastEmergencyRollback", timestamp);
             
             PlayerPrefs.Save();
-            Debug.LogError($"[FeatureFlags] Emergency rollback completed at {timestamp}");
+            UnityEngine.Debug.LogError($"[FeatureFlags] Emergency rollback completed at {timestamp}");
         }
         
         /// <summary>
@@ -432,7 +432,7 @@ namespace _Project.Core
             
             PlayerPrefs.Save();
             
-            Debug.Log("[FeatureFlags] All flags reset to default");
+            UnityEngine.Debug.Log("[FeatureFlags] All flags reset to default");
         }
         
         /// <summary>
@@ -440,31 +440,31 @@ namespace _Project.Core
         /// </summary>
         public static void LogCurrentFlags()
         {
-            Debug.Log($"[FeatureFlags] === Current Settings ===");
-            Debug.Log($"  基本フラグ:");
-            Debug.Log($"    - UseNewAudioSystem: {UseNewAudioSystem}");
-            Debug.Log($"    - UseServiceLocator: {UseServiceLocator}");
-            Debug.Log($"    - UseEventDrivenAudio: {UseEventDrivenAudio}");
-            Debug.Log($"    - UseNewAudioUpdateSystem: {UseNewAudioUpdateSystem}");
-            Debug.Log($"    - EnableDebugLogging: {EnableDebugLogging}");
+            UnityEngine.Debug.Log($"[FeatureFlags] === Current Settings ===");
+            UnityEngine.Debug.Log($"  基本フラグ:");
+            UnityEngine.Debug.Log($"    - UseNewAudioSystem: {UseNewAudioSystem}");
+            UnityEngine.Debug.Log($"    - UseServiceLocator: {UseServiceLocator}");
+            UnityEngine.Debug.Log($"    - UseEventDrivenAudio: {UseEventDrivenAudio}");
+            UnityEngine.Debug.Log($"    - UseNewAudioUpdateSystem: {UseNewAudioUpdateSystem}");
+            UnityEngine.Debug.Log($"    - EnableDebugLogging: {EnableDebugLogging}");
             
-            Debug.Log($"  移行管理フラグ:");
-            Debug.Log($"    - EnableMigrationMonitoring: {EnableMigrationMonitoring}");
-            Debug.Log($"    - EnablePerformanceMeasurement: {EnablePerformanceMeasurement}");
-            Debug.Log($"    - EnableAutoRollback: {EnableAutoRollback}");
-            Debug.Log($"    - AllowSingletonFallback: {AllowSingletonFallback}");
-            Debug.Log($"    - EnableTestMode: {EnableTestMode}");
+            UnityEngine.Debug.Log($"  移行管理フラグ:");
+            UnityEngine.Debug.Log($"    - EnableMigrationMonitoring: {EnableMigrationMonitoring}");
+            UnityEngine.Debug.Log($"    - EnablePerformanceMeasurement: {EnablePerformanceMeasurement}");
+            UnityEngine.Debug.Log($"    - EnableAutoRollback: {EnableAutoRollback}");
+            UnityEngine.Debug.Log($"    - AllowSingletonFallback: {AllowSingletonFallback}");
+            UnityEngine.Debug.Log($"    - EnableTestMode: {EnableTestMode}");
             
-            Debug.Log($"  段階的移行フラグ:");
-            Debug.Log($"    - MigrateAudioManager: {MigrateAudioManager}");
-            Debug.Log($"    - MigrateSpatialAudioManager: {MigrateSpatialAudioManager}");
-            Debug.Log($"    - MigrateEffectManager: {MigrateEffectManager}");
-            Debug.Log($"    - MigrateStealthAudioCoordinator: {MigrateStealthAudioCoordinator}");
-            Debug.Log($"    - MigrateAudioUpdateCoordinator: {MigrateAudioUpdateCoordinator}");
+            UnityEngine.Debug.Log($"  段階的移行フラグ:");
+            UnityEngine.Debug.Log($"    - MigrateAudioManager: {MigrateAudioManager}");
+            UnityEngine.Debug.Log($"    - MigrateSpatialAudioManager: {MigrateSpatialAudioManager}");
+            UnityEngine.Debug.Log($"    - MigrateEffectManager: {MigrateEffectManager}");
+            UnityEngine.Debug.Log($"    - MigrateStealthAudioCoordinator: {MigrateStealthAudioCoordinator}");
+            UnityEngine.Debug.Log($"    - MigrateAudioUpdateCoordinator: {MigrateAudioUpdateCoordinator}");
             
-            Debug.Log($"  移行進捗: {GetMigrationProgress()}%");
-            Debug.Log($"  最後の緊急ロールバック: {GetLastEmergencyRollbackTime()}");
-            Debug.Log($"  移行安全性: {(IsMigrationSafe() ? "OK" : "NG")}");
+            UnityEngine.Debug.Log($"  移行進捗: {GetMigrationProgress()}%");
+            UnityEngine.Debug.Log($"  最後の緊急ロールバック: {GetLastEmergencyRollbackTime()}");
+            UnityEngine.Debug.Log($"  移行安全性: {(IsMigrationSafe() ? "OK" : "NG")}");
         }
         
         /// <summary>
@@ -504,7 +504,7 @@ namespace _Project.Core
             
             PlayerPrefs.Save();
             
-            Debug.Log("[FeatureFlags] Phase 3 flags enabled successfully");
+            UnityEngine.Debug.Log("[FeatureFlags] Phase 3 flags enabled successfully");
             LogCurrentFlags(); // 設定確認
         }
         
@@ -517,13 +517,72 @@ namespace _Project.Core
             if (!UseServiceLocator && (MigrateAudioManager || MigrateSpatialAudioManager || 
                 MigrateEffectManager || MigrateAudioUpdateCoordinator || MigrateStealthAudioCoordinator))
             {
-                Debug.LogWarning("[FeatureFlags] Inconsistent configuration: Migration flags are enabled but UseServiceLocator is false");
+                UnityEngine.Debug.LogWarning("[FeatureFlags] Inconsistent configuration: Migration flags are enabled but UseServiceLocator is false");
             }
             
             // 移行監視が無効なのにパフォーマンス測定が有効の場合は警告
             if (!EnableMigrationMonitoring && EnablePerformanceMeasurement)
             {
-                Debug.LogWarning("[FeatureFlags] EnablePerformanceMeasurement requires EnableMigrationMonitoring");
+                UnityEngine.Debug.LogWarning("[FeatureFlags] EnablePerformanceMeasurement requires EnableMigrationMonitoring");
+            }
+            
+            // DisableLegacySingletons と AllowSingletonFallback の競合
+            if (DisableLegacySingletons && AllowSingletonFallback)
+            {
+                UnityEngine.Debug.LogWarning("[FeatureFlags] Inconsistent configuration: DisableLegacySingletons=true conflicts with AllowSingletonFallback=true");
+            }
+            
+            // Day4前提: DisableLegacySingletonsが有効ならPhase3新サービスは全て有効が安全
+            if (DisableLegacySingletons && (!UseNewAudioService || !UseNewSpatialService || !UseNewStealthService))
+            {
+                UnityEngine.Debug.LogWarning("[FeatureFlags] DisableLegacySingletons requires Phase 3 services enabled (UseNewAudio/Spatial/Stealth)");
+            }
+        }
+
+        /// <summary>
+        /// 整合性を強制（autoFix=trueで安全側に自動補正）
+        /// </summary>
+        public static void EnforceConsistency(bool autoFix = false)
+        {
+            bool changed = false;
+            
+            if (!UseServiceLocator)
+            {
+                // 移行フラグは無効が安全
+                if (MigrateAudioManager && autoFix) { MigrateAudioManager = false; changed = true; }
+                if (MigrateSpatialAudioManager && autoFix) { MigrateSpatialAudioManager = false; changed = true; }
+                if (MigrateEffectManager && autoFix) { MigrateEffectManager = false; changed = true; }
+                if (MigrateStealthAudioCoordinator && autoFix) { MigrateStealthAudioCoordinator = false; changed = true; }
+                if (MigrateAudioUpdateCoordinator && autoFix) { MigrateAudioUpdateCoordinator = false; changed = true; }
+                
+                // Legacy無効化は危険なので解除
+                if (DisableLegacySingletons && autoFix) { DisableLegacySingletons = false; changed = true; }
+            }
+
+            // 監視なしで計測は無効化
+            if (!EnableMigrationMonitoring && EnablePerformanceMeasurement && autoFix)
+            {
+                EnablePerformanceMeasurement = false; changed = true;
+            }
+
+            // 競合解消: Legacy無効化とSingletonフォールバック同時は不可
+            if (DisableLegacySingletons && AllowSingletonFallback && autoFix)
+            {
+                AllowSingletonFallback = false; changed = true;
+            }
+
+            // Day4安全性: Legacyを無効にするならPhase3新サービスを有効化
+            if (DisableLegacySingletons && autoFix)
+            {
+                if (!UseNewAudioService) { UseNewAudioService = true; changed = true; }
+                if (!UseNewSpatialService) { UseNewSpatialService = true; changed = true; }
+                if (!UseNewStealthService) { UseNewStealthService = true; changed = true; }
+            }
+
+            if (changed)
+            {
+                PlayerPrefs.Save();
+                UnityEngine.Debug.Log("[FeatureFlags] Consistency enforced and saved");
             }
         }
         
@@ -543,7 +602,7 @@ namespace _Project.Core
             EnableDebugLogging = true;
             
             PlayerPrefs.Save();
-            Debug.Log("[FeatureFlags] Day 1: Test warnings enabled successfully");
+            UnityEngine.Debug.Log("[FeatureFlags] Day 1: Test warnings enabled successfully");
             LogCurrentFlags();
         }
         
@@ -561,7 +620,7 @@ namespace _Project.Core
             PlayerPrefs.SetInt("Task4_Day1_Executed", 1);
             PlayerPrefs.Save();
             
-            Debug.Log("[Task 4 - Day 1] 警告システムがテスト環境で有効化されました。Legacy Singletonの使用が監視されています。");
+            UnityEngine.Debug.Log("[Task 4 - Day 1] 警告システムがテスト環境で有効化されました。Legacy Singletonの使用が監視されています。");
         }
         
         /// <summary>
@@ -575,11 +634,11 @@ namespace _Project.Core
             DisableLegacySingletons = true;
             
             PlayerPrefs.Save();
-            Debug.Log("[FeatureFlags] Day 4: Legacy Singletons disabled successfully");
+            UnityEngine.Debug.Log("[FeatureFlags] Day 4: Legacy Singletons disabled successfully");
             LogCurrentFlags();
             
             // MigrationValidator実行を推奨
-            Debug.Log("[FeatureFlags] RECOMMENDATION: Run MigrationValidator to verify migration completion");
+            UnityEngine.Debug.Log("[FeatureFlags] RECOMMENDATION: Run MigrationValidator to verify migration completion");
         }
         
         /// <summary>
@@ -590,14 +649,14 @@ namespace _Project.Core
             // Day 4の実行は一度だけ行う
             if (PlayerPrefs.GetInt("Task4_Day4_Executed", 0) == 1)
             {
-                Debug.Log("[Task 4 - Day 4] Already executed. Legacy Singletons are disabled.");
+                UnityEngine.Debug.Log("[Task 4 - Day 4] Already executed. Legacy Singletons are disabled.");
                 return;
             }
             
             // 安全性チェック
             if (!IsTask4Safe())
             {
-                Debug.LogError("[Task 4 - Day 4] Safety check failed. Cannot disable Legacy Singletons.");
+                UnityEngine.Debug.LogError("[Task 4 - Day 4] Safety check failed. Cannot disable Legacy Singletons.");
                 return;
             }
             
@@ -605,10 +664,10 @@ namespace _Project.Core
             PlayerPrefs.SetInt("Task4_Day4_Executed", 1);
             PlayerPrefs.Save();
             
-            Debug.Log("[Task 4 - Day 4] Legacy Singletonが本番環境で無効化されました。ServiceLocator完全移行完了。");
+            UnityEngine.Debug.Log("[Task 4 - Day 4] Legacy Singletonが本番環境で無効化されました。ServiceLocator完全移行完了。");
             
             // 完了状況をレポート
-            Debug.Log($"[Task 4 Complete] Migration Progress: {GetMigrationProgress()}%, Safety Status: {(IsMigrationSafe() ? "SAFE" : "UNSAFE")}");
+            UnityEngine.Debug.Log($"[Task 4 Complete] Migration Progress: {GetMigrationProgress()}%, Safety Status: {(IsMigrationSafe() ? "SAFE" : "UNSAFE")}");
         }
         
         /// <summary>
@@ -619,40 +678,58 @@ namespace _Project.Core
             // ServiceLocator基盤が整っているかチェック
             if (!UseServiceLocator)
             {
-                Debug.LogError("[FeatureFlags] Task 4 requires UseServiceLocator = true");
+                UnityEngine.Debug.LogError("[FeatureFlags] Task 4 requires UseServiceLocator = true");
                 return false;
             }
             
             // Phase 3の新サービスが有効かチェック  
             if (!UseNewAudioService || !UseNewSpatialService || !UseNewStealthService)
             {
-                Debug.LogError("[FeatureFlags] Task 4 requires all Phase 3 services enabled");
+                UnityEngine.Debug.LogError("[FeatureFlags] Task 4 requires all Phase 3 services enabled");
                 return false;
             }
             
             // 移行監視システムが有効かチェック
             if (!EnableMigrationMonitoring)
             {
-                Debug.LogError("[FeatureFlags] Task 4 requires EnableMigrationMonitoring = true");
+                UnityEngine.Debug.LogError("[FeatureFlags] Task 4 requires EnableMigrationMonitoring = true");
                 return false;
             }
             
             return true;
         }
+
+        /// <summary>
+        /// 起動時の構成検証フック（必ず一度実行）
+        /// </summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
+        private static void RuntimeValidateOnStartup()
+        {
+            try
+            {
+                ValidateConfiguration();
+                // 自動修正は行わず警告のみ。必要に応じて起動スクリプトからEnforceConsistency(true)を呼び出す
+                EnforceConsistency(false);
+            }
+            catch (System.Exception e)
+            {
+                UnityEngine.Debug.LogError($"[FeatureFlags] Runtime validation failed: {e.Message}");
+            }
+        }
     public static void LogFlagHistory()
         {
-            Debug.Log($"[FeatureFlags] === Flag Change History ===");
+            UnityEngine.Debug.Log($"[FeatureFlags] === Flag Change History ===");
             var history = GetFlagChangeHistory();
             
             if (history.Count == 0)
             {
-                Debug.Log($"  履歴なし");
+                UnityEngine.Debug.Log($"  履歴なし");
                 return;
             }
             
             foreach (var entry in history)
             {
-                Debug.Log($"  {entry}");
+                UnityEngine.Debug.Log($"  {entry}");
             }
         }
     }

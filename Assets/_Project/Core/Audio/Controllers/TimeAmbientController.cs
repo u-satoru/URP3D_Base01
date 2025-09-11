@@ -66,7 +66,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             if (enableAutomaticTimeUpdates)
             {
                 // ✅ ServiceLocator専用実装 - IAudioUpdateServiceを取得
-                if (_Project.Core.FeatureFlags.UseServiceLocator)
+                if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator)
                 {
                     try
                     {

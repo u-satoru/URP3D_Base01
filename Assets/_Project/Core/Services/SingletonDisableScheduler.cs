@@ -1,9 +1,11 @@
+using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core.Debug;
 
-namespace _Project.Core.Services
+namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
     /// Step 3.10: 段階的Singleton無効化スケジュール

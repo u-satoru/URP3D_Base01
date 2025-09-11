@@ -1,7 +1,7 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Debug;
 
-namespace _Project.Core.Services
+namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
     /// 緊急時のロールバックシステム
@@ -73,7 +73,7 @@ namespace _Project.Core.Services
             PlayerPrefs.SetString(ROLLBACK_TIME_KEY, timestamp);
             
             // 全てのFeatureFlagを安全な状態に戻す
-            FeatureFlags.UseServiceLocator = true;  // ServiceLocator自体は保持
+            asterivo.Unity60.Core.FeatureFlags.UseServiceLocator = true;  // ServiceLocator自体は保持
             FeatureFlags.UseNewAudioService = false;
             FeatureFlags.UseNewSpatialService = false;  
             FeatureFlags.UseNewStealthService = false;

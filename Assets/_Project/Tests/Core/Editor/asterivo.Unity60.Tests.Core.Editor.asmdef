@@ -4,8 +4,8 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "asterivo.Unity60.Core",
-        "asterivo.Unity60.Core.Editor"
+        "GUID:e1d2c191d72ab8740bb4719ed7fe849d",
+        "GUID:a6306a1513995aa459fe3c5534950c7f"
     ],
     "includePlatforms": [
         "Editor"

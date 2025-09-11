@@ -7,7 +7,7 @@ using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Audio.Interfaces;
-using _Project.Core;
+
 
 namespace asterivo.Unity60.Core.Audio
 {
@@ -26,7 +26,7 @@ namespace asterivo.Unity60.Core.Audio
     /// 一般的な効果音とステルスゲーム用効果音の統合管理
     /// ServiceLocator対応版
     /// </summary>
-    public class EffectManager : MonoBehaviour, IEffectService, _Project.Core.IInitializable
+    public class EffectManager : MonoBehaviour, IEffectService, IInitializable
     {
         [Header("Effect Manager Settings")]
         [SerializeField] private int maxConcurrentEffects = 16;

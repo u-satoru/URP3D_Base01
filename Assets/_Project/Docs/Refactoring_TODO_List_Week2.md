@@ -30,6 +30,8 @@
   // IntegrationTestTemplate.cs
   // MockServiceTemplate.cs
   ```
+  - レポート生成: XML + Markdown両形式対応
+  - 出力形式: NUnit標準XML（CI/CD用） + 分析Markdown（人間可読用）
 
 - [ ] **[P0]** テストヘルパークラスの作成
   - 期限: Day 2 午前
@@ -41,6 +43,9 @@
   - 期限: Day 2 午後
   - 対象: AudioManager, SpatialAudioManager, EffectManager
   - 成果物: `Tests/Core/Audio/` 配下のテストファイル
+  - テスト結果出力: 
+    - `Tests/Results/audio-system-test-results.xml` (NUnit形式)
+    - `Tests/Results/audio-system-verification.md` (分析レポート形式)
 
 ### 🔴 P0: FindFirstObjectByType全体置換（Day 2-3）
 

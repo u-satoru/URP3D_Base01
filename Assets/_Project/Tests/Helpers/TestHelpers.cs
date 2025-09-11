@@ -211,6 +211,237 @@ namespace asterivo.Unity60.Tests.Helpers
             CleanupTestGameObjects();
             InitializeServiceLocatorForTest();
         }
+
+        #region Audio System Test Support
+
+        /// <summary>
+        /// Audio系テスト用の包括的セットアップ
+        /// </summary>
+        public static AudioTestContext SetupAudioTestContext()
+        {
+            SetupTestScene();
+
+            // AudioListenerの作成
+            var listenerGO = CreateTestGameObject("TestAudioListener");
+            var audioListener = listenerGO.AddComponent<AudioListener>();
+
+            // MainCameraの作成（AudioListenerが必要）
+            var cameraGO = CreateTestGameObject("TestMainCamera");
+            var camera = cameraGO.AddComponent<Camera>();
+            camera.tag = "MainCamera";
+
+            return new AudioTestContext
+            {
+                AudioListener = audioListener,
+                MainCamera = camera
+            };
+        }
+
+        /// <summary>
+        /// Audio系テスト用のモックサービス一式を登録
+        /// </summary>
+        public static AudioMockServices RegisterAudioMockServices()
+        {
+            var audioService = CreateMockAudioService();
+            var spatialAudioService = CreateMockSpatialAudioService();
+            var stealthAudioService = CreateMockStealthAudioService();
+
+            ServiceLocator.RegisterService<IAudioService>(audioService);
+            ServiceLocator.RegisterService<ISpatialAudioService>(spatialAudioService);
+            ServiceLocator.RegisterService<IStealthAudioService>(stealthAudioService);
+
+            return new AudioMockServices
+            {
+                AudioService = audioService,
+                SpatialAudioService = spatialAudioService,
+                StealthAudioService = stealthAudioService
+            };
+        }
+
+        /// <summary>
+        /// Audio系コンポーネントの動作検証
+        /// </summary>
+        public static void AssertAudioComponentsWorking(GameObject audioObject)
+        {
+            var audioSource = audioObject.GetComponent<AudioSource>();
+            if (audioSource != null)
+            {
+                // AudioSourceの基本設定確認
+                Assert.That(audioSource.volume, Is.InRange(0f, 1f), "AudioSource volume should be in valid range");
+                Assert.That(audioSource.pitch, Is.InRange(0.1f, 3f), "AudioSource pitch should be in valid range");
+            }
+
+            var audioListener = Object.FindObjectOfType<AudioListener>();
+            Assert.IsNotNull(audioListener, "AudioListener should exist in scene for spatial audio tests");
+        }
+
+        /// <summary>
+        /// Audio系サービスの統合状態を検証
+        /// </summary>
+        public static void AssertAudioServicesIntegrated()
+        {
+            Assert.IsTrue(ServiceLocator.HasService<IAudioService>(), "AudioService should be registered");
+            Assert.IsTrue(ServiceLocator.HasService<ISpatialAudioService>(), "SpatialAudioService should be registered");
+            Assert.IsTrue(ServiceLocator.HasService<IStealthAudioService>(), "StealthAudioService should be registered");
+        }
+
+        /// <summary>
+        /// Audio系のパフォーマンス閾値検証
+        /// </summary>
+        public static void AssertAudioPerformanceThresholds(System.Action audioAction, float maxTimeMs = 5f, int maxAllocationsKB = 100)
+        {
+            // メモリ使用量測定開始
+            long memoryBefore = System.GC.GetTotalMemory(false);
+            
+            // 実行時間測定
+            AssertExecutionTime(audioAction, maxTimeMs, $"Audio operation should complete within {maxTimeMs}ms");
+            
+            // メモリ使用量測定終了
+            System.GC.Collect();
+            System.GC.WaitForPendingFinalizers();
+            System.GC.Collect();
+            
+            long memoryAfter = System.GC.GetTotalMemory(true);
+            long memoryDelta = (memoryAfter - memoryBefore) / 1024; // KB単位
+            
+            Assert.That(memoryDelta, Is.LessThan(maxAllocationsKB), 
+                $"Audio operation should not allocate more than {maxAllocationsKB}KB (actual: {memoryDelta}KB)");
+        }
+
+        /// <summary>
+        /// 3D音響のポジション精度検証
+        /// </summary>
+        public static void AssertSpatialAudioPositioning(Vector3 expectedPosition, Vector3 actualPosition, float toleranceMeters = 0.1f)
+        {
+            float distance = Vector3.Distance(expectedPosition, actualPosition);
+            Assert.That(distance, Is.LessThan(toleranceMeters), 
+                $"Spatial audio position should be within {toleranceMeters}m tolerance (actual distance: {distance:F3}m)");
+        }
+
+        /// <summary>
+        /// オーディオ音量レベルの検証
+        /// </summary>
+        public static void AssertAudioVolumeLevel(float actualVolume, float expectedVolume, float tolerance = 0.05f)
+        {
+            Assert.That(actualVolume, Is.EqualTo(expectedVolume).Within(tolerance), 
+                $"Audio volume should be {expectedVolume} ± {tolerance} (actual: {actualVolume})");
+        }
+
+        #endregion
+
+        #region Test Report Generation
+
+        /// <summary>
+        /// テスト実行結果からMarkdownレポートを生成
+        /// </summary>
+        public static string GenerateMarkdownTestReport(TestReportData reportData)
+        {
+            var report = new System.Text.StringBuilder();
+            
+            report.AppendLine("# Audio System Test Verification Report");
+            report.AppendLine();
+            report.AppendLine($"**Generated**: {System.DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+            report.AppendLine($"**Test Environment**: Unity {UnityEngine.Application.unityVersion}");
+            report.AppendLine($"**Total Tests**: {reportData.TotalTests}");
+            report.AppendLine($"**Passed**: {reportData.PassedTests}");
+            report.AppendLine($"**Failed**: {reportData.FailedTests}");
+            report.AppendLine($"**Success Rate**: {(reportData.PassedTests / (float)reportData.TotalTests * 100):F1}%");
+            report.AppendLine();
+
+            if (reportData.FailedTests > 0)
+            {
+                report.AppendLine("## ⚠️ Failed Tests");
+                foreach (var failure in reportData.Failures)
+                {
+                    report.AppendLine($"- **{failure.TestName}**: {failure.ErrorMessage}");
+                }
+                report.AppendLine();
+            }
+
+            report.AppendLine("## Performance Metrics");
+            report.AppendLine($"- **Average Execution Time**: {reportData.AverageExecutionTime:F2}ms");
+            report.AppendLine($"- **Memory Usage**: {reportData.MemoryUsageKB}KB");
+            report.AppendLine($"- **Performance Score**: {reportData.PerformanceScore}/100");
+            report.AppendLine();
+
+            report.AppendLine("## Recommendations");
+            report.AppendLine(reportData.Recommendations ?? "All tests completed successfully.");
+            report.AppendLine();
+
+            report.AppendLine("## Next Actions");
+            report.AppendLine(reportData.NextActions ?? "Continue with regular testing schedule.");
+
+            return report.ToString();
+        }
+
+        /// <summary>
+        /// テスト結果をXMLとMarkdown両形式で保存
+        /// </summary>
+        public static void SaveTestResults(TestReportData reportData, string baseFileName = "audio-system-test")
+        {
+            var resultsDir = "Assets/_Project/Tests/Results";
+            if (!System.IO.Directory.Exists(resultsDir))
+            {
+                System.IO.Directory.CreateDirectory(resultsDir);
+            }
+
+            // XML形式で保存（CI/CD用）
+            var xmlPath = System.IO.Path.Combine(resultsDir, $"{baseFileName}-results.xml");
+            var xmlContent = GenerateNUnitXmlReport(reportData);
+            System.IO.File.WriteAllText(xmlPath, xmlContent);
+
+            // Markdown形式で保存（人間可読用）
+            var markdownPath = System.IO.Path.Combine(resultsDir, $"{baseFileName}-verification.md");
+            var markdownContent = GenerateMarkdownTestReport(reportData);
+            System.IO.File.WriteAllText(markdownPath, markdownContent);
+
+            Debug.Log($"Test results saved to {xmlPath} and {markdownPath}");
+        }
+
+        /// <summary>
+        /// NUnit標準XML形式でレポートを生成
+        /// </summary>
+        private static string GenerateNUnitXmlReport(TestReportData reportData)
+        {
+            var xml = new System.Text.StringBuilder();
+            xml.AppendLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+            xml.AppendLine($"<test-results name=\"{reportData.TestSuiteName}\" total=\"{reportData.TotalTests}\" " +
+                          $"errors=\"0\" failures=\"{reportData.FailedTests}\" " +
+                          $"not-run=\"0\" inconclusive=\"0\" ignored=\"0\" skipped=\"0\" invalid=\"0\" " +
+                          $"date=\"{System.DateTime.Now:yyyy-MM-dd}\" time=\"{System.DateTime.Now:HH:mm:ss}\">");
+            
+            xml.AppendLine($"  <environment unity-version=\"{UnityEngine.Application.unityVersion}\" " +
+                          $"platform=\"{UnityEngine.Application.platform}\" />");
+            
+            xml.AppendLine($"  <culture-info current-culture=\"{System.Globalization.CultureInfo.CurrentCulture.Name}\" " +
+                          $"current-uiculture=\"{System.Globalization.CultureInfo.CurrentUICulture.Name}\" />");
+            
+            xml.AppendLine($"  <test-suite type=\"Assembly\" name=\"{reportData.TestSuiteName}\" executed=\"True\" " +
+                          $"result=\"{(reportData.FailedTests == 0 ? "Success" : "Failure")}\" " +
+                          $"success=\"{(reportData.FailedTests == 0 ? "True" : "False")}\" " +
+                          $"time=\"{reportData.AverageExecutionTime / 1000:F3}\" asserts=\"{reportData.TotalAssertions}\">");
+            
+            xml.AppendLine("    <results>");
+            
+            // Individual test results would be added here in a real implementation
+            foreach (var failure in reportData.Failures)
+            {
+                xml.AppendLine($"      <test-case name=\"{failure.TestName}\" executed=\"True\" " +
+                              $"result=\"Failure\" success=\"False\">");
+                xml.AppendLine($"        <failure>");
+                xml.AppendLine($"          <message><![CDATA[{failure.ErrorMessage}]]></message>");
+                xml.AppendLine($"        </failure>");
+                xml.AppendLine($"      </test-case>");
+            }
+            
+            xml.AppendLine("    </results>");
+            xml.AppendLine("  </test-suite>");
+            xml.AppendLine("</test-results>");
+            
+            return xml.ToString();
+        }
+
+        #endregion
 }
 
     #region Mock Classes
@@ -540,6 +771,67 @@ public void Play3DSound(string soundId, Vector3 position, float maxDistance = 50
             LastSensorIntensity = 0f;
             LastStealthLevel = 0f;
         }
+    }
+
+    #endregion
+
+    #region Support Classes for Audio Testing
+
+    /// <summary>
+    /// Audio系テスト用のコンテキスト情報
+    /// </summary>
+    public class AudioTestContext
+    {
+        public AudioListener AudioListener { get; set; }
+        public Camera MainCamera { get; set; }
+    }
+
+    /// <summary>
+    /// Audio系のモックサービス一式
+    /// </summary>
+    public class AudioMockServices
+    {
+        public MockAudioService AudioService { get; set; }
+        public MockSpatialAudioService SpatialAudioService { get; set; }
+        public MockStealthAudioService StealthAudioService { get; set; }
+
+        /// <summary>
+        /// すべてのモックサービスをリセット
+        /// </summary>
+        public void ResetAll()
+        {
+            AudioService?.Reset();
+            SpatialAudioService?.Reset();
+            StealthAudioService?.Reset();
+        }
+    }
+
+    /// <summary>
+    /// テストレポート用のデータ構造
+    /// </summary>
+    public class TestReportData
+    {
+        public string TestSuiteName { get; set; } = "AudioSystemTests";
+        public int TotalTests { get; set; }
+        public int PassedTests { get; set; }
+        public int FailedTests { get; set; }
+        public float AverageExecutionTime { get; set; } // milliseconds
+        public long MemoryUsageKB { get; set; }
+        public int PerformanceScore { get; set; } = 100;
+        public int TotalAssertions { get; set; }
+        public List<TestFailure> Failures { get; set; } = new List<TestFailure>();
+        public string Recommendations { get; set; }
+        public string NextActions { get; set; }
+    }
+
+    /// <summary>
+    /// テスト失敗情報
+    /// </summary>
+    public class TestFailure
+    {
+        public string TestName { get; set; }
+        public string ErrorMessage { get; set; }
+        public string StackTrace { get; set; }
     }
 
     #endregion

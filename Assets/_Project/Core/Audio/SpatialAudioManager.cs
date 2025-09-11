@@ -7,7 +7,7 @@ using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Shared;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Debug;
-using _Project.Core;
+
 
 namespace asterivo.Unity60.Core.Audio
 {
@@ -17,7 +17,7 @@ namespace asterivo.Unity60.Core.Audio
     /// 新しいSpatialAudioServiceへの移行を推奨
     /// </summary>
     [System.Obsolete("Use SpatialAudioService instead. This class will be removed in future versions.")]
-    public class SpatialAudioManager : MonoBehaviour, ISpatialAudioService, _Project.Core.IInitializable
+    public class SpatialAudioManager : MonoBehaviour, ISpatialAudioService, IInitializable
     {
         // ✅ Task 3: Legacy Singleton警告システム（後方互換性のため）
         private static SpatialAudioManager instance;

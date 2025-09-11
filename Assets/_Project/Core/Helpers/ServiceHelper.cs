@@ -1,5 +1,5 @@
 using UnityEngine;
-using _Project.Core;
+// using _Project.Core; // 直接参照を避け、CoreFeatureFlags経由に統一
 
 namespace asterivo.Unity60.Core.Helpers
 {
@@ -15,7 +15,7 @@ namespace asterivo.Unity60.Core.Helpers
         public static T GetServiceWithFallback<T>() where T : class
         {
             // ServiceLocator使用（推奨）
-            if (FeatureFlags.UseServiceLocator)
+            if (CoreFeatureFlags.UseServiceLocator)
             {
                 var service = ServiceLocator.GetService<T>();
                 if (service != null) 
@@ -25,7 +25,8 @@ namespace asterivo.Unity60.Core.Helpers
                 }
             }
             
-            // フォールバック: Unity標準検索
+            // フォールバック: Unity標準検索（開発ビルド/エディタ限定）
+            #if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (typeof(T).IsSubclassOf(typeof(UnityEngine.Object)))
             {
                 var unityObject = UnityEngine.Object.FindFirstObjectByType(typeof(T)) as T;
@@ -35,7 +36,9 @@ namespace asterivo.Unity60.Core.Helpers
                 }
                 return unityObject;
             }
-            
+            #endif
+
+            // 本番ビルドではフォールバックしない
             LogServiceNotFound<T>();
             return null;
         }
@@ -43,7 +46,7 @@ namespace asterivo.Unity60.Core.Helpers
         private static void LogServiceAcquisition<T>(string method)
         {
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            if (FeatureFlags.EnableDebugLogging)
+            if (CoreFeatureFlags.EnableDebugLogging)
             {
                 UnityEngine.Debug.Log($"[ServiceHelper] {typeof(T).Name} acquired via {method}");
             }

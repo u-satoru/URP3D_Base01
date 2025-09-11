@@ -1,10 +1,9 @@
 using UnityEngine;
-using _Project.Core;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Debug;
 
-namespace _Project.Core.Services
+namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
     /// サービス段階的移行ヘルパークラス

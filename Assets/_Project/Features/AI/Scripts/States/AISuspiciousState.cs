@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace asterivo.Unity60.AI.States
+namespace asterivo.Unity60.Features.AI.States
 {
     public class AISuspiciousState : IAIState
     {

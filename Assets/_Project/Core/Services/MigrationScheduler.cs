@@ -1,10 +1,10 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
-using _Project.Core;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Debug;
 
-namespace _Project.Core.Services
+namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
     /// Step 3.7: 段階的機能有効化スケジュール管理システム

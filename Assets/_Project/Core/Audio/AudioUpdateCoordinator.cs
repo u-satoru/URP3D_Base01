@@ -9,7 +9,7 @@ using asterivo.Unity60.Core.Shared;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Audio.Services;
 using asterivo.Unity60.Core.Helpers;
-using _Project.Core;
+using asterivo.Unity60.Core;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio
@@ -19,7 +19,7 @@ namespace asterivo.Unity60.Core.Audio
     /// リアルタイム同期の最適化とパフォーマンス向上を担当
     /// Service Locatorパターンを使用して他のサービスと連携
     /// </summary>
-    public class AudioUpdateCoordinator : MonoBehaviour, IAudioUpdateService, _Project.Core.IInitializable
+    public class AudioUpdateCoordinator : MonoBehaviour, IAudioUpdateService, IInitializable
     {
         [Header("Update Settings")]
         [SerializeField, Range(0.05f, 1f)] private float updateInterval = AudioConstants.AUDIO_UPDATE_INTERVAL;

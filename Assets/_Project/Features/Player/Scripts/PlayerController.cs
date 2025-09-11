@@ -4,9 +4,8 @@ using UnityEngine.InputSystem;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Commands.Definitions;
 using asterivo.Unity60.Core.Audio.Interfaces;
-using _Project.Core;
 using asterivo.Unity60.Core;
-using _Project.Core.Services;
+using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Debug;
 using Sirenix.OdinInspector;
 

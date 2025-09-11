@@ -5,7 +5,7 @@ using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Shared;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Audio.Interfaces;
-using _Project.Core;
+using asterivo.Unity60.Core;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio.Services
@@ -14,7 +14,7 @@ namespace asterivo.Unity60.Core.Audio.Services
     /// AudioManagerのService化実装
     /// Singletonパターンを使わず、ServiceLocator経由でアクセス
     /// </summary>
-    public class AudioService : MonoBehaviour, IAudioService, _Project.Core.IInitializable
+    public class AudioService : MonoBehaviour, IAudioService, IInitializable
     {
         [TabGroup("Audio Managers", "System Integration")]
         [Header("New Audio Systems")]
@@ -418,12 +418,5 @@ namespace asterivo.Unity60.Core.Audio.Services
         #endregion
     }
 
-    public enum GameState
-    {
-        MainMenu,
-        InGame,
-        Paused,
-        GameOver,
-        Victory
-    }
+    // GameState enumはAudioManager.csで定義されています
 }

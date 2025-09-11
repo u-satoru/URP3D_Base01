@@ -1,4 +1,4 @@
-using _Project.Core;
+using asterivo.Unity60.Core;
 using UnityEngine;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Audio.Data;

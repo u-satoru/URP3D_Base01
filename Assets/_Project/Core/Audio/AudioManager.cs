@@ -6,7 +6,7 @@ using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Shared;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Helpers;
-using _Project.Core;
+using asterivo.Unity60.Core;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio
@@ -16,7 +16,7 @@ namespace asterivo.Unity60.Core.Audio
     /// 既存のステルスオーディオシステムと新規システムを統合管理
     /// ServiceLocator対応版
     /// </summary>
-    public class AudioManager : MonoBehaviour, IAudioService, _Project.Core.IInitializable
+    public class AudioManager : MonoBehaviour, IAudioService, IInitializable
     {
         // ✅ Task 3: Legacy Singleton警告システム（後方互換性のため）
         private static AudioManager instance;
@@ -652,9 +652,12 @@ namespace asterivo.Unity60.Core.Audio
         MainMenu,
         Loading,
         Gameplay,
+        Playing = Gameplay,  // Alias for backwards compatibility
         Paused,
         GameOver,
-        Cutscene
+        Victory,             // Added for game completion
+        Cutscene,
+        InGame = Gameplay    // Alias for audio system
     }
 
     /// <summary>

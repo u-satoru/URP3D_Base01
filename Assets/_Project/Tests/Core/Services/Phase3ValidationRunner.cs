@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
-using _Project.Core.Services;
+using asterivo.Unity60.Core.Services;
 using _Project.Core;
 using System.Collections.Generic;
 
@@ -115,13 +115,13 @@ namespace asterivo.Unity60.Tests.Core.Services
             try
             {
                 // MigrationMonitorが正常に動作することを確認
-                var monitor = new _Project.Core.Services.MigrationMonitor();
+                var monitor = new asterivo.Unity60.Core.Services.MigrationMonitor();
                 Assert.IsNotNull(monitor, "MigrationMonitorが初期化されていません");
                 
                 // FeatureFlagsが正しく設定されていることを確認
-                Assert.IsTrue(typeof(FeatureFlags).GetProperty("EnableMigrationWarnings") != null, 
+                Assert.IsTrue(typeof(asterivo.Unity60.Core.FeatureFlags).GetProperty("EnableMigrationWarnings") != null, 
                              "FeatureFlags.EnableMigrationWarningsプロパティが存在しません");
-                Assert.IsTrue(typeof(FeatureFlags).GetProperty("DisableLegacySingletons") != null, 
+                Assert.IsTrue(typeof(asterivo.Unity60.Core.FeatureFlags).GetProperty("DisableLegacySingletons") != null, 
                              "FeatureFlags.DisableLegacySingletonsプロパティが存在しません");
                 
                 ValidationResults.Add("Step 3.9: PASSED - Legacy Singleton警告システム");
@@ -147,7 +147,7 @@ namespace asterivo.Unity60.Tests.Core.Services
                 Assert.IsNotNull(disableScheduler, "SingletonDisableSchedulerが初期化されていません");
                 
                 // ScheduleDayが正しく定義されていることを確認
-                var schedulerType = typeof(_Project.Core.Services.SingletonDisableScheduler);
+                var schedulerType = typeof(asterivo.Unity60.Core.Services.SingletonDisableScheduler);
                 var scheduleEnumType = schedulerType.GetNestedType("ScheduleDay");
                 Assert.IsNotNull(scheduleEnumType, "ScheduleDay列挙型が見つかりません");
                 var enumValues = System.Enum.GetValues(scheduleEnumType);

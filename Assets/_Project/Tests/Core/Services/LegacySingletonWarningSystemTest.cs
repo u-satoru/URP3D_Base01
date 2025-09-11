@@ -2,12 +2,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
-using _Project.Core;
-using _Project.Core.Services;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Audio;
-using MigrationMonitorService = _Project.Core.Services.MigrationMonitor;
+using MigrationMonitorService = asterivo.Unity60.Core.Services.MigrationMonitor;
 
-namespace _Project.Tests.Core.Services
+namespace asterivo.Unity60.Tests.Core.Services
 {
     /// <summary>
     /// Legacy Singleton警告システムの包括的テスト
@@ -24,24 +24,24 @@ namespace _Project.Tests.Core.Services
         public void Setup()
         {
             // 元のFeatureFlags設定を保存
-            originalEnableMigrationWarnings = FeatureFlags.EnableMigrationWarnings;
-            originalDisableLegacySingletons = FeatureFlags.DisableLegacySingletons;
+            originalEnableMigrationWarnings = asterivo.Unity60.Core.FeatureFlags.EnableMigrationWarnings;
+            originalDisableLegacySingletons = asterivo.Unity60.Core.FeatureFlags.DisableLegacySingletons;
 
             // テスト用のMigrationMonitorを作成
             migrationMonitorObject = new GameObject("MigrationMonitorTest");
             migrationMonitor = migrationMonitorObject.AddComponent<MigrationMonitorService>();
 
             // テスト用の初期設定
-            FeatureFlags.EnableMigrationWarnings = true;
-            FeatureFlags.DisableLegacySingletons = false;
+            asterivo.Unity60.Core.FeatureFlags.EnableMigrationWarnings = true;
+            asterivo.Unity60.Core.FeatureFlags.DisableLegacySingletons = false;
         }
 
         [TearDown]
         public void TearDown()
         {
             // FeatureFlags設定を復元
-            FeatureFlags.EnableMigrationWarnings = originalEnableMigrationWarnings;
-            FeatureFlags.DisableLegacySingletons = originalDisableLegacySingletons;
+            asterivo.Unity60.Core.FeatureFlags.EnableMigrationWarnings = originalEnableMigrationWarnings;
+            asterivo.Unity60.Core.FeatureFlags.DisableLegacySingletons = originalDisableLegacySingletons;
 
             // テストオブジェクトをクリーンアップ
             if (migrationMonitorObject != null)

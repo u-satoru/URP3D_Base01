@@ -11,6 +11,9 @@ using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Components;
 using asterivo.Unity60.Core.Validation;
+using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core.Helpers;
+using asterivo.Unity60.Core.Audio; // GameState enum用
 
 namespace asterivo.Unity60.Core
 {
@@ -57,39 +60,41 @@ namespace asterivo.Unity60.Core
         [Header("Scene Management")]
         [SerializeField] private string mainMenuSceneName = "MainMenu";
         [SerializeField] private string gameplaySceneName = "Gameplay";
-        [SerializeField] private float minLoadingTime = 1f;
 
         [Header("Game Data")]
         [SerializeField] private GameData gameData;
         [SerializeField] private float gameTime = 0f;
-        [SerializeField] private int gameScore = 0;
-        [SerializeField] private int playerLives = 3;
-        [SerializeField] private int maxLives = 5;
 
         [Header("Settings")]
         [SerializeField] private bool enableDebugLog = true;
         [SerializeField] private bool validateEventConnections = true;
-        [SerializeField] private bool pauseTimeOnPause = true;
         
-        [Header("Game Events")]
-        [SerializeField] private IntGameEvent onScoreChanged;
-        [SerializeField] private IntGameEvent onLivesChanged;
-        [SerializeField] private GameEvent onGameOver;
-        [SerializeField] private BoolGameEvent onPauseStateChanged;
+        // Game events are now owned by services (Score/Pause/State)
         
         [Header("Input")]
         [SerializeField] private InputActionAsset inputActions;
         private InputAction pauseAction;
 
-        public GameState CurrentGameState => currentGameState;
-        public GameState PreviousGameState => previousGameState;
-        public int CurrentScore => gameScore;
-        public int CurrentLives => playerLives;
-        public bool IsPaused { get; private set; }
-        public bool IsGameOver => playerLives <= 0;
-
-        private Dictionary<string, Coroutine> activeCoroutines = new Dictionary<string, Coroutine>();
-        private bool isTransitioning = false;
+        public GameState CurrentGameState
+        {
+            get
+            {
+                var gsm = ServiceHelper.GetServiceWithFallback<IGameStateManager>();
+                return gsm != null ? gsm.CurrentGameState : currentGameState;
+            }
+        }
+        public GameState PreviousGameState
+        {
+            get
+            {
+                var gsm = ServiceHelper.GetServiceWithFallback<IGameStateManager>();
+                return gsm != null ? gsm.PreviousGameState : previousGameState;
+            }
+        }
+        public int CurrentScore => ServiceHelper.GetServiceWithFallback<IScoreService>()?.CurrentScore ?? 0;
+        public int CurrentLives => ServiceHelper.GetServiceWithFallback<IScoreService>()?.CurrentLives ?? 0;
+        public bool IsPaused => ServiceHelper.GetServiceWithFallback<IPauseService>()?.IsPaused ?? false;
+        public bool IsGameOver => CurrentLives <= 0;
 
         private void Awake()
         {
@@ -109,12 +114,12 @@ namespace asterivo.Unity60.Core
         private void OnDisable()
         {
             UnregisterEventListeners();
-            StopAllActiveCoroutines();
+            // no-op
         }
 
         private void Update()
         {
-            if (currentGameState == GameState.Playing)
+            if (CurrentGameState == GameState.Playing)
             {
                 gameTime += Time.deltaTime;
             }
@@ -279,217 +284,63 @@ namespace asterivo.Unity60.Core
         #endregion
 
         #region Event Handlers
-        private void HandleStartGame() { if (!isTransitioning) StartCoroutineManaged("LoadGameplay", LoadGameplayScene(gameplaySceneName)); }
-        private void HandlePauseGame() { if (currentGameState == GameState.Playing) ChangeGameState(GameState.Paused); }
-        private void HandleResumeGame() { if (currentGameState == GameState.Paused) ChangeGameState(GameState.Playing); }
-        private void HandleRestartGame() { if (!isTransitioning) StartCoroutineManaged("LoadGameplay", LoadGameplayScene(gameplaySceneName)); }
+        private void HandleStartGame()
+        {
+            var loader = ServiceHelper.GetServiceWithFallback<ISceneLoadingService>();
+            if (loader != null) { loader.LoadGameplaySceneWithMinTime(); return; }
+            LogWarning("SceneLoadingService not found; cannot start game.");
+        }
+        private void HandlePauseGame() { if (CurrentGameState == GameState.Playing) ChangeGameState(GameState.Paused); }
+        private void HandleResumeGame() { if (CurrentGameState == GameState.Paused) ChangeGameState(GameState.Playing); }
+        private void HandleRestartGame()
+        {
+            var loader = ServiceHelper.GetServiceWithFallback<ISceneLoadingService>();
+            if (loader != null) { loader.LoadGameplaySceneWithMinTime(); return; }
+            LogWarning("SceneLoadingService not found; cannot restart game.");
+        }
         private void HandleQuitGame() { Application.Quit(); }
-        private void HandleReturnToMenu() { if (!isTransitioning) StartCoroutineManaged("LoadMenu", LoadGameplayScene(mainMenuSceneName)); }
-        private void HandleGameOver() { if (currentGameState == GameState.Playing) ChangeGameState(GameState.GameOver); }
-        private void HandleVictory() { if (currentGameState == GameState.Playing) ChangeGameState(GameState.Victory); }
+        private void HandleReturnToMenu()
+        {
+            var loader = ServiceHelper.GetServiceWithFallback<ISceneLoadingService>();
+            if (loader != null) { loader.LoadSceneWithMinTime(mainMenuSceneName); return; }
+            LogWarning("SceneLoadingService not found; cannot return to menu.");
+        }
+        private void HandleGameOver() { if (CurrentGameState == GameState.Playing) ChangeGameState(GameState.GameOver); }
+        private void HandleVictory() { if (CurrentGameState == GameState.Playing) ChangeGameState(GameState.Victory); }
         #endregion
 
         #region Game State Management
         private void ChangeGameState(GameState newState)
         {
-            if (currentGameState == newState) return;
-            previousGameState = currentGameState;
-            currentGameState = newState;
-            gameStateChangedEvent?.Raise(currentGameState);
-            Log($"Game state changed to: {newState}");
+            var gsm = ServiceHelper.GetServiceWithFallback<IGameStateManager>();
+            if (gsm != null)
+            {
+                gsm.ChangeGameState(newState);
+                Log($"Game state changed to: {newState} (via service)");
+                return;
+            }
+            LogWarning("GameStateManagerService not found; state not changed.");
         }
         #endregion
 
-        #region Scene Loading
-        private IEnumerator LoadGameplayScene(string sceneName)
-        {
-            isTransitioning = true;
-            ChangeGameState(GameState.Loading);
-            yield return SceneManager.LoadSceneAsync(sceneName);
-            isTransitioning = false;
-            ChangeGameState(GameState.Playing);
-        }
-        #endregion
+        // Scene loading handled by SceneLoadingService
 
         private void OnPauseInputPerformed(InputAction.CallbackContext context)
         {
-            if (currentGameState == GameState.Playing || currentGameState == GameState.Paused)
+            if (CurrentGameState == GameState.Playing || CurrentGameState == GameState.Paused)
             {
+                var pauseSvc = ServiceHelper.GetServiceWithFallback<IPauseService>();
+                if (pauseSvc != null) { pauseSvc.TogglePause(); return; }
                 onPauseGameCommand?.Raise();
             }
         }
 
-        #region Score and Lives System
-        /// <summary>
-        /// スコアを追加
-        /// </summary>
-        public void AddScore(int points)
-        {
-            if (points <= 0) return;
-            
-            gameScore += points;
-            onScoreChanged?.Raise(gameScore);
-            Log($"Score increased by {points}. Total score: {gameScore}");
-        }
+        // Score/Lives handled by ScoreService
 
-        /// <summary>
-        /// スコアを設定
-        /// </summary>
-        public void SetScore(int newScore)
-        {
-            if (newScore < 0) newScore = 0;
-            
-            gameScore = newScore;
-            onScoreChanged?.Raise(gameScore);
-            Log($"Score set to: {gameScore}");
-        }
+        // Pause handled by PauseService
 
-        /// <summary>
-        /// ライフを失う
-        /// </summary>
-        public void LoseLife()
-        {
-            if (playerLives <= 0) return;
+        // Loading handled by SceneLoadingService
 
-            playerLives--;
-            onLivesChanged?.Raise(playerLives);
-            Log($"Life lost. Remaining lives: {playerLives}");
-
-            if (playerLives <= 0)
-            {
-                TriggerGameOver();
-            }
-        }
-
-        /// <summary>
-        /// ライフを追加
-        /// </summary>
-        public void AddLife()
-        {
-            if (playerLives >= maxLives) return;
-
-            playerLives++;
-            onLivesChanged?.Raise(playerLives);
-            Log($"Life gained. Current lives: {playerLives}");
-        }
-
-        /// <summary>
-        /// ライフを設定
-        /// </summary>
-        public void SetLives(int lives)
-        {
-            lives = Mathf.Clamp(lives, 0, maxLives);
-            playerLives = lives;
-            onLivesChanged?.Raise(playerLives);
-            Log($"Lives set to: {playerLives}");
-
-            if (playerLives <= 0)
-            {
-                TriggerGameOver();
-            }
-        }
-
-        /// <summary>
-        /// ゲームオーバーをトリガー
-        /// </summary>
-        private void TriggerGameOver()
-        {
-            Log("Game Over triggered!");
-            ChangeGameState(GameState.GameOver);
-            onGameOver?.Raise();
-        }
-        #endregion
-
-        #region Pause System
-        /// <summary>
-        /// ポーズ状態を切り替え
-        /// </summary>
-        public void TogglePause()
-        {
-            SetPauseState(!IsPaused);
-        }
-
-        /// <summary>
-        /// ポーズ状態を設定
-        /// </summary>
-        public void SetPauseState(bool paused)
-        {
-            if (IsPaused == paused) return;
-
-            IsPaused = paused;
-
-            if (pauseTimeOnPause)
-            {
-                Time.timeScale = paused ? 0f : 1f;
-            }
-
-            ChangeGameState(paused ? GameState.Paused : GameState.Playing);
-            onPauseStateChanged?.Raise(IsPaused);
-            Log($"Game {(paused ? "paused" : "unpaused")}");
-        }
-
-        /// <summary>
-        /// ゲームを再開
-        /// </summary>
-        public void ResumeGame()
-        {
-            SetPauseState(false);
-        }
-        #endregion
-
-        #region Loading System  
-        /// <summary>
-        /// 最小ロード時間を保証したシーンロード
-        /// </summary>
-        private IEnumerator LoadSceneWithMinTime(string sceneName)
-        {
-            isTransitioning = true;
-            ChangeGameState(GameState.Loading);
-            
-            float startTime = Time.realtimeSinceStartup;
-            var asyncOperation = SceneManager.LoadSceneAsync(sceneName);
-            
-            // 最小ロード時間を待機
-            while (Time.realtimeSinceStartup - startTime < minLoadingTime || !asyncOperation.isDone)
-            {
-                yield return null;
-            }
-            
-            isTransitioning = false;
-            ChangeGameState(GameState.Playing);
-            Log($"Scene '{sceneName}' loaded with minimum load time guarantee");
-        }
-        
-        /// <summary>
-        /// 最小ロード時間保証付きでゲームプレイシーンをロード
-        /// </summary>
-        public void LoadGameplaySceneWithMinTime()
-        {
-            StartCoroutineManaged("LoadGameplayScene", LoadSceneWithMinTime(gameplaySceneName));
-        }
-        #endregion
-
-        #region Coroutine Management
-        private void StartCoroutineManaged(string name, IEnumerator routine)
-        {
-            StopCoroutineManaged(name);
-            activeCoroutines[name] = StartCoroutine(routine);
-        }
-
-        private void StopCoroutineManaged(string name)
-        {
-            if (activeCoroutines.TryGetValue(name, out Coroutine coroutine) && coroutine != null)
-            {
-                StopCoroutine(coroutine);
-                activeCoroutines.Remove(name);
-            }
-        }
-
-        private void StopAllActiveCoroutines()
-        {
-            foreach (var coroutine in activeCoroutines.Values) if (coroutine != null) StopCoroutine(coroutine);
-            activeCoroutines.Clear();
-        }
-        #endregion
+        // Coroutine management no longer required here
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using asterivo.Unity60.Core.Debug;
 using System.Linq;
 
 namespace asterivo.Unity60.Core.Events
@@ -74,9 +75,9 @@ namespace asterivo.Unity60.Core.Events
             
             // イベントログに記録（ペイロード付き）
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            if (global::asterivo.Unity60.Core.Debug.EventLogger.IsEnabled)
+            if (EventLogger.IsEnabled)
             {
-                global::asterivo.Unity60.Core.Debug.EventLogger.LogEventWithPayload(name, listeners.Count, value);
+                EventLogger.LogEventWithPayload(name, listeners.Count, value);
             }
             #endif
             

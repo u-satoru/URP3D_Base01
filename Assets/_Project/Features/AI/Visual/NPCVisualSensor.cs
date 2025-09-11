@@ -226,7 +226,7 @@ namespace asterivo.Unity60.Features.AI.Visual
         private AlertLevel previousAlertLevel;
         
         // AI State Machine連動
-        private asterivo.Unity60.AI.States.AIStateMachine aiStateMachine;
+        private asterivo.Unity60.Features.AI.States.AIStateMachine aiStateMachine;
         
         // イベント発行用
         [Header("AI Integration")]
@@ -306,7 +306,7 @@ namespace asterivo.Unity60.Features.AI.Visual
         private void InitializeModules()
         {
             // AI State Machineの取得
-            aiStateMachine = GetComponent<asterivo.Unity60.AI.States.AIStateMachine>();
+            aiStateMachine = GetComponent<asterivo.Unity60.Features.AI.States.AIStateMachine>();
             if (aiStateMachine == null)
             {
                 Debug.LogWarning($"[NPCVisualSensor] {gameObject.name}: AIStateMachine component not found!");

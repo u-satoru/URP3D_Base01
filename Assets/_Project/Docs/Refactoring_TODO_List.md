@@ -25,7 +25,11 @@
 - [ ] **[P0]** 既存テストの実行と記録
   - 依存: 0.1完了後
   - 期限: Day 1
-  - 成果物: `Tests/Results/baseline-test-results.xml`
+  - 成果物: 
+    - `Tests/Results/baseline-test-results.xml` (NUnit標準・CI/CD用)
+    - `Tests/Results/baseline-test-verification.md` (分析・共有用)
+  - 実行形式: Unity Test Runner（手動）/ バッチモード（自動）
+  - 記録内容: 通過率・実行時間・カバレッジ・環境制約・改善提案
 
 ### 0.2 リファクタリング環境整備
 - [ ] **[P0]** リファクタリング用ブランチ作成

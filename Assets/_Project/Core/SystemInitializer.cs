@@ -27,16 +27,19 @@ namespace _Project.Core
         
         // 初期化可能なシステムのリスト
         private List<IInitializable> initializableSystems = new List<IInitializable>();
+        // ServiceLocator登録対象のリスト（優先度順に登録、破棄時は逆順に解除）
+        private List<IServiceLocatorRegistrable> registrants = new List<IServiceLocatorRegistrable>();
         
         private void Awake()
         {
             // ServiceLocatorに登録
-            if (FeatureFlags.UseServiceLocator)
+            if (CoreFeatureFlags.UseServiceLocator)
             {
                 ServiceLocator.RegisterService<SystemInitializer>(this);
             }
             
             DiscoverSystems();
+            DiscoverAndRegisterServices();
         }
         
         private void Start()
@@ -49,9 +52,48 @@ namespace _Project.Core
         
         private void OnDestroy()
         {
-            if (FeatureFlags.UseServiceLocator)
+            // 逆順で解除
+            for (int i = registrants.Count - 1; i >= 0; i--)
+            {
+                try { registrants[i]?.UnregisterServices(); }
+                catch (System.Exception e) { Debug.LogError($"[SystemInitializer] Unregister failed: {e.Message}"); }
+            }
+
+            if (CoreFeatureFlags.UseServiceLocator)
             {
                 ServiceLocator.UnregisterService<SystemInitializer>();
+            }
+        }
+
+        /// <summary>
+        /// ServiceLocator登録対象を探索し、Priority順で登録
+        /// </summary>
+        private void DiscoverAndRegisterServices()
+        {
+            var components = GetComponentsInChildren<MonoBehaviour>(true);
+            foreach (var component in components)
+            {
+                if (component is IServiceLocatorRegistrable r)
+                {
+                    registrants.Add(r);
+                }
+            }
+            registrants = registrants.OrderBy(r => r.Priority).ToList();
+
+            foreach (var r in registrants)
+            {
+                try
+                {
+                    r.RegisterServices();
+                    if (logInitializationSteps && CoreFeatureFlags.EnableDebugLogging)
+                    {
+                        Debug.Log($"[SystemInitializer] Registered services: {r.GetType().Name} (Priority: {r.Priority})");
+                    }
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogError($"[SystemInitializer] Register failed on {r.GetType().Name}: {e.Message}");
+                }
             }
         }
         
@@ -76,7 +118,7 @@ namespace _Project.Core
             initializableSystems = initializableSystems.OrderBy(s => s.Priority).ToList();
             totalSystemCount = initializableSystems.Count;
             
-            if (logInitializationSteps && FeatureFlags.EnableDebugLogging)
+            if (logInitializationSteps && CoreFeatureFlags.EnableDebugLogging)
             {
                 Debug.Log($"[SystemInitializer] Discovered {totalSystemCount} systems to initialize");
                 foreach (var system in initializableSystems)
@@ -106,7 +148,7 @@ namespace _Project.Core
                 {
                     if (!system.IsInitialized)
                     {
-                        if (logInitializationSteps && FeatureFlags.EnableDebugLogging)
+                        if (logInitializationSteps && CoreFeatureFlags.EnableDebugLogging)
                         {
                             Debug.Log($"[SystemInitializer] Initializing {system.GetType().Name}...");
                         }
@@ -114,7 +156,7 @@ namespace _Project.Core
                         system.Initialize();
                         initializedCount++;
                         
-                        if (logInitializationSteps && FeatureFlags.EnableDebugLogging)
+                        if (logInitializationSteps && CoreFeatureFlags.EnableDebugLogging)
                         {
                             Debug.Log($"[SystemInitializer] {system.GetType().Name} initialized successfully");
                         }
@@ -129,7 +171,7 @@ namespace _Project.Core
             
             isInitialized = true;
             
-            if (FeatureFlags.EnableDebugLogging)
+            if (CoreFeatureFlags.EnableDebugLogging)
             {
                 Debug.Log($"[SystemInitializer] Initialization complete. {initializedCount}/{totalSystemCount} systems initialized");
             }
@@ -145,7 +187,7 @@ namespace _Project.Core
             {
                 system.Initialize();
                 
-                if (FeatureFlags.EnableDebugLogging)
+                if (CoreFeatureFlags.EnableDebugLogging)
                 {
                     Debug.Log($"[SystemInitializer] {typeof(T).Name} initialized");
                 }
@@ -179,7 +221,7 @@ namespace _Project.Core
             isInitialized = false;
             initializedCount = 0;
             
-            if (FeatureFlags.EnableDebugLogging)
+            if (CoreFeatureFlags.EnableDebugLogging)
             {
                 Debug.Log("[SystemInitializer] Initialization state reset");
             }

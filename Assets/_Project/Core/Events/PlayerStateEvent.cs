@@ -1,5 +1,6 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Player;
+using asterivo.Unity60.Core.Audio; // GameState enum用
 
 namespace asterivo.Unity60.Core.Events
 {
