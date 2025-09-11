@@ -242,7 +242,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             {
                 try
                 {
-                    var audioUpdateService = _Project.Core.ServiceLocator.GetService<asterivo.Unity60.Core.Audio.Interfaces.IAudioUpdateService>();
+                    var audioUpdateService = asterivo.Unity60.Core.ServiceLocator.GetService<asterivo.Unity60.Core.Audio.Interfaces.IAudioUpdateService>();
                     if (audioUpdateService is AudioUpdateCoordinator coordinator && coordinator.enabled)
                     {
                         // 協調更新システムに登録（イベント駆動）
@@ -283,7 +283,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             {
                 try
                 {
-                    var audioUpdateService = _Project.Core.ServiceLocator.GetService<asterivo.Unity60.Core.Audio.Interfaces.IAudioUpdateService>();
+                    var audioUpdateService = asterivo.Unity60.Core.ServiceLocator.GetService<asterivo.Unity60.Core.Audio.Interfaces.IAudioUpdateService>();
                     if (audioUpdateService is AudioUpdateCoordinator coordinator)
                     {
                         coordinator.OnAudioSystemSync -= OnAudioSystemSync;

@@ -1,0 +1,22 @@
+{
+    "name": "asterivo.Unity60.Tests.Runtime",
+    "rootNamespace": "asterivo.Unity60.Tests.Runtime",
+    "references": [
+        "UnityEngine.TestRunner",
+        "asterivo.Unity60.Core",
+        "asterivo.Unity60.Features"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

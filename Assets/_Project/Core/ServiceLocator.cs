@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace _Project.Core
+namespace asterivo.Unity60.Core
 {
     /// <summary>
     /// Service Locatorパターンの実装
@@ -24,10 +24,10 @@ namespace _Project.Core
                 var type = typeof(T);
                 if (services.ContainsKey(type))
                 {
-                    Debug.LogWarning($"[ServiceLocator] Service {type.Name} is already registered. Replacing...");
+                    UnityEngine.Debug.LogWarning($"[ServiceLocator] Service {type.Name} is already registered. Replacing...");
                 }
                 services[type] = service;
-                Debug.Log($"[ServiceLocator] Service {type.Name} registered successfully");
+                UnityEngine.Debug.Log($"[ServiceLocator] Service {type.Name} registered successfully");
             }
         }
         
@@ -40,7 +40,7 @@ namespace _Project.Core
             {
                 var type = typeof(T);
                 factories[type] = () => factory();
-                Debug.Log($"[ServiceLocator] Factory for {type.Name} registered");
+                UnityEngine.Debug.Log($"[ServiceLocator] Factory for {type.Name} registered");
             }
         }
         
@@ -71,7 +71,7 @@ namespace _Project.Core
                     }
                 }
                 
-                Debug.LogWarning($"[ServiceLocator] Service {type.Name} not found");
+                UnityEngine.Debug.LogWarning($"[ServiceLocator] Service {type.Name} not found");
                 return null;
             }
         }
@@ -119,7 +119,7 @@ namespace _Project.Core
                 var type = typeof(T);
                 services.Remove(type);
                 factories.Remove(type);
-                Debug.Log($"[ServiceLocator] Service {type.Name} unregistered");
+                UnityEngine.Debug.Log($"[ServiceLocator] Service {type.Name} unregistered");
             }
         }
         
@@ -132,7 +132,7 @@ namespace _Project.Core
             {
                 services.Clear();
                 factories.Clear();
-                Debug.Log("[ServiceLocator] All services cleared");
+                UnityEngine.Debug.Log("[ServiceLocator] All services cleared");
             }
         }
         
@@ -155,16 +155,16 @@ namespace _Project.Core
         {
             lock (lockObject)
             {
-                Debug.Log($"[ServiceLocator] === Registered Services ({services.Count}) ===");
+                UnityEngine.Debug.Log($"[ServiceLocator] === Registered Services ({services.Count}) ===");
                 foreach (var kvp in services)
                 {
-                    Debug.Log($"  - {kvp.Key.Name}: {kvp.Value.GetType().Name}");
+                    UnityEngine.Debug.Log($"  - {kvp.Key.Name}: {kvp.Value.GetType().Name}");
                 }
                 
-                Debug.Log($"[ServiceLocator] === Registered Factories ({factories.Count}) ===");
+                UnityEngine.Debug.Log($"[ServiceLocator] === Registered Factories ({factories.Count}) ===");
                 foreach (var kvp in factories)
                 {
-                    Debug.Log($"  - {kvp.Key.Name}: [Factory]");
+                    UnityEngine.Debug.Log($"  - {kvp.Key.Name}: [Factory]");
                 }
             }
         }

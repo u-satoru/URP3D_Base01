@@ -4,6 +4,7 @@ using UnityEngine.TestTools;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using asterivo.Unity60.Core;
 using _Project.Core;
 
 namespace asterivo.Unity60.Tests.Core.Services

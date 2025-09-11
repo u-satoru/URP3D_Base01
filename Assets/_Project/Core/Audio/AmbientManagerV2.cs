@@ -560,7 +560,7 @@ namespace asterivo.Unity60.Core.Audio
             {
                 try
                 {
-                    return _Project.Core.ServiceLocator.GetService<asterivo.Unity60.Core.Audio.Interfaces.IAudioUpdateService>();
+                    return asterivo.Unity60.Core.ServiceLocator.GetService<asterivo.Unity60.Core.Audio.Interfaces.IAudioUpdateService>();
                 }
                 catch (System.Exception ex)
                 {

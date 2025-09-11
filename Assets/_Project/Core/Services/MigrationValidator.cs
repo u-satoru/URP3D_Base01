@@ -2,6 +2,7 @@ using UnityEngine;
 using _Project.Core.Services;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core;
 
 namespace _Project.Core.Services
 {

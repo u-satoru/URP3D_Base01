@@ -70,7 +70,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                 {
                     try
                     {
-                        var audioUpdateService = _Project.Core.ServiceLocator.GetService<asterivo.Unity60.Core.Audio.Interfaces.IAudioUpdateService>();
+                        var audioUpdateService = asterivo.Unity60.Core.ServiceLocator.GetService<asterivo.Unity60.Core.Audio.Interfaces.IAudioUpdateService>();
                         if (audioUpdateService is AudioUpdateCoordinator coordinator && coordinator.enabled)
                         {
                             coordinator.OnAudioSystemSync += OnAudioSystemSync;

@@ -1,6 +1,7 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using asterivo.Unity60.Core;
 using System;
 
 namespace _Project.Core
