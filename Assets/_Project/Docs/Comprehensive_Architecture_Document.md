@@ -37,19 +37,38 @@
 
 ### アーキテクチャの柱
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    Unity URP 3D Base Template          │
-├─────────────────┬─────────────────┬─────────────────────┤
-│   Core Layer    │ Features Layer  │   Tests Layer       │
-│                 │                 │                     │
-│ • ServiceLoc.   │ • Player        │ • Unit Tests        │
-│ • Events        │ • AI            │ • Integration Tests │
-│ • Commands      │ • UI            │ • Performance Tests │
-│ • Audio         │ • Camera        │                     │
-│ • Data          │                 │                     │
-│ • Helpers       │                 │                     │
-└─────────────────┴─────────────────┴─────────────────────┘
+```mermaid
+block-beta
+    columns 3
+    
+    block:core["Core Layer"]
+        columns 1
+        ServiceLocator["• ServiceLocator"]
+        Events["• Events"]
+        Commands["• Commands"]  
+        Audio["• Audio"]
+        Data["• Data"]
+        Helpers["• Helpers"]
+    end
+    
+    block:features["Features Layer"]
+        columns 1
+        Player["• Player"]
+        AI["• AI"]
+        UI["• UI"]
+        Camera["• Camera"]
+    end
+    
+    block:tests["Tests Layer"]  
+        columns 1
+        UnitTests["• Unit Tests"]
+        IntegrationTests["• Integration Tests"]
+        PerformanceTests["• Performance Tests"]
+    end
+    
+    Core --> Features
+    Core --> Tests
+    Features --> Tests
 ```
 
 ---
@@ -58,45 +77,63 @@
 
 ### 物理的構造
 
-```
-Assets/_Project/
-├── Core/                           # 核心システム（共通基盤）
-│   ├── Audio/                      # オーディオシステム
-│   ├── Commands/                   # コマンドパターン実装
-│   ├── Events/                     # イベントシステム
-│   ├── Services/                   # サービス実装
-│   ├── Helpers/                    # ヘルパークラス
-│   ├── Lifecycle/                  # ライフサイクル管理
-│   ├── ServiceLocator.cs           # サービスロケーター
-│   ├── FeatureFlags.cs            # フィーチャーフラグ
-│   ├── GameManager.cs             # ゲーム統括管理
-│   └── SystemInitializer.cs       # システム初期化
-├── Features/                       # 機能実装（ドメイン固有）
-│   ├── Player/                     # プレイヤー機能
-│   ├── AI/                         # AI機能
-│   ├── UI/                         # UI機能
-│   └── Camera/                     # カメラ機能
-├── Tests/                          # テストコード
-│   ├── Core/                       # Coreレイヤーのテスト
-│   ├── Features/                   # Featuresレイヤーのテスト
-│   ├── Integration/                # 結合テスト
-│   └── Performance/                # パフォーマンステスト
-└── Docs/                          # ドキュメント
-    ├── Architecture_Policies.md
-    └── Works/                      # 作業ログ保管庫
+```mermaid
+flowchart TD
+    Project["Assets/_Project/"]
+    
+    Project --> Core["Core/<br/><small>核心システム（共通基盤）</small>"]
+    Project --> Features["Features/<br/><small>機能実装（ドメイン固有）</small>"]
+    Project --> Tests["Tests/<br/><small>テストコード</small>"]
+    Project --> Docs["Docs/<br/><small>ドキュメント</small>"]
+    
+    Core --> CoreAudio["Audio/<br/><small>オーディオシステム</small>"]
+    Core --> CoreCommands["Commands/<br/><small>コマンドパターン実装</small>"]
+    Core --> CoreEvents["Events/<br/><small>イベントシステム</small>"]
+    Core --> CoreServices["Services/<br/><small>サービス実装</small>"]
+    Core --> CoreHelpers["Helpers/<br/><small>ヘルパークラス</small>"]
+    Core --> CoreLifecycle["Lifecycle/<br/><small>ライフサイクル管理</small>"]
+    Core --> ServiceLocatorFile["ServiceLocator.cs"]
+    Core --> FeatureFlagsFile["FeatureFlags.cs"]
+    Core --> GameManagerFile["GameManager.cs"]
+    Core --> SystemInitializerFile["SystemInitializer.cs"]
+    
+    Features --> FeaturesPlayer["Player/<br/><small>プレイヤー機能</small>"]
+    Features --> FeaturesAI["AI/<br/><small>AI機能</small>"]
+    Features --> FeaturesUI["UI/<br/><small>UI機能</small>"]
+    Features --> FeaturesCamera["Camera/<br/><small>カメラ機能</small>"]
+    
+    Tests --> TestsCore["Core/<br/><small>Coreレイヤーのテスト</small>"]
+    Tests --> TestsFeatures["Features/<br/><small>Featuresレイヤーのテスト</small>"]
+    Tests --> TestsIntegration["Integration/<br/><small>結合テスト</small>"]
+    Tests --> TestsPerformance["Performance/<br/><small>パフォーマンステスト</small>"]
+    
+    Docs --> ArchPolicies["Architecture_Policies.md"]
+    Docs --> Works["Works/<br/><small>作業ログ保管庫</small>"]
+    
+    style Core fill:#e1f5fe
+    style Features fill:#f3e5f5
+    style Tests fill:#e8f5e8
+    style Docs fill:#fff3e0
 ```
 
 ### 依存関係制約
 
-```
-Features Layer
-    ↓ (依存許可)
-Core Layer
-    ↑ (依存禁止)
-Features Layer
-
-Tests Layer → Core Layer (OK)
-Tests Layer → Features Layer (OK)
+```mermaid
+graph TB
+    subgraph "レイヤー依存関係"
+        Features["Features Layer"]
+        Core["Core Layer"]
+        Tests["Tests Layer"]
+    end
+    
+    Features -->|"✅ 依存許可"| Core
+    Core -.->|"❌ 依存禁止"| Features
+    Tests -->|"✅ OK"| Core
+    Tests -->|"✅ OK"| Features
+    
+    style Core fill:#e1f5fe
+    style Features fill:#f3e5f5
+    style Tests fill:#e8f5e8
 ```
 
 **重要**: Core層からFeatures層への依存は **厳格に禁止** されています。
@@ -188,16 +225,39 @@ public class CommandInvoker : MonoBehaviour, IGameEventListener<ICommand>
 
 ### イベントフロー図
 
-```
-[User Input] → [PlayerController] → [CommandDefinitionGameEvent]
-                      ↓
-[GameManager] ← [IGameEventListener<ICommandDefinition>]
-                      ↓
-[CommandInvoker] ← [ICommand Creation] → [Command.Execute()]
-                      ↓
-[Game State Changes] → [GameStateEvent] → [UI Updates]
-                      ↓                    ↓
-                [Audio Events]        [Visual Effects]
+```mermaid
+flowchart TD
+    UserInput["User Input"]
+    PlayerController["PlayerController"]
+    CommandDefEvent["CommandDefinitionGameEvent"]
+    GameManager["GameManager"]
+    EventListener["IGameEventListener&lt;ICommandDefinition&gt;"]
+    CommandInvoker["CommandInvoker"]
+    CommandCreation["ICommand Creation"]
+    CommandExecute["Command.Execute()"]
+    GameStateChanges["Game State Changes"]
+    GameStateEvent["GameStateEvent"]
+    UIUpdates["UI Updates"]
+    AudioEvents["Audio Events"]
+    VisualEffects["Visual Effects"]
+    
+    UserInput --> PlayerController
+    PlayerController --> CommandDefEvent
+    CommandDefEvent --> EventListener
+    EventListener --> GameManager
+    GameManager --> CommandCreation
+    CommandCreation --> CommandInvoker
+    CommandCreation --> CommandExecute
+    CommandExecute --> GameStateChanges
+    GameStateChanges --> GameStateEvent
+    GameStateEvent --> UIUpdates
+    GameStateChanges --> AudioEvents
+    GameStateChanges --> VisualEffects
+    
+    style UserInput fill:#ffecb3
+    style CommandDefEvent fill:#c8e6c9
+    style GameStateEvent fill:#c8e6c9
+    style CommandExecute fill:#ffcdd2
 ```
 
 ### イベントの種類
@@ -311,16 +371,33 @@ public static T GetServiceWithFallback<T>() where T : class
 
 ### コマンド実行フロー
 
-```
-[Player Input] → [PlayerController.OnMove()]
-                       ↓
-[MoveCommandDefinition] → [CommandDefinitionGameEvent.Raise()]
-                       ↓
-[GameManager.OnEventRaised()] → [CreateCommandFromDefinition()]
-                       ↓
-[ICommand.Execute()] → [Game Logic Execution]
-                       ↓
-[CommandInvoker.ExecuteCommand()] → [Undo Stack Push]
+```mermaid
+flowchart TD
+    PlayerInput["Player Input"]
+    OnMove["PlayerController.OnMove()"]
+    MoveCommandDef["MoveCommandDefinition"]
+    EventRaise["CommandDefinitionGameEvent.Raise()"]
+    OnEventRaised["GameManager.OnEventRaised()"]
+    CreateCommand["CreateCommandFromDefinition()"]
+    Execute["ICommand.Execute()"]
+    GameLogic["Game Logic Execution"]
+    InvokerExecute["CommandInvoker.ExecuteCommand()"]
+    UndoStack["Undo Stack Push"]
+    
+    PlayerInput --> OnMove
+    OnMove --> MoveCommandDef
+    MoveCommandDef --> EventRaise
+    EventRaise --> OnEventRaised
+    OnEventRaised --> CreateCommand
+    CreateCommand --> Execute
+    Execute --> GameLogic
+    GameLogic --> InvokerExecute
+    InvokerExecute --> UndoStack
+    
+    style PlayerInput fill:#ffecb3
+    style MoveCommandDef fill:#e1f5fe
+    style Execute fill:#ffcdd2
+    style UndoStack fill:#f3e5f5
 ```
 
 ### コマンド種類
@@ -415,15 +492,31 @@ public interface IServiceLocatorRegistrable
 
 ### 初期化順序例
 
-```
-Priority 0: CoreFeatureFlags
-Priority 5: AudioManager (IAudioService)  
-Priority 10: AudioService (IAudioService backup)
-Priority 15: GameStateManagerService
-Priority 20: SceneLoadingService
-Priority 25: UIService
-...
-Priority N: Feature-specific services
+```mermaid
+flowchart TD
+    Start["System Initialization Start"]
+    P0["Priority 0<br/>CoreFeatureFlags"]
+    P5["Priority 5<br/>AudioManager (IAudioService)"]
+    P10["Priority 10<br/>AudioService (IAudioService backup)"]
+    P15["Priority 15<br/>GameStateManagerService"]
+    P20["Priority 20<br/>SceneLoadingService"]
+    P25["Priority 25<br/>UIService"]
+    PN["Priority N<br/>Feature-specific services"]
+    Complete["All Systems Initialized"]
+    
+    Start --> P0
+    P0 --> P5
+    P5 --> P10
+    P10 --> P15
+    P15 --> P20
+    P20 --> P25
+    P25 --> PN
+    PN --> Complete
+    
+    style Start fill:#e8f5e8
+    style P0 fill:#ffecb3
+    style P5 fill:#e1f5fe
+    style Complete fill:#c8e6c9
 ```
 
 ---
@@ -432,28 +525,78 @@ Priority N: Feature-specific services
 
 ### メインデータフロー
 
-```
-[User Input] 
-    ↓
-[InputSystem] → [PlayerController]
-    ↓
-[Command Definition] → [CommandDefinitionGameEvent]
-    ↓
-[GameManager] → [Command Creation] → [CommandInvoker]
-    ↓
-[Command.Execute()] → [Game State Change]
-    ↓
-[Service Notifications] → [UI Updates] + [Audio Updates] + [Visual Updates]
+```mermaid
+flowchart TD
+    UserInput["User Input"]
+    InputSystem["InputSystem"]
+    PlayerController["PlayerController"]
+    CommandDef["Command Definition"]
+    CommandEvent["CommandDefinitionGameEvent"]
+    GameManager["GameManager"]
+    CommandCreation["Command Creation"]
+    CommandInvoker["CommandInvoker"]
+    CommandExecute["Command.Execute()"]
+    StateChange["Game State Change"]
+    ServiceNotifications["Service Notifications"]
+    
+    subgraph Updates["System Updates"]
+        UIUpdates["UI Updates"]
+        AudioUpdates["Audio Updates"] 
+        VisualUpdates["Visual Updates"]
+    end
+    
+    UserInput --> InputSystem
+    InputSystem --> PlayerController
+    PlayerController --> CommandDef
+    CommandDef --> CommandEvent
+    CommandEvent --> GameManager
+    GameManager --> CommandCreation
+    CommandCreation --> CommandInvoker
+    CommandInvoker --> CommandExecute
+    CommandExecute --> StateChange
+    StateChange --> ServiceNotifications
+    ServiceNotifications --> UIUpdates
+    ServiceNotifications --> AudioUpdates
+    ServiceNotifications --> VisualUpdates
+    
+    style UserInput fill:#ffecb3
+    style StateChange fill:#ffcdd2
+    style Updates fill:#e8f5e8
 ```
 
 ### 音響システムのデータフロー
 
-```
-[Game State Change] → [GameStateEvent]
-                           ↓
-[AudioService.UpdateGameState()] → [BGMManager] + [AmbientManager] + [EffectManager]
-                           ↓                     ↓                    ↓
-[Stealth Integration] → [StealthAudioCoordinator] → [SpatialAudio] → [NPCs Audio Detection]
+```mermaid
+flowchart TD
+    GameStateChange["Game State Change"]
+    GameStateEvent["GameStateEvent"]
+    AudioServiceUpdate["AudioService.UpdateGameState()"]
+    
+    subgraph AudioManagers["Audio Category Managers"]
+        BGMManager["BGMManager"]
+        AmbientManager["AmbientManager"]
+        EffectManager["EffectManager"]
+    end
+    
+    StealthIntegration["Stealth Integration"]
+    StealthCoordinator["StealthAudioCoordinator"]
+    SpatialAudio["SpatialAudio"]
+    NPCAudioDetection["NPCs Audio Detection"]
+    
+    GameStateChange --> GameStateEvent
+    GameStateEvent --> AudioServiceUpdate
+    AudioServiceUpdate --> BGMManager
+    AudioServiceUpdate --> AmbientManager
+    AudioServiceUpdate --> EffectManager
+    AudioServiceUpdate --> StealthIntegration
+    StealthIntegration --> StealthCoordinator
+    StealthCoordinator --> SpatialAudio
+    SpatialAudio --> NPCAudioDetection
+    
+    style GameStateChange fill:#ffcdd2
+    style AudioManagers fill:#e1f5fe
+    style StealthCoordinator fill:#f3e5f5
+    style NPCAudioDetection fill:#c8e6c9
 ```
 
 ### イベント伝播パターン
@@ -468,17 +611,31 @@ Priority N: Feature-specific services
 
 ### 階層構造
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                 AudioManager (Top Level)                │
-│                 Implements: IAudioService                │
-├─────────────────┬─────────────────┬─────────────────────┤
-│   BGMManager    │ AmbientManager  │  EffectManager      │
-│   (Background)  │ (Environment)   │  (Sound Effects)    │
-├─────────────────┼─────────────────┼─────────────────────┤
-│ SpatialAudioMgr │DynamicAudioEnv  │StealthAudioCoord    │
-│ (3D Positioning)│(Adaptive Audio) │(Stealth Detection)  │
-└─────────────────┴─────────────────┴─────────────────────┘
+```mermaid
+block-beta
+    columns 3
+    
+    block:top["AudioManager (Top Level)"]
+        columns 1
+        TopLevel["implements IAudioService"]
+    end
+    
+    block:category["Audio Category Managers"]
+        columns 3
+        BGMManager["BGMManager<br/>(Background)"]
+        AmbientManager["AmbientManager<br/>(Environment)"]
+        EffectManager["EffectManager<br/>(Sound Effects)"]
+    end
+    
+    block:specialized["Specialized Audio Systems"]
+        columns 3
+        SpatialAudioMgr["SpatialAudioMgr<br/>(3D Positioning)"]
+        DynamicAudioEnv["DynamicAudioEnv<br/>(Adaptive Audio)"]
+        StealthAudioCoord["StealthAudioCoord<br/>(Stealth Detection)"]
+    end
+    
+    top --> category
+    category --> specialized
 ```
 
 ### Singleton → Service Locator移行
@@ -511,12 +668,32 @@ public static AudioManager Instance
 
 ### オーディオイベントフロー
 
-```
-[Game Event] → [AudioService] → [Audio Category Manager]
-                    ↓                      ↓
-[Volume Control] → [AudioMixer] → [Unity Audio Engine]
-                    ↓
-[Stealth Detection] → [NPCAudioSensor] → [AI Behavior]
+```mermaid
+flowchart TD
+    GameEvent["Game Event"]
+    AudioService["AudioService"]
+    CategoryManager["Audio Category Manager"]
+    VolumeControl["Volume Control"]
+    AudioMixer["AudioMixer"]
+    UnityEngine["Unity Audio Engine"]
+    StealthDetection["Stealth Detection"]
+    NPCAudioSensor["NPCAudioSensor"]
+    AIBehavior["AI Behavior"]
+    
+    GameEvent --> AudioService
+    AudioService --> CategoryManager
+    AudioService --> VolumeControl
+    CategoryManager --> AudioMixer
+    VolumeControl --> AudioMixer
+    AudioMixer --> UnityEngine
+    AudioMixer --> StealthDetection
+    StealthDetection --> NPCAudioSensor
+    NPCAudioSensor --> AIBehavior
+    
+    style GameEvent fill:#c8e6c9
+    style AudioService fill:#e1f5fe
+    style AudioMixer fill:#ffecb3
+    style AIBehavior fill:#f3e5f5
 ```
 
 ---
@@ -631,169 +808,230 @@ namespace asterivo.Unity60.Tests.Integration
 
 ### システム全体図
 
-```
-                    ┌─────────────────────────────────────┐
-                    │          Unity URP 3D Game          │
-                    └─────────────────┬───────────────────┘
-                                     │
-                    ┌─────────────────┴───────────────────┐
-                    │           GameManager               │
-                    │    (Central Orchestrator)           │
-                    └─────────────────┬───────────────────┘
-                                     │
-              ┌──────────────────────┼──────────────────────┐
-              │                      │                      │
-    ┌─────────▼─────────┐   ┌────────▼────────┐   ┌────────▼────────┐
-    │  ServiceLocator   │   │  EventSystem    │   │ CommandInvoker  │
-    │   (DI Container)  │   │ (Event Bus)     │   │ (Action Queue)  │
-    └─────────┬─────────┘   └────────┬────────┘   └────────┬────────┘
-              │                      │                     │
-    ┌─────────▼─────────┐            │           ┌─────────▼─────────┐
-    │     Services      │            │           │     Commands      │
-    │                   │            │           │                   │
-    │ • IAudioService   │            │           │ • MoveCommand     │
-    │ • IGameStateMan.  │            │           │ • JumpCommand     │
-    │ • ISceneLoading   │            │           │ • DamageCommand   │
-    │ • IScoreService   │            │           │ • HealCommand     │
-    │ • IPauseService   │            │           │                   │
-    └───────────────────┘            │           └───────────────────┘
-                                     │
-                      ┌──────────────▼──────────────┐
-                      │         Event Types          │
-                      │                              │
-                      │ • GameEvent                 │
-                      │ • GameStateEvent            │
-                      │ • CommandDefinitionEvent    │
-                      │ • PlayerDataEvent           │
-                      │ • FloatGameEvent            │
-                      │ • StringGameEvent           │
-                      └─────────────────────────────┘
+```mermaid
+block-beta
+    columns 1
+    
+    UnityGame["Unity URP 3D Game"]
+    
+    GameManager["GameManager<br/>(Central Orchestrator)"]
+    
+    block:core["Core Systems"]
+        columns 3
+        
+        block:servicelocator["ServiceLocator<br/>(DI Container)"]
+            columns 1
+            Services["Services"]
+            AudioService["• IAudioService"]
+            GameStateMan["• IGameStateManager"]
+            SceneLoading["• ISceneLoading"]
+            ScoreService["• IScoreService"]
+            PauseService["• IPauseService"]
+        end
+        
+        block:eventsystem["EventSystem<br/>(Event Bus)"]
+            columns 1
+            EventTypes["Event Types"]
+            GameEvent["• GameEvent"]
+            GameStateEvent["• GameStateEvent"]
+            CommandDefEvent["• CommandDefinitionEvent"]
+            PlayerDataEvent["• PlayerDataEvent"]
+            FloatGameEvent["• FloatGameEvent"]
+            StringGameEvent["• StringGameEvent"]
+        end
+        
+        block:commandinvoker["CommandInvoker<br/>(Action Queue)"]
+            columns 1
+            Commands["Commands"]
+            MoveCommand["• MoveCommand"]
+            JumpCommand["• JumpCommand"]
+            DamageCommand["• DamageCommand"]
+            HealCommand["• HealCommand"]
+        end
+    end
+    
+    UnityGame --> GameManager
+    GameManager --> core
 ```
 
 ### イベント駆動フロー詳細図
 
-```
-[Player Input] ──► [InputSystem] ──► [PlayerController]
-                                            │
-                                            ▼
-                                   [CommandDefinition]
-                                            │
-                                            ▼
-                                [CommandDefinitionGameEvent] ──► [Event Bus]
-                                            │                        │
-                                            ▼                        ▼
-                                    [GameManager]              [Other Listeners]
-                                            │
-                                            ▼
-                                [CreateCommandFromDefinition]
-                                            │
-                                            ▼
-                                     [ICommand.Execute]
-                                            │
-                                    ┌───────┴───────┐
-                                    ▼               ▼
-                            [Game Logic]    [CommandInvoker]
-                            [Updates]       [History Stack]
-                                    │               │
-                                    ▼               ▼
-                            [State Changes]  [Undo/Redo]
-                                    │
-                            ┌───────┼───────┐
-                            ▼       ▼       ▼
-                        [Audio] [Visual] [UI]
-                        Events   Effects  Updates
+```mermaid
+flowchart TD
+    PlayerInput["Player Input"]
+    InputSystem["InputSystem"]
+    PlayerController["PlayerController"]
+    CommandDefinition["CommandDefinition"]
+    CommandDefGameEvent["CommandDefinitionGameEvent"]
+    EventBus["Event Bus"]
+    GameManager["GameManager"]
+    OtherListeners["Other Listeners"]
+    CreateCommand["CreateCommandFromDefinition"]
+    ICommandExecute["ICommand.Execute"]
+    
+    subgraph Execution["Parallel Execution"]
+        GameLogic["Game Logic<br/>Updates"]
+        CommandInvoker["CommandInvoker<br/>History Stack"]
+    end
+    
+    StateChanges["State Changes"]
+    UndoRedo["Undo/Redo"]
+    
+    subgraph SystemUpdates["System Updates"]
+        AudioEvents["Audio<br/>Events"]
+        VisualEffects["Visual<br/>Effects"]
+        UIUpdates["UI<br/>Updates"]
+    end
+    
+    PlayerInput --> InputSystem
+    InputSystem --> PlayerController
+    PlayerController --> CommandDefinition
+    CommandDefinition --> CommandDefGameEvent
+    CommandDefGameEvent --> EventBus
+    EventBus --> GameManager
+    EventBus --> OtherListeners
+    GameManager --> CreateCommand
+    CreateCommand --> ICommandExecute
+    ICommandExecute --> GameLogic
+    ICommandExecute --> CommandInvoker
+    GameLogic --> StateChanges
+    CommandInvoker --> UndoRedo
+    StateChanges --> AudioEvents
+    StateChanges --> VisualEffects
+    StateChanges --> UIUpdates
+    
+    style PlayerInput fill:#ffecb3
+    style EventBus fill:#c8e6c9
+    style ICommandExecute fill:#ffcdd2
+    style SystemUpdates fill:#e8f5e8
 ```
 
 ### サービスロケーター詳細図
 
-```
-                    ┌─────────────────────────────────────┐
-                    │          ServiceLocator             │
-                    │   (Static Class - Thread Safe)      │
-                    └─────────────────┬───────────────────┘
-                                     │
-                    ┌─────────────────┴───────────────────┐
-                    │    Dictionary<Type, object>         │
-                    │         services                    │
-                    └─────────────────┬───────────────────┘
-                                     │
-        ┌────────────────────────────┼────────────────────────────┐
-        │                            │                            │
-        ▼                            ▼                            ▼
-┌──────────────┐            ┌──────────────┐            ┌──────────────┐
-│ AudioService │            │GameStateMgr  │            │SceneLoading  │
-│implements    │            │implements    │            │implements    │
-│IAudioService │            │IGameStateMgr │            │ISceneLoading │
-└──────────────┘            └──────────────┘            └──────────────┘
-        │                            │                            │
-        ▼                            ▼                            ▼
-┌──────────────┐            ┌──────────────┐            ┌──────────────┐
-│ BGMManager   │            │ State Events │            │Scene Loading │
-│AmbientManager│            │ Transitions  │            │ Management   │
-│EffectManager │            │              │            │              │
-└──────────────┘            └──────────────┘            └──────────────┘
+```mermaid
+block-beta
+    columns 1
+    
+    ServiceLocator["ServiceLocator<br/>(Static Class - Thread Safe)"]
+    
+    ServiceDict["Dictionary&lt;Type, object&gt;<br/>services"]
+    
+    block:services["Registered Services"]
+        columns 3
+        
+        block:audio["AudioService"]
+            columns 1
+            AudioInterface["implements<br/>IAudioService"]
+            BGMManager["BGMManager"]
+            AmbientManager["AmbientManager"]
+            EffectManager["EffectManager"]
+        end
+        
+        block:gamestate["GameStateMgr"]
+            columns 1
+            GameStateInterface["implements<br/>IGameStateMgr"]
+            StateEvents["State Events"]
+            Transitions["Transitions"]
+        end
+        
+        block:sceneloading["SceneLoading"]
+            columns 1
+            SceneInterface["implements<br/>ISceneLoading"]
+            SceneManagement["Scene Loading<br/>Management"]
+        end
+    end
+    
+    ServiceLocator --> ServiceDict
+    ServiceDict --> services
 ```
 
 ### オーディオシステム詳細図
 
-```
-                    ┌─────────────────────────────────────┐
-                    │          AudioManager               │
-                    │      implements IAudioService       │
-                    └─────────────────┬───────────────────┘
-                                     │
-                    ┌─────────────────┴───────────────────┐
-                    │       Audio Category Managers       │
-                    └─────────────────┬───────────────────┘
-                                     │
-              ┌──────────────────────┼──────────────────────┐
-              │                      │                      │
-    ┌─────────▼─────────┐   ┌────────▼────────┐   ┌────────▼────────┐
-    │    BGMManager     │   │ AmbientManager  │   │  EffectManager  │
-    │  (Background)     │   │ (Environment)   │   │ (Sound Effects) │
-    └─────────┬─────────┘   └────────┬────────┘   └────────┬────────┘
-              │                      │                     │
-              └──────────────────────┼─────────────────────┘
-                                     │
-                    ┌─────────────────┴───────────────────┐
-                    │      Specialized Audio Systems      │
-                    └─────────────────┬───────────────────┘
-                                     │
-              ┌──────────────────────┼──────────────────────┐
-              │                      │                      │
-    ┌─────────▼─────────┐   ┌────────▼────────┐   ┌────────▼────────┐
-    │SpatialAudioMgr    │   │DynamicAudioEnv  │   │StealthAudioCoord│
-    │ (3D Positioning)  │   │(Adaptive Audio) │   │(Stealth System) │
-    └─────────┬─────────┘   └────────┬────────┘   └────────┬────────┘
-              │                      │                     │
-              ▼                      ▼                     ▼
-       [Unity Audio]          [Weather/Time]        [NPCAudioSensor]
-       [3D Engine]            [Adaptation]          [AI Detection]
+```mermaid
+block-beta
+    columns 1
+    
+    AudioManager["AudioManager<br/>implements IAudioService"]
+    
+    CategoryManagers["Audio Category Managers"]
+    
+    block:categories["Category Layer"]
+        columns 3
+        BGMManager["BGMManager<br/>(Background)"]
+        AmbientManager["AmbientManager<br/>(Environment)"]
+        EffectManager["EffectManager<br/>(Sound Effects)"]
+    end
+    
+    SpecializedSystems["Specialized Audio Systems"]
+    
+    block:specialized["Specialized Layer"]
+        columns 3
+        
+        block:spatial["SpatialAudioMgr<br/>(3D Positioning)"]
+            columns 1
+            UnityAudio["Unity Audio<br/>3D Engine"]
+        end
+        
+        block:dynamic["DynamicAudioEnv<br/>(Adaptive Audio)"]
+            columns 1
+            WeatherTime["Weather/Time<br/>Adaptation"]
+        end
+        
+        block:stealth["StealthAudioCoord<br/>(Stealth System)"]
+            columns 1
+            NPCAudio["NPCAudioSensor<br/>AI Detection"]
+        end
+    end
+    
+    AudioManager --> CategoryManagers
+    CategoryManagers --> categories
+    categories --> SpecializedSystems
+    SpecializedSystems --> specialized
 ```
 
 ### システム初期化フロー
 
-```
-[SystemInitializer.Awake()]
-            │
-            ▼
-    [DiscoverSystems()]
-            │
-            ▼
-  [IInitializable Components]
-            │
-    ┌───────┴───────┐
-    ▼               ▼
-[Sort by Priority] [IServiceLocatorRegistrable]
-    │               │
-    ▼               ▼
-[Initialize()]   [RegisterServices()]
-    │               │
-    ▼               ▼
-[AudioService]   [ServiceLocator.Register()]
-[GameManager]         │
-[UIService]           ▼
-[...]           [Service Available]
+```mermaid
+flowchart TD
+    Awake["SystemInitializer.Awake()"]
+    Discover["DiscoverSystems()"]
+    IInitializable["IInitializable Components"]
+    
+    subgraph Processing["Parallel Processing"]
+        SortPriority["Sort by Priority"]
+        ServiceRegistrable["IServiceLocatorRegistrable"]
+    end
+    
+    Initialize["Initialize()"]
+    RegisterServices["RegisterServices()"]
+    
+    subgraph Services["Service Initialization"]
+        AudioService["AudioService"]
+        GameManager["GameManager"]
+        UIService["UIService"]
+        Others["..."]
+    end
+    
+    ServiceRegister["ServiceLocator.Register()"]
+    ServiceAvailable["Service Available"]
+    
+    Awake --> Discover
+    Discover --> IInitializable
+    IInitializable --> SortPriority
+    IInitializable --> ServiceRegistrable
+    SortPriority --> Initialize
+    ServiceRegistrable --> RegisterServices
+    Initialize --> AudioService
+    Initialize --> GameManager
+    Initialize --> UIService
+    Initialize --> Others
+    RegisterServices --> ServiceRegister
+    ServiceRegister --> ServiceAvailable
+    
+    style Awake fill:#e8f5e8
+    style Processing fill:#e1f5fe
+    style Services fill:#f3e5f5
+    style ServiceAvailable fill:#c8e6c9
 ```
 
 ---
@@ -823,6 +1061,24 @@ namespace asterivo.Unity60.Tests.Integration
 - **テストカバレッジ**: 段階的拡充中 🔄
 
 このアーキテクチャは、Unity 6の最新機能を活用しながら、保守性と拡張性を両立した設計となっています。
+
+---
+
+## 変更履歴
+
+### 2025年9月11日 - Mermaid図表変換
+- 全15箇所の図をMermaid形式に変換
+- 視覚的階層構造: block-beta形式採用
+- データフロー図: flowchart形式で統一
+- 依存関係図: graph形式で表現
+- 色分けとスタイリングを統一して可読性向上
+- GitHub/GitLab等での表示互換性向上
+
+### 2025年9月11日 - 初版作成
+- 現在実装の包括的アーキテクチャ解説
+- Phase 1完了状況の詳細記録
+- 15種類のアーキテクチャ図作成
+- 実装ベースの技術仕様書完成
 
 ---
 
