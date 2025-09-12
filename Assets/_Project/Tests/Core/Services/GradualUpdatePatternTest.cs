@@ -4,7 +4,7 @@ using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Debug;
 // Removed Sirenix dependency for test compatibility
 
-namespace _Project.Tests.Core.Services
+namespace asterivo.Unity60.Tests.Core.Services
 {
     /// <summary>
     /// 段階的更新パターンの包括テスト

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Services;
 
 namespace asterivo.Unity60.Core.Validation
 {
@@ -134,13 +135,19 @@ namespace asterivo.Unity60.Core.Validation
         public void AddError(string message)
         {
             errors.Add(message);
-            EventLogger.LogErrorStatic($"[Validation] {message}");
+            var eventLogger = ServiceLocator.GetService<IEventLogger>();
+            if (eventLogger != null) {
+                eventLogger.LogError($"[Validation] {message}");
+            }
         }
         
         public void AddWarning(string message)
         {
             warnings.Add(message);
-            EventLogger.LogWarningStatic($"[Validation] {message}");
+            var eventLogger = ServiceLocator.GetService<IEventLogger>();
+            if (eventLogger != null) {
+                eventLogger.LogWarning($"[Validation] {message}");
+            }
         }
         
         public void AddInfo(string message)

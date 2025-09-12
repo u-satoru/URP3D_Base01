@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 using asterivo.Unity60.Core.Services;
-using _Project.Core;
+using asterivo.Unity60.Core;
 using System.Collections.Generic;
 
 namespace asterivo.Unity60.Tests.Core.Services

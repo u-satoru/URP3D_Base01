@@ -108,6 +108,11 @@ namespace asterivo.Unity60.Features.AI.Visual
         [LabelText("Detection Configuration")]
         [SerializeField] private DetectionConfiguration detectionConfig;
         
+        [BoxGroup("Detection/Components/Required")]
+        [Required]
+        [LabelText("Player Transform")]
+        [SerializeField] private Transform playerTransform;
+        
         [BoxGroup("Detection/Components/Settings")]
         [LabelText("Visual Sensor Settings")]
         [InfoBox("Optional: システム全体の設定を統一管理する場合に使用")]
@@ -699,10 +704,9 @@ namespace asterivo.Unity60.Features.AI.Visual
         private void FindPotentialTargets()
         {
             potentialTargets.Clear();
-            var playerObject = GameObject.FindGameObjectWithTag("Player");
-            if (playerObject != null)
+            if (playerTransform != null)
             {
-                potentialTargets.Add(playerObject.transform);
+                potentialTargets.Add(playerTransform);
             }
             
             var allNPCs = GameObject.FindGameObjectsWithTag("NPC");

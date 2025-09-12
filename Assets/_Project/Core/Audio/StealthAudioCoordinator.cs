@@ -5,6 +5,7 @@ using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Audio.Interfaces;
+using asterivo.Unity60.Core.Services;
 using Sirenix.OdinInspector;
 using asterivo.Unity60.Core.Helpers;
 
@@ -86,17 +87,26 @@ namespace asterivo.Unity60.Core.Audio
                     
                     if (asterivo.Unity60.Core.FeatureFlags.EnableDebugLogging)
                     {
-                        EventLogger.LogStatic("[StealthAudioCoordinator] Successfully registered to ServiceLocator as IStealthAudioService");
+                        var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                        if (eventLogger != null) {
+                            eventLogger.Log("[StealthAudioCoordinator] Successfully registered to ServiceLocator as IStealthAudioService");
+                        }
                     }
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[StealthAudioCoordinator] Failed to register to ServiceLocator: {ex.Message}");
+                    var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                    if (eventLogger != null) {
+                        eventLogger.LogError($"[StealthAudioCoordinator] Failed to register to ServiceLocator: {ex.Message}");
+                    }
                 }
             }
             else
             {
-                EventLogger.LogWarningStatic("[StealthAudioCoordinator] ServiceLocator is disabled - service not registered");
+                var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                if (eventLogger != null) {
+                    eventLogger.LogWarning("[StealthAudioCoordinator] ServiceLocator is disabled - service not registered");
+                }
             }
             
             InitializeCoordinator();
@@ -126,12 +136,18 @@ namespace asterivo.Unity60.Core.Audio
                     
                     if (asterivo.Unity60.Core.FeatureFlags.EnableDebugLogging)
                     {
-                        EventLogger.LogStatic("[StealthAudioCoordinator] Unregistered from ServiceLocator");
+                        var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                        if (eventLogger != null) {
+                            eventLogger.Log("[StealthAudioCoordinator] Unregistered from ServiceLocator");
+                        }
                     }
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[StealthAudioCoordinator] Failed to unregister from ServiceLocator: {ex.Message}");
+                    var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                    if (eventLogger != null) {
+                        eventLogger.LogError($"[StealthAudioCoordinator] Failed to unregister from ServiceLocator: {ex.Message}");
+                    }
                 }
             }
         }
@@ -153,7 +169,10 @@ namespace asterivo.Unity60.Core.Audio
             }
             else
             {
-                EventLogger.LogWarningStatic("[StealthAudioCoordinator] Player object not found! Please assign a Player tag.");
+                var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                if (eventLogger != null) {
+                    eventLogger.LogWarning("[StealthAudioCoordinator] Player object not found! Please assign a Player tag.");
+                }
             }
         }
 
@@ -174,20 +193,29 @@ namespace asterivo.Unity60.Core.Audio
                     {
                         if (asterivo.Unity60.Core.FeatureFlags.EnableDebugLogging)
                         {
-                            EventLogger.LogStatic("[StealthAudioCoordinator] Successfully retrieved AudioService from ServiceLocator");
+                            var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                            if (eventLogger != null) {
+                                eventLogger.Log("[StealthAudioCoordinator] Successfully retrieved AudioService from ServiceLocator");
+                            }
                         }
                     }
                     else
                     {
                         if (asterivo.Unity60.Core.FeatureFlags.EnableMigrationMonitoring)
                         {
-                            EventLogger.LogWarningStatic("[StealthAudioCoordinator] ServiceLocator returned null for IAudioService, falling back to legacy approach");
+                            var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                            if (eventLogger != null) {
+                                eventLogger.LogWarning("[StealthAudioCoordinator] ServiceLocator returned null for IAudioService, falling back to legacy approach");
+                            }
                         }
                     }
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[StealthAudioCoordinator] Failed to retrieve AudioService from ServiceLocator: {ex.Message}");
+                    var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                    if (eventLogger != null) {
+                        eventLogger.LogError($"[StealthAudioCoordinator] Failed to retrieve AudioService from ServiceLocator: {ex.Message}");
+                    }
                 }
             }
             
@@ -199,16 +227,25 @@ namespace asterivo.Unity60.Core.Audio
                     audioManager = ServiceHelper.GetServiceWithFallback<AudioManager>();
                     if (audioManager != null && asterivo.Unity60.Core.FeatureFlags.EnableDebugLogging)
                     {
-                        EventLogger.LogStatic("[StealthAudioCoordinator] Found AudioManager via FindFirstObjectByType");
+                        var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                        if (eventLogger != null) {
+                            eventLogger.Log("[StealthAudioCoordinator] Found AudioManager via FindFirstObjectByType");
+                        }
                     }
                     else if (audioManager == null)
                     {
-                        EventLogger.LogErrorStatic("[StealthAudioCoordinator] No AudioManager found");
+                        var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                        if (eventLogger != null) {
+                            eventLogger.LogError("[StealthAudioCoordinator] No AudioManager found");
+                        }
                     }
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[StealthAudioCoordinator] Failed to get AudioManager: {ex.Message}");
+                    var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                    if (eventLogger != null) {
+                        eventLogger.LogError($"[StealthAudioCoordinator] Failed to get AudioManager: {ex.Message}");
+                    }
                 }
             }
 
@@ -241,7 +278,10 @@ namespace asterivo.Unity60.Core.Audio
             IsInitialized = true;
             
             // デバッグログ (一時的に簡素化)
-            EventLogger.LogStatic("[StealthAudioCoordinator] Initialization complete");
+            { 
+                var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+                if (eventLogger != null) eventLogger.Log("[StealthAudioCoordinator] Initialization complete");
+            }
         }
 
         #endregion
@@ -255,13 +295,19 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (!IsInitialized)
             {
-                EventLogger.LogWarningStatic("[StealthAudioCoordinator] System not initialized");
+                { 
+                    var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+                    if (eventLogger != null) eventLogger.LogWarning("[StealthAudioCoordinator] System not initialized");
+                }
                 return;
             }
             
             // TODO: 表面タイプに応じた足音の生成
             // デバッグログ出力
-            EventLogger.LogStatic($"[StealthAudioCoordinator] Creating footstep at {position}, intensity: {intensity}, surface: {surfaceType}");
+            { 
+                var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+                if (eventLogger != null) eventLogger.Log($"[StealthAudioCoordinator] Creating footstep at {position}, intensity: {intensity}, surface: {surfaceType}");
+            }
         }
         
         /// <summary>
@@ -274,7 +320,10 @@ namespace asterivo.Unity60.Core.Audio
             globalMaskingStrength = Mathf.Clamp01(level);
             
             // デバッグログ出力
-            EventLogger.LogStatic($"[StealthAudioCoordinator] Environment noise level set to: {level}");
+            { 
+                var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+                if (eventLogger != null) eventLogger.Log($"[StealthAudioCoordinator] Environment noise level set to: {level}");
+            }
         }
         
         /// <summary>
@@ -288,7 +337,10 @@ namespace asterivo.Unity60.Core.Audio
             NotifyAuditorySensors(position, radius, intensity);
             
             // デバッグログ出力
-            EventLogger.LogStatic($"[StealthAudioCoordinator] Detectable sound emitted: {soundType} at {position}");
+            { 
+                var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+                if (eventLogger != null) eventLogger.Log($"[StealthAudioCoordinator] Detectable sound emitted: {soundType} at {position}");
+            }
         }
         
         /// <summary>
@@ -322,7 +374,10 @@ namespace asterivo.Unity60.Core.Audio
             // audioService.PlayBGM(bgmName); // TODO: IBGMServiceが必要
             
             // デバッグログ出力
-            EventLogger.LogStatic($"[StealthAudioCoordinator] Alert level music set: {level} -> {bgmName}");
+            { 
+                var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+                if (eventLogger != null) eventLogger.Log($"[StealthAudioCoordinator] Alert level music set: {level} -> {bgmName}");
+            }
         }
         
         /// <summary>
@@ -352,7 +407,10 @@ namespace asterivo.Unity60.Core.Audio
             
             // TODO: AIシステムとの連携実装
             // デバッグログ出力
-            EventLogger.LogStatic($"[StealthAudioCoordinator] Notifying auditory sensors: origin={origin}, radius={radius}, intensity={intensity}");
+            { 
+                var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+                if (eventLogger != null) eventLogger.Log($"[StealthAudioCoordinator] Notifying auditory sensors: origin={origin}, radius={radius}, intensity={intensity}");
+            }
         }
         
         /// <summary>
@@ -373,7 +431,10 @@ namespace asterivo.Unity60.Core.Audio
             }
             
             // デバッグログ出力
-            EventLogger.LogStatic($"[StealthAudioCoordinator] Stealth audio adjusted: level={stealthLevel}, reduction={volumeReduction}");
+            { 
+                var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+                if (eventLogger != null) eventLogger.Log($"[StealthAudioCoordinator] Stealth audio adjusted: level={stealthLevel}, reduction={volumeReduction}");
+            }
         }
 
         #endregion
@@ -438,7 +499,10 @@ namespace asterivo.Unity60.Core.Audio
                     stealthModeDeactivatedEvent?.Raise();
                 }
 
-                EventLogger.LogStatic($"<color=orange>[StealthAudioCoordinator]</color> Stealth mode {(newStealthMode ? "activated" : "deactivated")}");
+                { 
+                    var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+                    if (eventLogger != null) eventLogger.Log($"<color=orange>[StealthAudioCoordinator]</color> Stealth mode {(newStealthMode ? "activated" : "deactivated")}");
+                }
             }
         }
 
@@ -647,7 +711,10 @@ namespace asterivo.Unity60.Core.Audio
             // グローバルマスキング強度を一時的に増加
             globalMaskingStrength = Mathf.Max(globalMaskingStrength, effectiveStrength * 0.5f);
             
-            EventLogger.LogStatic($"<color=purple>[StealthAudioCoordinator]</color> Masking effect applied: strength={effectiveStrength:F2}, distance={distance:F1}m");
+            { 
+                var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+                if (eventLogger != null) eventLogger.Log($"<color=purple>[StealthAudioCoordinator]</color> Masking effect applied: strength={effectiveStrength:F2}, distance={distance:F1}m");
+            }
         }
 
         /// <summary>
@@ -761,7 +828,10 @@ namespace asterivo.Unity60.Core.Audio
                 testData.worldPosition = playerTransform.position;
                 
                 float masking = CalculateMaskingEffect(playerTransform.position, testData);
-                EventLogger.LogStatic($"Current masking level at player position: {masking:F2}");
+                { 
+                    var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+                    if (eventLogger != null) eventLogger.Log($"Current masking level at player position: {masking:F2}");
+                }
             }
         }
 

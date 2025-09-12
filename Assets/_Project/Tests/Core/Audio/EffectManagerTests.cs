@@ -5,7 +5,8 @@ using System.Collections;
 using asterivo.Unity60.Tests.Helpers;
 using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core;
-using _Project.Core;
+using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core.Audio.Interfaces;
 
 namespace asterivo.Unity60.Tests.Core.Audio
 {
@@ -66,8 +67,8 @@ namespace asterivo.Unity60.Tests.Core.Audio
         public void EffectManager_ShouldImplement_SingletonPattern()
         {
             // Arrange & Act
-            var instance1 = EffectManager.Instance;
-            var instance2 = EffectManager.Instance;
+            var instance1 = ServiceLocator.GetService<IEffectService>();
+            var instance2 = ServiceLocator.GetService<IEffectService>();
             
             // Assert
             Assert.IsNotNull(instance1, "EffectManager instance should not be null");

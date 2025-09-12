@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
-using _Project.Core;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core;
 using System;
 

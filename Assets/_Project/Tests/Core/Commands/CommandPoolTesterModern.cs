@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using asterivo.Unity60.Core.Components;
+using asterivo.Unity60.Core.Services;
 using Debug = UnityEngine.Debug;
 
 namespace asterivo.Unity60.Core.Commands
@@ -42,7 +43,7 @@ namespace asterivo.Unity60.Core.Commands
             healthTarget = dummyHealth;
             
             // CommandPoolServiceの初期化
-            if (createPoolService && CommandPoolService.Instance == null)
+            if (createPoolService && ServiceLocator.GetService<ICommandPoolService>() == null)
             {
                 var poolServiceGO = new GameObject("CommandPoolService");
                 poolService = poolServiceGO.AddComponent<CommandPoolService>();
@@ -70,7 +71,7 @@ namespace asterivo.Unity60.Core.Commands
                 return;
             }
             
-            var service = CommandPoolService.Instance;
+            var service = ServiceLocator.GetService<ICommandPoolService>();
             if (service == null)
             {
                 UnityEngine.Debug.LogError("CommandPoolService not found! Please ensure it exists in the scene.");
@@ -89,7 +90,7 @@ namespace asterivo.Unity60.Core.Commands
         
         private IEnumerator RunModernTest()
         {
-            var service = CommandPoolService.Instance;
+            var service = ServiceLocator.GetService<ICommandPoolService>();
             
             for (int i = 0; i < testCommandCount; i++)
             {
@@ -119,7 +120,7 @@ namespace asterivo.Unity60.Core.Commands
             testInProgress = false;
         }
         
-        private void TestDamageCommand(CommandPoolService service)
+        private void TestDamageCommand(ICommandPoolService service)
         {
             // 新しいAPI使用: CommandPoolServiceから取得
             var command = service.GetCommand<DamageCommand>();
@@ -132,7 +133,7 @@ namespace asterivo.Unity60.Core.Commands
             service.ReturnCommand(command);
         }
         
-        private void TestHealCommand(CommandPoolService service)
+        private void TestHealCommand(ICommandPoolService service)
         {
             // 新しいAPI使用: CommandPoolServiceから取得
             var command = service.GetCommand<HealCommand>();
@@ -145,7 +146,7 @@ namespace asterivo.Unity60.Core.Commands
             service.ReturnCommand(command);
         }
         
-        private void LogCurrentStats(CommandPoolService service)
+        private void LogCurrentStats(ICommandPoolService service)
         {
             var damageStats = service.GetStatistics<DamageCommand>();
             var healStats = service.GetStatistics<HealCommand>();
@@ -155,7 +156,7 @@ namespace asterivo.Unity60.Core.Commands
                      $"HealCommand - Gets: {healStats.TotalGets}, Returns: {healStats.TotalReturns}, Reuse: {healStats.ReuseRatio:P1}");
         }
         
-        private void LogFinalStats(CommandPoolService service)
+        private void LogFinalStats(ICommandPoolService service)
         {
             float testDuration = Time.time - testStartTime;
             
@@ -183,7 +184,7 @@ namespace asterivo.Unity60.Core.Commands
         [ContextMenu("Log Current Pool Statistics")]
         public void LogCurrentPoolStatistics()
         {
-            var service = CommandPoolService.Instance;
+            var service = ServiceLocator.GetService<ICommandPoolService>();
             if (service != null)
             {
                 UnityEngine.Debug.Log("=== Current Pool Statistics ===");

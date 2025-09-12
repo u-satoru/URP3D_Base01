@@ -5,7 +5,8 @@ using System.Collections;
 using asterivo.Unity60.Tests.Helpers;
 using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core;
-using _Project.Core;
+using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core.Audio.Interfaces;
 
 namespace asterivo.Unity60.Tests.Core.Audio
 {
@@ -66,8 +67,8 @@ namespace asterivo.Unity60.Tests.Core.Audio
         public void AudioManager_ShouldImplement_SingletonPattern()
         {
             // Arrange & Act
-            var instance1 = AudioManager.Instance;
-            var instance2 = AudioManager.Instance;
+            var instance1 = ServiceLocator.GetService<IAudioService>();
+            var instance2 = ServiceLocator.GetService<IAudioService>();
             
             // Assert
             Assert.IsNotNull(instance1, "AudioManager instance should not be null");

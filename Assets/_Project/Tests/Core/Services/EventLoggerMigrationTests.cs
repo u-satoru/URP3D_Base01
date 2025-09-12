@@ -2,6 +2,7 @@ using UnityEngine;
 using NUnit.Framework;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Services;
 using System.Collections.Generic;
 
 namespace asterivo.Unity60.Tests.Core.Services
@@ -104,10 +105,8 @@ namespace asterivo.Unity60.Tests.Core.Services
                 }
             };
             
-            // 非推奨Instanceプロパティへのアクセス
-            #pragma warning disable CS0618 // Type or member is obsolete
-            var instance = EventLogger.Instance;
-            #pragma warning restore CS0618 // Type or member is obsolete
+            // ServiceLocator経由でのアクセス (Phase 2 移行後)
+            var instance = ServiceLocator.GetService<IEventLogger>();
             
             Application.logMessageReceived -= (condition, stackTrace, type) => { };
             
@@ -136,10 +135,8 @@ namespace asterivo.Unity60.Tests.Core.Services
                 }
             };
             
-            // 無効化されたInstanceアクセスの試行
-            #pragma warning disable CS0618 // Type or member is obsolete
-            var instance = EventLogger.Instance;
-            #pragma warning restore CS0618 // Type or member is obsolete
+            // ServiceLocator経由でのアクセス (Phase 2 移行後)
+            var instance = ServiceLocator.GetService<IEventLogger>();
             
             Application.logMessageReceived -= (condition, stackTrace, type) => { };
             
@@ -183,10 +180,8 @@ namespace asterivo.Unity60.Tests.Core.Services
             FeatureFlags.UseServiceLocator = false;
             eventLogger = testGameObject.AddComponent<EventLogger>();
             
-            // ServiceLocatorが無効でもInstanceプロパティ経由でアクセス可能
-            #pragma warning disable CS0618 // Type or member is obsolete
-            var instance = EventLogger.Instance;
-            #pragma warning restore CS0618 // Type or member is obsolete
+            // ServiceLocator経由でのアクセス (Phase 2 移行後)
+            var instance = ServiceLocator.GetService<IEventLogger>();
             
             Assert.IsNotNull(instance, "Should fall back to Instance when ServiceLocator is disabled");
             

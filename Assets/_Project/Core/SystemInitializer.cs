@@ -2,9 +2,10 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Lifecycle;
 using Sirenix.OdinInspector;
 
-namespace _Project.Core
+namespace asterivo.Unity60.Core
 {
     /// <summary>
     /// システム初期化マネージャー
@@ -56,7 +57,7 @@ namespace _Project.Core
             for (int i = registrants.Count - 1; i >= 0; i--)
             {
                 try { registrants[i]?.UnregisterServices(); }
-                catch (System.Exception e) { Debug.LogError($"[SystemInitializer] Unregister failed: {e.Message}"); }
+                catch (System.Exception e) { UnityEngine.Debug.LogError($"[SystemInitializer] Unregister failed: {e.Message}"); }
             }
 
             if (CoreFeatureFlags.UseServiceLocator)
@@ -87,12 +88,12 @@ namespace _Project.Core
                     r.RegisterServices();
                     if (logInitializationSteps && CoreFeatureFlags.EnableDebugLogging)
                     {
-                        Debug.Log($"[SystemInitializer] Registered services: {r.GetType().Name} (Priority: {r.Priority})");
+                        UnityEngine.Debug.Log($"[SystemInitializer] Registered services: {r.GetType().Name} (Priority: {r.Priority})");
                     }
                 }
                 catch (System.Exception e)
                 {
-                    Debug.LogError($"[SystemInitializer] Register failed on {r.GetType().Name}: {e.Message}");
+                    UnityEngine.Debug.LogError($"[SystemInitializer] Register failed on {r.GetType().Name}: {e.Message}");
                 }
             }
         }
@@ -120,10 +121,10 @@ namespace _Project.Core
             
             if (logInitializationSteps && CoreFeatureFlags.EnableDebugLogging)
             {
-                Debug.Log($"[SystemInitializer] Discovered {totalSystemCount} systems to initialize");
+                UnityEngine.Debug.Log($"[SystemInitializer] Discovered {totalSystemCount} systems to initialize");
                 foreach (var system in initializableSystems)
                 {
-                    Debug.Log($"  - {system.GetType().Name} (Priority: {system.Priority})");
+                    UnityEngine.Debug.Log($"  - {system.GetType().Name} (Priority: {system.Priority})");
                 }
             }
         }
@@ -136,7 +137,7 @@ namespace _Project.Core
         {
             if (isInitialized)
             {
-                Debug.LogWarning("[SystemInitializer] Systems already initialized");
+                UnityEngine.Debug.LogWarning("[SystemInitializer] Systems already initialized");
                 return;
             }
             
@@ -150,7 +151,7 @@ namespace _Project.Core
                     {
                         if (logInitializationSteps && CoreFeatureFlags.EnableDebugLogging)
                         {
-                            Debug.Log($"[SystemInitializer] Initializing {system.GetType().Name}...");
+                            UnityEngine.Debug.Log($"[SystemInitializer] Initializing {system.GetType().Name}...");
                         }
                         
                         system.Initialize();
@@ -158,14 +159,14 @@ namespace _Project.Core
                         
                         if (logInitializationSteps && CoreFeatureFlags.EnableDebugLogging)
                         {
-                            Debug.Log($"[SystemInitializer] {system.GetType().Name} initialized successfully");
+                            UnityEngine.Debug.Log($"[SystemInitializer] {system.GetType().Name} initialized successfully");
                         }
                     }
                 }
                 catch (System.Exception e)
                 {
-                    Debug.LogError($"[SystemInitializer] Failed to initialize {system.GetType().Name}: {e.Message}");
-                    Debug.LogException(e);
+                    UnityEngine.Debug.LogError($"[SystemInitializer] Failed to initialize {system.GetType().Name}: {e.Message}");
+                    UnityEngine.Debug.LogException(e);
                 }
             }
             
@@ -173,7 +174,7 @@ namespace _Project.Core
             
             if (CoreFeatureFlags.EnableDebugLogging)
             {
-                Debug.Log($"[SystemInitializer] Initialization complete. {initializedCount}/{totalSystemCount} systems initialized");
+                UnityEngine.Debug.Log($"[SystemInitializer] Initialization complete. {initializedCount}/{totalSystemCount} systems initialized");
             }
         }
         
@@ -189,7 +190,7 @@ namespace _Project.Core
                 
                 if (CoreFeatureFlags.EnableDebugLogging)
                 {
-                    Debug.Log($"[SystemInitializer] {typeof(T).Name} initialized");
+                    UnityEngine.Debug.Log($"[SystemInitializer] {typeof(T).Name} initialized");
                 }
             }
         }
@@ -223,7 +224,7 @@ namespace _Project.Core
             
             if (CoreFeatureFlags.EnableDebugLogging)
             {
-                Debug.Log("[SystemInitializer] Initialization state reset");
+                UnityEngine.Debug.Log("[SystemInitializer] Initialization state reset");
             }
         }
         
@@ -233,15 +234,15 @@ namespace _Project.Core
         [Button("Log System Status")]
         public void LogSystemStatus()
         {
-            Debug.Log($"[SystemInitializer] === System Status ===");
-            Debug.Log($"Total Systems: {totalSystemCount}");
-            Debug.Log($"Initialized: {initializedCount}");
-            Debug.Log($"Is Fully Initialized: {isInitialized}");
+            UnityEngine.Debug.Log($"[SystemInitializer] === System Status ===");
+            UnityEngine.Debug.Log($"Total Systems: {totalSystemCount}");
+            UnityEngine.Debug.Log($"Initialized: {initializedCount}");
+            UnityEngine.Debug.Log($"Is Fully Initialized: {isInitialized}");
             
             foreach (var system in initializableSystems)
             {
                 var status = system.IsInitialized ? "✓" : "✗";
-                Debug.Log($"  {status} {system.GetType().Name} (Priority: {system.Priority})");
+                UnityEngine.Debug.Log($"  {status} {system.GetType().Name} (Priority: {system.Priority})");
             }
         }
     }

@@ -468,7 +468,7 @@ namespace asterivo.Unity60.Player
         private void OnFreezeMovement()
         {
             movementFrozen = true;
-            Debug.Log("Player movement frozen");
+            ProjectDebug.Log("Player movement frozen");
         }
         
         /// <summary>
@@ -477,7 +477,7 @@ namespace asterivo.Unity60.Player
         private void OnUnfreezeMovement()
         {
             movementFrozen = false;
-            Debug.Log("Player movement unfrozen");
+            ProjectDebug.Log("Player movement unfrozen");
         }
         
         #if UNITY_EDITOR

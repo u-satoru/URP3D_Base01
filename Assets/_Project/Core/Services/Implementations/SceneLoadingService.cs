@@ -1,13 +1,14 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Audio; // GameState enum用
+using asterivo.Unity60.Core.Lifecycle;
 
 namespace asterivo.Unity60.Core
 {
     /// <summary>
     /// GameManagerのシーンロード処理を委譲するサービス実装
     /// </summary>
-    public class SceneLoadingService : MonoBehaviour, ISceneLoadingService, _Project.Core.IServiceLocatorRegistrable
+    public class SceneLoadingService : MonoBehaviour, ISceneLoadingService, IServiceLocatorRegistrable
     {
         [Header("Scenes")] [SerializeField] private string gameplaySceneName = "Gameplay";
         [Header("Settings")] [SerializeField] private float minLoadingTime = 1f;

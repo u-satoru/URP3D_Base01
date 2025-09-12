@@ -1,5 +1,6 @@
 using UnityEngine;
-// using _Project.Core; // 直接参照を避け、CoreFeatureFlags経由に統一
+using asterivo.Unity60.Core.Debug;
+// using asterivo.Unity60.Core; // 直接参照を避け、CoreFeatureFlags経由に統一
 
 namespace asterivo.Unity60.Core.Helpers
 {
@@ -48,14 +49,14 @@ namespace asterivo.Unity60.Core.Helpers
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (CoreFeatureFlags.EnableDebugLogging)
             {
-                UnityEngine.Debug.Log($"[ServiceHelper] {typeof(T).Name} acquired via {method}");
+                ProjectDebug.Log($"[ServiceHelper] {typeof(T).Name} acquired via {method}");
             }
             #endif
         }
         
         private static void LogServiceNotFound<T>()
         {
-            UnityEngine.Debug.LogWarning($"[ServiceHelper] Failed to acquire service: {typeof(T).Name}");
+            ProjectDebug.LogWarning($"[ServiceHelper] Failed to acquire service: {typeof(T).Name}");
         }
     }
 }

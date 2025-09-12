@@ -1,4 +1,4 @@
-namespace _Project.Core
+namespace asterivo.Unity60.Core.Lifecycle
 {
     /// <summary>
     /// ServiceLocatorへの登録/解除を標準化するためのインターフェース。

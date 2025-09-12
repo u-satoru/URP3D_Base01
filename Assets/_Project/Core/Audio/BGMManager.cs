@@ -6,6 +6,7 @@ using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Services;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio
@@ -305,7 +306,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (!bgmCategories.TryGetValue(category, out BGMTrack[] tracks) || tracks.Length == 0)
             {
-                EventLogger.LogWarningStatic($"[BGMManager] No tracks found for category: {category}");
+                var eventLogger = ServiceLocator.GetService<IEventLogger>(); if (eventLogger != null) eventLogger.LogWarning($"[BGMManager] No tracks found for category: {category}");
                 return null;
             }
 
@@ -369,7 +370,7 @@ namespace asterivo.Unity60.Core.Audio
             bgmTrackStartedEvent?.Raise();
             bgmChangeEvent?.RaiseAtPosition(track.trackName, transform.position);
 
-            EventLogger.LogStatic($"<color=green>[BGMManager]</color> Playing BGM: {track.trackName} (Category: {track.category})");
+            var eventLogger = ServiceLocator.GetService<IEventLogger>(); if (eventLogger != null) eventLogger.Log($"<color=green>[BGMManager]</color> Playing BGM: {track.trackName} (Category: {track.category})");
         }
 
         /// <summary>
@@ -441,7 +442,7 @@ namespace asterivo.Unity60.Core.Audio
             bgmTrackStartedEvent?.Raise();
             bgmChangeEvent?.RaiseAtPosition(newTrack.trackName, transform.position);
 
-            EventLogger.LogStatic($"<color=green>[BGMManager]</color> Crossfaded to BGM: {newTrack.trackName}");
+            var eventLogger = ServiceLocator.GetService<IEventLogger>(); if (eventLogger != null) eventLogger.Log($"<color=green>[BGMManager]</color> Crossfaded to BGM: {newTrack.trackName}");
         }
 
         /// <summary>

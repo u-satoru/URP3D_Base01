@@ -5,7 +5,7 @@ using UnityEngine.TestTools;
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using _Project.Core;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Services;

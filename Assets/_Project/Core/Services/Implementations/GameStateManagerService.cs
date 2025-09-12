@@ -2,13 +2,14 @@ using UnityEngine;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Audio; // GameState enum用
+using asterivo.Unity60.Core.Lifecycle;
 
 namespace asterivo.Unity60.Core
 {
     /// <summary>
     /// GameManagerのゲーム状態関連を委譲するサービス実装
     /// </summary>
-    public class GameStateManagerService : MonoBehaviour, IGameStateManager, _Project.Core.IServiceLocatorRegistrable
+    public class GameStateManagerService : MonoBehaviour, IGameStateManager, IServiceLocatorRegistrable
     {
         [Header("Events")] [SerializeField] private GameStateEvent gameStateChangedEvent;
 

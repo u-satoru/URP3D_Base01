@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using System;
 using asterivo.Unity60.Core;
-using _Project.Core;
+using asterivo.Unity60.Core;
 
 namespace asterivo.Unity60.Tests.Core.Services
 {

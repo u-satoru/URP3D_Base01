@@ -1,13 +1,14 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Core.Lifecycle;
 
 namespace asterivo.Unity60.Core
 {
     /// <summary>
     /// スコア/ライフの独立サービス実装（イベント発火含む）
     /// </summary>
-    public class ScoreService : MonoBehaviour, IScoreService, _Project.Core.IServiceLocatorRegistrable
+    public class ScoreService : MonoBehaviour, IScoreService, IServiceLocatorRegistrable
     {
         [Header("References")]
         [SerializeField] private IntGameEvent onScoreChanged;

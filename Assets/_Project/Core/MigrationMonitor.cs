@@ -2,6 +2,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Debug;
 using System;
 
 namespace asterivo.Unity60.Core
@@ -59,7 +60,7 @@ namespace asterivo.Unity60.Core
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                    UnityEngine.Debug.Log("[MigrationMonitor] Migration monitoring started");
+                    ProjectDebug.Log("[MigrationMonitor] Migration monitoring started");
             }
         }
         
@@ -213,7 +214,7 @@ namespace asterivo.Unity60.Core
             if (FeatureFlags.EnableDebugLogging)
             {
                 string message = $"[MIGRATION] Singleton usage: {singletonType.Name} at {location}";
-                UnityEngine.Debug.LogWarning(message);
+                ProjectDebug.LogWarning(message);
                 
                 totalWarningCount++;
                 lastWarningTime = DateTime.Now.ToString("HH:mm:ss");
@@ -243,7 +244,7 @@ namespace asterivo.Unity60.Core
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                UnityEngine.Debug.Log($"[ServiceLocator] Service usage: {serviceType.Name} at {location}");
+                ProjectDebug.Log($"[ServiceLocator] Service usage: {serviceType.Name} at {location}");
             }
         }
         
@@ -266,7 +267,7 @@ namespace asterivo.Unity60.Core
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                UnityEngine.Debug.Log($"[MigrationMonitor] {eventDescription}");
+                ProjectDebug.Log($"[MigrationMonitor] {eventDescription}");
             }
         }
         
@@ -363,7 +364,7 @@ namespace asterivo.Unity60.Core
             MonitorMigrationProgress();
             UpdateMigrationStatus();
             
-            UnityEngine.Debug.Log($"[MigrationMonitor] Progress: {migrationProgress:F1}% - " +
+            ProjectDebug.Log($"[MigrationMonitor] Progress: {migrationProgress:F1}% - " +
                       $"Audio: {audioServiceMigrated}, Spatial: {spatialServiceMigrated}, " +
                       $"Effect: {effectServiceMigrated}, Update: {updateServiceMigrated}, " +
                       $"Stealth: {stealthServiceMigrated}");
@@ -383,7 +384,7 @@ namespace asterivo.Unity60.Core
             recentFrameTimes.Clear();
             
             LogMigrationEvent("Counters reset by user");
-            UnityEngine.Debug.Log("[MigrationMonitor] All counters reset");
+            ProjectDebug.Log("[MigrationMonitor] All counters reset");
         }
         
         [Button("Generate Migration Report")]
@@ -421,7 +422,7 @@ RECENT EVENTS:
 {string.Join("\n", migrationEvents.ConvertAll(s => "  " + s))}
 =================================";
             
-            UnityEngine.Debug.Log(report);
+            ProjectDebug.Log(report);
             LogMigrationEvent("Migration report generated");
         }
         
@@ -474,7 +475,7 @@ RECENT EVENTS:
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                UnityEngine.Debug.Log($"[MigrationMonitor] Monitoring session ended. Duration: {totalHours:F1} hours");
+                ProjectDebug.Log($"[MigrationMonitor] Monitoring session ended. Duration: {totalHours:F1} hours");
             }
         }
         

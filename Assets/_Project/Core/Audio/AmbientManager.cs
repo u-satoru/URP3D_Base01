@@ -8,6 +8,7 @@ using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Audio.Interfaces;
+using asterivo.Unity60.Core.Services;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio
@@ -173,14 +174,17 @@ namespace asterivo.Unity60.Core.Audio
                     {
                         if (asterivo.Unity60.Core.FeatureFlags.EnableDebugLogging)
                         {
-                            EventLogger.LogStatic("[AmbientManager] Successfully retrieved SpatialAudioManager from ServiceLocator");
+                            var eventLogger = ServiceLocator.GetService<IEventLogger>(); if (eventLogger != null) eventLogger.Log("[AmbientManager] Successfully retrieved SpatialAudioManager from ServiceLocator");
                         }
                         return manager;
                     }
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[AmbientManager] Failed to get SpatialAudioManager from ServiceLocator: {ex.Message}");
+                    var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                    if (eventLogger != null) {
+                        eventLogger.LogError($"[AmbientManager] Failed to get SpatialAudioManager from ServiceLocator: {ex.Message}");
+                    }
                 }
             }
             
@@ -190,13 +194,16 @@ namespace asterivo.Unity60.Core.Audio
             {
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.LogStatic("[AmbientManager] Found SpatialAudioManager via FindFirstObjectByType");
+                    var eventLogger = ServiceLocator.GetService<IEventLogger>(); if (eventLogger != null) eventLogger.Log("[AmbientManager] Found SpatialAudioManager via FindFirstObjectByType");
                 }
                 return spatialAudioManager;
             }
             else
             {
-                EventLogger.LogErrorStatic("[AmbientManager] No SpatialAudioManager available and legacy singletons are disabled");
+                var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                if (eventLogger != null) {
+                    eventLogger.LogError("[AmbientManager] No SpatialAudioManager available and legacy singletons are disabled");
+                }
             }
             
             return null;
@@ -278,7 +285,7 @@ namespace asterivo.Unity60.Core.Audio
                 UpdateTimeBasedAmbient();
             }
 
-            EventLogger.LogStatic($"<color=green>[AmbientManager]</color> Environment updated - Env: {environment}, Weather: {weather}, Time: {timeOfDay}");
+            var eventLogger = ServiceLocator.GetService<IEventLogger>(); if (eventLogger != null) eventLogger.Log($"<color=green>[AmbientManager]</color> Environment updated - Env: {environment}, Weather: {weather}, Time: {timeOfDay}");
         }
 
         /// <summary>

@@ -3,6 +3,7 @@ using UnityEngine.Audio;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Audio.Events;
+using asterivo.Unity60.Core.Debug;
 
 namespace asterivo.Unity60.Core.Audio
 {
@@ -277,7 +278,7 @@ namespace asterivo.Unity60.Core.Audio
             
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            UnityEngine.Debug.Log($"<color=blue>[DynamicAudioEnvironment]</color> Environment changed: {previousEnvironment} → {newEnvironment}");
+            ProjectDebug.Log($"<color=blue>[DynamicAudioEnvironment]</color> Environment changed: {previousEnvironment} → {newEnvironment}");
 #endif
             #endif
         }
@@ -300,7 +301,7 @@ namespace asterivo.Unity60.Core.Audio
             
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            UnityEngine.Debug.Log($"<color=blue>[DynamicAudioEnvironment]</color> Weather changed: {previousWeather} → {newWeather}");
+            ProjectDebug.Log($"<color=blue>[DynamicAudioEnvironment]</color> Weather changed: {previousWeather} → {newWeather}");
 #endif
             #endif
         }
@@ -322,7 +323,7 @@ namespace asterivo.Unity60.Core.Audio
             
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            UnityEngine.Debug.Log($"<color=blue>[DynamicAudioEnvironment]</color> Time of day changed: {previousTime} → {newTimeOfDay}");
+            ProjectDebug.Log($"<color=blue>[DynamicAudioEnvironment]</color> Time of day changed: {previousTime} → {newTimeOfDay}");
 #endif
             #endif
         }

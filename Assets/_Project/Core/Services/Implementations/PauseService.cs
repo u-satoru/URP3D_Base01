@@ -2,13 +2,14 @@ using UnityEngine;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Audio; // GameState enum用
+using asterivo.Unity60.Core.Lifecycle;
 
 namespace asterivo.Unity60.Core
 {
     /// <summary>
     /// GameManagerのポーズ制御を委譲するサービス実装
     /// </summary>
-    public class PauseService : MonoBehaviour, IPauseService, _Project.Core.IServiceLocatorRegistrable
+    public class PauseService : MonoBehaviour, IPauseService, IServiceLocatorRegistrable
     {
         [Header("Events")] [SerializeField] private BoolGameEvent onPauseStateChanged;
         [Header("Settings")] [SerializeField] private bool pauseTimeOnPause = true;

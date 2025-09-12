@@ -66,6 +66,10 @@ namespace asterivo.Unity60.Core.UI
         [LabelText("Minimap")]
         [SerializeField] private RawImage minimap;
         
+        [TabGroup("HUD Elements", "Player")]
+        [LabelText("Player Transform")]
+        [SerializeField] private Transform playerTransform;
+        
         [TabGroup("HUD Events", "Health Events")]
         [LabelText("Health Changed")]
         [SerializeField] private GameEvent onHealthChanged;
@@ -162,10 +166,9 @@ namespace asterivo.Unity60.Core.UI
         private void InitializeHUD()
         {
             // プレイヤーの体力コンポーネントを取得
-            var player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
+            if (playerTransform != null)
             {
-                playerHealth = player.GetComponent<IHealthTarget>();
+                playerHealth = playerTransform.GetComponent<IHealthTarget>();
             }
             
             // 初期値を設定

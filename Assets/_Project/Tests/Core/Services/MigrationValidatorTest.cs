@@ -2,12 +2,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
-using _Project.Core;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 
-namespace _Project.Tests.Core.Services
+namespace asterivo.Unity60.Tests.Core.Services
 {
     /// <summary>
     /// MigrationValidatorの包括的テスト

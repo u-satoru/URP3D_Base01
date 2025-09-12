@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Services;
 using System.Linq;
 
 namespace asterivo.Unity60.Core.Events
@@ -75,7 +76,8 @@ namespace asterivo.Unity60.Core.Events
             
             // イベントログに記録（ペイロード付き）
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            if (EventLogger.IsEnabledStatic)
+            var eventLogger = ServiceLocator.GetService<IEventLogger>();
+            if (eventLogger != null && eventLogger.IsEnabled)
             {
                 EventLogger.LogEventWithPayloadStatic(name, listeners.Count, value);
             }

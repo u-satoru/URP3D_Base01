@@ -4,7 +4,7 @@ namespace asterivo.Unity60.Core
 {
     /// <summary>
     /// Core層からのFeatureFlags参照を集約するブリッジ。
-    /// 実体は _Project.Core.FeatureFlags への委譲。
+    /// 実体は asterivo.Unity60.Core.FeatureFlags への委譲。
     /// </summary>
     public static class CoreFeatureFlags
     {

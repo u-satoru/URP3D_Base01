@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using asterivo.Unity60.Core.Components;
 using asterivo.Unity60.Core.Commands.Definitions;
+using asterivo.Unity60.Core.Services;
 
 namespace asterivo.Unity60.Core.Commands
 {
@@ -70,7 +71,7 @@ namespace asterivo.Unity60.Core.Commands
                 return;
             }
             
-            if (CommandPoolService.Instance == null)
+            if (ServiceLocator.GetService<ICommandPoolService>() == null)
             {
                 UnityEngine.Debug.LogError("CommandPoolServiceが見つかりません。シーンにCommandPoolServiceを配置してください。");
                 return;
@@ -96,13 +97,13 @@ namespace asterivo.Unity60.Core.Commands
         [ContextMenu("Show Pool Stats")]
         public void ShowPoolStats()
         {
-            if (CommandPoolService.Instance == null)
+            if (ServiceLocator.GetService<ICommandPoolService>() == null)
             {
                 UnityEngine.Debug.LogWarning("CommandPoolServiceが見つかりません。");
                 return;
             }
             
-            var service = CommandPoolService.Instance;
+            var service = ServiceLocator.GetService<ICommandPoolService>();
             UnityEngine.Debug.Log("=== CommandPool統計 ===");
             service.LogDebugInfo();
             
@@ -163,7 +164,7 @@ namespace asterivo.Unity60.Core.Commands
                 command.Execute();
                 
                 // テストなのですぐにプールに返却（通常はCommandInvokerが管理）
-                CommandPoolService.Instance?.ReturnCommand((DamageCommand)command);
+                ServiceLocator.GetService<ICommandPoolService>()?.ReturnCommand((DamageCommand)command);
             }
         }
         
@@ -180,7 +181,7 @@ namespace asterivo.Unity60.Core.Commands
                 command.Execute();
                 
                 // テストなのですぐにプールに返却（通常はCommandInvokerが管理）
-                CommandPoolService.Instance?.ReturnCommand((HealCommand)command);
+                ServiceLocator.GetService<ICommandPoolService>()?.ReturnCommand((HealCommand)command);
             }
         }
     }

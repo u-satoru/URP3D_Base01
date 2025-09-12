@@ -1,10 +1,10 @@
 using UnityEngine;
-using _Project.Core;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Debug;
 
-namespace _Project.Tests.Core.Services
+namespace asterivo.Unity60.Tests.Core.Services
 {
     /// <summary>
     /// StealthAudioCoordinatorのServiceLocator登録テスト用スクリプト

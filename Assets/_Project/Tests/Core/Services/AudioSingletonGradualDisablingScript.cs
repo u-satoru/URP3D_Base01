@@ -2,6 +2,8 @@ using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core.Audio.Interfaces;
 
 namespace asterivo.Unity60.Tests.Core.Services
 {
@@ -152,8 +154,8 @@ namespace asterivo.Unity60.Tests.Core.Services
             
             try
             {
-                // AudioManager.Instance テスト
-                var audioInstance = AudioManager.Instance;
+                // AudioManager ServiceLocator テスト (Phase 2 移行後)
+                var audioInstance = ServiceLocator.GetService<IAudioService>();
                 LogResult($"AudioManager.Instance: {(audioInstance == null ? "NULL" : "VALID")}");
                 
                 if (expectNull && audioInstance != null)
@@ -176,8 +178,8 @@ namespace asterivo.Unity60.Tests.Core.Services
             
             try
             {
-                // SpatialAudioManager.Instance テスト
-                var spatialInstance = SpatialAudioManager.Instance;
+                // SpatialAudioManager ServiceLocator テスト (Phase 2 移行後)
+                var spatialInstance = ServiceLocator.GetService<ISpatialAudioService>();
                 LogResult($"SpatialAudioManager.Instance: {(spatialInstance == null ? "NULL" : "VALID")}");
                 
                 if (expectNull && spatialInstance != null)
@@ -227,7 +229,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             if (enableDetailedLogging)
             {
                 EventLogger.LogStatic($"[AudioSingletonTest] {message}");
-                Debug.Log($"[AudioSingletonTest] {message}");
+                UnityEngine.Debug.Log($"[AudioSingletonTest] {message}");
             }
         }
 
