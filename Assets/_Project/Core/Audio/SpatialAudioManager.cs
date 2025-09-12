@@ -20,40 +20,8 @@ namespace asterivo.Unity60.Core.Audio
     public class SpatialAudioManager : MonoBehaviour, ISpatialAudioService, IInitializable
     {
         // ✅ Task 3: Legacy Singleton警告システム（後方互換性のため）
-        private static SpatialAudioManager instance;
+        
 
-        /// <summary>
-        /// 後方互換性のためのInstance（非推奨）
-        /// ServiceLocator.GetService<ISpatialAudioService>()を使用してください
-        /// </summary>
-        [System.Obsolete("Use ServiceLocator.GetService<ISpatialAudioService>() instead")]
-        public static SpatialAudioManager Instance 
-        {
-            get 
-            {
-                // Legacy Singleton完全無効化フラグの確認
-                if (FeatureFlags.DisableLegacySingletons) 
-                {
-                    EventLogger.LogErrorStatic("[DEPRECATED] SpatialAudioManager.Instance is disabled. Use ServiceLocator.GetService<ISpatialAudioService>() instead");
-                    return null;
-                }
-                
-                // 移行警告の表示
-                if (FeatureFlags.EnableMigrationWarnings) 
-                {
-                    EventLogger.LogWarningStatic("[DEPRECATED] SpatialAudioManager.Instance usage detected. Please migrate to ServiceLocator.GetService<ISpatialAudioService>()");
-                    
-                    // MigrationMonitorに使用状況を記録
-                    if (FeatureFlags.EnableMigrationMonitoring)
-                    {
-                        var migrationMonitor = FindFirstObjectByType<MigrationMonitor>();
-                        migrationMonitor?.LogSingletonUsage(typeof(SpatialAudioManager), "SpatialAudioManager.Instance");
-                    }
-                }
-                
-                return instance;
-            }
-        }
 
         [Header("Audio Manager Settings")]
         [SerializeField] private AudioMixer mainMixer;
@@ -100,7 +68,7 @@ namespace asterivo.Unity60.Core.Audio
         private void Awake()
         {
             // ✅ Task 3: Legacy Singleton警告システム用のinstance設定
-            instance = this;
+            
             
             DontDestroyOnLoad(gameObject);
             
@@ -473,7 +441,7 @@ namespace asterivo.Unity60.Core.Audio
             }
             
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            UnityEngine.Debug.LogWarning("[SpatialAudioManager] オーディオソースプールが枯渇しました");
+            ProjectDebug.LogWarning("[SpatialAudioManager] オーディオソースプールが枯渇しました");
 #endif
             return null;
         }

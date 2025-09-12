@@ -3,6 +3,10 @@ using Debug = UnityEngine.Debug;
 using Unity.Cinemachine;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Player;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core.Helpers;
+using asterivo.Unity60.Core.Debug;
 using System.Collections.Generic;
 using System.Collections;
 using CameraState = asterivo.Unity60.Camera.CameraState;
@@ -14,13 +18,15 @@ namespace asterivo.Unity60.Camera
     /// <summary>
     /// Cinemachine 3.1統合カメラシステム
     /// Unity 6最適化版 - イベント駆動アーキテクチャ対応
+    /// ServiceLocator移行パターン対応
     /// </summary>
     public class CinemachineIntegration : MonoBehaviour, 
         IGameEventListener<CoreCameraState>, 
         IGameEventListener<Vector2>
     {
-        private static CinemachineIntegration instance;
-        public static CinemachineIntegration Instance => instance;
+        // ✅ ServiceLocator移行: Legacy Singleton警告システム（後方互換性のため）
+        
+
         
         #region Camera Configuration
         [System.Serializable]
@@ -89,17 +95,38 @@ namespace asterivo.Unity60.Camera
         #region Unity Lifecycle
         private void Awake()
         {
-            // Singleton Pattern
-            if (instance == null)
+            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
+            DontDestroyOnLoad(gameObject);
+            
+            // ServiceLocatorへの登録
+            if (FeatureFlags.UseServiceLocator)
             {
-                instance = this;
-                DontDestroyOnLoad(gameObject);
-                InitializeCameraSystem();
+                try
+                {
+                    ServiceLocator.RegisterService<CinemachineIntegration>(this);
+                    
+                    if (FeatureFlags.EnableDebugLogging)
+                    {
+                        var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                        if (eventLogger != null) eventLogger.Log("[CinemachineIntegration] Successfully registered to ServiceLocator");
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                    if (eventLogger != null) eventLogger.LogError($"[CinemachineIntegration] Failed to register to ServiceLocator: {ex.Message}");
+                }
             }
             else
             {
-                Destroy(gameObject);
+                if (FeatureFlags.EnableDebugLogging)
+                {
+                    var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                    if (eventLogger != null) eventLogger.LogWarning("[CinemachineIntegration] ServiceLocator is disabled - service not registered");
+                }
             }
+            
+            InitializeCameraSystem();
         }
         
         private void Start()
@@ -115,6 +142,30 @@ namespace asterivo.Unity60.Camera
         private void OnDisable()
         {
             UnregisterEventListeners();
+        }
+        
+        private void OnDestroy()
+        {
+            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
+            // ServiceLocatorからの登録解除
+            if (FeatureFlags.UseServiceLocator)
+            {
+                try
+                {
+                    ServiceLocator.UnregisterService<CinemachineIntegration>();
+                    
+                    if (FeatureFlags.EnableDebugLogging)
+                    {
+                        var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                        if (eventLogger != null) eventLogger.Log("[CinemachineIntegration] Unregistered from ServiceLocator");
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                    if (eventLogger != null) eventLogger.LogError($"[CinemachineIntegration] Failed to unregister from ServiceLocator: {ex.Message}");
+                }
+            }
         }
         #endregion
         
@@ -244,7 +295,7 @@ namespace asterivo.Unity60.Camera
         {
             if (!cameraStateLookup.ContainsKey(targetState))
             {
-                Debug.LogWarning($"[CinemachineIntegration] Camera state '{targetState}' not configured!");
+                ProjectDebug.LogWarning($"[CinemachineIntegration] Camera state '{targetState}' not configured!");
                 return;
             }
             
@@ -284,7 +335,7 @@ namespace asterivo.Unity60.Camera
                 cinemachineBrain.DefaultBlend.Style = activeCameraConfig.blendStyle;
             }
             
-            Debug.Log($"[CinemachineIntegration] Switched to camera: {targetState}");
+            ProjectDebug.Log($"[CinemachineIntegration] Switched to camera: {targetState}");
         }
         
         /// <summary>

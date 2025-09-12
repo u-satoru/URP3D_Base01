@@ -2,11 +2,12 @@ using UnityEngine;
 using asterivo.Unity60.Core.Helpers;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Services;
 using Debug = UnityEngine.Debug;
 
 namespace asterivo.Unity60.Core.Commands
 {
-    /// <summary>
+    
     /// CommandPoolManagerのサービスラッパークラス
     /// ServiceLocatorパターンでコマンドプールへのアクセスを提供する
     /// 
@@ -39,40 +40,9 @@ namespace asterivo.Unity60.Core.Commands
         private bool _isInitialized = false;
         
         // ✅ ServiceLocator移行: Legacy Singleton警告システム（後方互換性のため）
-        private static CommandPoolService instance;
+        
 
-        /// <summary>
-        /// 後方互換性のためのInstance（非推奨）
-        /// ServiceLocator.GetService&lt;ICommandPoolService&gt;()を使用してください
-        /// </summary>
-        [System.Obsolete("Use ServiceLocator.GetService<ICommandPoolService>() instead")]
-        public static CommandPoolService Instance 
-        {
-            get 
-            {
-                // Legacy Singleton完全無効化フラグの確認
-                if (FeatureFlags.DisableLegacySingletons) 
-                {
-                    EventLogger.LogErrorStatic("[DEPRECATED] CommandPoolService.Instance is disabled. Use ServiceLocator.GetService<ICommandPoolService>() instead");
-                    return null;
-                }
-                
-                // 移行警告の表示
-                if (FeatureFlags.EnableMigrationWarnings) 
-                {
-                    EventLogger.LogWarningStatic("[DEPRECATED] CommandPoolService.Instance usage detected. Please migrate to ServiceLocator.GetService<ICommandPoolService>()");
-                    
-                    // MigrationMonitorに使用状況を記録
-                    if (FeatureFlags.EnableMigrationMonitoring)
-                    {
-                        var migrationMonitor = ServiceHelper.GetServiceWithFallback<MigrationMonitor>();
-                        migrationMonitor?.LogSingletonUsage(typeof(CommandPoolService), "CommandPoolService.Instance");
-                    }
-                }
-                
-                return instance;
-            }
-        }
+
         
         /// <summary>
         /// CommandPoolManagerへの直接アクセス
@@ -94,24 +64,16 @@ namespace asterivo.Unity60.Core.Commands
         
         private void Awake()
         {
-            if (instance == null)
+            InitializeService();
+            
+            // ServiceLocatorへの登録
+            if (autoRegisterOnAwake)
             {
-                instance = this;
-                InitializeService();
-                
-                // ServiceLocatorへの登録
-                if (autoRegisterOnAwake)
-                {
-                    RegisterToServiceLocator();
-                    LogServiceStatus();
-                }
-                
-                DontDestroyOnLoad(gameObject);
+                RegisterToServiceLocator();
+                LogServiceStatus();
             }
-            else
-            {
-                Destroy(gameObject);
-            }
+            
+            DontDestroyOnLoad(gameObject);
         }
         
         /// <summary>
@@ -183,7 +145,10 @@ namespace asterivo.Unity60.Core.Commands
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogErrorStatic($"Failed to register CommandPoolService: {ex.Message}");
+                var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                if (eventLogger != null) {
+                    eventLogger.LogError($"Failed to register CommandPoolService: {ex.Message}");
+                }
             }
         }
         
@@ -290,9 +255,10 @@ namespace asterivo.Unity60.Core.Commands
         [System.Obsolete("Use ServiceLocator.GetService<ICommandPoolService>().GetCommand<T>() instead")]
         public static T GetCommandStatic<T>() where T : class, ICommand, new()
         {
-            if (instance != null)
+            var service = ServiceLocator.GetService<ICommandPoolService>();
+            if (service != null)
             {
-                return instance.GetCommand<T>();
+                return service.GetCommand<T>();
             }
             
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -314,9 +280,10 @@ namespace asterivo.Unity60.Core.Commands
         [System.Obsolete("Use ServiceLocator.GetService<ICommandPoolService>().ReturnCommand<T>() instead")]
         public static void ReturnCommandStatic<T>(T command) where T : ICommand
         {
-            if (instance != null)
+            var service = ServiceLocator.GetService<ICommandPoolService>();
+            if (service != null)
             {
-                instance.ReturnCommand(command);
+                service.ReturnCommand(command);
             }
             else
             {
@@ -330,24 +297,20 @@ namespace asterivo.Unity60.Core.Commands
         
         private void OnDestroy()
         {
-            if (instance == this)
+            // ServiceLocatorからの登録解除
+            try
             {
-                // ServiceLocatorからの登録解除
-                try
-                {
-                    ServiceLocator.UnregisterService<ICommandPoolService>();
+                ServiceLocator.UnregisterService<ICommandPoolService>();
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                    UnityEngine.Debug.Log("CommandPoolService unregistered from ServiceLocator");
+                UnityEngine.Debug.Log("CommandPoolService unregistered from ServiceLocator");
 #endif
-                }
-                catch (System.Exception ex)
-                {
-                    EventLogger.LogErrorStatic($"Failed to unregister CommandPoolService: {ex.Message}");
-                }
-                
-                Cleanup();
-                instance = null;
             }
+            catch (System.Exception ex)
+            {
+                var eventLogger = ServiceLocator.GetService<IEventLogger>(); if (eventLogger != null) eventLogger.LogError($"Failed to unregister CommandPoolService: {ex.Message}");
+            }
+            
+            Cleanup();
         }
     }
 }

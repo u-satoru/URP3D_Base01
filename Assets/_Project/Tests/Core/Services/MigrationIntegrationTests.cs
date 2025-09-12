@@ -6,13 +6,14 @@ using UnityEngine.TestTools;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using _Project.Core;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core.Audio.Services;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Services;
 
 namespace asterivo.Unity60.Tests.Core.Services
 {
@@ -24,7 +25,7 @@ namespace asterivo.Unity60.Tests.Core.Services
     public class MigrationIntegrationTests 
     {
         private GameObject testGameObject;
-        private MigrationMonitor migrationMonitor;
+        private asterivo.Unity60.Core.Services.MigrationMonitor migrationMonitor;
         private List<IAudioService> audioServices;
         private List<ISpatialAudioService> spatialServices;
         private List<IEffectService> effectServices;
@@ -37,7 +38,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             ServiceLocator.Clear();
             FeatureFlags.ResetToDefaults();
             testGameObject = new GameObject("IntegrationTest");
-            migrationMonitor = testGameObject.AddComponent<MigrationMonitor>();
+            migrationMonitor = testGameObject.AddComponent<asterivo.Unity60.Core.Services.MigrationMonitor>();
             
             audioServices = new List<IAudioService>();
             spatialServices = new List<ISpatialAudioService>();
@@ -225,7 +226,7 @@ namespace asterivo.Unity60.Tests.Core.Services
                 {
                     var progress = migrationMonitor.GetMigrationProgress();
                     var isSafe = migrationMonitor.IsMigrationSafe();
-                    monitoringResults.Add((Time.realtimeSinceStartup, progress, isSafe));
+                    monitoringResults.Add((Time.realtimeSinceStartup, progress, isSafe ?? false));
                 }
                 
                 yield return null;
@@ -523,7 +524,7 @@ namespace asterivo.Unity60.Tests.Core.Services
                     var progress = migrationMonitor.GetMigrationProgress();
                     var isSafe = migrationMonitor.IsMigrationSafe();
                     
-                    hourlyMetrics.Add((currentHour, avgFrameTime, progress, isSafe));
+                    hourlyMetrics.Add((currentHour, avgFrameTime, progress, isSafe ?? false));
                     
                     currentHour++;
                     hourStartTime = Time.realtimeSinceStartup;
@@ -611,10 +612,8 @@ namespace asterivo.Unity60.Tests.Core.Services
                 }
             };
             
-            // Access via deprecated Instance property
-            #pragma warning disable CS0618 // Type or member is obsolete
-            var instance = CommandPoolService.Instance;
-            #pragma warning restore CS0618 // Type or member is obsolete
+            // ServiceLocator経由でのアクセス (Phase 2 移行後)
+            var instance = ServiceLocator.GetService<ICommandPoolService>();
             
             Application.logMessageReceived -= (condition, stackTrace, type) => { };
             
@@ -643,10 +642,8 @@ namespace asterivo.Unity60.Tests.Core.Services
                 }
             };
             
-            // Try to access disabled Instance
-            #pragma warning disable CS0618 // Type or member is obsolete
-            var instance = CommandPoolService.Instance;
-            #pragma warning restore CS0618 // Type or member is obsolete
+            // ServiceLocator経由でのアクセス (Phase 2 移行後)
+            var instance = ServiceLocator.GetService<ICommandPoolService>();
             
             Application.logMessageReceived -= (condition, stackTrace, type) => { };
             

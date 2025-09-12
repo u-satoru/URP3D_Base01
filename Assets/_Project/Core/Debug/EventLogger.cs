@@ -26,7 +26,7 @@ namespace asterivo.Unity60.Core.Debug
     public class EventLogger : MonoBehaviour, IEventLogger, IInitializable
     {
         // ✅ ServiceLocator移行: Legacy Singleton警告システム（後方互換性のため）
-        private static EventLogger instance;
+        
         private List<EventLogEntry> eventLog = new List<EventLogEntry>();
         private EventLoggerSettings settings;
         
@@ -62,53 +62,11 @@ namespace asterivo.Unity60.Core.Debug
             InitializeService();
         }
         
-        #endregion
         
-        #region Legacy Singleton Support
         
-        /// <summary>
-        /// 後方互換性のためのInstance（非推奨）
-        /// ServiceLocator.GetService&lt;IEventLogger&gt;()を使用してください
-        /// </summary>
-        [System.Obsolete("Use ServiceLocator.GetService<IEventLogger>() instead")]
-        public static EventLogger Instance
-        {
-            get
-            {
-                // Legacy Singleton完全無効化フラグの確認
-                if (FeatureFlags.DisableLegacySingletons) 
-                {
-                    UnityEngine.Debug.LogError("[DEPRECATED] EventLogger.Instance is disabled. Use ServiceLocator.GetService<IEventLogger>() instead");
-                    return null;
-                }
-                
-                // 移行警告の表示
-                if (FeatureFlags.EnableMigrationWarnings) 
-                {
-                    UnityEngine.Debug.LogWarning("[DEPRECATED] EventLogger.Instance usage detected. Please migrate to ServiceLocator.GetService<IEventLogger>()");
-                    
-                    // MigrationMonitorに使用状況を記録
-                    if (FeatureFlags.EnableMigrationMonitoring)
-                    {
-                        var migrationMonitor = ServiceHelper.GetServiceWithFallback<MigrationMonitor>();
-                        migrationMonitor?.LogSingletonUsage(typeof(EventLogger), "EventLogger.Instance");
-                    }
-                }
-                
-                if (instance == null)
-                {
-                    var go = new GameObject("EventLogger");
-                    instance = go.AddComponent<EventLogger>();
-                    
-                    // Editor環境ではDontDestroyOnLoadは使用不可のため条件チェック
-                    if (Application.isPlaying)
-                    {
-                        DontDestroyOnLoad(go);
-                    }
-                }
-                return instance;
-            }
-        }
+        
+        
+
         
         #endregion
         
@@ -145,50 +103,36 @@ namespace asterivo.Unity60.Core.Debug
         
         void Awake()
         {
-            // Singleton パターンの実装
-            if (instance == null)
+            // ServiceLocatorへの登録
+            if (autoRegisterOnAwake)
             {
-                instance = this;
-                
-                // ServiceLocatorへの登録
-                if (autoRegisterOnAwake)
-                {
-                    RegisterToServiceLocator();
-                    LogServiceStatus();
-                }
-                
-                // Editor環境ではDontDestroyOnLoadは使用不可のため条件チェック
-                if (Application.isPlaying)
-                {
-                    DontDestroyOnLoad(gameObject);
-                }
+                RegisterToServiceLocator();
+                LogServiceStatus();
             }
-            else if (instance != this)
+            
+            // Editor環境ではDontDestroyOnLoadは使用不可のため条件チェック
+            if (Application.isPlaying)
             {
-                Destroy(gameObject);
+                DontDestroyOnLoad(gameObject);
             }
         }
         
         void OnDestroy()
         {
-            if (instance == this)
+            // ServiceLocatorからの登録解除
+            try
             {
-                // ServiceLocatorからの登録解除
-                try
-                {
-                    ServiceLocator.UnregisterService<IEventLogger>();
+                ServiceLocator.UnregisterService<IEventLogger>();
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                    UnityEngine.Debug.Log("EventLogger unregistered from ServiceLocator");
+                UnityEngine.Debug.Log("EventLogger unregistered from ServiceLocator");
 #endif
-                }
-                catch (System.Exception ex)
-                {
-                    UnityEngine.Debug.LogError($"Failed to unregister EventLogger: {ex.Message}");
-                }
-                
-                _isInitialized = false;
-                instance = null;
             }
+            catch (System.Exception ex)
+            {
+                UnityEngine.Debug.LogError($"Failed to unregister EventLogger: {ex.Message}");
+            }
+            
+            _isInitialized = false;
         }
         
         #endregion
@@ -244,17 +188,7 @@ namespace asterivo.Unity60.Core.Debug
         /// </summary>
         private static IEventLogger GetServiceInstance()
         {
-            if (FeatureFlags.UseServiceLocator)
-            {
-                return ServiceLocator.GetService<IEventLogger>();
-            }
-            else
-            {
-                // ServiceLocator無効時のフォールバック
-#pragma warning disable CS0618 // Type or member is obsolete
-                return Instance;
-#pragma warning restore CS0618 // Type or member is obsolete
-            }
+            return ServiceLocator.GetService<IEventLogger>();
         }
         
         private void AddLogEntry(EventLogEntry entry)
