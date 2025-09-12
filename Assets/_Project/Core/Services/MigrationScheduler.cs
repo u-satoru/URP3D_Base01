@@ -415,7 +415,7 @@ namespace asterivo.Unity60.Core.Services
         {
             if (enableDebugLogging)
             {
-                EventLogger.Log($"[MigrationScheduler] {message}");
+                EventLogger.LogStatic($"[MigrationScheduler] {message}");
             }
         }
 

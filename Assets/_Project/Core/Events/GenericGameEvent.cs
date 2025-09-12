@@ -75,9 +75,9 @@ namespace asterivo.Unity60.Core.Events
             
             // イベントログに記録（ペイロード付き）
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            if (EventLogger.IsEnabled)
+            if (EventLogger.IsEnabledStatic)
             {
-                EventLogger.LogEventWithPayload(name, listeners.Count, value);
+                EventLogger.LogEventWithPayloadStatic(name, listeners.Count, value);
             }
             #endif
             

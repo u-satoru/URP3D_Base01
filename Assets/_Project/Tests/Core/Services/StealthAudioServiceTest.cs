@@ -26,37 +26,37 @@ namespace _Project.Tests.Core.Services
         [ContextMenu("Test New StealthAudioService")]
         public void TestNewStealthAudioService()
         {
-            EventLogger.Log("[TEST] Starting NEW StealthAudioService integration test");
+            EventLogger.LogStatic("[TEST] Starting NEW StealthAudioService integration test");
 
             // ServiceLocatorからIStealthAudioServiceを取得
             var stealthAudioService = ServiceLocator.GetService<IStealthAudioService>();
 
             if (stealthAudioService != null)
             {
-                EventLogger.Log("[TEST] ✅ Successfully retrieved IStealthAudioService from ServiceLocator");
+                EventLogger.LogStatic("[TEST] ✅ Successfully retrieved IStealthAudioService from ServiceLocator");
                 
                 // サービスの型を確認
                 string serviceType = stealthAudioService.GetType().Name;
-                EventLogger.Log($"[TEST] Service type: {serviceType}");
+                EventLogger.LogStatic($"[TEST] Service type: {serviceType}");
                 
                 // 新サービス（StealthAudioService）か従来サービス（StealthAudioCoordinator）かを判定
                 if (serviceType == "StealthAudioService")
                 {
-                    EventLogger.Log("[TEST] 🎉 NEW StealthAudioService is being used! (Step 3.5 Success)");
+                    EventLogger.LogStatic("[TEST] 🎉 NEW StealthAudioService is being used! (Step 3.5 Success)");
                     TestNewServiceFunctionality(stealthAudioService);
                 }
                 else if (serviceType == "StealthAudioCoordinator")
                 {
-                    EventLogger.LogWarning("[TEST] ⚠️ Still using legacy StealthAudioCoordinator");
+                    EventLogger.LogWarningStatic("[TEST] ⚠️ Still using legacy StealthAudioCoordinator");
                 }
                 else
                 {
-                    EventLogger.LogWarning($"[TEST] ⚠️ Unknown service type: {serviceType}");
+                    EventLogger.LogWarningStatic($"[TEST] ⚠️ Unknown service type: {serviceType}");
                 }
             }
             else
             {
-                EventLogger.LogError("[TEST] ❌ Failed to retrieve IStealthAudioService from ServiceLocator");
+                EventLogger.LogErrorStatic("[TEST] ❌ Failed to retrieve IStealthAudioService from ServiceLocator");
                 
                 // ServiceLocatorの現在の状態をデバッグ
                 DebugServiceLocatorState();
@@ -67,62 +67,62 @@ namespace _Project.Tests.Core.Services
         {
             try
             {
-                EventLogger.Log("[TEST] Testing NEW StealthAudioService functionality...");
+                EventLogger.LogStatic("[TEST] Testing NEW StealthAudioService functionality...");
 
                 // CreateFootstepテスト
                 service.CreateFootstep(Vector3.zero, 0.5f, "concrete");
-                EventLogger.Log("[TEST] ✅ CreateFootstep method works");
+                EventLogger.LogStatic("[TEST] ✅ CreateFootstep method works");
 
                 // SetEnvironmentNoiseLevelテスト
                 service.SetEnvironmentNoiseLevel(0.3f);
-                EventLogger.Log("[TEST] ✅ SetEnvironmentNoiseLevel method works");
+                EventLogger.LogStatic("[TEST] ✅ SetEnvironmentNoiseLevel method works");
 
                 // EmitDetectableSoundテスト
                 service.EmitDetectableSound(Vector3.forward, 5f, 0.7f, "test");
-                EventLogger.Log("[TEST] ✅ EmitDetectableSound method works");
+                EventLogger.LogStatic("[TEST] ✅ EmitDetectableSound method works");
 
                 // PlayDistractionテスト
                 service.PlayDistraction(Vector3.back, 3f);
-                EventLogger.Log("[TEST] ✅ PlayDistraction method works");
+                EventLogger.LogStatic("[TEST] ✅ PlayDistraction method works");
 
                 // SetAlertLevelMusicテスト
                 service.SetAlertLevelMusic(AlertLevel.Low);
-                EventLogger.Log("[TEST] ✅ SetAlertLevelMusic method works");
+                EventLogger.LogStatic("[TEST] ✅ SetAlertLevelMusic method works");
 
                 // ApplyAudioMaskingテスト
                 service.ApplyAudioMasking(0.4f);
-                EventLogger.Log("[TEST] ✅ ApplyAudioMasking method works");
+                EventLogger.LogStatic("[TEST] ✅ ApplyAudioMasking method works");
 
                 // AdjustStealthAudioテスト
                 service.AdjustStealthAudio(0.6f);
-                EventLogger.Log("[TEST] ✅ AdjustStealthAudio method works");
+                EventLogger.LogStatic("[TEST] ✅ AdjustStealthAudio method works");
 
-                EventLogger.Log("[TEST] 🎉 All NEW StealthAudioService functionality tests passed!");
+                EventLogger.LogStatic("[TEST] 🎉 All NEW StealthAudioService functionality tests passed!");
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogError($"[TEST] ❌ NEW StealthAudioService test failed: {ex.Message}");
+                EventLogger.LogErrorStatic($"[TEST] ❌ NEW StealthAudioService test failed: {ex.Message}");
             }
         }
 
         private void DebugServiceLocatorState()
         {
-            EventLogger.Log("[DEBUG] ServiceLocator debug information:");
+            EventLogger.LogStatic("[DEBUG] ServiceLocator debug information:");
             
             // ServiceLocatorにアクセスして登録済みサービス数を確認
             try
             {
                 // この部分は実際のServiceLocator実装に依存
-                EventLogger.Log("[DEBUG] Checking ServiceLocator registration...");
+                EventLogger.LogStatic("[DEBUG] Checking ServiceLocator registration...");
                 
                 // Feature Flagsの状態を確認
-                EventLogger.Log($"[DEBUG] FeatureFlags.UseServiceLocator: {FeatureFlags.UseServiceLocator}");
-                EventLogger.Log($"[DEBUG] FeatureFlags.MigrateStealthAudioCoordinator: {FeatureFlags.MigrateStealthAudioCoordinator}");
-                EventLogger.Log($"[DEBUG] FeatureFlags.EnableDebugLogging: {FeatureFlags.EnableDebugLogging}");
+                EventLogger.LogStatic($"[DEBUG] FeatureFlags.UseServiceLocator: {FeatureFlags.UseServiceLocator}");
+                EventLogger.LogStatic($"[DEBUG] FeatureFlags.MigrateStealthAudioCoordinator: {FeatureFlags.MigrateStealthAudioCoordinator}");
+                EventLogger.LogStatic($"[DEBUG] FeatureFlags.EnableDebugLogging: {FeatureFlags.EnableDebugLogging}");
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogError($"[DEBUG] ServiceLocator debug failed: {ex.Message}");
+                EventLogger.LogErrorStatic($"[DEBUG] ServiceLocator debug failed: {ex.Message}");
             }
         }
     }

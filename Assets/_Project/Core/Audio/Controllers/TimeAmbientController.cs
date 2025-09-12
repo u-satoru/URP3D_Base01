@@ -74,13 +74,13 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                         if (audioUpdateService is AudioUpdateCoordinator coordinator && coordinator.enabled)
                         {
                             coordinator.OnAudioSystemSync += OnAudioSystemSync;
-                            EventLogger.Log("<color=cyan>[TimeAmbientController]</color> Registered with AudioUpdateCoordinator via ServiceLocator");
+                            EventLogger.LogStatic("<color=cyan>[TimeAmbientController]</color> Registered with AudioUpdateCoordinator via ServiceLocator");
                             return; // 登録成功のため終了
                         }
                     }
                     catch (System.Exception ex)
                     {
-                        EventLogger.LogError($"[TimeAmbientController] Failed to get IAudioUpdateService from ServiceLocator: {ex.Message}");
+                        EventLogger.LogErrorStatic($"[TimeAmbientController] Failed to get IAudioUpdateService from ServiceLocator: {ex.Message}");
                     }
                 }
                 
@@ -89,7 +89,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                 if (fallbackCoordinator != null && fallbackCoordinator.enabled)
                 {
                     fallbackCoordinator.OnAudioSystemSync += OnAudioSystemSync;
-                    EventLogger.Log("<color=cyan>[TimeAmbientController]</color> Registered with AudioUpdateCoordinator via fallback");
+                    EventLogger.LogStatic("<color=cyan>[TimeAmbientController]</color> Registered with AudioUpdateCoordinator via fallback");
                 }
                 else
                 {
@@ -111,7 +111,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             timeSoundLookup = new Dictionary<TimeOfDay, TimeAmbientCollection>();
             activeTimeLayers = new List<TimeAmbientLayer>();
             
-            EventLogger.Log("<color=cyan>[TimeAmbientController]</color> Time ambient controller initialized");
+            EventLogger.LogStatic("<color=cyan>[TimeAmbientController]</color> Time ambient controller initialized");
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                 }
             }
             
-            EventLogger.Log($"<color=cyan>[TimeAmbientController]</color> Built lookup for {timeSoundLookup.Count} time periods");
+            EventLogger.LogStatic($"<color=cyan>[TimeAmbientController]</color> Built lookup for {timeSoundLookup.Count} time periods");
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             
             if (detectedTime != currentTimeOfDay)
             {
-                EventLogger.Log($"<color=cyan>[TimeAmbientController]</color> Automatic time change detected: {currentTimeOfDay} -> {detectedTime}");
+                EventLogger.LogStatic($"<color=cyan>[TimeAmbientController]</color> Automatic time change detected: {currentTimeOfDay} -> {detectedTime}");
                 ChangeTimeOfDay(detectedTime);
             }
             
@@ -326,12 +326,12 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             isTransitioning = true;
             currentTimeOfDay = newTime;
 
-            EventLogger.Log($"<color=cyan>[TimeAmbientController]</color> Starting transition to {newTime}");
+            EventLogger.LogStatic($"<color=cyan>[TimeAmbientController]</color> Starting transition to {newTime}");
 
             // 新しい時間音響を取得
             if (!timeSoundLookup.TryGetValue(newTime, out var timeCollection))
             {
-                EventLogger.LogWarning($"[TimeAmbientController] No sound collection found for time: {newTime}");
+                EventLogger.LogWarningStatic($"[TimeAmbientController] No sound collection found for time: {newTime}");
                 isTransitioning = false;
                 yield break;
             }
@@ -340,7 +340,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             AudioSource availableSource = GetAvailableTimeSource();
             if (availableSource == null)
             {
-                EventLogger.LogWarning("[TimeAmbientController] No available audio sources for time transition");
+                EventLogger.LogWarningStatic("[TimeAmbientController] No available audio sources for time transition");
                 isTransitioning = false;
                 yield break;
             }
@@ -363,7 +363,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             }
 
             isTransitioning = false;
-            EventLogger.Log($"<color=cyan>[TimeAmbientController]</color> Completed transition to {newTime}");
+            EventLogger.LogStatic($"<color=cyan>[TimeAmbientController]</color> Completed transition to {newTime}");
 
             // イベント発火
             if (timeSoundTriggeredEvent != null)
@@ -511,7 +511,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             // 時間変更が検出された場合のみ処理
             if (syncData.timeChanged && syncData.currentTimeOfDay != currentTimeOfDay)
             {
-                EventLogger.Log($"<color=cyan>[TimeAmbientController]</color> Time change detected via coordinator: {currentTimeOfDay} -> {syncData.currentTimeOfDay}");
+                EventLogger.LogStatic($"<color=cyan>[TimeAmbientController]</color> Time change detected via coordinator: {currentTimeOfDay} -> {syncData.currentTimeOfDay}");
                 ChangeTimeOfDay(syncData.currentTimeOfDay);
             }
             

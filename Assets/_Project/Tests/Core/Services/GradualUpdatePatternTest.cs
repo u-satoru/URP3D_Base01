@@ -283,11 +283,11 @@ namespace _Project.Tests.Core.Services
 
             if (allTestsPassed)
             {
-                EventLogger.Log("🎉 [PATTERN TEST] Step 3.6 Gradual Update Patterns are working correctly!");
+                EventLogger.LogStatic("🎉 [PATTERN TEST] Step 3.6 Gradual Update Patterns are working correctly!");
             }
             else
             {
-                EventLogger.LogError("❌ [PATTERN TEST] Some Step 3.6 patterns need attention.");
+                EventLogger.LogErrorStatic("❌ [PATTERN TEST] Some Step 3.6 patterns need attention.");
             }
         }
 
@@ -348,7 +348,7 @@ namespace _Project.Tests.Core.Services
         {
             if (enableDetailedLogs)
             {
-                EventLogger.Log($"[PATTERN_TEST] {message}");
+                EventLogger.LogStatic($"[PATTERN_TEST] {message}");
             }
         }
 

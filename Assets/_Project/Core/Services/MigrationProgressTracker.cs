@@ -715,7 +715,7 @@ namespace asterivo.Unity60.Core.Services
         {
             if (enableDebugLogging)
             {
-                EventLogger.Log($"[MigrationProgressTracker] {message}");
+                EventLogger.LogStatic($"[MigrationProgressTracker] {message}");
             }
         }
 

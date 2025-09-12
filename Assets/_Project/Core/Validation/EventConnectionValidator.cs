@@ -134,19 +134,19 @@ namespace asterivo.Unity60.Core.Validation
         public void AddError(string message)
         {
             errors.Add(message);
-            EventLogger.LogError($"[Validation] {message}");
+            EventLogger.LogErrorStatic($"[Validation] {message}");
         }
         
         public void AddWarning(string message)
         {
             warnings.Add(message);
-            EventLogger.LogWarning($"[Validation] {message}");
+            EventLogger.LogWarningStatic($"[Validation] {message}");
         }
         
         public void AddInfo(string message)
         {
             infos.Add(message);
-            EventLogger.Log($"[Validation] {message}");
+            EventLogger.LogStatic($"[Validation] {message}");
         }
         
         /// <summary>

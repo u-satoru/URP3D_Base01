@@ -53,14 +53,14 @@ namespace asterivo.Unity60.Core.Commands
                 // Legacy Singleton完全無効化フラグの確認
                 if (FeatureFlags.DisableLegacySingletons) 
                 {
-                    EventLogger.LogError("[DEPRECATED] CommandPoolService.Instance is disabled. Use ServiceLocator.GetService<ICommandPoolService>() instead");
+                    EventLogger.LogErrorStatic("[DEPRECATED] CommandPoolService.Instance is disabled. Use ServiceLocator.GetService<ICommandPoolService>() instead");
                     return null;
                 }
                 
                 // 移行警告の表示
                 if (FeatureFlags.EnableMigrationWarnings) 
                 {
-                    EventLogger.LogWarning("[DEPRECATED] CommandPoolService.Instance usage detected. Please migrate to ServiceLocator.GetService<ICommandPoolService>()");
+                    EventLogger.LogWarningStatic("[DEPRECATED] CommandPoolService.Instance usage detected. Please migrate to ServiceLocator.GetService<ICommandPoolService>()");
                     
                     // MigrationMonitorに使用状況を記録
                     if (FeatureFlags.EnableMigrationMonitoring)
@@ -183,7 +183,7 @@ namespace asterivo.Unity60.Core.Commands
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogError($"Failed to register CommandPoolService: {ex.Message}");
+                EventLogger.LogErrorStatic($"Failed to register CommandPoolService: {ex.Message}");
             }
         }
         
@@ -342,7 +342,7 @@ namespace asterivo.Unity60.Core.Commands
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"Failed to unregister CommandPoolService: {ex.Message}");
+                    EventLogger.LogErrorStatic($"Failed to unregister CommandPoolService: {ex.Message}");
                 }
                 
                 Cleanup();

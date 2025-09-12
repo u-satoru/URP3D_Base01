@@ -51,7 +51,7 @@ namespace asterivo.Unity60.Core.Services
                 InvokeRepeating(nameof(PerformHealthAnalysis), healthCheckInterval, healthCheckInterval);
             }
             
-            EventLogger.Log("[AdvancedRollbackMonitor] Advanced monitoring system started");
+            EventLogger.LogStatic("[AdvancedRollbackMonitor] Advanced monitoring system started");
         }
         
         private void OnDestroy()
@@ -68,7 +68,7 @@ namespace asterivo.Unity60.Core.Services
             RegisterServiceMetrics();
             PerformInitialHealthCheck();
             
-            EventLogger.Log("[AdvancedRollbackMonitor] Monitoring system initialized");
+            EventLogger.LogStatic("[AdvancedRollbackMonitor] Monitoring system initialized");
         }
         
         /// <summary>
@@ -129,7 +129,7 @@ namespace asterivo.Unity60.Core.Services
             }
             catch (Exception ex)
             {
-                EventLogger.LogError($"[AdvancedRollbackMonitor] System check failed: {ex.Message}");
+                EventLogger.LogErrorStatic($"[AdvancedRollbackMonitor] System check failed: {ex.Message}");
             }
         }
         
@@ -188,7 +188,7 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void OnHealthLevelChanged(SystemHealthLevel previous, SystemHealthLevel current, int score)
         {
-            EventLogger.Log($"[AdvancedRollbackMonitor] Health level changed: {previous} -> {current} (Score: {score})");
+            EventLogger.LogStatic("[AdvancedRollbackMonitor] Health level changed: {previous} -> {current} (Score: {score})");
             
             switch (current)
             {
@@ -241,7 +241,7 @@ namespace asterivo.Unity60.Core.Services
                 }
                 catch (Exception ex)
                 {
-                    EventLogger.LogError($"[AdvancedRollbackMonitor] Service check failed for {serviceName}: {ex.Message}");
+                    EventLogger.LogErrorStatic("[AdvancedRollbackMonitor] Service check failed for {serviceName}: {ex.Message}");
                 }
             }
         }
@@ -310,7 +310,7 @@ namespace asterivo.Unity60.Core.Services
             }
             catch (Exception ex)
             {
-                EventLogger.LogError($"[AdvancedRollbackMonitor] Performance check failed: {ex.Message}");
+                EventLogger.LogErrorStatic("[AdvancedRollbackMonitor] Performance check failed: {ex.Message}");
             }
         }
         
@@ -335,7 +335,7 @@ namespace asterivo.Unity60.Core.Services
             }
             catch (Exception ex)
             {
-                EventLogger.LogError($"[AdvancedRollbackMonitor] Predictive analysis failed: {ex.Message}");
+                EventLogger.LogErrorStatic("[AdvancedRollbackMonitor] Predictive analysis failed: {ex.Message}");
             }
         }
         
@@ -451,27 +451,27 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void HandleEmergencyCondition(string reason)
         {
-            EventLogger.LogError($"[AdvancedRollbackMonitor] EMERGENCY CONDITION: {reason}");
+            EventLogger.LogErrorStatic($"[AdvancedRollbackMonitor] EMERGENCY CONDITION: {reason}");
             
             if (enableAutoRecovery)
             {
-                EventLogger.LogError("[AdvancedRollbackMonitor] Attempting automatic recovery...");
+                EventLogger.LogErrorStatic("[AdvancedRollbackMonitor] Attempting automatic recovery...");
                 
                 // 段階的な回復を試行
                 if (TryGradualRecovery())
                 {
-                    EventLogger.Log("[AdvancedRollbackMonitor] Gradual recovery succeeded");
+                    EventLogger.LogStatic("[AdvancedRollbackMonitor] Gradual recovery succeeded");
                     consecutiveFailures = 0;
                 }
                 else
                 {
-                    EventLogger.LogError("[AdvancedRollbackMonitor] Gradual recovery failed, executing emergency rollback");
+                    EventLogger.LogErrorStatic("[AdvancedRollbackMonitor] Gradual recovery failed, executing emergency rollback");
                     EmergencyRollback.ExecuteEmergencyRollback($"Auto rollback triggered: {reason}");
                 }
             }
             else
             {
-                EventLogger.LogError("[AdvancedRollbackMonitor] Auto recovery disabled, manual intervention required");
+                EventLogger.LogErrorStatic("[AdvancedRollbackMonitor] Auto recovery disabled, manual intervention required");
                 EmergencyRollback.SetEmergencyFlag($"Emergency condition detected: {reason}");
             }
         }
@@ -483,13 +483,13 @@ namespace asterivo.Unity60.Core.Services
         {
             try
             {
-                EventLogger.Log("[AdvancedRollbackMonitor] Attempting gradual recovery...");
+                EventLogger.LogStatic("[AdvancedRollbackMonitor] Attempting gradual recovery...");
                 
                 // Step 1: 最新のサービス設定を無効化
                 if (FeatureFlags.UseNewStealthService)
                 {
                     FeatureFlags.UseNewStealthService = false;
-                    EventLogger.Log("[AdvancedRollbackMonitor] Disabled StealthService");
+                    EventLogger.LogStatic("[AdvancedRollbackMonitor] Disabled StealthService");
                     if (CheckSystemHealthImprovement()) return true;
                 }
                 
@@ -497,7 +497,7 @@ namespace asterivo.Unity60.Core.Services
                 if (FeatureFlags.UseNewSpatialService)
                 {
                     FeatureFlags.UseNewSpatialService = false;
-                    EventLogger.Log("[AdvancedRollbackMonitor] Disabled SpatialService");
+                    EventLogger.LogStatic("[AdvancedRollbackMonitor] Disabled SpatialService");
                     if (CheckSystemHealthImprovement()) return true;
                 }
                 
@@ -505,7 +505,7 @@ namespace asterivo.Unity60.Core.Services
                 if (FeatureFlags.EnableMigrationMonitoring)
                 {
                     FeatureFlags.EnableMigrationMonitoring = false;
-                    EventLogger.Log("[AdvancedRollbackMonitor] Disabled migration monitoring");
+                    EventLogger.LogStatic("[AdvancedRollbackMonitor] Disabled migration monitoring");
                     if (CheckSystemHealthImprovement()) return true;
                 }
                 
@@ -513,7 +513,7 @@ namespace asterivo.Unity60.Core.Services
             }
             catch (Exception ex)
             {
-                EventLogger.LogError($"[AdvancedRollbackMonitor] Gradual recovery failed: {ex.Message}");
+                EventLogger.LogErrorStatic($"[AdvancedRollbackMonitor] Gradual recovery failed: {ex.Message}");
                 return false;
             }
         }
@@ -548,7 +548,7 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void HandleCriticalHealthLevel(int score)
         {
-            EventLogger.LogError($"[AdvancedRollbackMonitor] CRITICAL HEALTH LEVEL: Score {score}");
+            EventLogger.LogErrorStatic($"[AdvancedRollbackMonitor] CRITICAL HEALTH LEVEL: Score {score}");
             
             if (enableAutoRecovery)
             {
@@ -561,7 +561,7 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void HandleWarningHealthLevel(int score)
         {
-            EventLogger.LogWarning($"[AdvancedRollbackMonitor] WARNING HEALTH LEVEL: Score {score}");
+            EventLogger.LogWarningStatic($"[AdvancedRollbackMonitor] WARNING HEALTH LEVEL: Score {score}");
             
             // 予防的措置の実行
             PerformPreventiveMeasures();
@@ -572,7 +572,7 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void HandleHealthRecovery(SystemHealthLevel previous, SystemHealthLevel current)
         {
-            EventLogger.Log($"[AdvancedRollbackMonitor] System health recovered from {previous} to {current}");
+            EventLogger.LogStatic($"[AdvancedRollbackMonitor] System health recovered from {previous} to {current}");
             
             // 回復後の安定性確認
             InvokeRepeating(nameof(ConfirmHealthStability), 30f, 10f);
@@ -583,7 +583,7 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void PerformPreventiveMeasures()
         {
-            EventLogger.Log("[AdvancedRollbackMonitor] Performing preventive measures...");
+            EventLogger.LogStatic("[AdvancedRollbackMonitor] Performing preventive measures...");
             
             // ガベージコレクションの実行
             System.GC.Collect();
@@ -608,7 +608,7 @@ namespace asterivo.Unity60.Core.Services
             if (currentHealthLevel == SystemHealthLevel.Good || currentHealthLevel == SystemHealthLevel.Excellent)
             {
                 CancelInvoke(nameof(ConfirmHealthStability));
-                EventLogger.Log("[AdvancedRollbackMonitor] Health stability confirmed");
+                EventLogger.LogStatic("[AdvancedRollbackMonitor] Health stability confirmed");
             }
         }
         
@@ -647,7 +647,7 @@ namespace asterivo.Unity60.Core.Services
             if (Math.Abs(longTermTrend) > 5f)
             {
                 string trendDirection = longTermTrend > 0 ? "improving" : "declining";
-                EventLogger.Log($"[AdvancedRollbackMonitor] Long-term health trend: {trendDirection} by {Math.Abs(longTermTrend):F1} points");
+                EventLogger.LogStatic($"[AdvancedRollbackMonitor] Long-term health trend: {trendDirection} by {Math.Abs(longTermTrend):F1} points");
             }
         }
         
@@ -656,13 +656,13 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void GenerateServiceQualityReport()
         {
-            EventLogger.Log("[AdvancedRollbackMonitor] === Service Quality Report ===");
+            EventLogger.LogStatic("[AdvancedRollbackMonitor] === Service Quality Report ===");
             
             foreach (var kvp in serviceMetrics)
             {
                 var metrics = kvp.Value;
                 string status = metrics.IsHealthy ? "✅" : "❌";
-                EventLogger.Log($"  {status} {metrics.ServiceName}: " +
+                EventLogger.LogStatic($"  {status} {metrics.ServiceName}: " +
                                $"Success Rate: {metrics.SuccessRate:F1}%, " +
                                $"Avg Response: {metrics.ResponseTime:F1}ms, " +
                                $"Errors: {metrics.ErrorCount}");
@@ -692,13 +692,13 @@ namespace asterivo.Unity60.Core.Services
             switch (severity)
             {
                 case IssueSeverity.Info:
-                    EventLogger.Log($"[AdvancedRollbackMonitor] {description}");
+                    EventLogger.LogStatic($"[AdvancedRollbackMonitor] {description}");
                     break;
                 case IssueSeverity.Warning:
-                    EventLogger.LogWarning($"[AdvancedRollbackMonitor] {description}");
+                    EventLogger.LogWarningStatic($"[AdvancedRollbackMonitor] {description}");
                     break;
                 case IssueSeverity.Error:
-                    EventLogger.LogError($"[AdvancedRollbackMonitor] {description}");
+                    EventLogger.LogErrorStatic($"[AdvancedRollbackMonitor] {description}");
                     break;
             }
         }
@@ -717,7 +717,7 @@ namespace asterivo.Unity60.Core.Services
             }
             catch (Exception ex)
             {
-                EventLogger.LogError($"[AdvancedRollbackMonitor] Failed to save monitoring data: {ex.Message}");
+                EventLogger.LogErrorStatic($"[AdvancedRollbackMonitor] Failed to save monitoring data: {ex.Message}");
             }
         }
         
@@ -734,7 +734,7 @@ namespace asterivo.Unity60.Core.Services
             }
             catch (Exception ex)
             {
-                EventLogger.LogError($"[AdvancedRollbackMonitor] Failed to load monitoring data: {ex.Message}");
+                EventLogger.LogErrorStatic($"[AdvancedRollbackMonitor] Failed to load monitoring data: {ex.Message}");
             }
         }
         
@@ -746,7 +746,7 @@ namespace asterivo.Unity60.Core.Services
             var healthStatus = EmergencyRollback.CheckSystemHealth();
             UpdateHealthHistory(healthStatus);
             
-            EventLogger.Log($"[AdvancedRollbackMonitor] Initial health check: {healthStatus.HealthScore}% ({currentHealthLevel})");
+            EventLogger.LogStatic($"[AdvancedRollbackMonitor] Initial health check: {healthStatus.HealthScore}% ({currentHealthLevel})");
         }
         
         /// <summary>
@@ -755,18 +755,18 @@ namespace asterivo.Unity60.Core.Services
         [ContextMenu("Generate Monitoring Report")]
         public void GenerateMonitoringReport()
         {
-            EventLogger.Log("[AdvancedRollbackMonitor] === Monitoring Status Report ===");
-            EventLogger.Log($"  Current Health Level: {currentHealthLevel} (Score: {lastHealthScore:F1})");
-            EventLogger.Log($"  Consecutive Failures: {consecutiveFailures}");
-            EventLogger.Log($"  Continuous Monitoring: {enableContinuousMonitoring}");
-            EventLogger.Log($"  Predictive Analysis: {enablePredictiveAnalysis}");
-            EventLogger.Log($"  Auto Recovery: {enableAutoRecovery}");
-            EventLogger.Log($"  Health History: {healthHistory.Count} entries");
-            EventLogger.Log($"  Recent Issues: {recentIssues.Count} issues");
+            EventLogger.LogStatic("[AdvancedRollbackMonitor] === Monitoring Status Report ===");
+            EventLogger.LogStatic($"  Current Health Level: {currentHealthLevel} (Score: {lastHealthScore:F1})");
+            EventLogger.LogStatic($"  Consecutive Failures: {consecutiveFailures}");
+            EventLogger.LogStatic($"  Continuous Monitoring: {enableContinuousMonitoring}");
+            EventLogger.LogStatic($"  Predictive Analysis: {enablePredictiveAnalysis}");
+            EventLogger.LogStatic($"  Auto Recovery: {enableAutoRecovery}");
+            EventLogger.LogStatic($"  Health History: {healthHistory.Count} entries");
+            EventLogger.LogStatic($"  Recent Issues: {recentIssues.Count} issues");
             
             if (!string.IsNullOrEmpty(lastIssueDetected))
             {
-                EventLogger.Log($"  Last Issue: {lastIssueDetected}");
+                EventLogger.LogStatic($"  Last Issue: {lastIssueDetected}");
             }
         }
         
@@ -787,7 +787,7 @@ namespace asterivo.Unity60.Core.Services
             RegisterServiceMetrics();
             PerformInitialHealthCheck();
             
-            EventLogger.Log("[AdvancedRollbackMonitor] Monitoring system reset");
+            EventLogger.LogStatic("[AdvancedRollbackMonitor] Monitoring system reset");
         }
     }
     

@@ -178,14 +178,14 @@ namespace asterivo.Unity60.Player
                         
                         if (FeatureFlags.EnableDebugLogging)
                         {
-                            EventLogger.Log("[PlayerController] Using ServiceLocator for audio services");
+                            EventLogger.LogStatic("[PlayerController] Using ServiceLocator for audio services");
                         }
                         return; // 正常に取得できたので終了
                     }
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogWarning($"[PlayerController] ServiceLocator audio service failed: {ex.Message}");
+                    EventLogger.LogWarningStatic($"[PlayerController] ServiceLocator audio service failed: {ex.Message}");
                 }
             }
             
@@ -214,12 +214,12 @@ namespace asterivo.Unity60.Player
                     
                     if (FeatureFlags.EnableMigrationWarnings)
                     {
-                        EventLogger.LogWarning("[PlayerController] Using legacy Singleton access");
+                        EventLogger.LogWarningStatic("[PlayerController] Using legacy Singleton access");
                     }
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[PlayerController] Legacy audio service fallback failed: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[PlayerController] Legacy audio service fallback failed: {ex.Message}");
                 }
             }
             
@@ -227,12 +227,12 @@ namespace asterivo.Unity60.Player
             if (audioService == null)
             {
                 audioServiceStatus = "Failed: No Audio Service";
-                EventLogger.LogError("[PlayerController] Failed to get IAudioService");
+                EventLogger.LogErrorStatic("[PlayerController] Failed to get IAudioService");
             }
             
             if (enableStealthAudio && stealthAudioService == null)
             {
-                EventLogger.LogWarning("[PlayerController] Failed to get IStealthAudioService");
+                EventLogger.LogWarningStatic("[PlayerController] Failed to get IStealthAudioService");
             }
         }
         

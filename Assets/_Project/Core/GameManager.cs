@@ -159,9 +159,9 @@ namespace asterivo.Unity60.Core
             
             return isValid;
         }
-        private void LogError(string message) { if (enableDebugLog) EventLogger.LogError($"[GameManager] {message}"); }
-        private void LogWarning(string message) { if (enableDebugLog) EventLogger.LogWarning($"[GameManager] {message}"); }
-        private void Log(string message) { if (enableDebugLog) EventLogger.Log($"[GameManager] {message}"); }
+        private void LogError(string message) { if (enableDebugLog) EventLogger.LogErrorStatic($"[GameManager] {message}"); }
+        private void LogWarning(string message) { if (enableDebugLog) EventLogger.LogWarningStatic($"[GameManager] {message}"); }
+        private void Log(string message) { if (enableDebugLog) EventLogger.LogStatic($"[GameManager] {message}"); }
         #endregion
 
         private void InitializeGameManager()

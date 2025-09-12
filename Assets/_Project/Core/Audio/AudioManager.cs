@@ -33,14 +33,14 @@ namespace asterivo.Unity60.Core.Audio
                 // Legacy Singleton完全無効化フラグの確認
                 if (FeatureFlags.DisableLegacySingletons) 
                 {
-                    EventLogger.LogError("[DEPRECATED] AudioManager.Instance is disabled. Use ServiceLocator.GetService<IAudioService>() instead");
+                    EventLogger.LogErrorStatic("[DEPRECATED] AudioManager.Instance is disabled. Use ServiceLocator.GetService<IAudioService>() instead");
                     return null;
                 }
                 
                 // 移行警告の表示
                 if (FeatureFlags.EnableMigrationWarnings) 
                 {
-                    EventLogger.LogWarning("[DEPRECATED] AudioManager.Instance usage detected. Please migrate to ServiceLocator.GetService<IAudioService>()");
+                    EventLogger.LogWarningStatic("[DEPRECATED] AudioManager.Instance usage detected. Please migrate to ServiceLocator.GetService<IAudioService>()");
                     
                     // MigrationMonitorに使用状況を記録 (LogSingletonUsage method)
                     if (FeatureFlags.EnableMigrationMonitoring)
@@ -121,12 +121,12 @@ namespace asterivo.Unity60.Core.Audio
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.Log("[AudioManager] Registered to ServiceLocator as IAudioService");
+                    EventLogger.LogStatic("[AudioManager] Registered to ServiceLocator as IAudioService");
                 }
             }
             else
             {
-                EventLogger.LogWarning("[AudioManager] ServiceLocator is disabled - service not registered");
+                EventLogger.LogWarningStatic("[AudioManager] ServiceLocator is disabled - service not registered");
             }
         }
 
@@ -150,7 +150,7 @@ namespace asterivo.Unity60.Core.Audio
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.Log("[AudioManager] Unregistered from ServiceLocator");
+                    EventLogger.LogStatic("[AudioManager] Unregistered from ServiceLocator");
                 }
             }
         }
@@ -200,7 +200,7 @@ namespace asterivo.Unity60.Core.Audio
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.Log("<color=cyan>[AudioManager]</color> Audio system initialized successfully");
+                EventLogger.LogStatic("<color=cyan>[AudioManager]</color> Audio system initialized successfully");
             }
         }
 
@@ -213,19 +213,19 @@ namespace asterivo.Unity60.Core.Audio
 
             if (spatialAudioService == null)
             {
-                EventLogger.LogError("[AudioManager] SpatialAudioService is required but not available!");
+                EventLogger.LogErrorStatic("[AudioManager] SpatialAudioService is required but not available!");
                 hasErrors = true;
             }
 
             if (stealthCoordinator == null)
             {
-                EventLogger.LogWarning("[AudioManager] StealthAudioCoordinator not found, creating default instance");
+                EventLogger.LogWarningStatic("[AudioManager] StealthAudioCoordinator not found, creating default instance");
                 stealthCoordinator = gameObject.AddComponent<StealthAudioCoordinator>();
             }
 
             if (hasErrors)
             {
-                EventLogger.LogError("[AudioManager] Critical components missing! Audio system may not function properly.");
+                EventLogger.LogErrorStatic("[AudioManager] Critical components missing! Audio system may not function properly.");
             }
         }
 
@@ -258,12 +258,12 @@ namespace asterivo.Unity60.Core.Audio
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.Log("<color=cyan>[AudioManager]</color> Created AudioUpdateCoordinator for optimized updates");
+                    EventLogger.LogStatic("<color=cyan>[AudioManager]</color> Created AudioUpdateCoordinator for optimized updates");
                 }
             }
             else if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.Log("<color=cyan>[AudioManager]</color> Found existing AudioUpdateCoordinator");
+                EventLogger.LogStatic("<color=cyan>[AudioManager]</color> Found existing AudioUpdateCoordinator");
             }
         }
 
@@ -302,7 +302,7 @@ namespace asterivo.Unity60.Core.Audio
                 UpdateAudioForEnvironmentalState(env, weather, time, tensionLevel);
             }
 
-            EventLogger.Log($"<color=cyan>[AudioManager]</color> Updated audio for game state: {state}, Tension: {tensionLevel:F2}, Stealth Mode: {isStealthModeActive}");
+            EventLogger.LogStatic($"<color=cyan>[AudioManager]</color> Updated audio for game state: {state}, Tension: {tensionLevel:F2}, Stealth Mode: {isStealthModeActive}");
         }
 
         /// <summary>
@@ -487,7 +487,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (!isInitialized)
             {
-                EventLogger.LogWarning("[AudioManager] System not initialized");
+                EventLogger.LogWarningStatic("[AudioManager] System not initialized");
                 return;
             }
             
@@ -573,7 +573,7 @@ namespace asterivo.Unity60.Core.Audio
                     SetStealthAudioVolume(volume);
                     break;
                 default:
-                    EventLogger.LogWarning($"[AudioManager] Unknown category: {category}");
+                    EventLogger.LogWarningStatic($"[AudioManager] Unknown category: {category}");
                     break;
             }
         }

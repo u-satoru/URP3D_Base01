@@ -12,6 +12,7 @@ using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core.Audio.Services;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Commands;
+using asterivo.Unity60.Core.Debug;
 
 namespace asterivo.Unity60.Tests.Core.Services
 {
@@ -28,6 +29,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         private List<ISpatialAudioService> spatialServices;
         private List<IEffectService> effectServices;
         private List<ICommandPoolService> commandPoolServices;
+        private List<IEventLogger> eventLoggers;
         
         [SetUp]
         public void SetUp()
@@ -41,11 +43,22 @@ namespace asterivo.Unity60.Tests.Core.Services
             spatialServices = new List<ISpatialAudioService>();
             effectServices = new List<IEffectService>();
             commandPoolServices = new List<ICommandPoolService>();
+            eventLoggers = new List<IEventLogger>();
         }
         
         [TearDown]
         public void TearDown()
         {
+            // EventLoggers cleanup
+            foreach (var logger in eventLoggers)
+            {
+                if (logger is EventLogger el && el != null && el.gameObject != null)
+                {
+                    UnityEngine.Object.DestroyImmediate(el.gameObject);
+                }
+            }
+            eventLoggers.Clear();
+            
             ServiceLocator.Clear();
             FeatureFlags.ResetToDefaults();
             if (testGameObject != null)
@@ -722,6 +735,102 @@ namespace asterivo.Unity60.Tests.Core.Services
             
             service.ReturnCommand(command);
             Assert.Pass("All methods should be accessible via interface");
+        }
+        
+        #endregion
+        
+        #region EventLogger Migration Tests
+        
+        [Test]
+        public void Migration_EventLogger_ServiceLocatorIntegration()
+        {
+            // EventLogger migration setup
+            FeatureFlags.UseServiceLocator = true;
+            FeatureFlags.EnableMigrationMonitoring = true;
+            
+            var eventLogger = testGameObject.AddComponent<EventLogger>();
+            eventLoggers.Add(eventLogger);
+            
+            // Test ServiceLocator registration
+            ServiceLocator.RegisterService<IEventLogger>(eventLogger);
+            
+            var retrievedService = ServiceLocator.GetService<IEventLogger>();
+            Assert.IsNotNull(retrievedService, "EventLogger should be accessible via ServiceLocator");
+            Assert.AreEqual(eventLogger, retrievedService, "Retrieved service should be the same instance");
+            
+            // Test interface functionality
+            retrievedService.Log("Migration test message");
+            retrievedService.LogEvent("TestEvent", 2, "test payload");
+            retrievedService.LogWarning("Test warning");
+            retrievedService.LogError("Test error");
+            
+            Assert.IsTrue(retrievedService.IsEnabled, "EventLogger should be enabled");
+            Assert.IsNotNull(retrievedService.EventLog, "EventLog should be accessible");
+            
+            Assert.DoesNotThrow(() => retrievedService.GetStatistics(), "Service status logging should work");
+            
+            // Test MigrationMonitor integration
+            migrationMonitor.LogServiceLocatorUsage(typeof(IEventLogger), "eventlogger_test");
+            
+            var serviceStats = migrationMonitor.GetServiceLocatorUsageStats();
+            Assert.Greater(serviceStats.Count, 0, "Should record ServiceLocator usage");
+        }
+        
+        [Test]
+        public void Migration_EventLogger_StaticMethodCompatibility()
+        {
+            // Test static method backward compatibility
+            FeatureFlags.UseServiceLocator = true;
+            var eventLogger = testGameObject.AddComponent<EventLogger>();
+            eventLoggers.Add(eventLogger);
+            ServiceLocator.RegisterService<IEventLogger>(eventLogger);
+            
+            // Test that static methods still work
+            Assert.DoesNotThrow(() => EventLogger.LogStatic("Static compatibility test"));
+            Assert.DoesNotThrow(() => EventLogger.LogWarningStatic("Static warning test"));
+            Assert.DoesNotThrow(() => EventLogger.LogErrorStatic("Static error test"));
+            Assert.DoesNotThrow(() => EventLogger.LogEventStatic("StaticEvent", 1, "payload"));
+            Assert.DoesNotThrow(() => EventLogger.LogEventWithPayloadStatic("TypedEvent", 1, 42));
+            
+            // Test static properties
+            Assert.IsTrue(EventLogger.IsEnabledStatic, "Static IsEnabled should work");
+            Assert.IsNotNull(EventLogger.EventLogStatic, "Static EventLog should work");
+            
+            // Test utility methods
+            var stats = EventLogger.GetStatisticsStatic();
+            Assert.IsNotNull(stats, "GetStatistics should work");
+            
+            var filteredLogs = EventLogger.GetFilteredLogStatic("test");
+            Assert.IsNotNull(filteredLogs, "GetFilteredLog should work");
+            
+            Assert.DoesNotThrow(() => EventLogger.ClearLogStatic(), "ClearLog should work");
+        }
+        
+        [Test]
+        public void Migration_EventLogger_AllInterfaceMethodsAccessible()
+        {
+            // Test all IEventLogger interface methods
+            var eventLogger = testGameObject.AddComponent<EventLogger>();
+            eventLoggers.Add(eventLogger);
+            ServiceLocator.RegisterService<IEventLogger>(eventLogger);
+            
+            var service = ServiceLocator.GetService<IEventLogger>();
+            
+            // Test all interface methods
+            Assert.DoesNotThrow(() => service.Log("Interface test"));
+            Assert.DoesNotThrow(() => service.LogWarning("Interface warning"));
+            Assert.DoesNotThrow(() => service.LogError("Interface error"));
+            Assert.DoesNotThrow(() => service.LogEvent("InterfaceEvent", 3, "payload"));
+            Assert.DoesNotThrow(() => service.LogEventWithPayload("TypedEvent", 2, new { value = 123 }));
+            Assert.DoesNotThrow(() => service.LogWarning("EventName", 1, "warning"));
+            Assert.DoesNotThrow(() => service.LogError("EventName", 1, "error"));
+            Assert.DoesNotThrow(() => service.ClearLog());
+            
+            // Test properties and utility methods
+            Assert.IsTrue(service.IsEnabled, "IsEnabled should be accessible");
+            Assert.IsNotNull(service.EventLog, "EventLog should be accessible");
+            Assert.IsNotNull(service.GetFilteredLog(), "GetFilteredLog should be accessible");
+            Assert.IsNotNull(service.GetStatistics(), "GetStatistics should be accessible");
         }
         
         #endregion

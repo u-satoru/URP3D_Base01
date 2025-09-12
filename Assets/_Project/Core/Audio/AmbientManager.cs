@@ -173,14 +173,14 @@ namespace asterivo.Unity60.Core.Audio
                     {
                         if (asterivo.Unity60.Core.FeatureFlags.EnableDebugLogging)
                         {
-                            EventLogger.Log("[AmbientManager] Successfully retrieved SpatialAudioManager from ServiceLocator");
+                            EventLogger.LogStatic("[AmbientManager] Successfully retrieved SpatialAudioManager from ServiceLocator");
                         }
                         return manager;
                     }
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[AmbientManager] Failed to get SpatialAudioManager from ServiceLocator: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[AmbientManager] Failed to get SpatialAudioManager from ServiceLocator: {ex.Message}");
                 }
             }
             
@@ -190,13 +190,13 @@ namespace asterivo.Unity60.Core.Audio
             {
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.Log("[AmbientManager] Found SpatialAudioManager via FindFirstObjectByType");
+                    EventLogger.LogStatic("[AmbientManager] Found SpatialAudioManager via FindFirstObjectByType");
                 }
                 return spatialAudioManager;
             }
             else
             {
-                EventLogger.LogError("[AmbientManager] No SpatialAudioManager available and legacy singletons are disabled");
+                EventLogger.LogErrorStatic("[AmbientManager] No SpatialAudioManager available and legacy singletons are disabled");
             }
             
             return null;
@@ -278,7 +278,7 @@ namespace asterivo.Unity60.Core.Audio
                 UpdateTimeBasedAmbient();
             }
 
-            EventLogger.Log($"<color=green>[AmbientManager]</color> Environment updated - Env: {environment}, Weather: {weather}, Time: {timeOfDay}");
+            EventLogger.LogStatic($"<color=green>[AmbientManager]</color> Environment updated - Env: {environment}, Weather: {weather}, Time: {timeOfDay}");
         }
 
         /// <summary>

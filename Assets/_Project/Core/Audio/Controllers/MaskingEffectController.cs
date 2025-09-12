@@ -86,7 +86,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             trackingAudioSources = new List<MaskingAudioSource>();
             maskingStrengthCache = new Dictionary<AudioSource, float>();
             
-            EventLogger.Log("<color=cyan>[MaskingEffectController]</color> Masking effect controller initialized");
+            EventLogger.LogStatic("<color=cyan>[MaskingEffectController]</color> Masking effect controller initialized");
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             
             if (playerTransform == null)
             {
-                EventLogger.LogWarning("[MaskingEffectController] Player transform not found! Masking effects may not work properly.");
+                EventLogger.LogWarningStatic("[MaskingEffectController] Player transform not found! Masking effects may not work properly.");
             }
         }
 
@@ -120,7 +120,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         public void SetGlobalMaskingStrength(float strength)
         {
             globalMaskingStrength = Mathf.Clamp01(strength);
-            EventLogger.Log($"<color=cyan>[MaskingEffectController]</color> Global masking strength set to {globalMaskingStrength:F2}");
+            EventLogger.LogStatic($"<color=cyan>[MaskingEffectController]</color> Global masking strength set to {globalMaskingStrength:F2}");
         }
 
         /// <summary>
@@ -247,13 +247,13 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                     {
                         // 協調更新システムに登録（イベント駆動）
                         coordinator.OnAudioSystemSync += OnAudioSystemSync;
-                        EventLogger.Log("<color=cyan>[MaskingEffectController]</color> Registered with AudioUpdateCoordinator via ServiceLocator");
+                        EventLogger.LogStatic("<color=cyan>[MaskingEffectController]</color> Registered with AudioUpdateCoordinator via ServiceLocator");
                         return;
                     }
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[MaskingEffectController] Failed to get IAudioUpdateService from ServiceLocator: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[MaskingEffectController] Failed to get IAudioUpdateService from ServiceLocator: {ex.Message}");
                 }
             }
             
@@ -262,7 +262,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             if (fallbackCoordinator != null && fallbackCoordinator.enabled)
             {
                 fallbackCoordinator.OnAudioSystemSync += OnAudioSystemSync;
-                EventLogger.Log("<color=cyan>[MaskingEffectController]</color> Registered with AudioUpdateCoordinator via fallback");
+                EventLogger.LogStatic("<color=cyan>[MaskingEffectController]</color> Registered with AudioUpdateCoordinator via fallback");
                 return;
             }
             
@@ -291,7 +291,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[MaskingEffectController] Failed to unregister from IAudioUpdateService: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[MaskingEffectController] Failed to unregister from IAudioUpdateService: {ex.Message}");
                 }
             }
             
@@ -432,7 +432,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         /// </summary>
         private IEnumerator ManualMaskingCoroutine(Vector3 position, float duration, float strength)
         {
-            EventLogger.Log($"<color=cyan>[MaskingEffectController]</color> Manual masking triggered at {position} for {duration}s");
+            EventLogger.LogStatic($"<color=cyan>[MaskingEffectController]</color> Manual masking triggered at {position} for {duration}s");
 
             float elapsed = 0f;
             bool wasActive = isMaskingActive;

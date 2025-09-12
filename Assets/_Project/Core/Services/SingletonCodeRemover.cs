@@ -28,7 +28,7 @@ namespace asterivo.Unity60.Core.Services
                 // 安全のため、Day 5完了後のみ自動クリーンアップを実行
                 if (CheckDay5Completion())
                 {
-                    EventLogger.Log("[SingletonCodeRemover] Day 5 completed, executing auto cleanup");
+                    EventLogger.LogStatic("[SingletonCodeRemover] Day 5 completed, executing auto cleanup");
                     ExecuteCleanup();
                 }
             }
@@ -58,15 +58,15 @@ namespace asterivo.Unity60.Core.Services
         {
             if (cleanupCompleted)
             {
-                EventLogger.LogWarning("[SingletonCodeRemover] Cleanup already completed");
+                EventLogger.LogWarningStatic("[SingletonCodeRemover] Cleanup already completed");
                 return;
             }
             
             if (requireConfirmation)
             {
-                EventLogger.LogWarning("[SingletonCodeRemover] Manual confirmation required for singleton code removal");
-                EventLogger.LogWarning("[SingletonCodeRemover] This action cannot be undone!");
-                EventLogger.LogWarning("[SingletonCodeRemover] Call ExecuteCleanupConfirmed() to proceed");
+                EventLogger.LogWarningStatic("[SingletonCodeRemover] Manual confirmation required for singleton code removal");
+                EventLogger.LogWarningStatic("[SingletonCodeRemover] This action cannot be undone!");
+                EventLogger.LogWarningStatic("[SingletonCodeRemover] Call ExecuteCleanupConfirmed() to proceed");
                 return;
             }
             
@@ -79,7 +79,7 @@ namespace asterivo.Unity60.Core.Services
         [ContextMenu("Execute Cleanup (Confirmed)")]
         public void ExecuteCleanupConfirmed()
         {
-            EventLogger.Log("[SingletonCodeRemover] === Starting Singleton Code Removal ===");
+            EventLogger.LogStatic("[SingletonCodeRemover] === Starting Singleton Code Removal ===");
             
             if (createBackup)
             {
@@ -106,8 +106,8 @@ namespace asterivo.Unity60.Core.Services
             lastCleanupTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             SaveCleanupState();
             
-            EventLogger.Log("[SingletonCodeRemover] === Singleton Code Removal Completed ===");
-            EventLogger.Log($"[SingletonCodeRemover] Cleanup completed at: {lastCleanupTime}");
+            EventLogger.LogStatic("[SingletonCodeRemover] === Singleton Code Removal Completed ===");
+            EventLogger.LogStatic($"[SingletonCodeRemover] Cleanup completed at: {lastCleanupTime}");
         }
         
         /// <summary>
@@ -115,7 +115,7 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void CleanupAudioManager()
         {
-            EventLogger.Log("[SingletonCodeRemover] Cleaning AudioManager singleton code...");
+            EventLogger.LogStatic("[SingletonCodeRemover] Cleaning AudioManager singleton code...");
             
             // 実際の削除はマニュアル作業として記録
             RecordCleanupAction("AudioManager", new string[]
@@ -133,7 +133,7 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void CleanupSpatialAudioManager()
         {
-            EventLogger.Log("[SingletonCodeRemover] Cleaning SpatialAudioManager singleton code...");
+            EventLogger.LogStatic("[SingletonCodeRemover] Cleaning SpatialAudioManager singleton code...");
             
             RecordCleanupAction("SpatialAudioManager", new string[]
             {
@@ -150,7 +150,7 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void CleanupEffectManager()
         {
-            EventLogger.Log("[SingletonCodeRemover] Cleaning EffectManager singleton code...");
+            EventLogger.LogStatic("[SingletonCodeRemover] Cleaning EffectManager singleton code...");
             
             RecordCleanupAction("EffectManager", new string[]
             {
@@ -167,7 +167,7 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void CleanupOtherManagers()
         {
-            EventLogger.Log("[SingletonCodeRemover] Checking other managers for singleton patterns...");
+            EventLogger.LogStatic("[SingletonCodeRemover] Checking other managers for singleton patterns...");
             
             // 追加のManagerクラスがある場合の処理
             string[] otherManagers = {
@@ -179,7 +179,7 @@ namespace asterivo.Unity60.Core.Services
             
             foreach (var managerName in otherManagers)
             {
-                EventLogger.Log($"[SingletonCodeRemover] Scanning {managerName} for singleton patterns");
+                EventLogger.LogStatic($"[SingletonCodeRemover] Scanning {managerName} for singleton patterns");
                 // 実際のスキャンとクリーンアップは手動作業
             }
         }
@@ -189,10 +189,10 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void RecordCleanupAction(string className, string[] actions)
         {
-            EventLogger.Log($"[SingletonCodeRemover] {className} cleanup actions:");
+            EventLogger.LogStatic($"[SingletonCodeRemover] {className} cleanup actions:");
             foreach (var action in actions)
             {
-                EventLogger.Log($"[SingletonCodeRemover]   {action}");
+                EventLogger.LogStatic($"[SingletonCodeRemover]   {action}");
             }
             
             // PlayerPrefsに記録
@@ -205,7 +205,7 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void CreateBackupRecord()
         {
-            EventLogger.Log("[SingletonCodeRemover] Creating backup record...");
+            EventLogger.LogStatic("[SingletonCodeRemover] Creating backup record...");
             
             string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmm");
             string backupInfo = $"Singleton code backup created at {timestamp}";
@@ -213,8 +213,8 @@ namespace asterivo.Unity60.Core.Services
             PlayerPrefs.SetString("CleanupBackup_Timestamp", timestamp);
             PlayerPrefs.SetString("CleanupBackup_Info", backupInfo);
             
-            EventLogger.Log($"[SingletonCodeRemover] {backupInfo}");
-            EventLogger.LogWarning("[SingletonCodeRemover] Manual backup recommended before proceeding");
+            EventLogger.LogStatic($"[SingletonCodeRemover] {backupInfo}");
+            EventLogger.LogWarningStatic("[SingletonCodeRemover] Manual backup recommended before proceeding");
         }
         
         /// <summary>
@@ -222,14 +222,14 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void ValidateCleanup()
         {
-            EventLogger.Log("[SingletonCodeRemover] Validating cleanup results...");
+            EventLogger.LogStatic("[SingletonCodeRemover] Validating cleanup results...");
             
             // MigrationValidatorを使用して最終検証
             var validator = FindFirstObjectByType<MigrationValidator>();
             if (validator != null)
             {
                 validator.ValidateMigration();
-                EventLogger.Log("[SingletonCodeRemover] Migration validation completed");
+                EventLogger.LogStatic("[SingletonCodeRemover] Migration validation completed");
             }
             
             // FeatureFlagsの最終状態確認
@@ -237,18 +237,18 @@ namespace asterivo.Unity60.Core.Services
             
             // EmergencyRollbackシステムの健全性チェック
             var healthStatus = EmergencyRollback.CheckSystemHealth();
-            EventLogger.Log($"[SingletonCodeRemover] System health after cleanup: {healthStatus.HealthScore}%");
+            EventLogger.LogStatic($"[SingletonCodeRemover] System health after cleanup: {healthStatus.HealthScore}%");
             
             if (healthStatus.IsHealthy)
             {
-                EventLogger.Log("[SingletonCodeRemover] ✅ System validation passed");
+                EventLogger.LogStatic("[SingletonCodeRemover] ✅ System validation passed");
             }
             else
             {
-                EventLogger.LogWarning("[SingletonCodeRemover] ⚠️ System validation issues detected");
+                EventLogger.LogWarningStatic("[SingletonCodeRemover] ⚠️ System validation issues detected");
                 foreach (var issue in healthStatus.Issues)
                 {
-                    EventLogger.LogWarning($"[SingletonCodeRemover] Issue: {issue}");
+                    EventLogger.LogWarningStatic($"[SingletonCodeRemover] Issue: {issue}");
                 }
             }
         }
@@ -258,13 +258,13 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void ValidateFeatureFlagsState()
         {
-            EventLogger.Log("[SingletonCodeRemover] Final FeatureFlags state:");
-            EventLogger.Log($"  - UseServiceLocator: {FeatureFlags.UseServiceLocator}");
-            EventLogger.Log($"  - DisableLegacySingletons: {FeatureFlags.DisableLegacySingletons}");
-            EventLogger.Log($"  - EnableMigrationWarnings: {FeatureFlags.EnableMigrationWarnings}");
-            EventLogger.Log($"  - UseNewAudioService: {FeatureFlags.UseNewAudioService}");
-            EventLogger.Log($"  - UseNewSpatialService: {FeatureFlags.UseNewSpatialService}");
-            EventLogger.Log($"  - UseNewStealthService: {FeatureFlags.UseNewStealthService}");
+            EventLogger.LogStatic("[SingletonCodeRemover] Final FeatureFlags state:");
+            EventLogger.LogStatic($"  - UseServiceLocator: {FeatureFlags.UseServiceLocator}");
+            EventLogger.LogStatic($"  - DisableLegacySingletons: {FeatureFlags.DisableLegacySingletons}");
+            EventLogger.LogStatic($"  - EnableMigrationWarnings: {FeatureFlags.EnableMigrationWarnings}");
+            EventLogger.LogStatic($"  - UseNewAudioService: {FeatureFlags.UseNewAudioService}");
+            EventLogger.LogStatic($"  - UseNewSpatialService: {FeatureFlags.UseNewSpatialService}");
+            EventLogger.LogStatic($"  - UseNewStealthService: {FeatureFlags.UseNewStealthService}");
             
             // 期待される最終状態
             bool expectedState = 
@@ -277,11 +277,11 @@ namespace asterivo.Unity60.Core.Services
                 
             if (expectedState)
             {
-                EventLogger.Log("[SingletonCodeRemover] ✅ FeatureFlags in expected final state");
+                EventLogger.LogStatic("[SingletonCodeRemover] ✅ FeatureFlags in expected final state");
             }
             else
             {
-                EventLogger.LogWarning("[SingletonCodeRemover] ⚠️ FeatureFlags not in expected final state");
+                EventLogger.LogWarningStatic("[SingletonCodeRemover] ⚠️ FeatureFlags not in expected final state");
             }
         }
         
@@ -314,7 +314,7 @@ namespace asterivo.Unity60.Core.Services
             lastCleanupTime = "";
             SaveCleanupState();
             
-            EventLogger.Log("[SingletonCodeRemover] Cleanup state reset");
+            EventLogger.LogStatic("[SingletonCodeRemover] Cleanup state reset");
         }
         
         /// <summary>
@@ -323,22 +323,22 @@ namespace asterivo.Unity60.Core.Services
         [ContextMenu("Generate Cleanup Report")]
         public void GenerateCleanupReport()
         {
-            EventLogger.Log("[SingletonCodeRemover] === Cleanup Status Report ===");
-            EventLogger.Log($"  Cleanup Completed: {cleanupCompleted}");
-            EventLogger.Log($"  Last Cleanup Time: {(string.IsNullOrEmpty(lastCleanupTime) ? "Never" : lastCleanupTime)}");
-            EventLogger.Log($"  Auto Cleanup Enabled: {enableAutoCleanup}");
-            EventLogger.Log($"  Require Confirmation: {requireConfirmation}");
-            EventLogger.Log($"  Create Backup: {createBackup}");
+            EventLogger.LogStatic("[SingletonCodeRemover] === Cleanup Status Report ===");
+            EventLogger.LogStatic($"  Cleanup Completed: {cleanupCompleted}");
+            EventLogger.LogStatic($"  Last Cleanup Time: {(string.IsNullOrEmpty(lastCleanupTime) ? "Never" : lastCleanupTime)}");
+            EventLogger.LogStatic($"  Auto Cleanup Enabled: {enableAutoCleanup}");
+            EventLogger.LogStatic($"  Require Confirmation: {requireConfirmation}");
+            EventLogger.LogStatic($"  Create Backup: {createBackup}");
             
             if (cleanupCompleted)
             {
-                EventLogger.Log("  📋 Manual Actions Required:");
-                EventLogger.Log("    1. Remove 'private static instance' fields from Manager classes");
-                EventLogger.Log("    2. Remove 'public static Instance' properties from Manager classes");
-                EventLogger.Log("    3. Remove instance assignments in Awake() methods");
-                EventLogger.Log("    4. Keep ServiceLocator registrations intact");
-                EventLogger.Log("    5. Verify all interface implementations remain functional");
-                EventLogger.Log("    6. Run final compilation and testing");
+                EventLogger.LogStatic("  📋 Manual Actions Required:");
+                EventLogger.LogStatic("    1. Remove 'private static instance' fields from Manager classes");
+                EventLogger.LogStatic("    2. Remove 'public static Instance' properties from Manager classes");
+                EventLogger.LogStatic("    3. Remove instance assignments in Awake() methods");
+                EventLogger.LogStatic("    4. Keep ServiceLocator registrations intact");
+                EventLogger.LogStatic("    5. Verify all interface implementations remain functional");
+                EventLogger.LogStatic("    6. Run final compilation and testing");
             }
         }
         
@@ -348,32 +348,32 @@ namespace asterivo.Unity60.Core.Services
         [ContextMenu("Show Manual Cleanup Guide")]
         public void ShowManualCleanupGuide()
         {
-            EventLogger.Log("[SingletonCodeRemover] === Manual Cleanup Guide ===");
-            EventLogger.Log("Step-by-step singleton removal process:");
-            EventLogger.Log("");
-            EventLogger.Log("1. AudioManager.cs:");
-            EventLogger.Log("   ❌ Delete: private static AudioManager instance;");
-            EventLogger.Log("   ❌ Delete: public static AudioManager Instance { get; }");
-            EventLogger.Log("   ❌ Delete: instance = this; (in Awake)");
-            EventLogger.Log("   ✅ Keep: ServiceLocator.RegisterService<IAudioService>(this);");
-            EventLogger.Log("");
-            EventLogger.Log("2. SpatialAudioManager.cs:");
-            EventLogger.Log("   ❌ Delete: private static SpatialAudioManager instance;");
-            EventLogger.Log("   ❌ Delete: public static SpatialAudioManager Instance { get; }");
-            EventLogger.Log("   ❌ Delete: instance = this; (in Awake)");
-            EventLogger.Log("   ✅ Keep: ServiceLocator.RegisterService<ISpatialAudioService>(this);");
-            EventLogger.Log("");
-            EventLogger.Log("3. EffectManager.cs:");
-            EventLogger.Log("   ❌ Delete: private static EffectManager instance;");
-            EventLogger.Log("   ❌ Delete: public static EffectManager Instance { get; }");
-            EventLogger.Log("   ❌ Delete: instance = this; (in Awake)");
-            EventLogger.Log("   ✅ Keep: ServiceLocator.RegisterService<IEffectService>(this);");
-            EventLogger.Log("");
-            EventLogger.Log("4. After cleanup:");
-            EventLogger.Log("   - Run Unity compilation");
-            EventLogger.Log("   - Execute MigrationValidator");
-            EventLogger.Log("   - Run all tests");
-            EventLogger.Log("   - Mark cleanup as completed");
+            EventLogger.LogStatic("[SingletonCodeRemover] === Manual Cleanup Guide ===");
+            EventLogger.LogStatic("Step-by-step singleton removal process:");
+            EventLogger.LogStatic("");
+            EventLogger.LogStatic("1. AudioManager.cs:");
+            EventLogger.LogStatic("   ❌ Delete: private static AudioManager instance;");
+            EventLogger.LogStatic("   ❌ Delete: public static AudioManager Instance { get; }");
+            EventLogger.LogStatic("   ❌ Delete: instance = this; (in Awake)");
+            EventLogger.LogStatic("   ✅ Keep: ServiceLocator.RegisterService<IAudioService>(this);");
+            EventLogger.LogStatic("");
+            EventLogger.LogStatic("2. SpatialAudioManager.cs:");
+            EventLogger.LogStatic("   ❌ Delete: private static SpatialAudioManager instance;");
+            EventLogger.LogStatic("   ❌ Delete: public static SpatialAudioManager Instance { get; }");
+            EventLogger.LogStatic("   ❌ Delete: instance = this; (in Awake)");
+            EventLogger.LogStatic("   ✅ Keep: ServiceLocator.RegisterService<ISpatialAudioService>(this);");
+            EventLogger.LogStatic("");
+            EventLogger.LogStatic("3. EffectManager.cs:");
+            EventLogger.LogStatic("   ❌ Delete: private static EffectManager instance;");
+            EventLogger.LogStatic("   ❌ Delete: public static EffectManager Instance { get; }");
+            EventLogger.LogStatic("   ❌ Delete: instance = this; (in Awake)");
+            EventLogger.LogStatic("   ✅ Keep: ServiceLocator.RegisterService<IEffectService>(this);");
+            EventLogger.LogStatic("");
+            EventLogger.LogStatic("4. After cleanup:");
+            EventLogger.LogStatic("   - Run Unity compilation");
+            EventLogger.LogStatic("   - Execute MigrationValidator");
+            EventLogger.LogStatic("   - Run all tests");
+            EventLogger.LogStatic("   - Mark cleanup as completed");
         }
     }
 }

@@ -46,9 +46,9 @@ namespace asterivo.Unity60.Core.Events
             
             // イベントログに記録
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            if (EventLogger.IsEnabled)
+            if (EventLogger.IsEnabledStatic)
             {
-                EventLogger.LogEvent(name, listeners.Count);
+                EventLogger.LogEventStatic(name, listeners.Count);
             }
             #endif
             

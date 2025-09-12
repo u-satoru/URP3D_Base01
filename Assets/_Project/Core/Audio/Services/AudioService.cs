@@ -78,7 +78,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.Log("[AudioService] Registered to ServiceLocator");
+                    EventLogger.LogStatic("[AudioService] Registered to ServiceLocator");
                 }
             }
         }
@@ -118,7 +118,7 @@ namespace asterivo.Unity60.Core.Audio.Services
 
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.Log("[AudioService] Initialization complete");
+                EventLogger.LogStatic("[AudioService] Initialization complete");
             }
         }
 
@@ -130,7 +130,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             if (!IsInitialized)
             {
-                EventLogger.LogWarning("[AudioService] System not initialized");
+                EventLogger.LogWarningStatic("[AudioService] System not initialized");
                 return;
             }
 
@@ -221,7 +221,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                     break;
                     
                 default:
-                    EventLogger.LogWarning($"[AudioService] Unknown category: {category}");
+                    EventLogger.LogWarningStatic($"[AudioService] Unknown category: {category}");
                     break;
             }
             
@@ -276,7 +276,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.Log("[AudioService] Audio paused");
+                EventLogger.LogStatic("[AudioService] Audio paused");
             }
         }
 
@@ -304,7 +304,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.Log("[AudioService] Audio resumed");
+                EventLogger.LogStatic("[AudioService] Audio resumed");
             }
         }
 
@@ -315,13 +315,13 @@ namespace asterivo.Unity60.Core.Audio.Services
         private void ValidateComponents()
         {
             if (bgmManager == null)
-                EventLogger.LogWarning("[AudioService] BGMManager is not assigned");
+                EventLogger.LogWarningStatic("[AudioService] BGMManager is not assigned");
             
             if (ambientManager == null)
-                EventLogger.LogWarning("[AudioService] AmbientManager is not assigned");
+                EventLogger.LogWarningStatic("[AudioService] AmbientManager is not assigned");
             
             if (effectManager == null)
-                EventLogger.LogWarning("[AudioService] EffectManager is not assigned");
+                EventLogger.LogWarningStatic("[AudioService] EffectManager is not assigned");
         }
 
         private void InitializeSubsystems()
@@ -377,7 +377,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.Log($"[AudioService] Playing BGM: {bgmName} -> {category}, fadeTime: {fadeTime}");
+                    EventLogger.LogStatic($"[AudioService] Playing BGM: {bgmName} -> {category}, fadeTime: {fadeTime}");
                 }
             }
         }

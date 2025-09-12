@@ -29,16 +29,16 @@ namespace asterivo.Unity60.Core.Audio
                     audioService = ServiceLocator.GetService<IAudioService>();
                     if (audioService != null && FeatureFlags.EnableDebugLogging)
                     {
-                        EventLogger.Log("[AudioManagerAdapter] Successfully retrieved AudioService from ServiceLocator");
+                        EventLogger.LogStatic("[AudioManagerAdapter] Successfully retrieved AudioService from ServiceLocator");
                     }
                     else if (audioService == null && FeatureFlags.EnableDebugLogging)
                     {
-                        EventLogger.LogWarning("[AudioManagerAdapter] AudioService not found in ServiceLocator");
+                        EventLogger.LogWarningStatic("[AudioManagerAdapter] AudioService not found in ServiceLocator");
                     }
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[AudioManagerAdapter] Failed to get AudioService from ServiceLocator: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[AudioManagerAdapter] Failed to get AudioService from ServiceLocator: {ex.Message}");
                 }
             }
         }
@@ -62,7 +62,7 @@ namespace asterivo.Unity60.Core.Audio
                 }
                 else
                 {
-                    EventLogger.LogError("[AudioManagerAdapter] IEffectService not found in ServiceLocator");
+                    EventLogger.LogErrorStatic("[AudioManagerAdapter] IEffectService not found in ServiceLocator");
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace asterivo.Unity60.Core.Audio
             }
             else
             {
-                EventLogger.LogError("[AudioManagerAdapter] No audio service available and legacy singletons are disabled");
+                EventLogger.LogErrorStatic("[AudioManagerAdapter] No audio service available and legacy singletons are disabled");
             }
         }
         
@@ -97,7 +97,7 @@ namespace asterivo.Unity60.Core.Audio
                 }
                 else
                 {
-                    EventLogger.LogError("[AudioManagerAdapter] BGMManager not found");
+                    EventLogger.LogErrorStatic("[AudioManagerAdapter] BGMManager not found");
                 }
             }
         }
@@ -119,7 +119,7 @@ namespace asterivo.Unity60.Core.Audio
                 }
                 else
                 {
-                    EventLogger.LogError("[AudioManagerAdapter] BGMManager not found");
+                    EventLogger.LogErrorStatic("[AudioManagerAdapter] BGMManager not found");
                 }
             }
         }
@@ -134,7 +134,7 @@ namespace asterivo.Unity60.Core.Audio
             // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.Log("[AudioManagerAdapter] Adapter destroyed");
+                EventLogger.LogStatic("[AudioManagerAdapter] Adapter destroyed");
             }
         }
     }

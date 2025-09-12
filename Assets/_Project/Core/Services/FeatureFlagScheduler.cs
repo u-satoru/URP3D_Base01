@@ -379,7 +379,7 @@ namespace asterivo.Unity60.Core.Services
         {
             if (enableDebugLogging)
             {
-                EventLogger.Log($"[FeatureFlagScheduler] {message}");
+                EventLogger.LogStatic($"[FeatureFlagScheduler] {message}");
             }
         }
         

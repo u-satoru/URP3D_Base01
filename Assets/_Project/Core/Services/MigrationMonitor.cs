@@ -33,7 +33,7 @@ namespace asterivo.Unity60.Core.Services
                 InvokeRepeating(nameof(GenerateUsageReport), reportingInterval, reportingInterval);
             }
             
-            EventLogger.Log("[MigrationMonitor] Started monitoring singleton usage");
+            EventLogger.LogStatic("[MigrationMonitor] Started monitoring singleton usage");
         }
         
         private void OnDestroy()
@@ -93,11 +93,11 @@ namespace asterivo.Unity60.Core.Services
             {
                 if (FeatureFlags.EnableMigrationWarnings)
                 {
-                    EventLogger.LogWarning($"[MigrationMonitor] Singleton access detected: {singletonType.Name}.{accessMethod} (Total: {info.AccessCount})");
+                    EventLogger.LogWarningStatic($"[MigrationMonitor] Singleton access detected: {singletonType.Name}.{accessMethod} (Total: {info.AccessCount})");
                 }
                 else
                 {
-                    EventLogger.Log($"[MigrationMonitor] Singleton access: {singletonType.Name}.{accessMethod}");
+                    EventLogger.LogStatic($"[MigrationMonitor] Singleton access: {singletonType.Name}.{accessMethod}");
                 }
             }
         }
@@ -110,21 +110,21 @@ namespace asterivo.Unity60.Core.Services
         {
             if (usageStats.Count == 0)
             {
-                EventLogger.Log("[MigrationMonitor] No singleton usage detected");
+                EventLogger.LogStatic("[MigrationMonitor] No singleton usage detected");
                 return;
             }
             
-            EventLogger.Log("[MigrationMonitor] === Singleton Usage Report ===");
-            EventLogger.Log($"  Total Accesses: {totalSingletonAccesses}");
-            EventLogger.Log($"  Unique Classes: {uniqueSingletonClasses}");
-            EventLogger.Log($"  Monitoring Period: {Time.time:F1} seconds");
+            EventLogger.LogStatic("[MigrationMonitor] === Singleton Usage Report ===");
+            EventLogger.LogStatic($"  Total Accesses: {totalSingletonAccesses}");
+            EventLogger.LogStatic($"  Unique Classes: {uniqueSingletonClasses}");
+            EventLogger.LogStatic($"  Monitoring Period: {Time.time:F1} seconds");
             
-            EventLogger.Log("  Usage Details:");
+            EventLogger.LogStatic("  Usage Details:");
             foreach (var kvp in usageStats)
             {
                 var info = kvp.Value;
                 var duration = info.LastAccessTime - info.FirstAccessTime;
-                EventLogger.Log($"    - {info.SingletonType.Name}: {info.AccessCount} accesses " +
+                EventLogger.LogStatic($"    - {info.SingletonType.Name}: {info.AccessCount} accesses " +
                                $"(First: {info.FirstAccessTime:HH:mm:ss}, Last: {info.LastAccessTime:HH:mm:ss}, " +
                                $"Duration: {duration.TotalSeconds:F1}s)");
             }
@@ -138,17 +138,17 @@ namespace asterivo.Unity60.Core.Services
         {
             if (recentEvents.Count == 0)
             {
-                EventLogger.Log("[MigrationMonitor] No recent singleton events");
+                EventLogger.LogStatic("[MigrationMonitor] No recent singleton events");
                 return;
             }
             
-            EventLogger.Log("[MigrationMonitor] === Recent Singleton Events ===");
+            EventLogger.LogStatic("[MigrationMonitor] === Recent Singleton Events ===");
             int displayCount = Mathf.Min(recentEvents.Count, 10); // 最新10件を表示
             
             for (int i = recentEvents.Count - displayCount; i < recentEvents.Count; i++)
             {
                 var evt = recentEvents[i];
-                EventLogger.Log($"  [{evt.Timestamp:HH:mm:ss}] {evt.SingletonType}.{evt.AccessMethod}");
+                EventLogger.LogStatic($"  [{evt.Timestamp:HH:mm:ss}] {evt.SingletonType}.{evt.AccessMethod}");
             }
         }
         
@@ -171,11 +171,11 @@ namespace asterivo.Unity60.Core.Services
                 }
                 
                 PlayerPrefs.Save();
-                EventLogger.Log("[MigrationMonitor] Usage statistics saved");
+                EventLogger.LogStatic("[MigrationMonitor] Usage statistics saved");
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogError($"[MigrationMonitor] Failed to save statistics: {ex.Message}");
+                EventLogger.LogErrorStatic($"[MigrationMonitor] Failed to save statistics: {ex.Message}");
             }
         }
         
@@ -190,12 +190,12 @@ namespace asterivo.Unity60.Core.Services
                 uniqueSingletonClasses = PlayerPrefs.GetInt("MigrationMonitor_UniqueClasses", 0);
                 string lastReportTime = PlayerPrefs.GetString("MigrationMonitor_LastReportTime", "Never");
                 
-                EventLogger.Log($"[MigrationMonitor] Loaded statistics - Total: {totalSingletonAccesses}, " +
+                EventLogger.LogStatic($"[MigrationMonitor] Loaded statistics - Total: {totalSingletonAccesses}, " +
                                $"Unique: {uniqueSingletonClasses}, Last Report: {lastReportTime}");
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogError($"[MigrationMonitor] Failed to load statistics: {ex.Message}");
+                EventLogger.LogErrorStatic($"[MigrationMonitor] Failed to load statistics: {ex.Message}");
             }
         }
         
@@ -215,7 +215,7 @@ namespace asterivo.Unity60.Core.Services
             PlayerPrefs.DeleteKey("MigrationMonitor_UniqueClasses");
             PlayerPrefs.DeleteKey("MigrationMonitor_LastReportTime");
             
-            EventLogger.Log("[MigrationMonitor] Statistics reset");
+            EventLogger.LogStatic("[MigrationMonitor] Statistics reset");
         }
         
         /// <summary>
@@ -224,11 +224,11 @@ namespace asterivo.Unity60.Core.Services
         [ContextMenu("Generate Migration Recommendations")]
         public void GenerateMigrationRecommendations()
         {
-            EventLogger.Log("[MigrationMonitor] === Migration Recommendations ===");
+            EventLogger.LogStatic("[MigrationMonitor] === Migration Recommendations ===");
             
             if (usageStats.Count == 0)
             {
-                EventLogger.Log("  ✅ No singleton usage detected - migration appears complete!");
+                EventLogger.LogStatic("  ✅ No singleton usage detected - migration appears complete!");
                 return;
             }
             
@@ -236,7 +236,7 @@ namespace asterivo.Unity60.Core.Services
             {
                 var info = kvp.Value;
                 string recommendation = GetMigrationRecommendation(info);
-                EventLogger.Log($"  📋 {info.SingletonType.Name}: {recommendation}");
+                EventLogger.LogStatic($"  📋 {info.SingletonType.Name}: {recommendation}");
             }
         }
         

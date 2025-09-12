@@ -109,7 +109,7 @@ namespace asterivo.Unity60.Features.UI.Scripts
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogError($"[AudioStealthSettingsUI] ServiceLocator initialization failed: {ex.Message}");
+                EventLogger.LogErrorStatic($"[AudioStealthSettingsUI] ServiceLocator initialization failed: {ex.Message}");
                 InitializeWithLegacyFallback();
             }
         }
@@ -145,17 +145,17 @@ namespace asterivo.Unity60.Features.UI.Scripts
 
                     if (FeatureFlags.EnableMigrationMonitoring)
                     {
-                        EventLogger.LogWarning("[AudioStealthSettingsUI] Falling back to legacy AudioManager.Instance");
+                        EventLogger.LogWarningStatic("[AudioStealthSettingsUI] Falling back to legacy AudioManager.Instance");
                     }
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[AudioStealthSettingsUI] Legacy fallback failed: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[AudioStealthSettingsUI] Legacy fallback failed: {ex.Message}");
                 }
             }
             else
             {
-                EventLogger.LogError("[AudioStealthSettingsUI] No audio service available and legacy singletons are disabled");
+                EventLogger.LogErrorStatic("[AudioStealthSettingsUI] No audio service available and legacy singletons are disabled");
             }
         }
 
@@ -248,7 +248,7 @@ namespace asterivo.Unity60.Features.UI.Scripts
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogError($"[AudioStealthSettingsUI] Failed to update UI: {ex.Message}");
+                EventLogger.LogErrorStatic($"[AudioStealthSettingsUI] Failed to update UI: {ex.Message}");
             }
         }
 
@@ -270,12 +270,12 @@ namespace asterivo.Unity60.Features.UI.Scripts
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[AudioStealthSettingsUI] Failed to set master volume: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[AudioStealthSettingsUI] Failed to set master volume: {ex.Message}");
                 }
             }
             else
             {
-                EventLogger.LogError("[AudioStealthSettingsUI] No audio service available");
+                EventLogger.LogErrorStatic("[AudioStealthSettingsUI] No audio service available");
             }
         }
 
@@ -293,7 +293,7 @@ namespace asterivo.Unity60.Features.UI.Scripts
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[AudioStealthSettingsUI] Failed to set BGM volume: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[AudioStealthSettingsUI] Failed to set BGM volume: {ex.Message}");
                 }
             }
         }
@@ -312,7 +312,7 @@ namespace asterivo.Unity60.Features.UI.Scripts
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[AudioStealthSettingsUI] Failed to set effect volume: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[AudioStealthSettingsUI] Failed to set effect volume: {ex.Message}");
                 }
             }
         }
@@ -331,7 +331,7 @@ namespace asterivo.Unity60.Features.UI.Scripts
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[AudioStealthSettingsUI] Failed to set ambient volume: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[AudioStealthSettingsUI] Failed to set ambient volume: {ex.Message}");
                 }
             }
         }
@@ -354,7 +354,7 @@ namespace asterivo.Unity60.Features.UI.Scripts
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[AudioStealthSettingsUI] Failed to set stealth sensitivity: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[AudioStealthSettingsUI] Failed to set stealth sensitivity: {ex.Message}");
                 }
             }
         }
@@ -373,7 +373,7 @@ namespace asterivo.Unity60.Features.UI.Scripts
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[AudioStealthSettingsUI] Failed to set environment noise: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[AudioStealthSettingsUI] Failed to set environment noise: {ex.Message}");
                 }
             }
         }
@@ -393,7 +393,7 @@ namespace asterivo.Unity60.Features.UI.Scripts
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[AudioStealthSettingsUI] Failed to set audio masking: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[AudioStealthSettingsUI] Failed to set audio masking: {ex.Message}");
                 }
             }
         }
@@ -413,7 +413,7 @@ namespace asterivo.Unity60.Features.UI.Scripts
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[AudioStealthSettingsUI] Failed to play test distraction: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[AudioStealthSettingsUI] Failed to play test distraction: {ex.Message}");
                 }
             }
         }
@@ -459,7 +459,7 @@ namespace asterivo.Unity60.Features.UI.Scripts
         {
             if (!isServiceAvailable)
             {
-                EventLogger.LogError("[AudioStealthSettingsUI] Services not available for testing");
+                EventLogger.LogErrorStatic("[AudioStealthSettingsUI] Services not available for testing");
                 return;
             }
 
@@ -487,7 +487,7 @@ namespace asterivo.Unity60.Features.UI.Scripts
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogError($"[AudioStealthSettingsUI] ❌ Audio function test failed: {ex.Message}");
+                EventLogger.LogErrorStatic($"[AudioStealthSettingsUI] ❌ Audio function test failed: {ex.Message}");
             }
         }
 
@@ -510,7 +510,7 @@ namespace asterivo.Unity60.Features.UI.Scripts
         {
             if (enableDebugLogs && FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.Log(message);
+                EventLogger.LogStatic(message);
             }
         }
 
