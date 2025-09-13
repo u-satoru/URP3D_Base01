@@ -109,8 +109,9 @@ InitTestScene*.unity*
 Thumbs.db
 Desktop.ini.claude/settings.local.json
 
-# .meta
-# Assets/_Project/Docs/**/*.meta
+# .meta files exclusion for documentation directory
+# Documentation .meta files are not critical for version control
+Assets/_Project/Docs/**/*.meta
 
 # Claude
 .claude/settings.local.json
