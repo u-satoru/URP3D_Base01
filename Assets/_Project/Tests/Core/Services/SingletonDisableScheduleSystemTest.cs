@@ -2,10 +2,10 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
-using _Project.Core;
-using _Project.Core.Services;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Services;
 
-namespace _Project.Tests.Core.Services
+namespace asterivo.Unity60.Tests.Core.Services
 {
     /// <summary>
     /// Step 3.10: 段階的Singleton無効化スケジュール システムの包括的テスト

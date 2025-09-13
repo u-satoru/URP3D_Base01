@@ -1,6 +1,6 @@
 {
     "name": "asterivo.Unity60.AI",
-    "rootNamespace": "asterivo.Unity60.AI",
+    "rootNamespace": "asterivo.Unity60.Features.AI",
     "references": [
         "asterivo.Unity60.Core",
         "asterivo.Unity60.Stealth"

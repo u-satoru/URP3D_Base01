@@ -17,11 +17,11 @@ namespace asterivo.Unity60.Core.Commands
         {
             if (command == null) return;
             
-            // 新しいCommandPoolServiceを使用
-            var poolService = CommandPoolService.Instance;
+            // ServiceLocator経由でCommandPoolServiceを使用
+            var poolService = ServiceLocator.GetService<ICommandPoolService>();
             if (poolService != null)
             {
-                poolService.PoolManager.ReturnCommand(command);
+                poolService.ReturnCommand(command);
             }
             else
             {

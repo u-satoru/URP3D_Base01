@@ -1,6 +1,7 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Audio.Data;
+using asterivo.Unity60.Core.Debug;
 using Debug = UnityEngine.Debug;
 
 namespace asterivo.Unity60.Core.Audio.Commands
@@ -50,7 +51,7 @@ namespace asterivo.Unity60.Core.Audio.Commands
             
             if (usePooling)
             {
-                var poolService = CommandPoolService.Instance;
+                var poolService = ServiceLocator.GetService<ICommandPoolService>();
                 if (poolService != null)
                 {
                     command = poolService.GetCommand<PlaySoundCommand>();
@@ -59,7 +60,7 @@ namespace asterivo.Unity60.Core.Audio.Commands
                 {
                     // フォールバック：直接作成
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                    UnityEngine.Debug.LogWarning("CommandPoolService not available, creating PlaySoundCommand directly");
+                    ProjectDebug.LogWarning("CommandPoolService not available, creating PlaySoundCommand directly");
 #endif
                     command = new PlaySoundCommand();
                 }

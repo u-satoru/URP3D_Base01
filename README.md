@@ -14,6 +14,7 @@
 ## 主な機能
 
 - **イベント駆動型アーキテクチャ**: `GameEvent` を介したコンポーネント間の疎結合な連携。
+- **ServiceLocator + Event駆動システム統合**: グローバルサービスへのアクセスとイベントベースの通信を組み合わせたハイブリッドアプローチ。
 - **コマンドパターン**: ゲーム内のアクション（例：ダメージ、回復）をオブジェクトとしてカプセル化し、再利用と管理を容易にします。
 - **ObjectPool最適化**: 頻繁に作成・破棄されるコマンドオブジェクトをプール化し、メモリ効率とパフォーマンスを大幅に向上させます（95%のメモリ削減効果）。
 - **Scriptable Objectベースのデータ管理**: キャラクターのステータスやアイテム情報などをアセットとして管理。
@@ -45,6 +46,24 @@
     *   キャラクターの状態（待機、歩行、攻撃中など）を個別のクラスとして管理するために使用が推奨されています。（`StatePattern_Migration_Guide.md`より）
 
 これらのパターンを組み合わせることで、関心事の分離が促進され、拡張性、再利用性、メンテナンス性の高い構造を目指しています。
+
+## アーキテクチャガイドライン
+
+プロジェクトのアーキテクチャ準拠性を維持するため、以下のガイドラインに従って開発を行ってください：
+
+📋 **[Architecture Guidelines](Assets/_Project/Docs/Architecture_Guidelines.md)** - 完全なガイドライン文書
+
+### 重要な規約
+- **Namespace**: `asterivo.Unity60.*` 形式を使用、`_Project.*` は禁止
+- **Directory**: Core/Features/Tests/Docs の適切な分離
+- **Performance**: `GameObject.Find()` の代わりにSerializeFieldやServiceLocatorを使用
+- **Dependencies**: Core層からFeatures層への参照禁止
+
+### 開発ツール
+Unity Editor から `Tools > Architecture > Compliance Checker` でアーキテクチャ準拠性をチェックできます。
+
+### コードレビュー
+新規実装時は [Architecture Guidelines - コードレビューチェックリスト](Assets/_Project/Docs/Architecture_Guidelines.md#-コードレビューチェックリスト) を参照してください。
 
 ## 技術仕様
 

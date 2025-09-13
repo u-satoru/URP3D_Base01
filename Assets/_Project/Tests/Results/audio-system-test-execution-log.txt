@@ -1,0 +1,677 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-11T04:51:55.7382096Z"
+[Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 9184, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
+[Licensing::Module] Error: LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.17.1+ae67fbc
+  Session Id:              1c09ab110c754621b4c82608b4851bc1
+  Correlation Id:          9d626b99011badcd674c95a4b369505f
+  External correlation Id: 6269558352246367464
+  Machine Id:              6v8irZboPhn9pIeIA+kbS+sqP0M=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.01s, handshake: 0.07s)
+[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-11T04:51:55.8193241Z"
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully updated license
+Built from '6000.0/staging' branch; Version is '6000.0.42f1 (feb9a7235030) revision 16693671'; Using compiler version '193933523'; Build Type 'Release'
+OS: 'Windows 11  (10.0.26100) 64bit Professional' Language: 'ja' Physical Memory: 65279 MB
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Serial number assigned to: "4398760-UnityPersXXXX"
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+[Licensing::Client] Successfully resolved entitlement details
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Unity.exe
+-projectPath
+D:\UnityProjects\URP3D_Base01
+-batchmode
+-runTests
+-testResults
+D:\UnityProjects\URP3D_Base01\Assets\_Project\Tests\Results\audio-system-test-results.xml
+-logFile
+D:\UnityProjects\URP3D_Base01\Assets\_Project\Tests\Results\audio-system-test-execution-log.txt
+-quit
+Successfully changed project path to: D:\UnityProjects\URP3D_Base01
+D:/UnityProjects/URP3D_Base01
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [63352]  Target information:
+
+Player connection [63352]  * "[IP] 172.24.192.1 [Port] 55504 [Flags] 2 [Guid] 3910420698 [EditorId] 3910420698 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [63352]  * "[IP] 172.31.96.1 [Port] 55504 [Flags] 2 [Guid] 3910420698 [EditorId] 3910420698 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [63352]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 3910420698 [EditorId] 3910420698 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [63352] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [63352] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Package Manager] Connected to IPC stream "Upm-52248" after 0.4 seconds.
+Library Redirect Path: Library/
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 62 packages:
+  Packages from [https://packages.unity.com]:
+    com.unity.ai.navigation@2.0.9 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.ai.navigation@5218e4bf7edc)
+    com.unity.cinemachine@3.1.4 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.cinemachine@b66fdb7cd1f2)
+    com.unity.collab-proxy@2.9.3 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.collab-proxy@ab839cc7d2ad)
+    com.unity.ide.rider@3.0.37 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.ide.rider@0baf0f91edc0)
+    com.unity.ide.visualstudio@2.0.23 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.ide.visualstudio@198cdf337d13)
+    com.unity.inputsystem@1.13.1 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.inputsystem@e2c83221d2dc)
+    com.unity.test-framework@1.4.6 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.test-framework@5ac417e07314)
+    com.unity.timeline@1.8.9 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.timeline@6b9e48457ddb)
+    com.unity.visualscripting@1.9.8 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.visualscripting@b4d700247d4b)
+    com.unity.ext.nunit@2.0.5 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.ext.nunit@60ef35ffd3cd)
+    com.unity.splines@2.7.2 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.splines@d3e1e500c9a0)
+    com.unity.nuget.newtonsoft-json@3.2.1 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.nuget.newtonsoft-json@74deb55db2a0)
+    com.unity.searcher@4.9.3 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.searcher@1e17ce91558d)
+    com.unity.burst@1.8.19 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.burst@7a907cf5a459)
+    com.unity.mathematics@1.3.2 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.mathematics@8017b507cc74)
+    com.unity.collections@2.5.1 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.collections@56bff8827a7e)
+    com.unity.settings-manager@2.0.1 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.settings-manager@56a930affa1e)
+    com.unity.nuget.mono-cecil@1.11.4 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.nuget.mono-cecil@d6f9955a5d5f)
+    com.unity.test-framework.performance@3.0.3 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.test-framework.performance@fb0dc592af8b)
+  Built-in packages:
+    com.unity.multiplayer.center@1.0.0 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.multiplayer.center@f3fb577b3546)
+    com.unity.render-pipelines.universal@17.0.4 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.render-pipelines.universal@087c6d6dbb7d)
+    com.unity.ugui@2.0.0 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.ugui@9496653a3df6)
+    com.unity.modules.accessibility@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.accessibility)
+    com.unity.modules.ai@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.ai)
+    com.unity.modules.androidjni@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.androidjni)
+    com.unity.modules.animation@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.animation)
+    com.unity.modules.assetbundle@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.assetbundle)
+    com.unity.modules.audio@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.audio)
+    com.unity.modules.cloth@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.cloth)
+    com.unity.modules.director@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.director)
+    com.unity.modules.imageconversion@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.imageconversion)
+    com.unity.modules.imgui@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.imgui)
+    com.unity.modules.jsonserialize@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.jsonserialize)
+    com.unity.modules.particlesystem@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.particlesystem)
+    com.unity.modules.physics@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.physics)
+    com.unity.modules.physics2d@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.physics2d)
+    com.unity.modules.screencapture@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.screencapture)
+    com.unity.modules.terrain@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.terrain)
+    com.unity.modules.terrainphysics@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.terrainphysics)
+    com.unity.modules.tilemap@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.tilemap)
+    com.unity.modules.ui@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.ui)
+    com.unity.modules.uielements@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.uielements)
+    com.unity.modules.umbra@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.umbra)
+    com.unity.modules.unityanalytics@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unityanalytics)
+    com.unity.modules.unitywebrequest@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequest)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequestassetbundle)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequestaudio)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequesttexture)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequestwww)
+    com.unity.modules.vehicles@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.vehicles)
+    com.unity.modules.video@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.video)
+    com.unity.modules.vr@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.vr)
+    com.unity.modules.wind@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.wind)
+    com.unity.modules.xr@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.xr)
+    com.unity.modules.subsystems@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.subsystems)
+    com.unity.modules.hierarchycore@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.hierarchycore)
+    com.unity.render-pipelines.core@17.0.4 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.render-pipelines.core@1c27dfa04d8a)
+    com.unity.shadergraph@17.0.4 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.shadergraph@608f316e1f48)
+    com.unity.render-pipelines.universal-config@17.0.3 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.render-pipelines.universal-config@fa63c96d3e1a)
+    com.unity.rendering.light-transport@1.0.1 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.rendering.light-transport@307bc27a498f)
+  Git packages:
+    com.coplaydev.unity-mcp@https://github.com/CoplayDev/unity-mcp.git?path=/UnityMcpBridge (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.coplaydev.unity-mcp@2fa419eae991)
+    com.cysharp.unitask@https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.cysharp.unitask@0dda4ba29591)
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+[Subsystems] No new subsystems found in resolved package list.
+Package Manager log level set to [2]
+[Package Manager] Done registering packages in 0.27 seconds
+Artifact Garbage Collection - Removed 1 unused hashed content filesRefreshing native plugins compatible for Editor in 3.57 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 6000.0.42f1 (feb9a7235030)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/UnityProjects/URP3D_Base01/Assets
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 4060 Laptop GPU (ID=0x28a0)
+    Vendor:   NVIDIA
+    VRAM:     7957 MB
+    Driver:   32.0.15.7283
+[Licensing::Client] Successfully resolved entitlement details
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56248
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+[Licensing::Client] Successfully resolved entitlement details
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+[Licensing::Client] Successfully resolved entitlement details
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
+Registered in 0.044632 seconds.
+- Loaded All Assemblies, in  0.635 seconds
+[usbmuxd] Start listen thread
+[usbmuxd] Listen thread started
+[usbmuxd] Send listen message
+Native extension for iOS target not found
+Native extension for Android target not found
+Android Extension - Scanning For ADB Devices 1250 ms
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.753 seconds
+Domain Reload Profiling: 2382ms
+	BeginReloadAssembly (192ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (52ms)
+	RebuildNativeTypeToScriptingClass (18ms)
+	initialDomainReloadingComplete (116ms)
+	LoadAllAssembliesAndSetupDomain (250ms)
+		LoadAssemblies (186ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (245ms)
+			TypeCache.Refresh (243ms)
+				TypeCache.ScanAssembly (221ms)
+			BuildScriptInfoCaches (0ms)
+			ResolveRequiredComponents (1ms)
+	FinalizeReload (1754ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (1703ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (1388ms)
+			SetLoadedEditorAssemblies (7ms)
+			BeforeProcessingInitializeOnLoad (76ms)
+			ProcessInitializeOnLoadAttributes (135ms)
+			ProcessInitializeOnLoadMethodAttributes (97ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+'Assets/_Project/Tests/Results/audio-system-test-execution-log.txt' Amount of processed bytes '20320' does not match file size '18818'
+Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
+Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
+Assembly for Assembly Definition File 'Assets/_Project/Core/Services_DELETED/asterivo.Unity60.Core.Services.asmdef' will not be compiled, because it has no scripts associated with it.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:LogFormat (UnityEngine.LogType,string,object[])
+UnityEngine.Debug:LogWarningFormat (string,object[])
+UnityEditor.Scripting.ScriptCompilation.EditorCompilation:WarnIfThereAreAssembliesWithoutAnyScripts (UnityEditor.Scripting.ScriptCompilation.ScriptAssemblySettings,UnityEditor.Scripting.ScriptCompilation.ScriptAssembly[])
+UnityEditor.Scripting.ScriptCompilation.EditorCompilation:CompileScriptsWithSettings (UnityEditor.Scripting.ScriptCompilation.ScriptAssemblySettings)
+UnityEditor.Scripting.ScriptCompilation.EditorCompilation:CompileScripts (UnityEditor.Scripting.ScriptCompilation.EditorScriptCompilationOptions,UnityEditor.BuildTarget,int,string[])
+UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface/<>c__DisplayClass21_0:<CompileScripts>b__0 ()
+UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface:EmitExceptionAsError<UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus> (System.Func`1<UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus>,UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus)
+UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface:CompileScripts (UnityEditor.Scripting.ScriptCompilation.EditorScriptCompilationOptions,UnityEditor.BuildTarget,int,string[])
+
+Assembly for Assembly Definition File 'Assets/_Project/Core/Optimization/asterivo.Unity60.Optimization.asmdef' will not be compiled, because it has no scripts associated with it.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:LogFormat (UnityEngine.LogType,string,object[])
+UnityEngine.Debug:LogWarningFormat (string,object[])
+UnityEditor.Scripting.ScriptCompilation.EditorCompilation:WarnIfThereAreAssembliesWithoutAnyScripts (UnityEditor.Scripting.ScriptCompilation.ScriptAssemblySettings,UnityEditor.Scripting.ScriptCompilation.ScriptAssembly[])
+UnityEditor.Scripting.ScriptCompilation.EditorCompilation:CompileScriptsWithSettings (UnityEditor.Scripting.ScriptCompilation.ScriptAssemblySettings)
+UnityEditor.Scripting.ScriptCompilation.EditorCompilation:CompileScripts (UnityEditor.Scripting.ScriptCompilation.EditorScriptCompilationOptions,UnityEditor.BuildTarget,int,string[])
+UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface/<>c__DisplayClass21_0:<CompileScripts>b__0 ()
+UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface:EmitExceptionAsError<UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus> (System.Func`1<UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus>,UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus)
+UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface:CompileScripts (UnityEditor.Scripting.ScriptCompilation.EditorScriptCompilationOptions,UnityEditor.BuildTarget,int,string[])
+
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:80
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: D:\UnityProjects\URP3D_Base01\
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 52.8688ms
+Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: D:/UnityProjects/URP3D_Base01
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
+warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Runtime.InteropServices.WindowsRuntime.dll" in favor of "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetStandard\Extensions\2.0.0\System.Runtime.InteropServices.WindowsRuntime.dll"
+warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Assembly system.componentmodel.composition has duplicate hint path. Ignoring "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.ComponentModel.Composition.dll" in favor of "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetStandard\compat\2.1.0\shims\netfx\System.ComponentModel.Composition.dll"
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Resolved Unity.Burst.Cecil, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e with Library\PackageCache\com.unity.burst@7a907cf5a459\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Resolved Mono.Cecil, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e with Library\PackageCache\com.unity.nuget.mono-cecil@d6f9955a5d5f\Mono.Cecil.dll
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 98.8926ms
+DisplayProgressbar: Compiling Scripts
+Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Tools\netcorerun\netcorerun.exe "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1900b0aE.dag.json" "Library/Bee/1900b0aE-inputdata.json" "Library\Bee\buildprogram0.traceevents"
+WorkingDir: D:/UnityProjects/URP3D_Base01
+ExitCode: 4 Duration: 0s458ms
+Rebuilding DAG because FileSignature timestamp changed: Library/Bee/1900b0aE-inputdata.json
+[ 856/1119  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra requires additional run (0.39 seconds), 2 items updated, 855 evaluated
+ExitCode: 0 Duration: 1s269ms
+Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --dagfilejson="Library\Bee\1900b0aE.dag.json" --profile="Library/Bee/backend2.traceevents" ScriptAssemblies
+WorkingDir: D:/UnityProjects/URP3D_Base01
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Current configuration matches the requested one, skipping
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 2.2958ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-firstpass.dll, with 138 defines and 327 references
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running Unity.Jobs.CodeGen.JobsILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Resolved Unity.Collections, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null with Library\Bee\artifacts\1900b0aE.dag\Unity.Collections.dll
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      Processing assembly Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Tests.dll, with 138 defines and 252 references
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running Unity.Jobs.CodeGen.JobsILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly application/grpc - - 200 - application/grpc 16.8083ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.dll, with 138 defines and 328 references
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running Unity.Jobs.CodeGen.JobsILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Resolved UnityEditor.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null with C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Managed\UnityEngine\UnityEditor.CoreModule.dll
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor-firstpass.dll, with 136 defines and 351 references
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running Unity.Jobs.CodeGen.JobsILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Resolved UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null with C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Resolved Unity.Burst.Cecil.Rocks, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e with Library\PackageCache\com.unity.burst@7a907cf5a459\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly application/grpc - - 200 - application/grpc 349.3823ms
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly application/grpc - - 200 - application/grpc 463.2758ms
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly application/grpc - - 200 - application/grpc 803.9692ms
+ExitCode: 0 Duration: 2s491ms
+Finished compiling graph: 1123 nodes, 21638 flattened edges (17352 ToBuild, 186 ToUse), maximum node priority 1366
+[ 596/1119  0s] WriteResponseFile Library/Bee/artifacts/rsp/15549305282760055561.rsp
+[ 597/1119  0s] WriteResponseFile Library/Bee/artifacts/rsp/10678863128556690338.rsp
+[ 598/1119  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.rsp
+[ 599/1119  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-firstpass.rsp
+[ 600/1119  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor-firstpass.rsp
+[ 601/1119  0s] WriteResponseFile Library/Bee/artifacts/rsp/4345639507432806382.rsp
+[ 602/1119  0s] WriteResponseFile Library/Bee/artifacts/rsp/9347744537272444272.rsp
+[ 603/1119  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Tests.rsp
+[ 853/1119  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[1103/1119  0s] Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Tests.dll (+2 others)
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(22,17): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(36,74): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+
+Assets\_Project\Tests\Core\Audio\AudioManagerTests.cs(69,29): warning CS0618: 'AudioManager.Instance' is obsolete: 'Use ServiceLocator.GetService<IAudioService>() instead'
+
+Assets\_Project\Tests\Core\Audio\AudioManagerTests.cs(70,29): warning CS0618: 'AudioManager.Instance' is obsolete: 'Use ServiceLocator.GetService<IAudioService>() instead'
+
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(74,29): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(74,29): warning CS0618: 'SpatialAudioManager.Instance' is obsolete: 'Use ServiceLocator.GetService<ISpatialAudioService>() instead'
+
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(75,29): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(75,29): warning CS0618: 'SpatialAudioManager.Instance' is obsolete: 'Use ServiceLocator.GetService<ISpatialAudioService>() instead'
+
+Assets\_Project\Tests\Core\Audio\EffectManagerTests.cs(69,29): warning CS0618: 'EffectManager.Instance' is obsolete: 'Use ServiceLocator.GetService<IEffectService>() instead'
+
+Assets\_Project\Tests\Core\Audio\EffectManagerTests.cs(70,29): warning CS0618: 'EffectManager.Instance' is obsolete: 'Use ServiceLocator.GetService<IEffectService>() instead'
+
+Assets\_Project\Tests\Core\Audio\EffectManagerTests.cs(102,20): warning CS0219: The variable 'testEffectName' is assigned but its value is never used
+
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(109,33): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\_Project\Tests\Core\Audio\EffectManagerTests.cs(173,20): warning CS0219: The variable 'category' is assigned but its value is never used
+
+Assets\_Project\Tests\Templates\IntegrationTestTemplate.cs(179,18): warning CS0219: The variable 'eventReceived' is assigned but its value is never used
+
+Assets\_Project\Tests\Core\Audio\AudioSystemTestRunner.cs(185,68): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(181,44): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(184,103): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+
+Assets\_Project\Tests\Core\Audio\AudioSystemTestRunner.cs(308,72): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+
+Assets\_Project\Tests\Core\Audio\EffectManagerTests.cs(395,78): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+
+Assets\_Project\Tests\Core\Audio\EffectManagerTests.cs(397,44): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+
+Assets\_Project\Tests\Helpers\TestHelpers.cs(274,33): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(342,44): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(384,33): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+[1104/1119  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-firstpass.dll (+2 others)
+[1105/1119  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.dll (+2 others)
+[1106/1119  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/asterivo.Unity60.Tests.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Tests.dll, with 138 defines and 252 references
+
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running Unity.Jobs.CodeGen.JobsILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1107/1119  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor-firstpass.dll (+2 others)
+[1108/1119  0s] CopyFiles Library/ScriptAssemblies/asterivo.Unity60.Tests.pdb
+[1109/1119  0s] CopyFiles Library/ScriptAssemblies/asterivo.Unity60.Tests.dll
+[1110/1119  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Assembly-CSharp.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.dll, with 138 defines and 328 references
+
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running Unity.Jobs.CodeGen.JobsILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1111/1119  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Assembly-CSharp-Editor-firstpass.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor-firstpass.dll, with 136 defines and 351 references
+
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running Unity.Jobs.CodeGen.JobsILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1112/1119  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Assembly-CSharp-firstpass.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-firstpass.dll, with 138 defines and 327 references
+
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running Unity.Jobs.CodeGen.JobsILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1113/1119  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor-firstpass.pdb
+[1114/1119  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-firstpass.pdb
+[1115/1119  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.pdb
+[1116/1119  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.dll
+[1117/1119  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor-firstpass.dll
+[1118/1119  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll
+*** Tundra build success (2.44 seconds), 25 items updated, 1119 evaluated
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(22,17): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(36,74): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+Assets\_Project\Tests\Core\Audio\AudioManagerTests.cs(69,29): warning CS0618: 'AudioManager.Instance' is obsolete: 'Use ServiceLocator.GetService<IAudioService>() instead'
+Assets\_Project\Tests\Core\Audio\AudioManagerTests.cs(70,29): warning CS0618: 'AudioManager.Instance' is obsolete: 'Use ServiceLocator.GetService<IAudioService>() instead'
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(74,29): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(74,29): warning CS0618: 'SpatialAudioManager.Instance' is obsolete: 'Use ServiceLocator.GetService<ISpatialAudioService>() instead'
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(75,29): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(75,29): warning CS0618: 'SpatialAudioManager.Instance' is obsolete: 'Use ServiceLocator.GetService<ISpatialAudioService>() instead'
+Assets\_Project\Tests\Core\Audio\EffectManagerTests.cs(69,29): warning CS0618: 'EffectManager.Instance' is obsolete: 'Use ServiceLocator.GetService<IEffectService>() instead'
+Assets\_Project\Tests\Core\Audio\EffectManagerTests.cs(70,29): warning CS0618: 'EffectManager.Instance' is obsolete: 'Use ServiceLocator.GetService<IEffectService>() instead'
+Assets\_Project\Tests\Core\Audio\EffectManagerTests.cs(102,20): warning CS0219: The variable 'testEffectName' is assigned but its value is never used
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(109,33): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Tests\Core\Audio\EffectManagerTests.cs(173,20): warning CS0219: The variable 'category' is assigned but its value is never used
+Assets\_Project\Tests\Templates\IntegrationTestTemplate.cs(179,18): warning CS0219: The variable 'eventReceived' is assigned but its value is never used
+Assets\_Project\Tests\Core\Audio\AudioSystemTestRunner.cs(185,68): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(181,44): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(184,103): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+Assets\_Project\Tests\Core\Audio\AudioSystemTestRunner.cs(308,72): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+Assets\_Project\Tests\Core\Audio\EffectManagerTests.cs(395,78): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+Assets\_Project\Tests\Core\Audio\EffectManagerTests.cs(397,44): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+Assets\_Project\Tests\Helpers\TestHelpers.cs(274,33): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(342,44): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+Assets\_Project\Tests\Core\Audio\SpatialAudioManagerTests.cs(384,33): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+AssetDatabase: script compilation time: 4.898159s
+'Assets/_Project/Tests/Results/audio-system-test-execution-log.txt' Amount of processed bytes '48466' does not match file size '34005'
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  2.456 seconds
+'Packages/com.unity.cinemachine/Editor/Editors/CinemachineVirtualCameraBaseEditor.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+'Packages/com.unity.cinemachine/Editor/Obsolete/CinemachineVirtualCameraBaseEditor.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+'Assets/_Project/Tests/Results/audio-system-test-execution-log.txt' Amount of processed bytes '49285' does not match file size '48636'
+Start importing Assets/_Project/Tests/asterivo.Unity60.Tests.asmdef using Guid(a4c4208620b9a2e4b93b6e1a0fa731cc) (AssemblyDefinitionImporter) -> (artifact id: 'd323bdcf9dba1751ac14344a35c57db7') in 0.0168093 seconds
+Start importing Assets/_Project/Core/Editor/asterivo.Unity60.Core.Editor.asmdef using Guid(d705887fe974c114ab61a9385ee2c871) (AssemblyDefinitionImporter) -> (artifact id: 'da5fe52f47dc7774d4cecd1796d97925') in 0.0032973 seconds
+Refreshing native plugins compatible for Editor in 1.15 ms, found 3 plugins.
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  4.752 seconds
+Domain Reload Profiling: 7201ms
+	BeginReloadAssembly (469ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (22ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (174ms)
+	RebuildCommonClasses (55ms)
+	RebuildNativeTypeToScriptingClass (14ms)
+	initialDomainReloadingComplete (59ms)
+	LoadAllAssembliesAndSetupDomain (1852ms)
+		LoadAssemblies (1665ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (383ms)
+			TypeCache.Refresh (299ms)
+				TypeCache.ScanAssembly (282ms)
+			BuildScriptInfoCaches (62ms)
+			ResolveRequiredComponents (16ms)
+	FinalizeReload (4753ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (4441ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (45ms)
+			SetLoadedEditorAssemblies (5ms)
+			BeforeProcessingInitializeOnLoad (154ms)
+			ProcessInitializeOnLoadAttributes (3972ms)
+			ProcessInitializeOnLoadMethodAttributes (231ms)
+			AfterProcessingInitializeOnLoad (28ms)
+			EditorAssembliesLoaded (5ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (30ms)
+'Assets/_Project/Tests/Results/audio-system-test-execution-log.txt' Amount of processed bytes '51523' does not match file size '50280'
+Start importing Assets/_Project/Tests/Results/audio-system-test-execution-log.txt using Guid(4f0acc1c21bdc5b469f988a82f273642) (TextScriptImporter) -> (artifact id: '00000000000000000000000000000000') in 0.0337113 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/_project/tests/results/audio-system-test-execution-log.txt in SourceAssetDB has modification time of '2025-09-11T04:51:11.7771804Z' while content on disk has modification time of '2025-09-11T04:52:14.051671Z'
+'Assets/_Project/Tests/Results/audio-system-test-execution-log.txt' Amount of processed bytes '52158' does not match file size '51806'
+Start importing Assets/_Project/Tests/Results/audio-system-test-execution-log.txt using Guid(4f0acc1c21bdc5b469f988a82f273642) (TextScriptImporter) -> (artifact id: '00000000000000000000000000000000') in 0.056998 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/_project/tests/results/audio-system-test-execution-log.txt in SourceAssetDB has modification time of '2025-09-11T04:51:11.7771804Z' while content on disk has modification time of '2025-09-11T04:52:14.1447425Z'
+'Assets/_Project/Tests/Results/audio-system-test-execution-log.txt' Amount of processed bytes '52793' does not match file size '52441'
+Start importing Assets/_Project/Tests/Results/audio-system-test-execution-log.txt using Guid(4f0acc1c21bdc5b469f988a82f273642) (TextScriptImporter) -> (artifact id: '00000000000000000000000000000000') in 0.0590346 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/_project/tests/results/audio-system-test-execution-log.txt in SourceAssetDB has modification time of '2025-09-11T04:51:11.7771804Z' while content on disk has modification time of '2025-09-11T04:52:14.2653152Z'
+'Assets/_Project/Tests/Results/audio-system-test-execution-log.txt' Amount of processed bytes '53429' does not match file size '53076'
+Start importing Assets/_Project/Tests/Results/audio-system-test-execution-log.txt using Guid(4f0acc1c21bdc5b469f988a82f273642) (TextScriptImporter) -> (artifact id: '00000000000000000000000000000000') in 0.0550131 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/_project/tests/results/audio-system-test-execution-log.txt in SourceAssetDB has modification time of '2025-09-11T04:51:11.7771804Z' while content on disk has modification time of '2025-09-11T04:52:14.3909792Z'
+'Assets/_Project/Tests/Results/audio-system-test-execution-log.txt' Amount of processed bytes '54065' does not match file size '53712'
+Start importing Assets/_Project/Tests/Results/audio-system-test-execution-log.txt using Guid(4f0acc1c21bdc5b469f988a82f273642) (TextScriptImporter) -> (artifact id: '00000000000000000000000000000000') in 0.0570763 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/_project/tests/results/audio-system-test-execution-log.txt in SourceAssetDB has modification time of '2025-09-11T04:51:11.7771804Z' while content on disk has modification time of '2025-09-11T04:52:14.5171966Z'
+'Assets/_Project/Tests/Results/audio-system-test-execution-log.txt' Amount of processed bytes '54701' does not match file size '54348'
+Start importing Assets/_Project/Tests/Results/audio-system-test-execution-log.txt using Guid(4f0acc1c21bdc5b469f988a82f273642) (TextScriptImporter) -> (artifact id: '00000000000000000000000000000000') in 0.0488767 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/_project/tests/results/audio-system-test-execution-log.txt in SourceAssetDB has modification time of '2025-09-11T04:51:11.7771804Z' while content on disk has modification time of '2025-09-11T04:52:14.622678Z'
+'Assets/_Project/Tests/Results/audio-system-test-execution-log.txt' Amount of processed bytes '55336' does not match file size '54984'
+Start importing Assets/_Project/Tests/Results/audio-system-test-execution-log.txt using Guid(4f0acc1c21bdc5b469f988a82f273642) (TextScriptImporter) -> (artifact id: '00000000000000000000000000000000') in 0.05625 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/_project/tests/results/audio-system-test-execution-log.txt in SourceAssetDB has modification time of '2025-09-11T04:51:11.7771804Z' while content on disk has modification time of '2025-09-11T04:52:14.7290469Z'
+'Assets/_Project/Tests/Results/audio-system-test-execution-log.txt' Amount of processed bytes '55970' does not match file size '55619'
+Start importing Assets/_Project/Tests/Results/audio-system-test-execution-log.txt using Guid(4f0acc1c21bdc5b469f988a82f273642) (TextScriptImporter) -> (artifact id: '00000000000000000000000000000000') in 0.056448 seconds
+Import Error Code:(4)
+Message: Build asset version error: assets/_project/tests/results/audio-system-test-execution-log.txt in SourceAssetDB has modification time of '2025-09-11T04:51:11.7771804Z' while content on disk has modification time of '2025-09-11T04:52:14.8343133Z'
+An infinite import loop has been detected. The following Assets were imported multiple times, but no changes to them have been detected. Please check if any custom code is trying to import them:
+Assets/_Project/Tests/Results/audio-system-test-execution-log.txt(modified date 2025-09-11T04:52:14.8913862Z)
+Refreshing native plugins compatible for Editor in 1.85 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=46389fb48a2a65a43acaca8ae244bb1d): Total: 14.535 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	Summary:
+		Imports: total=2 (actual=9, local cache=18446744073709551609, cache server=0)
+		Asset DB Process Time: managed=3 ms, native=6608 ms
+		Asset DB Callback time: managed=478 ms, native=10 ms
+		Scripting: domain reloads=1, domain reload time=2456 ms, compile time=4903 ms, other=74 ms
+		Project Asset Count: scripts=1496, non-scripts=2504
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeCustomDependenciesCallbacks: 0.004ms
+	InvokePackagesCallback: 8.186ms
+	ApplyChangesToAssetFolders: 1.568ms
+	Scan: 838.144ms
+	OnSourceAssetsModified: 0.006ms
+	CategorizeAssetsWithTransientArtifact: 71.974ms
+	ProcessAssetsWithTransientArtifactChanges: 119.762ms
+	CategorizeAssets: 85.802ms
+	ImportOutOfDateAssets: 5227.306ms (-137.080ms without children)
+		ImportManagerImport: 451.944ms (4.831ms without children)
+			ImportInProcess: 447.034ms
+			UpdateCategorizedAssets: 0.079ms
+		CompileScripts: 4903.132ms
+		ReloadNativeAssets: 0.360ms
+		UnloadImportedAssets: 4.146ms
+		ReloadImportedAssets: 0.000ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 3.984ms
+		InitializingProgressBar: 0.089ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.002ms
+		OnDemandSchedulerStart: 0.729ms
+	PostProcessAllAssets: 480.608ms
+	Hotreload: 7.463ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.001ms
+	UnloadStreamsBegin: 2.294ms
+	UnloadStreamsEnd: 0.001ms
+	GenerateScriptTypeHashes: 5.642ms
+	Untracked: 7692.137ms
+
+Application.AssetDatabase Initial Refresh End
+Scanning for USB devices : 9.233ms
+Initializing Unity extensions:
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-URP3D_Base01
+Unloading 17 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6939 unused Assets / (5.8 MB). Loaded Objects now: 7723.
+Memory consumption went from 202.0 MB to 196.2 MB.
+Total: 66.819600 ms (FindLiveObjects: 1.404800 ms CreateObjectMapping: 1.270300 ms MarkObjects: 57.577900 ms  DeleteObjects: 6.564100 ms)
+
+Batchmode quit successfully invoked - shutting down!
+Killing ADB server in 0.162626 seconds.
+[Physics::Module] Cleanup current backned.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input System polling thread exited.
+Input System module state changed to: Shutdown.
+[Licensing::IpcConnector] License Notification channel disconnected successfully.
+[Licensing::IpcConnector] License Client channel disconnected successfully.
+AcceleratorClientConnectionCallback - disconnected - :0
+Cleanup mono
+abort_threads: Failed aborting id: 000000000000E558, mono_thread_manage will ignore it
+
+abort_threads: Failed aborting id: 0000000000010410, mono_thread_manage will ignore it
+
+abort_threads: Failed aborting id: 000000000000E558, mono_thread_manage will ignore it
+
+abort_threads: Failed aborting id: 0000000000010410, mono_thread_manage will ignore it
+
+debugger-agent: Unable to listen on 3992
+[usbmuxd] Stop listen thread
+[usbmuxd] Error: 
+[usbmuxd] Listen thread exiting
+Exiting batchmode successfully now!
+Exiting without the bug reporter. Application will terminate with return code 0

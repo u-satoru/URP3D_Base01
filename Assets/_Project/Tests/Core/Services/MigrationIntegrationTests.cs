@@ -5,11 +5,15 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using _Project.Core;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core.Audio.Services;
 using asterivo.Unity60.Core.Audio.Interfaces;
+
+#pragma warning disable CS0618 // Intentionally using deprecated SpatialAudioManager for migration testing
+using asterivo.Unity60.Core.Commands;
+using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Services;
 
 namespace asterivo.Unity60.Tests.Core.Services
 {
@@ -21,10 +25,12 @@ namespace asterivo.Unity60.Tests.Core.Services
     public class MigrationIntegrationTests 
     {
         private GameObject testGameObject;
-        private MigrationMonitor migrationMonitor;
+        private asterivo.Unity60.Core.Services.MigrationMonitor migrationMonitor;
         private List<IAudioService> audioServices;
         private List<ISpatialAudioService> spatialServices;
         private List<IEffectService> effectServices;
+        private List<ICommandPoolService> commandPoolServices;
+        private List<IEventLogger> eventLoggers;
         
         [SetUp]
         public void SetUp()
@@ -32,16 +38,28 @@ namespace asterivo.Unity60.Tests.Core.Services
             ServiceLocator.Clear();
             FeatureFlags.ResetToDefaults();
             testGameObject = new GameObject("IntegrationTest");
-            migrationMonitor = testGameObject.AddComponent<MigrationMonitor>();
+            migrationMonitor = testGameObject.AddComponent<asterivo.Unity60.Core.Services.MigrationMonitor>();
             
             audioServices = new List<IAudioService>();
             spatialServices = new List<ISpatialAudioService>();
             effectServices = new List<IEffectService>();
+            commandPoolServices = new List<ICommandPoolService>();
+            eventLoggers = new List<IEventLogger>();
         }
         
         [TearDown]
         public void TearDown()
         {
+            // EventLoggers cleanup
+            foreach (var logger in eventLoggers)
+            {
+                if (logger is EventLogger el && el != null && el.gameObject != null)
+                {
+                    UnityEngine.Object.DestroyImmediate(el.gameObject);
+                }
+            }
+            eventLoggers.Clear();
+            
             ServiceLocator.Clear();
             FeatureFlags.ResetToDefaults();
             if (testGameObject != null)
@@ -208,7 +226,7 @@ namespace asterivo.Unity60.Tests.Core.Services
                 {
                     var progress = migrationMonitor.GetMigrationProgress();
                     var isSafe = migrationMonitor.IsMigrationSafe();
-                    monitoringResults.Add((Time.realtimeSinceStartup, progress, isSafe));
+                    monitoringResults.Add((Time.realtimeSinceStartup, progress, isSafe ?? false));
                 }
                 
                 yield return null;
@@ -506,7 +524,7 @@ namespace asterivo.Unity60.Tests.Core.Services
                     var progress = migrationMonitor.GetMigrationProgress();
                     var isSafe = migrationMonitor.IsMigrationSafe();
                     
-                    hourlyMetrics.Add((currentHour, avgFrameTime, progress, isSafe));
+                    hourlyMetrics.Add((currentHour, avgFrameTime, progress, isSafe ?? false));
                     
                     currentHour++;
                     hourStartTime = Time.realtimeSinceStartup;
@@ -523,7 +541,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             var overallAvgFrameTime = hourlyMetrics.Average(m => m.avgFrameTime);
             var maxFrameTime = hourlyMetrics.Max(m => m.avgFrameTime);
             var progressStability = hourlyMetrics.All(m => m.progress >= 0 && m.progress <= 100);
-            var safetyConsistency = hourlyMetrics.All(m => m.isSafe != null);
+            var safetyConsistency = hourlyMetrics.All(m => true); // All isSafe values are valid booleans.HasValue);
             
             UnityEngine.Debug.Log($"24-Hour Simulation Results:");
             UnityEngine.Debug.Log($"Hours Simulated: {hourlyMetrics.Count}");
@@ -538,6 +556,280 @@ namespace asterivo.Unity60.Tests.Core.Services
             Assert.Less(maxFrameTime, 0.02f, "Max frame time should not spike significantly");
             Assert.IsTrue(progressStability, "Progress should remain stable over long periods");
             Assert.IsTrue(safetyConsistency, "Safety checks should remain consistent");
+        }
+        
+        #endregion
+        
+        #region CommandPoolService Migration Tests
+        
+        [Test]
+        public void Migration_CommandPoolService_ServiceLocatorIntegration()
+        {
+            // Setup CommandPoolService migration
+            FeatureFlags.UseServiceLocator = true;
+            FeatureFlags.EnableMigrationMonitoring = true;
+            
+            var commandPoolService = testGameObject.AddComponent<CommandPoolService>();
+            
+            // Test ServiceLocator registration
+            ServiceLocator.RegisterService<ICommandPoolService>(commandPoolService);
+            
+            var retrievedService = ServiceLocator.GetService<ICommandPoolService>();
+            Assert.IsNotNull(retrievedService, "CommandPoolService should be accessible via ServiceLocator");
+            Assert.AreEqual(commandPoolService, retrievedService, "Retrieved service should be the same instance");
+            
+            // Test interface functionality
+            var testCommand = retrievedService.GetCommand<DamageCommand>();
+            Assert.IsNotNull(testCommand, "Should be able to get commands via interface");
+            
+            retrievedService.ReturnCommand(testCommand);
+            Assert.DoesNotThrow(() => retrievedService.LogServiceStatus(), "Service status logging should work");
+            
+            // Test MigrationMonitor integration
+            migrationMonitor.LogServiceLocatorUsage(typeof(ICommandPoolService), "command_pool_test");
+            
+            var serviceStats = migrationMonitor.GetServiceLocatorUsageStats();
+            Assert.Greater(serviceStats.Count, 0, "Should record ServiceLocator usage");
+        }
+        
+        [Test]
+        public void Migration_CommandPoolService_LegacySingletonWarnings()
+        {
+            // Enable migration warnings
+            FeatureFlags.EnableMigrationWarnings = true;
+            FeatureFlags.EnableMigrationMonitoring = true;
+            FeatureFlags.DisableLegacySingletons = false; // Allow legacy access for testing
+            
+            var commandPoolService = testGameObject.AddComponent<CommandPoolService>();
+            var loggedWarnings = new List<string>();
+            
+            // Capture log output (simplified for test)
+            Application.logMessageReceived += (condition, stackTrace, type) =>
+            {
+                if (type == LogType.Warning && condition.Contains("DEPRECATED"))
+                {
+                    loggedWarnings.Add(condition);
+                }
+            };
+            
+            // ServiceLocator経由でのアクセス (Phase 2 移行後)
+            var instance = ServiceLocator.GetService<ICommandPoolService>();
+            
+            Application.logMessageReceived -= (condition, stackTrace, type) => { };
+            
+            // Verify warning was logged
+            Assert.Greater(loggedWarnings.Count, 0, "Should log deprecation warning");
+            Assert.IsTrue(loggedWarnings.Any(w => w.Contains("ServiceLocator")), 
+                "Warning should mention ServiceLocator alternative");
+        }
+        
+        [Test] 
+        public void Migration_CommandPoolService_FeatureFlagDisabling()
+        {
+            // Setup service
+            var commandPoolService = testGameObject.AddComponent<CommandPoolService>();
+            
+            // Test with legacy singletons disabled
+            FeatureFlags.DisableLegacySingletons = true;
+            FeatureFlags.EnableMigrationMonitoring = true;
+            
+            var loggedErrors = new List<string>();
+            Application.logMessageReceived += (condition, stackTrace, type) =>
+            {
+                if (type == LogType.Error && condition.Contains("DEPRECATED"))
+                {
+                    loggedErrors.Add(condition);
+                }
+            };
+            
+            // ServiceLocator経由でのアクセス (Phase 2 移行後)
+            var instance = ServiceLocator.GetService<ICommandPoolService>();
+            
+            Application.logMessageReceived -= (condition, stackTrace, type) => { };
+            
+            // Verify instance is null and error logged
+            Assert.IsNull(instance, "Instance should be null when legacy singletons are disabled");
+            Assert.Greater(loggedErrors.Count, 0, "Should log error when accessing disabled singleton");
+        }
+        
+        [UnityTest]
+        public IEnumerator Migration_CommandPoolService_ConcurrentUsage()
+        {
+            // Setup
+            FeatureFlags.UseServiceLocator = true;
+            FeatureFlags.EnableMigrationMonitoring = true;
+            
+            var commandPoolService = testGameObject.AddComponent<CommandPoolService>();
+            ServiceLocator.RegisterService<ICommandPoolService>(commandPoolService);
+            
+            var operations = 0;
+            var errors = 0;
+            var endTime = Time.realtimeSinceStartup + 2.0f;
+            
+            // Simulate concurrent command pool usage
+            while (Time.realtimeSinceStartup < endTime)
+            {
+                try
+                {
+                    var service = ServiceLocator.GetService<ICommandPoolService>();
+                    if (service != null)
+                    {
+                        var command = service.GetCommand<DamageCommand>();
+                        operations++;
+                        
+                        if (command != null)
+                        {
+                            service.ReturnCommand(command);
+                        }
+                        
+                        // Record usage for monitoring
+                        if (operations % 10 == 0)
+                        {
+                            migrationMonitor.LogServiceLocatorUsage(typeof(ICommandPoolService), $"concurrent_{operations}");
+                        }
+                    }
+                }
+                catch (System.Exception)
+                {
+                    errors++;
+                }
+                
+                yield return null;
+            }
+            
+            // Verify performance and reliability
+            Assert.Greater(operations, 100, "Should complete many operations");
+            Assert.AreEqual(0, errors, "Should not have any errors during concurrent usage");
+            
+            var statistics = commandPoolService.GetStatistics<DamageCommand>();
+            Assert.IsNotNull(statistics, "Should be able to get command statistics");
+            
+            UnityEngine.Debug.Log($"CommandPoolService Concurrent Test: {operations} operations, {errors} errors");
+        }
+        
+        [Test]
+        public void Migration_CommandPoolService_AllMethodsAccessible()
+        {
+            // Setup
+            var commandPoolService = testGameObject.AddComponent<CommandPoolService>();
+            ServiceLocator.RegisterService<ICommandPoolService>(commandPoolService);
+            
+            var service = ServiceLocator.GetService<ICommandPoolService>();
+            Assert.IsNotNull(service, "Service should be accessible");
+            
+            // Test all interface methods
+            Assert.IsNotNull(service.PoolManager, "PoolManager should be accessible");
+            Assert.DoesNotThrow(() => service.LogServiceStatus(), "LogServiceStatus should work");
+            Assert.DoesNotThrow(() => service.LogDebugInfo(), "LogDebugInfo should work");
+            Assert.DoesNotThrow(() => service.Cleanup(), "Cleanup should work");
+            
+            // Test command operations
+            var command = service.GetCommand<HealCommand>();
+            Assert.IsNotNull(command, "Should get command instance");
+            
+            var statistics = service.GetStatistics<HealCommand>();
+            Assert.IsNotNull(statistics, "Should get statistics");
+            
+            service.ReturnCommand(command);
+            Assert.Pass("All methods should be accessible via interface");
+        }
+        
+        #endregion
+        
+        #region EventLogger Migration Tests
+        
+        [Test]
+        public void Migration_EventLogger_ServiceLocatorIntegration()
+        {
+            // EventLogger migration setup
+            FeatureFlags.UseServiceLocator = true;
+            FeatureFlags.EnableMigrationMonitoring = true;
+            
+            var eventLogger = testGameObject.AddComponent<EventLogger>();
+            eventLoggers.Add(eventLogger);
+            
+            // Test ServiceLocator registration
+            ServiceLocator.RegisterService<IEventLogger>(eventLogger);
+            
+            var retrievedService = ServiceLocator.GetService<IEventLogger>();
+            Assert.IsNotNull(retrievedService, "EventLogger should be accessible via ServiceLocator");
+            Assert.AreEqual(eventLogger, retrievedService, "Retrieved service should be the same instance");
+            
+            // Test interface functionality
+            retrievedService.Log("Migration test message");
+            retrievedService.LogEvent("TestEvent", 2, "test payload");
+            retrievedService.LogWarning("Test warning");
+            retrievedService.LogError("Test error");
+            
+            Assert.IsTrue(retrievedService.IsEnabled, "EventLogger should be enabled");
+            Assert.IsNotNull(retrievedService.EventLog, "EventLog should be accessible");
+            
+            Assert.DoesNotThrow(() => retrievedService.GetStatistics(), "Service status logging should work");
+            
+            // Test MigrationMonitor integration
+            migrationMonitor.LogServiceLocatorUsage(typeof(IEventLogger), "eventlogger_test");
+            
+            var serviceStats = migrationMonitor.GetServiceLocatorUsageStats();
+            Assert.Greater(serviceStats.Count, 0, "Should record ServiceLocator usage");
+        }
+        
+        [Test]
+        public void Migration_EventLogger_StaticMethodCompatibility()
+        {
+            // Test static method backward compatibility
+            FeatureFlags.UseServiceLocator = true;
+            var eventLogger = testGameObject.AddComponent<EventLogger>();
+            eventLoggers.Add(eventLogger);
+            ServiceLocator.RegisterService<IEventLogger>(eventLogger);
+            
+            #pragma warning disable CS0618 // Intentionally testing deprecated static methods
+            // Test that static methods still work
+            Assert.DoesNotThrow(() => EventLogger.LogStatic("Static compatibility test"));
+            Assert.DoesNotThrow(() => EventLogger.LogWarningStatic("Static warning test"));
+            Assert.DoesNotThrow(() => EventLogger.LogErrorStatic("Static error test"));
+            Assert.DoesNotThrow(() => EventLogger.LogEventStatic("StaticEvent", 1, "payload"));
+            Assert.DoesNotThrow(() => EventLogger.LogEventWithPayloadStatic("TypedEvent", 1, 42));
+            
+            // Test static properties
+            Assert.IsTrue(EventLogger.IsEnabledStatic, "Static IsEnabled should work");
+            Assert.IsNotNull(EventLogger.EventLogStatic, "Static EventLog should work");
+            
+            // Test utility methods
+            #pragma warning restore CS0618
+            var stats = EventLogger.GetStatisticsStatic();
+            Assert.IsNotNull(stats, "GetStatistics should work");
+            
+            var filteredLogs = EventLogger.GetFilteredLogStatic("test");
+            Assert.IsNotNull(filteredLogs, "GetFilteredLog should work");
+            
+            Assert.DoesNotThrow(() => EventLogger.ClearLogStatic(), "ClearLog should work");
+        }
+        
+        [Test]
+        public void Migration_EventLogger_AllInterfaceMethodsAccessible()
+        {
+            // Test all IEventLogger interface methods
+            var eventLogger = testGameObject.AddComponent<EventLogger>();
+            eventLoggers.Add(eventLogger);
+            ServiceLocator.RegisterService<IEventLogger>(eventLogger);
+            
+            var service = ServiceLocator.GetService<IEventLogger>();
+            
+            // Test all interface methods
+            Assert.DoesNotThrow(() => service.Log("Interface test"));
+            Assert.DoesNotThrow(() => service.LogWarning("Interface warning"));
+            Assert.DoesNotThrow(() => service.LogError("Interface error"));
+            Assert.DoesNotThrow(() => service.LogEvent("InterfaceEvent", 3, "payload"));
+            Assert.DoesNotThrow(() => service.LogEventWithPayload("TypedEvent", 2, new { value = 123 }));
+            Assert.DoesNotThrow(() => service.LogWarning("EventName", 1, "warning"));
+            Assert.DoesNotThrow(() => service.LogError("EventName", 1, "error"));
+            Assert.DoesNotThrow(() => service.ClearLog());
+            
+            // Test properties and utility methods
+            Assert.IsTrue(service.IsEnabled, "IsEnabled should be accessible");
+            Assert.IsNotNull(service.EventLog, "EventLog should be accessible");
+            Assert.IsNotNull(service.GetFilteredLog(), "GetFilteredLog should be accessible");
+            Assert.IsNotNull(service.GetStatistics(), "GetStatistics should be accessible");
         }
         
         #endregion

@@ -1,6 +1,7 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Audio.Data;
+using asterivo.Unity60.Core.Debug;
 
 namespace asterivo.Unity60.Core.Audio.Events
 {
@@ -25,8 +26,8 @@ namespace asterivo.Unity60.Core.Audio.Events
             #if UNITY_EDITOR
             if (showAudioDebug && Application.isPlaying)
             {
-                UnityEngine.Debug.Log($"<color=magenta>[AudioEvent]</color> '{name}' - Sound: {audioData.soundID}, " +
-                         $"Volume: {audioData.volume:F2}, Position: {audioData.worldPosition}", this);
+                ProjectDebug.Log($"<color=magenta>[AudioEvent]</color> '{name}' - Sound: {audioData.soundID}, " +
+                         $"Volume: {audioData.volume:F2}, Position: {audioData.worldPosition}");
             }
             #endif
             

@@ -1,10 +1,11 @@
 using UnityEngine;
-using _Project.Core.Services;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Debug;
 // Removed Sirenix dependency for test compatibility
 
-namespace _Project.Tests.Core.Services
+namespace asterivo.Unity60.Tests.Core.Services
 {
     /// <summary>
     /// 段階的更新パターンの包括テスト
@@ -283,11 +284,11 @@ namespace _Project.Tests.Core.Services
 
             if (allTestsPassed)
             {
-                EventLogger.Log("🎉 [PATTERN TEST] Step 3.6 Gradual Update Patterns are working correctly!");
+                EventLogger.LogStatic("🎉 [PATTERN TEST] Step 3.6 Gradual Update Patterns are working correctly!");
             }
             else
             {
-                EventLogger.LogError("❌ [PATTERN TEST] Some Step 3.6 patterns need attention.");
+                ServiceLocator.GetService<IEventLogger>()?.LogError("❌ [PATTERN TEST] Some Step 3.6 patterns need attention.");
             }
         }
 
@@ -348,7 +349,7 @@ namespace _Project.Tests.Core.Services
         {
             if (enableDetailedLogs)
             {
-                EventLogger.Log($"[PATTERN_TEST] {message}");
+                EventLogger.LogStatic($"[PATTERN_TEST] {message}");
             }
         }
 

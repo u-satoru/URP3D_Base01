@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
-using _Project.Core;
-using _Project.Core.Services;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Debug;
 
-namespace _Project.Tests.Core.Services
+namespace asterivo.Unity60.Tests.Core.Services
 {
     /// <summary>
     /// Step 3.7: 段階的機能有効化スケジュールの包括テスト
@@ -15,8 +15,6 @@ namespace _Project.Tests.Core.Services
         [Header("Test Configuration")]
         [SerializeField] private bool runTestOnStart = false;
         [SerializeField] private bool enableDetailedLogs = true;
-        [SerializeField] private bool testAutomaticMode = false;
-        [SerializeField] private float acceleratedTimeMultiplier = 100f; // テスト時間を短縮
 
         [Header("Test Results")]
         [SerializeField] private bool migrationSchedulerTestPassed;
@@ -200,9 +198,9 @@ namespace _Project.Tests.Core.Services
             try
             {
                 // 初期フラグ状態の記録
-                bool initialAudioService = FeatureFlags.UseNewAudioService;
-                bool initialSpatialService = FeatureFlags.UseNewSpatialService;
-                bool initialStealthService = FeatureFlags.UseNewStealthService;
+                bool initialAudioService = asterivo.Unity60.Core.FeatureFlags.UseNewAudioService;
+                bool initialSpatialService = asterivo.Unity60.Core.FeatureFlags.UseNewSpatialService;
+                bool initialStealthService = asterivo.Unity60.Core.FeatureFlags.UseNewStealthService;
 
                 // Day 1-2 設定をテスト
                 var day12Config = new MigrationScheduler.PhaseConfiguration
@@ -230,9 +228,9 @@ namespace _Project.Tests.Core.Services
             try
             {
                 // フラグ状態の確認
-                audioServiceSet = FeatureFlags.UseNewAudioService == true;
-                spatialServiceSet = FeatureFlags.UseNewSpatialService == false;
-                stealthServiceSet = FeatureFlags.UseNewStealthService == false;
+                audioServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewAudioService == true;
+                spatialServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewSpatialService == false;
+                stealthServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewStealthService == false;
 
                 // Day 4 設定をテスト
                 var day4Config = new MigrationScheduler.PhaseConfiguration
@@ -260,14 +258,14 @@ namespace _Project.Tests.Core.Services
             try
             {
                 // 最終状態の確認
-                finalAudioServiceSet = FeatureFlags.UseNewAudioService == true;
-                finalSpatialServiceSet = FeatureFlags.UseNewSpatialService == true;
-                finalStealthServiceSet = FeatureFlags.UseNewStealthService == true;
+                finalAudioServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewAudioService == true;
+                finalSpatialServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewSpatialService == true;
+                finalStealthServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewStealthService == true;
 
                 // フラグ状態の確認
-                audioServiceSet = FeatureFlags.UseNewAudioService == true;
-                spatialServiceSet = FeatureFlags.UseNewSpatialService == false;
-                stealthServiceSet = FeatureFlags.UseNewStealthService == false;
+                audioServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewAudioService == true;
+                spatialServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewSpatialService == false;
+                stealthServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewStealthService == false;
 
                 // Day 4 設定をテスト
                 var day4Config = new MigrationScheduler.PhaseConfiguration
@@ -293,9 +291,9 @@ namespace _Project.Tests.Core.Services
             yield return new WaitForSeconds(0.2f);
 
             // 最終状態の確認
-            finalAudioServiceSet = FeatureFlags.UseNewAudioService == true;
-            finalSpatialServiceSet = FeatureFlags.UseNewSpatialService == true;
-            finalStealthServiceSet = FeatureFlags.UseNewStealthService == true;
+            finalAudioServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewAudioService == true;
+            finalSpatialServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewSpatialService == true;
+            finalStealthServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewStealthService == true;
 
             // 結果判定
             featureFlagSchedulerTestPassed = audioServiceSet && spatialServiceSet && stealthServiceSet &&
@@ -380,7 +378,6 @@ namespace _Project.Tests.Core.Services
         {
             LogTest("[TEST 4] Testing Integrated Schedule...");
 
-            bool hasError = false;
             System.Exception caughtException = null;
 
             // 統合テストの実行 - yield return は try-catch の外で実行
@@ -480,20 +477,20 @@ namespace _Project.Tests.Core.Services
             switch (phase)
             {
                 case MigrationScheduler.MigrationPhase.Day1_2_Staging:
-                    return FeatureFlags.UseNewAudioService == true &&
-                           FeatureFlags.UseNewSpatialService == false &&
-                           FeatureFlags.UseNewStealthService == false;
+                    return asterivo.Unity60.Core.FeatureFlags.UseNewAudioService == true &&
+                           asterivo.Unity60.Core.FeatureFlags.UseNewSpatialService == false &&
+                           asterivo.Unity60.Core.FeatureFlags.UseNewStealthService == false;
 
                 case MigrationScheduler.MigrationPhase.Day3_SpatialEnabled:
-                    return FeatureFlags.UseNewAudioService == true &&
-                           FeatureFlags.UseNewSpatialService == true &&
-                           FeatureFlags.UseNewStealthService == false;
+                    return asterivo.Unity60.Core.FeatureFlags.UseNewAudioService == true &&
+                           asterivo.Unity60.Core.FeatureFlags.UseNewSpatialService == true &&
+                           asterivo.Unity60.Core.FeatureFlags.UseNewStealthService == false;
 
                 case MigrationScheduler.MigrationPhase.Day4_StealthEnabled:
                 case MigrationScheduler.MigrationPhase.Day5_Validation:
-                    return FeatureFlags.UseNewAudioService == true &&
-                           FeatureFlags.UseNewSpatialService == true &&
-                           FeatureFlags.UseNewStealthService == true;
+                    return asterivo.Unity60.Core.FeatureFlags.UseNewAudioService == true &&
+                           asterivo.Unity60.Core.FeatureFlags.UseNewSpatialService == true &&
+                           asterivo.Unity60.Core.FeatureFlags.UseNewStealthService == true;
 
                 default:
                     return false;
@@ -530,12 +527,15 @@ namespace _Project.Tests.Core.Services
 
             if (allTestsPassed)
             {
-                EventLogger.Log("🎉 [SCHEDULE TEST] Step 3.7 Gradual Activation Schedule is working correctly!");
+                EventLogger.LogStatic("🎉 [SCHEDULE TEST] Step 3.7 Gradual Activation Schedule is working correctly!");
             }
             else
+            // Intentional test of deprecated EventLogger static method
+#pragma warning disable CS0618
             {
-                EventLogger.LogError("❌ [SCHEDULE TEST] Some Step 3.7 schedule components need attention.");
+                EventLogger.LogErrorStatic("❌ [SCHEDULE TEST] Some Step 3.7 schedule components need attention.");
             }
+#pragma warning restore CS0618
         }
 
         #endregion
@@ -576,12 +576,12 @@ namespace _Project.Tests.Core.Services
         public void ReportCurrentFeatureFlags()
         {
             LogTest("=== Current FeatureFlags State ===");
-            LogTest($"UseServiceLocator: {FeatureFlags.UseServiceLocator}");
-            LogTest($"UseNewAudioService: {FeatureFlags.UseNewAudioService}");
-            LogTest($"UseNewSpatialService: {FeatureFlags.UseNewSpatialService}");
-            LogTest($"UseNewStealthService: {FeatureFlags.UseNewStealthService}");
-            LogTest($"AllowSingletonFallback: {FeatureFlags.AllowSingletonFallback}");
-            LogTest($"EnablePerformanceMonitoring: {FeatureFlags.EnablePerformanceMonitoring}");
+            LogTest($"UseServiceLocator: {asterivo.Unity60.Core.FeatureFlags.UseServiceLocator}");
+            LogTest($"UseNewAudioService: {asterivo.Unity60.Core.FeatureFlags.UseNewAudioService}");
+            LogTest($"UseNewSpatialService: {asterivo.Unity60.Core.FeatureFlags.UseNewSpatialService}");
+            LogTest($"UseNewStealthService: {asterivo.Unity60.Core.FeatureFlags.UseNewStealthService}");
+            LogTest($"AllowSingletonFallback: {asterivo.Unity60.Core.FeatureFlags.AllowSingletonFallback}");
+            LogTest($"EnablePerformanceMonitoring: {asterivo.Unity60.Core.FeatureFlags.EnablePerformanceMonitoring}");
         }
 
         /// <summary>
@@ -636,7 +636,7 @@ namespace _Project.Tests.Core.Services
         {
             if (enableDetailedLogs)
             {
-                EventLogger.Log($"[SCHEDULE_TEST] {message}");
+                EventLogger.LogStatic($"[SCHEDULE_TEST] {message}");
             }
         }
 

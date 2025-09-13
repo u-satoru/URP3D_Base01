@@ -2,11 +2,11 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
-using _Project.Core;
-using _Project.Core.Services;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Audio.Interfaces;
 
-namespace _Project.Tests.Core.Services
+namespace asterivo.Unity60.Tests.Core.Services
 {
     /// <summary>
     /// MigrationValidatorの包括的テスト
@@ -74,8 +74,6 @@ namespace _Project.Tests.Core.Services
             Object.DestroyImmediate(testObject);
             testObject = new GameObject("MigrationValidatorTestRunOnStart");
             
-            bool startValidationExecuted = false;
-
             // Act
             var validator = testObject.AddComponent<MigrationValidator>();
             

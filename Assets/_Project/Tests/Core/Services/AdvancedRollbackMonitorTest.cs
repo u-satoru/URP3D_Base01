@@ -2,10 +2,10 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
-using _Project.Core;
-using _Project.Core.Services;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Services;
 
-namespace _Project.Tests.Core.Services
+namespace asterivo.Unity60.Tests.Core.Services
 {
     /// <summary>
     /// Step 3.12: 高度な緊急時ロールバック監視システムのテスト
@@ -24,10 +24,10 @@ namespace _Project.Tests.Core.Services
         public void Setup()
         {
             // 元のFeatureFlags設定を保存
-            originalUseNewAudioService = FeatureFlags.UseNewAudioService;
-            originalUseNewSpatialService = FeatureFlags.UseNewSpatialService;
-            originalUseNewStealthService = FeatureFlags.UseNewStealthService;
-            originalEnableMigrationMonitoring = FeatureFlags.EnableMigrationMonitoring;
+            originalUseNewAudioService = asterivo.Unity60.Core.FeatureFlags.UseNewAudioService;
+            originalUseNewSpatialService = asterivo.Unity60.Core.FeatureFlags.UseNewSpatialService;
+            originalUseNewStealthService = asterivo.Unity60.Core.FeatureFlags.UseNewStealthService;
+            originalEnableMigrationMonitoring = asterivo.Unity60.Core.FeatureFlags.EnableMigrationMonitoring;
 
             // テスト用のAdvancedRollbackMonitorを作成
             monitorObject = new GameObject("AdvancedRollbackMonitorTest");

@@ -94,7 +94,7 @@ namespace asterivo.Unity60.Core.Editor
             // 統計情報の定期更新
             if (Time.realtimeSinceStartup >= nextStatsUpdate)
             {
-                lastStatistics = EventLogger.GetStatistics();
+                lastStatistics = EventLogger.GetStatisticsStatic();
                 nextStatsUpdate = Time.realtimeSinceStartup + STATS_UPDATE_INTERVAL;
             }
         }
@@ -119,7 +119,7 @@ namespace asterivo.Unity60.Core.Editor
             // 基本操作ボタン
             if (GUILayout.Button("🗑️ Clear", EditorStyles.toolbarButton))
             {
-                EventLogger.ClearLog();
+                EventLogger.ClearLogStatic();
             }
             
             if (GUILayout.Button("📊 Export CSV", EditorStyles.toolbarButton))
@@ -169,12 +169,13 @@ namespace asterivo.Unity60.Core.Editor
                 EditorGUILayout.LabelField($"Errors: {lastStatistics.errorCount}", errorStyle, GUILayout.Width(70));
             }
             
-            EditorGUILayout.LabelField($"Types: {lastStatistics.uniqueEventTypes}", GUILayout.Width(70));
+            EditorGUILayout.LabelField($"Types: {lastStatistics.eventCounts.Count}", GUILayout.Width(70));
             EditorGUILayout.EndHorizontal();
             
-            if (!string.IsNullOrEmpty(lastStatistics.mostFrequentEvent))
+            if (lastStatistics.eventCounts.Count > 0)
             {
-                EditorGUILayout.LabelField($"Most Frequent: {lastStatistics.mostFrequentEvent} ({lastStatistics.mostFrequentEventCount}x)", EditorStyles.miniLabel);
+                var mostFrequent = lastStatistics.eventCounts.OrderByDescending(kvp => kvp.Value).First();
+                EditorGUILayout.LabelField($"Most Frequent: {mostFrequent.Key} ({mostFrequent.Value}x)", EditorStyles.miniLabel);
             }
             
             EditorGUILayout.EndVertical();
@@ -211,7 +212,7 @@ namespace asterivo.Unity60.Core.Editor
             
             // 利用可能なイベントタイプを収集
             var availableTypes = new HashSet<string>();
-            foreach (var entry in EventLogger.EventLog)
+            foreach (var entry in EventLogger.EventLogStatic)
             {
                 availableTypes.Add(entry.eventName);
             }
@@ -267,7 +268,7 @@ namespace asterivo.Unity60.Core.Editor
         {
             var filteredLog = GetFilteredLog();
             
-            EditorGUILayout.LabelField($"Showing {filteredLog.Count} / {EventLogger.EventLog.Count} entries", EditorStyles.miniLabel);
+            EditorGUILayout.LabelField($"Showing {filteredLog.Count} / {EventLogger.EventLogStatic.Count} entries", EditorStyles.miniLabel);
             
             scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
             
@@ -304,7 +305,7 @@ namespace asterivo.Unity60.Core.Editor
                     GUI.backgroundColor = new Color(1f, 0.3f, 0.3f, 0.3f);
                     break;
                 default:
-                    GUI.backgroundColor = entry.displayColor * 0.3f;
+                    GUI.backgroundColor = new Color(0.8f, 0.8f, 0.8f, 0.3f); // Default color for Info level
                     break;
             }
             
@@ -337,25 +338,15 @@ namespace asterivo.Unity60.Core.Editor
             EditorGUILayout.EndHorizontal();
             
             // ペイロード表示
-            if (showPayload && !string.IsNullOrEmpty(entry.payloadData))
+            if (showPayload && !string.IsNullOrEmpty(entry.payload))
             {
                 EditorGUI.indentLevel++;
-                EditorGUILayout.LabelField($"Payload: {entry.payloadData}", EditorStyles.wordWrappedMiniLabel);
+                EditorGUILayout.LabelField($"Payload: {entry.payload}", EditorStyles.wordWrappedMiniLabel);
                 EditorGUI.indentLevel--;
             }
             
-            // スタックトレース表示
-            if (showStackTrace && !string.IsNullOrEmpty(entry.stackTrace))
-            {
-                EditorGUI.indentLevel++;
-                EditorGUILayout.LabelField("Stack Trace:", EditorStyles.miniLabel);
-                var lines = entry.stackTrace.Split('\n');
-                for (int i = 0; i < Mathf.Min(lines.Length, 3); i++) // 最初の3行のみ
-                {
-                    EditorGUILayout.LabelField(lines[i], EditorStyles.wordWrappedMiniLabel);
-                }
-                EditorGUI.indentLevel--;
-            }
+            // Stack trace not available in current EventLogEntry structure
+            // TODO: Implement stack trace collection if needed for debugging
             
             EditorGUILayout.EndVertical();
             
@@ -364,7 +355,7 @@ namespace asterivo.Unity60.Core.Editor
         
         private List<EventLogger.EventLogEntry> GetFilteredLog()
         {
-            var log = isPaused ? EventLogger.EventLog.ToList() : EventLogger.EventLog;
+            var log = isPaused ? EventLogger.EventLogStatic.ToList() : EventLogger.EventLogStatic;
             var filtered = new List<EventLogger.EventLogEntry>();
             
             foreach (var entry in log)
@@ -376,7 +367,7 @@ namespace asterivo.Unity60.Core.Editor
                 if (!string.IsNullOrEmpty(searchFilter))
                 {
                     bool matchesSearch = entry.eventName.ToLower().Contains(searchFilter.ToLower()) ||
-                                       entry.payloadData.ToLower().Contains(searchFilter.ToLower());
+                                       entry.payload.ToLower().Contains(searchFilter.ToLower());
                     if (!matchesSearch) continue;
                 }
                 
@@ -408,16 +399,16 @@ namespace asterivo.Unity60.Core.Editor
             string path = EditorUtility.SaveFilePanel("Export Event Log", "", "EventLog.csv", "csv");
             if (!string.IsNullOrEmpty(path))
             {
-                EventLogger.ExportToCSV(path);
+                EventLogger.ExportToCSVStatic(path);
             }
         }
         
         private void CopyEntryToClipboard(EventLogger.EventLogEntry entry)
         {
             string text = $"[{entry.timestamp:F2}s] [{entry.level}] {entry.eventName} ({entry.listenerCount} listeners)";
-            if (!string.IsNullOrEmpty(entry.payloadData))
+            if (!string.IsNullOrEmpty(entry.payload))
             {
-                text += $" - {entry.payloadData}";
+                text += $" - {entry.payload}";
             }
             
             GUIUtility.systemCopyBuffer = text;
@@ -432,9 +423,9 @@ namespace asterivo.Unity60.Core.Editor
             foreach (var entry in filteredLog)
             {
                 text += $"[{entry.timestamp:F2}s] [{entry.level}] {entry.eventName} ({entry.listenerCount} listeners)";
-                if (!string.IsNullOrEmpty(entry.payloadData))
+                if (!string.IsNullOrEmpty(entry.payload))
                 {
-                    text += $" - {entry.payloadData}";
+                    text += $" - {entry.payload}";
                 }
                 text += "\n";
             }

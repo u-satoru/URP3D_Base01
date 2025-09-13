@@ -1,7 +1,7 @@
 using UnityEngine;
-using _Project.Core;
+using asterivo.Unity60.Core;
 
-namespace _Project.Tests
+namespace asterivo.Unity60.Tests
 {
     /// <summary>
     /// Task 4: DisableLegacySingletons段階的有効化 の実行テスト

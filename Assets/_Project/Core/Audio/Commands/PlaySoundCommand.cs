@@ -1,6 +1,7 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Audio.Data;
+using asterivo.Unity60.Core.Debug;
 
 namespace asterivo.Unity60.Core.Audio.Commands
 {
@@ -55,7 +56,7 @@ namespace asterivo.Unity60.Core.Audio.Commands
             if (audioSource == null || soundData == null)
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogWarning("[PlaySoundCommand] AudioSource または SoundData が null です");
+                ProjectDebug.LogWarning("[PlaySoundCommand] AudioSource または SoundData が null です");
 #endif
                 return;
             }
@@ -174,7 +175,7 @@ namespace asterivo.Unity60.Core.Audio.Commands
         /// </summary>
         private void LogPlayback()
         {
-            UnityEngine.Debug.Log($"<color=cyan>[PlaySoundCommand]</color> Playing '{soundData.SoundID}' " +
+            ProjectDebug.Log($"<color=cyan>[PlaySoundCommand]</color> Playing '{soundData.SoundID}' " +
                      $"at {audioData.worldPosition} | Volume: {audioSource.volume:F2} | " +
                      $"Surface: {audioData.surfaceType} | Hearing Radius: {audioData.hearingRadius:F1}m");
         }

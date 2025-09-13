@@ -177,19 +177,19 @@ namespace asterivo.Unity60.Core.Lifecycle
         private void Log(string message)
         {
             if (enableDebugLog)
-                EventLogger.Log($"[ComponentLifecycleManager] {message}");
+                EventLogger.LogStatic($"[ComponentLifecycleManager] {message}");
         }
         
         private void LogWarning(string message)
         {
             if (enableDebugLog)
-                EventLogger.LogWarning($"[ComponentLifecycleManager] {message}");
+                EventLogger.LogWarningStatic($"[ComponentLifecycleManager] {message}");
         }
         
         private void LogError(string message)
         {
             if (enableDebugLog)
-                EventLogger.LogError($"[ComponentLifecycleManager] {message}");
+                EventLogger.LogErrorStatic($"[ComponentLifecycleManager] {message}");
         }
         #endregion
     }

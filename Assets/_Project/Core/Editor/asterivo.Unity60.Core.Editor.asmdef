@@ -2,7 +2,9 @@
     "name": "asterivo.Unity60.Core.Editor",
     "rootNamespace": "asterivo.Unity60.Core.Editor",
     "references": [
-        "asterivo.Unity60.Core"
+        "GUID:e1d2c191d72ab8740bb4719ed7fe849d",
+        "UnityEditor",
+        "UnityEngine"
     ],
     "includePlatforms": [
         "Editor"
@@ -11,7 +13,7 @@
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

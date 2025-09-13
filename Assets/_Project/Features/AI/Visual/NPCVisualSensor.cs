@@ -108,6 +108,11 @@ namespace asterivo.Unity60.Features.AI.Visual
         [LabelText("Detection Configuration")]
         [SerializeField] private DetectionConfiguration detectionConfig;
         
+        [BoxGroup("Detection/Components/Required")]
+        [Required]
+        [LabelText("Player Transform")]
+        [SerializeField] private Transform playerTransform;
+        
         [BoxGroup("Detection/Components/Settings")]
         [LabelText("Visual Sensor Settings")]
         [InfoBox("Optional: システム全体の設定を統一管理する場合に使用")]
@@ -226,7 +231,7 @@ namespace asterivo.Unity60.Features.AI.Visual
         private AlertLevel previousAlertLevel;
         
         // AI State Machine連動
-        private asterivo.Unity60.AI.States.AIStateMachine aiStateMachine;
+        private asterivo.Unity60.Features.AI.States.AIStateMachine aiStateMachine;
         
         // イベント発行用
         [Header("AI Integration")]
@@ -306,7 +311,7 @@ namespace asterivo.Unity60.Features.AI.Visual
         private void InitializeModules()
         {
             // AI State Machineの取得
-            aiStateMachine = GetComponent<asterivo.Unity60.AI.States.AIStateMachine>();
+            aiStateMachine = GetComponent<asterivo.Unity60.Features.AI.States.AIStateMachine>();
             if (aiStateMachine == null)
             {
                 Debug.LogWarning($"[NPCVisualSensor] {gameObject.name}: AIStateMachine component not found!");
@@ -699,10 +704,9 @@ namespace asterivo.Unity60.Features.AI.Visual
         private void FindPotentialTargets()
         {
             potentialTargets.Clear();
-            var playerObject = GameObject.FindGameObjectWithTag("Player");
-            if (playerObject != null)
+            if (playerTransform != null)
             {
-                potentialTargets.Add(playerObject.transform);
+                potentialTargets.Add(playerTransform);
             }
             
             var allNPCs = GameObject.FindGameObjectsWithTag("NPC");

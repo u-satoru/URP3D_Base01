@@ -1,11 +1,10 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
-using _Project.Core;
-using _Project.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Debug;
 
-namespace _Project.Core.Services
+namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
     /// Step 3.7: 段階的移行の進行状況監視と検証機能
@@ -716,7 +715,7 @@ namespace _Project.Core.Services
         {
             if (enableDebugLogging)
             {
-                EventLogger.Log($"[MigrationProgressTracker] {message}");
+                EventLogger.LogStatic($"[MigrationProgressTracker] {message}");
             }
         }
 

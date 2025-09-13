@@ -6,7 +6,7 @@ using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Data;
 using Sirenix.OdinInspector;
 
-namespace asterivo.Unity60.AI.States
+namespace asterivo.Unity60.Features.AI.States
 {
     public class AIStateMachine : MonoBehaviour
     {

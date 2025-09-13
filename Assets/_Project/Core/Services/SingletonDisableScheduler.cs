@@ -1,9 +1,11 @@
+using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core.Debug;
 
-namespace _Project.Core.Services
+namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
     /// Step 3.10: 段階的Singleton無効化スケジュール
@@ -34,7 +36,7 @@ namespace _Project.Core.Services
                 InvokeRepeating(nameof(CheckScheduleProgression), 60f, 60f); // 1分ごとに確認
             }
             
-            EventLogger.Log($"[SingletonDisableScheduler] Started - Current Day: {currentDay}, Auto: {enableAutoProgression}");
+            EventLogger.LogStatic($"[SingletonDisableScheduler] Started - Current Day: {currentDay}, Auto: {enableAutoProgression}");
         }
         
         private void OnDestroy()
@@ -50,7 +52,7 @@ namespace _Project.Core.Services
         {
             if (currentDay != ScheduleDay.NotStarted)
             {
-                EventLogger.LogWarning($"[SingletonDisableScheduler] Schedule already started. Current day: {currentDay}");
+                EventLogger.LogWarningStatic($"[SingletonDisableScheduler] Schedule already started. Current day: {currentDay}");
                 return;
             }
             
@@ -61,7 +63,7 @@ namespace _Project.Core.Services
             ExecuteDay1Configuration();
             SaveScheduleState();
             
-            EventLogger.Log($"[SingletonDisableScheduler] Schedule started at {scheduleStartTimeString}");
+            EventLogger.LogStatic($"[SingletonDisableScheduler] Schedule started at {scheduleStartTimeString}");
         }
         
         /// <summary>
@@ -106,7 +108,7 @@ namespace _Project.Core.Services
         {
             if (targetDay <= currentDay && targetDay != ScheduleDay.NotStarted)
             {
-                EventLogger.LogWarning($"[SingletonDisableScheduler] Cannot advance to previous day. Current: {currentDay}, Target: {targetDay}");
+                EventLogger.LogWarningStatic($"[SingletonDisableScheduler] Cannot advance to previous day. Current: {currentDay}, Target: {targetDay}");
                 return;
             }
             
@@ -117,7 +119,7 @@ namespace _Project.Core.Services
             RecordDayTransition(previousDay, targetDay);
             SaveScheduleState();
             
-            EventLogger.Log($"[SingletonDisableScheduler] Advanced from {previousDay} to {targetDay}");
+            EventLogger.LogStatic($"[SingletonDisableScheduler] Advanced from {previousDay} to {targetDay}");
         }
         
         /// <summary>
@@ -125,7 +127,7 @@ namespace _Project.Core.Services
         /// </summary>
         private void ExecuteDay1Configuration()
         {
-            EventLogger.Log("[SingletonDisableScheduler] === Day 1: Warnings Enabled ===");
+            EventLogger.LogStatic("[SingletonDisableScheduler] === Day 1: Warnings Enabled ===");
             
             // テスト環境で警告システム有効化
             FeatureFlags.EnableMigrationWarnings = true;
@@ -133,11 +135,11 @@ namespace _Project.Core.Services
             
             if (isTestEnvironment)
             {
-                EventLogger.Log("[SingletonDisableScheduler] Day 1: Test environment - Migration warnings enabled");
+                EventLogger.LogStatic("[SingletonDisableScheduler] Day 1: Test environment - Migration warnings enabled");
             }
             else
             {
-                EventLogger.Log("[SingletonDisableScheduler] Day 1: Production environment - Migration warnings enabled");
+                EventLogger.LogStatic("[SingletonDisableScheduler] Day 1: Production environment - Migration warnings enabled");
             }
             
             // MigrationMonitorの統計リセット
@@ -150,7 +152,7 @@ namespace _Project.Core.Services
         /// </summary>
         private void ExecuteDay2_3Configuration()
         {
-            EventLogger.Log("[SingletonDisableScheduler] === Day 2-3: Issue Fixing Period ===");
+            EventLogger.LogStatic("[SingletonDisableScheduler] === Day 2-3: Issue Fixing Period ===");
             
             // 警告は継続、詳細な監視を開始
             FeatureFlags.EnableMigrationWarnings = true;
@@ -162,7 +164,7 @@ namespace _Project.Core.Services
             monitor?.GenerateUsageReport();
             monitor?.GenerateMigrationRecommendations();
             
-            EventLogger.Log("[SingletonDisableScheduler] Day 2-3: Focus on fixing singleton usage based on warnings");
+            EventLogger.LogStatic("[SingletonDisableScheduler] Day 2-3: Focus on fixing singleton usage based on warnings");
         }
         
         /// <summary>
@@ -170,14 +172,14 @@ namespace _Project.Core.Services
         /// </summary>
         private void ExecuteDay4Configuration()
         {
-            EventLogger.Log("[SingletonDisableScheduler] === Day 4: Singleton Disabled ===");
+            EventLogger.LogStatic("[SingletonDisableScheduler] === Day 4: Singleton Disabled ===");
             
             // 本番環境でSingleton無効化
             FeatureFlags.EnableMigrationWarnings = true; // 警告は継続
             FeatureFlags.DisableLegacySingletons = true;  // ✅ Singleton無効化
             
-            EventLogger.LogWarning("[SingletonDisableScheduler] Day 4: Legacy Singletons are now DISABLED");
-            EventLogger.LogWarning("[SingletonDisableScheduler] Day 4: All code should use ServiceLocator from now on");
+            EventLogger.LogWarningStatic("[SingletonDisableScheduler] Day 4: Legacy Singletons are now DISABLED");
+            EventLogger.LogWarningStatic("[SingletonDisableScheduler] Day 4: All code should use ServiceLocator from now on");
             
             // 最終使用状況チェック
             var monitor = FindFirstObjectByType<MigrationMonitor>();
@@ -193,7 +195,7 @@ namespace _Project.Core.Services
         /// </summary>
         private void ExecuteDay5Configuration()
         {
-            EventLogger.Log("[SingletonDisableScheduler] === Day 5: Complete Removal Preparation ===");
+            EventLogger.LogStatic("[SingletonDisableScheduler] === Day 5: Complete Removal Preparation ===");
             
             // 完全削除準備
             FeatureFlags.EnableMigrationWarnings = false; // 警告停止
@@ -203,8 +205,8 @@ namespace _Project.Core.Services
             var migrationValidator = FindFirstObjectByType<MigrationValidator>();
             migrationValidator?.ValidateMigration();
             
-            EventLogger.Log("[SingletonDisableScheduler] Day 5: Ready for complete singleton code removal");
-            EventLogger.Log("[SingletonDisableScheduler] Day 5: Migration process completed successfully");
+            EventLogger.LogStatic("[SingletonDisableScheduler] Day 5: Ready for complete singleton code removal");
+            EventLogger.LogStatic("[SingletonDisableScheduler] Day 5: Migration process completed successfully");
             
             currentDay = ScheduleDay.Completed;
         }
@@ -302,7 +304,7 @@ namespace _Project.Core.Services
         {
             if (currentDay != ScheduleDay.NotStarted && scheduleStartTime == default)
             {
-                EventLogger.LogError("[SingletonDisableScheduler] Invalid state: Schedule is started but no start time recorded");
+                EventLogger.LogErrorStatic("[SingletonDisableScheduler] Invalid state: Schedule is started but no start time recorded");
                 ResetSchedule();
             }
         }
@@ -323,7 +325,7 @@ namespace _Project.Core.Services
             FeatureFlags.DisableLegacySingletons = false;
             
             SaveScheduleState();
-            EventLogger.Log("[SingletonDisableScheduler] Schedule reset to initial state");
+            EventLogger.LogStatic("[SingletonDisableScheduler] Schedule reset to initial state");
         }
         
         /// <summary>
@@ -332,27 +334,27 @@ namespace _Project.Core.Services
         [ContextMenu("Generate Status Report")]
         public void GenerateStatusReport()
         {
-            EventLogger.Log("[SingletonDisableScheduler] === Schedule Status Report ===");
-            EventLogger.Log($"  Current Day: {currentDay}");
-            EventLogger.Log($"  Start Time: {scheduleStartTimeString}");
-            EventLogger.Log($"  Day Duration: {dayDurationHours} hours");
-            EventLogger.Log($"  Environment: {(isTestEnvironment ? "Test" : "Production")}");
-            EventLogger.Log($"  Auto Progression: {enableAutoProgression}");
+            EventLogger.LogStatic("[SingletonDisableScheduler] === Schedule Status Report ===");
+            EventLogger.LogStatic($"  Current Day: {currentDay}");
+            EventLogger.LogStatic($"  Start Time: {scheduleStartTimeString}");
+            EventLogger.LogStatic($"  Day Duration: {dayDurationHours} hours");
+            EventLogger.LogStatic($"  Environment: {(isTestEnvironment ? "Test" : "Production")}");
+            EventLogger.LogStatic($"  Auto Progression: {enableAutoProgression}");
             
             if (currentDay != ScheduleDay.NotStarted)
             {
                 TimeSpan elapsed = DateTime.Now - scheduleStartTime;
-                EventLogger.Log($"  Elapsed Time: {elapsed.TotalHours:F1} hours ({elapsed.TotalDays:F1} days)");
+                EventLogger.LogStatic($"  Elapsed Time: {elapsed.TotalHours:F1} hours ({elapsed.TotalDays:F1} days)");
                 
                 float progress = GetScheduleProgress();
-                EventLogger.Log($"  Overall Progress: {progress:F1}%");
+                EventLogger.LogStatic($"  Overall Progress: {progress:F1}%");
             }
             
-            EventLogger.Log("  Feature Flags Status:");
+            EventLogger.LogStatic("  Feature Flags Status:");
             var snapshot = GetCurrentFeatureFlagsSnapshot();
             foreach (var kvp in snapshot)
             {
-                EventLogger.Log($"    - {kvp.Key}: {kvp.Value}");
+                EventLogger.LogStatic($"    - {kvp.Key}: {kvp.Value}");
             }
         }
         

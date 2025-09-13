@@ -8,8 +8,8 @@ using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Shared;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Audio.Services;
-using asterivo.Unity60.Core.Audio.Interfaces;
-using _Project.Core;
+using asterivo.Unity60.Core.Helpers;
+using asterivo.Unity60.Core;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio
@@ -88,7 +88,7 @@ namespace asterivo.Unity60.Core.Audio
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.Log("[AudioUpdateCoordinator] Registered to ServiceLocator as IAudioUpdateService");
+                    EventLogger.LogStatic("[AudioUpdateCoordinator] Registered to ServiceLocator as IAudioUpdateService");
                 }
             }
             
@@ -109,7 +109,7 @@ namespace asterivo.Unity60.Core.Audio
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.Log("[AudioUpdateCoordinator] Unregistered from ServiceLocator");
+                    EventLogger.LogStatic("[AudioUpdateCoordinator] Unregistered from ServiceLocator");
                 }
             }
             
@@ -136,7 +136,7 @@ namespace asterivo.Unity60.Core.Audio
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.Log("[AudioUpdateCoordinator] Initialization complete");
+                EventLogger.LogStatic("[AudioUpdateCoordinator] Initialization complete");
             }
         }
 
@@ -154,7 +154,7 @@ namespace asterivo.Unity60.Core.Audio
             updateQueue = new Queue<AudioSource>();
             registeredUpdatables = new HashSet<IAudioUpdatable>();
             
-            EventLogger.Log("<color=green>[AudioUpdateCoordinator]</color> Audio update coordinator initialized");
+            EventLogger.LogStatic("<color=green>[AudioUpdateCoordinator]</color> Audio update coordinator initialized");
         }
 
         /// <summary>
@@ -162,19 +162,19 @@ namespace asterivo.Unity60.Core.Audio
         /// </summary>
         private void FindSystemReferences()
         {
-            weatherController = FindFirstObjectByType<WeatherAmbientController>();
-            timeController = FindFirstObjectByType<TimeAmbientController>();
-            maskingController = FindFirstObjectByType<MaskingEffectController>();
-            stealthCoordinator = FindFirstObjectByType<StealthAudioCoordinator>();
+            weatherController = ServiceHelper.GetServiceWithFallback<WeatherAmbientController>();
+            timeController = ServiceHelper.GetServiceWithFallback<TimeAmbientController>();
+            maskingController = ServiceHelper.GetServiceWithFallback<MaskingEffectController>();
+            stealthCoordinator = ServiceHelper.GetServiceWithFallback<StealthAudioCoordinator>();
 
             // プレイヤーTransformの検索
-            var audioListener = FindFirstObjectByType<AudioListener>();
+                        var audioListener = ServiceHelper.GetServiceWithFallback<AudioListener>();;
             if (audioListener != null)
             {
                 playerTransform = audioListener.transform;
             }
 
-            EventLogger.Log($"<color=green>[AudioUpdateCoordinator]</color> Found {GetFoundSystemsCount()} audio systems");
+            EventLogger.LogStatic($"<color=green>[AudioUpdateCoordinator]</color> Found {GetFoundSystemsCount()} audio systems");
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace asterivo.Unity60.Core.Audio
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.Log($"[AudioUpdateCoordinator] Registered updatable: {updatable.GetType().Name}");
+                    EventLogger.LogStatic($"[AudioUpdateCoordinator] Registered updatable: {updatable.GetType().Name}");
                 }
             }
         }
@@ -217,7 +217,7 @@ namespace asterivo.Unity60.Core.Audio
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.Log($"[AudioUpdateCoordinator] Unregistered updatable: {updatable.GetType().Name}");
+                    EventLogger.LogStatic($"[AudioUpdateCoordinator] Unregistered updatable: {updatable.GetType().Name}");
                 }
             }
         }
@@ -234,7 +234,7 @@ namespace asterivo.Unity60.Core.Audio
             if (coordinatedUpdateCoroutine == null)
             {
                 coordinatedUpdateCoroutine = StartCoroutine(CoordinatedUpdateLoop());
-                EventLogger.Log("<color=green>[AudioUpdateCoordinator]</color> Coordinated updates started");
+                EventLogger.LogStatic("<color=green>[AudioUpdateCoordinator]</color> Coordinated updates started");
             }
         }
 
@@ -247,7 +247,7 @@ namespace asterivo.Unity60.Core.Audio
             {
                 StopCoroutine(coordinatedUpdateCoroutine);
                 coordinatedUpdateCoroutine = null;
-                EventLogger.Log("<color=green>[AudioUpdateCoordinator]</color> Coordinated updates stopped");
+                EventLogger.LogStatic("<color=green>[AudioUpdateCoordinator]</color> Coordinated updates stopped");
             }
         }
 
@@ -330,7 +330,7 @@ namespace asterivo.Unity60.Core.Audio
                     }
                     catch (System.Exception ex)
                     {
-                        EventLogger.LogError($"[AudioUpdateCoordinator] Error updating {updatable.GetType().Name}: {ex.Message}");
+                        EventLogger.LogErrorStatic($"[AudioUpdateCoordinator] Error updating {updatable.GetType().Name}: {ex.Message}");
                     }
                 }
             }
@@ -449,7 +449,7 @@ namespace asterivo.Unity60.Core.Audio
                 }
             }
 
-            EventLogger.Log($"<color=green>[AudioUpdateCoordinator]</color> Rebuilt spatial cache: {totalManagedAudioSources} total, {activeAudioSources} active");
+            EventLogger.LogStatic($"<color=green>[AudioUpdateCoordinator]</color> Rebuilt spatial cache: {totalManagedAudioSources} total, {activeAudioSources} active");
         }
 
         /// <summary>
@@ -529,7 +529,7 @@ namespace asterivo.Unity60.Core.Audio
             syncData.currentTimeOfDay = newTimeOfDay;
 
             // 天気情報（DynamicAudioEnvironmentから取得）
-            var dynamicEnvironment = FindFirstObjectByType<DynamicAudioEnvironment>();
+            var dynamicEnvironment = ServiceHelper.GetServiceWithFallback<DynamicAudioEnvironment>();
             if (dynamicEnvironment != null)
             {
                 var (env, weather, time) = dynamicEnvironment.GetCurrentState();
@@ -551,14 +551,14 @@ namespace asterivo.Unity60.Core.Audio
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[AudioUpdateCoordinator] Failed to get audio state from service: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[AudioUpdateCoordinator] Failed to get audio state from service: {ex.Message}");
                 }
             }
             else
             {
                 // フォールバック: FindFirstObjectByType (ServiceLocator専用実装)
                 // ✅ ServiceLocator専用実装 - 直接AudioManagerを検索
-                var audioManager = FindFirstObjectByType<AudioManager>();
+                var audioManager = ServiceHelper.GetServiceWithFallback<AudioManager>();
                 if (audioManager != null)
                 {
                     try
@@ -571,12 +571,12 @@ namespace asterivo.Unity60.Core.Audio
                         
                         if (FeatureFlags.EnableDebugLogging)
                         {
-                            EventLogger.Log("[AudioUpdateCoordinator] Found AudioManager via FindFirstObjectByType");
+                            EventLogger.LogStatic("[AudioUpdateCoordinator] Found AudioManager via FindFirstObjectByType");
                         }
                     }
                     catch (System.Exception ex)
                     {
-                        EventLogger.LogError($"[AudioUpdateCoordinator] Failed to get audio state from AudioManager: {ex.Message}");
+                        EventLogger.LogErrorStatic($"[AudioUpdateCoordinator] Failed to get audio state from AudioManager: {ex.Message}");
                     }
                 }
             }
@@ -712,7 +712,7 @@ namespace asterivo.Unity60.Core.Audio
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[AudioUpdateCoordinator] Failed to get IAudioService from ServiceLocator: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[AudioUpdateCoordinator] Failed to get IAudioService from ServiceLocator: {ex.Message}");
                 }
             }
             return null;

@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using asterivo.Unity60.Core.Data;
-using asterivo.Unity60.AI.States;
+using asterivo.Unity60.Features.AI.States;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Features.AI.Visual

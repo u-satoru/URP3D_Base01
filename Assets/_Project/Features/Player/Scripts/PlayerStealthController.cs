@@ -1,10 +1,10 @@
 using UnityEngine;
-using _Project.Core;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Debug;
 using Sirenix.OdinInspector;
 
-namespace _Project.Features.Player.Scripts
+namespace asterivo.Unity60.Features.Player.Scripts
 {
     /// <summary>
     /// プレイヤーのステルス機能制御コンポーネント
@@ -99,7 +99,7 @@ namespace _Project.Features.Player.Scripts
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogError($"[PlayerStealthController] ServiceLocator initialization failed: {ex.Message}");
+                EventLogger.LogErrorStatic($"[PlayerStealthController] ServiceLocator initialization failed: {ex.Message}");
                 InitializeWithLegacyMethod();
             }
         }
@@ -133,12 +133,12 @@ namespace _Project.Features.Player.Scripts
 
                 if (FeatureFlags.EnableMigrationMonitoring)
                 {
-                    EventLogger.LogWarning("[PlayerStealthController] Using legacy Singleton access");
+                    EventLogger.LogWarningStatic("[PlayerStealthController] Using legacy Singleton access");
                 }
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogError($"[PlayerStealthController] Legacy initialization failed: {ex.Message}");
+                EventLogger.LogErrorStatic($"[PlayerStealthController] Legacy initialization failed: {ex.Message}");
             }
         }
 
@@ -149,13 +149,13 @@ namespace _Project.Features.Player.Scripts
         {
             if (audioService == null)
             {
-                EventLogger.LogError("[PlayerStealthController] Failed to get IAudioService");
+                EventLogger.LogErrorStatic("[PlayerStealthController] Failed to get IAudioService");
                 isServiceAvailable = false;
             }
 
             if (stealthAudioService == null)
             {
-                EventLogger.LogError("[PlayerStealthController] Failed to get IStealthAudioService");
+                EventLogger.LogErrorStatic("[PlayerStealthController] Failed to get IStealthAudioService");
                 isServiceAvailable = false;
             }
 
@@ -213,7 +213,7 @@ namespace _Project.Features.Player.Scripts
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[PlayerStealthController] Footstep creation failed: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[PlayerStealthController] Footstep creation failed: {ex.Message}");
                 }
             }
         }
@@ -234,7 +234,7 @@ namespace _Project.Features.Player.Scripts
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[PlayerStealthController] Stealth adjustment failed: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[PlayerStealthController] Stealth adjustment failed: {ex.Message}");
                 }
             }
         }
@@ -257,7 +257,7 @@ namespace _Project.Features.Player.Scripts
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogError($"[PlayerStealthController] Distraction creation failed: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[PlayerStealthController] Distraction creation failed: {ex.Message}");
                 }
             }
         }
@@ -306,7 +306,7 @@ namespace _Project.Features.Player.Scripts
         {
             if (!isServiceAvailable)
             {
-                EventLogger.LogError("[PlayerStealthController] Services not available for testing");
+                EventLogger.LogErrorStatic("[PlayerStealthController] Services not available for testing");
                 return;
             }
 
@@ -330,7 +330,7 @@ namespace _Project.Features.Player.Scripts
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogError($"[PlayerStealthController] ❌ Function test failed: {ex.Message}");
+                EventLogger.LogErrorStatic($"[PlayerStealthController] ❌ Function test failed: {ex.Message}");
             }
         }
 
@@ -338,7 +338,7 @@ namespace _Project.Features.Player.Scripts
         {
             if (enableDebugLogs && FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.Log(message);
+                EventLogger.LogStatic(message);
             }
         }
 

@@ -7,7 +7,7 @@ using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Audio.Interfaces;
-using _Project.Core;
+
 
 namespace asterivo.Unity60.Core.Audio
 {
@@ -51,41 +51,6 @@ namespace asterivo.Unity60.Core.Audio
         [SerializeField] private int stealthEffectPriority = 16;
         
                 
-        // Legacy Singleton support (Deprecated - 段階的移行用)
-        private static EffectManager instance;
-        
-        /// <summary>
-        /// 後方互換性のためのInstance（非推奨）
-        /// ServiceLocator.GetService<IEffectService>()を使用してください
-        /// </summary>
-        [System.Obsolete("Use ServiceLocator.GetService<IEffectService>() instead")]
-        public static EffectManager Instance 
-        {
-            get 
-            {
-                // Legacy Singleton完全無効化フラグの確認
-                if (FeatureFlags.DisableLegacySingletons) 
-                {
-                    EventLogger.LogError("[DEPRECATED] EffectManager.Instance is disabled. Use ServiceLocator.GetService<IEffectService>() instead");
-                    return null;
-                }
-                
-                // 移行警告の表示
-                if (FeatureFlags.EnableMigrationWarnings) 
-                {
-                    EventLogger.LogWarning("[DEPRECATED] EffectManager.Instance usage detected. Please migrate to ServiceLocator.GetService<IEffectService>()");
-                    
-                    // MigrationMonitorに使用状況を記録
-                    if (FeatureFlags.EnableMigrationMonitoring)
-                    {
-                        var migrationMonitor = FindFirstObjectByType<MigrationMonitor>();
-                        migrationMonitor?.LogSingletonUsage(typeof(EffectManager), "EffectManager.Instance");
-                    }
-                }
-                
-                return instance;
-            }
-        }
 // 効果音プール管理
         private Queue<AudioSource> effectSourcePool = new Queue<AudioSource>();
         private List<AudioSource> activeEffectSources = new List<AudioSource>();
@@ -108,15 +73,6 @@ namespace asterivo.Unity60.Core.Audio
         
         private void Awake()
         {
-            // Legacy Singleton初期化（段階的移行用）
-            if (instance != null && instance != this) 
-            {
-                EventLogger.LogWarning("[EffectManager] Multiple instances detected. Destroying duplicate.");
-                Destroy(gameObject);
-                return;
-            }
-            instance = this;
-            
             // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
             DontDestroyOnLoad(gameObject);
             
@@ -126,7 +82,7 @@ namespace asterivo.Unity60.Core.Audio
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.Log("[EffectManager] Registered to ServiceLocator as IEffectService");
+                    EventLogger.LogStatic("[EffectManager] Registered to ServiceLocator as IEffectService");
                 }
             }
             
@@ -140,12 +96,6 @@ namespace asterivo.Unity60.Core.Audio
         
         private void OnDestroy()
         {
-            // Legacy Singletonクリーンアップ（段階的移行用）
-            if (instance == this)
-            {
-                instance = null;
-            }
-            
             // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
             if (FeatureFlags.UseServiceLocator)
             {
@@ -153,7 +103,7 @@ namespace asterivo.Unity60.Core.Audio
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.Log("[EffectManager] Unregistered from ServiceLocator");
+                    EventLogger.LogStatic("[EffectManager] Unregistered from ServiceLocator");
                 }
             }
         }
@@ -194,7 +144,7 @@ namespace asterivo.Unity60.Core.Audio
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.Log("[EffectManager] Initialization complete");
+                EventLogger.LogStatic("[EffectManager] Initialization complete");
             }
         }
         
@@ -209,7 +159,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (!IsInitialized)
             {
-                EventLogger.LogWarning("[EffectManager] System not initialized");
+                EventLogger.LogWarningStatic("[EffectManager] System not initialized");
                 return;
             }
             
@@ -230,7 +180,7 @@ namespace asterivo.Unity60.Core.Audio
             if (!IsInitialized) return -1;
             
             // TODO: ループ効果音の実装
-            EventLogger.Log($"[EffectManager] Starting looping effect: {effectId}");
+            EventLogger.LogStatic($"[EffectManager] Starting looping effect: {effectId}");
             return 0; // 仮のID
         }
         
@@ -242,7 +192,7 @@ namespace asterivo.Unity60.Core.Audio
             if (!IsInitialized) return;
             
             // TODO: ループ効果音の停止実装
-            EventLogger.Log($"[EffectManager] Stopping looping effect: {loopId}");
+            EventLogger.LogStatic($"[EffectManager] Stopping looping effect: {loopId}");
         }
         
         /// <summary>
@@ -271,7 +221,7 @@ namespace asterivo.Unity60.Core.Audio
         public void SetEffectPitch(string effectId, float pitch)
         {
             // TODO: ピッチ設定の実装
-            EventLogger.Log($"[EffectManager] Setting pitch for {effectId}: {pitch}");
+            EventLogger.LogStatic($"[EffectManager] Setting pitch for {effectId}: {pitch}");
         }
         
         /// <summary>
@@ -282,7 +232,7 @@ namespace asterivo.Unity60.Core.Audio
             // TODO: プリロード機能の実装
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.Log($"[EffectManager] Preloading {effectIds?.Length ?? 0} effects");
+                EventLogger.LogStatic($"[EffectManager] Preloading {effectIds?.Length ?? 0} effects");
             }
         }
         
@@ -294,7 +244,7 @@ namespace asterivo.Unity60.Core.Audio
             // TODO: プールクリア機能の実装
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.Log("[EffectManager] Clearing effect pool");
+                EventLogger.LogStatic("[EffectManager] Clearing effect pool");
             }
         }
         
@@ -318,7 +268,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (!effectDatabase.ContainsKey(effectID))
             {
-                EventLogger.LogWarning($"[EffectManager] Effect '{effectID}' not found in database");
+                EventLogger.LogWarningStatic($"[EffectManager] Effect '{effectID}' not found in database");
                 return null;
             }
             
@@ -498,7 +448,7 @@ namespace asterivo.Unity60.Core.Audio
                         // 重複チェック（異なるパスに同名ファイルがある場合の処理）
                         if (effectDatabase.ContainsKey(sound.name))
                         {
-                            EventLogger.LogWarning($"[EffectManager] Duplicate effect sound found: {sound.name} in {path}");
+                            EventLogger.LogWarningStatic($"[EffectManager] Duplicate effect sound found: {sound.name} in {path}");
                             continue;
                         }
                         
@@ -522,7 +472,7 @@ namespace asterivo.Unity60.Core.Audio
             // デフォルト効果音の作成（必要最小限のサウンド）
             CreateDefaultEffectsIfNeeded();
             
-            EventLogger.Log($"[EffectManager] Loaded {totalLoaded} effect sounds from Resources. " +
+            EventLogger.LogStatic($"[EffectManager] Loaded {totalLoaded} effect sounds from Resources. " +
                           $"Total effects in database: {effectDatabase.Count}");
                           
             // デバッグ情報：利用可能な効果音リストを出力
@@ -535,7 +485,7 @@ namespace asterivo.Unity60.Core.Audio
                 {
                     sb.AppendLine($"  - {kvp.Key}");
                 }
-                EventLogger.Log(sb.ToString());
+                EventLogger.LogStatic(sb.ToString());
             }
             #endif
         }
@@ -568,13 +518,13 @@ namespace asterivo.Unity60.Core.Audio
                     effectDatabase[effectId] = defaultSound;
                     created++;
                     
-                    EventLogger.LogWarning($"[EffectManager] Created default effect: {effectId}");
+                    EventLogger.LogWarningStatic($"[EffectManager] Created default effect: {effectId}");
                 }
             }
             
             if (created > 0)
             {
-                EventLogger.LogWarning($"[EffectManager] Created {created} default effects. " +
+                EventLogger.LogWarningStatic($"[EffectManager] Created {created} default effects. " +
                                      "Consider adding proper SoundDataSO assets for these effects.");
             }
         }
@@ -586,7 +536,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (!effectDatabase.ContainsKey(effectID))
             {
-                EventLogger.LogWarning($"[EffectManager] Effect '{effectID}' not found in database");
+                EventLogger.LogWarningStatic($"[EffectManager] Effect '{effectID}' not found in database");
                 return null;
             }
             
@@ -676,7 +626,7 @@ namespace asterivo.Unity60.Core.Audio
             }
             
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            UnityEngine.Debug.LogWarning("[EffectManager] Effect source pool exhausted");
+            ProjectDebug.LogWarning("[EffectManager] Effect source pool exhausted");
 #endif
             return null;
         }
@@ -764,7 +714,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (!effectDatabase.TryGetValue(effectName, out SoundDataSO soundData))
             {
-                EventLogger.LogError($"Effect '{effectName}' not found in database");
+                EventLogger.LogErrorStatic($"Effect '{effectName}' not found in database");
                 return;
             }
 
@@ -794,7 +744,7 @@ namespace asterivo.Unity60.Core.Audio
             StartCoroutine(ReturnToPoolWhenFinished(audioSource, soundData.GetRandomClip().length));
 
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            EventLogger.Log($"Playing effect: {effectName} ({effectType}) with priority: {audioSource.priority}");
+            EventLogger.LogStatic($"Playing effect: {effectName} ({effectType}) with priority: {audioSource.priority}");
             #endif
         }
         

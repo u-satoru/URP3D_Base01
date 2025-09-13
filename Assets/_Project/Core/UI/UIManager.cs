@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Core.Debug;
 using Sirenix.OdinInspector;
 using DG.Tweening;
 
@@ -193,7 +194,7 @@ namespace asterivo.Unity60.Core.UI
             if (!panelDictionary.ContainsKey(panelName))
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogWarning($"UIManager: Panel '{panelName}' not found!");
+                ProjectDebug.LogWarning($"UIManager: Panel '{panelName}' not found!");
 #endif
                 return;
             }
@@ -230,7 +231,7 @@ namespace asterivo.Unity60.Core.UI
             });
             
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            UnityEngine.Debug.Log($"UIManager: Showed panel '{panel.panelName}'");
+            ProjectDebug.Log($"UIManager: Showed panel '{panel.panelName}'");
 #endif
         }
         
@@ -285,7 +286,7 @@ namespace asterivo.Unity60.Core.UI
             }
             
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            UnityEngine.Debug.Log($"UIManager: Hidden panel '{panel.panelName}'");
+            ProjectDebug.Log($"UIManager: Hidden panel '{panel.panelName}'");
 #endif
         }
         
@@ -307,7 +308,7 @@ namespace asterivo.Unity60.Core.UI
             panelHistory.Clear();
             
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            UnityEngine.Debug.Log("UIManager: Hidden all panels");
+            ProjectDebug.Log("UIManager: Hidden all panels");
 #endif
         }
         

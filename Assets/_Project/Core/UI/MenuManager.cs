@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Core.Debug;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
@@ -543,7 +544,7 @@ namespace asterivo.Unity60.Core.UI
             string previousMenu = currentMenu;
             currentMenu = newMenu;
             
-            UnityEngine.Debug.Log($"Menu changed: {previousMenu} -> {newMenu}");
+            ProjectDebug.Log($"Menu changed: {previousMenu} -> {newMenu}");
         }
         
         
@@ -638,7 +639,7 @@ namespace asterivo.Unity60.Core.UI
         public void ClearMenuHistory()
         {
             menuHistory.Clear();
-            UnityEngine.Debug.Log("Menu history cleared");
+            ProjectDebug.Log("Menu history cleared");
         }
         
         /// <summary>

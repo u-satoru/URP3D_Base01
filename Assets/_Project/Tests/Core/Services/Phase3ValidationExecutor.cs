@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
-using _Project.Core.Services;
-using _Project.Core;
+using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using System.Collections.Generic;
 
 namespace asterivo.Unity60.Tests.Core.Services
@@ -136,20 +136,20 @@ namespace asterivo.Unity60.Tests.Core.Services
             try
             {
                 // MigrationMonitorが正常に動作することを確認
-                var monitor = new _Project.Core.Services.MigrationMonitor();
+                var monitor = new asterivo.Unity60.Core.Services.MigrationMonitor();
                 if (monitor == null)
                 {
                     throw new System.Exception("MigrationMonitorが初期化されていません");
                 }
                 
                 // FeatureFlagsが正しく設定されていることを確認
-                var enableWarningsProperty = typeof(FeatureFlags).GetProperty("EnableMigrationWarnings");
+                var enableWarningsProperty = typeof(asterivo.Unity60.Core.FeatureFlags).GetProperty("EnableMigrationWarnings");
                 if (enableWarningsProperty == null)
                 {
                     throw new System.Exception("FeatureFlags.EnableMigrationWarningsプロパティが存在しません");
                 }
                 
-                var disableLegacyProperty = typeof(FeatureFlags).GetProperty("DisableLegacySingletons");
+                var disableLegacyProperty = typeof(asterivo.Unity60.Core.FeatureFlags).GetProperty("DisableLegacySingletons");
                 if (disableLegacyProperty == null)
                 {
                     throw new System.Exception("FeatureFlags.DisableLegacySingletonsプロパティが存在しません");
@@ -181,7 +181,7 @@ namespace asterivo.Unity60.Tests.Core.Services
                 }
                 
                 // ScheduleDayが正しく定義されていることを確認
-                var schedulerType = typeof(_Project.Core.Services.SingletonDisableScheduler);
+                var schedulerType = typeof(asterivo.Unity60.Core.Services.SingletonDisableScheduler);
                 var scheduleEnumType = schedulerType.GetNestedType("ScheduleDay");
                 if (scheduleEnumType == null)
                 {

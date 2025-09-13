@@ -34,17 +34,6 @@ namespace asterivo.Unity60.Core.Player
         Dead           // 死亡
     }
     
-    /// <summary>
-    /// ゲームの状態定義
-    /// </summary>
-    [Serializable]
-    public enum GameState
-    {
-        MainMenu,   // メインメニュー
-        Loading,    // ローディング
-        Playing,    // ゲームプレイ中
-        Paused,     // 一時停止
-        GameOver,   // ゲームオーバー
-        Victory     // 勝利
-    }
+    // GameState enumは asterivo.Unity60.Core.Audio.AudioManager.cs で定義されています
+    // このファイルはPlayerState専用です
 }

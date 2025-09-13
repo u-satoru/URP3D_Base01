@@ -7,7 +7,7 @@ using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Shared;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Debug;
-using _Project.Core;
+
 
 namespace asterivo.Unity60.Core.Audio
 {
@@ -20,40 +20,8 @@ namespace asterivo.Unity60.Core.Audio
     public class SpatialAudioManager : MonoBehaviour, ISpatialAudioService, IInitializable
     {
         // ✅ Task 3: Legacy Singleton警告システム（後方互換性のため）
-        private static SpatialAudioManager instance;
+        
 
-        /// <summary>
-        /// 後方互換性のためのInstance（非推奨）
-        /// ServiceLocator.GetService<ISpatialAudioService>()を使用してください
-        /// </summary>
-        [System.Obsolete("Use ServiceLocator.GetService<ISpatialAudioService>() instead")]
-        public static SpatialAudioManager Instance 
-        {
-            get 
-            {
-                // Legacy Singleton完全無効化フラグの確認
-                if (FeatureFlags.DisableLegacySingletons) 
-                {
-                    EventLogger.LogError("[DEPRECATED] SpatialAudioManager.Instance is disabled. Use ServiceLocator.GetService<ISpatialAudioService>() instead");
-                    return null;
-                }
-                
-                // 移行警告の表示
-                if (FeatureFlags.EnableMigrationWarnings) 
-                {
-                    EventLogger.LogWarning("[DEPRECATED] SpatialAudioManager.Instance usage detected. Please migrate to ServiceLocator.GetService<ISpatialAudioService>()");
-                    
-                    // MigrationMonitorに使用状況を記録
-                    if (FeatureFlags.EnableMigrationMonitoring)
-                    {
-                        var migrationMonitor = FindFirstObjectByType<MigrationMonitor>();
-                        migrationMonitor?.LogSingletonUsage(typeof(SpatialAudioManager), "SpatialAudioManager.Instance");
-                    }
-                }
-                
-                return instance;
-            }
-        }
 
         [Header("Audio Manager Settings")]
         [SerializeField] private AudioMixer mainMixer;
@@ -100,7 +68,7 @@ namespace asterivo.Unity60.Core.Audio
         private void Awake()
         {
             // ✅ Task 3: Legacy Singleton警告システム用のinstance設定
-            instance = this;
+            
             
             DontDestroyOnLoad(gameObject);
             
@@ -111,12 +79,12 @@ namespace asterivo.Unity60.Core.Audio
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.Log("[SpatialAudioManager] Registered to ServiceLocator as ISpatialAudioService");
+                    EventLogger.LogStatic("[SpatialAudioManager] Registered to ServiceLocator as ISpatialAudioService");
                 }
             }
             else
             {
-                EventLogger.LogWarning("[SpatialAudioManager] ServiceLocator is disabled - service not registered");
+                EventLogger.LogWarningStatic("[SpatialAudioManager] ServiceLocator is disabled - service not registered");
             }
             
             InitializeAudioSourcePool();
@@ -138,7 +106,7 @@ namespace asterivo.Unity60.Core.Audio
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.Log("[SpatialAudioManager] Unregistered from ServiceLocator");
+                    EventLogger.LogStatic("[SpatialAudioManager] Unregistered from ServiceLocator");
                 }
             }
         }
@@ -163,7 +131,7 @@ namespace asterivo.Unity60.Core.Audio
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.Log("[SpatialAudioManager] Initialization complete (Legacy)");
+                EventLogger.LogStatic("[SpatialAudioManager] Initialization complete (Legacy)");
             }
         }
         
@@ -178,7 +146,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (!IsInitialized)
             {
-                EventLogger.LogWarning("[SpatialAudioManager] System not initialized");
+                EventLogger.LogWarningStatic("[SpatialAudioManager] System not initialized");
                 return;
             }
             
@@ -198,7 +166,7 @@ namespace asterivo.Unity60.Core.Audio
             if (!IsInitialized || source == null) return;
             
             // TODO: 移動する音源の実装
-            EventLogger.Log($"[SpatialAudioManager] Creating moving sound: {soundId}");
+            EventLogger.LogStatic($"[SpatialAudioManager] Creating moving sound: {soundId}");
         }
         
         /// <summary>
@@ -209,7 +177,7 @@ namespace asterivo.Unity60.Core.Audio
             if (!IsInitialized) return;
             
             // TODO: 環境音の実装
-            EventLogger.Log($"[SpatialAudioManager] Setting ambient sound: {soundId}");
+            EventLogger.LogStatic($"[SpatialAudioManager] Setting ambient sound: {soundId}");
         }
         
         /// <summary>
@@ -229,7 +197,7 @@ namespace asterivo.Unity60.Core.Audio
             if (!IsInitialized) return;
             
             // TODO: リバーブゾーンの実装
-            EventLogger.Log($"[SpatialAudioManager] Setting reverb zone: {zoneId}, level: {reverbLevel}");
+            EventLogger.LogStatic($"[SpatialAudioManager] Setting reverb zone: {zoneId}, level: {reverbLevel}");
         }
         
         /// <summary>
@@ -240,7 +208,7 @@ namespace asterivo.Unity60.Core.Audio
             if (!IsInitialized) return;
             
             // TODO: ドップラーレベルの実装
-            EventLogger.Log($"[SpatialAudioManager] Setting Doppler level: {level}");
+            EventLogger.LogStatic($"[SpatialAudioManager] Setting Doppler level: {level}");
         }
         
         /// <summary>
@@ -322,7 +290,7 @@ namespace asterivo.Unity60.Core.Audio
         /// カテゴリ対応の音響再生システム
         /// </summary>
         public AudioSource PlayCategorizedSound(SoundDataSO soundData, Vector3 position, 
-            Audio.Data.AudioCategory category, float volumeMultiplier = 1f)
+            AudioCategory category, float volumeMultiplier = 1f)
         {
             if (soundData == null) return null;
             
@@ -348,32 +316,32 @@ namespace asterivo.Unity60.Core.Audio
         /// <summary>
         /// カテゴリに応じた音響設定
         /// </summary>
-        private void SetupCategorySettings(AudioSource audioSource, Audio.Data.AudioCategory category, SoundDataSO soundData)
+        private void SetupCategorySettings(AudioSource audioSource, AudioCategory category, SoundDataSO soundData)
         {
             switch (category)
             {
-                case Audio.Data.AudioCategory.BGM:
+                case AudioCategory.BGM:
                     audioSource.outputAudioMixerGroup = bgmMixerGroup;
                     audioSource.spatialBlend = 0f; // BGMは2D音響
                     audioSource.loop = true; // BGMは基本的にループ
                     break;
                     
-                case Audio.Data.AudioCategory.Ambient:
+                case AudioCategory.Ambient:
                     audioSource.outputAudioMixerGroup = ambientMixerGroup;
                     audioSource.spatialBlend = soundData.Is3D ? soundData.SpatialBlend : 0f;
                     break;
                     
-                case Audio.Data.AudioCategory.Effect:
+                case AudioCategory.Effect:
                     audioSource.outputAudioMixerGroup = effectMixerGroup;
                     audioSource.spatialBlend = soundData.Is3D ? soundData.SpatialBlend : 0f;
                     break;
                     
-                case Audio.Data.AudioCategory.Stealth:
+                case AudioCategory.Stealth:
                     audioSource.outputAudioMixerGroup = stealthMixerGroup;
                     audioSource.spatialBlend = soundData.Is3D ? soundData.SpatialBlend : 1f;
                     break;
                     
-                case Audio.Data.AudioCategory.UI:
+                case AudioCategory.UI:
                     // UIはミキサーグループを使わない場合が多い
                     audioSource.spatialBlend = 0f; // UI音響は常に2D
                     break;
@@ -473,7 +441,7 @@ namespace asterivo.Unity60.Core.Audio
             }
             
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            UnityEngine.Debug.LogWarning("[SpatialAudioManager] オーディオソースプールが枯渇しました");
+            ProjectDebug.LogWarning("[SpatialAudioManager] オーディオソースプールが枯渇しました");
 #endif
             return null;
         }
