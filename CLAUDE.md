@@ -87,21 +87,22 @@
 ## 開発環境要件
 
 - **Command Line Interface**: PowerShell 7を使用してください。従来のコマンドプロンプト（cmd）ではなく、PowerShell 7を推奨します。これにより、最新のコマンドレット機能とUnity CLIツールとの互換性が向上します。
+- **タイムゾーン**: 日本標準時 (JST, UTC+9)
+- **日付形式**: `YYYYMMDD_HHMM`（例: `20231005_1430`）
 
 ## ディレクトリ構成
 
 -   `Assets/_Project/Core`: ゲームのコアロジック（イベント、コマンド、オーディオシステム、データ構造など）。**コアロジックは必ずこのディレクトリに配置してください**。
 -   `Assets/_Project/Features`: 各機能（プレイヤー、AI、カメラなど）の実装。**新しい機能はここに追加してください**。 **機能コードはCoreに混在させないでください**。
 -   `Assets/_Project/Tests`: ユニットテストとプレイモードテスト。 **テストコードは必ずここに配置してください**。 **テストコードはCoreやFeaturesに混在させないでください**。
--   `Assets/_Project/Scenes`: ゲームシーン。
+-   `Assets/_Project/Scenes`: ゲームシーン。 **シーンファイルは必ずここに配置してください**。
 -   `Assets/_Project/Docs`: プロジェクト関連のドキュメント（ステルスオーディオシステム仕様書、SDD実践ガイドを含む）。
--   `Assets/_Project/Works`: 作業ログ保管庫（日時フォルダ（YYYYMMDD_HHMM）で、各ファイルのスナップショットを保管します）。
+-   `Assets/_Project/Docs/Works`: 作業報告フォルダ（YYYYMMDD_HHMM）で、 @SPEC.md、@REQUIREMENTS.md、@DESIGN.md、@TASKS.md、@TODO.md など、各ファイルのスナップショットを保管します。 作業報告は `WORK_LOG.md` に記録してください。 **作業報告は必ずここに配置してください**。
 -   `Assets/_Project/Docs`: プロジェクト関連のドキュメント。 **ドキュメントは必ずここに配置してください**。
 -   `Assets/_Project/Tests`: テスト関連のファイル。 **テストコードは必ずここに配置してください**。 **テストコードはCoreやFeaturesに混在させないでください**。
--   `Assets/_Project/Logs` : ログファイル。
+-   `Assets/_Project/Logs` : システムログファイル。 **ログファイルは必ずここに配置してください**。
 -   `Assets/_Project/ThirdParty`: サードパーティ製アセットのラッピング。
 -   `Assets/Plugins`: サードパーティ製アセット。 **直接編集しないでください**。
--   `Assets/_Project/Docs/Works/` - 作業ログ保管庫（日時フォルダ（YYYYMMDD_HHMM）で、`SPEC.md`、`REQUIREMENTS.md`、`DESIGN.md`、`TASKS.md`、`TODO.md`など、各ファイルのスナップショットを保管します）。
 
 ## スペック駆動開発（SDD）の実践
 
@@ -110,11 +111,11 @@
 ### SDD Markdownファイル構成
 
 #### プロジェクトルート配置（基盤仕様書）
-- `SPEC.md` - 初期構想・要件定義（人間作成）
-- `REQUIREMENTS.md` - 形式化された要件（AI生成）
-- `DESIGN.md` - 技術設計書（AI生成）
-- `TASKS.md` - 実装タスク一覧（AI生成）
-- `TODO.md` - 進行中タスク管理（人間作成）
+- `SPEC.md` - 初期構想・要件定義（人間作成） : @SPEC.md
+- `REQUIREMENTS.md` - 形式化された要件（AI生成） : @REQUIREMENTS.md
+- `DESIGN.md` - 技術設計書（AI生成） : @DESIGN.md
+- `TASKS.md` - 実装タスク一覧（AI生成） : @TASKS.md
+- `TODO.md` - 進行中タスク管理（人間作成） : @TODO.md
 
 
 #### 作業ディレクトリ配置（実装管理）
