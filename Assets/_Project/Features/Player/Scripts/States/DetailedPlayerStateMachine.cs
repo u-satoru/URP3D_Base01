@@ -87,8 +87,8 @@ namespace asterivo.Unity60.Player.States
         private PlayerState legacyCurrentState = PlayerState.Idle;
         private PlayerState legacyPreviousState = PlayerState.Idle;
         
-        // イベントリスナー管理
-        private PlayerStateEventListener stateChangeListener;
+        // イベントリスナー管理 - 循環依存回避のため一時的にコメントアウト
+        // private PlayerStateEventListener stateChangeListener;
         
         // 状態変更イベント
         public event System.Action<PlayerState, PlayerState> OnLegacyStateChanged;
@@ -307,16 +307,17 @@ namespace asterivo.Unity60.Player.States
         /// </summary>
         private void RegisterEventListeners()
         {
-            if (legacyStateChangeRequestEvent != null)
-            {
-                stateChangeListener = gameObject.GetComponent<PlayerStateEventListener>();
-                if (stateChangeListener == null)
-                {
-                    stateChangeListener = gameObject.AddComponent<PlayerStateEventListener>();
-                }
-                stateChangeListener.GameEvent = legacyStateChangeRequestEvent;
-                stateChangeListener.Response.AddListener(OnLegacyStateChangeRequested);
-            }
+            // Temporarily disabled due to circular dependency with PlayerStateEventListener
+            // if (legacyStateChangeRequestEvent != null)
+            // {
+            //     stateChangeListener = gameObject.GetComponent<PlayerStateEventListener>();
+            //     if (stateChangeListener == null)
+            //     {
+            //         stateChangeListener = gameObject.AddComponent<PlayerStateEventListener>();
+            //     }
+            //     stateChangeListener.GameEvent = legacyStateChangeRequestEvent;
+            //     stateChangeListener.Response.AddListener(OnLegacyStateChangeRequested);
+            // }
         }
         
         /// <summary>
@@ -324,12 +325,13 @@ namespace asterivo.Unity60.Player.States
         /// </summary>
         private void UnregisterEventListeners()
         {
-            if (stateChangeListener != null)
-            {
-                stateChangeListener.Response.RemoveListener(OnLegacyStateChangeRequested);
-                Destroy(stateChangeListener);
-                stateChangeListener = null;
-            }
+            // Temporarily disabled due to circular dependency with PlayerStateEventListener
+            // if (stateChangeListener != null)
+            // {
+            //     stateChangeListener.Response.RemoveListener(OnLegacyStateChangeRequested);
+            //     Destroy(stateChangeListener);
+            //     stateChangeListener = null;
+            // }
         }
         
         /// <summary>
@@ -357,7 +359,7 @@ namespace asterivo.Unity60.Player.States
                 legacyCurrentState = newLegacyState;
                 
                 OnLegacyStateChanged?.Invoke(oldLegacyState, legacyCurrentState);
-                legacyStateChangedEvent?.Raise(legacyCurrentState);
+                legacyStateChangedEvent?.Raise((int)legacyCurrentState);
                 
                 if (enableDebugLog)
                 {

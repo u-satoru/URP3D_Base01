@@ -1,12 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
-using asterivo.Unity60.Features.AI.Visual;
-using asterivo.Unity60.Features.AI.Audio;
 using asterivo.Unity60.Core.Data;
 using CoreAlertLevel = asterivo.Unity60.Core.Data.AlertLevel;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Audio.Data;
 using Sirenix.OdinInspector;
+using asterivo.Unity60.Features.AI.Visual;
 
 namespace asterivo.Unity60.Features.AI
 {
@@ -17,16 +16,18 @@ namespace asterivo.Unity60.Features.AI
     /// </summary>
     public class NPCMultiSensorDetector : MonoBehaviour
     {
-        [TabGroup("Multi-Sensor", "Core Components")]
+        // TODO: Visual namespaceが未実装のため一時的にコメントアウト
+        // [TabGroup("Multi-Sensor", "Core Components")]
         [BoxGroup("Multi-Sensor/Core Components/Sensors")]
         [LabelText("Visual Sensor")]
         [Required]
         [SerializeField] private NPCVisualSensor visualSensor;
         
-        [BoxGroup("Multi-Sensor/Core Components/Sensors")]
-        [LabelText("Auditory Sensor")]
-        [Required]
-        [SerializeField] private NPCAuditorySensor auditorySensor;
+        // TODO: NPCAuditorySensorが未実装のため一時的にコメントアウト
+        // [BoxGroup("Multi-Sensor/Core Components/Sensors")]
+        // [LabelText("Auditory Sensor")]
+        // [Required]
+        // [SerializeField] private NPCAuditorySensor auditorySensor; // TODO: Implement NPCAuditorySensor
         
         [TabGroup("Multi-Sensor", "Integration Settings")]
         [BoxGroup("Multi-Sensor/Integration Settings/Fusion")]
@@ -138,12 +139,15 @@ namespace asterivo.Unity60.Features.AI
             if (visualSensor == null)
                 visualSensor = GetComponent<NPCVisualSensor>();
                 
+            // TODO: NPCAuditorySensorが実装されていないため、現在はコメントアウト
+            /*
             if (auditorySensor == null)
                 auditorySensor = GetComponent<NPCAuditorySensor>();
+            */
                 
-            if (visualSensor == null || auditorySensor == null)
+            if (visualSensor == null)
             {
-                Debug.LogError($"[NPCMultiSensorDetector] {gameObject.name}: Required sensor components not found!");
+                Debug.LogError($"[NPCMultiSensorDetector] {gameObject.name}: Visual sensor component not found!");
             }
         }
         
@@ -197,7 +201,7 @@ namespace asterivo.Unity60.Features.AI
         /// <summary>
         /// センサー融合処理
         /// </summary>
-        private void ProcessSensorFusion(List<Transform> visualTargets, List<DetectedSound> auditoryTargets)
+        private void ProcessSensorFusion(List<Transform> visualTargets, List<object> auditoryTargets) // TODO: Replace with proper DetectedSound type
         {
             // 既存の統合検知をリセット
             integratedDetections.Clear();
@@ -232,7 +236,9 @@ namespace asterivo.Unity60.Features.AI
                 }
             }
             
-            // 聴覚のみの検知も処理（視覚で確認できていないもの）
+            // TODO: 聴覚のみの検知も処理（視覚で確認できていないもの）
+            // NPCAuditorySensorが実装されていないため、現在はコメントアウト
+            /*
             foreach (var sound in auditoryTargets)
             {
                 if (IsPositionVisuallyDetected(sound.estimatedPosition)) continue;
@@ -255,6 +261,7 @@ namespace asterivo.Unity60.Features.AI
                     integratedDetections.Add(detection);
                 }
             }
+            */
         }
         
         /// <summary>
@@ -317,11 +324,16 @@ namespace asterivo.Unity60.Features.AI
             return targets;
         }
         
-        private List<DetectedSound> GetAuditoryDetections()
+        private List<object> GetAuditoryDetections() // TODO: Replace with proper DetectedSound type when NPCAuditorySensor is implemented
         {
+            // TODO: NPCAuditorySensorが実装されていないため、空のリストを返す
+            return new List<object>();
+            
+            /*
             if (auditorySensor == null) return new List<DetectedSound>();
             
             return auditorySensor.GetRecentSounds();
+            */
         }
         
         private float GetVisualDetectionScore(Transform target)
@@ -340,6 +352,10 @@ namespace asterivo.Unity60.Features.AI
         
         private float GetAuditoryDetectionScore(Vector3 position)
         {
+            // TODO: NPCAuditorySensorが実装されていないため、0を返す
+            return 0f;
+            
+            /*
             if (auditorySensor == null) return 0f;
             
             float maxScore = 0f;
@@ -355,6 +371,7 @@ namespace asterivo.Unity60.Features.AI
             }
             
             return maxScore;
+            */
         }
         
         private bool IsPositionVisuallyDetected(Vector3 position)
@@ -534,9 +551,12 @@ namespace asterivo.Unity60.Features.AI
             if (visualSensor != null)
                 Gizmos.DrawWireSphere(transform.position, 15f); // 視覚範囲
                 
+            // TODO: NPCAuditorySensorが実装されていないため、聴覚範囲表示をコメントアウト
+            /*
             Gizmos.color = new Color(1f, 0f, 1f, 0.3f);
             if (auditorySensor != null)
                 Gizmos.DrawWireSphere(transform.position, 10f); // 聴覚範囲
+            */
         }
         #endif
         

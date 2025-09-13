@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using asterivo.Unity60.Core;
-// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
+using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Services;
 
 namespace asterivo.Unity60.Core.Services
 {
@@ -379,7 +380,7 @@ namespace asterivo.Unity60.Core.Services
         {
             if (enableDebugLogging)
             {
-                EventLogger.LogStatic($"[FeatureFlagScheduler] {message}");
+                ServiceLocator.GetService<IEventLogger>()?.Log($"[FeatureFlagScheduler] {message}");
             }
         }
         

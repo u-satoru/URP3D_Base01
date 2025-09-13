@@ -6,7 +6,6 @@ using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core.Shared;
-using asterivo.Unity60.Core;
 
 namespace asterivo.Unity60.Tests.Integration
 {

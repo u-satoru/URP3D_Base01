@@ -6,8 +6,8 @@
 - **生成元**: REQUIREMENTS.md - Unity 6 3Dゲーム基盤プロジェクト 形式化された要件定義
 - **トレーサビリティ**: SPEC.md v3.0 究極テンプレートビジョン → REQUIREMENTS.md → 本技術設計書
 - **対象読者**: アーキテクト、シニア開発者、技術リード、実装担当者
-- **更新日**: 2025年9月（SPEC.md v3.0 + REQUIREMENTS.md 完全整合性確保更新）
-- **整合性状態**: SPEC.md v3.0 究極テンプレートビジョンとREQUIREMENTS.md との完全整合性確保済み
+- **更新日**: 2025年9月（REQUIREMENTS.md アクションRPG対応 + Core/Feature層分離強化更新）
+- **整合性状態**: CLAUDE.md、REQUIREMENTS.md（FR-5アクションRPG追加、FR番号更新済み）との完全整合性確保済み
 
 ## 設計原則とアーキテクチャビジョン
 
@@ -54,6 +54,107 @@
 - **究極テンプレート貢献**: Clone & Create 価値（1分セットアップの技術基盤）
 
 ## システムアーキテクチャ設計
+
+### アーキテクチャ分離原則（Core層とFeature層の明確な役割分担）
+
+#### Core層の責任範囲 (`Assets/_Project/Core`)
+```
+Core Layer Architecture:
+┌─────────────────────────────────────────────┐
+│                 Core Layer                   │
+│          (asterivo.Unity60.Core.*)           │
+├─────────────────────────────────────────────┤
+│ ✅ イベント駆動アーキテクチャ基盤             │
+│ ✅ コマンドパターン + ObjectPool統合          │
+│ ✅ ServiceLocator基盤                        │
+│ ✅ 基本データ構造・インターフェース           │
+│ ✅ オーディオシステム基盤                     │
+│ ✅ ステートマシン基盤                         │
+│ ✅ 共通ユーティリティ                         │
+└─────────────────────────────────────────────┘
+```
+
+#### Feature層の責任範囲 (`Assets/_Project/Features`)
+```
+Feature Layer Architecture:
+┌─────────────────────────────────────────────┐
+│                Feature Layer                 │
+│        (asterivo.Unity60.Features.*)         │
+├─────────────────────────────────────────────┤
+│ ✅ プレイヤー機能（移動、インタラクション）   │
+│ ✅ AI機能（NPCの具体的行動）                 │
+│ ✅ カメラ機能（具体的カメラ制御）             │
+│ ✅ ゲームジャンル固有機能                     │
+│ ✅ アクションRPG機能（キャラ成長、装備）     │
+│ ✅ ゲームプレイロジック                       │
+│ ❌ Core層への直接参照（禁止）                │
+└─────────────────────────────────────────────┘
+```
+
+#### 分離原則の技術実装
+- **依存関係制御**: Core層 ← Feature層（一方向依存）
+- **通信方式**: Event駆動によるCore↔Feature間の疎結合通信
+- **名前空間分離**: `asterivo.Unity60.Core.*` vs `asterivo.Unity60.Features.*`
+- **Assembly Definition分離**: Core.asmdef, Features.asmdef
+
+#### 名前空間一貫性設計（CLAUDE.md規約準拠）
+
+```
+名前空間階層設計:
+┌─────────────────────────────────────────────┐
+│ asterivo.Unity60                              │
+│ │                                           │
+│ ├── Core.*      (基盤システム、他に依存しない)   │
+│ │   ├── Events    (イベントシステム)           │
+│ │   ├── Commands  (コマンドシステム)           │
+│ │   ├── Services  (ServiceLocator)          │
+│ │   └── Audio     (オーディオ基盤)           │
+│ │                                           │
+│ ├── Features.*  (機能実装、Coreに依存)      │
+│ │   ├── Player    (プレイヤー機能)           │
+│ │   ├── AI        (AI機能)                 │
+│ │   ├── Camera    (カメラ機能)             │
+│ │   └── ActionRPG (アクションRPG機能)       │
+│ │                                           │
+│ └── Tests.*     (テスト、独立環境)          │
+│     ├── Core      (Core層テスト)            │
+│     └── Features  (Feature層テスト)        │
+└─────────────────────────────────────────────┘
+```
+
+##### 名前空間設計角を
+
+- **Root名前空間**: `asterivo.Unity60`
+  - プロジェクト統一名前空間、全システムのエントリーポイント
+  - Unity 6バージョン情報と企業名を組み合わせた一意性確保
+
+- **Core層名前空間**: `asterivo.Unity60.Core.*`
+  - 基盤システム専用、他の層に依存しない独立性確保
+  - イベント、コマンド、ServiceLocator等のアーキテクチャ核心機能
+  - 例: `asterivo.Unity60.Core.Events`, `asterivo.Unity60.Core.Commands`
+
+- **Feature層名前空間**: `asterivo.Unity60.Features.*`
+  - 機能実装専用、Core層の基盤機能を活用
+  - ゲームジャンル固有機能、プレイヤー・AI・カメラ機能
+  - 例: `asterivo.Unity60.Features.Player`, `asterivo.Unity60.Features.AI`
+
+- **Test層名前空間**: `asterivo.Unity60.Tests.*`
+  - テスト専用、独立テスト環境確保
+  - Core層・Feature層の各機能に対応したテスト構造
+  - 例: `asterivo.Unity60.Tests.Core`, `asterivo.Unity60.Tests.Features`
+
+##### 依存関係制約の強制
+
+- **Core→Feature参照禁止**: Core層はFeature層を直接参照できない
+- **Event駆動通信**: Core↔Feature間の通信はGameEvent経由のみ
+- **Assembly Definition制御**: .asmdefファイルによる依存関係のコンパイル時強制
+
+##### レガシー名前空間の段階的移行
+
+- **非推奨名前空間**: `_Project.*`の新規使用禁止
+- **移行戦略**: 既存`_Project.*`クラスを`asterivo.Unity60.*`へ段階的移行
+- **互換性維持**: 移行期間中のusingエイリアスで互換性確保
+- **最終目標**: レガシー名前空間ゼロ化、一貫性ある名前空間構造完成
 
 ### Layer 1: Core Foundation Layer（基盤層）
 
@@ -121,7 +222,15 @@ Command System Architecture:
 
 ### Layer 2: Feature System Layer（機能システム層）
 
-#### 2.1 State Machine System Design
+#### Feature層設計原則
+- **Core層基盤の活用**: Core層のイベント・コマンド・ServiceLocator基盤を利用
+- **ゲームジャンル特化**: 各ゲームジャンルに最適化された機能実装
+- **Core層非依存**: Feature間の直接参照を避け、Event駆動で連携
+
+#### 2.1 State Machine System Design（Feature層実装）
+
+**配置**: `Assets/_Project/Features/Camera`, `Assets/_Project/Features/AI`, `Assets/_Project/Features/Player`
+**名前空間**: `asterivo.Unity60.Features.Camera`, `asterivo.Unity60.Features.AI`, `asterivo.Unity60.Features.Player`
 
 ##### Camera State Machine Architecture
 
@@ -181,7 +290,13 @@ AI State System:
 - **Behavior Tree Integration**: Complex AI行動の階層的管理
 - **Memory System**: LastKnownPosition, SuspiciousEvents履歴管理
 
-#### 2.2 Stealth Audio System Design
+#### 2.2 Stealth Audio System Design（Core層基盤 + Feature層実装）
+
+**Core層**: `Assets/_Project/Core/Audio` - オーディオシステムの基盤
+**Feature層**: `Assets/_Project/Features/Stealth` - ステルス固有のオーディオ機能
+**名前空間**:
+- Core: `asterivo.Unity60.Core.Audio`
+- Feature: `asterivo.Unity60.Features.Stealth.Audio`
 
 ```
 Stealth Audio Architecture:
@@ -207,7 +322,11 @@ Stealth Audio Architecture:
 - **距離関数**: Custom曲線による現実的な音響減衰
 - **Event Integration**: プレイヤー行動イベントとの即座連動
 
-#### 2.3 AI Visual Sensor System Design（新規追加）
+#### 2.3 AI Visual Sensor System Design（Feature層実装）
+
+**配置**: `Assets/_Project/Features/AI/Sensors`
+**名前空間**: `asterivo.Unity60.Features.AI.Sensors`
+**Core層依存**: `asterivo.Unity60.Core.Events`, `asterivo.Unity60.Core.ServiceLocator`
 
 ```
 Visual Sensor Architecture:
@@ -334,9 +453,162 @@ Sensor Fusion System:
 └─────────────────────────────────────────────┘
 ```
 
+#### 2.4 Action RPG System Design（Feature層実装）
+
+**FR-5対応**: アクションRPG統合システムの技術設計
+
+```
+Action RPG Feature Architecture:
+┌─────────────────────────────────────────────┐
+│         Character Progression System        │
+├─────────────────────────────────────────────┤
+│ CharacterStatsManager (Feature層)          │
+│ - Level & Experience Management            │
+│ - Skill Tree System                        │
+│ - Stat Modification System                 │
+│ - Core.Events連携による成長通知             │
+└─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│        Inventory & Equipment System         │
+├─────────────────────────────────────────────┤
+│ InventoryManager (Feature層)               │
+│ - Item Management System                   │
+│ - Equipment System Integration             │
+│ - Core.Commands活用による操作管理          │
+│ - ScriptableObject Data Integration        │
+└─────────────────────────────────────────────┘
+```
+
+**配置**: `Assets/_Project/Features/ActionRPG/`
+**名前空間**: `asterivo.Unity60.Features.ActionRPG.*`
+
+##### Character Progression Implementation
+
+```csharp
+namespace asterivo.Unity60.Features.ActionRPG.Character
+{
+    public class CharacterStatsManager : MonoBehaviour
+    {
+        [SerializeField] private CharacterStatsData _statsData;
+        [SerializeField] private GameEvent<LevelUpEventData> _onLevelUp;
+
+        // Core.ServiceLocator経由でのサービス取得
+        private ICommandInvoker _commandInvoker;
+
+        private void Start()
+        {
+            // Core層のServiceLocatorを活用
+            _commandInvoker = ServiceLocator.Get<ICommandInvoker>();
+        }
+
+        public void GainExperience(int amount)
+        {
+            // Core.Commandsを活用
+            var command = new GainExperienceCommand(_statsData, amount);
+            _commandInvoker.Execute(command);
+
+            // レベルアップチェックとイベント発行
+            if (CheckLevelUp())
+            {
+                _onLevelUp.Raise(new LevelUpEventData { NewLevel = _statsData.Level });
+            }
+        }
+    }
+}
+```
+
+##### Inventory System Implementation
+
+```csharp
+namespace asterivo.Unity60.Features.ActionRPG.Inventory
+{
+    public class InventoryManager : MonoBehaviour
+    {
+        [SerializeField] private InventoryData _inventoryData;
+        [SerializeField] private GameEvent<ItemAcquiredEventData> _onItemAcquired;
+
+        public void AcquireItem(ItemData item)
+        {
+            // Core.Commandsパターンでアイテム取得処理
+            var command = new AcquireItemCommand(_inventoryData, item);
+            ServiceLocator.Get<ICommandInvoker>().Execute(command);
+
+            // Core.Eventsでアイテム取得通知
+            _onItemAcquired.Raise(new ItemAcquiredEventData { Item = item });
+        }
+
+        public void EquipItem(EquipmentData equipment)
+        {
+            var command = new EquipItemCommand(_inventoryData, equipment);
+            ServiceLocator.Get<ICommandInvoker>().Execute(command);
+        }
+    }
+}
+```
+
+##### Action RPG Data Structures
+
+```csharp
+// ScriptableObject データ構造（Feature層）
+[CreateAssetMenu(menuName = "ActionRPG/Character Stats")]
+public class CharacterStatsData : ScriptableObject
+{
+    [Header("基本ステータス")]
+    public int Level = 1;
+    public int Experience = 0;
+    public int Health = 100;
+    public int Mana = 50;
+
+    [Header("能力値")]
+    public int Strength = 10;
+    public int Agility = 10;
+    public int Intelligence = 10;
+
+    [Header("成長パラメータ")]
+    public AnimationCurve ExperienceCurve;
+    public StatGrowthData[] StatGrowthTable;
+}
+
+[CreateAssetMenu(menuName = "ActionRPG/Item Database")]
+public class ItemDatabase : ScriptableObject
+{
+    public ItemData[] AllItems;
+    public EquipmentData[] AllEquipment;
+    public Dictionary<int, ItemData> ItemLookup { get; private set; }
+
+    private void OnEnable()
+    {
+        BuildLookupTable();
+    }
+}
+```
+
+##### Core層連携設計
+
+**Event連携**:
+- `LevelUpEvent`: キャラクターレベルアップ通知
+- `ItemAcquiredEvent`: アイテム取得通知
+- `EquipmentChangedEvent`: 装備変更通知
+- `StatsChangedEvent`: ステータス変更通知
+
+**Command連携**:
+- `GainExperienceCommand`: 経験値取得処理
+- `AcquireItemCommand`: アイテム取得処理
+- `EquipItemCommand`: 装備変更処理
+- `UsePotionCommand`: アイテム使用処理
+
+**ServiceLocator連携**:
+- `ICharacterStatsService`: キャラクターステータス管理サービス
+- `IInventoryService`: インベントリ管理サービス
+- `IEquipmentService`: 装備管理サービス
+
 ### Layer 3: Integration Layer（統合層）
 
-#### 3.1 Cinemachine Integration Design
+#### 3.1 Cinemachine Integration Design（Feature層実装）
+
+**FR-6対応**: Cinemachine 3.1統合カメラシステム
+**配置**: `Assets/_Project/Features/Camera/Cinemachine`
+**名前空間**: `asterivo.Unity60.Features.Camera.Cinemachine`
 
 ```
 Cinemachine Integration:
@@ -356,7 +628,10 @@ Cinemachine Integration:
 └─────────────────────────────────────────────┘
 ```
 
-#### 3.2 Input System Integration
+#### 3.2 Input System Integration（Feature層実装）
+
+**配置**: `Assets/_Project/Features/Input`
+**名前空間**: `asterivo.Unity60.Features.Input`
 
 ```
 Input Integration Architecture:
@@ -512,6 +787,359 @@ Visual Sensor Debug Tools:
 - **パフォーマンス測定**: Unity Profiler統合
 - **ログ出力**: 構造化ログによる詳細トレース
 
+#### ProjectDebugSystem統合デバッグツール（新規追加）
+
+**FR-7.3対応**: プロジェクト専用の包括的デバッグシステム
+**配置**: `Assets/_Project/Core/Debug` - Core層基盤デバッグシステム
+**名前空間**: `asterivo.Unity60.Core.Debug`
+
+```
+ProjectDebugSystem Comprehensive Architecture:
+┌─────────────────────────────────────────────┐
+│            Unified Logging Layer            │
+├─────────────────────────────────────────────┤
+│ ProjectLogger (Static Class)               │
+│ - LogLevel Management (Debug/Info/Warning/ │
+│   Error/Critical)                          │
+│ - Category-based Filtering                 │
+│ - Structured Log Output                    │
+│ - Editor/Runtime Environment Detection     │
+└─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│         Real-time Performance Monitor      │
+├─────────────────────────────────────────────┤
+│ PerformanceMonitor (MonoBehaviour Singleton)│
+│ - Frame Rate Tracking                      │
+│ - Memory Usage Monitoring                  │
+│ - CPU Usage Analysis                       │
+│ - GPU Performance Metrics                  │
+│ - Unity Profiler Integration               │
+└─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│          Project Diagnostics Engine         │
+├─────────────────────────────────────────────┤
+│ ProjectDiagnostics (EditorWindow)          │
+│ - Event Circular Dependency Detection      │
+│ - Command Execution Statistics             │
+│ - ObjectPool Efficiency Analysis           │
+│ - Service Locator Health Check             │
+│ - Asset Reference Validation               │
+└─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│         Environment-Specific Debug Config   │
+├─────────────────────────────────────────────┤
+│ DebugConfiguration (ScriptableObject)      │
+│ - Development: Full Debug Info             │
+│ - Testing: Performance Focus               │
+│ - Production: Critical Only                │
+│ - Auto Environment Detection               │
+└─────────────────────────────────────────────┘
+```
+
+**統一ログシステム実装詳細**:
+
+```csharp
+namespace asterivo.Unity60.Core.Debug
+{
+    public static class ProjectLogger
+    {
+        public enum LogLevel
+        {
+            Debug = 0,
+            Info = 1,
+            Warning = 2,
+            Error = 3,
+            Critical = 4
+        }
+
+        public enum LogCategory
+        {
+            Core,           // Core系システム
+            Features,       // Feature層機能
+            Audio,          // オーディオシステム
+            AI,             // AI・センサーシステム
+            Commands,       // コマンドシステム
+            Events,         // イベントシステム
+            Performance,    // パフォーマンス
+            Network,        // ネットワーク（将来用）
+            Custom         // カスタムカテゴリ
+        }
+
+        private static DebugConfiguration _config;
+        private static readonly Dictionary<LogCategory, List<LogEntry>> _logs = new();
+
+        public static void Log(LogLevel level, LogCategory category, string message, UnityEngine.Object context = null)
+        {
+            if (!ShouldLog(level, category)) return;
+
+            var entry = new LogEntry
+            {
+                Level = level,
+                Category = category,
+                Message = message,
+                Timestamp = DateTime.UtcNow,
+                Context = context,
+                StackTrace = level >= LogLevel.Error ? Environment.StackTrace : null
+            };
+
+            RecordLog(entry);
+            OutputToUnityConsole(entry);
+
+            #if UNITY_EDITOR
+            // エディタ専用機能: リアルタイム表示更新
+            DebugWindow.RefreshLogs(entry);
+            #endif
+        }
+
+        [System.Diagnostics.Conditional("DEVELOPMENT_BUILD"), System.Diagnostics.Conditional("UNITY_EDITOR")]
+        public static void Debug(LogCategory category, string message, UnityEngine.Object context = null)
+            => Log(LogLevel.Debug, category, message, context);
+
+        public static void Info(LogCategory category, string message, UnityEngine.Object context = null)
+            => Log(LogLevel.Info, category, message, context);
+
+        public static void Warning(LogCategory category, string message, UnityEngine.Object context = null)
+            => Log(LogLevel.Warning, category, message, context);
+
+        public static void Error(LogCategory category, string message, UnityEngine.Object context = null)
+            => Log(LogLevel.Error, category, message, context);
+
+        public static void Critical(LogCategory category, string message, UnityEngine.Object context = null)
+            => Log(LogLevel.Critical, category, message, context);
+    }
+
+    [System.Serializable]
+    public class LogEntry
+    {
+        public LogLevel Level;
+        public LogCategory Category;
+        public string Message;
+        public DateTime Timestamp;
+        public UnityEngine.Object Context;
+        public string StackTrace;
+    }
+}
+```
+
+**リアルタイムパフォーマンス監視実装**:
+
+```csharp
+namespace asterivo.Unity60.Core.Debug
+{
+    public class PerformanceMonitor : MonoBehaviour
+    {
+        [Header("監視設定")]
+        [SerializeField] private float _updateInterval = 0.5f;
+        [SerializeField] private int _frameHistorySize = 100;
+
+        // パフォーマンスメトリクス
+        public float CurrentFPS { get; private set; }
+        public float AverageFPS { get; private set; }
+        public long AllocatedMemory { get; private set; }
+        public long ReservedMemory { get; private set; }
+        public float CPUUsage { get; private set; }
+
+        private readonly Queue<float> _frameTimeHistory = new();
+        private float _lastUpdateTime;
+
+        private void Update()
+        {
+            RecordFrameTime();
+
+            if (Time.unscaledTime - _lastUpdateTime >= _updateInterval)
+            {
+                UpdateMetrics();
+                _lastUpdateTime = Time.unscaledTime;
+
+                // 閾値チェックと警告
+                CheckPerformanceThresholds();
+            }
+        }
+
+        private void UpdateMetrics()
+        {
+            // FPS計算
+            CurrentFPS = 1.0f / Time.unscaledDeltaTime;
+            AverageFPS = _frameTimeHistory.Count > 0 ? 1.0f / _frameTimeHistory.Average() : CurrentFPS;
+
+            // メモリ使用量
+            AllocatedMemory = UnityEngine.Profiling.Profiler.GetTotalAllocatedMemory(0);
+            ReservedMemory = UnityEngine.Profiling.Profiler.GetTotalReservedMemory(0);
+
+            // CPUプロファイリング（Editor専用）
+            #if UNITY_EDITOR
+            CPUUsage = UnityEditor.EditorApplication.timeSinceStartup % 1.0f;
+            #endif
+
+            // ログ出力
+            ProjectLogger.Debug(LogCategory.Performance,
+                $"FPS: {CurrentFPS:F1} | Memory: {FormatBytes(AllocatedMemory)} | CPU: {CPUUsage:P}");
+        }
+
+        private void CheckPerformanceThresholds()
+        {
+            // FPS警告
+            if (CurrentFPS < 30f)
+            {
+                ProjectLogger.Warning(LogCategory.Performance,
+                    $"Low FPS detected: {CurrentFPS:F1}. Consider optimization.");
+            }
+
+            // メモリ警告
+            var memoryMB = AllocatedMemory / (1024 * 1024);
+            if (memoryMB > 500) // 500MB threshold
+            {
+                ProjectLogger.Warning(LogCategory.Performance,
+                    $"High memory usage: {memoryMB}MB. Consider memory optimization.");
+            }
+        }
+    }
+}
+```
+
+**プロジェクト診断システム実装**:
+
+```csharp
+namespace asterivo.Unity60.Core.Debug
+{
+    #if UNITY_EDITOR
+    public class ProjectDiagnosticsWindow : EditorWindow
+    {
+        [MenuItem("Tools/Project Debug/Diagnostics")]
+        public static void ShowWindow()
+        {
+            GetWindow<ProjectDiagnosticsWindow>("Project Diagnostics");
+        }
+
+        private Vector2 _scrollPosition;
+        private string[] _tabNames = {"Events", "Commands", "Performance", "ObjectPools"};
+        private int _selectedTab = 0;
+
+        private void OnGUI()
+        {
+            _selectedTab = GUILayout.Toolbar(_selectedTab, _tabNames);
+            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
+
+            switch (_selectedTab)
+            {
+                case 0: DrawEventsDiagnostics(); break;
+                case 1: DrawCommandsDiagnostics(); break;
+                case 2: DrawPerformanceDiagnostics(); break;
+                case 3: DrawObjectPoolDiagnostics(); break;
+            }
+
+            EditorGUILayout.EndScrollView();
+        }
+
+        private void DrawEventsDiagnostics()
+        {
+            EditorGUILayout.LabelField("Event System Diagnostics", EditorStyles.boldLabel);
+
+            // イベント循環依存検出
+            if (GUILayout.Button("Check Circular Dependencies"))
+            {
+                var result = EventDependencyAnalyzer.CheckCircularDependencies();
+                ProjectLogger.Info(LogCategory.Core, $"Circular dependency check: {result}");
+            }
+
+            // 登録済みイベント一覧
+            var events = EventChannelRegistry.GetAllEvents();
+            EditorGUILayout.LabelField($"Registered Events: {events.Count}");
+
+            foreach (var eventChannel in events)
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField(eventChannel.Name);
+                EditorGUILayout.LabelField($"Listeners: {eventChannel.ListenerCount}");
+                EditorGUILayout.EndHorizontal();
+            }
+        }
+
+        private void DrawObjectPoolDiagnostics()
+        {
+            EditorGUILayout.LabelField("ObjectPool Diagnostics", EditorStyles.boldLabel);
+
+            var poolManager = CommandPoolManager.Instance;
+            if (poolManager != null)
+            {
+                var statistics = poolManager.GetStatistics();
+                EditorGUILayout.LabelField($"Total Pools: {statistics.PoolCount}");
+                EditorGUILayout.LabelField($"Objects in Use: {statistics.ObjectsInUse}");
+                EditorGUILayout.LabelField($"Objects Available: {statistics.ObjectsAvailable}");
+                EditorGUILayout.LabelField($"Reuse Rate: {statistics.ReuseRate:P}");
+                EditorGUILayout.LabelField($"Memory Saved: {statistics.MemorySavedMB:F2} MB");
+            }
+        }
+    }
+    #endif
+}
+```
+
+**環境別デバッグ設定管理**:
+
+```csharp
+[CreateAssetMenu(menuName = "Debug/Debug Configuration")]
+public class DebugConfiguration : ScriptableObject
+{
+    [Header("Environment Settings")]
+    public DebugEnvironment Environment = DebugEnvironment.Development;
+
+    [Header("Log Level Settings")]
+    public LogLevel DevelopmentLogLevel = LogLevel.Debug;
+    public LogLevel TestingLogLevel = LogLevel.Info;
+    public LogLevel ProductionLogLevel = LogLevel.Critical;
+
+    [Header("Category Filters")]
+    public LogCategory[] EnabledCategories = System.Enum.GetValues(typeof(LogCategory)).Cast<LogCategory>().ToArray();
+
+    [Header("Performance Monitoring")]
+    public bool EnablePerformanceMonitoring = true;
+    public float PerformanceUpdateInterval = 0.5f;
+    public bool EnableMemoryTracking = true;
+
+    [Header("Debug UI")]
+    public bool ShowDebugOverlay = true;
+    public bool EnableRuntimeDebugWindow = false; // エディタ専用
+
+    public enum DebugEnvironment
+    {
+        Development,  // 開発環境
+        Testing,      // テスト環境
+        Production    // プロダクション環境
+    }
+
+    public LogLevel GetCurrentLogLevel()
+    {
+        return Environment switch
+        {
+            DebugEnvironment.Development => DevelopmentLogLevel,
+            DebugEnvironment.Testing => TestingLogLevel,
+            DebugEnvironment.Production => ProductionLogLevel,
+            _ => LogLevel.Info
+        };
+    }
+
+    public bool ShouldLog(LogLevel level, LogCategory category)
+    {
+        return level >= GetCurrentLogLevel() && EnabledCategories.Contains(category);
+    }
+}
+```
+
+**実装戦略**:
+- **Core層配置**: `asterivo.Unity60.Core.Debug`名前空間での一元管理
+- **エディタ/ランタイム分離**: プリプロセッサディレクティブによる環境分離
+- **パフォーマンス重視**: プロダクションビルドでの完全無効化
+- **Unity Profiler統合**: 標準プロファイリングAPIの活用
+- **構造化ログ**: カテゴリ・レベル別の効率的ログ管理
+- **リアルタイム監視**: Play Mode中の継続的メトリクス収集
+
+**トラブルシューティング支援機能**:
+- **自動問題検出**: よくある設定ミス・パフォーマンス問題の検知
+- **解決策提示**: 検出した問題に対する具体的な改善案
+- **ワンクリック修復**: 可能な問題の自動修復機能
+- **詳細診断レポート**: 包括的な健全性チェックレポート生成
+
 ## セキュリティ・品質保証設計
 
 ### Code Quality Assurance
@@ -642,7 +1270,7 @@ Setup Wizard Comprehensive Architecture:
 │ - Progress Visualization                    │
 │ - Error Handling & Recovery                 │
 │ GenreSelectionUI                            │
-│ - 6-Genre Preview System                    │
+│ - 7-Genre Preview System                    │
 │ - Interactive Configuration                 │
 │ - Real-time Validation                      │
 └─────────────────────────────────────────────┘
@@ -673,7 +1301,7 @@ Setup Wizard Comprehensive Architecture:
 
 ##### A.2 Game Genre Templates System Architecture
 
-**FR-7.1.2 対応**: 6ジャンル対応テンプレートシステム
+**FR-8.1.2 対応**: 7ジャンル対応テンプレートシステム（アクションRPG追加）
 
 ```
 Comprehensive Genre Template Architecture:
@@ -701,10 +1329,14 @@ Comprehensive Genre Template Architecture:
 │ │  - Dialogue Systems                       │
 │ │  - Inventory Management                   │
 │ │  - Quest System Framework                 │
-│ └─ Strategy Template Configuration          │
-│    - RTS Camera Controls                    │
-│    - Unit Selection Systems                 │
-│    - Resource Management UI                 │
+│ ├─ Strategy Template Configuration          │
+│ │  - RTS Camera Controls                    │
+│ │  - Unit Selection Systems                 │
+│ │  - Resource Management UI                 │
+│ └─ Action RPG Template Configuration       │
+│    - Character Progression Systems          │
+│    - Inventory & Equipment Management       │
+│    - Action Combat Mechanics                │
 └─────────────────────────────────────────────┘
 ┌─────────────────────────────────────────────┐
 │         Runtime Template Management          │
@@ -757,7 +1389,7 @@ Asset Integration Architecture:
 
 ##### B.1 Advanced Save/Load System Architecture
 
-**FR-7.2.1 対応**: 高度なセーブ/ロードシステム
+**FR-8.2.1 対応**: 高度なセーブ/ロードシステム
 
 ```
 Save System Comprehensive Architecture:
@@ -776,16 +1408,16 @@ Save System Comprehensive Architecture:
 
 ##### B.2-B.4 追加システム設計
 
-**FR-7.2.2**: Comprehensive Settings System - リアルタイム設定変更
-**FR-7.2.3**: 4言語対応ローカリゼーション - 日英中韓サポート  
-**FR-7.2.4**: Performance Profiler Integration - リアルタイム監視
+**FR-8.2.2**: Comprehensive Settings System - リアルタイム設定変更
+**FR-8.2.3**: 4言語対応ローカリゼーション - 日英中韓サポート
+**FR-8.2.4**: Performance Profiler Integration - リアルタイム監視
 
 #### Phase C-E: プロダクション・エコシステム機能（🟢🔵 中低優先度）
 
 **Ship & Scale 価値実現**: プロダクション対応の包括機能群
-- **Phase C**: Build Pipeline, Asset Validation, Memory Management
-- **Phase D**: Package Templates, Code Generator, Visual Scripting
-- **Phase E**: Plugin Architecture, Template Marketplace, Community Docs
+- **Phase C (FR-8.3.1)**: Build Pipeline, Asset Validation, Memory Management
+- **Phase D (FR-8.3.2)**: Package Templates, Code Generator, Visual Scripting
+- **Phase E (FR-8.3.3)**: Plugin Architecture, Template Marketplace, Community Docs
 
 ### 成功指標・パフォーマンス要件の技術実現
 
@@ -909,7 +1541,7 @@ SDD Integration System:
 #### Learn & Grow 価値の技術実現  
 - **70%学習コスト削減**: 40時間→12時間のインタラクティブチュートリアルエンジン
 - **段階的成長支援**: 5段階学習システム（基礎→応用→実践→カスタマイズ→出版）
-- **6ジャンル完全対応**: FPS/TPS/Platformer/Stealth/Adventure/Strategy
+- **7ジャンル完全対応**: FPS/TPS/Platformer/Stealth/Adventure/Strategy/ActionRPG
 
 #### Ship & Scale 価値の技術実現
 - **プロダクション品質**: エラー０・警告０のクリーン実装基盤
@@ -924,9 +1556,11 @@ SDD Integration System:
 ### SDD フェーズ4への完全橋渡し
 
 #### TASKS.md生成のための実装基盤確保
-- **Phase A優先実装**: TASK-003 (Setup Wizard) の技術設計完了
+- **Core/Feature分離実装基盤**: アーキテクチャ分離原則に基づく実装ガイドライン確立
+- **Phase A優先実装**: FR-8.1.1 (Setup Wizard) の技術設計完了
+- **アクションRPG統合**: FR-5技術設計によるFeature層実装基盤確立
 - **アーキテクチャ詳細**: 具体的クラス設計・API仕様・データフロー定義
-- **実装ガイドライン**: コーディング標準・テスト戦略・品質保証方針
+- **実装ガイドライン**: Core/Feature分離、名前空間規約、コーディング標準
 
 #### 技術実装の完全準備
 - **既存基盤活用**: NPCVisualSensor等の成功実装パターンを新機能に適用
@@ -935,6 +1569,6 @@ SDD Integration System:
 
 ### 究極テンプレート実現への確実な道筋
 
-この技術設計により、**SPEC.md v3.0で定義された究極の Unity 6ベース 3Dゲーム開発基盤テンプレート**の技術的実現が完全に可能となり、次のフェーズ（TASKS.md → 実装・検証）への確実な移行を保証します。
+この技術設計により、**REQUIREMENTS.md FR-8 究極テンプレートロードマップと Core/Feature層分離アーキテクチャ**の技術的実現が完全に可能となり、次のフェーズ（TASKS.md → 実装・検証）への確実な移行を保証します。
 
-**設計完了状態**: ✅ SPEC.md v3.0 完全整合性確保、技術実装準備完了
+**設計完了状態**: ✅ REQUIREMENTS.md 完全対応（FR-5アクションRPG + FR-8ロードマップ）、Core/Feature分離強化、技術実装準備完了

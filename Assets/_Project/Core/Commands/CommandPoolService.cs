@@ -145,10 +145,7 @@ namespace asterivo.Unity60.Core.Commands
             }
             catch (System.Exception ex)
             {
-                var eventLogger = ServiceLocator.GetService<IEventLogger>();
-                if (eventLogger != null) {
-                    eventLogger.LogError($"Failed to register CommandPoolService: {ex.Message}");
-                }
+                Debug.LogError($"Failed to register CommandPoolService: {ex.Message}");
             }
         }
         
@@ -307,7 +304,7 @@ namespace asterivo.Unity60.Core.Commands
             }
             catch (System.Exception ex)
             {
-                var eventLogger = ServiceLocator.GetService<IEventLogger>(); if (eventLogger != null) eventLogger.LogError($"Failed to unregister CommandPoolService: {ex.Message}");
+                Debug.LogError($"Failed to unregister CommandPoolService: {ex.Message}");
             }
             
             Cleanup();

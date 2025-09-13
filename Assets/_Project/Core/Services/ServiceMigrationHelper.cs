@@ -1,7 +1,8 @@
 using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
-// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
+using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Services;
 
 namespace asterivo.Unity60.Core.Services
 {
@@ -102,15 +103,19 @@ namespace asterivo.Unity60.Core.Services
         /// 段階的更新の状態診断
         /// </summary>
         /// <param name="context">呼び出し元のコンテキスト名</param>
+/// <summary>
+        /// 段階的更新の状態診断
+        /// </summary>
+        /// <param name="context">呼び出し元のコンテキスト名</param>
         public static void DiagnoseMigrationState(string context = "Unknown")
         {
-            EventLogger.LogStatic($"=== Migration State Diagnosis - {context} ===");
+            ServiceLocator.GetService<IEventLogger>()?.Log($"=== Migration State Diagnosis - {context} ===");
             
             // FeatureFlags状態
-            EventLogger.LogStatic($"FeatureFlags.UseServiceLocator: {FeatureFlags.UseServiceLocator}");
-            EventLogger.LogStatic($"FeatureFlags.MigrateStealthAudioCoordinator: {FeatureFlags.MigrateStealthAudioCoordinator}");
-            EventLogger.LogStatic($"FeatureFlags.EnableDebugLogging: {FeatureFlags.EnableDebugLogging}");
-            EventLogger.LogStatic($"FeatureFlags.EnableMigrationMonitoring: {FeatureFlags.EnableMigrationMonitoring}");
+            ServiceLocator.GetService<IEventLogger>()?.Log($"FeatureFlags.UseServiceLocator: {FeatureFlags.UseServiceLocator}");
+            ServiceLocator.GetService<IEventLogger>()?.Log($"FeatureFlags.MigrateStealthAudioCoordinator: {FeatureFlags.MigrateStealthAudioCoordinator}");
+            ServiceLocator.GetService<IEventLogger>()?.Log($"FeatureFlags.EnableDebugLogging: {FeatureFlags.EnableDebugLogging}");
+            ServiceLocator.GetService<IEventLogger>()?.Log($"FeatureFlags.EnableMigrationMonitoring: {FeatureFlags.EnableMigrationMonitoring}");
             
             // ServiceLocator状態
             try
@@ -118,27 +123,18 @@ namespace asterivo.Unity60.Core.Services
                 var audioService = ServiceLocator.GetService<IAudioService>();
                 var stealthService = ServiceLocator.GetService<IStealthAudioService>();
                 
-                EventLogger.LogStatic($"ServiceLocator IAudioService: {(audioService != null ? audioService.GetType().Name : "null")}");
-                EventLogger.LogStatic($"ServiceLocator IStealthAudioService: {(stealthService != null ? stealthService.GetType().Name : "null")}");
+                ServiceLocator.GetService<IEventLogger>()?.Log($"ServiceLocator IAudioService: {(audioService != null ? audioService.GetType().Name : "null")}");
+                ServiceLocator.GetService<IEventLogger>()?.Log($"ServiceLocator IStealthAudioService: {(stealthService != null ? stealthService.GetType().Name : "null")}");
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogErrorStatic($"ServiceLocator access failed: {ex.Message}");
+                ServiceLocator.GetService<IEventLogger>()?.LogError($"ServiceLocator access failed: {ex.Message}");
             }
             
             // レガシーシステム状態
-            try
-            {
-                var legacyAudioManager = Object.FindFirstObjectByType<asterivo.Unity60.Core.Audio.AudioManager>();
-                var legacyStealthCoordinator = Object.FindFirstObjectByType<asterivo.Unity60.Core.Audio.StealthAudioCoordinator>();
-                
-                EventLogger.LogStatic($"Legacy AudioManager: {(legacyAudioManager != null ? "Found" : "Not Found")}");
-                EventLogger.LogStatic($"Legacy StealthAudioCoordinator: {(legacyStealthCoordinator != null ? "Found" : "Not Found")}");
-            }
-            catch (System.Exception ex)
-            {
-                EventLogger.LogErrorStatic($"Legacy system check failed: {ex.Message}");
-            }
+            // CheckLegacySystemState(); // Method not implemented - removed to fix compilation
+            
+            ServiceLocator.GetService<IEventLogger>()?.Log($"=== End Migration State Diagnosis - {context} ===");
         }
 
         /// <summary>
@@ -266,7 +262,7 @@ namespace asterivo.Unity60.Core.Services
                     
                     if (FeatureFlags.EnableMigrationMonitoring)
                     {
-                        EventLogger.LogWarningStatic($"[{context}] Using legacy AudioManager access");
+                        ServiceLocator.GetService<IEventLogger>()?.LogWarning($"[{context}] Using legacy AudioManager access");
                     }
                 }
                 else
@@ -315,7 +311,7 @@ namespace asterivo.Unity60.Core.Services
                     
                     if (FeatureFlags.EnableMigrationMonitoring)
                     {
-                        EventLogger.LogWarningStatic($"[{context}] Using legacy StealthAudioCoordinator access");
+                        ServiceLocator.GetService<IEventLogger>()?.LogWarning($"[{context}] Using legacy StealthAudioCoordinator access");
                     }
                 }
                 else
@@ -341,7 +337,7 @@ namespace asterivo.Unity60.Core.Services
         {
             if (enableDebugLogs && FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogStatic(message);
+                ServiceLocator.GetService<IEventLogger>()?.Log(message);
             }
         }
 

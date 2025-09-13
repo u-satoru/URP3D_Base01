@@ -4,7 +4,9 @@
     "references": [
         "asterivo.Unity60.Core",
         "asterivo.Unity60.Core.Events",
-        "asterivo.Unity60.Core.Commands"
+        "asterivo.Unity60.Core.Commands",
+        "asterivo.Unity60.Core.Debug",
+        "asterivo.Unity60.Core.Shared"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

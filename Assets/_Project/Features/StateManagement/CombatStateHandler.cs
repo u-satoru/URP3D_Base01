@@ -8,7 +8,7 @@ namespace asterivo.Unity60.Core.Patterns.StateHandlers
     /// </summary>
     public class CombatStateHandler : IStateHandler
     {
-        public PlayerState HandledState => PlayerState.Combat;
+        public int HandledState => (int)PlayerState.Combat;
 
         public void OnEnter(IStateContext context)
         {
@@ -26,7 +26,7 @@ namespace asterivo.Unity60.Core.Patterns.StateHandlers
     /// </summary>
     public class CombatAttackingStateHandler : IStateHandler
     {
-        public PlayerState HandledState => PlayerState.CombatAttacking;
+        public int HandledState => (int)PlayerState.CombatAttacking;
 
         public void OnEnter(IStateContext context)
         {
@@ -44,7 +44,7 @@ namespace asterivo.Unity60.Core.Patterns.StateHandlers
     /// </summary>
     public class InteractingStateHandler : IStateHandler
     {
-        public PlayerState HandledState => PlayerState.Interacting;
+        public int HandledState => (int)PlayerState.Interacting;
 
         public void OnEnter(IStateContext context)
         {
@@ -62,7 +62,7 @@ namespace asterivo.Unity60.Core.Patterns.StateHandlers
     /// </summary>
     public class DeadStateHandler : IStateHandler
     {
-        public PlayerState HandledState => PlayerState.Dead;
+        public int HandledState => (int)PlayerState.Dead;
 
         public void OnEnter(IStateContext context)
         {

@@ -23,7 +23,7 @@ namespace asterivo.Unity60.Tests.Core.Editor
     /// </summary>
     public class SetupWizardWindowTests
     {
-        // private asterivo.Unity60.Core.Editor.SetupWizardWindow window; // Temporarily commented out
+        private SetupWizardWindow window;
         private MethodInfo[] privateMethods;
         private PropertyInfo[] privateFields;
         

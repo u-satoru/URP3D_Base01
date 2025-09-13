@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using UnityEngine;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Debug;
+using Debug = UnityEngine.Debug;
 using System;
 
 namespace asterivo.Unity60.Tests

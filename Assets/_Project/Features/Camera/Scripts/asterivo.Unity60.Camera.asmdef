@@ -7,6 +7,7 @@
         "asterivo.Unity60.Core.Commands",
         "asterivo.Unity60.Core.Services",
         "asterivo.Unity60.Core.Shared",
+        "asterivo.Unity60.Core.Debug",
         "Unity.Cinemachine"
     ],
     "includePlatforms": [],

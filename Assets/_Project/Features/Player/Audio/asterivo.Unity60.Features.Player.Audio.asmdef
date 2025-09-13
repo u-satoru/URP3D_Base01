@@ -1,0 +1,20 @@
+{
+    "name": "asterivo.Unity60.Features.Player.Audio",
+    "rootNamespace": "asterivo.Unity60.Features.Player.Audio",
+    "references": [
+        "asterivo.Unity60.Core",
+        "asterivo.Unity60.Core.Audio",
+        "asterivo.Unity60.Core.Events", 
+        "asterivo.Unity60.Player",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

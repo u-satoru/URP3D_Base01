@@ -14,14 +14,14 @@ namespace asterivo.Unity60.Core
         [Header("Events")] [SerializeField] private BoolGameEvent onPauseStateChanged;
         [Header("Settings")] [SerializeField] private bool pauseTimeOnPause = true;
         [Header("Runtime")] [SerializeField] private bool isPaused = false;
-        [SerializeField] private GameManager gameManager; // optional fallback
+        // GameManager reference removed - Core層からFeatures層への参照禁止
         [SerializeField] private int priority = 80;
 
         public int Priority => priority;
 
         private void Reset()
         {
-            if (gameManager == null) gameManager = FindFirstObjectByType<GameManager>();
+            // GameManager fallback removed - ServiceLocatorパターンのみ使用
         }
 
         public void RegisterServices()

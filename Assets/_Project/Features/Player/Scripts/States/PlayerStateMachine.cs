@@ -79,7 +79,7 @@ namespace asterivo.Unity60.Player.States
             if (onStateChanged != null)
             {
                 // 初期状態の通知
-                onStateChanged.Raise(LegacyCurrentState);
+                onStateChanged.Raise((int)LegacyCurrentState);
             }
         }
         
@@ -101,7 +101,7 @@ namespace asterivo.Unity60.Player.States
             // イベント通知
             if (onStateChanged != null && previousState != newState)
             {
-                onStateChanged.Raise(detailedStateMachine.GetLegacyCurrentState());
+                onStateChanged.Raise((int)detailedStateMachine.GetLegacyCurrentState());
             }
         }
         
@@ -118,7 +118,7 @@ namespace asterivo.Unity60.Player.States
             // イベント通知
             if (onStateChanged != null)
             {
-                onStateChanged.Raise(newState);
+                onStateChanged.Raise((int)newState);
             }
         }
         
@@ -134,7 +134,7 @@ namespace asterivo.Unity60.Player.States
             // イベント通知
             if (onStateChanged != null)
             {
-                onStateChanged.Raise(detailedStateMachine.GetLegacyCurrentState());
+                onStateChanged.Raise((int)detailedStateMachine.GetLegacyCurrentState());
             }
         }
         

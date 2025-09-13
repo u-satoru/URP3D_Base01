@@ -22,10 +22,10 @@ namespace asterivo.Unity60.Core.Events
     // public class UnityPlayerStateEvent : UnityEngine.Events.UnityEvent<PlayerState> { }
     
     /// <summary>
-    /// GameState用のイベント定義（一時的にコメントアウト - 型参照問題のため）
+    /// GameState用のイベント定義
     /// </summary>
-    // [CreateAssetMenu(fileName = "GameStateEvent", menuName = "asterivo.Unity60/Events/Game State Event")]
-    // public class GameStateEvent : GenericGameEvent<GameState> { }
+    [CreateAssetMenu(fileName = "GameStateEvent", menuName = "asterivo.Unity60/Events/Game State Event")]
+    public class GameStateEvent : GenericGameEvent<int> { } // Using int to avoid circular dependency
     
     /// <summary>
     /// GameStateイベントリスナー（一時的にコメントアウト - 型参照問題のため）

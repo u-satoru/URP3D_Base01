@@ -1,4 +1,5 @@
 using UnityEngine;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Commands;
@@ -64,9 +65,10 @@ namespace asterivo.Unity60.Tests.Core.Services
                 // サービスの基本機能テスト（副作用の少ないメソッドのみ）
                 try
                 {
-                    bool isInitialized = spatialService.IsInitialized;
+                    // Note: ISpatialAudioServiceにはIsInitializedプロパティが存在しないため、
+                    // サービスが正常に取得できた時点で成功とする
                     if (enableDebugOutput)
-                        Debug.Log($"✅ SpatialAudioService: IsInitialized = {isInitialized}");
+                        Debug.Log($"✅ SpatialAudioService: Service instance available");
                 }
                 catch (System.Exception e)
                 {
@@ -151,11 +153,11 @@ namespace asterivo.Unity60.Tests.Core.Services
 
             var services = new[]
             {
-                new { Name = "IAudioService", Service = ServiceLocator.GetService<IAudioService>() },
-                new { Name = "ISpatialAudioService", Service = ServiceLocator.GetService<ISpatialAudioService>() },
-                new { Name = "IEffectService", Service = ServiceLocator.GetService<IEffectService>() },
-                new { Name = "ICommandPoolService", Service = ServiceLocator.GetService<ICommandPoolService>() },
-                new { Name = "IEventLogger", Service = ServiceLocator.GetService<IEventLogger>() }
+                new { Name = "IAudioService", Service = (object)ServiceLocator.GetService<IAudioService>() },
+                new { Name = "ISpatialAudioService", Service = (object)ServiceLocator.GetService<ISpatialAudioService>() },
+                new { Name = "IEffectService", Service = (object)ServiceLocator.GetService<IEffectService>() },
+                new { Name = "ICommandPoolService", Service = (object)ServiceLocator.GetService<ICommandPoolService>() },
+                new { Name = "IEventLogger", Service = (object)ServiceLocator.GetService<IEventLogger>() }
             };
 
             int registeredCount = 0;

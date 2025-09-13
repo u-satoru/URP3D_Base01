@@ -3,7 +3,7 @@ using asterivo.Unity60.Core;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
+using asterivo.Unity60.Core.Debug;
 
 namespace asterivo.Unity60.Core.Services
 {
@@ -52,7 +52,7 @@ namespace asterivo.Unity60.Core.Services
         {
             if (currentDay != ScheduleDay.NotStarted)
             {
-                EventLogger.LogWarningStatic($"[SingletonDisableScheduler] Schedule already started. Current day: {currentDay}");
+                ServiceLocator.GetService<IEventLogger>()?.LogWarning($"[SingletonDisableScheduler] Schedule already started. Current day: {currentDay}");
                 return;
             }
             
@@ -108,7 +108,7 @@ namespace asterivo.Unity60.Core.Services
         {
             if (targetDay <= currentDay && targetDay != ScheduleDay.NotStarted)
             {
-                EventLogger.LogWarningStatic($"[SingletonDisableScheduler] Cannot advance to previous day. Current: {currentDay}, Target: {targetDay}");
+                ServiceLocator.GetService<IEventLogger>()?.LogWarning($"[SingletonDisableScheduler] Cannot advance to previous day. Current: {currentDay}, Target: {targetDay}");
                 return;
             }
             
@@ -178,8 +178,8 @@ namespace asterivo.Unity60.Core.Services
             FeatureFlags.EnableMigrationWarnings = true; // 警告は継続
             FeatureFlags.DisableLegacySingletons = true;  // ✅ Singleton無効化
             
-            EventLogger.LogWarningStatic("[SingletonDisableScheduler] Day 4: Legacy Singletons are now DISABLED");
-            EventLogger.LogWarningStatic("[SingletonDisableScheduler] Day 4: All code should use ServiceLocator from now on");
+            ServiceLocator.GetService<IEventLogger>()?.LogWarning("[SingletonDisableScheduler] Day 4: Legacy Singletons are now DISABLED");
+            ServiceLocator.GetService<IEventLogger>()?.LogWarning("[SingletonDisableScheduler] Day 4: All code should use ServiceLocator from now on");
             
             // 最終使用状況チェック
             var monitor = FindFirstObjectByType<MigrationMonitor>();
@@ -304,7 +304,7 @@ namespace asterivo.Unity60.Core.Services
         {
             if (currentDay != ScheduleDay.NotStarted && scheduleStartTime == default)
             {
-                EventLogger.LogErrorStatic("[SingletonDisableScheduler] Invalid state: Schedule is started but no start time recorded");
+                ServiceLocator.GetService<IEventLogger>()?.LogError("[SingletonDisableScheduler] Invalid state: Schedule is started but no start time recorded");
                 ResetSchedule();
             }
         }

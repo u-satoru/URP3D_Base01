@@ -178,14 +178,14 @@ namespace asterivo.Unity60.Player
                         
                         if (FeatureFlags.EnableDebugLogging)
                         {
-                            EventLogger.LogStatic("[PlayerController] Using ServiceLocator for audio services");
+                            ServiceLocator.GetService<IEventLogger>()?.Log("[PlayerController] Using ServiceLocator for audio services");
                         }
                         return; // 正常に取得できたので終了
                     }
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogWarningStatic($"[PlayerController] ServiceLocator audio service failed: {ex.Message}");
+                    ServiceLocator.GetService<IEventLogger>()?.LogWarning($"[PlayerController] ServiceLocator audio service failed: {ex.Message}");
                 }
             }
             
@@ -219,7 +219,7 @@ namespace asterivo.Unity60.Player
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[PlayerController] Legacy audio service fallback failed: {ex.Message}");
+                    ServiceLocator.GetService<IEventLogger>()?.LogError($"[PlayerController] Legacy audio service fallback failed: {ex.Message}");
                 }
             }
             

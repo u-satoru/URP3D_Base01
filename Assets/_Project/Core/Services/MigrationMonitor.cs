@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Services;
 // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 
 namespace asterivo.Unity60.Core.Services
@@ -34,7 +36,7 @@ namespace asterivo.Unity60.Core.Services
                 InvokeRepeating(nameof(GenerateUsageReport), reportingInterval, reportingInterval);
             }
             
-            EventLogger.LogStatic("[MigrationMonitor] Started monitoring singleton usage");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationMonitor] Started monitoring singleton usage");
         }
         
         private void OnDestroy()
@@ -94,11 +96,11 @@ namespace asterivo.Unity60.Core.Services
             {
                 if (FeatureFlags.EnableMigrationWarnings)
                 {
-                    EventLogger.LogWarningStatic($"[MigrationMonitor] Singleton access detected: {singletonType.Name}.{accessMethod} (Total: {info.AccessCount})");
+                    ServiceLocator.GetService<IEventLogger>()?.LogWarning($"[MigrationMonitor] Singleton access detected: {singletonType.Name}.{accessMethod} (Total: {info.AccessCount})");
                 }
                 else
                 {
-                    EventLogger.LogStatic($"[MigrationMonitor] Singleton access: {singletonType.Name}.{accessMethod}");
+                    ServiceLocator.GetService<IEventLogger>()?.Log($"[MigrationMonitor] Singleton access: {singletonType.Name}.{accessMethod}");
                 }
             }
         }
@@ -117,7 +119,7 @@ namespace asterivo.Unity60.Core.Services
             // リアルタイムログ出力
             if (enableRealTimeLogging)
             {
-                EventLogger.LogStatic($"[MigrationMonitor] ServiceLocator usage: {serviceType.Name} via {accessMethod}");
+                ServiceLocator.GetService<IEventLogger>()?.Log($"[MigrationMonitor] ServiceLocator usage: {serviceType.Name} via {accessMethod}");
             }
             
             // ServiceLocator使用イベントを記録
@@ -150,21 +152,21 @@ namespace asterivo.Unity60.Core.Services
         {
             if (usageStats.Count == 0)
             {
-                EventLogger.LogStatic("[MigrationMonitor] No singleton usage detected");
+                ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationMonitor] No singleton usage detected");
                 return;
             }
             
-            EventLogger.LogStatic("[MigrationMonitor] === Singleton Usage Report ===");
-            EventLogger.LogStatic($"  Total Accesses: {totalSingletonAccesses}");
-            EventLogger.LogStatic($"  Unique Classes: {uniqueSingletonClasses}");
-            EventLogger.LogStatic($"  Monitoring Period: {Time.time:F1} seconds");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationMonitor] === Singleton Usage Report ===");
+            ServiceLocator.GetService<IEventLogger>()?.Log($"  Total Accesses: {totalSingletonAccesses}");
+            ServiceLocator.GetService<IEventLogger>()?.Log($"  Unique Classes: {uniqueSingletonClasses}");
+            ServiceLocator.GetService<IEventLogger>()?.Log($"  Monitoring Period: {Time.time:F1} seconds");
             
-            EventLogger.LogStatic("  Usage Details:");
+            ServiceLocator.GetService<IEventLogger>()?.Log("  Usage Details:");
             foreach (var kvp in usageStats)
             {
                 var info = kvp.Value;
                 var duration = info.LastAccessTime - info.FirstAccessTime;
-                EventLogger.LogStatic($"    - {info.SingletonType.Name}: {info.AccessCount} accesses " +
+                ServiceLocator.GetService<IEventLogger>()?.Log($"    - {info.SingletonType.Name}: {info.AccessCount} accesses " +
                                $"(First: {info.FirstAccessTime:HH:mm:ss}, Last: {info.LastAccessTime:HH:mm:ss}, " +
                                $"Duration: {duration.TotalSeconds:F1}s)");
             }
@@ -178,17 +180,17 @@ namespace asterivo.Unity60.Core.Services
         {
             if (recentEvents.Count == 0)
             {
-                EventLogger.LogStatic("[MigrationMonitor] No recent singleton events");
+                ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationMonitor] No recent singleton events");
                 return;
             }
             
-            EventLogger.LogStatic("[MigrationMonitor] === Recent Singleton Events ===");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationMonitor] === Recent Singleton Events ===");
             int displayCount = Mathf.Min(recentEvents.Count, 10); // 最新10件を表示
             
             for (int i = recentEvents.Count - displayCount; i < recentEvents.Count; i++)
             {
                 var evt = recentEvents[i];
-                EventLogger.LogStatic($"  [{evt.Timestamp:HH:mm:ss}] {evt.SingletonType}.{evt.AccessMethod}");
+                ServiceLocator.GetService<IEventLogger>()?.Log($"  [{evt.Timestamp:HH:mm:ss}] {evt.SingletonType}.{evt.AccessMethod}");
             }
         }
         
@@ -211,11 +213,11 @@ namespace asterivo.Unity60.Core.Services
                 }
                 
                 PlayerPrefs.Save();
-                EventLogger.LogStatic("[MigrationMonitor] Usage statistics saved");
+                ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationMonitor] Usage statistics saved");
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogErrorStatic($"[MigrationMonitor] Failed to save statistics: {ex.Message}");
+                ServiceLocator.GetService<IEventLogger>()?.LogError($"[MigrationMonitor] Failed to save statistics: {ex.Message}");
             }
         }
         
@@ -230,12 +232,12 @@ namespace asterivo.Unity60.Core.Services
                 uniqueSingletonClasses = PlayerPrefs.GetInt("MigrationMonitor_UniqueClasses", 0);
                 string lastReportTime = PlayerPrefs.GetString("MigrationMonitor_LastReportTime", "Never");
                 
-                EventLogger.LogStatic($"[MigrationMonitor] Loaded statistics - Total: {totalSingletonAccesses}, " +
+                ServiceLocator.GetService<IEventLogger>()?.Log($"[MigrationMonitor] Loaded statistics - Total: {totalSingletonAccesses}, " +
                                $"Unique: {uniqueSingletonClasses}, Last Report: {lastReportTime}");
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogErrorStatic($"[MigrationMonitor] Failed to load statistics: {ex.Message}");
+                ServiceLocator.GetService<IEventLogger>()?.LogError($"[MigrationMonitor] Failed to load statistics: {ex.Message}");
             }
         }
         
@@ -255,7 +257,7 @@ namespace asterivo.Unity60.Core.Services
             PlayerPrefs.DeleteKey("MigrationMonitor_UniqueClasses");
             PlayerPrefs.DeleteKey("MigrationMonitor_LastReportTime");
             
-            EventLogger.LogStatic("[MigrationMonitor] Statistics reset");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationMonitor] Statistics reset");
         }
         
         /// <summary>
@@ -264,11 +266,11 @@ namespace asterivo.Unity60.Core.Services
         [ContextMenu("Generate Migration Recommendations")]
         public void GenerateMigrationRecommendations()
         {
-            EventLogger.LogStatic("[MigrationMonitor] === Migration Recommendations ===");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationMonitor] === Migration Recommendations ===");
             
             if (usageStats.Count == 0)
             {
-                EventLogger.LogStatic("  ✅ No singleton usage detected - migration appears complete!");
+                ServiceLocator.GetService<IEventLogger>()?.Log("  ✅ No singleton usage detected - migration appears complete!");
                 return;
             }
             
@@ -276,7 +278,7 @@ namespace asterivo.Unity60.Core.Services
             {
                 var info = kvp.Value;
                 string recommendation = GetMigrationRecommendation(info);
-                EventLogger.LogStatic($"  📋 {info.SingletonType.Name}: {recommendation}");
+                ServiceLocator.GetService<IEventLogger>()?.Log($"  📋 {info.SingletonType.Name}: {recommendation}");
             }
         }
         
@@ -323,7 +325,7 @@ namespace asterivo.Unity60.Core.Services
             // デバッグログ出力
             if (enableRealTimeLogging)
             {
-                EventLogger.LogStatic($"[MigrationMonitor] Migration Progress: {totalProgress:P1} " +
+                ServiceLocator.GetService<IEventLogger>()?.Log($"[MigrationMonitor] Migration Progress: {totalProgress:P1} " +
                                $"(Phase1: {phase1Progress:P1}, Phase2: {phase2Progress:P1}, Phase3: {phase3Progress:P1})");
             }
             
@@ -343,7 +345,7 @@ namespace asterivo.Unity60.Core.Services
                 if (!FeatureFlags.UseServiceLocator)
                 {
                     if (enableRealTimeLogging)
-                        EventLogger.LogWarningStatic("[MigrationMonitor] ServiceLocator is disabled - migration safety uncertain");
+                        ServiceLocator.GetService<IEventLogger>()?.LogWarning("[MigrationMonitor] ServiceLocator is disabled - migration safety uncertain");
                     return null; // ServiceLocatorが無効の場合は判定不能
                 }
                 
@@ -389,11 +391,11 @@ namespace asterivo.Unity60.Core.Services
                 // デバッグ情報出力
                 if (enableRealTimeLogging)
                 {
-                    EventLogger.LogStatic($"[MigrationMonitor] Safety Assessment:");
-                    EventLogger.LogStatic($"  Services: {registeredServicesCount}/{criticalServicesCount} ({serviceRegistrationRatio:P1}) - {(isServicesSafe ? "安全" : "危険")}");
-                    EventLogger.LogStatic($"  Legacy Usage: {totalSingletonAccesses} accesses - {(isLegacyUsageSafe ? "安全" : "危険")}");
-                    EventLogger.LogStatic($"  FeatureFlags: ServiceLocator={FeatureFlags.UseServiceLocator} - {(isFeatureFlagsSafe ? "安全" : "危険")}");
-                    EventLogger.LogStatic($"  Overall Safety: {(overallSafety ? "✅ SAFE" : "⚠️ UNSAFE")}");
+                    ServiceLocator.GetService<IEventLogger>()?.Log($"[MigrationMonitor] Safety Assessment:");
+                    ServiceLocator.GetService<IEventLogger>()?.Log($"  Services: {registeredServicesCount}/{criticalServicesCount} ({serviceRegistrationRatio:P1}) - {(isServicesSafe ? "安全" : "危険")}");
+                    ServiceLocator.GetService<IEventLogger>()?.Log($"  Legacy Usage: {totalSingletonAccesses} accesses - {(isLegacyUsageSafe ? "安全" : "危険")}");
+                    ServiceLocator.GetService<IEventLogger>()?.Log($"  FeatureFlags: ServiceLocator={FeatureFlags.UseServiceLocator} - {(isFeatureFlagsSafe ? "安全" : "危険")}");
+                    ServiceLocator.GetService<IEventLogger>()?.Log($"  Overall Safety: {(overallSafety ? "✅ SAFE" : "⚠️ UNSAFE")}");
                 }
                 
                 return overallSafety;
@@ -401,7 +403,7 @@ namespace asterivo.Unity60.Core.Services
             catch (System.Exception ex)
             {
                 if (enableRealTimeLogging)
-                    EventLogger.LogErrorStatic($"[MigrationMonitor] Safety assessment failed: {ex.Message}");
+                    ServiceLocator.GetService<IEventLogger>()?.LogError($"[MigrationMonitor] Safety assessment failed: {ex.Message}");
                 return null; // 例外発生時は判定不能
             }
         }
@@ -434,15 +436,15 @@ namespace asterivo.Unity60.Core.Services
             
             if (safetyResult == null)
             {
-                EventLogger.LogWarningStatic("[MigrationMonitor] ⚠️ Migration safety assessment inconclusive");
+                ServiceLocator.GetService<IEventLogger>()?.LogWarning("[MigrationMonitor] ⚠️ Migration safety assessment inconclusive");
             }
             else if (safetyResult.Value)
             {
-                EventLogger.LogStatic("[MigrationMonitor] ✅ Migration is SAFE to proceed");
+                ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationMonitor] ✅ Migration is SAFE to proceed");
             }
             else
             {
-                EventLogger.LogErrorStatic("[MigrationMonitor] ⚠️ Migration is UNSAFE - review issues before proceeding");
+                ServiceLocator.GetService<IEventLogger>()?.LogError("[MigrationMonitor] ⚠️ Migration is UNSAFE - review issues before proceeding");
             }
         }
 

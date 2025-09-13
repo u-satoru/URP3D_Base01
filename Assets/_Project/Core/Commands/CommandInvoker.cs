@@ -10,7 +10,7 @@ namespace asterivo.Unity60.Core.Commands
     /// コマンドパターンの中核をなすクラスです。
     /// コマンドの実行、およびUndo/Redoのためのコマンド履歴管理を担当します。
     /// </summary>
-    public class CommandInvoker : MonoBehaviour, IGameEventListener<ICommand>
+    public class CommandInvoker : MonoBehaviour, IGameEventListener<object>
     {
         [Header("Command Events")]
         [Tooltip("実行すべきコマンドを受け取るためのイベント")]
@@ -216,10 +216,17 @@ namespace asterivo.Unity60.Core.Commands
         /// <summary>
         /// ゲームイベント経由でコマンドを受け取った際のリスナー処理です。
         /// </summary>
-        /// <param name="value">受信したコマンド。</param>
-        public void OnEventRaised(ICommand value)
+        /// <param name="value">受信したオブジェクト（ICommandにキャストされる）。</param>
+        public void OnEventRaised(object value)
         {
-            ExecuteCommand(value);
+            if (value is ICommand command)
+            {
+                ExecuteCommand(command);
+            }
+            else
+            {
+                Debug.LogWarning($"[CommandInvoker] 受信したオブジェクトがICommandではありません: {value?.GetType().Name ?? "null"}");
+            }
         }
 
         /// <summary>
@@ -239,10 +246,17 @@ namespace asterivo.Unity60.Core.Commands
 
             foreach (var definition in itemData.commandDefinitions)
             {
-                ICommand command = CreateCommandFromDefinition(definition);
-                if (command != null)
+                if (definition is ICommandDefinition commandDefinition)
                 {
-                    ExecuteCommand(command);
+                    ICommand command = CreateCommandFromDefinition(commandDefinition);
+                    if (command != null)
+                    {
+                        ExecuteCommand(command);
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning($"[CommandInvoker] ItemDataのcommandDefinitionsに無効な型のオブジェクトが含まれています: {definition?.GetType().Name ?? "null"}");
                 }
             }
         }

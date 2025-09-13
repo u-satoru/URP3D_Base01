@@ -230,8 +230,8 @@ namespace asterivo.Unity60.Features.AI.Visual
         private VisualDetectionModule detectionModule;
         private AlertLevel previousAlertLevel;
         
-        // AI State Machine連動
-        private asterivo.Unity60.Features.AI.States.AIStateMachine aiStateMachine;
+        // TODO: AI State Machine連動 - States名前空間が未実装のためコメントアウト
+        // private asterivo.Unity60.Features.AI.States.AIStateMachine aiStateMachine;
         
         // イベント発行用
         [Header("AI Integration")]
@@ -311,8 +311,9 @@ namespace asterivo.Unity60.Features.AI.Visual
         private void InitializeModules()
         {
             // AI State Machineの取得
-            aiStateMachine = GetComponent<asterivo.Unity60.Features.AI.States.AIStateMachine>();
-            if (aiStateMachine == null)
+            // TODO: AI State Machine連動 - States名前空間が未実装のためコメントアウト
+            // aiStateMachine = GetComponent<asterivo.Unity60.Features.AI.States.AIStateMachine>();
+            // if (aiStateMachine == null)
             {
                 Debug.LogWarning($"[NPCVisualSensor] {gameObject.name}: AIStateMachine component not found!");
             }
@@ -519,11 +520,12 @@ namespace asterivo.Unity60.Features.AI.Visual
             // Target Tracking Moduleに目標を追加（既にScanTargetで処理済みのため、ここでは重複処理を回避）
             
             // AI State Machineに目標発見を通知
-            if (aiStateMachine != null)
-            {
-                aiStateMachine.SetTarget(target);
-                aiStateMachine.OnSightTarget(target);
-            }
+            // TODO: AI State Machine連動 - States名前空間が未実装のためコメントアウト
+            // if (aiStateMachine != null)
+            // {
+            //     aiStateMachine.SetTarget(target);
+            //     aiStateMachine.OnSightTarget(target);
+            // }
             
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"<color=yellow>[NPCVisualSensor]</color> {gameObject.name}: New target spotted - {target.name} (Score: {score:F2})");
@@ -624,10 +626,11 @@ namespace asterivo.Unity60.Features.AI.Visual
             }
             
             // AI State Machineへの通知
-            if (aiStateMachine != null)
-            {
-                aiStateMachine.IncreaseSuspicion(alertSystem.AlertIntensity);
-            }
+            // TODO: AI State Machine連動 - States名前空間が未実装のためコメントアウト
+            // if (aiStateMachine != null)
+            // {
+            //     aiStateMachine.IncreaseSuspicion(alertSystem.AlertIntensity);
+            // }
             
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"<color=orange>[NPCVisualSensor]</color> {gameObject.name}: Alert level changed from {previous} to {current} (Intensity: {alertSystem.AlertIntensity:F2})");
@@ -687,10 +690,11 @@ namespace asterivo.Unity60.Features.AI.Visual
         private void OnTargetPositionPredicted(int targetId, Vector3 predictedPosition)
         {
             // AI State Machineに予測位置を通知
-            if (aiStateMachine != null)
-            {
-                aiStateMachine.LastKnownPosition = predictedPosition;
-            }
+            // TODO: AI State Machine連動 - States名前空間が未実装のためコメントアウト
+            // if (aiStateMachine != null)
+            // {
+            //     aiStateMachine.LastKnownPosition = predictedPosition;
+            // }
             
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"<color=magenta>[NPCVisualSensor]</color> {gameObject.name}: Predicted position for target {targetId}: {predictedPosition}");
@@ -790,10 +794,11 @@ namespace asterivo.Unity60.Features.AI.Visual
             Debug.Log($"[NPCVisualSensor] Target added to tracking: {target.transform?.name}");
             
             // AIStateMachineに通知
-            if (aiStateMachine != null && target.transform != null)
-            {
-                aiStateMachine.OnSightTarget(target.transform);
-            }
+            // TODO: AI State Machine連動 - States名前空間が未実装のためコメントアウト
+            // if (aiStateMachine != null && target.transform != null)
+            // {
+            //     aiStateMachine.OnSightTarget(target.transform);
+            // }
         }
         
         private void OnTargetTrackingTargetRemoved(DetectedTarget target)
@@ -805,18 +810,19 @@ namespace asterivo.Unity60.Features.AI.Visual
         {
             Debug.Log($"[NPCVisualSensor] Primary target changed from {oldPrimary?.transform?.name ?? "None"} to {newPrimary?.transform?.name ?? "None"}");
             
-            // AIStateMachineに新しいプライマリターゲットを設定
-            if (aiStateMachine != null)
-            {
-                if (newPrimary?.transform != null)
-                {
-                    aiStateMachine.SetTarget(newPrimary.transform);
-                }
-                else
-                {
-                    aiStateMachine.ClearTarget();
-                }
-            }
+            // AIStateMachineに新しいプライマリターゲットを設定 - States名前空間が未実装のためコメントアウト
+            // TODO: AI State Machine連動 - States名前空間が未実装のためコメントアウト
+            // if (aiStateMachine != null)
+            // {
+            //     if (newPrimary?.transform != null)
+            //     {
+            //         aiStateMachine.SetTarget(newPrimary.transform);
+            //     }
+            //     else
+            //     {
+            //         aiStateMachine.ClearTarget();
+            //     }
+            // }
         }
         
         #endregion

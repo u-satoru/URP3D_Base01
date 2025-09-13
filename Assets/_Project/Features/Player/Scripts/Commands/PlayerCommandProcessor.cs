@@ -63,7 +63,14 @@ namespace asterivo.Unity60.Player.Commands
                 return;
                 
             var commands = skill.Use(playerContext);
-            ExecuteCommands(commands);
+            // TODO: 型変換の修正 - skill.UseがList<object>を返すためList<ICommand>にキャスト
+            var commandList = new List<ICommand>();
+            foreach (var cmd in commands)
+            {
+                if (cmd is ICommand command)
+                    commandList.Add(command);
+            }
+            ExecuteCommands(commandList);
         }
         
         /// <summary>
@@ -75,7 +82,14 @@ namespace asterivo.Unity60.Player.Commands
                 return;
                 
             var commands = skill.Use(playerContext);
-            ExecuteCommands(commands);
+            // TODO: 型変換の修正 - skill.UseがList<object>を返すためList<ICommand>にキャスト
+            var commandList = new List<ICommand>();
+            foreach (var cmd in commands)
+            {
+                if (cmd is ICommand command)
+                    commandList.Add(command);
+            }
+            ExecuteCommands(commandList);
         }
         
         /// <summary>
@@ -94,7 +108,14 @@ namespace asterivo.Unity60.Player.Commands
                 return;
                 
             var commands = item.Use(playerContext);
-            ExecuteCommands(commands);
+            // TODO: 型変換の修正 - item.UseがList<object>を返すためList<ICommand>にキャスト
+            var commandList = new List<ICommand>();
+            foreach (var cmd in commands)
+            {
+                if (cmd is ICommand command)
+                    commandList.Add(command);
+            }
+            ExecuteCommands(commandList);
         }
         
         /// <summary>
@@ -106,7 +127,14 @@ namespace asterivo.Unity60.Player.Commands
                 return;
                 
             var commands = item.Use(playerContext);
-            ExecuteCommands(commands);
+            // TODO: 型変換の修正 - item.UseがList<object>を返すためList<ICommand>にキャスト
+            var commandList = new List<ICommand>();
+            foreach (var cmd in commands)
+            {
+                if (cmd is ICommand command)
+                    commandList.Add(command);
+            }
+            ExecuteCommands(commandList);
         }
         
         /// <summary>
@@ -118,7 +146,14 @@ namespace asterivo.Unity60.Player.Commands
                 return;
                 
             var commands = item.Equip(playerContext);
-            ExecuteCommands(commands);
+            // TODO: 型変換の修正 - item.EquipがList<object>を返すためList<ICommand>にキャスト
+            var commandList = new List<ICommand>();
+            foreach (var cmd in commands)
+            {
+                if (cmd is ICommand command)
+                    commandList.Add(command);
+            }
+            ExecuteCommands(commandList);
         }
         
         /// <summary>
@@ -130,7 +165,14 @@ namespace asterivo.Unity60.Player.Commands
                 return;
                 
             var commands = item.Unequip(playerContext);
-            ExecuteCommands(commands);
+            // TODO: 型変換の修正 - item.UnequipがList<object>を返すためList<ICommand>にキャスト
+            var commandList = new List<ICommand>();
+            foreach (var cmd in commands)
+            {
+                if (cmd is ICommand command)
+                    commandList.Add(command);
+            }
+            ExecuteCommands(commandList);
         }
         
         /// <summary>

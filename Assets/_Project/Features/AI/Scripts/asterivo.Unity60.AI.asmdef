@@ -4,8 +4,14 @@
     "references": [
         "asterivo.Unity60.Core",
         "asterivo.Unity60.Core.Events",
+        "asterivo.Unity60.Core.Commands",
+        "asterivo.Unity60.Core.Audio",
+        "asterivo.Unity60.Core.Services",
+        "asterivo.Unity60.Core.Components",
+        "asterivo.Unity60.Core.Debug",
         "asterivo.Unity60.Core.Shared",
-        "asterivo.Unity60.Stealth"
+        "asterivo.Unity60.Stealth",
+        "asterivo.Unity60.Features.AI.Visual"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

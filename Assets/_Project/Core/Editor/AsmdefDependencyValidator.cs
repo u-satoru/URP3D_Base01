@@ -58,6 +58,12 @@ namespace asterivo.Unity60.Core.Editor
                     }
                 }
 
+                UnityEngine.Debug.Log($"[AsmdefValidator] Found {violations.Count} violations");
+                foreach(var violation in violations)
+                {
+                    UnityEngine.Debug.Log($"[AsmdefValidator] Violation: {violation}");
+                }
+                
                 if (violations.Count > 0)
                 {
                     UnityEngine.Debug.LogError("[AsmdefValidator] Core asmdef has forbidden references:\n - " + string.Join("\n - ", violations));

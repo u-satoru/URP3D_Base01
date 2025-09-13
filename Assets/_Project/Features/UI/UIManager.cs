@@ -11,6 +11,35 @@ using DG.Tweening.Core;
 
 
 
+
+    /// <summary>
+    /// UI状態データを格納する構造体（UIManager内でのローカル定義）
+    /// </summary>
+    [System.Serializable]
+    public struct UIStateData
+    {
+        public string panelName;
+        public UIPanelType panelType;
+        public bool isVisible;
+        public string metadata;
+        
+        public override string ToString()
+        {
+            return $"UIState: {panelName} ({panelType}) - Visible: {isVisible}";
+        }
+    }
+
+    /// <summary>
+    /// UIパネルのタイプを定義する列挙型
+    /// </summary>
+    public enum UIPanelType
+    {
+        Menu,
+        HUD,
+        Popup,
+        Dialog,
+        Overlay
+    }
 namespace asterivo.Unity60.Core.UI
 {
     /// <summary>
@@ -117,17 +146,7 @@ namespace asterivo.Unity60.Core.UI
             public bool IsActive => panelObject != null && panelObject.activeInHierarchy;
         }
         
-        /// <summary>
-        /// UIパネルのタイプを定義する列挙型
-        /// </summary>
-        public enum UIPanelType
-        {
-            Menu,
-            HUD,
-            Popup,
-            Dialog,
-            Overlay
-        }
+        // UIPanelType moved to namespace level to avoid circular reference
         
         private void Awake()
         {
@@ -227,7 +246,8 @@ namespace asterivo.Unity60.Core.UI
             { 
                 panelName = panel.panelName, 
                 panelType = panel.panelType,
-                isVisible = true 
+                isVisible = true,
+                metadata = ""
             });
             
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -269,7 +289,8 @@ namespace asterivo.Unity60.Core.UI
             { 
                 panelName = panel.panelName, 
                 panelType = panel.panelType,
-                isVisible = false 
+                isVisible = false,
+                metadata = ""
             });
             
             if (currentActivePanel == panel)

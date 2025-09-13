@@ -1,6 +1,8 @@
 using UnityEngine;
 
 using asterivo.Unity60.Core.Audio.Interfaces;
+using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Services;
 // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 using asterivo.Unity60.Core;
 
@@ -32,7 +34,7 @@ namespace asterivo.Unity60.Core.Services
         [ContextMenu("Validate Migration")]
         public void ValidateMigration()
         {
-            EventLogger.LogStatic("[MigrationValidator] Starting migration validation...");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] Starting migration validation...");
             
             bool allPassed = true;
             
@@ -50,107 +52,107 @@ namespace asterivo.Unity60.Core.Services
             allPassed &= ValidateFeatureFlags();
             
             string result = allPassed ? "PASSED" : "FAILED";
-            EventLogger.LogStatic($"[MigrationValidator] Migration validation {result}");
+            ServiceLocator.GetService<IEventLogger>()?.Log($"[MigrationValidator] Migration validation {result}");
         }
         
         private bool ValidateServiceLocatorBasics()
         {
-            EventLogger.LogStatic("[MigrationValidator] Validating ServiceLocator basics...");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] Validating ServiceLocator basics...");
             
             // ServiceLocatorが動作していることを確認
             int serviceCount = ServiceLocator.GetServiceCount();
             if (serviceCount == 0)
             {
-                EventLogger.LogErrorStatic("[MigrationValidator] ServiceLocator has no registered services");
+                ServiceLocator.GetService<IEventLogger>()?.LogError("[MigrationValidator] ServiceLocator has no registered services");
                 return false;
             }
             
-            EventLogger.LogStatic($"[MigrationValidator] ServiceLocator has {serviceCount} registered services");
+            ServiceLocator.GetService<IEventLogger>()?.Log($"[MigrationValidator] ServiceLocator has {serviceCount} registered services");
             return true;
         }
         
         private bool ValidateAudioService()
         {
-            EventLogger.LogStatic("[MigrationValidator] Validating AudioService...");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] Validating AudioService...");
             
             var audioService = ServiceLocator.GetService<IAudioService>();
             if (audioService == null)
             {
-                EventLogger.LogErrorStatic("[MigrationValidator] IAudioService not found in ServiceLocator");
+                ServiceLocator.GetService<IEventLogger>()?.LogError("[MigrationValidator] IAudioService not found in ServiceLocator");
                 return false;
             }
             
-            EventLogger.LogStatic("[MigrationValidator] IAudioService validation passed");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] IAudioService validation passed");
             return true;
         }
         
         private bool ValidateSpatialAudioService()
         {
-            EventLogger.LogStatic("[MigrationValidator] Validating SpatialAudioService...");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] Validating SpatialAudioService...");
             
             var spatialService = ServiceLocator.GetService<ISpatialAudioService>();
             if (spatialService == null)
             {
-                EventLogger.LogErrorStatic("[MigrationValidator] ISpatialAudioService not found in ServiceLocator");
+                ServiceLocator.GetService<IEventLogger>()?.LogError("[MigrationValidator] ISpatialAudioService not found in ServiceLocator");
                 return false;
             }
             
-            EventLogger.LogStatic("[MigrationValidator] ISpatialAudioService validation passed");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] ISpatialAudioService validation passed");
             return true;
         }
         
         private bool ValidateStealthAudioService()
         {
-            EventLogger.LogStatic("[MigrationValidator] Validating StealthAudioService...");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] Validating StealthAudioService...");
             
             var stealthService = ServiceLocator.GetService<IStealthAudioService>();
             if (stealthService == null)
             {
-                EventLogger.LogErrorStatic("[MigrationValidator] IStealthAudioService not found in ServiceLocator");
+                ServiceLocator.GetService<IEventLogger>()?.LogError("[MigrationValidator] IStealthAudioService not found in ServiceLocator");
                 return false;
             }
             
-            EventLogger.LogStatic("[MigrationValidator] IStealthAudioService validation passed");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] IStealthAudioService validation passed");
             return true;
         }
         
         private bool ValidateEffectService()
         {
-            EventLogger.LogStatic("[MigrationValidator] Validating EffectService...");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] Validating EffectService...");
             
             var effectService = ServiceLocator.GetService<IEffectService>();
             if (effectService == null)
             {
-                EventLogger.LogErrorStatic("[MigrationValidator] IEffectService not found in ServiceLocator");
+                ServiceLocator.GetService<IEventLogger>()?.LogError("[MigrationValidator] IEffectService not found in ServiceLocator");
                 return false;
             }
             
-            EventLogger.LogStatic("[MigrationValidator] IEffectService validation passed");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] IEffectService validation passed");
             return true;
         }
         
         private bool ValidateAudioUpdateService()
         {
-            EventLogger.LogStatic("[MigrationValidator] Validating AudioUpdateService...");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] Validating AudioUpdateService...");
             
             var updateService = ServiceLocator.GetService<IAudioUpdateService>();
             if (updateService == null)
             {
-                EventLogger.LogErrorStatic("[MigrationValidator] IAudioUpdateService not found in ServiceLocator");
+                ServiceLocator.GetService<IEventLogger>()?.LogError("[MigrationValidator] IAudioUpdateService not found in ServiceLocator");
                 return false;
             }
             
-            EventLogger.LogStatic("[MigrationValidator] IAudioUpdateService validation passed");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] IAudioUpdateService validation passed");
             return true;
         }
         
         private bool ValidateFeatureFlags()
         {
-            EventLogger.LogStatic("[MigrationValidator] Validating FeatureFlags...");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] Validating FeatureFlags...");
             
             if (!FeatureFlags.UseServiceLocator)
             {
-                EventLogger.LogErrorStatic("[MigrationValidator] UseServiceLocator is disabled");
+                ServiceLocator.GetService<IEventLogger>()?.LogError("[MigrationValidator] UseServiceLocator is disabled");
                 return false;
             }
             
@@ -159,12 +161,12 @@ namespace asterivo.Unity60.Core.Services
                 FeatureFlags.UseNewSpatialService && 
                 FeatureFlags.UseNewStealthService)
             {
-                EventLogger.LogStatic("[MigrationValidator] All new services are enabled");
+                ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] All new services are enabled");
                 return true;
             }
             else
             {
-                EventLogger.LogWarningStatic("[MigrationValidator] Some new services are still disabled");
+                ServiceLocator.GetService<IEventLogger>()?.LogWarning("[MigrationValidator] Some new services are still disabled");
                 return false;
             }
         }

@@ -11,20 +11,20 @@ namespace asterivo.Unity60.Core
     /// </summary>
     public class GameStateManagerService : MonoBehaviour, IGameStateManager, IServiceLocatorRegistrable
     {
-        [Header("Events")] [SerializeField] private GameStateEvent gameStateChangedEvent;
+        [Header("Events")] [SerializeField] private GenericGameEvent<GameState> gameStateChangedEvent;
 
         [Header("Runtime")]
         [SerializeField] private GameState currentGameState = GameState.MainMenu;
         [SerializeField] private GameState previousGameState = GameState.MainMenu;
 
-        [Header("Back-Compat")] [SerializeField] private GameManager gameManager; // optional for early boot
+        // GameManager reference removed - Core層からFeatures層への参照禁止
         [SerializeField] private int priority = 50;
 
         public int Priority => priority;
 
         private void Reset()
         {
-            if (gameManager == null) gameManager = FindFirstObjectByType<GameManager>();
+            // GameManager fallback removed - ServiceLocatorパターンのみ使用
         }
 
         public void RegisterServices()
@@ -43,18 +43,12 @@ namespace asterivo.Unity60.Core
             }
         }
 
-        public GameState CurrentGameState => gameManager != null ? gameManager.CurrentGameState : currentGameState;
-        public GameState PreviousGameState => gameManager != null ? gameManager.PreviousGameState : previousGameState;
+        public GameState CurrentGameState => currentGameState;
+        public GameState PreviousGameState => previousGameState;
         public bool IsGameOver => false; // game over判定はScoreService側で行う
 
         public void ChangeGameState(GameState newState)
         {
-            if (gameManager != null)
-            {
-                // 旧システムが優先の場合はGameManagerに委譲（後方互換）
-                // GameManager側がServiceに委譲するためループは起きない
-            }
-
             if (currentGameState == newState) return;
             previousGameState = currentGameState;
             currentGameState = newState;

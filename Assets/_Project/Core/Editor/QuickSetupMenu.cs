@@ -78,8 +78,10 @@ namespace asterivo.Unity60.Core.Editor
         [MenuItem(MENU_ROOT + "3. Create Game Manager", priority = 3)]
         public static void CreateGameManager()
         {
-            // GameManagerが既に存在するかチェック
-            GameObject existingGameManager = GameObject.FindFirstObjectByType<asterivo.Unity60.Core.GameManager>()?.gameObject;
+            // GameManagerが既に存在するかチェック - 循環依存回避のため一時的にコメントアウト
+            // TODO: GameManagerはFeaturesアセンブリにあるため、Coreから直接参照できない
+            // GameObject existingGameManager = GameObject.FindFirstObjectByType<asterivo.Unity60.Core.GameManager>()?.gameObject;
+            GameObject existingGameManager = null; // 一時的な回避策
             if (existingGameManager != null)
             {
                 UnityEngine.Debug.LogWarning("⚠️ GameManager already exists in the scene");
@@ -268,7 +270,9 @@ namespace asterivo.Unity60.Core.Editor
         private static void CreateEmptyGameManager()
         {
             GameObject gameManager = new GameObject("GameManager");
-            gameManager.AddComponent<asterivo.Unity60.Core.GameManager>();
+            // TODO: GameManagerはFeaturesアセンブリにあるため、Coreから直接参照できない
+            // gameManager.AddComponent<asterivo.Unity60.Core.GameManager>();
+            UnityEngine.Debug.LogWarning("⚠️ GameManagerコンポーネントの追加は循環依存のためスキップされました");
             Selection.activeGameObject = gameManager;
         }
 

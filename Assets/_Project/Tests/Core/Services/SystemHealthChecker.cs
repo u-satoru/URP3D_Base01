@@ -1,5 +1,8 @@
 using UnityEngine;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core.Audio.Interfaces;
+using asterivo.Unity60.Core.Debug;
 
 namespace asterivo.Unity60.Tests.Core.Services
 {
@@ -68,28 +71,13 @@ namespace asterivo.Unity60.Tests.Core.Services
             // 2. サービス登録状況確認
             try
             {
-                var removalPlan = FindFirstObjectByType<SingletonRemovalPlan>();
-                if (removalPlan != null)
-                {
-                    bool allServicesOK = removalPlan.ValidateServiceRegistration();
-                    if (enableDebugOutput)
-                        Debug.Log($"✅ Service Registration Validation: {(allServicesOK ? "PASSED" : "FAILED")}");
-                    
-                    if (!allServicesOK)
-                    {
-                        if (enableDebugOutput)
-                            Debug.LogWarning("⚠️ Some services are not properly registered");
-                        validationPassed = false;
-                    }
-                }
-                else
-                {
-                    if (enableDebugOutput)
-                        Debug.LogWarning("⚠️ SingletonRemovalPlan not found in scene - skipping service validation");
-                    
-                    // フォールバック: 手動でサービス状況確認
-                    RunManualServiceValidation();
-                }
+                // TODO: SingletonRemovalPlan.ValidateServiceRegistration()メソッドが実装されていないため、
+                // 手動でサービス状況を確認する
+                if (enableDebugOutput)
+                    Debug.LogWarning("⚠️ Using manual service validation (SingletonRemovalPlan.ValidateServiceRegistration not implemented)");
+                
+                // フォールバック: 手動でサービス状況確認
+                RunManualServiceValidation();
             }
             catch (System.Exception e)
             {
@@ -101,7 +89,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             // 3. 追加チェック：MigrationMonitorによる安全性評価
             try
             {
-                var migrationMonitor = FindFirstObjectByType<MigrationMonitor>();
+                var migrationMonitor = FindFirstObjectByType<asterivo.Unity60.Core.Services.MigrationMonitor>();
                 if (migrationMonitor != null)
                 {
                     var migrationProgress = migrationMonitor.GetMigrationProgress();

@@ -99,7 +99,7 @@ namespace asterivo.Unity60.Features.Player.Scripts
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogErrorStatic($"[PlayerStealthController] ServiceLocator initialization failed: {ex.Message}");
+                ServiceLocator.GetService<IEventLogger>()?.LogError($"[PlayerStealthController] ServiceLocator initialization failed: {ex.Message}");
                 InitializeWithLegacyMethod();
             }
         }
@@ -133,7 +133,7 @@ namespace asterivo.Unity60.Features.Player.Scripts
 
                 if (FeatureFlags.EnableMigrationMonitoring)
                 {
-                    EventLogger.LogWarningStatic("[PlayerStealthController] Using legacy Singleton access");
+                    ServiceLocator.GetService<IEventLogger>()?.LogWarning("[PlayerStealthController] Using legacy Singleton access");
                 }
             }
             catch (System.Exception ex)
@@ -338,7 +338,7 @@ namespace asterivo.Unity60.Features.Player.Scripts
         {
             if (enableDebugLogs && FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogStatic(message);
+                ServiceLocator.GetService<IEventLogger>()?.Log(message);
             }
         }
 

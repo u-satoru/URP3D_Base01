@@ -17,7 +17,7 @@ using asterivo.Unity60.Core.Audio; // GameState enum用
 
 namespace asterivo.Unity60.Core
 {
-    public class GameManager : MonoBehaviour, IGameEventListener<ICommandDefinition>
+    public class GameManager : MonoBehaviour, IGameEventListener<object>
     {
         [Header("Game State")]
         [SerializeField] private GameState currentGameState = GameState.MainMenu;
@@ -59,7 +59,7 @@ namespace asterivo.Unity60.Core
 
         [Header("Scene Management")]
         [SerializeField] private string mainMenuSceneName = "MainMenu";
-        [SerializeField] private string gameplaySceneName = "Gameplay";
+        
 
         [Header("Game Data")]
         [SerializeField] private GameData gameData;
@@ -245,19 +245,22 @@ namespace asterivo.Unity60.Core
         #endregion
 
         #region Command System
-        public void OnEventRaised(ICommandDefinition definition)
+public void OnEventRaised(object value)
         {
-            Log($"Command definition received: {definition.GetType().Name}");
-            ICommand command = CreateCommandFromDefinition(definition);
-            if (command != null) 
+            if (value is ICommandDefinition definition)
             {
-                if (commandInvoker != null)
+                Log($"Command definition received: {definition.GetType().Name}");
+                ICommand command = CreateCommandFromDefinition(definition);
+                if (command != null) 
                 {
-                    commandInvoker.ExecuteCommand(command);
-                }
-                else
-                {
-                    ExecuteCommand(command);
+                    if (commandInvoker != null)
+                    {
+                        commandInvoker.ExecuteCommand(command);
+                    }
+                    else
+                    {
+                        ExecuteCommand(command);
+                    }
                 }
             }
         }

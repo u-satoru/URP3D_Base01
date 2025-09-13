@@ -1,4 +1,6 @@
 using UnityEngine;
+using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Services;
 // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 
 namespace asterivo.Unity60.Core.Services
@@ -28,7 +30,7 @@ namespace asterivo.Unity60.Core.Services
             emergencyFlagSet = UnityEditor.EditorPrefs.GetBool("EmergencyRollback", false);
             if (emergencyFlagSet)
             {
-                EventLogger.LogWarningStatic("[EmergencyRollback] Emergency flag detected in Editor");
+                ServiceLocator.GetService<IEventLogger>()?.LogWarning("[EmergencyRollback] Emergency flag detected in Editor");
                 UnityEditor.EditorPrefs.SetBool("EmergencyRollback", false); // フラグをリセット
             }
             #endif
@@ -37,7 +39,7 @@ namespace asterivo.Unity60.Core.Services
             if (PlayerPrefs.GetInt(EMERGENCY_FLAG_KEY, 0) == 1)
             {
                 emergencyFlagSet = true;
-                EventLogger.LogWarningStatic("[EmergencyRollback] Emergency flag detected in PlayerPrefs");
+                ServiceLocator.GetService<IEventLogger>()?.LogWarning("[EmergencyRollback] Emergency flag detected in PlayerPrefs");
                 PlayerPrefs.SetInt(EMERGENCY_FLAG_KEY, 0); // フラグをリセット
                 PlayerPrefs.Save();
             }
@@ -49,7 +51,7 @@ namespace asterivo.Unity60.Core.Services
                 if (args[i] == "-emergency-rollback")
                 {
                     emergencyFlagSet = true;
-                    EventLogger.LogWarningStatic("[EmergencyRollback] Emergency flag detected in command line args");
+                    ServiceLocator.GetService<IEventLogger>()?.LogWarning("[EmergencyRollback] Emergency flag detected in command line args");
                     break;
                 }
             }
@@ -65,7 +67,7 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         public static void ExecuteEmergencyRollback(string reason = "Manual execution")
         {
-            EventLogger.LogErrorStatic($"[EMERGENCY] Executing emergency rollback: {reason}");
+            ServiceLocator.GetService<IEventLogger>()?.LogError($"[EMERGENCY] Executing emergency rollback: {reason}");
             
             // 緊急ロールバック実行記録
             string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -97,11 +99,11 @@ namespace asterivo.Unity60.Core.Services
             
             PlayerPrefs.Save();
             
-            EventLogger.LogErrorStatic("[EMERGENCY] Complete rollback executed successfully");
-            EventLogger.LogErrorStatic("EMERGENCY] Reverted to legacy Singleton system. All new services disabled.");
-            EventLogger.LogErrorStatic($"[EMERGENCY] Rollback reason: {reason}");
-            EventLogger.LogErrorStatic($"[EMERGENCY] Rollback time: {timestamp}");
-            EventLogger.LogErrorStatic("EMERGENCY] Please check logs for the cause of rollback and fix issues before retrying migration.");
+            ServiceLocator.GetService<IEventLogger>()?.LogError("[EMERGENCY] Complete rollback executed successfully");
+            ServiceLocator.GetService<IEventLogger>()?.LogError("EMERGENCY] Reverted to legacy Singleton system. All new services disabled.");
+            ServiceLocator.GetService<IEventLogger>()?.LogError($"[EMERGENCY] Rollback reason: {reason}");
+            ServiceLocator.GetService<IEventLogger>()?.LogError($"[EMERGENCY] Rollback time: {timestamp}");
+            ServiceLocator.GetService<IEventLogger>()?.LogError("EMERGENCY] Please check logs for the cause of rollback and fix issues before retrying migration.");
             
             // SingletonDisableSchedulerもリセット
             ResetScheduler();
@@ -112,7 +114,7 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         public static void RollbackSpecificService(string serviceName, string reason = "Service-specific issue")
         {
-            EventLogger.LogWarningStatic($"[EMERGENCY] Rolling back service '{serviceName}': {reason}");
+            ServiceLocator.GetService<IEventLogger>()?.LogWarning($"[EMERGENCY] Rolling back service '{serviceName}': {reason}");
             
             switch (serviceName.ToLower())
             {
@@ -120,38 +122,38 @@ namespace asterivo.Unity60.Core.Services
                 case "audioservice":
                     FeatureFlags.UseNewAudioService = false;
                     FeatureFlags.MigrateAudioManager = false;
-                    EventLogger.LogWarningStatic("[EMERGENCY] AudioService rolled back to Singleton");
+                    ServiceLocator.GetService<IEventLogger>()?.LogWarning("[EMERGENCY] AudioService rolled back to Singleton");
                     break;
                     
                 case "spatial":
                 case "spatialaudio":
                     FeatureFlags.UseNewSpatialService = false;
                     FeatureFlags.MigrateSpatialAudioManager = false;
-                    EventLogger.LogWarningStatic("[EMERGENCY] SpatialAudioService rolled back to Singleton");
+                    ServiceLocator.GetService<IEventLogger>()?.LogWarning("[EMERGENCY] SpatialAudioService rolled back to Singleton");
                     break;
                     
                 case "stealth":
                 case "stealthaudio":
                     FeatureFlags.UseNewStealthService = false;
                     FeatureFlags.MigrateStealthAudioCoordinator = false;
-                    EventLogger.LogWarningStatic("[EMERGENCY] StealthAudioService rolled back to Singleton");
+                    ServiceLocator.GetService<IEventLogger>()?.LogWarning("[EMERGENCY] StealthAudioService rolled back to Singleton");
                     break;
                     
                 case "effect":
                 case "effectmanager":
                     FeatureFlags.MigrateEffectManager = false;
-                    EventLogger.LogWarningStatic("[EMERGENCY] EffectManager rolled back to Singleton");
+                    ServiceLocator.GetService<IEventLogger>()?.LogWarning("[EMERGENCY] EffectManager rolled back to Singleton");
                     break;
                     
                 case "audioupdate":
                 case "audiocoordinator":
                     FeatureFlags.UseNewAudioUpdateSystem = false;
                     FeatureFlags.MigrateAudioUpdateCoordinator = false;
-                    EventLogger.LogWarningStatic("[EMERGENCY] AudioUpdateCoordinator rolled back to Singleton");
+                    ServiceLocator.GetService<IEventLogger>()?.LogWarning("[EMERGENCY] AudioUpdateCoordinator rolled back to Singleton");
                     break;
                     
                 default:
-                    EventLogger.LogErrorStatic("[EMERGENCY] Unknown service name for rollback: {serviceName}");
+                    ServiceLocator.GetService<IEventLogger>()?.LogError("[EMERGENCY] Unknown service name for rollback: {serviceName}");
                     return;
             }
             
@@ -161,7 +163,7 @@ namespace asterivo.Unity60.Core.Services
             PlayerPrefs.SetString(partialRollbackKey, $"{timestamp}: {reason}");
             PlayerPrefs.Save();
             
-            EventLogger.LogWarningStatic($"[EMERGENCY] Service '{serviceName}' rollback completed");
+            ServiceLocator.GetService<IEventLogger>()?.LogWarning($"[EMERGENCY] Service '{serviceName}' rollback completed");
         }
         
         /// <summary>
@@ -169,7 +171,7 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         public static void RestoreFromRollback(string reason = "Manual recovery")
         {
-            EventLogger.LogStatic("[RECOVERY] Restoring from emergency rollback: {reason}");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[RECOVERY] Restoring from emergency rollback: {reason}");
             
             // 段階的に復旧（安全のため）
             FeatureFlags.UseServiceLocator = true;
@@ -194,9 +196,9 @@ namespace asterivo.Unity60.Core.Services
             PlayerPrefs.SetString("Recovery_Reason", reason);
             PlayerPrefs.Save();
             
-            EventLogger.LogStatic("[RECOVERY] All services restored to new implementation");
-            EventLogger.LogStatic($"[RECOVERY] Recovery reason: {reason}");
-            EventLogger.LogStatic($"[RECOVERY] Recovery time: {timestamp}");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[RECOVERY] All services restored to new implementation");
+            ServiceLocator.GetService<IEventLogger>()?.Log($"[RECOVERY] Recovery reason: {reason}");
+            ServiceLocator.GetService<IEventLogger>()?.Log($"[RECOVERY] Recovery time: {timestamp}");
         }
         
         /// <summary>
@@ -212,8 +214,8 @@ namespace asterivo.Unity60.Core.Services
             UnityEditor.EditorPrefs.SetBool("EmergencyRollback", true);
             #endif
             
-            EventLogger.LogWarningStatic($"[EmergencyRollback] Emergency flag set: {reason}");
-            EventLogger.LogWarningStatic("[EmergencyRollback] Rollback will execute on next application start");
+            ServiceLocator.GetService<IEventLogger>()?.LogWarning($"[EmergencyRollback] Emergency flag set: {reason}");
+            ServiceLocator.GetService<IEventLogger>()?.LogWarning("[EmergencyRollback] Rollback will execute on next application start");
         }
         
         /// <summary>
@@ -225,7 +227,7 @@ namespace asterivo.Unity60.Core.Services
             PlayerPrefs.SetString("SingletonDisableScheduler_StartTime", "");
             PlayerPrefs.Save();
             
-            EventLogger.LogStatic("[EmergencyRollback] SingletonDisableScheduler reset to initial state");
+            ServiceLocator.GetService<IEventLogger>()?.Log("[EmergencyRollback] SingletonDisableScheduler reset to initial state");
         }
         
         /// <summary>
@@ -289,17 +291,17 @@ namespace asterivo.Unity60.Core.Services
             
             if (!health.IsHealthy)
             {
-                EventLogger.LogWarningStatic($"[EmergencyRollback] System health degraded: {health.HealthScore}%");
+                ServiceLocator.GetService<IEventLogger>()?.LogWarning($"[EmergencyRollback] System health degraded: {health.HealthScore}%");
                 
                 foreach (var issue in health.Issues)
                 {
-                    EventLogger.LogWarningStatic($"[EmergencyRollback] Health Issue: {issue}");
+                    ServiceLocator.GetService<IEventLogger>()?.LogWarning($"[EmergencyRollback] Health Issue: {issue}");
                 }
                 
                 // 重大な問題がある場合は自動ロールバックを検討
                 if (health.HealthScore < 30)
                 {
-                    EventLogger.LogErrorStatic("[EmergencyRollback] Critical system health detected");
+                    ServiceLocator.GetService<IEventLogger>()?.LogError("[EmergencyRollback] Critical system health detected");
                     
                     if (FeatureFlags.EnableAutoRollback)
                     {
@@ -307,7 +309,7 @@ namespace asterivo.Unity60.Core.Services
                     }
                     else
                     {
-                        EventLogger.LogErrorStatic("[EmergencyRollback] Auto rollback disabled. Manual intervention required.");
+                        ServiceLocator.GetService<IEventLogger>()?.LogError("[EmergencyRollback] Auto rollback disabled. Manual intervention required.");
                         SetEmergencyFlag("Critical health issues detected - manual rollback required");
                     }
                 }

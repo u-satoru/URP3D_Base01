@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio;
-using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 
 namespace asterivo.Unity60.Tests.Performance
@@ -366,16 +365,16 @@ namespace asterivo.Unity60.Tests.Performance
         public float UpdateInterval { get; set; } = 0.1f;
         public bool IsCoordinatedUpdateEnabled => true;
         
-        // public event System.Action<AudioSystemSyncData> OnAudioSystemSync; // Temporarily commented out for architecture verification
+        public event System.Action<AudioSystemSyncData> OnAudioSystemSync;
         
         public void Initialize() { }
-        // public void RegisterUpdatable(IAudioUpdatable updatable) { } // Temporarily commented out for architecture verification
-        // public void UnregisterUpdatable(IAudioUpdatable updatable) { } // Temporarily commented out for architecture verification
+        public void RegisterUpdatable(IAudioUpdatable updatable) { }
+        public void UnregisterUpdatable(IAudioUpdatable updatable) { }
         public void StartCoordinatedUpdates() { }
         public void StopCoordinatedUpdates() { }
         public List<AudioSource> GetNearbyAudioSources(Vector3 center, float radius) => new List<AudioSource>();
         public void ForceRebuildSpatialCache() { }
-        // public AudioCoordinatorStats GetPerformanceStats() => new AudioCoordinatorStats(); // Temporarily commented out for architecture verification
+        public AudioCoordinatorStats GetPerformanceStats() => new AudioCoordinatorStats();
     }
     
     /// <summary>

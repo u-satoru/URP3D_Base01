@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Data;
-using asterivo.Unity60.Features.AI.States;
+// using asterivo.Unity60.Features.AI.States; // TODO: Implement States namespace if needed
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Features.AI.Visual

@@ -1,8 +1,9 @@
 using UnityEngine;
-// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
+using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core.Audio.Interfaces;
+using asterivo.Unity60.Core.Commands;
 // using asterivo.Unity60.Core.Commands; // Removed to avoid circular dependency
 using System;
 

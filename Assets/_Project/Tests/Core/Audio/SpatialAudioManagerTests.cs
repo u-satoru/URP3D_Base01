@@ -20,7 +20,9 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Setup & Teardown
 
         private GameObject spatialAudioManagerObject;
+        #pragma warning disable CS0618 // Type or member is obsolete
         private SpatialAudioManager spatialAudioManager;
+        #pragma warning restore CS0618 // Type or member is obsolete
         private Camera testCamera;
 
         [SetUp]

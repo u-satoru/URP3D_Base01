@@ -13,14 +13,14 @@ namespace asterivo.Unity60.Core
         [Header("Scenes")] [SerializeField] private string gameplaySceneName = "Gameplay";
         [Header("Settings")] [SerializeField] private float minLoadingTime = 1f;
         [Header("Runtime")] [SerializeField] private bool isTransitioning = false;
-        [SerializeField] private GameManager gameManager; // optional fallback
+        // GameManager reference removed - Core層からFeatures層への参照禁止
         [SerializeField] private int priority = 60;
 
         public int Priority => priority;
 
         private void Reset()
         {
-            if (gameManager == null) gameManager = FindFirstObjectByType<GameManager>();
+            // GameManager fallback removed - ServiceLocatorパターンのみ使用
         }
 
         public void RegisterServices()

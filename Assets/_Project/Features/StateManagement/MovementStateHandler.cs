@@ -8,7 +8,7 @@ namespace asterivo.Unity60.Core.Patterns.StateHandlers
     /// </summary>
     public abstract class MovementStateHandler : IStateHandler
     {
-        public abstract PlayerState HandledState { get; }
+        public abstract int HandledState { get; }
         
         protected abstract string MovementType { get; }
 
@@ -28,7 +28,7 @@ namespace asterivo.Unity60.Core.Patterns.StateHandlers
     /// </summary>
     public class WalkingStateHandler : MovementStateHandler
     {
-        public override PlayerState HandledState => PlayerState.Walking;
+        public override int HandledState => (int)PlayerState.Walking;
         protected override string MovementType => "Walking";
     }
     
@@ -37,7 +37,7 @@ namespace asterivo.Unity60.Core.Patterns.StateHandlers
     /// </summary>
     public class RunningStateHandler : MovementStateHandler
     {
-        public override PlayerState HandledState => PlayerState.Running;
+        public override int HandledState => (int)PlayerState.Running;
         protected override string MovementType => "Running";
     }
     
@@ -46,7 +46,7 @@ namespace asterivo.Unity60.Core.Patterns.StateHandlers
     /// </summary>
     public class SprintingStateHandler : MovementStateHandler
     {
-        public override PlayerState HandledState => PlayerState.Sprinting;
+        public override int HandledState => (int)PlayerState.Sprinting;
         protected override string MovementType => "Sprinting";
     }
     
@@ -55,7 +55,7 @@ namespace asterivo.Unity60.Core.Patterns.StateHandlers
     /// </summary>
     public class JumpingStateHandler : MovementStateHandler
     {
-        public override PlayerState HandledState => PlayerState.Jumping;
+        public override int HandledState => (int)PlayerState.Jumping;
         protected override string MovementType => "Jumping";
     }
     
@@ -64,7 +64,7 @@ namespace asterivo.Unity60.Core.Patterns.StateHandlers
     /// </summary>
     public class FallingStateHandler : MovementStateHandler
     {
-        public override PlayerState HandledState => PlayerState.Falling;
+        public override int HandledState => (int)PlayerState.Falling;
         protected override string MovementType => "Falling";
     }
     
@@ -73,7 +73,7 @@ namespace asterivo.Unity60.Core.Patterns.StateHandlers
     /// </summary>
     public class LandingStateHandler : MovementStateHandler
     {
-        public override PlayerState HandledState => PlayerState.Landing;
+        public override int HandledState => (int)PlayerState.Landing;
         protected override string MovementType => "Landing";
     }
 }

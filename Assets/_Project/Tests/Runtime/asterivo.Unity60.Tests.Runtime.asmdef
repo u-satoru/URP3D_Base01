@@ -4,6 +4,8 @@
     "references": [
         "UnityEngine.TestRunner",
         "asterivo.Unity60.Core",
+        "asterivo.Unity60.Core.Audio",
+        "asterivo.Unity60.Core.Shared",
         "asterivo.Unity60.Features"
     ],
     "includePlatforms": [],

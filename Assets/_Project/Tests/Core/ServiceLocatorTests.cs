@@ -2,7 +2,6 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core;
 using System;
 
 namespace asterivo.Unity60.Tests.Core

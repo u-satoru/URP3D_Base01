@@ -8,7 +8,7 @@ namespace asterivo.Unity60.Core.Patterns.StateHandlers
     /// </summary>
     public class IdleStateHandler : IStateHandler
     {
-        public PlayerState HandledState => PlayerState.Idle;
+        public int HandledState => (int)PlayerState.Idle;
 
         public void OnEnter(IStateContext context)
         {

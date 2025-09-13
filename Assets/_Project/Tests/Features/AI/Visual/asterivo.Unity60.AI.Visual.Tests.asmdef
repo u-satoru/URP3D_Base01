@@ -2,14 +2,14 @@
     "name": "asterivo.Unity60.AI.Visual.Tests",
     "rootNamespace": "asterivo.Unity60.Features.AI.Visual.Tests",
     "references": [
-        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc",
-        "GUID:84651a3751eca9349aac36a66bba901b",
-        "GUID:0acc523941302664db1f4e527237feb3",
-        "GUID:478a2357cc57436488a56e564b08d223",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:e1d2c191d72ab8740bb4719ed7fe849d",
-        "GUID:492814c9a6fbd98418ac154b6effacfd"
+        "asterivo.Unity60.Core",
+        "asterivo.Unity60.Core.Events",
+        "asterivo.Unity60.Core.Data",
+        "asterivo.Unity60.Features.AI.Visual",
+        "asterivo.Unity60.Stealth",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "Unity.PerformanceTesting"
     ],
     "includePlatforms": [
         "Editor"
