@@ -1,7 +1,6 @@
 using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
-using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Debug;
 
 namespace asterivo.Unity60.Tests.Core.Services
@@ -40,7 +39,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             }
             else
             {
-                EventLogger.LogErrorStatic("[TEST] ❌ Failed to retrieve IStealthAudioService from ServiceLocator");
+                ServiceLocator.GetService<IEventLogger>()?.LogError("[TEST] ❌ Failed to retrieve IStealthAudioService from ServiceLocator");
             }
         }
 
@@ -76,7 +75,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogErrorStatic($"[TEST] ❌ Basic functionality test failed: {ex.Message}");
+                ServiceLocator.GetService<IEventLogger>()?.LogError($"[TEST] ❌ Basic functionality test failed: {ex.Message}");
             }
         }
     }

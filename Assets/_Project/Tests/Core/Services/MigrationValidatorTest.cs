@@ -4,7 +4,6 @@ using UnityEngine.TestTools;
 using NUnit.Framework;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Services;
-using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 
 namespace asterivo.Unity60.Tests.Core.Services
@@ -75,8 +74,6 @@ namespace asterivo.Unity60.Tests.Core.Services
             Object.DestroyImmediate(testObject);
             testObject = new GameObject("MigrationValidatorTestRunOnStart");
             
-            bool startValidationExecuted = false;
-
             // Act
             var validator = testObject.AddComponent<MigrationValidator>();
             

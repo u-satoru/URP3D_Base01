@@ -1,7 +1,6 @@
 using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
-using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Debug;
 
 namespace asterivo.Unity60.Tests.Core.Services
@@ -47,16 +46,16 @@ namespace asterivo.Unity60.Tests.Core.Services
                 }
                 else if (serviceType == "StealthAudioCoordinator")
                 {
-                    EventLogger.LogWarningStatic("[TEST] ⚠️ Still using legacy StealthAudioCoordinator");
+                    ServiceLocator.GetService<IEventLogger>()?.LogWarning("[TEST] ⚠️ Still using legacy StealthAudioCoordinator");
                 }
                 else
                 {
-                    EventLogger.LogWarningStatic($"[TEST] ⚠️ Unknown service type: {serviceType}");
+                    ServiceLocator.GetService<IEventLogger>()?.LogWarning($"[TEST] ⚠️ Unknown service type: {serviceType}");
                 }
             }
             else
             {
-                EventLogger.LogErrorStatic("[TEST] ❌ Failed to retrieve IStealthAudioService from ServiceLocator");
+                ServiceLocator.GetService<IEventLogger>()?.LogError("[TEST] ❌ Failed to retrieve IStealthAudioService from ServiceLocator");
                 
                 // ServiceLocatorの現在の状態をデバッグ
                 DebugServiceLocatorState();
@@ -101,7 +100,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogErrorStatic($"[TEST] ❌ NEW StealthAudioService test failed: {ex.Message}");
+                ServiceLocator.GetService<IEventLogger>()?.LogError($"[TEST] ❌ NEW StealthAudioService test failed: {ex.Message}");
             }
         }
 
@@ -121,9 +120,12 @@ namespace asterivo.Unity60.Tests.Core.Services
                 EventLogger.LogStatic($"[DEBUG] FeatureFlags.EnableDebugLogging: {FeatureFlags.EnableDebugLogging}");
             }
             catch (System.Exception ex)
+            // Intentional test of deprecated EventLogger static method
+#pragma warning disable CS0618
             {
                 EventLogger.LogErrorStatic($"[DEBUG] ServiceLocator debug failed: {ex.Message}");
-            }
+#pragma warning restore CS0618
+                            }
         }
     }
 }

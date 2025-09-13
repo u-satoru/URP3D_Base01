@@ -9,6 +9,8 @@ using MigrationMonitorService = asterivo.Unity60.Core.Services.MigrationMonitor;
 
 namespace asterivo.Unity60.Tests.Core.Services
 {
+
+#pragma warning disable CS0618 // Intentionally using deprecated SpatialAudioManager for migration testing
     /// <summary>
     /// Legacy Singleton警告システムの包括的テスト
     /// Step 3.9: Legacy Singleton警告システムの検証
@@ -68,8 +70,6 @@ namespace asterivo.Unity60.Tests.Core.Services
         public void MigrationMonitor_LogSingletonUsage_ShouldRecordUsage()
         {
             // Arrange
-            int initialAccessCount = 0;
-            
             // Act
             migrationMonitor.LogSingletonUsage(typeof(AudioManager), "Instance");
             migrationMonitor.LogSingletonUsage(typeof(AudioManager), "Instance");
