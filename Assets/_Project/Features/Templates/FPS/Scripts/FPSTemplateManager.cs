@@ -184,11 +184,11 @@ namespace asterivo.Unity60.Features.Templates.FPS
             }
         }
         
-        private void InitializeUI()
+private void InitializeUI()
         {
             if (fpsUI == null)
             {
-fpsUI = FindFirstObjectByType<FPSUIManager>();fpsUI = FindFirstObjectByType<FPSUIManager>();                fpsUI = FindFirstObjectByType<FPSUIManager>();                fpsUI = FindFirstObjectByType<FPSUIManager>();                fpsUI = FindFirstObjectByType<FPSUIManager>();r>();
+                fpsUI = FindFirstObjectByType<FPSUIManager>();
             }
             
             if (fpsUI != null && startingWeapon != null)
