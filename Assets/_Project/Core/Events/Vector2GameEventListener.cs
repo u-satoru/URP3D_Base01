@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
-using asterivo.Unity60.Core.Debug;
+// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 
 namespace asterivo.Unity60.Core.Events
 {
@@ -32,7 +32,7 @@ namespace asterivo.Unity60.Core.Events
             }
             else if (debugMode)
             {
-                ProjectDebug.LogWarning($"[{name}] GameEvent is not assigned!");
+                UnityEngine.Debug.LogWarning($"[{name}] GameEvent is not assigned!");
             }
         }
         
@@ -74,7 +74,7 @@ namespace asterivo.Unity60.Core.Events
         {
             if (gameEvent == null && debugMode)
             {
-                ProjectDebug.LogWarning($"[{name}] GameEvent reference is missing!");
+                UnityEngine.Debug.LogWarning($"[{name}] GameEvent reference is missing!");
             }
         }
         #endif

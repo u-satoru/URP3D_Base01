@@ -1,5 +1,5 @@
 using UnityEngine;
-using asterivo.Unity60.Core.UI;
+// using asterivo.Unity60.Core.UI; // UI moved to Features
 
 namespace asterivo.Unity60.Core.Events
 {
@@ -7,13 +7,14 @@ namespace asterivo.Unity60.Core.Events
     /// UI状態変更イベント。UIパネルの表示・非表示やタイプ情報を含むイベントです。
     /// </summary>
     [CreateAssetMenu(fileName = "New UI State Event", menuName = "Game Events/UI State Event")]
-    public class UIStateEvent : GenericGameEvent<UIStateData>
+    public class UIStateEvent : GenericGameEvent<object> // Changed from UIStateData to object to avoid circular dependency
     {
     }
     
     /// <summary>
-    /// UI状態データを格納する構造体
+    /// UI状態データを格納する構造体（一時的にコメントアウト - 型参照問題のため）
     /// </summary>
+    /*
     [System.Serializable]
     public struct UIStateData
     {
@@ -37,4 +38,5 @@ namespace asterivo.Unity60.Core.Events
             return $"UIState: {panelName} ({panelType}) - Visible: {isVisible}";
         }
     }
+    */
 }

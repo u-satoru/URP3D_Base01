@@ -4,8 +4,15 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "GUID:e1d2c191d72ab8740bb4719ed7fe849d",
-        "GUID:a6306a1513995aa459fe3c5534950c7f"
+        "asterivo.Unity60.Core",
+        "asterivo.Unity60.Core.Audio",
+        "asterivo.Unity60.Core.Commands",
+        "asterivo.Unity60.Core.Events",
+        "asterivo.Unity60.Core.Services",
+        "asterivo.Unity60.Core.Shared",
+        "asterivo.Unity60.Core.Components",
+        "asterivo.Unity60.Core.Editor",
+        "asterivo.Unity60.Features"
     ],
     "includePlatforms": [
         "Editor"

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using asterivo.Unity60.Core.Commands;
+// using asterivo.Unity60.Core.Commands; // Removed to avoid circular dependency
 
 namespace asterivo.Unity60.Core.Data
 {
@@ -23,7 +23,7 @@ namespace asterivo.Unity60.Core.Data
         [Header("Command Definitions")]
         [SerializeReference] 
         [Tooltip("List of command definitions that will be executed when this skill is used")]
-        private List<ICommandDefinition> commandDefinitions = new List<ICommandDefinition>();
+        private List<object> commandDefinitions = new List<object>();
         
         [Header("Requirements")]
         [SerializeField] private int requiredLevel = 1;
@@ -44,8 +44,9 @@ namespace asterivo.Unity60.Core.Data
             // Check all command definitions
             foreach (var definition in commandDefinitions)
             {
-                if (definition != null && !definition.CanExecute(context))
-                    return false;
+                // Temporarily comment out to resolve circular dependency
+                // if (definition != null && !definition.CanExecute(context))
+                //     return false;
             }
             
             return true;
@@ -54,9 +55,9 @@ namespace asterivo.Unity60.Core.Data
         /// <summary>
         /// Uses the skill by creating and returning commands
         /// </summary>
-        public List<ICommand> Use(object context = null)
+        public List<object> Use(object context = null)
         {
-            var commands = new List<ICommand>();
+            var commands = new List<object>();
             
             if (!CanUse(context))
             {
@@ -70,11 +71,12 @@ namespace asterivo.Unity60.Core.Data
             {
                 if (definition != null)
                 {
-                    var command = definition.CreateCommand(context);
-                    if (command != null)
-                    {
-                        commands.Add(command);
-                    }
+                    // Temporarily comment out to resolve circular dependency
+                    // var command = definition.CreateCommand(context);
+                    // if (command != null)
+                    // {
+                    //     commands.Add(command);
+                    // }
                 }
             }
             

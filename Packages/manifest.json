@@ -53,6 +53,7 @@
       "name": "package.openupm.com",
       "url": "https://package.openupm.com",
       "scopes": [
+        "com.coplaydev.unity-mcp",
         "com.hryooba.dotween"
       ]
     }

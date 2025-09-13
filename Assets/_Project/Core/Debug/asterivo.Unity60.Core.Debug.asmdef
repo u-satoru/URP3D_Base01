@@ -1,0 +1,16 @@
+{
+    "name": "asterivo.Unity60.Core.Debug",
+    "rootNamespace": "asterivo.Unity60.Core.Debug",
+    "references": [
+        "asterivo.Unity60.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

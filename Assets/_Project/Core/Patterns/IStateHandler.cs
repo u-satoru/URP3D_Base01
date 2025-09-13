@@ -1,5 +1,5 @@
 using UnityEngine;
-using asterivo.Unity60.Core.Player;
+// using asterivo.Unity60.Core.Player; // Removed to avoid circular dependency
 
 namespace asterivo.Unity60.Core.Patterns
 {
@@ -23,7 +23,7 @@ namespace asterivo.Unity60.Core.Patterns
         /// <summary>
         /// 処理対象の状態
         /// </summary>
-        PlayerState HandledState { get; }
+        int HandledState { get; } // Changed from PlayerState to int to avoid circular dependency
     }
     
     /// <summary>

@@ -110,6 +110,5 @@ Thumbs.db
 Desktop.ini.claude/settings.local.json
 
 # .meta
-Assets/_Project/**/*.meta
 Assets/_Project/Docs/**/*.meta
 .claude/settings.local.json

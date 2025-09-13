@@ -1,6 +1,6 @@
 using UnityEngine;
-using asterivo.Unity60.Core.Debug;
-// using asterivo.Unity60.Core; // 直接参照を避け、CoreFeatureFlags経由に統一
+// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
+// using asterivo.Unity60.Core; // 直接参照を避け、FeatureFlags経由に統一
 
 namespace asterivo.Unity60.Core.Helpers
 {
@@ -16,7 +16,7 @@ namespace asterivo.Unity60.Core.Helpers
         public static T GetServiceWithFallback<T>() where T : class
         {
             // ServiceLocator使用（推奨）
-            if (CoreFeatureFlags.UseServiceLocator)
+            if (FeatureFlags.UseServiceLocator)
             {
                 var service = ServiceLocator.GetService<T>();
                 if (service != null) 
@@ -47,16 +47,16 @@ namespace asterivo.Unity60.Core.Helpers
         private static void LogServiceAcquisition<T>(string method)
         {
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            if (CoreFeatureFlags.EnableDebugLogging)
+            if (FeatureFlags.EnableDebugLogging)
             {
-                ProjectDebug.Log($"[ServiceHelper] {typeof(T).Name} acquired via {method}");
+                Debug.Log($"[ServiceHelper] {typeof(T).Name} acquired via {method}");
             }
             #endif
         }
         
         private static void LogServiceNotFound<T>()
         {
-            ProjectDebug.LogWarning($"[ServiceHelper] Failed to acquire service: {typeof(T).Name}");
+            Debug.LogWarning($"[ServiceHelper] Failed to acquire service: {typeof(T).Name}");
         }
     }
 }

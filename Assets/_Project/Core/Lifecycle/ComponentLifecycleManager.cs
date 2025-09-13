@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using asterivo.Unity60.Core.Debug;
+// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 
 namespace asterivo.Unity60.Core.Lifecycle
 {
@@ -177,19 +177,19 @@ namespace asterivo.Unity60.Core.Lifecycle
         private void Log(string message)
         {
             if (enableDebugLog)
-                EventLogger.LogStatic($"[ComponentLifecycleManager] {message}");
+                Debug.Log($"[ComponentLifecycleManager] {message}");
         }
         
         private void LogWarning(string message)
         {
             if (enableDebugLog)
-                EventLogger.LogWarningStatic($"[ComponentLifecycleManager] {message}");
+                Debug.LogWarning($"[ComponentLifecycleManager] {message}");
         }
         
         private void LogError(string message)
         {
             if (enableDebugLog)
-                EventLogger.LogErrorStatic($"[ComponentLifecycleManager] {message}");
+                Debug.LogError($"[ComponentLifecycleManager] {message}");
         }
         #endregion
     }

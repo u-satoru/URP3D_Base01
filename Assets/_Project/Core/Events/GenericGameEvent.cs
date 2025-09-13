@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
-using asterivo.Unity60.Core.Debug;
-using asterivo.Unity60.Core.Services;
+// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
+// using asterivo.Unity60.Core.Services; // Removed to avoid circular dependency
 using System.Linq;
 
 namespace asterivo.Unity60.Core.Events
@@ -74,12 +74,11 @@ namespace asterivo.Unity60.Core.Events
             }
             #endif
             
-            // イベントログに記録（ペイロード付き）
+            // イベントログに記録（簡略化版）
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            var eventLogger = ServiceLocator.GetService<IEventLogger>();
-            if (eventLogger != null && eventLogger.IsEnabled)
+            if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogEventWithPayloadStatic(name, listeners.Count, value);
+                UnityEngine.Debug.Log($"[GenericGameEvent] {name} raised to {listeners.Count} listeners with value: {value}");
             }
             #endif
             

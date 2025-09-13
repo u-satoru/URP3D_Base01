@@ -8,8 +8,8 @@ namespace asterivo.Unity60.Core
     /// </summary>
     public static class CoreFeatureFlags
     {
-        public static bool UseServiceLocator => asterivo.Unity60.Core.FeatureFlags.UseServiceLocator;
-        public static bool EnableDebugLogging => asterivo.Unity60.Core.FeatureFlags.EnableDebugLogging;
+        public static bool UseServiceLocator => FeatureFlags.UseServiceLocator;
+        public static bool EnableDebugLogging => FeatureFlags.EnableDebugLogging;
     }
 }
 

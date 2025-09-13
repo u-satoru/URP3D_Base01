@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using asterivo.Unity60.Core.Debug;
+// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 using System.Linq;
 
 namespace asterivo.Unity60.Core.Events
@@ -44,11 +44,11 @@ namespace asterivo.Unity60.Core.Events
             listenerCount = listeners.Count;
             #endif
             
-            // イベントログに記録
+            // イベントログに記録（簡略化版）
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            if (EventLogger.IsEnabledStatic)
+            if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogEventStatic(name, listeners.Count);
+                UnityEngine.Debug.Log($"[GameEvent] {name} raised to {listeners.Count} listeners");
             }
             #endif
             

@@ -29,7 +29,7 @@ namespace asterivo.Unity60.Core
 
         public void RegisterServices()
         {
-            if (CoreFeatureFlags.UseServiceLocator)
+            if (FeatureFlags.UseServiceLocator)
             {
                 ServiceLocator.RegisterService<IGameStateManager>(this);
             }
@@ -37,7 +37,7 @@ namespace asterivo.Unity60.Core
 
         public void UnregisterServices()
         {
-            if (CoreFeatureFlags.UseServiceLocator)
+            if (FeatureFlags.UseServiceLocator)
             {
                 ServiceLocator.UnregisterService<IGameStateManager>();
             }

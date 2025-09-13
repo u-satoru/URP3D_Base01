@@ -4,7 +4,14 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "asterivo.Unity60.Core"
+        "asterivo.Unity60.Core",
+        "asterivo.Unity60.Core.Audio",
+        "asterivo.Unity60.Core.Commands",
+        "asterivo.Unity60.Core.Events",
+        "asterivo.Unity60.Core.Services",
+        "asterivo.Unity60.Core.Shared",
+        "asterivo.Unity60.Core.Components",
+        "asterivo.Unity60.Features"
     ],
     "includePlatforms": [
         "Editor"

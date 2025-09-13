@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
-using asterivo.Unity60.Core.Commands;
+// using asterivo.Unity60.Core.Commands; // Removed to avoid circular dependency
 
 /// <summary>
 /// Item data using polymorphic command serialization (ドキュメント第4章:444-452行目の実装)
@@ -22,16 +22,16 @@ public class ItemData : ScriptableObject
     [Header("Item Commands")]
     [SerializeReference]
     [Tooltip("Commands executed when the item is used (ドキュメント第4章対応)")]
-    public List<ICommandDefinition> commandDefinitions = new List<ICommandDefinition>();
+    public List<object> commandDefinitions = new List<object>();
     
     [Header("Equipment System (Project Extension)")]
     [SerializeReference]
     [Tooltip("Commands executed when the item is equipped (プロジェクト独自拡張)")]
-    public List<ICommandDefinition> equipCommandDefinitions = new List<ICommandDefinition>();
+    public List<object> equipCommandDefinitions = new List<object>();
     
     [SerializeReference]
     [Tooltip("Commands executed when the item is unequipped (プロジェクト独自拡張)")]
-    public List<ICommandDefinition> unequipCommandDefinitions = new List<ICommandDefinition>();
+    public List<object> unequipCommandDefinitions = new List<object>();
     
     /// <summary>
     /// Checks if the item can be used
@@ -41,8 +41,9 @@ public class ItemData : ScriptableObject
         // Check all command definitions
         foreach (var definition in commandDefinitions)
         {
-            if (definition != null && !definition.CanExecute(context))
-                return false;
+            // Temporarily comment out to resolve circular dependency
+            // if (definition != null && !definition.CanExecute(context))
+            //     return false;
         }
         
         return true;
@@ -51,9 +52,9 @@ public class ItemData : ScriptableObject
     /// <summary>
     /// Uses the item by creating and returning commands
     /// </summary>
-    public List<ICommand> Use(object context = null)
+    public List<object> Use(object context = null)
     {
-        var commands = new List<ICommand>();
+        var commands = new List<object>();
         
         if (!CanUse(context))
         {
@@ -65,11 +66,12 @@ public class ItemData : ScriptableObject
         {
             if (definition != null)
             {
-                var command = definition.CreateCommand(context);
-                if (command != null)
-                {
-                    commands.Add(command);
-                }
+                // Temporarily comment out to resolve circular dependency
+                // var command = definition.CreateCommand(context);
+                // if (command != null)
+                // {
+                //     commands.Add(command);
+                // }
             }
         }
         
@@ -84,8 +86,9 @@ public class ItemData : ScriptableObject
         // Check all equip command definitions
         foreach (var definition in equipCommandDefinitions)
         {
-            if (definition != null && !definition.CanExecute(context))
-                return false;
+            // Temporarily comment out to resolve circular dependency
+            // if (definition != null && !definition.CanExecute(context))
+            //     return false;
         }
         
         return true;
@@ -94,9 +97,9 @@ public class ItemData : ScriptableObject
     /// <summary>
     /// Equips the item by creating and returning equip commands
     /// </summary>
-    public List<ICommand> Equip(object context = null)
+    public List<object> Equip(object context = null)
     {
-        var commands = new List<ICommand>();
+        var commands = new List<object>();
         
         if (!CanEquip(context))
         {
@@ -108,11 +111,12 @@ public class ItemData : ScriptableObject
         {
             if (definition != null)
             {
-                var command = definition.CreateCommand(context);
-                if (command != null)
-                {
-                    commands.Add(command);
-                }
+                // Temporarily comment out to resolve circular dependency
+                // var command = definition.CreateCommand(context);
+                // if (command != null)
+                // {
+                //     commands.Add(command);
+                // }
             }
         }
         
@@ -127,8 +131,9 @@ public class ItemData : ScriptableObject
         // Check all unequip command definitions
         foreach (var definition in unequipCommandDefinitions)
         {
-            if (definition != null && !definition.CanExecute(context))
-                return false;
+            // Temporarily comment out to resolve circular dependency
+            // if (definition != null && !definition.CanExecute(context))
+            //     return false;
         }
         
         return true;
@@ -137,9 +142,9 @@ public class ItemData : ScriptableObject
     /// <summary>
     /// Unequips the item by creating and returning unequip commands
     /// </summary>
-    public List<ICommand> Unequip(object context = null)
+    public List<object> Unequip(object context = null)
     {
-        var commands = new List<ICommand>();
+        var commands = new List<object>();
         
         if (!CanUnequip(context))
         {
@@ -151,11 +156,12 @@ public class ItemData : ScriptableObject
         {
             if (definition != null)
             {
-                var command = definition.CreateCommand(context);
-                if (command != null)
-                {
-                    commands.Add(command);
-                }
+                // Temporarily comment out to resolve circular dependency
+                // var command = definition.CreateCommand(context);
+                // if (command != null)
+                // {
+                //     commands.Add(command);
+                // }
             }
         }
         

@@ -1,6 +1,6 @@
 using UnityEngine;
-using asterivo.Unity60.Core.Player;
-using asterivo.Unity60.Core.Audio; // GameState enum用
+// using asterivo.Unity60.Core.Player; // Player moved to Features
+// using asterivo.Unity60.Core.Audio; // Temporarily commented to avoid circular dependency
 
 namespace asterivo.Unity60.Core.Events
 {
@@ -8,33 +8,33 @@ namespace asterivo.Unity60.Core.Events
     /// PlayerState用のイベント定義（enum値で通信）
     /// </summary>
     [CreateAssetMenu(fileName = "PlayerStateEvent", menuName = "asterivo.Unity60/Events/Player State Event")]
-    public class PlayerStateEvent : GenericGameEvent<PlayerState> { }
+    public class PlayerStateEvent : GenericGameEvent<int> { } // Changed from PlayerState to int to avoid circular dependency
     
     /// <summary>
-    /// PlayerStateイベントリスナー
+    /// PlayerStateイベントリスナー（一時的にコメントアウト - 型参照問題のため）
     /// </summary>
-    public class PlayerStateEventListener : GenericGameEventListener<PlayerState, PlayerStateEvent, UnityPlayerStateEvent> { }
+    // public class PlayerStateEventListener : GenericGameEventListener<PlayerState, PlayerStateEvent, UnityPlayerStateEvent> { }
     
     /// <summary>
-    /// PlayerState用のUnityEvent
+    /// PlayerState用のUnityEvent（一時的にコメントアウト - 型参照問題のため）
     /// </summary>
-    [System.Serializable]
-    public class UnityPlayerStateEvent : UnityEngine.Events.UnityEvent<PlayerState> { }
+    // [System.Serializable]
+    // public class UnityPlayerStateEvent : UnityEngine.Events.UnityEvent<PlayerState> { }
     
     /// <summary>
-    /// GameState用のイベント定義
+    /// GameState用のイベント定義（一時的にコメントアウト - 型参照問題のため）
     /// </summary>
-    [CreateAssetMenu(fileName = "GameStateEvent", menuName = "asterivo.Unity60/Events/Game State Event")]
-    public class GameStateEvent : GenericGameEvent<GameState> { }
+    // [CreateAssetMenu(fileName = "GameStateEvent", menuName = "asterivo.Unity60/Events/Game State Event")]
+    // public class GameStateEvent : GenericGameEvent<GameState> { }
     
     /// <summary>
-    /// GameStateイベントリスナー
+    /// GameStateイベントリスナー（一時的にコメントアウト - 型参照問題のため）
     /// </summary>
-    public class GameStateEventListener : GenericGameEventListener<GameState, GameStateEvent, UnityGameStateEvent> { }
+    // public class GameStateEventListener : GenericGameEventListener<GameState, GameStateEvent, UnityGameStateEvent> { }
     
     /// <summary>
-    /// GameState用のUnityEvent
+    /// GameState用のUnityEvent（一時的にコメントアウト - 型参照問題のため）
     /// </summary>
-    [System.Serializable]
-    public class UnityGameStateEvent : UnityEngine.Events.UnityEvent<GameState> { }
+    // [System.Serializable]
+    // public class UnityGameStateEvent : UnityEngine.Events.UnityEvent<GameState> { }
 }

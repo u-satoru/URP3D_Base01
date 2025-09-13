@@ -3,22 +3,33 @@
     "rootNamespace": "asterivo.Unity60.Tests",
     "references": [
         "asterivo.Unity60.Core",
-        "asterivo.Unity60.Core.Editor"
+        "asterivo.Unity60.Core.Audio",
+        "asterivo.Unity60.Core.Commands",
+        "asterivo.Unity60.Core.Components",
+        "asterivo.Unity60.Core.Constants",
+        "asterivo.Unity60.Core.Events",
+        "asterivo.Unity60.Core.Services",
+        "asterivo.Unity60.Core.Shared",
+        "asterivo.Unity60.Core.Lifecycle",
+        "asterivo.Unity60.Core.Editor",
+        "asterivo.Unity60.Features",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "Unity.InputSystem",
+        "Unity.Cinemachine",
+        "UniTask"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
     "autoReferenced": false,
     "defineConstraints": [
         "UNITY_INCLUDE_TESTS"
     ],
     "versionDefines": [],
-    "noEngineReferences": false,
-    "optionalUnityReferences": [
-        "TestAssemblies"
-    ]
+    "noEngineReferences": false
 }

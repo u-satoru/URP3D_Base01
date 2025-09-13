@@ -3,6 +3,8 @@
     "rootNamespace": "asterivo.Unity60.Stealth",
     "references": [
         "asterivo.Unity60.Core",
+        "asterivo.Unity60.Core.Events",
+        "asterivo.Unity60.Core.Shared",
         "Unity.Mathematics",
         "Unity.Collections"
     ],
