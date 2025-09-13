@@ -1,0 +1,27 @@
+{
+    "name": "asterivo.Unity60.Optimization",
+    "rootNamespace": "asterivo.Unity60.Optimization",
+    "references": [
+        "asterivo.Unity60.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.burst",
+            "expression": "1.8.0",
+            "define": "BURST_ENABLED"
+        },
+        {
+            "name": "Unity",
+            "expression": "6000.0",
+            "define": "UNITY_6_0_OR_NEWER"
+        }
+    ],
+    "noEngineReferences": false
+}

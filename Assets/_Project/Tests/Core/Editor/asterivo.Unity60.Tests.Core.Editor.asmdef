@@ -1,0 +1,25 @@
+{
+    "name": "asterivo.Unity60.Tests.Core.Editor",
+    "rootNamespace": "asterivo.Unity60.Tests.Core.Editor",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "GUID:e1d2c191d72ab8740bb4719ed7fe849d",
+        "GUID:a6306a1513995aa459fe3c5534950c7f"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

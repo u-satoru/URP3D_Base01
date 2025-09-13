@@ -1,0 +1,17 @@
+{
+    "name": "asterivo.Unity60.Core.Audio",
+    "rootNamespace": "asterivo.Unity60.Core.Audio",
+    "references": [
+        "asterivo.Unity60.Core",
+        "asterivo.Unity60.Core.Services"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
