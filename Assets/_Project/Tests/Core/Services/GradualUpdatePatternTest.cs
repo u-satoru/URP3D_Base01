@@ -1,5 +1,4 @@
 using UnityEngine;
-using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Debug;
@@ -288,7 +287,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             }
             else
             {
-                ServiceLocator.GetService<IEventLogger>()?.LogError("❌ [PATTERN TEST] Some Step 3.6 patterns need attention.");
+                EventLogger.LogErrorStatic("❌ [PATTERN TEST] Some Step 3.6 patterns need attention.");
             }
         }
 

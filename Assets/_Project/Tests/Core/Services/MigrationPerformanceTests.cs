@@ -6,11 +6,11 @@ using UnityEngine.TestTools;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core.Audio.Services;
-
-#pragma warning disable CS0618 // Intentionally using deprecated SpatialAudioManager for migration testing
 using asterivo.Unity60.Core.Audio.Interfaces;
 
 namespace asterivo.Unity60.Tests.Core.Services

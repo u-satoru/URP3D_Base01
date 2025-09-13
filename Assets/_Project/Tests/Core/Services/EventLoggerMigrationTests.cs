@@ -145,7 +145,6 @@ namespace asterivo.Unity60.Tests.Core.Services
             Assert.Greater(loggedErrors.Count, 0, "Should log deprecation error");
         }
         
-        #pragma warning disable CS0618 // Intentionally testing deprecated static methods
         [Test]
         public void Migration_EventLogger_StaticMethodsCompatibility()
         {
@@ -173,7 +172,6 @@ namespace asterivo.Unity60.Tests.Core.Services
             var filteredLogs = EventLogger.GetFilteredLogStatic("test");
             Assert.IsNotNull(filteredLogs, "Should return filtered logs");
         }
-        #pragma warning restore CS0618
         
         [Test]
         public void Migration_EventLogger_ServiceInstanceFallback()
@@ -188,11 +186,8 @@ namespace asterivo.Unity60.Tests.Core.Services
             Assert.IsNotNull(instance, "Should fall back to Instance when ServiceLocator is disabled");
             
             // 静的メソッドが依然として機能することを確認
-            // Intentional test of deprecated EventLogger static method
-#pragma warning disable CS0618
             Assert.DoesNotThrow(() => EventLogger.LogStatic("Fallback test"));
             Assert.IsTrue(EventLogger.IsEnabledStatic, "IsEnabled should work through fallback");
-#pragma warning restore CS0618
         }
         
         [Test]

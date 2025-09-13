@@ -15,6 +15,8 @@ namespace asterivo.Unity60.Tests.Core.Services
         [Header("Test Configuration")]
         [SerializeField] private bool runTestOnStart = false;
         [SerializeField] private bool enableDetailedLogs = true;
+        [SerializeField] private bool testAutomaticMode = false;
+        [SerializeField] private float acceleratedTimeMultiplier = 100f; // テスト時間を短縮
 
         [Header("Test Results")]
         [SerializeField] private bool migrationSchedulerTestPassed;
@@ -378,6 +380,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         {
             LogTest("[TEST 4] Testing Integrated Schedule...");
 
+            bool hasError = false;
             System.Exception caughtException = null;
 
             // 統合テストの実行 - yield return は try-catch の外で実行
@@ -530,12 +533,9 @@ namespace asterivo.Unity60.Tests.Core.Services
                 EventLogger.LogStatic("🎉 [SCHEDULE TEST] Step 3.7 Gradual Activation Schedule is working correctly!");
             }
             else
-            // Intentional test of deprecated EventLogger static method
-#pragma warning disable CS0618
             {
                 EventLogger.LogErrorStatic("❌ [SCHEDULE TEST] Some Step 3.7 schedule components need attention.");
             }
-#pragma warning restore CS0618
         }
 
         #endregion

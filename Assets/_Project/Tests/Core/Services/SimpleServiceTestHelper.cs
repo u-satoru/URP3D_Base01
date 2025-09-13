@@ -1,5 +1,4 @@
 using UnityEngine;
-using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Commands;
@@ -65,9 +64,9 @@ namespace asterivo.Unity60.Tests.Core.Services
                 // サービスの基本機能テスト（副作用の少ないメソッドのみ）
                 try
                 {
-                    // サービスが正しく取得できていることを確認
+                    bool isInitialized = spatialService.IsInitialized;
                     if (enableDebugOutput)
-                        Debug.Log("✅ SpatialAudioService: Service instance retrieved successfully");
+                        Debug.Log($"✅ SpatialAudioService: IsInitialized = {isInitialized}");
                 }
                 catch (System.Exception e)
                 {
@@ -141,6 +140,55 @@ namespace asterivo.Unity60.Tests.Core.Services
                 Debug.Log("=== Phase 3.2 ServiceLocator Runtime Test Completed ===");
         }
 
+        /// <summary>
+        /// サービス登録状況の詳細確認
+        /// </summary>
+        [ContextMenu("Check Service Registration Status")]
+        public void CheckServiceRegistrationStatus()
+        {
+            if (enableDebugOutput)
+                Debug.Log("=== Service Registration Status Check ===");
+
+            var services = new[]
+            {
+                new { Name = "IAudioService", Service = ServiceLocator.GetService<IAudioService>() },
+                new { Name = "ISpatialAudioService", Service = ServiceLocator.GetService<ISpatialAudioService>() },
+                new { Name = "IEffectService", Service = ServiceLocator.GetService<IEffectService>() },
+                new { Name = "ICommandPoolService", Service = ServiceLocator.GetService<ICommandPoolService>() },
+                new { Name = "IEventLogger", Service = ServiceLocator.GetService<IEventLogger>() }
+            };
+
+            int registeredCount = 0;
+            foreach (var serviceInfo in services)
+            {
+                if (serviceInfo.Service != null)
+                {
+                    registeredCount++;
+                    if (enableDebugOutput)
+                        Debug.Log($"✅ {serviceInfo.Name}: Registered ({serviceInfo.Service.GetType().Name})");
+                }
+                else
+                {
+                    if (enableDebugOutput)
+                        Debug.LogWarning($"⚠️ {serviceInfo.Name}: Not registered");
+                }
+            }
+
+            float registrationRatio = (float)registeredCount / services.Length;
+            if (enableDebugOutput)
+                Debug.Log($"📊 Service Registration Summary: {registeredCount}/{services.Length} ({registrationRatio:P1})");
+
+            if (registrationRatio >= 0.8f)
+            {
+                if (enableDebugOutput)
+                    Debug.Log("✅ Service registration is healthy (>=80%)");
+            }
+            else
+            {
+                if (enableDebugOutput)
+                    Debug.LogWarning("⚠️ Service registration may need attention (<80%)");
+            }
+        }
 
         private void Start()
         {

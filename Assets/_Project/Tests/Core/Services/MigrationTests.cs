@@ -5,12 +5,12 @@ using System.Collections;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Audio.Services;
+using asterivo.Unity60.Core.Audio.Interfaces;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio;
 
 namespace asterivo.Unity60.Tests.Core.Services
 {
-
-#pragma warning disable CS0618 // Intentionally using deprecated SpatialAudioManager for migration testing
     /// <summary>
     /// Singleton→ServiceLocator移行テストスイート
     /// Phase 3移行計画 Step 3.3の実装

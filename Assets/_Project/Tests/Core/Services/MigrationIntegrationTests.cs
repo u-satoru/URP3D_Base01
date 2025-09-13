@@ -5,12 +5,12 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core.Audio.Services;
 using asterivo.Unity60.Core.Audio.Interfaces;
-
-#pragma warning disable CS0618 // Intentionally using deprecated SpatialAudioManager for migration testing
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Services;
@@ -541,7 +541,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             var overallAvgFrameTime = hourlyMetrics.Average(m => m.avgFrameTime);
             var maxFrameTime = hourlyMetrics.Max(m => m.avgFrameTime);
             var progressStability = hourlyMetrics.All(m => m.progress >= 0 && m.progress <= 100);
-            var safetyConsistency = hourlyMetrics.All(m => true); // All isSafe values are valid booleans.HasValue);
+            var safetyConsistency = hourlyMetrics.All(m => m.isSafe != null);
             
             UnityEngine.Debug.Log($"24-Hour Simulation Results:");
             UnityEngine.Debug.Log($"Hours Simulated: {hourlyMetrics.Count}");
@@ -782,7 +782,6 @@ namespace asterivo.Unity60.Tests.Core.Services
             eventLoggers.Add(eventLogger);
             ServiceLocator.RegisterService<IEventLogger>(eventLogger);
             
-            #pragma warning disable CS0618 // Intentionally testing deprecated static methods
             // Test that static methods still work
             Assert.DoesNotThrow(() => EventLogger.LogStatic("Static compatibility test"));
             Assert.DoesNotThrow(() => EventLogger.LogWarningStatic("Static warning test"));
@@ -795,7 +794,6 @@ namespace asterivo.Unity60.Tests.Core.Services
             Assert.IsNotNull(EventLogger.EventLogStatic, "Static EventLog should work");
             
             // Test utility methods
-            #pragma warning restore CS0618
             var stats = EventLogger.GetStatisticsStatic();
             Assert.IsNotNull(stats, "GetStatistics should work");
             
