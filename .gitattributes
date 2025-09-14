@@ -85,3 +85,4 @@ Assets/_Project/**/*.cs text eol=lf
 
 # Documentation .meta files exclusion from archives
 Assets/_Project/Docs/**/*.meta export-ignore
+Assets/_Project/Works/**/*.meta export-ignore
