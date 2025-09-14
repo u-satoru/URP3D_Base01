@@ -217,8 +217,8 @@ namespace asterivo.Unity60.Core
         /// </summary>
         public static (int accessCount, int hitCount, float hitRate) GetPerformanceStats()
         {
-            var currentAccessCount = System.Threading.Volatile.Read(ref accessCount);
-            var currentHitCount = System.Threading.Volatile.Read(ref hitCount);
+                        var currentAccessCount = accessCount;
+                        var currentHitCount = hitCount;
             var hitRate = currentAccessCount > 0 ? (float)currentHitCount / currentAccessCount : 0f;
             
             return (currentAccessCount, currentHitCount, hitRate);

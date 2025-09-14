@@ -1,4 +1,4 @@
-// Author: Daniele Giardini - http://www.demigiant.com
+﻿// Author: Daniele Giardini - http://www.demigiant.com
 // Created: 2014/10/27 15:59
 // 
 // License Copyright (c) Daniele Giardini.

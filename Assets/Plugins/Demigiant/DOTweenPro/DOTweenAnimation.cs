@@ -1,4 +1,4 @@
-// Author: Daniele Giardini - http://www.demigiant.com
+﻿// Author: Daniele Giardini - http://www.demigiant.com
 // Created: 2015/03/12 15:55
 
 using System;
@@ -572,7 +572,7 @@ namespace DG.Tweening
         {
             TargetType newTargetType = TypeToDOTargetType(target.GetType());
             if (newTargetType != targetType) {
-                Debug.LogError("DOTweenAnimation ► SetAnimationTarget: the new target is of a different type from the one set in the Inspector");
+                Debug.LogError("DOTweenAnimation 笆ｺ SetAnimationTarget: the new target is of a different type from the one set in the Inspector");
                 return;
             }
             target = tweenTarget;
@@ -683,7 +683,7 @@ namespace DG.Tweening
             DOTween.TweensByTarget(GetTweenTarget(), false, _tmpTweens);
             int len = _tmpTweens.Count;
             if (len == 0) {
-                Debugger.LogWarning((andPlay ? "DOGotoAndPlay" : "DoGotoAndPause") + " ► tween doesn't exist");
+                Debugger.LogWarning((andPlay ? "DOGotoAndPlay" : "DoGotoAndPause") + " 笆ｺ tween doesn't exist");
             } else {
                 for (int i = 0; i < _tmpTweens.Count; ++i) {
                     _tmpTweens[i].Goto(time, andPlay);
