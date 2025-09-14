@@ -1,57 +1,71 @@
-# Set default behavior for all files to handle line endings automatically.  
-* text=auto eol=lf
-# Specify files that should always have LF line endings (e.g., shell scripts)  
-*.sh eol=lf
-# Specify files that should always have CRLF line endings (e.g., Windows batch files)  
+# Unity Project Git Attributes
+# Optimized configuration to prevent conflicts with third-party assets
+
+# Default behavior: auto-detect text files but don't enforce line endings globally
+* text=auto
+
+# Explicitly exclude third-party and binary directories from line ending processing
+Assets/Plugins/** -text
+Packages/** -text
+Library/** -text
+Temp/** -text
+obj/** -text
+.vs/** -text
+
+# Specify files that should always have LF line endings
+*.sh text eol=lf
+
+# Specify files that should always have CRLF line endings (Windows batch files)
 *.{cmd,[cC][mM][dD]} text eol=crlf
 *.{bat,[bB][aA][tT]} text eol=crlf
 
+# Git LFS Tracking
+# Define all large binary assets to be tracked by Git LFS.
+# The `filter=lfs diff=lfs merge=lfs -text` configuration is essential.
+# `-text` prevents Git from tampering with line endings, which can corrupt LFS pointers.
 
-#  
-# Git LFS Tracking  
-# Define all large binary assets to be tracked by Git LFS.  
-# The `filter=lfs diff=lfs merge=lfs -text` configuration is essential.  
-# `-text` prevents Git from tampering with line endings, which can corrupt LFS pointers.  
-#
-# 3D Models  
-*.fbx filter=lfs diff=lfs merge=lfs -text  
-*.obj filter=lfs diff=lfs merge=lfs -text  
-*.gltf filter=lfs diff=lfs merge=lfs -text  
+# 3D Models
+*.fbx filter=lfs diff=lfs merge=lfs -text
+*.obj filter=lfs diff=lfs merge=lfs -text
+*.gltf filter=lfs diff=lfs merge=lfs -text
 *.glb filter=lfs diff=lfs merge=lfs -text
-# Textures (High Dynamic Range & Standard)  
-*.exr filter=lfs diff=lfs merge=lfs -text  
-*.hdr filter=lfs diff=lfs merge=lfs -text  
-*.tif filter=lfs diff=lfs merge=lfs -text  
-*.tiff filter=lfs diff=lfs merge=lfs -text  
-*.png filter=lfs diff=lfs merge=lfs -text  
-*.jpg filter=lfs diff=lfs merge=lfs -text  
-*.jpeg filter=lfs diff=lfs merge=lfs -text  
-*.tga filter=lfs diff=lfs merge=lfs -text  
+
+# Textures (High Dynamic Range & Standard)
+*.exr filter=lfs diff=lfs merge=lfs -text
+*.hdr filter=lfs diff=lfs merge=lfs -text
+*.tif filter=lfs diff=lfs merge=lfs -text
+*.tiff filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.jpeg filter=lfs diff=lfs merge=lfs -text
+*.tga filter=lfs diff=lfs merge=lfs -text
 *.psd filter=lfs diff=lfs merge=lfs -text
-# Audio & Video  
-*.wav filter=lfs diff=lfs merge=lfs -text  
-*.mp3 filter=lfs diff=lfs merge=lfs -text  
-*.ogg filter=lfs diff=lfs merge=lfs -text  
-*.flac filter=lfs diff=lfs merge=lfs -text  
-*.mp4 filter=lfs diff=lfs merge=lfs -text  
+
+# Audio & Video
+*.wav filter=lfs diff=lfs merge=lfs -text
+*.mp3 filter=lfs diff=lfs merge=lfs -text
+*.ogg filter=lfs diff=lfs merge=lfs -text
+*.flac filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
 *.mov filter=lfs diff=lfs merge=lfs -text
+
 # Other common large files
 *.pdf filter=lfs diff=lfs merge=lfs -text
 *.zip filter=lfs diff=lfs merge=lfs -text
 *.otf filter=lfs diff=lfs merge=lfs -text
 *.ttf filter=lfs diff=lfs merge=lfs -text
 
-# Unity specific text files (YAML format) - handle line endings
-*.asset text eol=lf
-*.prefab text eol=lf
-*.unity text eol=lf
-*.meta text eol=lf
-*.asmdef text eol=lf
+# Unity specific text files (ONLY for project files, not plugins)
+# Apply LF line endings only to our project files
+Assets/_Project/**/*.asset text eol=lf
+Assets/_Project/**/*.prefab text eol=lf
+Assets/_Project/**/*.unity text eol=lf
+Assets/_Project/**/*.meta text eol=lf
+Assets/_Project/**/*.asmdef text eol=lf
+Assets/_Project/**/*.cs text eol=lf
 
-# Unity specific code files
+# Project root files
 *.cs text eol=lf
-
-# Other text files
 *.md text eol=lf
 *.json text eol=lf
 *.txt text eol=lf
@@ -59,8 +73,15 @@
 *.yml text eol=lf
 *.yaml text eol=lf
 
-# Note: Existing LFS-managed assets will remain in LFS until manually migrated
+# Unity YAML Merge Tool for resolving merge conflicts in Unity-specific files
+# Ensure you have configured Git to use UnityYAMLMerge as a merge driver
+*.unity merge=unityyamlmerge
+*.prefab merge=unityyamlmerge
+*.asset merge=unityyamlmerge
+*.mat merge=unityyamlmerge
+*.anim merge=unityyamlmerge
+*.controller merge=unityyamlmerge
+*.meta merge=unityyamlmerge
 
 # Documentation .meta files exclusion from archives
-# These files are not critical for distribution packages
 Assets/_Project/Docs/**/*.meta export-ignore
