@@ -229,32 +229,77 @@
 ```
 🔥 TASK-004: Ultimate Template Phase-1統合 (6-7日) ⚡ Critical
 ├─ 価値: Learn & Grow実現（学習コスト70%削減）
-├─ 目標: 7ジャンル完全対応（各15分ゲームプレイ）+ 名前空間規約遵守
-├─ 成果: 市場投入可能品質達成
-├─ ✅ 基盤: NPCVisualSensor + PlayerStateMachine完成済み
-├─ ⏳ ジャンル別テンプレート実装
-│   ├─ [ ] FPS Template（一人称視点シューター）
-│   ├─ [ ] TPS Template（三人称視点シューター）
-│   ├─ [ ] Platformer Template（3Dプラットフォーマー）
-│   ├─ [ ] Stealth Template（ステルスアクション）
-│   ├─ [ ] Adventure Template（アドベンチャー）
-│   ├─ [ ] Strategy Template（リアルタイム戦略）
-│   └─ [ ] Action RPG Template（アクションRPG）
-├─ ⏳ インタラクティブチュートリアル統合
-│   ├─ [ ] ジャンル別チュートリアルシステム
-│   ├─ [ ] 段階的学習プログラム
-│   ├─ [ ] インタラクティブガイド機能
-│   └─ [ ] 学習進捗追跡システム
-├─ ⏳ ゲームプレイ実現システム
-│   ├─ [ ] 各ジャンル15分ゲームプレイ実装
-│   ├─ [ ] 基本ゲームループ統合
-│   ├─ [ ] UI/UXシステム統合
-│   └─ [ ] パフォーマンス最適化
-└─ 🎯 成功指標
-    ├─ [ ] 学習コスト70%削減達成
-    ├─ [ ] 7ジャンル完全対応確認
-    ├─ [ ] 各15分ゲームプレイ実現
-    └─ [ ] 市場投入可能品質達成
+├─ 目標: 7ジャンル完全対応（各15分ゲームプレイ）+ 名前空間規約完全遵守
+├─ 成果: 市場投入可能品質達成・Beta Release準備完了
+├─ ✅ 技術基盤: NPCVisualSensor + PlayerStateMachine完成済み（ステルス基盤完備）
+├─ ⏳ Layer 1: Template Configuration Layer
+│   ├─ [ ] **GenreTemplateConfig (ScriptableObject) システム実装**
+│   │   ├─ Template Registry System（Dictionary<GenreType, GenreTemplateConfig>高速管理）
+│   │   ├─ Dynamic Genre Switching（実行時ジャンル切り替え機能）
+│   │   ├─ State Preservation System（切り替え時のユーザー進捗保持）
+│   │   └─ Asset Bundle Management（ジャンル別アセット効率管理）
+│   ├─ [ ] **7ジャンルテンプレート完全実装（REQUIREMENTS.md優先度準拠）**
+│   │   ├─ [ ] **Stealth Template Configuration** **（最優先・✅AI Detection Systems活用）**
+│   │   │   ├─ ✅AI検知システム統合（NPCVisualSensor + NPCAuditorySensor）
+│   │   │   ├─ Stealth Mechanics（隠蔽・発見システム）
+│   │   │   ├─ Environmental Interaction（環境相互作用システム）
+│   │   │   └─ asterivo.Unity60.Features.Templates.Stealth.*名前空間適用
+│   │   ├─ [ ] **Platformer Template Configuration** **（高優先）**
+│   │   │   ├─ Jump & Movement Physics（ジャンプ・移動物理演算）
+│   │   │   ├─ Collectible Systems（アイテム収集システム）
+│   │   │   ├─ Level Design Tools（レベルデザインツール）
+│   │   │   └─ asterivo.Unity60.Features.Templates.Platformer.*名前空間適用
+│   │   ├─ [ ] **FPS Template Configuration** **（高優先）**
+│   │   │   ├─ First Person Camera Setup（一人称視点カメラ設定）
+│   │   │   ├─ Shooting Mechanics Presets（射撃メカニクスプリセット）
+│   │   │   ├─ Combat UI Configuration（戦闘UI設定）
+│   │   │   └─ asterivo.Unity60.Features.Templates.FPS.*名前空間適用
+│   │   ├─ [ ] **TPS Template Configuration** **（高優先）**
+│   │   │   ├─ Third Person Camera System（三人称視点カメラシステム）
+│   │   │   ├─ Cover System Integration（カバーシステム統合）
+│   │   │   ├─ Aiming & Movement Mechanics（エイミング・移動メカニクス）
+│   │   │   └─ asterivo.Unity60.Features.Templates.TPS.*名前空間適用
+│   │   ├─ [ ] **Action RPG Template Configuration** **（中優先・FR-5対応）**
+│   │   │   ├─ Character Progression System（キャラクター成長システム）
+│   │   │   ├─ Equipment Management（装備管理システム）
+│   │   │   ├─ Skill Trees Integration（スキルツリー統合）
+│   │   │   └─ asterivo.Unity60.Features.Templates.ActionRPG.*名前空間適用
+│   │   ├─ [ ] Adventure Template Configuration
+│   │   │   ├─ Dialogue Systems（ダイアログシステム）
+│   │   │   ├─ Inventory Management（インベントリ管理）
+│   │   │   ├─ Quest System Framework（クエストシステムフレームワーク）
+│   │   │   └─ asterivo.Unity60.Features.Templates.Adventure.*名前空間適用
+│   │   └─ [ ] Strategy Template Configuration
+│   │       ├─ RTS Camera Controls（RTS視点カメラ制御）
+│   │       ├─ Unit Selection Systems（ユニット選択システム）
+│   │       ├─ Resource Management UI（リソース管理UI）
+│   │       └─ asterivo.Unity60.Features.Templates.Strategy.*名前空間適用
+├─ ⏳ Layer 2: Runtime Template Management + 学習システム統合
+│   ├─ [ ] **TemplateManager (Singleton) + 学習支援システム実装**
+│   │   ├─ Configuration Synchronization（設定の即座同期）
+│   │   ├─ TemplateTransitionSystem（スムーズなシーン遷移）
+│   │   ├─ Data Migration Between Genres（ジャンル間データ移行）
+│   │   ├─ User Progress Preservation（学習進捗の永続化）
+│   │   └─ **5段階学習システム**: 基礎→応用→実践→カスタマイズ→出版
+│   ├─ [ ] **Camera & Input Settings Presets 実装**
+│   │   ├─ **Cinemachine 3.1統合プリセット**: VirtualCamera構成済み、ジャンル別優先度管理
+│   │   ├─ **Input System構成プリセット**: PlayerInputActions自動生成、ジャンル別マッピング
+│   │   ├─ **Real-time Configuration**: プリセット即座切り替えとプレビュー機能
+│   │   └─ カスタマイズ対応UI（Inspector拡張）
+│   └─ [ ] **Sample Gameplay + インタラクティブチュートリアル実装**
+│       ├─ **各ジャンル15分ゲームプレイ**: 基本動作確認可能なサンプルシーン
+│       ├─ **段階的学習チュートリアル**: Unity中級開発者が1週間で基本概念習得可能
+│       ├─ **インタラクティブチュートリアル統合**: リアルタイムヒントシステム
+│       └─ **進捗追跡と成果測定**: 学習コスト70%削減の定量測定
+└─ 🎯 **FR-8.1.2 完全準拠受入条件**
+    ├─ [ ] ✅各ジャンル15分以内で基本ゲームプレイ実現
+    ├─ [ ] ✅テンプレート切り替え時のデータ整合性保証（3分以内）
+    ├─ [ ] ✅サンプルシーンの完全動作確認（30秒以内起動）
+    ├─ [ ] ✅学習コスト70%削減目標の達成（40時間→12時間、Unity中級開発者1週間習得）
+    ├─ [ ] ✅Learn & Grow価値の実現（実践的学習コンテンツ、段階的成長支援）
+    ├─ [ ] ✅**名前空間規約完全遵守**（asterivo.Unity60.Features.*、Template全システム）
+    ├─ [ ] ✅**レガシー名前空間段階的削除完了**（_Project.*→asterivo.Unity60.*移行）
+    └─ [ ] ✅**アーキテクチャ制約完全遵守**（Core/Feature層分離、依存関係制御）
 ```
 
 # 🏭 PHASE 4: Ship & Scale価値実現 ⏳ 待機中
@@ -270,43 +315,113 @@
 
 ## 【Phase 4 実装タスク詳細】
 ```
-🔥 TASK-007: Ultimate Template Phase-2拡張 (8-10日) ⚡ Critical ← LOW昇格
-├─ 価値: Ship & Scale実現（プロトタイプ→プロダクション）
-├─ 目標: プロダクション品質システム完成 + エンタープライズレベル名前空間規約適用
-├─ ⏳ 高度セーブ/ロードシステム
-│   ├─ [ ] 暗号化セーブ/ロードシステム実装
-│   ├─ [ ] バイナリ・JSON両対応
-│   ├─ [ ] セーブデータ整合性検証
-│   ├─ [ ] 100ms以内の高速処理実現
-│   ├─ [ ] セーブスロット管理システム
-│   └─ [ ] 自動セーブ・バックアップ機能
-├─ ⏳ 多言語対応ローカライゼーション
-│   ├─ [ ] 4言語対応システム（日英中韓）
-│   ├─ [ ] TextMeshPro統合ローカライゼーション
-│   ├─ [ ] 音声ローカライゼーション対応
-│   ├─ [ ] UI文字列動的切り替え
-│   └─ [ ] 文字エンコーディング最適化
-├─ ⏳ アセット統合支援システム
-│   ├─ [ ] 50+人気アセット自動統合対応
-│   ├─ [ ] Asset Store連携システム
-│   ├─ [ ] 依存関係自動解決
-│   ├─ [ ] アセット競合回避システム
-│   └─ [ ] プラグイン統合管理
-├─ ⏳ プロダクション品質システム
-│   ├─ [ ] エラートラッキング・クラッシュレポート
-│   ├─ [ ] パフォーマンス監視システム
-│   ├─ [ ] メモリリーク検出・防止
-│   ├─ [ ] ビルド自動化システム
-│   └─ [ ] 品質保証自動テスト
-└─ 🎯 成功指標
-    ├─ [ ] セーブ/ロード100ms以内達成
-    ├─ [ ] 4言語完全対応
-    ├─ [ ] 50+アセット統合対応
-    └─ [ ] プロダクション品質保証
+🔥 TASK-007: Ultimate Template Phase-2拡張 (8-10日) ⚡ Critical ← Medium昇格
+├─ 価値: Ship & Scale実現（プロトタイプ→プロダクション完全対応）
+├─ 目標: エンタープライズ品質システム完成 + Production Release準備
+├─ 技術制約: asterivo.Unity60.*名前空間完全適用・アセンブリ定義ファイル制約実装
+├─ ⏳ **FR-8.2.1 Advanced Save/Load System（AES256暗号化・クラウド統合・10スロット）**
+│   ├─ [ ] **SaveSystemManager統合管理システム**
+│   │   ├─ ScriptableObjectベースの統合管理・モジュラー設計
+│   │   ├─ 複数セーブスロット対応（最大10スロット、スロット間独立性保証）
+│   │   ├─ 自動保存機能（チェックポイント + 時間間隔保存のハイブリッド方式）
+│   │   └─ asterivo.Unity60.Core.SaveSystem.*名前空間適用
+│   ├─ [ ] **暗号化・整合性保証システム**
+│   │   ├─ AES256暗号化によるデータ保護・整合性検証
+│   │   ├─ バージョン管理システム（セーブデータ移行機能・後方互換性）
+│   │   ├─ データ整合性保証（チェックサム検証・バックアップ機能）
+│   │   └─ パフォーマンス要件（セーブ100ms以内・ロード50ms以内・非同期処理）
+│   └─ [ ] **クラウド保存対応システム**
+│       ├─ Steam Cloud, iCloud, Google Play Games等の統合サポート
+│       ├─ クラウド同期（バックグラウンド処理・UIブロックなし）
+│       └─ データ破損からの自動復旧機能
+├─ ⏳ **FR-8.2.2 Comprehensive Settings System（Graphics/Audio/Input/Gameplay・リアルタイム反映）**
+│   ├─ [ ] **包括的設定カテゴリシステム**
+│   │   ├─ Graphics Settings（品質レベル・解像度・フレームレート制限・URP固有設定）
+│   │   ├─ Audio Settings（マスター音量・カテゴリ別音量・オーディオデバイス選択）
+│   │   ├─ Input Settings（キーバインド変更・マウス/コントローラー感度調整）
+│   │   └─ Gameplay Settings（難易度設定・字幕設定・アクセシビリティ設定）
+│   ├─ [ ] **リアルタイム設定システム**
+│   │   ├─ リアルタイム設定変更反映（再起動不要・即座反映）
+│   │   ├─ 設定プリセット機能（Easy/Normal/Expert/Custom プリセット）
+│   │   ├─ 設定変更の即座プレビュー（リアルタイム反映・インタラクティブプレビュー）
+│   │   └─ 設定インポート/エクスポート（JSON形式での設定共有）
+│   └─ [ ] **UX・アクセシビリティ対応**
+│       ├─ 直感的UI設計・カスタマイズ可能インターフェース
+│       ├─ キーボードショートカット対応・アクセシビリティ機能
+│       └─ パフォーマンス要件（設定反映即座・UI応答100ms以内）
+├─ ⏳ **FR-8.2.3 Localization Support System（2言語：日英中韓・実行時切り替え）**
+│   ├─ [ ] **2言語対応システム**
+│   │   ├─ Primary: 日本語（基準言語・完全サポート）
+│   │   └─ Secondary: English（国際展開・グローバル市場）
+│   ├─ [ ] **実行時言語切り替えシステム**
+│   │   ├─ 実行時言語切り替え（再起動不要・シームレス切り替え）
+│   │   ├─ フォント・レイアウト自動調整（言語別最適化・フォールバック機能）
+│   │   ├─ 音声翻訳対応（ボイス・効果音・音声アセット自動管理）
+│   │   └─ パフォーマンス要件（言語切り替え3秒以内・メモリパック20MB以内）
+│   └─ [ ] **翻訳管理・品質保証システム**
+│       ├─ 翻訳管理エディタツール（CSV/JSON出力・インポート・バージョン管理）
+│       ├─ 未翻訳要素自動検出（警告機能・レポート生成）
+│       ├─ 翻訳品質管理（文字数制限・文脈チェック・コンシステンシー検証）
+│       └─ Community & Ecosystem価値実現（グローバルコミュニティ形成・多言語ユーザーベース拡大）
+├─ ⏳ **FR-8.1.3 Asset Store Integration Guide System（人気アセット50種・自動競合解決）**
+│   ├─ [ ] **AssetCompatibilityChecker統合システム**
+│   │   ├─ 人気アセット50種の統合ガイド・ベストプラクティス
+│   │   ├─ 自動互換性チェック（バージョン管理・既存システム競合検証）
+│   │   ├─ 依存関係自動解決（パッケージ競合・統合ガイダンス）
+│   │   └─ 推奨アセットシステム（ジャンル別最適・価格情報・コミュニティレビュー）
+│   └─ [ ] **Community & Ecosystem統合基盤**
+│       ├─ アセット共有・知識交換促進システム
+│       ├─ コミュニティ連携（ユーザーレビュー・アセットストア情報統合）
+│       └─ 活発なエコシステム形成への貢献
+└─ 🎯 **成功指標・Ship & Scale価値実現**
+    ├─ [ ] ✅セーブ/ロードパフォーマンス要件達成（100ms/50ms以内）
+    ├─ [ ] ✅暗号化データ読み書き正常動作・クラウド保存3プラットフォーム対応
+    ├─ [ ] ✅2言語完全対応・リアルタイム言語切り替え機能
+    ├─ [ ] ✅全設定カテゴリ実装・リアルタイム反映・パフォーマンス要件達成
+    ├─ [ ] ✅人気アセット20種統合確認・自動競合解決機能確認
+    ├─ [ ] ✅プロトタイプ→プロダクション完全対応・Production Release品質達成
+    └─ [ ] ✅Ship & Scale価値実現（商用利用可能レベル・核心価値75%実現）
 
 🔧 TASK-005: Visual-Auditory Detection統合 (3-4日) ✅ COMPLETE
 ├─ ✅ センサー融合システム完成
 └─ ✅ 統合検知精度向上
+
+🔧 TASK-009: ProjectDebugSystem統合デバッグツール (4-5日) ❌
+├─ 価値: 開発効率向上・デバッグ作業効率化
+├─ 目標: プロジェクト専用統合デバッグシステム完成 + エンタープライズレベル名前空間規約適用
+├─ ⏳ 統一ログシステム（FR-7.3準拠）
+│   ├─ [ ] ProjectLogger（静的クラス）実装
+│   ├─ [ ] LogLevel管理（Debug/Info/Warning/Error/Critical）
+│   ├─ [ ] Category別フィルタリング（Core/Features/Audio/AI/Commands/Events等）
+│   ├─ [ ] 構造化ログ出力機能
+│   └─ [ ] Editor/Runtime環境自動検出
+├─ ⏳ リアルタイムパフォーマンス監視
+│   ├─ [ ] PerformanceMonitor（MonoBehaviour Singleton）
+│   ├─ [ ] Frame Rate追跡・メモリ使用量監視
+│   ├─ [ ] CPU使用率解析・GPU性能メトリクス
+│   ├─ [ ] Unity Profiler統合
+│   └─ [ ] 閾値チェック・警告システム
+├─ ⏳ プロジェクト診断エンジン
+│   ├─ [ ] ProjectDiagnosticsWindow（EditorWindow）
+│   ├─ [ ] Event循環依存検出・Command実行統計
+│   ├─ [ ] ObjectPool効率解析・ServiceLocator健全性チェック
+│   ├─ [ ] Asset参照検証・アンチパターン検出
+│   └─ [ ] 自動問題検出・解決策提示
+├─ ⏳ 環境別デバッグ設定
+│   ├─ [ ] DebugConfiguration（ScriptableObject）
+│   ├─ [ ] Development/Testing/Production環境対応
+│   ├─ [ ] ログレベル・カテゴリ設定管理
+│   └─ [ ] プロダクションビルド自動無効化
+├─ ⏳ トラブルシューティング支援機能
+│   ├─ [ ] よくある問題の自動検出
+│   ├─ [ ] 具体的解決策提示システム
+│   ├─ [ ] ワンクリック修復機能
+│   └─ [ ] 包括的診断レポート生成
+└─ 🎯 成功指標
+    ├─ [ ] Core層配置（asterivo.Unity60.Core.Debug.*）
+    ├─ [ ] エディタ/ランタイム分離完全実装
+    ├─ [ ] プロダクションビルドオーバーヘッドゼロ
+    └─ [ ] 開発効率向上・デバッグ時間50%短縮
 ```
 
 # 🌐 PHASE 5: Community & Ecosystem価値実現 ⏳ 待機中
@@ -322,28 +437,47 @@
 
 ## 【Phase 5 実装タスク詳細】
 ```
-🔧 TASK-006: SDD Workflow Integration (4-5日)
-├─ 価値: Community & Ecosystem実現（AI連携開発）
-├─ ⏳ SDD実践統合システム
-│   ├─ [ ] SDD Markdownファイル自動生成
-│   ├─ [ ] SPEC.md → REQUIREMENTS.md変換
-│   ├─ [ ] REQUIREMENTS.md → DESIGN.md変換
-│   ├─ [ ] DESIGN.md → TASKS.md変換
-│   └─ [ ] WorkLogs自動管理システム
-├─ ⏳ AI連携開発プロセス
-│   ├─ [ ] Claude Code連携最適化
-│   ├─ [ ] 自動コード生成統合
-│   ├─ [ ] 品質保証AI統合
-│   └─ [ ] 開発効率測定システム
-├─ ⏳ エコシステム基盤構築
-│   ├─ [ ] コミュニティテンプレート共有
-│   ├─ [ ] 拡張機能管理システム
-│   ├─ [ ] サードパーティ統合API
-│   └─ [ ] 開発者向けドキュメント生成
-└─ 🎯 成功指標
-    ├─ [ ] SDD 5フェーズ完全自動化
-    ├─ [ ] AI連携開発効率50%向上
-    └─ [ ] エコシステム基盤完成
+🔧 TASK-006: SDD Workflow Integration System (4-5日) ⚡ Medium
+├─ 価値: Community & Ecosystem実現（AI連携開発・エコシステム基盤）
+├─ 目標: 究極テンプレートAI連携開発完成 + Gold Master品質達成
+├─ 技術制約: asterivo.Unity60.*名前空間完全適用・MCP統合最適化
+├─ ⏳ **SDD統合ワークフローシステム**
+│   ├─ [ ] **MarkdownDocumentManager統合実装**
+│   │   ├─ SDD Markdownファイル自動生成（SPEC→REQUIREMENTS→DESIGN→TASKS・バージョン管理・自動遷移）
+│   │   ├─ ドキュメント管理（プロジェクトルート配置基盤仕様書・作業ディレクトリ実装管理）
+│   │   ├─ 作業ログ保管（WorkLogs/日時スナップショット管理）
+│   │   └─ 要件追跡・品質保証（5段階フェーズ管理・整合性確保・トレーサビリティ維持）
+│   ├─ [ ] **Claude Code MCP Server統合システム**
+│   │   ├─ AI連携コマンド（/spec-create, /design-create, /tasks-create, /todo-execute）
+│   │   ├─ MCPサーバー戦略活用（unityMCP・context7・git）
+│   │   ├─ 情報収集（ddg-search→context7→deepwiki）・実装（context7→unityMCP→git）
+│   │   └─ 3Dコンテンツ（blender-mcp→unityMCP→git）
+│   └─ [ ] **ハイブリッド開発統合**
+│       ├─ AI（コード生成・技術調査・文書作成）+ 人間（アーキテクチャ判断・品質検証・戦略決定）
+│       ├─ プロンプトエンジニアリング（各開発フェーズ特化テンプレート）
+│       └─ 品質保証統合（AI+人間ハイブリッド開発効率化・品質向上）
+├─ ⏳ **Community & Ecosystemプラットフォーム基盤**
+│   ├─ [ ] **Plugin Architecture System**
+│   │   ├─ プラグインシステム（サードパーティ拡張の安全な統合）
+│   │   ├─ APIゲートウェイ（統一アクセスポイント・セキュリティポリシー）
+│   │   ├─ サンドボックス実行（プラグインの安全な実行環境）
+│   │   └─ 拡張機能管理システム（プラグイン統合管理・依存関係解決）
+│   ├─ [ ] **Template Marketplace System**
+│   │   ├─ テンプレートマーケットプレイス（コミュニティ作成テンプレート共有プラットフォーム）
+│   │   ├─ 品質管理（テンプレート品質検証・レーティングシステム）
+│   │   ├─ ライセンス管理（適切なライセンシング・属性管理）
+│   │   └─ コミュニティテンプレート共有（活発なエコシステム形成・知識交換促進）
+│   └─ [ ] **Community Documentation System**
+│       ├─ コミュニティWiki（ユーザー作成ドキュメント・ナレッジベース）
+│       ├─ ベストプラクティスガイド（コミュニティ知見集約）
+│       ├─ Q&Aシステム（技術的質問・回答のデータベース）
+│       └─ 開発者向けドキュメント生成（自動化・コミュニティ貢献支援）
+└─ 🎯 **成功指標・Community & Ecosystem価値実現**
+    ├─ [ ] ✅SDD 5フェーズ完全自動化・AI連携コマンド動作確認
+    ├─ [ ] ✅MCPサーバー統合最適化・ハイブリッド開発効率50%向上
+    ├─ [ ] ✅プラグインアーキテクチャ・テンプレートマーケットプレイス基盤完成
+    ├─ [ ] ✅コミュニティドキュメンテーション・エコシステム基盤完成
+    └─ [ ] ✅Community & Ecosystem価値実現（究極テンプレート100%完成・Gold Master品質）
 
 📈 TASK-008: Performance Optimization Suite (3-4日)
 ├─ ⏳ メモリ最適化システム
@@ -417,7 +551,7 @@
 
 #### **成功指標・検証項目（REQUIREMENTS.md TR-2.2準拠）**
 - [ ] **1分セットアップ達成**: 完全なプロジェクト生成が60秒以内
-- [ ] **7ジャンル対応**: FPS/TPS/Platformer/Stealth/Adventure/Strategy/Action RPG全て
+- [ ] **7ジャンル対応**: Stealth(最優先)/Platformer(高)/FPS(高)/TPS(高)/ActionRPG(中)/Adventure/Strategy全て
 - [ ] **成功率95%以上**: エラー発生率5%以下
 - [ ] **Unity 6.0完全対応**: 6000.0.42f1以降での動作保証
 - [ ] **名前空間規約完全遵守**: asterivo.Unity60.Core.Setup.*適用確認
@@ -461,19 +595,20 @@ Error Recovery: Auto-fix   // 自動エラー修復
 |-------|--------|-------|------|--------|-------------|-------------|----------|
 | **1** | TASK-001 NPCVisualSensor | Critical | ✅完了 | 100% | 0日 | - | 技術基盤 |
 | **1** | TASK-002 PlayerStateMachine | Critical | ✅完了 | 100% | 0日 | - | 技術基盤 |
+| **1** | TASK-005 Detection統合 | Medium | ✅完了 | 100% | 0日 | - | システム統合 |
 | **2** | TASK-003 Setup Wizard | **Critical** | ✅完了 | 100% | 0日 | - | **Clone & Create** |
-| **3** | TASK-004 Template Phase-1 | **Critical** | ⏳待機 | 0% | 6-7日 | TASK-003完了後 | **Learn & Grow** |
+| **3** | TASK-004 Template Phase-1 | **Critical** | 🎯次期実行 | 0% | 6-7日 | Phase 2完了済み | **Learn & Grow** |
 | **4** | TASK-007 Template Phase-2 | **Critical** | ⏳待機 | 0% | 8-10日 | TASK-004完了後 | **Ship & Scale** |
-| **4** | TASK-005 Detection統合 | Medium | ✅完了 | 100% | 0日 | - | システム統合 |
+| **4** | TASK-009 ProjectDebugSystem | Medium | ⏳待機 | 0% | 4-5日 | Phase 4実行時 | 開発効率向上 |
 | **5** | TASK-006 SDD Integration | Medium | ⏳待機 | 0% | 4-5日 | Phase 4完了後 | **Community & Ecosystem** |
-| **6** | TASK-008 Performance Opt | Low | ⏳待機 | 0% | 3-4日 | 主要システム完了後 | 最終最適化 |
+| **5** | TASK-008 Performance Opt | Low | ⏳待機 | 0% | 3-4日 | 主要システム完了後 | 最終最適化 |
 
 ### **工数サマリー（4つの核心価値実現基盤）**
-- **完了済み**: 5-7日（Phase 1 - 技術基盤確立 + Clone & Create価値実現）
-- **Critical Phase**: 14-17日（Learn & Grow + Ship & Scale）
-- **残り実装**: 10-12日（Community & Ecosystem + 最適化）
-- **最適実行**: 約20-25日（戦略的並行処理）
-- **究極テンプレート達成**: Critical Phase完了で核心価値85%実現
+- **✅完了済み**: 7-10日（Phase 1技術基盤 + Phase 2 Clone & Create価値実現完了）
+- **🎯Critical Phase**: 14-17日（Learn & Grow + Ship & Scale価値実現）
+- **⏳残り実装**: 11-14日（Community & Ecosystem + ProjectDebugSystem + 最適化）
+- **📊全体実行**: 約25-31日（戦略的並行処理・TASK-009追加対応）
+- **🏆究極テンプレート達成**: Critical Phase完了で核心価値85%実現・全Phase完了で100%実現
 
 ---
 
@@ -507,7 +642,7 @@ TASK-004 Template Phase-1（6-7日）最優先実装
 TASK-007 Template Phase-2拡張（8-10日）⚡ Critical昇格
     ├─ プロダクション品質システム
     ├─ 暗号化セーブ/ロードシステム
-    ├─ 4言語対応ローカライゼーション
+    ├─ 2言語対応ローカライゼーション
     └─ 50+アセット統合支援
 
 Week 4+: Community & Ecosystem価値実現
@@ -582,6 +717,71 @@ Week 4+: Community & Ecosystem価値実現
    - Event駆動通信のみ許可
 ```
 
+## 🏗️ **アーキテクチャ制約・品質保証システム**
+
+### **TR-2.2 名前空間一貫性制約（REQUIREMENTS.md完全準拠）**
+```
+🏛️ 名前空間階層構造（3層分離）:
+Root: asterivo.Unity60
+├─ Core層: asterivo.Unity60.Core.*
+│   ├─ asterivo.Unity60.Core.Events（イベント駆動基盤）
+│   ├─ asterivo.Unity60.Core.Commands（コマンドパターン基盤）
+│   ├─ asterivo.Unity60.Core.Services（ServiceLocator基盤）
+│   ├─ asterivo.Unity60.Core.Audio（オーディオシステム基盤）
+│   ├─ asterivo.Unity60.Core.StateMachine（ステートマシン基盤）
+│   ├─ asterivo.Unity60.Core.Debug（ProjectDebugSystem）
+│   └─ asterivo.Unity60.Core.Setup（SetupWizardSystem）
+├─ Feature層: asterivo.Unity60.Features.*
+│   ├─ asterivo.Unity60.Features.Player（プレイヤー機能）
+│   ├─ asterivo.Unity60.Features.AI（AI機能・NPCセンサー）
+│   ├─ asterivo.Unity60.Features.Camera（カメラ機能）
+│   ├─ asterivo.Unity60.Features.ActionRPG（RPG機能）
+│   ├─ asterivo.Unity60.Features.Templates（ジャンルテンプレート）
+│   └─ asterivo.Unity60.Features.Stealth（ステルス機能）
+└─ Test層: asterivo.Unity60.Tests.*
+    ├─ asterivo.Unity60.Tests.Unit（ユニットテスト）
+    ├─ asterivo.Unity60.Tests.Integration（統合テスト）
+    └─ asterivo.Unity60.Tests.Performance（パフォーマンステスト）
+
+🚫 制約・禁止事項:
+├─ Core層→Feature層参照: **完全禁止**
+├─ _Project.*新規使用: **完全禁止**（段階的削除実施）
+├─ レガシー名前空間継続使用: **禁止**
+└─ アセンブリ定義ファイル(.asmdef)依存関係違反: **コンパイル時強制阻止**
+
+✅ 許可される通信方式:
+├─ Core←→Feature: Event駆動通信のみ（GameEvent経由）
+├─ Feature→Core: Services/Commands/Events利用
+├─ Feature←→Feature: Event駆動通信推奨
+└─ Test→All: テスト用アクセス許可
+```
+
+### **アセンブリ定義ファイル制約システム**
+```
+📦 Assembly Definition構造:
+├─ Core.asmdef
+│   ├─ 依存関係: Unity基本パッケージのみ
+│   ├─ 参照先: なし（基盤層）
+│   └─ 制約: Feature層への参照完全禁止
+├─ Features.asmdef
+│   ├─ 依存関係: Core.asmdef + Unity基本パッケージ
+│   ├─ 参照先: Core層のみ許可
+│   └─ 制約: 他Feature間の直接参照最小化
+├─ Tests.asmdef
+│   ├─ 依存関係: Core.asmdef + Features.asmdef + TestFramework
+│   ├─ 参照先: 全層アクセス許可（テスト用）
+│   └─ 制約: プロダクションビルドから除外
+└─ Editor.asmdef
+    ├─ 依存関係: 全層 + UnityEditor
+    ├─ 参照先: エディタ専用機能
+    └─ 制約: エディタ環境限定
+
+🔒 コンパイル時強制制約:
+├─ 違反時コンパイルエラー発生
+├─ 循環依存の完全防止
+├─ 意図しない結合の阻止
+└─ アーキテクチャ遵守の自動保証
+
 ### **品質保証要件（REQUIREMENTS.md TR-2.2統合）**
 ```
 🧪 テスト要件:
@@ -610,50 +810,73 @@ Week 4+: Community & Ecosystem価値実現
 
 ## 🚀 **Next Actions（即座に開始）**
 
-### **【基盤完成】今日開始すべきCritical Phase作業（Clone & Create価値実現）**
-1. **✅TASK-003.2 Environment Diagnostics 完全実装完了**
-   - ✅SystemRequirementChecker基盤完全対応（VS/VSCode両対応）
-   - ✅ハードウェア診断API実装（CPU/RAM/GPU/Storage）
-   - ✅PDFレポート生成システム実装
-   - ✅自動修復機能実装（97%時間短縮目標達成）
-   - ✅環境評価スコア算出システム（0-100点）
-   - ✅JSON診断結果保存システム
+### **🎯【Phase 3開始】Critical Phase作業（Learn & Grow価値実現）**
 
-2. **TASK-003.3 SetupWizardWindow UI基盤実装開始（Critical最優先）**
-   - Unity Editor Window基盤クラス実装（asterivo.Unity60.Core.Setup.*名前空間適用）
-   - UI Toolkit vs IMGUI 技術選択確定
-   - ウィザードステップ管理システム実装
-   - Environment Diagnostics統合UI実装
-   - アセンブリ定義ファイル(.asmdef)依存関係制約実装
-   - _Project.*新規使用禁止遵守確認
+#### **最優先実行: TASK-004 Ultimate Template Phase-1統合（6-7日）**
 
-2. **Setup Wizard 3層アーキテクチャ最終設計**
-   - UI Toolkit vs IMGUI の技術選択確定
-   - ウィザードUI実装方法の確定
-   - 1分セットアッププロトタイプ検証
+**実行準備完了状況**:
+- ✅**Phase 1基盤**: NPCVisualSensor + PlayerStateMachine完成済み（ステルス基盤完備）
+- ✅**Phase 2完了**: Clone & Create価値実現（1分セットアップシステム完全実装）
+- ✅**Environment Diagnostics**: VS/VSCode対応・ハードウェア診断・97%時間短縮実現
+- ✅**Setup Wizard**: 7ジャンル選択システム・ProjectGenerationEngine完成
+- 🎯**Phase 3移行**: Learn & Grow価値実現への即座移行準備完了
 
-3. **Unity Editor API統合戦略策定**
-   - ProjectGenerationEngineの具体的API設計
-   - Package Manager統合の実装パターン調査
-   - エラーハンドリング戦略の策定
+#### **TASK-004 実装スケジュール（6-7日間）**
 
-4. **Ship & Scale価値実現準備（TASK-007 Critical昇格対応）**
-   - プロダクション品質システム設計準備
-   - Advanced Save/Load System要件確認
-   - 多言語対応技術調査
+| Day | Layer | 主要成果物 | 所要時間 | 核心価値 |
+|-----|-------|-----------|----------|----------|
+| **Day 1-2** | 🏗️ **Layer 1: Template Configuration** | GenreTemplateConfig + Stealth/Platformer基盤 | 16時間 | Learn & Grow基盤 |
+| **Day 3-4** | 🎨 **Layer 1: 7ジャンル実装** | FPS/TPS/ActionRPG/Adventure/Strategy完成 | 16時間 | 7ジャンル完全対応 |
+| **Day 5-6** | ⚙️ **Layer 2: Runtime Management** | TemplateManager + 学習システム統合 | 16時間 | 70%学習コスト削減 |
+| **Day 7** | 🚀 **統合・検証** | Camera/Input統合 + 15分ゲームプレイ検証 | 8時間 | Beta Release準備 |
 
-### **Critical Phase今週完了目標（Clone & Create価値実現 + 名前空間規約遵守）**
-- ✅**TASK-003.1-EXT**: SystemRequirementChecker VS/VSCode両対応拡張【完了済み】
-- ✅**TASK-003.2**: Environment Diagnostics実装完了（97%時間短縮目標達成）【完了済み】
-- **TASK-003.3**: SetupWizardWindow UI基盤実装【即座開始】
-  - asterivo.Unity60.Core.Setup.*名前空間適用確認
-  - アセンブリ定義ファイル依存関係制約実装
-- **TASK-003.4-003.5**: ジャンル選択・生成エンジン実装完了
-  - 7ジャンル完全対応（Action RPG追加対応）
-  - _Project.*新規使用禁止遵守確認
-- ✅**TASK-005**: Visual-Auditory Detection統合完了
-- **TASK-007準備**: Ship & Scale価値実現基盤設計完了
-  - エンタープライズレベル名前空間規約適用準備
+#### **Critical Path 実行戦略**:
+1. **Day 1: Stealth Template優先実装**
+   - ✅既存AI Detection Systems活用（NPCVisualSensor + NPCAuditorySensor）
+   - Stealth Mechanics（隠蔽・発見システム）実装
+   - Environmental Interaction（環境相互作用）統合
+   - asterivo.Unity60.Features.Templates.Stealth.*名前空間適用
+
+2. **Day 2: GenreTemplateConfig基盤 + Platformer Template**
+   - Dictionary<GenreType, GenreTemplateConfig>高速管理システム
+   - Dynamic Genre Switching（実行時切り替え）実装
+   - Jump & Movement Physics + Collectible Systems実装
+   - asterivo.Unity60.Features.Templates.Platformer.*名前空間適用
+
+3. **Day 3-4: 高優先度ジャンル実装（FPS/TPS）**
+   - FPS: First Person Camera + Shooting Mechanics + Combat UI
+   - TPS: Third Person Camera + Cover System + Aiming Mechanics
+   - asterivo.Unity60.Features.Templates.{FPS,TPS}.*名前空間適用
+
+4. **Day 5: Action RPG + Adventure/Strategy Template**
+   - Action RPG: Character Progression + Equipment + Skill Trees（FR-5対応）
+   - Adventure: Dialogue + Inventory + Quest System
+   - Strategy: RTS Camera + Unit Selection + Resource Management
+   - asterivo.Unity60.Features.Templates.{ActionRPG,Adventure,Strategy}.*名前空間適用
+
+5. **Day 6: Runtime Template Management + 学習システム**
+   - TemplateManager (Singleton) + 学習支援システム実装
+   - 5段階学習システム: 基礎→応用→実践→カスタマイズ→出版
+   - Configuration Synchronization + User Progress Preservation
+
+6. **Day 7: Camera/Input統合 + 最終検証**
+   - Cinemachine 3.1統合プリセット + Input System構成プリセット
+   - 各ジャンル15分ゲームプレイ実現・段階的学習チュートリアル統合
+   - インタラクティブチュートリアル + 進捗追跡システム
+
+### **Critical Phase 成功指標（Learn & Grow価値実現）**
+- ✅**学習コスト70%削減**: 40時間→12時間（Unity中級開発者1週間習得）
+- ✅**7ジャンル完全対応**: 各15分ゲームプレイ実現・テンプレート切り替え3分以内
+- ✅**市場投入可能品質**: Beta Release準備完了・実践的学習コンテンツ
+- ✅**名前空間規約完全遵守**: asterivo.Unity60.Features.*適用・レガシー削除完了
+- ✅**アーキテクチャ制約遵守**: Core/Feature層分離・依存関係制御完全実装
+
+### **Phase 4準備（Ship & Scale価値実現基盤設計）**
+- **TASK-007**: Ultimate Template Phase-2拡張（8-10日準備）
+- **Advanced Save/Load System**: AES256暗号化・クラウド統合・10スロット
+- **Comprehensive Settings**: Graphics/Audio/Input/Gameplay・リアルタイム反映
+- **Localization Support**: 2言語対応（日英）・実行時切り替え
+- **TASK-009**: ProjectDebugSystem（4-5日）・開発効率向上・デバッグ時間50%短縮
 
 ---
 

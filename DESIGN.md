@@ -819,7 +819,7 @@ public class DebugConfiguration : ScriptableObject
 #### Phase B: 高度ゲーム機能（🟡 高優先度）
 **B.1 Advanced Save/Load**: SaveSystemManager（10スロット・自動保存・AES256暗号化・バージョン移行・整合性検証）、Cloud統合（Steam・iCloud・Google Play）
 
-**B.2-B.4 追加システム**: Settings（リアルタイム設定）、4言語ローカリゼーション（日英中韓）、Performance Profiler（リアルタイム監視）
+**B.2-B.4 追加システム**: Settings（リアルタイム設定）、2言語ローカリゼーション（日英）、Performance Profiler（リアルタイム監視）
 
 #### Phase C-E: プロダクション・エコシステム（🟢🔵 中低優先度）
 **Ship & Scale価値**: Build Pipeline・Asset Validation・Memory Management（Phase C）、Package Templates・Code Generator・Visual Scripting（Phase D）、Plugin Architecture・Template Marketplace・Community Docs（Phase E）

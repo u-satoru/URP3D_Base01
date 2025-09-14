@@ -115,8 +115,8 @@
 - `SPEC.md` - 初期構想・要件定義（人間作成） : @SPEC.md
 - `REQUIREMENTS.md` - 形式化された要件（AI生成） : @REQUIREMENTS.md
 - `DESIGN.md` - 技術設計書（AI生成） : @DESIGN.md
-- `TASKS.md` - 実装タスク一覧（AI生成） : @TASKS.md
-- `TODO.md` - 進行中タスク管理（人間作成） : @TODO.md
+- `TASKS.md` - 実装タスク一覧（AI生成）
+- `TODO.md` - 進行中タスク管理（人間作成）
 
 
 #### 作業ディレクトリ配置（実装管理）

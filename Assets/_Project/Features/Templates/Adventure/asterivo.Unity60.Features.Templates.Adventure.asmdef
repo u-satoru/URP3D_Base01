@@ -1,0 +1,23 @@
+{
+    "name": "asterivo.Unity60.Features.Templates.Adventure",
+    "rootNamespace": "asterivo.Unity60.Features.Templates.Adventure",
+    "references": [
+        "asterivo.Unity60.Core.Events",
+        "asterivo.Unity60.Core.Services",
+        "asterivo.Unity60.Core.Commands",
+        "asterivo.Unity60.Core.Audio",
+        "Unity.Cinemachine",
+        "Unity.InputSystem",
+        "Unity.TextMeshPro",
+        "Sirenix.OdinInspector.Attributes"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
