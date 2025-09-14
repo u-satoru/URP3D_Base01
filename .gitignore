@@ -112,6 +112,7 @@ Desktop.ini.claude/settings.local.json
 # .meta files exclusion for documentation directory
 # Documentation .meta files are not critical for version control
 Assets/_Project/Docs/**/*.meta
+Assets/_Project/Works/**/*.meta
 
 # Claude
 .claude/settings.local.json
