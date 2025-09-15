@@ -164,6 +164,27 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
             _isEntering = isEntering;
         }
 
+        /// <summary>
+        /// Initialize with generic parameters (IResettableCommand interface requirement)
+        /// </summary>
+        public void Initialize(params object[] parameters)
+        {
+            if (parameters == null || parameters.Length < 2)
+            {
+                Debug.LogError("[HidingSpotInteractionCommand] Initialize requires at least 2 parameters: HidingSpot and bool");
+                return;
+            }
+
+            if (parameters[0] is HidingSpot hidingSpot && parameters[1] is bool isEntering)
+            {
+                Initialize(hidingSpot, isEntering);
+            }
+            else
+            {
+                Debug.LogError("[HidingSpotInteractionCommand] Invalid parameter types. Expected HidingSpot and bool");
+            }
+        }
+
         #endregion
 
         #region Execution Implementation

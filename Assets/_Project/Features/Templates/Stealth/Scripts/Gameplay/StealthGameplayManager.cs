@@ -8,6 +8,7 @@ using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Features.Player.Scripts;
 using asterivo.Unity60.Player;
+using asterivo.Unity60.Features.Templates.Stealth.UI;
 using Sirenix.OdinInspector;
 using UnityEngine.AI;
 

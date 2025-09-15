@@ -8,6 +8,7 @@ using asterivo.Unity60.Features.AI;
 using asterivo.Unity60.Features.AI.Visual;
 using asterivo.Unity60.Features.AI.Audio;
 using asterivo.Unity60.Features.Templates.Stealth.Configuration;
+using asterivo.Unity60.Features.Templates.Stealth.Data;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.AI
 {
@@ -68,7 +69,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.AI
         private readonly List<MonoBehaviour> _registeredNPCs = new();
         private readonly Dictionary<MonoBehaviour, StealthAIMemory> _npcMemories = new();
         private readonly Dictionary<MonoBehaviour, float> _suspicionLevels = new();
-        private readonly Dictionary<MonoBehaviour, AlertLevel> _alertLevels = new();
+        private readonly Dictionary<MonoBehaviour, AIAlertLevel> _alertLevels = new();
 
         // Performance Optimization - 既存のObjectPool最適化を活用
         private readonly Queue<StealthDetectionEvent> _detectionEventPool = new();
@@ -271,7 +272,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.AI
             float memoryRetention = _config?.MemoryRetentionTime ?? 30f;
             _npcMemories[npcComponent] = new StealthAIMemory(memoryRetention);
             _suspicionLevels[npcComponent] = 0f;
-            _alertLevels[npcComponent] = AlertLevel.Relaxed;
+            _alertLevels[npcComponent] = AIAlertLevel.Relaxed;
         }
 
         /// <summary>
@@ -473,10 +474,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth.AI
             {
                 multiplier *= alertLevel switch
                 {
-                    AlertLevel.Relaxed => 0.8f,
-                    AlertLevel.Suspicious => 1.0f,
-                    AlertLevel.Investigating => 1.2f,
-                    AlertLevel.Alert => 1.5f,
+                    AIAlertLevel.Relaxed => 0.8f,
+                    AIAlertLevel.Suspicious => 1.0f,
+                    AIAlertLevel.Investigating => 1.2f,
+                    AIAlertLevel.Alert => 1.5f,
                     _ => 1.0f
                 };
             }
@@ -511,12 +512,12 @@ namespace asterivo.Unity60.Features.Templates.Stealth.AI
         /// </summary>
         private void UpdateAIAlertLevel(MonoBehaviour npcComponent, float suspicionLevel)
         {
-            AlertLevel newAlertLevel = suspicionLevel switch
+            AIAlertLevel newAlertLevel = suspicionLevel switch
             {
-                <= 0.2f => AlertLevel.Relaxed,
-                <= 0.5f => AlertLevel.Suspicious,
-                <= 0.7f => AlertLevel.Investigating,
-                _ => AlertLevel.Alert
+                <= 0.2f => AIAlertLevel.Relaxed,
+                <= 0.5f => AIAlertLevel.Suspicious,
+                <= 0.7f => AIAlertLevel.Investigating,
+                _ => AIAlertLevel.Alert
             };
 
             if (_alertLevels.TryGetValue(npcComponent, out var currentLevel) && currentLevel != newAlertLevel)
@@ -805,7 +806,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.AI
             if (_config != null && IsCooperativeDetectionActive)
             {
                 Gizmos.color = Color.yellow;
-                float range = _config.CooperativeDetectionRange;
+                float range = _config?.CooperativeDetectionRange ?? 20f;
                 foreach (var npc in _registeredNPCs)
                 {
                     if (npc != null)

@@ -1,6 +1,7 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Features.Templates.Stealth.Configuration;
+using asterivo.Unity60.Features.Templates.Stealth.Data;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Events
 {
@@ -511,6 +512,71 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Events
             {
                 _eventHandlers[eventName] -= handler;
             }
+        }
+    }
+
+    /// <summary>
+    /// ステルス専用検知イベントチャネル
+    /// AIDetectionData専用の高速イベントチャネル
+    /// </summary>
+    [System.Serializable]
+    public class StealthDetectionEventChannel : GameEventChannel
+    {
+        [Header("Detection Event Settings")]
+        [SerializeField] private float _detectionEventCooldown = 0.1f;
+        [SerializeField] private int _maxDetectionEventsPerFrame = 5;
+
+        private float _lastDetectionEventTime;
+        private int _currentFrameEventCount;
+        private int _lastFrameCount;
+
+        /// <summary>
+        /// AI検知イベント専用送信メソッド
+        /// </summary>
+        public void RaiseDetectionEvent(AIDetectionData detectionData)
+        {
+            // フレーム制限チェック
+            if (Time.frameCount != _lastFrameCount)
+            {
+                _currentFrameEventCount = 0;
+                _lastFrameCount = Time.frameCount;
+            }
+
+            // 送信制限チェック
+            if (_currentFrameEventCount >= _maxDetectionEventsPerFrame)
+            {
+                return; // フレーム制限に達したため送信しない
+            }
+
+            // クールダウンチェック
+            if (Time.time - _lastDetectionEventTime < _detectionEventCooldown)
+            {
+                return; // クールダウン中のため送信しない
+            }
+
+            // イベント送信
+            RaiseEvent("DetectionLevelChanged", detectionData);
+
+            _lastDetectionEventTime = Time.time;
+            _currentFrameEventCount++;
+        }
+
+        /// <summary>
+        /// プレイヤー発見イベント送信
+        /// </summary>
+        public void RaisePlayerSpottedEvent(Vector3 playerPosition, string npcId)
+        {
+            var detectionData = AIDetectionData.Create(npcId, DetectionType.Visual, 1.0f, 0f, playerPosition, playerPosition);
+            RaiseDetectionEvent(detectionData);
+        }
+
+        /// <summary>
+        /// プレイヤー見失いイベント送信
+        /// </summary>
+        public void RaisePlayerLostEvent(Vector3 lastKnownPosition, string npcId)
+        {
+            var detectionData = AIDetectionData.Create(npcId, DetectionType.Visual, 0.0f, 0f, lastKnownPosition, lastKnownPosition);
+            RaiseDetectionEvent(detectionData);
         }
     }
 

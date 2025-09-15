@@ -5,6 +5,8 @@ using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Components;
 using asterivo.Unity60.Features.Templates.Stealth.Data;
+using asterivo.Unity60.Features.Templates.Stealth.Configuration;
+using asterivo.Unity60.Features.Templates.Stealth.Events;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Environment
 {
@@ -44,6 +46,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         // Performance optimization
         private readonly Dictionary<Transform, float> _lastUpdateTimes = new();
         private float _nextUpdateTime;
+
+        // TODO: Add these properties to StealthEnvironmentConfig
+        private const float DefaultDetectionRadius = 10f;
+        private const float DefaultShadowConcealmentMultiplier = 0.7f;
+        private const float DefaultFoliageConcealmentMultiplier = 0.8f;
+        private const float DefaultLightExposureMultiplier = 1.5f;
+        private const float DefaultDiscoveryRadius = 15f;
 
         #region Unity Lifecycle
 
@@ -112,7 +121,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
 
         private void DiscoverHidingSpots()
         {
-            var hidingSpotColliders = Physics.OverlapSphere(transform.position, _config.DiscoveryRadius, _hidingSpotLayer);
+            var hidingSpotColliders = Physics.OverlapSphere(transform.position, DefaultDiscoveryRadius, _hidingSpotLayer);
             
             foreach (var collider in hidingSpotColliders)
             {
@@ -130,7 +139,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
 
         private void DiscoverEnvironmentalElements()
         {
-            var environmentColliders = Physics.OverlapSphere(transform.position, _config.DiscoveryRadius, _environmentLayer);
+            var environmentColliders = Physics.OverlapSphere(transform.position, DefaultDiscoveryRadius, _environmentLayer);
             
             foreach (var collider in environmentColliders)
             {
@@ -299,7 +308,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
             if (_playerTransform == null) return;
 
             var nearbyElements = _environmentElements.Values
-                .Where(element => Vector3.Distance(element.transform.position, _playerTransform.position) <= _config.DetectionRadius)
+                .Where(element => Vector3.Distance(element.transform.position, _playerTransform.position) <= DefaultDetectionRadius)
                 .ToList();
 
             // Process environmental effects
@@ -314,7 +323,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
             if (element == null) return;
 
             var distance = Vector3.Distance(element.transform.position, _playerTransform.position);
-            var influence = Mathf.Clamp01(1f - (distance / _config.DetectionRadius));
+            var influence = Mathf.Clamp01(1f - (distance / DefaultDetectionRadius));
 
             // Apply environmental effect based on type and influence
             switch (element.ElementType)
@@ -345,7 +354,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
                 var stealthController = ServiceLocator.GetService<StealthMechanicsController>();
                 if (stealthController != null)
                 {
-                    var concealment = _config.ShadowConcealmentMultiplier * influence;
+                    var concealment = DefaultShadowConcealmentMultiplier * influence;
                     stealthController.ApplyEnvironmentalConcealment(concealment, "Shadow");
                 }
             }
@@ -359,7 +368,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
                 var stealthController = ServiceLocator.GetService<StealthMechanicsController>();
                 if (stealthController != null)
                 {
-                    var concealment = _config.FoliageConcealmentMultiplier * influence;
+                    var concealment = DefaultFoliageConcealmentMultiplier * influence;
                     stealthController.ApplyEnvironmentalConcealment(concealment, "Foliage");
                 }
             }
@@ -394,7 +403,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
                 var stealthController = ServiceLocator.GetService<StealthMechanicsController>();
                 if (stealthController != null)
                 {
-                    var exposure = _config.LightExposureMultiplier * influence;
+                    var exposure = DefaultLightExposureMultiplier * influence;
                     stealthController.ApplyLightExposure(exposure);
                 }
             }
@@ -424,11 +433,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
             }
 
             // Clean up old entries to prevent memory leaks
-            if (_lastUpdateTimes.Count > _config.MaxTrackedElements)
+            // TODO: Add MaxTrackedElements property to StealthEnvironmentConfig
+            const int maxTrackedElements = 1000; // Default fallback
+            if (_lastUpdateTimes.Count > maxTrackedElements)
             {
                 var oldestEntries = _lastUpdateTimes
                     .OrderBy(kvp => kvp.Value)
-                    .Take(_lastUpdateTimes.Count - _config.MaxTrackedElements)
+                    .Take(_lastUpdateTimes.Count - maxTrackedElements)
                     .ToList();
 
                 foreach (var entry in oldestEntries)
@@ -487,14 +498,14 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
                     element.ElementType == EnvironmentalElementType.Foliage)
                 {
                     var distance = Vector3.Distance(element.transform.position, position);
-                    if (distance <= _config.DetectionRadius)
+                    if (distance <= DefaultDetectionRadius)
                     {
-                        var influence = 1f - (distance / _config.DetectionRadius);
+                        var influence = 1f - (distance / DefaultDetectionRadius);
                         
                         if (element.ElementType == EnvironmentalElementType.Shadow)
-                            totalConcealment += _config.ShadowConcealmentMultiplier * influence;
+                            totalConcealment += DefaultShadowConcealmentMultiplier * influence;
                         else if (element.ElementType == EnvironmentalElementType.Foliage)
-                            totalConcealment += _config.FoliageConcealmentMultiplier * influence;
+                            totalConcealment += DefaultFoliageConcealmentMultiplier * influence;
                         
                         concealmentSources++;
                     }
@@ -517,10 +528,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
                 if (element.ElementType == EnvironmentalElementType.Light)
                 {
                     var distance = Vector3.Distance(element.transform.position, position);
-                    if (distance <= _config.DetectionRadius)
+                    if (distance <= DefaultDetectionRadius)
                     {
-                        var influence = 1f - (distance / _config.DetectionRadius);
-                        totalExposure += _config.LightExposureMultiplier * influence;
+                        var influence = 1f - (distance / DefaultDetectionRadius);
+                        totalExposure += DefaultLightExposureMultiplier * influence;
                         lightSources++;
                     }
                 }
@@ -560,7 +571,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
 
             // Draw discovery radius
             Gizmos.color = Color.white;
-            Gizmos.DrawWireSphere(transform.position, _config != null ? _config.DiscoveryRadius : 50f);
+            Gizmos.DrawWireSphere(transform.position, _config != null ? DefaultDiscoveryRadius : 50f);
 
             // Draw hiding spots
             Gizmos.color = _hidingSpotColor;
@@ -596,7 +607,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
             if (_playerTransform != null && _config != null)
             {
                 Gizmos.color = _dangerZoneColor;
-                Gizmos.DrawWireSphere(_playerTransform.position, _config.DetectionRadius);
+                Gizmos.DrawWireSphere(_playerTransform.position, DefaultDetectionRadius);
             }
         }
 

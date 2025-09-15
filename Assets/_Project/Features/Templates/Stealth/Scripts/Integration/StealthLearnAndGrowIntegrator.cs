@@ -9,6 +9,7 @@ using asterivo.Unity60.Features.Templates.Stealth.AI;
 using asterivo.Unity60.Features.Templates.Stealth.Environment;
 using asterivo.Unity60.Features.Templates.Stealth.UI;
 using asterivo.Unity60.Features.Templates.Stealth.Data;
+using asterivo.Unity60.Features.Templates.Stealth.Configuration;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Integration
 {
@@ -68,7 +69,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Integration
             Complete         // 完全習得
         }
         
-        private enum StealthSkill
+        public enum StealthSkill
         {
             BasicMovement,      // 基本移動
             NoiseControl,       // 音響制御

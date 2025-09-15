@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using asterivo.Unity60.Features.Templates.Stealth.Configuration;
 
 namespace asterivo.Unity60.Features.Templates.Stealth
 {
@@ -20,7 +21,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         
         [BoxGroup("Validation Configuration/Test Settings")]
         [LabelText("Template Configuration"), Required]
-        [SerializeField] private StealthTemplateConfiguration templateConfig;
+        [SerializeField] private StealthTemplateConfig templateConfig;
         
         [BoxGroup("Validation Configuration/Test Settings")]
         [LabelText("Enable Performance Testing")]
@@ -380,12 +381,14 @@ namespace asterivo.Unity60.Features.Templates.Stealth
 
             var tutorialConfig = templateConfig.TutorialConfig;
             
+            // TODO: Complete tutorial configuration properties
             // Validate learning structure
-            bool hasValidStages = tutorialConfig.TutorialSteps != null && tutorialConfig.TutorialSteps.Length >= 3;
-            bool hasProgression = tutorialConfig.EnableDetailedAnalytics;
-            bool hasTutorials = tutorialConfig.EnableRealTimeHints;
-            
-            // Calculate learning cost reduction potential
+            bool hasValidStages = false; // tutorialConfig.TutorialSteps != null && tutorialConfig.TutorialSteps.Length >= 3;
+            bool hasProgression = false; // tutorialConfig.EnableDetailedAnalytics;
+            bool hasTutorials = false; // tutorialConfig.EnableRealTimeHints;
+
+            // TODO: Calculate learning cost reduction potential when properties are implemented
+            /*
             if (hasValidStages)
             {
                 float totalLearningTime = learningSettings.learningStages.Sum(s => s.estimatedDuration);
@@ -393,9 +396,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                 learningMetrics.learningCostReduction = 1.0f - (learningMetrics.timeToBasicCompetency / 40f); // 40 hours baseline
                 learningMetrics.achieves70PercentReduction = learningMetrics.learningCostReduction >= 0.7f;
             }
-            
+            */
+
             AddValidationResult("Learn & Grow - Learning Stages", hasValidStages,
-                hasValidStages ? $"Has {learningSettings.learningStages.Length} learning stages" : "Missing or insufficient learning stages",
+                hasValidStages ? "Learning stages available" : "Tutorial configuration properties need implementation",
                 Time.realtimeSinceStartup - startTime, ValidationCategory.Learning,
                 hasValidStages ? ValidationSeverity.Info : ValidationSeverity.Error);
             
@@ -416,9 +420,9 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             var startTime = Time.realtimeSinceStartup;
             
             // Test integration between all modular systems
-            bool playerAudioIntegration = templateConfig?.MechanicsConfig != null && templateConfig?.AudioConfig != null;
-            bool aiVisionIntegration = templateConfig?.AIConfig != null && templateConfig?.MechanicsConfig != null;
-            bool missionLearningIntegration = templateConfig?.EnvironmentConfig != null && templateConfig?.TutorialConfig != null;
+            bool playerAudioIntegration = templateConfig?.Mechanics != null && templateConfig?.AudioSettings != null;
+            bool aiVisionIntegration = templateConfig?.AIConfiguration != null && templateConfig?.Mechanics != null;
+            bool missionLearningIntegration = templateConfig?.Environment != null && templateConfig?.TutorialConfig != null;
             
             AddValidationResult("Integration - Player-Audio", playerAudioIntegration,
                 "Player settings and audio settings integration validated",

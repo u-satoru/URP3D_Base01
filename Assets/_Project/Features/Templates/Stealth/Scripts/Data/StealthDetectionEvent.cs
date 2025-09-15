@@ -83,6 +83,41 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
+        /// IResettableCommandインターフェース用の汎用初期化メソッド
+        /// ObjectPool使用時のパラメータ初期化に使用
+        /// </summary>
+        public void Initialize(params object[] parameters)
+        {
+            if (parameters == null || parameters.Length < 4)
+            {
+                Debug.LogError("StealthDetectionEvent: Initialize requires at least 4 parameters: MonoBehaviour, DetectedTarget, DetectionType, float");
+                return;
+            }
+
+            if (parameters[0] is MonoBehaviour detectingNPC &&
+                parameters[1] is DetectedTarget target &&
+                parameters[2] is DetectionType detectionType &&
+                parameters[3] is float suspicionLevel)
+            {
+                Initialize(detectingNPC, target, detectionType, suspicionLevel);
+
+                // 追加パラメータがあれば処理
+                if (parameters.Length >= 6 &&
+                    parameters[4] is Vector3 detectionPosition &&
+                    parameters[5] is ConcealmentLevel concealmentLevel)
+                {
+                    DetectionPosition = detectionPosition;
+                    ConcealmentLevel = concealmentLevel;
+                    DetectionStrength = CalculateDetectionStrength();
+                }
+            }
+            else
+            {
+                Debug.LogError("StealthDetectionEvent: Invalid parameter types. Expected MonoBehaviour, DetectedTarget, DetectionType, float");
+            }
+        }
+
+        /// <summary>
         /// ObjectPool復帰時のリセット処理
         /// メモリ効率最適化: 参照をnullにして適切なガベージコレクション実施
         /// </summary>
@@ -143,10 +178,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         /// <summary>
         /// 取り消し可能かどうかの判定
         /// </summary>
-        public bool CanUndo()
-        {
-            return IsValid && Time.time - Timestamp < 5f; // 5秒以内のイベントは取り消し可能
-        }
+        public bool CanUndo => IsValid && Time.time - Timestamp < 5f; // 5秒以内のイベントは取り消し可能
 
         #endregion
 

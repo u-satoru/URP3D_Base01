@@ -5,6 +5,7 @@ using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Player.States;
 using asterivo.Unity60.Features.Templates.Stealth.Configuration;
+using asterivo.Unity60.Features.Templates.Stealth.Data;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
 {
@@ -664,10 +665,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
             }
         }
 
-        public bool CanUndo()
-        {
-            return _controller != null;
-        }
+        public bool CanUndo => _controller != null;
     }
 
     /// <summary>
@@ -697,10 +695,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
             }
         }
 
-        public bool CanUndo()
-        {
-            return _controller != null && _previousHidingSpot != null;
-        }
+        public bool CanUndo => _controller != null && _previousHidingSpot != null;
     }
 
     #endregion

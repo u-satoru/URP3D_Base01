@@ -6,7 +6,11 @@ using TMPro;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Components;
 using asterivo.Unity60.Features.Templates.Stealth.Data;
+using asterivo.Unity60.Features.Templates.Stealth.Configuration;
 using asterivo.Unity60.Features.Templates.Stealth.Environment;
+using asterivo.Unity60.Features.Templates.Stealth.Events;
+using asterivo.Unity60.Features.Templates.Stealth.Mechanics;
+using asterivo.Unity60.Features.Templates.Stealth.AI;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.UI
 {
@@ -81,7 +85,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
 
         // UI State
         private StealthState _currentStealthState = StealthState.Visible;
-        private AlertLevel _currentAlertLevel = AlertLevel.Relaxed;
+        private AIAlertLevel _currentAlertLevel = AIAlertLevel.Unaware;
         private float _currentStealthLevel = 0f;
         private HidingSpot _nearbyHidingSpot;
         
@@ -372,7 +376,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
                 StealthState.Concealed => _config.ConcealedColor,
                 StealthState.Visible => _config.VisibleColor,
                 StealthState.Detected => _config.DetectedColor,
-                StealthState.Compromised => _config.CompromisedColor,
+                StealthState.Compromised => Color.red, // TODO: Add CompromisedColor to StealthUIConfig
                 _ => Color.white
             };
 
@@ -389,7 +393,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
 
         #region Alert System UI
 
-        private void UpdateAlertLevelDisplay(AlertLevel alertLevel)
+        private void UpdateAlertLevelDisplay(AIAlertLevel alertLevel)
         {
             if (_alertLevelAnimation != null)
             {
@@ -400,7 +404,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
             _currentAlertLevel = alertLevel;
         }
 
-        private IEnumerator AnimateAlertLevel(AlertLevel alertLevel)
+        private IEnumerator AnimateAlertLevel(AIAlertLevel alertLevel)
         {
             // Update alert text
             if (_alertLevelText != null)
@@ -435,7 +439,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
             }
 
             // Trigger particle effects for high alert
-            if (alertLevel >= AlertLevel.Alert && _alertEffects != null)
+            if (alertLevel >= AIAlertLevel.Alert && _alertEffects != null)
             {
                 _alertEffects.Play();
             }
@@ -585,7 +589,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
             _completedTutorialSteps = 0;
             
             // Start tutorial if enabled
-            if (_config.AutoStartTutorial)
+            // TODO: Add AutoStartTutorial property to StealthUIConfig
+            if (true)
             {
                 StartCoroutine(DelayedTutorialStart());
             }
@@ -818,31 +823,31 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
                 StealthState.Concealed => _config.ConcealedColor,
                 StealthState.Visible => _config.VisibleColor,
                 StealthState.Detected => _config.DetectedColor,
-                StealthState.Compromised => _config.CompromisedColor,
+                StealthState.Compromised => Color.red, // TODO: Add CompromisedColor to StealthUIConfig
                 _ => Color.white
             };
         }
 
-        private string GetAlertLevelDisplayText(AlertLevel level)
+        private string GetAlertLevelDisplayText(AIAlertLevel level)
         {
             return level switch
             {
-                AlertLevel.Relaxed => "Relaxed",
-                AlertLevel.Suspicious => "Suspicious",
-                AlertLevel.Investigating => "Investigating",
-                AlertLevel.Alert => "Alert!",
+                AIAlertLevel.Unaware => "Unaware",
+                AIAlertLevel.Suspicious => "Suspicious",
+                AIAlertLevel.Investigating => "Investigating",
+                AIAlertLevel.Alert => "Alert!",
                 _ => "Unknown"
             };
         }
 
-        private Color GetAlertLevelColor(AlertLevel level)
+        private Color GetAlertLevelColor(AIAlertLevel level)
         {
             return level switch
             {
-                AlertLevel.Relaxed => Color.green,
-                AlertLevel.Suspicious => Color.yellow,
-                AlertLevel.Investigating => Color.orange,
-                AlertLevel.Alert => Color.red,
+                AIAlertLevel.Unaware => Color.green,
+                AIAlertLevel.Suspicious => Color.yellow,
+                AIAlertLevel.Investigating => new Color(1f, 0.5f, 0f), // Orange
+                AIAlertLevel.Alert => Color.red,
                 _ => Color.white
             };
         }
@@ -854,7 +859,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
         public void OnStealthDetectionEvent(StealthDetectionData detectionData)
         {
             // Handle detection event updates
-            if (detectionData.IsConcealment)
+            // TODO: Add IsConcealment property to StealthDetectionData
+            if (false)
             {
                 // Player found concealment
                 UpdateEnvironmentalIndicators();
@@ -899,7 +905,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
             if (active && !_isTutorialActive)
             {
                 PrepareTutorialContent();
-                if (_config.AutoStartTutorial)
+                // TODO: Add AutoStartTutorial property to StealthUIConfig
+                if (true)
                     StartTutorial();
             }
         }
@@ -932,7 +939,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
 
         private void LogDebug(string message)
         {
-            if (_config != null && _config.EnableDebugLogs)
+            // TODO: Add EnableDebugLogs property to StealthUIConfig
+            if (_config != null && false)
             {
                 Debug.Log($"[StealthUIManager] {message}");
             }

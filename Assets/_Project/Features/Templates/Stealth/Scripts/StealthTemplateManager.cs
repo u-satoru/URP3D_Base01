@@ -2,6 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Features.Templates.Stealth.Configuration;
+using asterivo.Unity60.Features.Templates.Stealth.Mechanics;
+using asterivo.Unity60.Features.Templates.Stealth.AI;
+using asterivo.Unity60.Features.Templates.Stealth.Environment;
+using asterivo.Unity60.Features.Templates.Stealth.UI;
+using asterivo.Unity60.Features.Templates.Stealth.Events;
 
 namespace asterivo.Unity60.Features.Templates.Stealth
 {
@@ -36,11 +42,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         private readonly Dictionary<string, GameEvent> _eventChannels = new();
 
         // Performance Monitoring
-        private StealthPerformanceMonitor _performanceMonitor;
-        
+        // TODO: Implement StealthPerformanceMonitor for performance monitoring
+        // private StealthPerformanceMonitor _performanceMonitor;
+
         // Learn & Grow System Integration
-        private StealthTutorialSystem _tutorialSystem;
-        private StealthProgressionTracker _progressionTracker;
+        // TODO: Implement StealthTutorialSystem and StealthProgressionTracker for Learn & Grow value
+        // private StealthTutorialSystem _tutorialSystem;
+        // private StealthProgressionTracker _progressionTracker;
         #endregion
 
         #region Template State Management
@@ -119,11 +127,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             }
 
             // Performance monitoring
-            _performanceMonitor = GetOrCreateSubsystem<StealthPerformanceMonitor>();
+            // TODO: Initialize StealthPerformanceMonitor when implemented
+            // _performanceMonitor = GetOrCreateSubsystem<StealthPerformanceMonitor>();
 
             // Learn & Grow systems
-            _tutorialSystem = GetOrCreateSubsystem<StealthTutorialSystem>();
-            _progressionTracker = GetOrCreateSubsystem<StealthProgressionTracker>();
+            // TODO: Initialize StealthTutorialSystem and StealthProgressionTracker when implemented
+            // _tutorialSystem = GetOrCreateSubsystem<StealthTutorialSystem>();
+            // _progressionTracker = GetOrCreateSubsystem<StealthProgressionTracker>();
 
             IsInitialized = true;
             Debug.Log("StealthTemplateManager: All subsystems initialized successfully.");

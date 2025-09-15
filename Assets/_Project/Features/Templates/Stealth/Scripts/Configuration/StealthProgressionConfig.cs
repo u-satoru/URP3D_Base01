@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace asterivo.Unity60.Features.Templates.Stealth
+namespace asterivo.Unity60.Features.Templates.Stealth.Configuration
 {
     /// <summary>
     /// Layer 1: ステルス習熟度設定
@@ -89,7 +89,6 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         [Tooltip("マイルストーン自動記録")]
         public bool EnableMilestoneAutoRecording = true;
 
-        [Header("Skill Categories")]
         [System.Serializable]
         public class SkillCategory
         {

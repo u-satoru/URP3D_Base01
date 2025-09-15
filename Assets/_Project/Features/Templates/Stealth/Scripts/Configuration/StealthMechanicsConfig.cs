@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace asterivo.Unity60.Features.Templates.Stealth
+namespace asterivo.Unity60.Features.Templates.Stealth.Configuration
 {
     /// <summary>
     /// Layer 1: ステルスメカニクス設定

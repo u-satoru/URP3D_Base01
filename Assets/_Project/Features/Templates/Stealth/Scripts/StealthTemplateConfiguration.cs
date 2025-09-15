@@ -1,5 +1,6 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Features.Templates.Stealth.Configuration;
 
 namespace asterivo.Unity60.Features.Templates.Stealth
 {

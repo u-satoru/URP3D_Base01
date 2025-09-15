@@ -1,15 +1,15 @@
 [Licensing::Module] Trying to connect to existing licensing client channel...
-[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-15T10:40:56.6146078Z"
+[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-15T10:25:10.0484061Z"
 [Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 26648, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
 [Licensing::Module] Error: LicensingClient has failed validation; ignoring
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.17.1+ae67fbc
-  Session Id:              4237a511449a423b8a42dba43d75469b
+  Session Id:              313b15c234004ae28bcb5857ffb4bdf2
   Correlation Id:          27ba378d00f61906260636ceec280eb9
-  External correlation Id: 4453273114213355694
+  External correlation Id: 7859114568305737518
   Machine Id:              6v8irZboPhn9pIeIA+kbS+sqP0M=
-[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.02s, handshake: 0.05s)
-[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-15T10:40:56.6826283Z"
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.03s, handshake: 0.06s)
+[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-15T10:25:10.1341374Z"
 [Licensing::Module] Error: Access token is unavailable; failed to update
 [Licensing::Client] Successfully updated license
 Built from '6000.0/staging' branch; Version is '6000.0.42f1 (feb9a7235030) revision 16693671'; Using compiler version '193933523'; Build Type 'Release'
@@ -26,7 +26,7 @@ D:\UnityProjects\URP3D_Base01
 -batchmode
 -quit
 -logFile
-D:\UnityProjects\URP3D_Base01\Assets\_Project\Tests\Results\compile-verification.txt
+D:\UnityProjects\URP3D_Base01\Assets\_Project\Tests\Results\stealth-configuration-final-fix-verification.txt
 Successfully changed project path to: D:\UnityProjects\URP3D_Base01
 D:/UnityProjects/URP3D_Base01
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -64,22 +64,22 @@ D:/UnityProjects/URP3D_Base01
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [43568]  Target information:
+Player connection [72816]  Target information:
 
-Player connection [43568]  * "[IP] 172.28.160.1 [Port] 55504 [Flags] 2 [Guid] 749608167 [EditorId] 749608167 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [72816]  * "[IP] 172.28.160.1 [Port] 55504 [Flags] 2 [Guid] 347116434 [EditorId] 347116434 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [43568]  * "[IP] 172.17.80.1 [Port] 55504 [Flags] 2 [Guid] 749608167 [EditorId] 749608167 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [72816]  * "[IP] 172.17.80.1 [Port] 55504 [Flags] 2 [Guid] 347116434 [EditorId] 347116434 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [43568]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 749608167 [EditorId] 749608167 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [72816]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 347116434 [EditorId] 347116434 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [43568]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 749608167 [EditorId] 749608167 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [72816]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 347116434 [EditorId] 347116434 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [43568] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [43568] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [72816] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [72816] Host joined alternative multi-casting on [225.0.0.222:34997]...
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
 [Physics::Module] Id: 0xdecafbad
-[Package Manager] Connected to IPC stream "Upm-79656" after 0.2 seconds.
+[Package Manager] Connected to IPC stream "Upm-11408" after 0.2 seconds.
 Library Redirect Path: Library/
 [Package Manager] Restoring resolved packages state from cache
 [Licensing::Client] Successfully resolved entitlement details
@@ -159,8 +159,8 @@ Library Redirect Path: Library/
 [Physics::Module] Threading Mode: Multi-Threaded
 [Subsystems] No new subsystems found in resolved package list.
 Package Manager log level set to [2]
-[Package Manager] Done registering packages in 0.30 seconds
-Refreshing native plugins compatible for Editor in 2.13 ms, found 3 plugins.
+[Package Manager] Done registering packages in 0.29 seconds
+Refreshing native plugins compatible for Editor in 3.19 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.0.42f1 (feb9a7235030)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Resources/UnitySubsystems
@@ -177,7 +177,7 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56656
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56408
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 ImportWorker Server TCP listen port: 0
@@ -190,53 +190,52 @@ Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 [Licensing::Client] Successfully resolved entitlement details
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
-Registered in 0.056738 seconds.
-- Loaded All Assemblies, in  0.578 seconds
+Registered in 0.056482 seconds.
+- Loaded All Assemblies, in  0.628 seconds
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 [usbmuxd] Send listen message
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 1018 ms
+Android Extension - Scanning For ADB Devices 1142 ms
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.416 seconds
-Domain Reload Profiling: 1988ms
-	BeginReloadAssembly (191ms)
+- Finished resetting the current domain, in  1.567 seconds
+Domain Reload Profiling: 2190ms
+	BeginReloadAssembly (237ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (47ms)
+	RebuildCommonClasses (46ms)
 	RebuildNativeTypeToScriptingClass (15ms)
-	initialDomainReloadingComplete (122ms)
-	LoadAllAssembliesAndSetupDomain (197ms)
-		LoadAssemblies (186ms)
+	initialDomainReloadingComplete (118ms)
+	LoadAllAssembliesAndSetupDomain (207ms)
+		LoadAssemblies (234ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (192ms)
-			TypeCache.Refresh (190ms)
-				TypeCache.ScanAssembly (176ms)
+		AnalyzeDomain (202ms)
+			TypeCache.Refresh (200ms)
+				TypeCache.ScanAssembly (182ms)
 			BuildScriptInfoCaches (0ms)
 			ResolveRequiredComponents (1ms)
-	FinalizeReload (1417ms)
+	FinalizeReload (1567ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1377ms)
+		SetupLoadedEditorAssemblies (1526ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (1130ms)
-			SetLoadedEditorAssemblies (5ms)
-			BeforeProcessingInitializeOnLoad (52ms)
-			ProcessInitializeOnLoadAttributes (122ms)
-			ProcessInitializeOnLoadMethodAttributes (67ms)
+			InitializePlatformSupportModulesInManaged (1264ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (53ms)
+			ProcessInitializeOnLoadAttributes (130ms)
+			ProcessInitializeOnLoadMethodAttributes (74ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
 		AwakeInstancesAfterBackupRestoration (0ms)
 [Licensing::Client] Successfully resolved entitlement details
 Application.AssetDatabase Initial Refresh Start
-'Assets/_Project/Tests/Results/compile-verification.txt' Amount of processed bytes '20612' does not match file size '20500'
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
 [ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
@@ -269,7 +268,7 @@ info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 45.2425ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 47.2861ms
 Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
 WorkingDir: D:/UnityProjects/URP3D_Base01
 info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
@@ -287,14 +286,87 @@ info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 100.9252ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 114.9005ms
 DisplayProgressbar: Compiling Scripts
 ## Script Compilation Error for: Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.dll (+2 others)
 ## CmdLine: "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.rsp2"
 ## Output:
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(24,34): error CS0246: The type or namespace name 'StealthTemplateConfiguration' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(536,22): error CS0051: Inconsistent accessibility: parameter type 'StealthLearnAndGrowIntegrator.StealthSkill' is less accessible than method 'StealthLearnAndGrowIntegrator.GetSkillProgress(StealthLearnAndGrowIntegrator.StealthSkill)'
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(35,16): error CS0246: The type or namespace name 'StealthMechanicsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(36,16): error CS0246: The type or namespace name 'StealthAIConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(37,16): error CS0246: The type or namespace name 'StealthEnvironmentConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(38,16): error CS0246: The type or namespace name 'StealthAudioConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(39,16): error CS0246: The type or namespace name 'StealthUIConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(40,16): error CS0246: The type or namespace name 'StealthTutorialConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(41,16): error CS0246: The type or namespace name 'StealthProgressionConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(42,16): error CS0246: The type or namespace name 'StealthPerformanceConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(15,34): error CS0246: The type or namespace name 'StealthMechanicsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(16,34): error CS0246: The type or namespace name 'StealthAIConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(17,34): error CS0246: The type or namespace name 'StealthEnvironmentConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(72,52): error CS0104: 'AlertLevel' is an ambiguous reference between 'asterivo.Unity60.Features.AI.Audio.AlertLevel' and 'asterivo.Unity60.Core.Data.AlertLevel'
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(18,34): error CS0246: The type or namespace name 'StealthAudioConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(19,34): error CS0246: The type or namespace name 'StealthUIConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(22,34): error CS0246: The type or namespace name 'StealthTutorialConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(23,34): error CS0246: The type or namespace name 'StealthProgressionConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(26,34): error CS0246: The type or namespace name 'StealthPerformanceConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Configuration\StealthProgressionConfig.cs(92,10): error CS0592: Attribute 'Header' is not valid on this declaration type. It is only valid on 'property, indexer, field' declarations.
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(27,17): error CS0246: The type or namespace name 'StealthMechanicsController' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(28,17): error CS0246: The type or namespace name 'StealthAICoordinator' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(29,17): error CS0246: The type or namespace name 'StealthEnvironmentManager' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(30,17): error CS0246: The type or namespace name 'StealthUIManager' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(39,17): error CS0246: The type or namespace name 'StealthPerformanceMonitor' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(42,17): error CS0246: The type or namespace name 'StealthTutorialSystem' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(43,17): error CS0246: The type or namespace name 'StealthProgressionTracker' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(25,34): error CS0246: The type or namespace name 'StealthDetectionEventChannel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(393,46): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(404,47): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(23,34): error CS0246: The type or namespace name 'StealthTemplateConfiguration' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(80,17): error CS0246: The type or namespace name 'StealthUIManager' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(827,49): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(839,42): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(67,34): error CS0246: The type or namespace name 'StealthDetectionEventChannel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(79,17): error CS0246: The type or namespace name 'StealthMechanicsController' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(80,17): error CS0246: The type or namespace name 'StealthAICoordinator' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(85,17): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
 
-ExitCode: 3 Duration: 0s548ms
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(536,22): error CS0051: Inconsistent accessibility: parameter type 'StealthLearnAndGrowIntegrator.StealthSkill' is less accessible than method 'StealthLearnAndGrowIntegrator.GetSkillProgress(StealthLearnAndGrowIntegrator.StealthSkill)'
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(35,16): error CS0246: The type or namespace name 'StealthMechanicsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(36,16): error CS0246: The type or namespace name 'StealthAIConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(37,16): error CS0246: The type or namespace name 'StealthEnvironmentConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(38,16): error CS0246: The type or namespace name 'StealthAudioConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(39,16): error CS0246: The type or namespace name 'StealthUIConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(40,16): error CS0246: The type or namespace name 'StealthTutorialConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(41,16): error CS0246: The type or namespace name 'StealthProgressionConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(42,16): error CS0246: The type or namespace name 'StealthPerformanceConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(15,34): error CS0246: The type or namespace name 'StealthMechanicsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(16,34): error CS0246: The type or namespace name 'StealthAIConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(17,34): error CS0246: The type or namespace name 'StealthEnvironmentConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(72,52): error CS0104: 'AlertLevel' is an ambiguous reference between 'asterivo.Unity60.Features.AI.Audio.AlertLevel' and 'asterivo.Unity60.Core.Data.AlertLevel'
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(18,34): error CS0246: The type or namespace name 'StealthAudioConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(19,34): error CS0246: The type or namespace name 'StealthUIConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(22,34): error CS0246: The type or namespace name 'StealthTutorialConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(23,34): error CS0246: The type or namespace name 'StealthProgressionConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(26,34): error CS0246: The type or namespace name 'StealthPerformanceConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Configuration\StealthProgressionConfig.cs(92,10): error CS0592: Attribute 'Header' is not valid on this declaration type. It is only valid on 'property, indexer, field' declarations.
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(27,17): error CS0246: The type or namespace name 'StealthMechanicsController' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(28,17): error CS0246: The type or namespace name 'StealthAICoordinator' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(29,17): error CS0246: The type or namespace name 'StealthEnvironmentManager' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(30,17): error CS0246: The type or namespace name 'StealthUIManager' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(39,17): error CS0246: The type or namespace name 'StealthPerformanceMonitor' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(42,17): error CS0246: The type or namespace name 'StealthTutorialSystem' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(43,17): error CS0246: The type or namespace name 'StealthProgressionTracker' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(25,34): error CS0246: The type or namespace name 'StealthDetectionEventChannel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(393,46): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(404,47): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(23,34): error CS0246: The type or namespace name 'StealthTemplateConfiguration' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(80,17): error CS0246: The type or namespace name 'StealthUIManager' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(827,49): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(839,42): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(67,34): error CS0246: The type or namespace name 'StealthDetectionEventChannel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(79,17): error CS0246: The type or namespace name 'StealthMechanicsController' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(80,17): error CS0246: The type or namespace name 'StealthAICoordinator' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(85,17): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+ExitCode: 3 Duration: 0s834ms
 [1073/1429  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
 [1413/1429  0s] Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.dll (+2 others)
 ##### CommandLine
@@ -795,10 +867,80 @@ DOTNET_MULTILEVEL_LOOKUP=0
 ##### ExitCode
 1
 ##### Output
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(24,34): error CS0246: The type or namespace name 'StealthTemplateConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-*** Tundra build failed (0.50 seconds), 2 items updated, 1429 evaluated
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(24,34): error CS0246: The type or namespace name 'StealthTemplateConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-AssetDatabase: script compilation time: 1.094781s
-'Assets/_Project/Tests/Results/compile-verification.txt' Amount of processed bytes '72249' does not match file size '26287'
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(536,22): error CS0051: Inconsistent accessibility: parameter type 'StealthLearnAndGrowIntegrator.StealthSkill' is less accessible than method 'StealthLearnAndGrowIntegrator.GetSkillProgress(StealthLearnAndGrowIntegrator.StealthSkill)'
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(35,16): error CS0246: The type or namespace name 'StealthMechanicsConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(36,16): error CS0246: The type or namespace name 'StealthAIConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(37,16): error CS0246: The type or namespace name 'StealthEnvironmentConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(38,16): error CS0246: The type or namespace name 'StealthAudioConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(39,16): error CS0246: The type or namespace name 'StealthUIConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(40,16): error CS0246: The type or namespace name 'StealthTutorialConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(41,16): error CS0246: The type or namespace name 'StealthProgressionConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(42,16): error CS0246: The type or namespace name 'StealthPerformanceConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(15,34): error CS0246: The type or namespace name 'StealthMechanicsConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(16,34): error CS0246: The type or namespace name 'StealthAIConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(17,34): error CS0246: The type or namespace name 'StealthEnvironmentConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(72,52): error CS0104: 'AlertLevel' is an ambiguous reference between 'asterivo.Unity60.Features.AI.Audio.AlertLevel' and 'asterivo.Unity60.Core.Data.AlertLevel'
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(18,34): error CS0246: The type or namespace name 'StealthAudioConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(19,34): error CS0246: The type or namespace name 'StealthUIConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(22,34): error CS0246: The type or namespace name 'StealthTutorialConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(23,34): error CS0246: The type or namespace name 'StealthProgressionConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateConfiguration.cs(26,34): error CS0246: The type or namespace name 'StealthPerformanceConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Configuration\StealthProgressionConfig.cs(92,10): error CS0592: Attribute 'Header' is not valid on this declaration type. It is only valid on 'property, indexer, field' declarations.
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(27,17): error CS0246: The type or namespace name 'StealthMechanicsController' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(28,17): error CS0246: The type or namespace name 'StealthAICoordinator' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(29,17): error CS0246: The type or namespace name 'StealthEnvironmentManager' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(30,17): error CS0246: The type or namespace name 'StealthUIManager' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(39,17): error CS0246: The type or namespace name 'StealthPerformanceMonitor' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(42,17): error CS0246: The type or namespace name 'StealthTutorialSystem' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(43,17): error CS0246: The type or namespace name 'StealthProgressionTracker' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(25,34): error CS0246: The type or namespace name 'StealthDetectionEventChannel' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(393,46): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(404,47): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(23,34): error CS0246: The type or namespace name 'StealthTemplateConfiguration' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(80,17): error CS0246: The type or namespace name 'StealthUIManager' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(827,49): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(839,42): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(67,34): error CS0246: The type or namespace name 'StealthDetectionEventChannel' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(79,17): error CS0246: The type or namespace name 'StealthMechanicsController' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(80,17): error CS0246: The type or namespace name 'StealthAICoordinator' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(85,17): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+*** Tundra build failed (0.71 seconds), 2 items updated, 1429 evaluated
+AssetDatabase: script compilation time: 1.442464s
 Scripts have compiler errors.
 Exiting without the bug reporter. Application will terminate with return code 1

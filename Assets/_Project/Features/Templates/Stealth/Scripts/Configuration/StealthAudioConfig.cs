@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace asterivo.Unity60.Features.Templates.Stealth
+namespace asterivo.Unity60.Features.Templates.Stealth.Configuration
 {
     /// <summary>
     /// Layer 1: ステルスオーディオ設定
