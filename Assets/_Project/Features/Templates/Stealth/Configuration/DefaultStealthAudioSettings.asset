@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8, type: 3}
+  m_Name: DefaultStealthAudioSettings
+  enable3DSpatialAudio: 1
+  globalVolumeMultiplier: 1.0
+  stealthVolumeMultiplier: 0.7
+  environmentalMaskingStrength: 0.8
+  materialProfiles:
+  - materialName: Carpet
+    footstepVolumeMultiplier: 0.2
+    impactSoundMultiplier: 0.1
+    echoReduction: 0.8
+    description: Soft carpet surface, very quiet footsteps
+  - materialName: Wood
+    footstepVolumeMultiplier: 1.0
+    impactSoundMultiplier: 1.2
+    echoReduction: 0.3
+    description: Wooden floors, normal footstep volume with some echo
+  - materialName: Metal
+    footstepVolumeMultiplier: 1.8
+    impactSoundMultiplier: 2.0
+    echoReduction: 0.1
+    description: Metal surfaces, loud and echoing footsteps
+  - materialName: Concrete
+    footstepVolumeMultiplier: 1.5
+    impactSoundMultiplier: 1.5
+    echoReduction: 0.2
+    description: Hard concrete, loud footsteps with reverb
+  - materialName: Grass
+    footstepVolumeMultiplier: 0.4
+    impactSoundMultiplier: 0.3
+    echoReduction: 0.9
+    description: Natural grass, muffled and quiet movement
+  - materialName: Gravel
+    footstepVolumeMultiplier: 2.2
+    impactSoundMultiplier: 1.8
+    echoReduction: 0.6
+    description: Loose gravel, very loud and crunchy footsteps
+  auditoryMaskingSettings:
+    enableEnvironmentalMasking: 1
+    rainMaskingStrength: 0.7
+    windMaskingStrength: 0.4
+    machineryMaskingStrength: 0.8
+    crowdMaskingStrength: 0.6
+    musicMaskingStrength: 0.5
+    minimumMaskingThreshold: 0.1
+    maximumMaskingThreshold: 0.9
+  npcAuditorySensorIntegration:
+    enableNPCHearing: 1
+    baseHearingRange: 15.0
+    hearingRangeMultiplier: 1.0
+    directionalHearingAccuracy: 0.8
+    soundLocalizationDelay: 1.5
+    falsePositiveRate: 0.05
+    attentionDecayRate: 0.1
+  stealthAudioFeedback:
+    enablePlayerAudioFeedback: 1
+    footstepFeedbackVolume: 0.3
+    environmentFeedbackVolume: 0.5
+    detectionWarningVolume: 0.8
+    heartbeatIntensityMultiplier: 1.2
+    breathingVolumeMultiplier: 0.6
+    tensionMusicVolume: 0.4
+  debugAudioSettings:
+    enableAudioDebugVisualization: 0
+    showSoundRanges: 0
+    showMaskingEffects: 0
+    audioLogLevel: 1
+    enableAudioMetrics: 0

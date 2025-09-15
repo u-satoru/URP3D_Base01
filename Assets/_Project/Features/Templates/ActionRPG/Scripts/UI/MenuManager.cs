@@ -104,7 +104,18 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.UI
             
             Debug.Log("[MenuManager] メニューシステム初期化完了");
         }
-        
+
+        /// <summary>
+        /// 外部からのメニューマネージャー初期化
+        /// </summary>
+        public void Initialize()
+        {
+            InitializeMenuSystem();
+            SetupButtonListeners();
+            SetupSettingsUI();
+            Debug.Log("[MenuManager] External initialization completed");
+        }
+
         /// <summary>
         /// ボタンリスナー設定
         /// </summary>
@@ -192,7 +203,7 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.UI
             for (int i = 0; i < resolutions.Length; i++)
             {
                 var resolution = resolutions[i];
-                string option = $"{resolution.width}x{resolution.height}@{resolution.refreshRate}Hz";
+                string option = $"{resolution.width}x{resolution.height}@{resolution.refreshRateRatio.value:0}Hz";
                 options.Add(option);
                 
                 if (resolution.width == Screen.currentResolution.width && 
@@ -430,6 +441,36 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.UI
         {
             // 時間制御リセット
             Time.timeScale = 1f;
+        }
+
+        /// <summary>
+        /// メインメニュー表示
+        /// </summary>
+        public void ShowMainMenu()
+        {
+            SetMenuState(MenuState.MainMenu);
+            Debug.Log("[MenuManager] Main menu shown");
+        }
+
+        /// <summary>
+        /// 一時停止メニュー表示
+        /// </summary>
+        public void ShowPauseMenu()
+        {
+            SetMenuState(MenuState.PauseMenu);
+            Debug.Log("[MenuManager] Pause menu shown");
+        }
+
+        /// <summary>
+        /// ゲームオーバーメニュー表示
+        /// </summary>
+        public void ShowGameOverMenu()
+        {
+            // ゲームオーバー用のUIがない場合はメインメニューを表示
+            SetMenuState(MenuState.MainMenu);
+            Debug.Log("[MenuManager] Game over menu shown (using main menu)");
+
+            // TODO: 専用のゲームオーバーパネルを作成した場合はここで処理
         }
     }
 }

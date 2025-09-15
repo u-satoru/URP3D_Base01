@@ -5,6 +5,7 @@ using asterivo.Unity60.Core.Audio.Controllers;
 using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Shared;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Audio.Services;
@@ -330,7 +331,7 @@ namespace asterivo.Unity60.Core.Audio
                     }
                     catch (System.Exception ex)
                     {
-                        EventLogger.LogErrorStatic($"[AudioUpdateCoordinator] Error updating {updatable.GetType().Name}: {ex.Message}");
+                        ServiceLocator.GetService<IEventLogger>().LogError($"[AudioUpdateCoordinator] Error updating {updatable.GetType().Name}: {ex.Message}");
                     }
                 }
             }
@@ -551,7 +552,7 @@ namespace asterivo.Unity60.Core.Audio
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[AudioUpdateCoordinator] Failed to get audio state from service: {ex.Message}");
+                    ServiceLocator.GetService<IEventLogger>().LogError($"[AudioUpdateCoordinator] Failed to get audio state from service: {ex.Message}");
                 }
             }
             else
@@ -576,7 +577,7 @@ namespace asterivo.Unity60.Core.Audio
                     }
                     catch (System.Exception ex)
                     {
-                        EventLogger.LogErrorStatic($"[AudioUpdateCoordinator] Failed to get audio state from AudioManager: {ex.Message}");
+                        ServiceLocator.GetService<IEventLogger>().LogError($"[AudioUpdateCoordinator] Failed to get audio state from AudioManager: {ex.Message}");
                     }
                 }
             }
@@ -712,7 +713,7 @@ namespace asterivo.Unity60.Core.Audio
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[AudioUpdateCoordinator] Failed to get IAudioService from ServiceLocator: {ex.Message}");
+                    ServiceLocator.GetService<IEventLogger>().LogError($"[AudioUpdateCoordinator] Failed to get IAudioService from ServiceLocator: {ex.Message}");
                 }
             }
             return null;

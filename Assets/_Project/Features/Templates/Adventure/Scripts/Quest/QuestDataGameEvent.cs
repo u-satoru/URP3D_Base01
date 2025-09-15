@@ -13,5 +13,5 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Quest
     /// - ScriptableObjectによるデータ駆動設計
     /// </summary>
     [CreateAssetMenu(fileName = "New QuestData Event", menuName = "asterivo.Unity60/Templates/Adventure/QuestData Event")]
-    public class QuestDataGameEvent : GenericGameEvent<QuestData> { }
+    public class QuestDataGameEvent : GameEvent<QuestData> { }
 }

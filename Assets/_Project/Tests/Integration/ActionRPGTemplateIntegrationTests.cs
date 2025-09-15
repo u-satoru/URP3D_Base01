@@ -4,8 +4,8 @@ using UnityEngine.TestTools;
 using NUnit.Framework;
 using asterivo.Unity60.Features.Templates.ActionRPG;
 using asterivo.Unity60.Features.Templates.ActionRPG.Character;
-using asterivo.Unity60.Features.Templates.ActionRPG.Equipment;
 using asterivo.Unity60.Features.Templates.ActionRPG.Combat;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Services;
 
 namespace asterivo.Unity60.Tests.Integration
@@ -30,8 +30,8 @@ namespace asterivo.Unity60.Tests.Integration
             // Create player object with required components
             playerObject = new GameObject("Player");
             var characterProgression = playerObject.AddComponent<CharacterProgressionManager>();
-            var inventoryManager = playerObject.AddComponent<InventoryManager>();
-            var equipmentManager = playerObject.AddComponent<EquipmentManager>();
+            var inventoryManager = playerObject.AddComponent<asterivo.Unity60.Features.Templates.ActionRPG.Equipment.InventoryManager>();
+            var equipmentManager = playerObject.AddComponent<asterivo.Unity60.Features.Templates.ActionRPG.Equipment.EquipmentManager>();
             var combatManager = playerObject.AddComponent<CombatManager>();
             var health = playerObject.AddComponent<Health>();
             var statusEffectManager = playerObject.AddComponent<StatusEffectManager>();
@@ -69,8 +69,8 @@ namespace asterivo.Unity60.Tests.Integration
             // When: Template initializes
             // Then: All systems should be ready
             var characterProgression = playerObject.GetComponent<CharacterProgressionManager>();
-            var inventory = playerObject.GetComponent<InventoryManager>();
-            var equipment = playerObject.GetComponent<EquipmentManager>();
+            var inventory = playerObject.GetComponent<asterivo.Unity60.Features.Templates.ActionRPG.Equipment.InventoryManager>();
+            var equipment = playerObject.GetComponent<asterivo.Unity60.Features.Templates.ActionRPG.Equipment.EquipmentManager>();
             var combat = playerObject.GetComponent<CombatManager>();
 
             Assert.IsNotNull(characterProgression, "Character Progression Manager should be initialized");
@@ -79,9 +79,9 @@ namespace asterivo.Unity60.Tests.Integration
             Assert.IsNotNull(combat, "Combat Manager should be initialized");
 
             // Test Service Locator registration
-            Assert.IsNotNull(ServiceLocator.Instance.GetService<InventoryManager>(),
+            Assert.IsNotNull(ServiceLocator.GetService<asterivo.Unity60.Features.Templates.ActionRPG.Equipment.InventoryManager>(),
                 "Inventory Manager should be registered with ServiceLocator");
-            Assert.IsNotNull(ServiceLocator.Instance.GetService<EquipmentManager>(),
+            Assert.IsNotNull(ServiceLocator.GetService<asterivo.Unity60.Features.Templates.ActionRPG.Equipment.EquipmentManager>(),
                 "Equipment Manager should be registered with ServiceLocator");
         }
 
@@ -101,7 +101,7 @@ namespace asterivo.Unity60.Tests.Integration
             var initialLevel = characterProgression.CurrentLevel;
             var initialMaxHealth = health.MaxHealth;
 
-            characterProgression.GainExperience(1000); // Should trigger level up
+            characterProgression.AddExperience(1000); // Should trigger level up
 
             yield return new WaitForSeconds(0.1f);
 
@@ -118,8 +118,8 @@ namespace asterivo.Unity60.Tests.Integration
         [UnityTest]
         public IEnumerator Equipment_IntegratesWithInventoryAndStats()
         {
-            var inventory = playerObject.GetComponent<InventoryManager>();
-            var equipment = playerObject.GetComponent<EquipmentManager>();
+            var inventory = playerObject.GetComponent<asterivo.Unity60.Features.Templates.ActionRPG.Equipment.InventoryManager>();
+            var equipment = playerObject.GetComponent<asterivo.Unity60.Features.Templates.ActionRPG.Equipment.EquipmentManager>();
             var health = playerObject.GetComponent<Health>();
 
             yield return new WaitForSeconds(0.5f);
@@ -162,7 +162,7 @@ namespace asterivo.Unity60.Tests.Integration
             yield return new WaitForSeconds(0.5f);
 
             var initialHealth = health.CurrentHealth;
-            var testDamage = 20.0f;
+            var testDamage = 20;
 
             // When: Take damage through combat system
             health.TakeDamage(testDamage, playerObject);
@@ -182,7 +182,7 @@ namespace asterivo.Unity60.Tests.Integration
             yield return new WaitForSeconds(0.1f);
 
             // Verify status effect is active
-            Assert.IsTrue(statusEffects.HasStatusEffect(testStatusEffect.effectName),
+            Assert.IsTrue(statusEffects.HasEffect(testStatusEffect.effectName),
                 "Applied status effect should be active");
         }
 
@@ -193,8 +193,8 @@ namespace asterivo.Unity60.Tests.Integration
         public IEnumerator CompleteProgression_ExperienceToEquipmentFlow()
         {
             var characterProgression = playerObject.GetComponent<CharacterProgressionManager>();
-            var inventory = playerObject.GetComponent<InventoryManager>();
-            var equipment = playerObject.GetComponent<EquipmentManager>();
+            var inventory = playerObject.GetComponent<asterivo.Unity60.Features.Templates.ActionRPG.Equipment.InventoryManager>();
+            var equipment = playerObject.GetComponent<asterivo.Unity60.Features.Templates.ActionRPG.Equipment.EquipmentManager>();
 
             yield return new WaitForSeconds(0.5f);
 
@@ -203,7 +203,7 @@ namespace asterivo.Unity60.Tests.Integration
 
             // When: Complete progression flow
             // 1. Gain experience and level up
-            characterProgression.GainExperience(2000);
+            characterProgression.AddExperience(2000);
             yield return new WaitForSeconds(0.1f);
 
             // 2. Get better equipment
@@ -230,7 +230,7 @@ namespace asterivo.Unity60.Tests.Integration
         [UnityTest]
         public IEnumerator Performance_LargeInventoryOperations()
         {
-            var inventory = playerObject.GetComponent<InventoryManager>();
+            var inventory = playerObject.GetComponent<asterivo.Unity60.Features.Templates.ActionRPG.Equipment.InventoryManager>();
 
             yield return new WaitForSeconds(0.5f);
 
@@ -255,15 +255,15 @@ namespace asterivo.Unity60.Tests.Integration
 
         #region Helper Methods
 
-        private ItemData CreateTestWeapon()
+        private asterivo.Unity60.Features.Templates.ActionRPG.Equipment.ItemData CreateTestWeapon()
         {
-            var weapon = ScriptableObject.CreateInstance<ItemData>();
+            var weapon = ScriptableObject.CreateInstance<asterivo.Unity60.Features.Templates.ActionRPG.Equipment.ItemData>();
             weapon.itemName = "Test Sword";
-            weapon.itemType = ItemType.Weapon;
-            weapon.equipmentSlot = EquipmentSlot.MainHand;
+            weapon.itemType = asterivo.Unity60.Features.Templates.ActionRPG.Equipment.ItemType.Weapon;
+            weapon.equipmentSlot = asterivo.Unity60.Features.Templates.ActionRPG.Equipment.EquipmentSlot.MainHand;
             weapon.maxStackSize = 1;
             weapon.requiredLevel = 1;
-            weapon.stats = new EquipmentStats
+            weapon.stats = new asterivo.Unity60.Features.Templates.ActionRPG.Equipment.EquipmentStats
             {
                 attackPower = 25,
                 defense = 0,
@@ -273,11 +273,11 @@ namespace asterivo.Unity60.Tests.Integration
             return weapon;
         }
 
-        private ItemData CreateTestConsumable()
+        private asterivo.Unity60.Features.Templates.ActionRPG.Equipment.ItemData CreateTestConsumable()
         {
-            var consumable = ScriptableObject.CreateInstance<ItemData>();
+            var consumable = ScriptableObject.CreateInstance<asterivo.Unity60.Features.Templates.ActionRPG.Equipment.ItemData>();
             consumable.itemName = "Test Potion";
-            consumable.itemType = ItemType.Consumable;
+            consumable.itemType = asterivo.Unity60.Features.Templates.ActionRPG.Equipment.ItemType.Consumable;
             consumable.maxStackSize = 50;
             return consumable;
         }
@@ -310,14 +310,14 @@ namespace asterivo.Unity60.Tests.Integration
             field?.SetValue(manager, characterProgression);
         }
 
-        public static void SetInventoryManager(this ActionRPGTemplateManager manager, InventoryManager inventory)
+        public static void SetInventoryManager(this ActionRPGTemplateManager manager, asterivo.Unity60.Features.Templates.ActionRPG.Equipment.InventoryManager inventory)
         {
             var field = typeof(ActionRPGTemplateManager).GetField("inventoryManager",
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             field?.SetValue(manager, inventory);
         }
 
-        public static void SetEquipmentManager(this ActionRPGTemplateManager manager, EquipmentManager equipment)
+        public static void SetEquipmentManager(this ActionRPGTemplateManager manager, asterivo.Unity60.Features.Templates.ActionRPG.Equipment.EquipmentManager equipment)
         {
             var field = typeof(ActionRPGTemplateManager).GetField("equipmentManager",
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);

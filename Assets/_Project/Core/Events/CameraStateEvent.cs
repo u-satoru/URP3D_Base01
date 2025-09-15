@@ -24,7 +24,7 @@ namespace asterivo.Unity60.Core.Events
     /// カメラ状態変更イベント
     /// </summary>
     [CreateAssetMenu(fileName = "New Camera State Event", menuName = "asterivo.Unity60/Events/Camera State Event")]
-    public class CameraStateEvent : GenericGameEvent<CameraState>
+    public class CameraStateEvent : GameEvent<CameraState>
     {
     }
     

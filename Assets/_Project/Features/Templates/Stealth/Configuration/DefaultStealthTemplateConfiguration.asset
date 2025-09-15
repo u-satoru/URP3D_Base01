@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2, type: 3}
+  m_Name: DefaultStealthTemplateConfiguration
+  # Template Identity
+  templateName: Default Stealth Template
+  templateVersion: 1.0.0
+  templateDescription: Complete stealth gameplay template with Learn & Grow educational system, designed for 15-minute gameplay experience demonstrating core stealth mechanics from basic to advanced levels.
+  
+  # Core Configuration Settings (References to modular ScriptableObjects)
+  playerSettings: {fileID: 11400000, guid: DefaultStealthPlayerSettings_GUID, type: 2}
+  aiSettings: {fileID: 11400000, guid: DefaultStealthAISettings_GUID, type: 2}
+  audioSettings: {fileID: 11400000, guid: DefaultStealthAudioSettings_GUID, type: 2}
+  cameraSettings: {fileID: 11400000, guid: DefaultStealthCameraSettings_GUID, type: 2}
+  missionSettings: {fileID: 11400000, guid: DefaultStealthMissionSettings_GUID, type: 2}
+  learningSettings: {fileID: 11400000, guid: DefaultStealthLearningSettings_GUID, type: 2}
+  
+  # Template Meta Information
+  targetAudience: Unity developers (intermediate level) learning stealth game mechanics
+  estimatedLearningTime: 12.0  # hours (70% reduction from 40 hours to 12 hours)
+  difficultyLevel: 2  # 0=Beginner, 1=Novice, 2=Intermediate, 3=Advanced, 4=Expert
+  
+  # Learn & Grow Integration
+  enableLearnAndGrow: 1
+  learningCostReductionTarget: 0.7  # 70% reduction target
+  progressiveComplexity: 1
+  adaptiveDifficulty: 1
+  
+  # 15-Minute Gameplay Experience
+  targetGameplayDuration: 900.0  # 15 minutes in seconds
+  enableGameplayPhases: 1
+  phaseTransitionSmoothing: 1
+  allowPhaseSkipping: 1  # For advanced users
+  
+  # Quality Assurance Metrics
+  performanceTargets:
+    maxNPCCount: 50
+    targetFrameRate: 60.0
+    maxMemoryUsageMB: 512.0
+    maxLoadTimeSeconds: 30.0
+    audioLatencyMS: 50.0
+  
+  # Accessibility Features
+  accessibilitySupport:
+    colorblindFriendly: 1
+    hearingImpairedSupport: 1
+    reducedMotionOptions: 1
+    simplifiedControlsOption: 1
+    highContrastMode: 1
+    subtitleSupport: 1
+  
+  # Development Tools Integration
+  developmentFeatures:
+    enableDebugVisualization: 0  # Disabled in default template
+    enablePerformanceMetrics: 1
+    enableLearningAnalytics: 1
+    enableProgressTracking: 1
+    enableValidationTools: 1
+  
+  # Template Validation
+  validationSettings:
+    requireAllModularSettings: 1
+    validateGameplayFlow: 1
+    validatePerformanceTargets: 1
+    validateLearningObjectives: 1
+    validateAccessibilityCompliance: 1
+  
+  # Version Information and Compatibility
+  minimumUnityVersion: 6000.0.42f1
+  compatibleRenderPipeline: URP
+  requiredPackages:
+  - com.unity.cinemachine
+  - com.unity.inputsystem
+  - com.unity.ai.navigation
+  - com.unity.render-pipelines.universal
+  
+  # Template Assets References
+  sceneReferences:
+  - sceneName: StealthTemplate_Tutorial
+    sceneDescription: Tutorial phase - basic stealth mechanics learning
+    estimatedDuration: 180.0
+    difficultyLevel: 0
+  - sceneName: StealthTemplate_Practice
+    sceneDescription: Practice phase - intermediate stealth challenges
+    estimatedDuration: 300.0
+    difficultyLevel: 1
+  - sceneName: StealthTemplate_Challenge
+    sceneDescription: Challenge phase - advanced stealth mastery test
+    estimatedDuration: 420.0
+    difficultyLevel: 2
+  
+  # Prefab References for Template Instantiation
+  prefabReferences:
+  - prefabPath: Templates/Stealth/Prefabs/StealthPlayer
+    description: Fully configured stealth player controller
+  - prefabPath: Templates/Stealth/Prefabs/StealthGuard_Basic
+    description: Basic patrolling guard with NPCVisualSensor
+  - prefabPath: Templates/Stealth/Prefabs/StealthGuard_Alert
+    description: Advanced guard with enhanced detection capabilities
+  - prefabPath: Templates/Stealth/Prefabs/StealthEnvironment_Props
+    description: Interactive environmental objects for stealth gameplay
+  
+  # Success Criteria for Learn & Grow Value
+  successCriteria:
+    learningCompletionRate: 0.9  # 90% of users complete learning objectives
+    skillRetentionRate: 0.8      # 80% skill retention after 1 week
+    satisfactionScore: 4.0       # User satisfaction score (1-5 scale)
+    timeToCompetency: 12.0       # Hours to achieve basic competency
+    errorReductionRate: 0.6      # 60% reduction in common mistakes
+  
+  # Community & Ecosystem Integration
+  communityFeatures:
+    enableSharing: 1
+    enableCustomization: 1
+    enableModding: 1
+    enableProgressExport: 1
+    enableCommunityFeedback: 1

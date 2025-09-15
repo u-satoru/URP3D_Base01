@@ -6,6 +6,7 @@ using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Audio.Controllers;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Shared;
 using Sirenix.OdinInspector;
 
@@ -179,19 +180,19 @@ namespace asterivo.Unity60.Core.Audio
 
             if (weatherController == null)
             {
-                EventLogger.LogErrorStatic("[AmbientManagerV2] WeatherAmbientController is required!");
+                ServiceLocator.GetService<IEventLogger>().LogError("[AmbientManagerV2] WeatherAmbientController is required!");
                 hasErrors = true;
             }
 
             if (timeController == null)
             {
-                EventLogger.LogErrorStatic("[AmbientManagerV2] TimeAmbientController is required!");
+                ServiceLocator.GetService<IEventLogger>().LogError("[AmbientManagerV2] TimeAmbientController is required!");
                 hasErrors = true;
             }
 
             if (maskingController == null)
             {
-                EventLogger.LogErrorStatic("[AmbientManagerV2] MaskingEffectController is required!");
+                ServiceLocator.GetService<IEventLogger>().LogError("[AmbientManagerV2] MaskingEffectController is required!");
                 hasErrors = true;
             }
 
@@ -376,7 +377,7 @@ namespace asterivo.Unity60.Core.Audio
             // 新しい環境音響を取得
             if (!environmentSoundLookup.TryGetValue(newEnvironment, out var environmentCollection))
             {
-                EventLogger.LogWarningStatic($"[AmbientManagerV2] No sound collection found for environment: {newEnvironment}");
+                ServiceLocator.GetService<IEventLogger>().LogWarning($"[AmbientManagerV2] No sound collection found for environment: {newEnvironment}");
                 yield break;
             }
 
@@ -384,7 +385,7 @@ namespace asterivo.Unity60.Core.Audio
             AudioSource availableSource = GetAvailableEnvironmentSource();
             if (availableSource == null)
             {
-                EventLogger.LogWarningStatic("[AmbientManagerV2] No available audio sources for environment transition");
+                ServiceLocator.GetService<IEventLogger>().LogWarning("[AmbientManagerV2] No available audio sources for environment transition");
                 yield break;
             }
 
@@ -564,7 +565,7 @@ namespace asterivo.Unity60.Core.Audio
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[AmbientManagerV2] Failed to get IAudioUpdateService from ServiceLocator: {ex.Message}");
+                    ServiceLocator.GetService<IEventLogger>().LogError($"[AmbientManagerV2] Failed to get IAudioUpdateService from ServiceLocator: {ex.Message}");
                 }
             }
             
@@ -584,7 +585,7 @@ namespace asterivo.Unity60.Core.Audio
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[AmbientManagerV2] Failed to get AudioUpdateCoordinator: {ex.Message}");
+                    ServiceLocator.GetService<IEventLogger>().LogError($"[AmbientManagerV2] Failed to get AudioUpdateCoordinator: {ex.Message}");
                 }
             }
             

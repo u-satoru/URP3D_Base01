@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Features.Templates.ActionRPG.Combat
@@ -170,11 +170,8 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Combat
             // プレイヤーの場合のみサービスに登録
             if (gameObject.CompareTag("Player"))
             {
-                if (ServiceLocator.Instance != null)
-                {
-                    ServiceLocator.Instance.RegisterService<Health>(this);
-                    LogDebug("[Health] Player health registered with ServiceLocator");
-                }
+                ServiceLocator.RegisterService<Health>(this);
+                LogDebug("[Health] Player health registered with ServiceLocator");
             }
         }
 
@@ -185,11 +182,8 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Combat
         {
             if (gameObject.CompareTag("Player"))
             {
-                if (ServiceLocator.Instance != null)
-                {
-                    ServiceLocator.Instance.UnregisterService<Health>();
-                    LogDebug("[Health] Player health unregistered from ServiceLocator");
-                }
+                ServiceLocator.UnregisterService<Health>();
+                LogDebug("[Health] Player health unregistered from ServiceLocator");
             }
         }
 

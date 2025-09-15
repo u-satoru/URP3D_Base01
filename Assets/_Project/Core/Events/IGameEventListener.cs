@@ -20,6 +20,11 @@ namespace asterivo.Unity60.Core.Events
         /// </summary>
         /// <param name="value">イベントと共に送信される値</param>
         void OnEventRaised(T value);
+
+        /// <summary>
+        /// Priority for event processing (higher values process first)
+        /// </summary>
+        int Priority => 0;
     }
     
     /// <summary>
@@ -37,7 +42,7 @@ namespace asterivo.Unity60.Core.Events
     /// <typeparam name="TEvent">対応するGameEventの型</typeparam>
     /// <typeparam name="TUnityEvent">対応するUnityEventの型</typeparam>
     public abstract class GenericGameEventListener<T, TEvent, TUnityEvent> : MonoBehaviour, IGameEventListener<T>
-        where TEvent : GenericGameEvent<T>
+        where TEvent : GameEvent<T>
         where TUnityEvent : UnityEvent<T>
     {
         [Header("Event Settings")]

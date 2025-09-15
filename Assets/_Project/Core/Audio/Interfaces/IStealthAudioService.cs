@@ -46,6 +46,12 @@ namespace asterivo.Unity60.Core.Audio.Interfaces
         /// プレイヤーの隠密度に応じた音響調整
         /// </summary>
         void AdjustStealthAudio(float stealthLevel);
+        
+        /// <summary>
+        /// 目標達成時のサウンドを再生
+        /// </summary>
+        /// <param name="withBonus">ボーナス付きかどうか</param>
+        void PlayObjectiveCompleteSound(bool withBonus);
     }
     
     /// <summary>

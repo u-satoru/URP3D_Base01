@@ -99,7 +99,17 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.UI
             
             Debug.Log("[ActionRPGUIManager] UI初期化完了");
         }
-        
+
+        /// <summary>
+        /// 外部からのUIマネージャー初期化
+        /// </summary>
+        public void Initialize()
+        {
+            InitializeUI();
+            SetupEventListeners();
+            Debug.Log("[ActionRPGUIManager] External initialization completed");
+        }
+
         /// <summary>
         /// イベントリスナーの設定
         /// </summary>
@@ -270,6 +280,39 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.UI
         {
             // インベントリ表示の更新処理
             // 実際の実装では ItemManager からアイテム情報を取得
+        }
+
+        /// <summary>
+        /// レベルアップ画面表示
+        /// </summary>
+        public void ShowLevelUpScreen()
+        {
+            // レベルアップ画面の表示処理
+            Debug.Log("[ActionRPGUIManager] Level up screen shown");
+
+            // TODO: レベルアップ用のUIパネル実装
+        }
+
+        /// <summary>
+        /// インベントリ表示
+        /// </summary>
+        public void ShowInventory()
+        {
+            ToggleUI(UIState.Inventory);
+            Debug.Log("[ActionRPGUIManager] Inventory shown");
+        }
+
+        /// <summary>
+        /// キャラクター画面切り替え
+        /// </summary>
+        public void ToggleCharacterScreen()
+        {
+            if (CurrentState == UIState.Character)
+                ToggleUI(UIState.Game);
+            else
+                ToggleUI(UIState.Character);
+
+            Debug.Log("[ActionRPGUIManager] Character screen toggled");
         }
     }
 }

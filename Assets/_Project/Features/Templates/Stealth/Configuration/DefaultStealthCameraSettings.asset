@@ -1,0 +1,153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9, type: 3}
+  m_Name: DefaultStealthCameraSettings
+  stealthCameraStates:
+  - stateName: StealthNormal
+    description: Standard third-person stealth view with optimal awareness
+    cameraDistance: 3.5
+    cameraHeight: 1.8
+    fieldOfView: 60.0
+    followSpeed: 2.0
+    lookSpeed: 1.5
+    transitionDuration: 1.0
+    priority: 10
+    enableCollisionAvoidance: 1
+    dampingSettings:
+      positionDamping: 1.2
+      rotationDamping: 1.0
+      lookDamping: 0.8
+  - stateName: StealthCrouch
+    description: Lower camera angle for crouched stealth movement
+    cameraDistance: 2.8
+    cameraHeight: 1.2
+    fieldOfView: 65.0
+    followSpeed: 1.5
+    lookSpeed: 1.2
+    transitionDuration: 0.8
+    priority: 15
+    enableCollisionAvoidance: 1
+    dampingSettings:
+      positionDamping: 1.5
+      rotationDamping: 1.2
+      lookDamping: 1.0
+  - stateName: StealthProne
+    description: Ground-level view for prone stealth movement
+    cameraDistance: 2.2
+    cameraHeight: 0.6
+    fieldOfView: 70.0
+    followSpeed: 1.0
+    lookSpeed: 1.0
+    transitionDuration: 1.2
+    priority: 20
+    enableCollisionAvoidance: 1
+    dampingSettings:
+      positionDamping: 2.0
+      rotationDamping: 1.5
+      lookDamping: 1.2
+  - stateName: StealthPeek
+    description: Specialized camera for corner peeking and cover usage
+    cameraDistance: 1.8
+    cameraHeight: 1.6
+    fieldOfView: 55.0
+    followSpeed: 3.0
+    lookSpeed: 2.0
+    transitionDuration: 0.5
+    priority: 25
+    enableCollisionAvoidance: 1
+    dampingSettings:
+      positionDamping: 0.8
+      rotationDamping: 0.6
+      lookDamping: 0.5
+  - stateName: StealthAlert
+    description: High-tension camera for alert situations
+    cameraDistance: 4.0
+    cameraHeight: 2.2
+    fieldOfView: 58.0
+    followSpeed: 2.5
+    lookSpeed: 2.2
+    transitionDuration: 0.6
+    priority: 30
+    enableCollisionAvoidance: 1
+    dampingSettings:
+      positionDamping: 1.0
+      rotationDamping: 0.8
+      lookDamping: 0.6
+  detectionVisualizations:
+  - visualizationType: 0
+    enabled: 1
+    intensity: 0.8
+    color: {r: 1.0, g: 0.0, b: 0.0, a: 0.6}
+    fadeInDuration: 0.3
+    fadeOutDuration: 1.0
+    description: Screen edge warning when player is being detected
+  - visualizationType: 1
+    enabled: 1
+    intensity: 0.6
+    color: {r: 1.0, g: 0.8, b: 0.0, a: 0.4}
+    fadeInDuration: 0.5
+    fadeOutDuration: 1.5
+    description: Subtle screen tint when NPCs are suspicious
+  - visualizationType: 2
+    enabled: 1
+    intensity: 1.0
+    color: {r: 0.8, g: 0.0, b: 0.0, a: 0.8}
+    fadeInDuration: 0.2
+    fadeOutDuration: 0.8
+    description: Directional threat indicator arrows
+  - visualizationType: 3
+    enabled: 1
+    intensity: 0.5
+    color: {r: 0.0, g: 0.8, b: 1.0, a: 0.3}
+    fadeInDuration: 1.0
+    fadeOutDuration: 2.0
+    description: Interactive object highlighting
+  cinemachineIntegration:
+    enableCinemachine31: 1
+    defaultBlendTime: 1.0
+    customBlendDefinitions:
+    - fromState: StealthNormal
+      toState: StealthCrouch
+      blendTime: 0.8
+      blendCurve: 2
+    - fromState: StealthCrouch
+      toState: StealthProne
+      blendTime: 1.2
+      blendCurve: 1
+    - fromState: StealthNormal
+      toState: StealthAlert
+      blendTime: 0.6
+      blendCurve: 0
+    - fromState: StealthPeek
+      toState: StealthNormal
+      blendTime: 0.5
+      blendCurve: 2
+    virtualCameraPoolSize: 8
+    enableCameraCulling: 1
+    cullingMask: -1
+    renderTargetEye: 0
+  cameraControlSettings:
+    enableMouseLook: 1
+    mouseSensitivity: 2.0
+    invertYAxis: 0
+    enableControllerLook: 1
+    controllerSensitivity: 3.0
+    deadZone: 0.1
+    maxLookSpeed: 10.0
+    accelerationCurve: 2
+    smoothingFactor: 5.0
+  accessibilitySupport:
+    enableReducedMotion: 0
+    cameraShakeIntensity: 1.0
+    motionSicknessReduction: 0
+    fieldOfViewModifier: 1.0
+    contrastEnhancement: 0.0

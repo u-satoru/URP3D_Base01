@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Features.Templates.Adventure.Quest;
 using asterivo.Unity60.Features.Templates.Adventure.Inventory;
+using asterivo.Unity60.Features.Templates.Adventure.Data;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
@@ -109,6 +111,11 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
         public virtual bool IsTargeted => isTargeted;
         public virtual string InteractionText => interactionText;
 
+        // 追加のプロパティ（Adventure Template互換性のため）
+        public virtual InteractionType InteractionType => InteractionType.Custom;
+        public virtual string InteractionPrompt => interactionText;
+        public virtual Sprite InteractionIcon => null;
+
         // イベント
         public event System.Action<IInteractable> OnInteractionSucceeded;
         public event System.Action<IInteractable> OnInteractionFailed;
@@ -148,8 +155,8 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
         /// </summary>
         protected virtual void InitializeDependencies()
         {
-            questManager = ServiceLocator.Instance?.GetService<QuestManager>();
-            inventoryManager = ServiceLocator.Instance?.GetService<AdventureInventoryManager>();
+            questManager = asterivo.Unity60.Core.ServiceLocator.GetService<QuestManager>();
+            inventoryManager = asterivo.Unity60.Core.ServiceLocator.GetService<AdventureInventoryManager>();
         }
 
         #region IInteractable Implementation
@@ -310,7 +317,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
 
             foreach (var itemId in requiredItemIds)
             {
-                if (!inventoryManager.HasItem(itemId))
+                if (!inventoryManager.CheckItemAvailability(itemId))
                 {
                     return false;
                 }
@@ -396,13 +403,8 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
                 return true;
             }
 
-            var quest = questManager.GetQuest(requiredQuestId);
-            if (quest == null)
-            {
-                return requiredQuestState == QuestState.None;
-            }
-
-            return quest.State == requiredQuestState;
+            var questState = questManager.GetQuestState(requiredQuestId);
+            return questState == requiredQuestState;
         }
 
         /// <summary>
@@ -494,6 +496,28 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
         protected virtual void LogError(string message)
         {
             Debug.LogError(message);
+        }
+
+        /// <summary>
+        /// プレイヤーがインタラクション範囲に入った時の処理
+        /// </summary>
+        public virtual void OnInteractionEnter(GameObject player)
+        {
+            // 基本実装: ハイライト効果を適用
+            ApplyHighlight(true);
+
+            // 継承先で追加処理を実装可能
+        }
+
+        /// <summary>
+        /// プレイヤーがインタラクション範囲を出た時の処理
+        /// </summary>
+        public virtual void OnInteractionExit(GameObject player)
+        {
+            // 基本実装: ハイライト効果を解除
+            ApplyHighlight(false);
+
+            // 継承先で追加処理を実装可能
         }
 
         #endregion

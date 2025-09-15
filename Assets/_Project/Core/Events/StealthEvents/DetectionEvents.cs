@@ -4,7 +4,7 @@ using asterivo.Unity60.Core.Data;
 namespace asterivo.Unity60.Core.Events
 {
     [CreateAssetMenu(menuName = "asterivo.Unity60/Core/Events/Stealth/Detection Event", fileName = "SE_DetectionEvent")]
-    public class DetectionEvent : GenericGameEvent<DetectionInfo> { }
+    public class DetectionEvent : GameEvent<DetectionInfo> { }
     
     [CreateAssetMenu(menuName = "asterivo.Unity60/Core/Events/Stealth/Player Detected Event", fileName = "SE_PlayerDetectedEvent")]
     public class PlayerDetectedEvent : GameEvent { }

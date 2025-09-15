@@ -1,5 +1,6 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Features.Templates.Adventure.Dialogue;
 using asterivo.Unity60.Features.Templates.Adventure.Inventory;
 using Sirenix.OdinInspector;
@@ -106,7 +107,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
         /// </summary>
         private void InitializeInteractableObject()
         {
-            dialogueManager = ServiceLocator.Instance?.GetService<DialogueManager>();
+            dialogueManager = asterivo.Unity60.Core.ServiceLocator.GetService<DialogueManager>();
 
             // オーディオソースの自動取得
             if (audioSource == null)
@@ -420,6 +421,54 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
         }
 
         #endregion
+
+        #region Adventure Template Integration Properties
+
+        [TabGroup("Adventure", "Adventure Template")]
+        [Header("Adventure Template Properties")]
+        [SerializeField]
+        [TextArea(2, 3)]
+        [Tooltip("Text shown when examining this object - used by AdventureTemplateManager")]
+        private string examinationText = "";
+
+        [TabGroup("Adventure", "Adventure Template")]
+        [SerializeField]
+        [Tooltip("Item that can be picked up from this object - used by AdventureTemplateManager")]
+        private AdventureItemData itemToPickup;
+
+        [TabGroup("Adventure", "Adventure Template")]
+        [SerializeField]
+        [Tooltip("Quest ID associated with this object - used by AdventureTemplateManager")]
+        private string questID = "";
+
+        /// <summary>
+        /// Text shown when examining this object - used by AdventureTemplateManager
+        /// </summary>
+        public string ExaminationText
+        {
+            get { return string.IsNullOrEmpty(examinationText) ? interactionMessage : examinationText; }
+            set { examinationText = value; }
+        }
+
+        /// <summary>
+        /// Item that can be picked up from this object - used by AdventureTemplateManager
+        /// </summary>
+        public AdventureItemData ItemToPickup
+        {
+            get { return itemToPickup; }
+            set { itemToPickup = value; }
+        }
+
+        /// <summary>
+        /// Quest ID associated with this object - used by AdventureTemplateManager
+        /// </summary>
+        public string QuestID
+        {
+            get { return questID; }
+            set { questID = value; }
+        }
+
+        #endregion
     }
 
     /// <summary>
@@ -437,6 +486,18 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
         GiveItem,
 
         [Tooltip("カスタムアクション")]
-        Custom
+        Custom,
+
+        [Tooltip("汎用インタラクション")]
+        Generic,
+
+        [Tooltip("コンテナ（チェスト等）")]
+        Container,
+
+        [Tooltip("アイテムピックアップ")]
+        PickupItem,
+
+        [Tooltip("クエストトリガー")]
+        TriggerQuest
     }
 }

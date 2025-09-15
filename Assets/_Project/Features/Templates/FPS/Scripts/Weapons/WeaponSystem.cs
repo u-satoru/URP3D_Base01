@@ -17,7 +17,7 @@ namespace asterivo.Unity60.Features.Templates.FPS.Weapons
     {
         [TabGroup("Weapon", "Data")]
         [LabelText("Weapon Data")]
-        [SerializeField] private WeaponData weaponData;
+        public WeaponData weaponData;
         
         [TabGroup("Weapon", "Transform")]
         [LabelText("Muzzle Transform")]

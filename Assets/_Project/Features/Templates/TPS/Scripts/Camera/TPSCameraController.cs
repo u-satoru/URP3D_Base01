@@ -162,10 +162,26 @@ private void Awake()
             SetCameraMode(inCover ? CameraMode.Cover : CameraMode.Normal);
         }
 
-        public void Initialize(Transform target)
+        public void Initialize(Transform target, TPSTemplateConfiguration configuration = null)
         {
             followTarget = target;
-            Debug.Log("[TPS Camera Fallback] Initialized with target: " + target.name);
+            
+            if (configuration != null)
+            {
+                // Apply configuration settings
+                normalDistance = configuration.CameraDistance;
+                cameraHeight = configuration.CameraHeight;
+                mouseSensitivity = configuration.CameraSensitivity;
+                
+                targetDistance = normalDistance;
+                targetFOV = normalFOV;
+                
+                Debug.Log($"[TPS Camera] Initialized with target: {target.name} and configuration");
+            }
+            else
+            {
+                Debug.Log($"[TPS Camera Fallback] Initialized with target: {target.name} (no configuration)");
+            }
         }
 
         // Public properties

@@ -40,6 +40,12 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Inventory
 
         [TabGroup("Properties", "Item Properties")]
         [SerializeField]
+        [Tooltip("アイテムの重量")]
+        [Min(0f)]
+        public float weight = 1f;
+
+        [TabGroup("Properties", "Item Properties")]
+        [SerializeField]
         [Tooltip("アイテムのレア度")]
         public AdventureItemRarity rarity = AdventureItemRarity.Common;
 
@@ -230,6 +236,9 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Inventory
         
         [Tooltip("キーアイテム（ストーリー進行に必要）")]
         Key,
+        
+        [Tooltip("クエストアイテム（クエスト専用アイテム）")]
+        QuestItem,
         
         [Tooltip("文書・資料（日記、手紙、地図など）")]
         Document,

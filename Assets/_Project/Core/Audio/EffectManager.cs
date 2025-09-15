@@ -6,6 +6,7 @@ using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 
 
@@ -159,7 +160,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (!IsInitialized)
             {
-                EventLogger.LogWarningStatic("[EffectManager] System not initialized");
+                ServiceLocator.GetService<IEventLogger>().LogWarning("[EffectManager] System not initialized");
                 return;
             }
             
@@ -268,7 +269,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (!effectDatabase.ContainsKey(effectID))
             {
-                EventLogger.LogWarningStatic($"[EffectManager] Effect '{effectID}' not found in database");
+                ServiceLocator.GetService<IEventLogger>().LogWarning($"[EffectManager] Effect '{effectID}' not found in database");
                 return null;
             }
             
@@ -448,7 +449,7 @@ namespace asterivo.Unity60.Core.Audio
                         // 重複チェック（異なるパスに同名ファイルがある場合の処理）
                         if (effectDatabase.ContainsKey(sound.name))
                         {
-                            EventLogger.LogWarningStatic($"[EffectManager] Duplicate effect sound found: {sound.name} in {path}");
+                            ServiceLocator.GetService<IEventLogger>().LogWarning($"[EffectManager] Duplicate effect sound found: {sound.name} in {path}");
                             continue;
                         }
                         
@@ -518,13 +519,13 @@ namespace asterivo.Unity60.Core.Audio
                     effectDatabase[effectId] = defaultSound;
                     created++;
                     
-                    EventLogger.LogWarningStatic($"[EffectManager] Created default effect: {effectId}");
+                    ServiceLocator.GetService<IEventLogger>().LogWarning($"[EffectManager] Created default effect: {effectId}");
                 }
             }
             
             if (created > 0)
             {
-                EventLogger.LogWarningStatic($"[EffectManager] Created {created} default effects. " +
+                ServiceLocator.GetService<IEventLogger>().LogWarning($"[EffectManager] Created {created} default effects. " +
                                      "Consider adding proper SoundDataSO assets for these effects.");
             }
         }
@@ -536,7 +537,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (!effectDatabase.ContainsKey(effectID))
             {
-                EventLogger.LogWarningStatic($"[EffectManager] Effect '{effectID}' not found in database");
+                ServiceLocator.GetService<IEventLogger>().LogWarning($"[EffectManager] Effect '{effectID}' not found in database");
                 return null;
             }
             
@@ -714,7 +715,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (!effectDatabase.TryGetValue(effectName, out SoundDataSO soundData))
             {
-                EventLogger.LogErrorStatic($"Effect '{effectName}' not found in database");
+                ServiceLocator.GetService<IEventLogger>().LogError($"Effect '{effectName}' not found in database");
                 return;
             }
 

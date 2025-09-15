@@ -7,6 +7,9 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Data
     public enum QuestObjectiveType
     {
         /// <summary>特定のアイテムを集める</summary>
+        /// <summary>特定のアイテムを集める（CollectItemの別名）</summary>
+        Collect = 0,
+        
         CollectItem = 0,
         
         /// <summary>特定の敵を倒す</summary>
@@ -20,6 +23,9 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Data
         
         /// <summary>特定のオブジェクトとインタラクション</summary>
         InteractWithObject = 4,
+        
+        /// <summary>特定のオブジェクトとインタラクション（InteractWithObjectの別名）</summary>
+        Interact = 4,
         
         /// <summary>特定のアイテムを配達する</summary>
         DeliverItem = 5,
@@ -41,6 +47,12 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Data
         
         /// <summary>特定のレベルに達する</summary>
         ReachLevel = 11,
+        
+        /// <summary>特定のアイテムを使用する</summary>
+        Use = 13,
+        
+        /// <summary>特定のアイテムを使用する（Useの別名）</summary>
+        UseItem = 13,
         
         /// <summary>特定の金額を稼ぐ</summary>
         EarnGold = 12,

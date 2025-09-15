@@ -6,7 +6,7 @@ namespace asterivo.Unity60.Core.Events
     /// UIナビゲーションイベント。メニュー間の遷移や戻る操作を管理します。
     /// </summary>
     [CreateAssetMenu(fileName = "New UI Navigation Event", menuName = "Game Events/UI Navigation Event")]
-    public class UINavigationEvent : GenericGameEvent<UINavigationData>
+    public class UINavigationEvent : GameEvent<UINavigationData>
     {
     }
     

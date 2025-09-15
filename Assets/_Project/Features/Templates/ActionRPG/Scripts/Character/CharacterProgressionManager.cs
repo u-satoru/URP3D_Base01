@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.ActionRPG.Data;
 using Sirenix.OdinInspector;
 
@@ -138,6 +138,7 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Character
         public int AvailableAttributePoints => availableAttributePoints;
         public float ProgressToNextLevel => progressToNextLevel;
         public CharacterAttributes Attributes => attributes;
+        public CharacterAttributes CurrentAttributes => attributes;
         public bool CanLevelUp => currentLevel < maxLevel && currentExperience >= GetExperienceRequiredForLevel(currentLevel + 1);
 
         #endregion
@@ -427,9 +428,9 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Character
         {
             if (level <= 1) return 0;
             
-            if (experienceCurve != null && experienceCurve.HasExperienceData(level))
+            if (experienceCurve != null && level >= 1 && level <= experienceCurve.MaxLevel)
             {
-                return experienceCurve.GetExperienceForLevel(level);
+                return experienceCurve.GetRequiredExperience(level);
             }
             
             // デフォルト計算式（指数関数的増加）
@@ -754,11 +755,12 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Character
                 Debug.Log($"[CharacterProgression] Equipment changed - recalculating total stats");
             }
 
+            // TODO: Add GameEvent for stats changes if needed
             // 装備変更イベントを発行
-            if (onStatsChanged != null)
-            {
-                onStatsChanged.Raise();
-            }
+            // if (onStatsChanged != null)
+            // {
+            //     onStatsChanged.Raise();
+            // }
         }
 
         #endregion

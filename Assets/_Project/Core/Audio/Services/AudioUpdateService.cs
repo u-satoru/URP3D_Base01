@@ -328,7 +328,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                 }
                 catch (System.Exception e)
                 {
-                    EventLogger.LogErrorStatic($"[AudioUpdateService] Error updating {updatable.GetType().Name}: {e.Message}");
+                    ServiceLocator.GetService<IEventLogger>().LogError($"[AudioUpdateService] Error updating {updatable.GetType().Name}: {e.Message}");
                 }
             }
         }

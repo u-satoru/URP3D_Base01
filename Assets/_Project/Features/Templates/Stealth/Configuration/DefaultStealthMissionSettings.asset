@@ -1,0 +1,175 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0, type: 3}
+  m_Name: DefaultStealthMissionSettings
+  gameplayPhases:
+  - phaseName: Tutorial
+    description: Learn basic stealth mechanics in a safe environment
+    duration: 180.0
+    allowedFailures: 5
+    skipAllowed: 1
+    objectives:
+    - objectiveType: 0
+      description: Learn to crouch and move quietly
+      targetValue: 1.0
+      timeLimit: 60.0
+      isOptional: 0
+      rewardPoints: 50
+      hints:
+      - Hold [Ctrl] to crouch and reduce noise
+      - Watch the noise indicator in the bottom-left
+      - Practice moving slowly while crouched
+    - objectiveType: 1
+      description: Hide from patrolling guard
+      targetValue: 1.0
+      timeLimit: 90.0
+      isOptional: 0
+      rewardPoints: 100
+      hints:
+      - Stay behind cover when the guard looks your way
+      - Use the detection meter to know when you're safe
+      - Green means safe, yellow means caution, red means danger
+    - objectiveType: 2
+      description: Reach the practice exit without being detected
+      targetValue: 1.0
+      timeLimit: 30.0
+      isOptional: 0
+      rewardPoints: 75
+      hints:
+      - Plan your route carefully
+      - Wait for the right moment to move
+      - Use shadows and cover to stay hidden
+  - phaseName: Practice
+    description: Apply stealth skills with moderate challenge
+    duration: 300.0
+    allowedFailures: 3
+    skipAllowed: 0
+    objectives:
+    - objectiveType: 3
+      description: Avoid 2 guards and reach checkpoint A
+      targetValue: 2.0
+      timeLimit: 120.0
+      isOptional: 0
+      rewardPoints: 150
+      hints:
+      - Study guard patrol patterns before moving
+      - Use prone position for maximum stealth
+      - Time your movements between patrol cycles
+    - objectiveType: 4
+      description: Collect intel item without alerting anyone
+      targetValue: 1.0
+      timeLimit: 90.0
+      isOptional: 0
+      rewardPoints: 200
+      hints:
+      - Wait for guards to turn away before approaching
+      - Move slowly when near NPCs
+      - Use environmental sounds to mask your movement
+    - objectiveType: 5
+      description: Escape to extraction point
+      targetValue: 1.0
+      timeLimit: 90.0
+      isOptional: 0
+      rewardPoints: 175
+      hints:
+      - Plan multiple escape routes
+      - Stay calm if detection level rises
+      - Use learned stealth techniques consistently
+  - phaseName: Challenge
+    description: Master-level stealth test with full AI awareness
+    duration: 420.0
+    allowedFailures: 1
+    skipAllowed: 0
+    objectives:
+    - objectiveType: 6
+      description: Infiltrate secure compound
+      targetValue: 1.0
+      timeLimit: 180.0
+      isOptional: 0
+      rewardPoints: 300
+      hints:
+      - Multiple guards with overlapping patrol routes
+      - Use advanced techniques like shadow manipulation
+      - Environmental distractions can create opportunities
+    - objectiveType: 7
+      description: Retrieve target data without any alerts
+      targetValue: 1.0
+      timeLimit: 120.0
+      isOptional: 0
+      rewardPoints: 400
+      hints:
+      - Perfect stealth required - no suspicion allowed
+      - Guards will investigate any anomalies
+      - Master timing and positioning essential
+    - objectiveType: 8
+      description: Ghost extraction - leave no trace
+      targetValue: 1.0
+      timeLimit: 120.0
+      isOptional: 0
+      rewardPoints: 500
+      hints:
+      - No evidence of your presence should remain
+      - Avoid leaving any disturbances
+      - Demonstrate complete stealth mastery
+  scoreSystem:
+    perfectStealthBonus: 1000
+    speedCompletionBonus: 500
+    noDetectionBonus: 750
+    optionalObjectiveBonus: 250
+    skillDemonstrationBonus: 300
+    creativeSolutionBonus: 200
+    rankThresholds:
+    - 0
+    - 500
+    - 1200
+    - 2000
+    - 3200
+    - 5000
+    rankNames:
+    - Novice
+    - Apprentice
+    - Skilled
+    - Expert
+    - Master
+    - Ghost
+  adaptiveDifficulty:
+    enableAdaptiveDifficulty: 1
+    difficultyScaling: 1.0
+    performanceAnalysisWindow: 60.0
+    difficultyAdjustmentRate: 0.1
+    minDifficultyMultiplier: 0.5
+    maxDifficultyMultiplier: 2.0
+    successRateTarget: 0.7
+    adaptationSettings:
+    - performanceMetric: DetectionRate
+      targetValue: 0.3
+      adjustmentFactor: 0.15
+      description: Adjust guard sensitivity based on detection frequency
+    - performanceMetric: CompletionTime
+      targetValue: 0.8
+      adjustmentFactor: 0.1
+      description: Modify time pressure based on completion speed
+    - performanceMetric: ObjectiveSuccess
+      targetValue: 0.9
+      adjustmentFactor: 0.2
+      description: Adapt objective complexity based on success rate
+  accessibility:
+    enableDifficultyScaling: 1
+    provideClearObjectives: 1
+    enableVisualAids: 1
+    enableAudioCues: 1
+    allowPause: 1
+    enableCheckpoints: 1
+    reducedTimeStress: 0
+    simplifiedControls: 0
+    colorblindSupport: 1
+    hearingImpairedSupport: 1

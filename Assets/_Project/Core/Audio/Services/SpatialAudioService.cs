@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core;
 using Sirenix.OdinInspector;
@@ -101,7 +102,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             mainListener = FindFirstObjectByType<AudioListener>();
             if (mainListener == null)
             {
-                EventLogger.LogWarningStatic("[SpatialAudioService] No AudioListener found in scene");
+                ServiceLocator.GetService<IEventLogger>().LogWarning("[SpatialAudioService] No AudioListener found in scene");
             }
             
             SetupDefaultSettings();
@@ -127,7 +128,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             if (!IsInitialized)
             {
-                EventLogger.LogWarningStatic("[SpatialAudioService] System not initialized");
+                ServiceLocator.GetService<IEventLogger>().LogWarning("[SpatialAudioService] System not initialized");
                 return;
             }
             
@@ -159,7 +160,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             var audioSource = GetAvailableAudioSource();
             if (audioSource == null)
             {
-                EventLogger.LogWarningStatic("[SpatialAudioService] No available audio sources");
+                ServiceLocator.GetService<IEventLogger>().LogWarning("[SpatialAudioService] No available audio sources");
                 return;
             }
             

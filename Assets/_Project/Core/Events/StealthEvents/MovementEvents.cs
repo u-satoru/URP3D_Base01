@@ -4,10 +4,10 @@ using asterivo.Unity60.Core.Data;
 namespace asterivo.Unity60.Core.Events
 {
     [CreateAssetMenu(menuName = "asterivo.Unity60/Core/Events/Stealth/Movement Stance Event", fileName = "SE_MovementStanceEvent")]
-    public class MovementStanceEvent : GenericGameEvent<MovementStance> { }
+    public class MovementStanceEvent : GameEvent<MovementStance> { }
     
     [CreateAssetMenu(menuName = "asterivo.Unity60/Core/Events/Stealth/Movement Info Event", fileName = "SE_MovementInfoEvent")]
-    public class MovementInfoEvent : GenericGameEvent<StealthMovementInfo> { }
+    public class MovementInfoEvent : GameEvent<StealthMovementInfo> { }
     
     [CreateAssetMenu(menuName = "asterivo.Unity60/Core/Events/Stealth/Cover Enter Event", fileName = "SE_CoverEnterEvent")]
     public class CoverEnterEvent : GameEvent { }

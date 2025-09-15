@@ -860,6 +860,73 @@ namespace asterivo.Unity60.Core.Audio
         }
 #endif
 
+        #region IStealthAudioService Implementation
+
+        /// <summary>
+        /// 目標達成時のサウンドを再生
+        /// </summary>
+        /// <param name="withBonus">ボーナス付きかどうか</param>
+        public void PlayObjectiveCompleteSound(bool withBonus)
+        {
+            if (!IsInitialized || audioService == null) 
+            {
+                var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                if (eventLogger != null && FeatureFlags.EnableDebugLogging)
+                {
+                    eventLogger.LogWarning("[StealthAudioCoordinator] Cannot play objective complete sound - system not initialized");
+                }
+                return;
+            }
+
+            try
+            {
+                // Determine which sound effect to play based on bonus status
+                string soundEffect = withBonus ? "objective_complete_bonus" : "objective_complete";
+                float volume = withBonus ? 1.0f : 0.8f;
+                
+                // Play the objective complete sound effect
+                // Using the effect category for objective completion sounds
+                audioService.PlaySound(soundEffect, 
+                    playerTransform != null ? playerTransform.position : Vector3.zero, 
+                    volume);;
+                
+                // If in stealth mode, apply appropriate volume adjustments
+                if (isStealthModeActive)
+                {
+                    // Apply stealth mode volume reduction to maintain stealth atmosphere
+                    float stealthVolume = volume * (1f - effectReductionAmount);
+                    audioService.SetCategoryVolume("effect", stealthVolume);
+                }
+                
+                // Log the action if debug logging is enabled
+                if (FeatureFlags.EnableDebugLogging)
+                {
+                    var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                    if (eventLogger != null)
+                    {
+                        eventLogger.Log($"[StealthAudioCoordinator] Objective complete sound played: withBonus={withBonus}, volume={volume:F2}");
+                    }
+                }
+                
+                // Raise event for objective completion if events are configured
+                if (withBonus && stealthModeActivatedEvent != null)
+                {
+                    // Could trigger a special event for bonus objectives
+                    // This is optional and can be customized based on game requirements
+                }
+            }
+            catch (System.Exception ex)
+            {
+                var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                if (eventLogger != null)
+                {
+                    eventLogger.LogError($"[StealthAudioCoordinator] Failed to play objective complete sound: {ex.Message}");
+                }
+            }
+        }
+
+        #endregion
+
         #endregion
     }
 }

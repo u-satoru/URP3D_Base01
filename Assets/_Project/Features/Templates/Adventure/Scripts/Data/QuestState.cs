@@ -9,6 +9,9 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Data
     [Serializable]
     public enum QuestState
     {
+        /// <summary>なし（クエスト要件なし）</summary>
+        None = -1,
+
         /// <summary>利用可能（開始可能）</summary>
         Available = 0,
 
@@ -50,9 +53,10 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Data
         /// </summary>
         public static bool IsActive(this QuestState state)
         {
-            return state == QuestState.InProgress ||
-                   state == QuestState.WaitingForCondition ||
-                   state == QuestState.Paused;
+            return state != QuestState.None &&
+                   (state == QuestState.InProgress ||
+                    state == QuestState.WaitingForCondition ||
+                    state == QuestState.Paused);
         }
 
         /// <summary>
@@ -60,11 +64,12 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Data
         /// </summary>
         public static bool IsFinished(this QuestState state)
         {
-            return state == QuestState.Completed ||
-                   state == QuestState.Failed ||
-                   state == QuestState.Rewarded ||
-                   state == QuestState.Expired ||
-                   state == QuestState.Cancelled;
+            return state != QuestState.None &&
+                   (state == QuestState.Completed ||
+                    state == QuestState.Failed ||
+                    state == QuestState.Rewarded ||
+                    state == QuestState.Expired ||
+                    state == QuestState.Cancelled);
         }
 
         /// <summary>
@@ -108,6 +113,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Data
         {
             return state switch
             {
+                QuestState.None => "なし",
                 QuestState.Available => "開始可能",
                 QuestState.InProgress => "進行中",
                 QuestState.Completed => "完了",
@@ -129,6 +135,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Data
         {
             return state switch
             {
+                QuestState.None => UnityEngine.Color.clear,
                 QuestState.Available => UnityEngine.Color.white,
                 QuestState.InProgress => UnityEngine.Color.yellow,
                 QuestState.Completed => UnityEngine.Color.green,
@@ -150,6 +157,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Data
         {
             return currentState switch
             {
+                QuestState.None => new QuestState[0], // 要件なしの場合は遷移なし
                 QuestState.Available => new[] { QuestState.InProgress, QuestState.Locked },
                 QuestState.InProgress => new[] { QuestState.Completed, QuestState.Failed, QuestState.Paused, QuestState.Cancelled, QuestState.WaitingForCondition },
                 QuestState.Completed => new[] { QuestState.Rewarded },

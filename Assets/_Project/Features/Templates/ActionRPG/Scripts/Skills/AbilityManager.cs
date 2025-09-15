@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Features.Templates.ActionRPG.Data;
 
 namespace asterivo.Unity60.Features.Templates.ActionRPG.Skills
 {
@@ -55,7 +56,16 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Skills
             
             Debug.Log("[AbilityManager] アビリティシステム初期化完了");
         }
-        
+
+        /// <summary>
+        /// 外部からのアビリティマネージャー初期化
+        /// </summary>
+        public void Initialize()
+        {
+            InitializeAbilities();
+            Debug.Log("[AbilityManager] External initialization completed");
+        }
+
         /// <summary>
         /// 基本アビリティ登録
         /// </summary>

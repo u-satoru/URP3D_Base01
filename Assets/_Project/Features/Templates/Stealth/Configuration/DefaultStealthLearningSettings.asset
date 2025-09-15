@@ -1,0 +1,200 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1, type: 3}
+  m_Name: DefaultStealthLearningSettings
+  learningStages:
+  - stageName: Foundation
+    description: Basic stealth mechanics and core concepts
+    estimatedDuration: 120.0
+    targetSkillLevel: 0
+    prerequisites: []
+    learningObjectives:
+    - Learn movement controls and stealth postures
+    - Understand detection mechanics
+    - Practice basic hiding techniques
+    isRequired: 1
+    successCriteria:
+    - Complete tutorial without detection
+    - Demonstrate all movement types
+    - Successfully hide from patrolling guard
+    rewards:
+    - Unlock Practice Mode
+    - Stealth Movement Badge
+    - Foundation Certificate
+  - stageName: Awareness
+    description: Environmental awareness and threat assessment
+    estimatedDuration: 180.0
+    targetSkillLevel: 1
+    prerequisites:
+    - Foundation
+    learningObjectives:
+    - Read guard patrol patterns
+    - Identify safe paths and hiding spots
+    - Use environmental audio cues
+    isRequired: 1
+    successCriteria:
+    - Predict guard movements accurately
+    - Navigate complex patrol patterns
+    - Use sound masking effectively
+    rewards:
+    - Advanced Movement Techniques
+    - Awareness Expert Badge
+    - Pattern Recognition Tool
+  - stageName: Technique
+    description: Advanced stealth techniques and timing
+    estimatedDuration: 240.0
+    targetSkillLevel: 2
+    prerequisites:
+    - Foundation
+    - Awareness
+    learningObjectives:
+    - Master movement timing
+    - Learn distraction techniques
+    - Practice escape routes planning
+    isRequired: 1
+    successCriteria:
+    - Complete medium difficulty scenarios
+    - Use environmental distractions
+    - Execute planned escape routes
+    rewards:
+    - Distraction Tools
+    - Technique Master Badge
+    - Route Planning Assistant
+  - stageName: Mastery
+    description: Expert-level stealth execution
+    estimatedDuration: 300.0
+    targetSkillLevel: 3
+    prerequisites:
+    - Foundation
+    - Awareness
+    - Technique
+    learningObjectives:
+    - Perfect stealth execution
+    - Adaptive strategy development
+    - Pressure situation management
+    isRequired: 0
+    successCriteria:
+    - Complete expert scenarios flawlessly
+    - Adapt to changing conditions
+    - Maintain composure under pressure
+    rewards:
+    - Expert Tools Access
+    - Mastery Achievement
+    - Mentor Status Unlock
+  - stageName: Innovation
+    description: Creative problem solving and advanced strategies
+    estimatedDuration: 360.0
+    targetSkillLevel: 4
+    prerequisites:
+    - Foundation
+    - Awareness
+    - Technique
+    - Mastery
+    learningObjectives:
+    - Develop unique approaches
+    - Teach others effectively
+    - Create custom strategies
+    isRequired: 0
+    successCriteria:
+    - Solve problems with novel approaches
+    - Successfully mentor other players
+    - Create reusable strategies
+    rewards:
+    - Innovation Badge
+    - Community Recognition
+    - Strategy Creator Tools
+  tutorialSystems:
+    enableInteractiveTutorials: 1
+    enableAdaptiveHints: 1
+    hintDelayTime: 10.0
+    maxHintsPerObjective: 3
+    enableVisualGuides: 1
+    enableContextualTips: 1
+    tutorialModes:
+    - modeName: Guided
+      description: Step-by-step instructions with visual aids
+      handHoldingLevel: 0.9
+      enableAutoProgression: 0
+      pauseBetweenSteps: 1
+    - modeName: Assisted
+      description: Helpful hints and suggestions when needed
+      handHoldingLevel: 0.6
+      enableAutoProgression: 0
+      pauseBetweenSteps: 0
+    - modeName: Independent
+      description: Minimal guidance, learn through exploration
+      handHoldingLevel: 0.2
+      enableAutoProgression: 1
+      pauseBetweenSteps: 0
+    - modeName: Expert
+      description: No tutorials, full challenge mode
+      handHoldingLevel: 0.0
+      enableAutoProgression: 1
+      pauseBetweenSteps: 0
+  progressTracking:
+    enableDetailedTracking: 1
+    trackingGranularity: 0
+    enableLearningAnalytics: 1
+    performanceMetrics:
+    - Detection Rate
+    - Completion Time
+    - Stealth Efficiency
+    - Pattern Recognition
+    - Timing Accuracy
+    - Spatial Awareness
+    - Decision Making
+    - Adaptation Speed
+    learningPathRecommendations: 1
+    skillGapAnalysis: 1
+    personalizedFeedback: 1
+    progressVisualization: 1
+  motivationSystems:
+    enableAchievements: 1
+    enableProgressBadges: 1
+    enableLeaderboards: 0
+    enableSocialSharing: 0
+    achievementCategories:
+    - categoryName: Stealth Mastery
+      description: Achievements for stealth skill development
+      totalAchievements: 25
+      rewardType: 0
+    - categoryName: Learning Excellence
+      description: Recognition for educational engagement
+      totalAchievements: 15
+      rewardType: 1
+    - categoryName: Community Contribution
+      description: Rewards for helping others learn
+      totalAchievements: 10
+      rewardType: 2
+    motivationalMessages: 1
+    celebrateProgressMilestones: 1
+    encourageReflection: 1
+  accessibility:
+    supportMultipleLearningStyles: 1
+    enableLanguageOptions: 1
+    providedLanguages:
+    - Japanese
+    - English
+    enableReducedCognitiveLload: 1
+    simplifyComplexConcepts: 1
+    enableRepetitionOptions: 1
+    accommodateProcessingSpeed: 1
+    enableCustomPacing: 1
+    supportAssistiveTechnology: 1
+  qualityAssurance:
+    enableFeedbackCollection: 1
+    enableUsabilityTracking: 1
+    enableEffectivenessMetrics: 1
+    targetLearningReduction: 0.7
+    minimumCompetencyLevel: 0.8
+    maxAllowedFrustrationLevel: 0.3
+    continuousImprovement: 1

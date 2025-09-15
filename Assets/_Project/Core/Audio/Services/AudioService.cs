@@ -4,6 +4,7 @@ using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Shared;
 using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core;
 using Sirenix.OdinInspector;
@@ -130,7 +131,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             if (!IsInitialized)
             {
-                EventLogger.LogWarningStatic("[AudioService] System not initialized");
+                ServiceLocator.GetService<IEventLogger>().LogWarning("[AudioService] System not initialized");
                 return;
             }
 
@@ -221,7 +222,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                     break;
                     
                 default:
-                    EventLogger.LogWarningStatic($"[AudioService] Unknown category: {category}");
+                    ServiceLocator.GetService<IEventLogger>().LogWarning($"[AudioService] Unknown category: {category}");
                     break;
             }
             
@@ -315,13 +316,13 @@ namespace asterivo.Unity60.Core.Audio.Services
         private void ValidateComponents()
         {
             if (bgmManager == null)
-                EventLogger.LogWarningStatic("[AudioService] BGMManager is not assigned");
+                ServiceLocator.GetService<IEventLogger>().LogWarning("[AudioService] BGMManager is not assigned");
             
             if (ambientManager == null)
-                EventLogger.LogWarningStatic("[AudioService] AmbientManager is not assigned");
+                ServiceLocator.GetService<IEventLogger>().LogWarning("[AudioService] AmbientManager is not assigned");
             
             if (effectManager == null)
-                EventLogger.LogWarningStatic("[AudioService] EffectManager is not assigned");
+                ServiceLocator.GetService<IEventLogger>().LogWarning("[AudioService] EffectManager is not assigned");
         }
 
         private void InitializeSubsystems()

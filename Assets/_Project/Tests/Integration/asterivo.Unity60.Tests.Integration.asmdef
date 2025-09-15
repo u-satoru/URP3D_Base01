@@ -11,7 +11,11 @@
         "asterivo.Unity60.Core.Services",
         "asterivo.Unity60.Core.Shared",
         "asterivo.Unity60.Core.Components",
-        "asterivo.Unity60.Features"
+        "asterivo.Unity60.Features",
+        "asterivo.Unity60.Features.Templates.ActionRPG",
+        "asterivo.Unity60.Features.Templates.Common",
+        "asterivo.Unity60.Player",
+        "Unity.Timeline"
     ],
     "includePlatforms": [
         "Editor"

@@ -7,6 +7,7 @@ using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Features.Templates.Adventure.Quest;
 using asterivo.Unity60.Features.Templates.Adventure.Dialogue;
 using asterivo.Unity60.Features.Templates.Adventure.Inventory;
+using asterivo.Unity60.Features.Templates.Adventure.Data;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
@@ -146,12 +147,12 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
             }
 
             // 依存システムの取得
-            questManager = ServiceLocator.Instance?.GetService<QuestManager>();
-            dialogueManager = ServiceLocator.Instance?.GetService<DialogueManager>();
-            inventoryManager = ServiceLocator.Instance?.GetService<AdventureInventoryManager>();
+            questManager = asterivo.Unity60.Core.ServiceLocator.GetService<QuestManager>();
+            dialogueManager = asterivo.Unity60.Core.ServiceLocator.GetService<DialogueManager>();
+            inventoryManager = asterivo.Unity60.Core.ServiceLocator.GetService<AdventureInventoryManager>();
 
             // ServiceLocatorへの登録
-            ServiceLocator.Instance?.RegisterService<InteractionManager>(this);
+            asterivo.Unity60.Core.ServiceLocator.RegisterService<InteractionManager>(this);
 
             LogDebug("[InteractionManager] Initialized with max distance: " + maxInteractionDistance);
         }
@@ -161,7 +162,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
         /// </summary>
         private void CleanupInteractionManager()
         {
-            ServiceLocator.Instance?.UnregisterService<InteractionManager>();
+            asterivo.Unity60.Core.ServiceLocator.UnregisterService<InteractionManager>();
             nearbyInteractables.Clear();
             currentTarget = null;
         }
@@ -192,7 +193,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
                     if (!previousInteractables.Contains(interactable))
                     {
                         OnInteractableDetected?.Invoke(interactable);
-                        onInteractableDetected?.Raise(interactable);
+                        onInteractableDetected?.Raise((interactable as Component)?.gameObject);
                         LogDebug($"[InteractionManager] Detected new interactable: {interactable.GetInteractionText()}");
                     }
                 }
@@ -204,7 +205,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
                 if (!nearbyInteractables.Contains(previousInteractable))
                 {
                     OnInteractableLost?.Invoke(previousInteractable);
-                    onInteractableLost?.Raise(previousInteractable);
+                    onInteractableLost?.Raise((previousInteractable as Component)?.gameObject);
                     LogDebug($"[InteractionManager] Lost interactable: {previousInteractable.GetInteractionText()}");
                 }
             }
@@ -318,7 +319,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
             {
                 LogWarning($"[InteractionManager] Target cannot be interacted with: {target.GetInteractionText()}");
                 OnInteractionFailed?.Invoke(target);
-                onInteractionFailed?.Raise(target);
+                onInteractionFailed?.Raise((target as Component)?.gameObject);
                 return false;
             }
 
@@ -331,7 +332,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
                 {
                     LogWarning("[InteractionManager] Target is too far away for interaction");
                     OnInteractionFailed?.Invoke(target);
-                    onInteractionFailed?.Raise(target);
+                    onInteractionFailed?.Raise((target as Component)?.gameObject);
                     return false;
                 }
             }
@@ -340,7 +341,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
             try
             {
                 OnInteractionStarted?.Invoke(target);
-                onInteractionStarted?.Raise(target);
+                onInteractionStarted?.Raise((target as Component)?.gameObject);
 
                 bool success = target.Interact();
                 lastInteractionTime = Time.time;
@@ -348,7 +349,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
                 if (success)
                 {
                     OnInteractionCompleted?.Invoke(target);
-                    onInteractionCompleted?.Raise(target);
+                    onInteractionCompleted?.Raise((target as Component)?.gameObject);
                     LogDebug($"[InteractionManager] Successfully interacted with: {target.GetInteractionText()}");
 
                     // クエスト進行チェック
@@ -357,7 +358,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
                 else
                 {
                     OnInteractionFailed?.Invoke(target);
-                    onInteractionFailed?.Raise(target);
+                    onInteractionFailed?.Raise((target as Component)?.gameObject);
                     LogWarning($"[InteractionManager] Interaction failed with: {target.GetInteractionText()}");
                 }
 
@@ -367,7 +368,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
             {
                 LogError($"[InteractionManager] Exception during interaction: {ex.Message}");
                 OnInteractionFailed?.Invoke(target);
-                onInteractionFailed?.Raise(target);
+                onInteractionFailed?.Raise((target as Component)?.gameObject);
                 return false;
             }
         }
@@ -384,7 +385,8 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
             if (interactableComponent != null)
             {
                 var interactableId = interactableComponent.name; // または固有ID
-                questManager.UpdateObjectiveProgress(QuestObjectiveType.Interact, interactableId, 1);
+                // TODO: Fix quest objective update - needs QuestData parameter, not QuestObjectiveType
+                // questManager.UpdateObjectiveProgress(QuestObjectiveType.Interact, interactableId, 1);
             }
         }
 
@@ -508,7 +510,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
 
             // インタラクション範囲の表示
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWiresSphere(playerTransform.position, maxInteractionDistance);
+            Gizmos.DrawWireSphere(playerTransform.position, maxInteractionDistance);
 
             // 現在のターゲットの表示
             if (currentTarget != null)
@@ -552,6 +554,38 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Interaction
         private void LogError(string message)
         {
             Debug.LogError(message);
+        }
+
+        #endregion
+
+        #region Adventure Template Integration Events
+
+        /// <summary>
+        /// Event fired when NPC interaction occurs - used by AdventureTemplateManager
+        /// </summary>
+        public event Action<IInteractable> OnNPCInteraction;
+
+        /// <summary>
+        /// Event fired when object interaction occurs - used by AdventureTemplateManager
+        /// </summary>
+        public event Action<IInteractable> OnObjectInteraction;
+
+        /// <summary>
+        /// Triggers NPC interaction event
+        /// </summary>
+        public void TriggerNPCInteraction(IInteractable npc)
+        {
+            OnNPCInteraction?.Invoke(npc);
+            Debug.Log($"[InteractionManager] NPC interaction triggered: {npc?.GetInteractionText()}");
+        }
+
+        /// <summary>
+        /// Triggers object interaction event
+        /// </summary>
+        public void TriggerObjectInteraction(IInteractable obj)
+        {
+            OnObjectInteraction?.Invoke(obj);
+            Debug.Log($"[InteractionManager] Object interaction triggered: {obj?.GetInteractionText()}");
         }
 
         #endregion

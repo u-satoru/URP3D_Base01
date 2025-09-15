@@ -51,33 +51,34 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Commands
         /// <summary>
         /// コマンドの実行
         /// </summary>
-        /// <returns>実行成功の可否</returns>
-        public bool Execute()
+        public void Execute()
         {
             if (targetCollectible == null || manager == null)
             {
-                return false;
+                UnityEngine.Debug.LogWarning("[CollectItemCommand] Cannot execute: targetCollectible or manager is null");
+                return;
             }
 
             if (targetCollectible.IsCollected)
             {
-                return false; // 既に収集済み
+                UnityEngine.Debug.LogWarning("[CollectItemCommand] Item already collected");
+                return; // 既に収集済み
             }
 
             // 実際の収集処理はCollectibleManager側で既に実行済み
             // このコマンドは記録とUndo/Redo機能のために存在
-            return true;
+            UnityEngine.Debug.Log($"[CollectItemCommand] Executed collection of {targetCollectible.Config?.displayName}");
         }
 
         /// <summary>
         /// コマンドの取り消し
         /// </summary>
-        /// <returns>取り消し成功の可否</returns>
-        public bool Undo()
+        public void Undo()
         {
             if (targetCollectible == null || manager == null)
             {
-                return false;
+                UnityEngine.Debug.LogWarning("[CollectItemCommand] Cannot undo: targetCollectible or manager is null");
+                return;
             }
 
             // アイテムの状態を復元
@@ -89,18 +90,19 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Commands
             // manager.RestoreScore(scoreBeforeCollection);
 
             UnityEngine.Debug.Log($"[CollectItemCommand] Undone collection of {targetCollectible.Config?.displayName}");
-            return true;
         }
 
         /// <summary>
         /// 取り消し可能かどうか
         /// </summary>
-        /// <returns>取り消し可能な場合はtrue</returns>
-        public bool CanUndo()
+        public bool CanUndo
         {
-            return targetCollectible != null &&
-                   manager != null &&
-                   targetCollectible.IsCollected;
+            get
+            {
+                return targetCollectible != null &&
+                       manager != null &&
+                       targetCollectible.IsCollected;
+            }
         }
 
         #endregion
@@ -116,6 +118,24 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Commands
             // プライベートフィールドのリセットは不要
             // （readonly fieldのため）
             // 必要に応じて可変データのリセット処理をここに記述
+        }
+
+        /// <summary>
+        /// 新しいパラメーターでコマンドを初期化
+        /// </summary>
+        /// <param name="parameters">初期化パラメーター [0]:Collectible, [1]:CollectibleManager</param>
+        public void Initialize(params object[] parameters)
+        {
+            if (parameters == null || parameters.Length < 2)
+            {
+                UnityEngine.Debug.LogError("[CollectItemCommand] Initialize requires 2 parameters: Collectible and CollectibleManager");
+                return;
+            }
+
+            // Note: readonly fieldsのため、実際の初期化はコンストラクタで行う必要があります
+            // このメソッドはIResettableCommandインターフェースの実装要件です
+            // 実際のプール実装では、オブジェクト作成時にパラメーターを渡す仕組みが必要です
+            UnityEngine.Debug.Log($"[CollectItemCommand] Initialize called with {parameters.Length} parameters");
         }
 
         #endregion

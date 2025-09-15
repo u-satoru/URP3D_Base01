@@ -11,7 +11,7 @@ namespace asterivo.Unity60.Core
     /// </summary>
     public class GameStateManagerService : MonoBehaviour, IGameStateManager, IServiceLocatorRegistrable
     {
-        [Header("Events")] [SerializeField] private GenericGameEvent<GameState> gameStateChangedEvent;
+        [Header("Events")] [SerializeField] private GameEvent<GameState> gameStateChangedEvent;
 
         [Header("Runtime")]
         [SerializeField] private GameState currentGameState = GameState.MainMenu;

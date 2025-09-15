@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.ActionRPG.Character;
 using asterivo.Unity60.Features.Templates.ActionRPG.Equipment;
 using Sirenix.OdinInspector;
@@ -77,6 +77,12 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Combat
         public event Action<DamageInfo> OnDamageDealt;
         public event Action<DamageInfo> OnDamageReceived;
         public event Action OnCombatStart;
+
+        // GameEvent (ScriptableObject-based events)
+        [BoxGroup("Events")]
+        [SerializeField] private GameEvent<DamageInfo> onDamageDealt;
+        [BoxGroup("Events")]
+        [SerializeField] private GameEvent<DamageInfo> onDamageReceived;
         public event Action OnCombatEnd;
 
         private void Awake()
@@ -150,11 +156,8 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Combat
         /// </summary>
         private void RegisterWithServices()
         {
-            if (ServiceLocator.Instance != null)
-            {
-                ServiceLocator.Instance.RegisterService<CombatManager>(this);
-                LogDebug("[CombatManager] Registered with ServiceLocator");
-            }
+            ServiceLocator.RegisterService<CombatManager>(this);
+            LogDebug("[CombatManager] Registered with ServiceLocator");
         }
 
         /// <summary>
@@ -162,14 +165,19 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Combat
         /// </summary>
         private void UnregisterFromServices()
         {
-            if (ServiceLocator.Instance != null)
-            {
-                ServiceLocator.Instance.UnregisterService<CombatManager>();
-                LogDebug("[CombatManager] Unregistered from ServiceLocator");
-            }
+            ServiceLocator.UnregisterService<CombatManager>();
+            LogDebug("[CombatManager] Unregistered from ServiceLocator");
         }
 
         #region Combat Management
+
+        /// <summary>
+        /// 戦闘開始（ターゲットなし）
+        /// </summary>
+        public void StartCombat()
+        {
+            StartCombat(null);
+        }
 
         /// <summary>
         /// 戦闘開始
@@ -185,6 +193,7 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Combat
 
                 OnCombatStart?.Invoke();
                 onCombatStart?.Raise();
+                OnCombatStarted?.Invoke();
 
                 LogDebug($"[CombatManager] Combat started - Session #{CombatSessionsCount}");
             }
@@ -213,6 +222,7 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Combat
 
                 OnCombatEnd?.Invoke();
                 onCombatEnd?.Raise();
+                OnCombatEnded?.Invoke();
 
                 LogDebug("[CombatManager] Combat ended");
             }
@@ -579,6 +589,82 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Combat
             if (debugMode)
             {
                 Debug.Log(message);
+            }
+        }
+
+        #endregion
+
+        #region Action Events and Public Methods
+
+        /// <summary>
+        /// 戦闘開始時のActionイベント
+        /// </summary>
+        public System.Action OnCombatStarted;
+
+        /// <summary>
+        /// 戦闘終了時のActionイベント
+        /// </summary>
+        public System.Action OnCombatEnded;
+
+        /// <summary>
+        /// 敵撃破時のActionイベント
+        /// </summary>
+        public System.Action OnEnemyDefeated;
+
+        /// <summary>
+        /// 戦闘開始メソッド
+        /// </summary>
+        public void EnterCombat()
+        {
+            if (!isInCombat)
+            {
+                StartCombat();
+                Debug.Log("[CombatManager] Entered combat mode");
+            }
+        }
+
+        /// <summary>
+        /// 戦闘状態更新
+        /// </summary>
+        public void UpdateCombat(float deltaTime)
+        {
+            if (isInCombat)
+            {
+                UpdateCombatTimer();
+
+                // 追加の戦闘更新処理
+                CheckCombatTargets();
+            }
+        }
+
+        /// <summary>
+        /// 戦闘ターゲットの状態確認
+        /// </summary>
+        private void CheckCombatTargets()
+        {
+            // 敵が全て倒されたかチェック
+            bool allEnemiesDefeated = true;
+            foreach (var target in combatTargets)
+            {
+                if (target != null)
+                {
+                    var health = target.GetComponent<Health>();
+                    if (health != null && health.CurrentHealth > 0)
+                    {
+                        allEnemiesDefeated = false;
+                        break;
+                    }
+                    else if (health != null && health.CurrentHealth <= 0)
+                    {
+                        // 敵撃破イベント発行
+                        OnEnemyDefeated?.Invoke();
+                    }
+                }
+            }
+
+            if (allEnemiesDefeated && isInCombat)
+            {
+                EndCombat();
             }
         }
 

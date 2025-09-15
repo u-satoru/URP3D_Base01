@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.ActionRPG.Character;
 using Sirenix.OdinInspector;
 
@@ -28,12 +28,12 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Equipment
         private GameEvent onEquipmentChanged;
 
         [BoxGroup("Events")]
-        // [SerializeField]
-        // private GameEvent<ItemData> onItemEquipped; // TODO: Implement after creating ItemData class
+        [SerializeField]
+        private GameEvent<ItemData> onItemEquipped;
 
         [BoxGroup("Events")]
-        // [SerializeField]
-        // private GameEvent<ItemData> onItemUnequipped; // TODO: Implement after creating ItemData class
+        [SerializeField]
+        private GameEvent<ItemData> onItemUnequipped;
 
         [BoxGroup("Current Equipment")]
         [ShowInInspector]
@@ -114,10 +114,7 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Equipment
                 characterProgression = FindFirstObjectByType<CharacterProgressionManager>();
             }
 
-            if (ServiceLocator.Instance != null)
-            {
-                inventoryManager = ServiceLocator.Instance.GetService<InventoryManager>();
-            }
+            inventoryManager = ServiceLocator.GetService<InventoryManager>();
 
             LogDebug("[EquipmentManager] Dependencies initialized");
         }
@@ -127,11 +124,8 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Equipment
         /// </summary>
         private void RegisterWithServices()
         {
-            if (ServiceLocator.Instance != null)
-            {
-                ServiceLocator.Instance.RegisterService<EquipmentManager>(this);
-                LogDebug("[EquipmentManager] Registered with ServiceLocator");
-            }
+            ServiceLocator.RegisterService<EquipmentManager>(this);
+            LogDebug("[EquipmentManager] Registered with ServiceLocator");
         }
 
         /// <summary>
@@ -139,11 +133,8 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Equipment
         /// </summary>
         private void UnregisterFromServices()
         {
-            if (ServiceLocator.Instance != null)
-            {
-                ServiceLocator.Instance.UnregisterService<EquipmentManager>();
-                LogDebug("[EquipmentManager] Unregistered from ServiceLocator");
-            }
+            ServiceLocator.UnregisterService<EquipmentManager>();
+            LogDebug("[EquipmentManager] Unregistered from ServiceLocator");
         }
 
         #region Equipment Management

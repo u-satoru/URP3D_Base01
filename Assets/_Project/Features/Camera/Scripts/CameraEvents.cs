@@ -22,7 +22,7 @@ namespace asterivo.Unity60.Camera
     /// カメラ状態変更イベント
     /// </summary>
     [CreateAssetMenu(fileName = "CameraStateEvent", menuName = "asterivo.Unity60/Events/Camera State Event")]
-    public class CameraStateEvent : GenericGameEvent<CameraState> { }
+    public class CameraStateEvent : GameEvent<CameraState> { }
     
     /// <summary>
     /// カメラ状態イベントリスナーインターフェース
@@ -33,7 +33,7 @@ namespace asterivo.Unity60.Camera
     /// Vector2入力イベント（ルック入力用）
     /// </summary>
     [CreateAssetMenu(fileName = "Vector2GameEvent", menuName = "asterivo.Unity60/Events/Vector2 Game Event")]
-    public class Vector2GameEvent : GenericGameEvent<Vector2> { }
+    public class Vector2GameEvent : GameEvent<Vector2> { }
     
     /// <summary>
     /// Vector2イベントリスナーインターフェース

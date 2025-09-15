@@ -771,6 +771,16 @@ public void Play3DSound(string soundId, Vector3 position, float maxDistance = 50
             LastSensorIntensity = 0f;
             LastStealthLevel = 0f;
         }
+
+        // Track objective complete sound calls
+        public int PlayObjectiveCompleteSoundCallCount { get; private set; }
+        public bool LastObjectiveCompleteWithBonus { get; private set; }
+
+        public void PlayObjectiveCompleteSound(bool withBonus)
+        {
+            PlayObjectiveCompleteSoundCallCount++;
+            LastObjectiveCompleteWithBonus = withBonus;
+        }
     }
 
     #endregion

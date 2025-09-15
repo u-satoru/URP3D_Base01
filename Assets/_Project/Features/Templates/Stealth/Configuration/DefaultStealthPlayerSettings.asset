@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6, type: 3}
+  m_Name: DefaultStealthPlayerSettings
+  walkSpeed: 3.5
+  runSpeed: 6.0
+  crouchSpeedMultiplier: 0.3
+  proneSpeedMultiplier: 0.1
+  sprintSpeedMultiplier: 1.5
+  baseStaminaCapacity: 100.0
+  staminaRegenRate: 15.0
+  sprintStaminaDrain: 25.0
+  movementVolumeModifiers:
+  - movementType: 0
+    volumeMultiplier: 0.1
+    description: Crouch - Very quiet movement
+  - movementType: 1
+    volumeMultiplier: 0.05
+    description: Prone - Nearly silent movement
+  - movementType: 2
+    volumeMultiplier: 1.0
+    description: Walk - Normal sound level
+  - movementType: 3
+    volumeMultiplier: 2.0
+    description: Run - Loud movement
+  - movementType: 4
+    volumeMultiplier: 3.5
+    description: Sprint - Very loud movement
+  baseLightVisibility: 1.0
+  baseNoiseGeneration: 1.0
+  hidingSpotEffectiveness: 1.0
+  learningProgression:
+    enableProgression: 1
+    initialSkillLevel: 0
+    maxSkillLevel: 5
+    experienceGainMultiplier: 1.0
+    skillUnlockThresholds:
+    - 0
+    - 100
+    - 250
+    - 500
+    - 850
+    - 1300
+    skillBenefits:
+    - skillLevel: 0
+      benefitDescription: Basic stealth movement
+      speedBonus: 0.0
+      noiseReduction: 0.0
+      detectionReduction: 0.0
+    - skillLevel: 1
+      benefitDescription: Improved quiet movement
+      speedBonus: 0.05
+      noiseReduction: 0.1
+      detectionReduction: 0.05
+    - skillLevel: 2
+      benefitDescription: Enhanced stealth techniques
+      speedBonus: 0.1
+      noiseReduction: 0.2
+      detectionReduction: 0.1
+    - skillLevel: 3
+      benefitDescription: Advanced infiltration skills
+      speedBonus: 0.15
+      noiseReduction: 0.3
+      detectionReduction: 0.15
+    - skillLevel: 4
+      benefitDescription: Expert stealth mastery
+      speedBonus: 0.2
+      noiseReduction: 0.4
+      detectionReduction: 0.2
+    - skillLevel: 5
+      benefitDescription: Master infiltrator
+      speedBonus: 0.25
+      noiseReduction: 0.5
+      detectionReduction: 0.25
+  accessibilityOptions:
+    enableColorblindSupport: 1
+    enableSubtitles: 1
+    enableReducedMotion: 0
+    simplifiedControls: 0
+    difficultyScaling: 1.0
+    visualAidIntensity: 1.0
+    audioAidIntensity: 1.0

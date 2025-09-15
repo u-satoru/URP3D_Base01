@@ -470,7 +470,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             // Auto-find NPCs if not manually assigned
             if (patrolNPCs.Count == 0)
             {
-                var foundNPCs = FindObjectsOfType<NPCPatrolController>();
+                var foundNPCs = FindObjectsByType<NPCPatrolController>(FindObjectsSortMode.None);
                 patrolNPCs.AddRange(foundNPCs);
             }
 

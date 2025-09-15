@@ -48,12 +48,21 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Skills
             SkillCooldowns.Clear();
             
             // デフォルトスキルの追加
-            var basicAttack = new SkillData("BasicAttack", "基本攻撃", 0, 1.0f);
+            var basicAttack = new SkillData("BasicAttack", "基本攻撃", 0, 1);
             LearnedSkills.Add(basicAttack.Id, basicAttack);
             
             Debug.Log("[SkillManager] スキルシステム初期化完了");
         }
-        
+
+        /// <summary>
+        /// 外部からのスキルマネージャー初期化
+        /// </summary>
+        public void Initialize()
+        {
+            InitializeSkillSystem();
+            Debug.Log("[SkillManager] External initialization completed");
+        }
+
         /// <summary>
         /// スキル習得
         /// </summary>
@@ -134,8 +143,23 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Skills
                 _ => null
             };
         }
+
+        /// <summary>
+        /// スキルシステムの更新処理
+        /// </summary>
+        public void UpdateSkills(float deltaTime)
+        {
+            // スキルクールダウン更新は既にUpdateで実行されているため、
+            // ここでは追加的な更新処理のみを実装
+
+            // 例：アクティブスキルの効果時間管理、コンボタイマー等
+            if (enableSkillCombos)
+            {
+                // コンボタイマーの処理など
+            }
+        }
     }
-    
+
     /// <summary>
     /// スキルデータクラス
     /// </summary>

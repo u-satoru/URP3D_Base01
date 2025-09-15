@@ -435,7 +435,7 @@ namespace asterivo.Unity60.Features.Templates.TPS.Player
         }
 
         // Public methods for external systems
-        public void Initialize(TPSTemplateManager templateManager)
+        public void Initialize(TPSTemplateConfiguration config)
         {
             // Initialize with template manager reference
             UnityEngine.Debug.Log("[TPS] TPSPlayerController initialized");

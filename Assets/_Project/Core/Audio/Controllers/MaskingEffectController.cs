@@ -6,6 +6,7 @@ using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Shared;
 using Sirenix.OdinInspector;
 
@@ -106,7 +107,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             
             if (playerTransform == null)
             {
-                EventLogger.LogWarningStatic("[MaskingEffectController] Player transform not found! Masking effects may not work properly.");
+                ServiceLocator.GetService<IEventLogger>().LogWarning("[MaskingEffectController] Player transform not found! Masking effects may not work properly.");
             }
         }
 
@@ -253,7 +254,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[MaskingEffectController] Failed to get IAudioUpdateService from ServiceLocator: {ex.Message}");
+                    ServiceLocator.GetService<IEventLogger>().LogError($"[MaskingEffectController] Failed to get IAudioUpdateService from ServiceLocator: {ex.Message}");
                 }
             }
             
@@ -291,7 +292,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[MaskingEffectController] Failed to unregister from IAudioUpdateService: {ex.Message}");
+                    ServiceLocator.GetService<IEventLogger>().LogError($"[MaskingEffectController] Failed to unregister from IAudioUpdateService: {ex.Message}");
                 }
             }
             

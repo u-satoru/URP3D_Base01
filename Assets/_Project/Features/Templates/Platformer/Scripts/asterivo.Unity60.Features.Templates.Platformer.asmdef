@@ -9,14 +9,17 @@
         "asterivo.Unity60.Core.Services",
         "asterivo.Unity60.Core.Components",
         "asterivo.Unity60.Core.Debug",
+        "asterivo.Unity60.Core.Templates",
         "asterivo.Unity60.Features",
+        "asterivo.Unity60.Features.Templates.Common",
         "asterivo.Unity60.Player",
         "asterivo.Unity60.Camera",
         "Unity.InputSystem",
         "Unity.Cinemachine",
         "Unity.TextMeshPro",
         "Unity.Mathematics",
-        "Unity.Collections"
+        "Unity.Collections",
+        "Sirenix.OdinInspector.Attributes"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -25,6 +28,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.cinemachine",
+            "expression": "3.1.4",
+            "define": "CINEMACHINE_3_1_4"
+        }
+    ],
     "noEngineReferences": false
 }

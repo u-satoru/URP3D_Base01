@@ -118,23 +118,15 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.UI
         /// </summary>
         private void SetupEventListeners()
         {
-            // ヘルス変更イベント
-            if (onHealthChanged != null)
-            {
-                onHealthChanged.AddListener(OnHealthChanged);
-            }
-            
-            // マナ変更イベント
-            if (onManaChanged != null)
-            {
-                onManaChanged.AddListener(OnManaChanged);
-            }
-            
-            // 経験値変更イベント
-            if (onExperienceChanged != null)
-            {
-                onExperienceChanged.AddListener(OnExperienceChanged);
-            }
+            // TODO: Event system integration needs to be updated to use IGameEventListener<T> pattern
+            // The current GameEvent<T> system uses RegisterListener with IGameEventListener<T> objects,
+            // not AddListener with simple method delegates
+
+            LogDebug("[HUDManager] Event listener registration temporarily disabled - needs IGameEventListener<T> implementation");
+
+            // ヘルス変更イベント - TODO: Implement IGameEventListener<float> for health changes
+            // マナ変更イベント - TODO: Implement IGameEventListener<float> for mana changes
+            // 経験値変更イベント - TODO: Implement IGameEventListener<float> for experience changes
         }
         
         /// <summary>
@@ -461,15 +453,53 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.UI
         
         private void OnDestroy()
         {
-            // イベントリスナー解除
-            if (onHealthChanged != null)
-                onHealthChanged.RemoveListener(OnHealthChanged);
-                
-            if (onManaChanged != null)
-                onManaChanged.RemoveListener(OnManaChanged);
-                
-            if (onExperienceChanged != null)
-                onExperienceChanged.RemoveListener(OnExperienceChanged);
+            // TODO: Event listener cleanup needs to be updated for IGameEventListener<T> pattern
+            LogDebug("[HUDManager] Event listener cleanup temporarily disabled - needs IGameEventListener<T> implementation");
+        }
+
+        /// <summary>
+        /// 外部からのHUDマネージャー初期化
+        /// </summary>
+        public void Initialize()
+        {
+            InitializeHUD();
+            SetupEventListeners();
+            Debug.Log("[HUDManager] External initialization completed");
+        }
+
+        /// <summary>
+        /// ゲームプレイHUD表示
+        /// </summary>
+        public void ShowGameplayHUD()
+        {
+            SetHUDVisibility(true);
+            Debug.Log("[HUDManager] Gameplay HUD shown");
+        }
+
+        /// <summary>
+        /// 戦闘HUD表示
+        /// </summary>
+        public void ShowCombatHUD()
+        {
+            SetHUDVisibility(true);
+            // 戦闘モード専用のHUD要素を有効化
+            Debug.Log("[HUDManager] Combat HUD shown");
+        }
+
+        /// <summary>
+        /// HUD更新処理
+        /// </summary>
+        public void UpdateHUD(float deltaTime)
+        {
+            UpdateHUDElements();
+        }
+
+        /// <summary>
+        /// デバッグログ出力
+        /// </summary>
+        private void LogDebug(string message)
+        {
+            Debug.Log(message);
         }
     }
 }

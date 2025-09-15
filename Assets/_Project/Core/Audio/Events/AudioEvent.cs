@@ -10,7 +10,7 @@ namespace asterivo.Unity60.Core.Audio.Events
     /// ステルスゲームに特化した音響システムの基盤
     /// </summary>
     [CreateAssetMenu(fileName = "New Audio Event", menuName = "asterivo.Unity60/Audio/Events/Audio Event")]
-    public class AudioEvent : GenericGameEvent<AudioEventData>
+    public class AudioEvent : GameEvent<AudioEventData>
     {
         #if UNITY_EDITOR
         [Header("Audio Debug Info")]

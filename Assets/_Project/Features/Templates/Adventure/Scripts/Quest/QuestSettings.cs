@@ -27,7 +27,12 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Quest
         private bool debugLogging = true;
 
         [TabGroup("Rewards", "Reward Settings")]
-        [Header("Experience Rewards")]
+        [Header("Reward Settings")]
+        [SerializeField]
+        [Tooltip("クエスト報酬システムを有効にする")]
+        private bool enableRewards = true;
+
+        [TabGroup("Rewards", "Reward Settings")]
         [SerializeField]
         [Tooltip("経験値報酬の基本倍率")]
         [Range(0.1f, 5.0f)]
@@ -40,7 +45,12 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Quest
         private float goldMultiplier = 1.0f;
 
         [TabGroup("Timing", "Time Settings")]
-        [Header("Time Limits")]
+        [Header("Time Settings")]
+        [SerializeField]
+        [Tooltip("クエストのタイマー機能を有効にする")]
+        private bool enableQuestTimers = true;
+
+        [TabGroup("Timing", "Time Settings")]
         [SerializeField]
         [Tooltip("制限時間のあるクエストのデフォルト時間（秒）")]
         [Min(60)]
@@ -80,6 +90,8 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Quest
         public int MaxActiveQuests => maxActiveQuests;
         public bool AutoSaveProgress => autoSaveProgress;
         public bool DebugLogging => debugLogging;
+        public bool EnableRewards => enableRewards;
+        public bool EnableQuestTimers => enableQuestTimers;
         public float ExperienceMultiplier => experienceMultiplier;
         public float GoldMultiplier => goldMultiplier;
         public float DefaultTimeLimit => defaultTimeLimit;
@@ -161,6 +173,8 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Quest
             maxActiveQuests = 10;
             autoSaveProgress = true;
             debugLogging = true;
+            enableRewards = true;
+            enableQuestTimers = true;
             experienceMultiplier = 1.0f;
             goldMultiplier = 1.0f;
             defaultTimeLimit = 600f;

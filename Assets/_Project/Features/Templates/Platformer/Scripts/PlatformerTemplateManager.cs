@@ -6,6 +6,10 @@ using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Features.Player.Scripts;
 using asterivo.Unity60.Player;
+using asterivo.Unity60.Features.Templates.Platformer.Camera;
+using asterivo.Unity60.Features.Templates.Platformer.Collectibles;
+using asterivo.Unity60.Features.Templates.Platformer.Platforms;
+using asterivo.Unity60.Features.Templates.Platformer.UI;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Features.Templates.Platformer
@@ -256,7 +260,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer
         /// </summary>
         private void CreateDefaultCameraSetup()
         {
-            Camera mainCamera = Camera.main;
+            UnityEngine.Camera mainCamera = UnityEngine.Camera.main;
             if (mainCamera != null && mainCamera.GetComponent<PlatformerCameraController>() == null)
             {
                 cameraController = mainCamera.gameObject.AddComponent<PlatformerCameraController>();
@@ -420,10 +424,10 @@ namespace asterivo.Unity60.Features.Templates.Platformer
         /// </summary>
         public void AddScore(int points)
         {
-            if (uiManager != null)
-            {
-                uiManager.AddScore(points);
-            }
+            // if (uiManager != null)
+            // {
+            //     uiManager.AddScore(points);
+            // }
         }
 
         /// <summary>

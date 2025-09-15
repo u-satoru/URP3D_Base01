@@ -241,7 +241,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
 
         #region Service References
 
-        private Camera playerCamera;
+        private UnityEngine.Camera playerCamera;
         private bool isInitialized = false;
 
         #endregion
@@ -291,7 +291,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
             try
             {
                 // カメラ参照取得
-                playerCamera = Camera.main ?? FindFirstObjectByType<Camera>();
+                playerCamera = UnityEngine.Camera.main ?? FindFirstObjectByType<UnityEngine.Camera>();
 
                 // プラットフォームグループの初期化
                 InitializePlatformGroups();

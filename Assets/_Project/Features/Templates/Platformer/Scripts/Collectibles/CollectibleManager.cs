@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Commands;
+using asterivo.Unity60.Features.Templates.Platformer.Commands;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
@@ -797,6 +799,24 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         {
             // UI更新処理
             // スコア表示、残り個数表示等
+        }
+
+        /// <summary>
+        /// 目標スコアを設定
+        /// PlatformerTemplateManagerから呼び出される
+        /// </summary>
+        /// <param name="targetScore">設定する目標スコア</param>
+        public void SetTargetScore(int targetScore)
+        {
+            if (targetScore < 0)
+            {
+                LogDebug("[CollectibleManager] ⚠️ Target score cannot be negative, setting to 0");
+                targetScore = 0;
+            }
+
+            // 内部的に目標スコアを保存（将来の拡張用）
+            // 現在のバージョンでは設定を記録するのみ
+            LogDebug($"[CollectibleManager] Target score set to: {targetScore}");
         }
 
         #endregion

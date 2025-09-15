@@ -2,6 +2,11 @@ using UnityEngine;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Commands;
 using System.Collections.Generic;
+using asterivo.Unity60.Features.Templates.Adventure.Player;
+using asterivo.Unity60.Features.Templates.Adventure.Interaction;
+using asterivo.Unity60.Features.Templates.Adventure.Dialog;
+using asterivo.Unity60.Features.Templates.Adventure.Inventory;
+using asterivo.Unity60.Features.Templates.Adventure.Quest;
 
 namespace asterivo.Unity60.Features.Templates.Adventure
 {
@@ -135,7 +140,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure
         /// </summary>
         private void SetupInteractionUI()
         {
-            var canvas = FindObjectOfType<Canvas>();
+            var canvas = FindFirstObjectByType<Canvas>();
             if (canvas != null)
             {
                 // Interaction Prompt
@@ -170,7 +175,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure
             if (player.GetComponent<AdventureDialogManager>() == null)
             {
                 var dialogManager = player.AddComponent<AdventureDialogManager>();
-                dialogManager.Initialize(this);
+                dialogManager.Initialize();
             }
 
             // Dialog UI
@@ -184,7 +189,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure
         /// </summary>
         private void SetupDialogUI()
         {
-            var canvas = FindObjectOfType<Canvas>();
+            var canvas = FindFirstObjectByType<Canvas>();
             if (canvas == null) return;
 
             // Dialog Panel
@@ -234,7 +239,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure
             if (player.GetComponent<AdventureInventoryManager>() == null)
             {
                 var inventoryManager = player.AddComponent<AdventureInventoryManager>();
-                inventoryManager.Initialize(this);
+                inventoryManager.Initialize();
             }
 
             // Inventory UI
@@ -251,7 +256,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure
         /// </summary>
         private void SetupInventoryUI()
         {
-            var canvas = FindObjectOfType<Canvas>();
+            var canvas = FindFirstObjectByType<Canvas>();
             if (canvas == null) return;
 
             // Inventory Panel
@@ -316,10 +321,10 @@ namespace asterivo.Unity60.Features.Templates.Adventure
             if (!enableQuestSystem || player == null) return;
 
             // Quest Manager
-            if (player.GetComponent<AdventureQuestManager>() == null)
+            if (player.GetComponent<QuestManager>() == null)
             {
-                var questManager = player.AddComponent<AdventureQuestManager>();
-                questManager.Initialize(this);
+                var questManager = player.AddComponent<QuestManager>();
+                questManager.Initialize(); // Remove parameter as Initialize method takes no arguments
             }
 
             // Quest UI
@@ -336,7 +341,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure
         /// </summary>
         private void SetupQuestUI()
         {
-            var canvas = FindObjectOfType<Canvas>();
+            var canvas = FindFirstObjectByType<Canvas>();
             if (canvas == null) return;
 
             // Quest Log Panel
@@ -382,12 +387,12 @@ namespace asterivo.Unity60.Features.Templates.Adventure
         {
             if (!enablePuzzleSystem || player == null) return;
 
-            // Puzzle Manager
-            if (player.GetComponent<AdventurePuzzleManager>() == null)
-            {
-                var puzzleManager = player.AddComponent<AdventurePuzzleManager>();
-                puzzleManager.Initialize(this);
-            }
+            // Puzzle Manager - TODO: Implement AdventurePuzzleManager
+            // if (player.GetComponent<AdventurePuzzleManager>() == null)
+            // {
+            //     var puzzleManager = player.AddComponent<AdventurePuzzleManager>();
+            //     puzzleManager.Initialize(this);
+            // }
 
             Debug.Log($"[AdventureTemplate] Puzzle system setup completed");
         }

@@ -8,7 +8,7 @@ namespace asterivo.Unity60.Core.Events
     /// PlayerState用のイベント定義（enum値で通信）
     /// </summary>
     [CreateAssetMenu(fileName = "PlayerStateEvent", menuName = "asterivo.Unity60/Events/Player State Event")]
-    public class PlayerStateEvent : GenericGameEvent<int> { } // Changed from PlayerState to int to avoid circular dependency
+    public class PlayerStateEvent : GameEvent<int> { } // Changed from PlayerState to int to avoid circular dependency
     
     /// <summary>
     /// PlayerStateイベントリスナー（一時的にコメントアウト - 型参照問題のため）
@@ -25,7 +25,7 @@ namespace asterivo.Unity60.Core.Events
     /// GameState用のイベント定義
     /// </summary>
     [CreateAssetMenu(fileName = "GameStateEvent", menuName = "asterivo.Unity60/Events/Game State Event")]
-    public class GameStateEvent : GenericGameEvent<int> { } // Using int to avoid circular dependency
+    public class GameStateEvent : GameEvent<int> { } // Using int to avoid circular dependency
     
     /// <summary>
     /// GameStateイベントリスナー（一時的にコメントアウト - 型参照問題のため）

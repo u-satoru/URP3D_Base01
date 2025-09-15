@@ -73,7 +73,7 @@ namespace asterivo.Unity60.Camera
         [SerializeField] private CoverViewSettings coverSettings;
         
         [Header("Events")]
-        [SerializeField] private GenericGameEvent<ViewMode> onViewModeChanged;
+        [SerializeField] private GameEvent<ViewMode> onViewModeChanged;
         
         [Header("Current State")]
         [SerializeField] private ViewMode currentMode = ViewMode.ThirdPerson;

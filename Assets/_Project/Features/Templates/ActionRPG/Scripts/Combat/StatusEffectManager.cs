@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Features.Templates.ActionRPG.Character;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Features.Templates.ActionRPG.Combat
@@ -85,11 +86,8 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Combat
         /// </summary>
         private void RegisterServices()
         {
-            if (ServiceLocator.Instance != null)
-            {
-                ServiceLocator.Instance.RegisterService<StatusEffectManager>(this);
-                LogDebug("[StatusEffect] Registered with ServiceLocator");
-            }
+            ServiceLocator.RegisterService<StatusEffectManager>(this);
+            LogDebug("[StatusEffect] Registered with ServiceLocator");
         }
 
         /// <summary>
@@ -97,11 +95,8 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Combat
         /// </summary>
         private void UnregisterServices()
         {
-            if (ServiceLocator.Instance != null)
-            {
-                ServiceLocator.Instance.UnregisterService<StatusEffectManager>();
-                LogDebug("[StatusEffect] Unregistered from ServiceLocator");
-            }
+            ServiceLocator.UnregisterService<StatusEffectManager>();
+            LogDebug("[StatusEffect] Unregistered from ServiceLocator");
         }
 
         #endregion
@@ -453,7 +448,7 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Combat
         {
             // ここでキャラクターステータスに修正を適用
             // CharacterProgressionManager との統合が必要
-            var progressionManager = ServiceLocator.Instance?.GetService<CharacterProgressionManager>();
+            var progressionManager = ServiceLocator.GetService<CharacterProgressionManager>();
             if (progressionManager != null)
             {
                 float modifier = effect.effectData.magnitude * effect.stacks;

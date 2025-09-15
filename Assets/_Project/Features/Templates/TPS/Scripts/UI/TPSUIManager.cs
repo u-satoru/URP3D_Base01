@@ -430,7 +430,32 @@ namespace asterivo.Unity60.Features.Templates.TPS.UI
         }
 
         // Public interface for template manager
-        public void Initialize(TPSTemplateManager manager)
+        
+
+        public void Initialize(TPSTemplateConfiguration configuration)
+        {
+            // Store reference to template manager if available
+            if (templateManager == null)
+            {
+                templateManager = FindFirstObjectByType<TPSTemplateManager>();
+            }
+            
+            // Apply configuration settings if needed
+            if (configuration != null)
+            {
+                // Configure UI elements based on configuration
+                // This could include setting up cover UI based on cover system enablement
+                if (coverStatusPanel != null)
+                {
+                    coverStatusPanel.SetActive(configuration.EnableCoverSystem);
+                }
+            }
+            
+            InitializeTPS();
+            
+            UnityEngine.Debug.Log("[TPS UI] TPSUIManager initialized with configuration");
+        }
+public void Initialize(TPSTemplateManager manager)
         {
             templateManager = manager;
             InitializeTPS();

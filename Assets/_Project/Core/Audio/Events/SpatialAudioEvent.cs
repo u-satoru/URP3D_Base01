@@ -34,7 +34,7 @@ namespace asterivo.Unity60.Core.Audio.Events
     /// 空間音響イベント
     /// </summary>
     [CreateAssetMenu(fileName = "SpatialAudioEvent", menuName = "Game Events/Audio/Spatial Audio Event")]
-    public class SpatialAudioEvent : GenericGameEvent<SpatialAudioData>
+    public class SpatialAudioEvent : GameEvent<SpatialAudioData>
     {
     }
 }

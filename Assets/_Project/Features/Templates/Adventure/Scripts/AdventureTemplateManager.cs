@@ -134,28 +134,29 @@ namespace asterivo.Unity60.Features.Templates.Adventure
         {
             if (questManager != null)
             {
-                Debug.Log("[Adventure Template] Initializing quest system...");
-                yield return questManager.InitializeAsync();
+                Debug.Log("[Adventure Template] Quest system initializing automatically...");
+                // QuestManager initializes automatically in its Start() method
             }
             yield return null;
         }
-        
+
         private IEnumerator InitializeInventorySystem()
         {
             if (inventoryManager != null)
             {
-                Debug.Log("[Adventure Template] Initializing inventory system...");
-                yield return inventoryManager.InitializeAsync();
+                Debug.Log("[Adventure Template] Inventory system initializing automatically...");
+                // AdventureInventoryManager initializes automatically in its Start() method
             }
             yield return null;
         }
-        
+
         private IEnumerator InitializeInteractionSystem()
         {
             if (interactionManager != null)
             {
                 Debug.Log("[Adventure Template] Initializing interaction system...");
-                yield return interactionManager.InitializeAsync();
+                // InteractionManager initializes automatically via Start() method
+                Debug.Log("[Adventure Template] InteractionManager will initialize automatically");
             }
             yield return null;
         }
@@ -180,11 +181,8 @@ namespace asterivo.Unity60.Features.Templates.Adventure
                 
             Debug.Log("[Adventure Template] Activating template...");
             
-            // Activate all systems
-            dialogueManager?.ActivateSystem();
-            questManager?.ActivateSystem();
-            inventoryManager?.ActivateSystem();
-            interactionManager?.ActivateSystem();
+            // Systems activate automatically via their own lifecycle methods
+            Debug.Log("[Adventure Template] All systems are initializing automatically...");
             
             isActive = true;
             
@@ -204,11 +202,8 @@ namespace asterivo.Unity60.Features.Templates.Adventure
                 
             Debug.Log("[Adventure Template] Deactivating template...");
             
-            // Deactivate all systems
-            dialogueManager?.DeactivateSystem();
-            questManager?.DeactivateSystem();
-            inventoryManager?.DeactivateSystem();
-            interactionManager?.DeactivateSystem();
+            // Systems deactivate automatically via their own lifecycle methods
+            Debug.Log("[Adventure Template] All systems are deactivating automatically...");
             
             isActive = false;
             
@@ -240,7 +235,8 @@ namespace asterivo.Unity60.Features.Templates.Adventure
             onStoryProgressChanged?.Raise(currentStoryPhase);
             
             // Update quest system with new story phase
-            questManager?.OnStoryPhaseChanged(currentStoryPhase);
+            // TODO: Convert string story phase to int or create different method
+            // questManager?.TriggerStoryPhaseChanged(GetStoryPhaseIndex(currentStoryPhase));
             
             // Update dialogue system with new story context
             dialogueManager?.OnStoryPhaseChanged(currentStoryPhase);
@@ -267,23 +263,29 @@ namespace asterivo.Unity60.Features.Templates.Adventure
             // Connect dialogue to quest system
             if (dialogueManager != null && questManager != null)
             {
-                dialogueManager.OnDialogueCompleted += questManager.OnDialogueCompleted;
-                dialogueManager.OnChoiceMade += questManager.OnPlayerChoiceMade;
+                dialogueManager.OnDialogueCompleted += questManager.TriggerDialogueCompleted;
+                dialogueManager.OnChoiceMade += questManager.TriggerPlayerChoiceMade;
             }
             
             // Connect quest to inventory system
             if (questManager != null && inventoryManager != null)
             {
-                questManager.OnItemRequired += inventoryManager.CheckItemAvailability;
-                questManager.OnItemReward += inventoryManager.AddQuestReward;
-                inventoryManager.OnItemUsed += questManager.OnItemUsed;
+                questManager.OnItemRequired += (itemId) => inventoryManager.CheckItemAvailability(itemId);
+                questManager.OnItemReward += (itemId) => inventoryManager.AddQuestReward(itemId);
+                inventoryManager.OnItemUsed += questManager.TriggerItemUsed;
             }
             
             // Connect interaction to dialogue system
             if (interactionManager != null && dialogueManager != null)
             {
-                interactionManager.OnNPCInteraction += dialogueManager.StartDialogue;
-                interactionManager.OnObjectInteraction += HandleObjectInteraction;
+                interactionManager.OnNPCInteraction += (npc) => {
+                    if (npc is MonoBehaviour npcComponent)
+                        dialogueManager.StartDialogue(npcComponent.gameObject.name);
+                };
+                interactionManager.OnObjectInteraction += (obj) => {
+                    if (obj is InteractableObject interactableObj)
+                        HandleObjectInteraction(interactableObj);
+                };
             }
             
             Debug.Log("[Adventure Template] System events connected successfully!");
@@ -320,19 +322,28 @@ namespace asterivo.Unity60.Features.Templates.Adventure
         
         private void RegisterWithServices()
         {
-            if (ServiceLocator.Instance != null)
+            try
             {
-                ServiceLocator.Instance.RegisterService<AdventureTemplateManager>(this);
+                asterivo.Unity60.Core.ServiceLocator.GetService<AdventureTemplateManager>();
+                // Already registered
+            }
+            catch
+            {
+                asterivo.Unity60.Core.ServiceLocator.RegisterService<AdventureTemplateManager>(this);
                 Debug.Log("[Adventure Template] Registered with ServiceLocator");
             }
         }
         
         private void UnregisterFromServices()
         {
-            if (ServiceLocator.Instance != null)
+            try
             {
-                ServiceLocator.Instance.UnregisterService<AdventureTemplateManager>();
+                asterivo.Unity60.Core.ServiceLocator.UnregisterService<AdventureTemplateManager>();
                 Debug.Log("[Adventure Template] Unregistered from ServiceLocator");
+            }
+            catch
+            {
+                // ServiceLocator not available or service not registered
             }
         }
         

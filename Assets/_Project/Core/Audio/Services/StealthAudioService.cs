@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core;
 using Sirenix.OdinInspector;
 using asterivo.Unity60.Core.Audio.Interfaces;
 
@@ -106,7 +107,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[StealthAudioService] Failed to register to ServiceLocator: {ex.Message}");
+                    ServiceLocator.GetService<IEventLogger>().LogError($"[StealthAudioService] Failed to register to ServiceLocator: {ex.Message}");
                     isServiceRegistered = false;
                 }
             }
@@ -130,7 +131,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[StealthAudioService] Failed to unregister from ServiceLocator: {ex.Message}");
+                    ServiceLocator.GetService<IEventLogger>().LogError($"[StealthAudioService] Failed to unregister from ServiceLocator: {ex.Message}");
                 }
                 finally
                 {
@@ -173,7 +174,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             // SerializeField による Inspector設定を推奨
             if (playerTransform == null)
             {
-                EventLogger.LogWarningStatic("[StealthAudioService] Player Transform not assigned! Please set in Inspector.");
+                ServiceLocator.GetService<IEventLogger>().LogWarning("[StealthAudioService] Player Transform not assigned! Please set in Inspector.");
             }
             else
             {
@@ -202,7 +203,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[StealthAudioService] Failed to retrieve AudioService from ServiceLocator: {ex.Message}");
+                    ServiceLocator.GetService<IEventLogger>().LogError($"[StealthAudioService] Failed to retrieve AudioService from ServiceLocator: {ex.Message}");
                 }
             }
         }
@@ -342,7 +343,30 @@ namespace asterivo.Unity60.Core.Audio.Services
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogErrorStatic($"[StealthAudioService] Failed to adjust stealth audio: {ex.Message}");
+                ServiceLocator.GetService<IEventLogger>().LogError($"[StealthAudioService] Failed to adjust stealth audio: {ex.Message}");
+            }
+        }
+
+        public void PlayObjectiveCompleteSound(bool withBonus)
+        {
+            if (!IsInitialized || audioService == null) return;
+            
+            try
+            {
+                string soundEffect = withBonus ? "objective_complete_bonus" : "objective_complete";
+                float volume = withBonus ? 1.0f : 0.8f;
+                
+                // Play the objective complete sound effect
+                audioService.PlaySound(soundEffect, Vector3.zero, volume);
+                
+                if (FeatureFlags.EnableDebugLogging)
+                {
+                    EventLogger.LogStatic($"[StealthAudioService] Objective complete sound played: withBonus={withBonus}");
+                }
+            }
+            catch (System.Exception ex)
+            {
+                ServiceLocator.GetService<IEventLogger>().LogError($"[StealthAudioService] Failed to play objective complete sound: {ex.Message}");
             }
         }
 
@@ -591,7 +615,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             }
             else
             {
-                EventLogger.LogErrorStatic($"[StealthAudioService] ❌ Service not found in ServiceLocator");
+                ServiceLocator.GetService<IEventLogger>().LogError($"[StealthAudioService] ❌ Service not found in ServiceLocator");
             }
         }
 

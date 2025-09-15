@@ -6,6 +6,7 @@ using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Shared;
 using Sirenix.OdinInspector;
 
@@ -80,7 +81,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                     }
                     catch (System.Exception ex)
                     {
-                        EventLogger.LogErrorStatic($"[TimeAmbientController] Failed to get IAudioUpdateService from ServiceLocator: {ex.Message}");
+                        ServiceLocator.GetService<IEventLogger>().LogError($"[TimeAmbientController] Failed to get IAudioUpdateService from ServiceLocator: {ex.Message}");
                     }
                 }
                 

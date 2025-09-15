@@ -49,6 +49,14 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Data
         }
         
         /// <summary>
+        /// 公開初期化メソッド（ActionRPGTemplateManager から呼び出し用）
+        /// </summary>
+        public void Initialize()
+        {
+            InitializeCustomization();
+        }
+
+        /// <summary>
         /// カスタマイゼーション初期化
         /// </summary>
         private void InitializeCustomization()

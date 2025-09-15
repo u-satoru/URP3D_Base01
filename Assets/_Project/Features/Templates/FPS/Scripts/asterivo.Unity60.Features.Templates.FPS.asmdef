@@ -11,6 +11,7 @@
         "asterivo.Unity60.Core.Debug",
         "asterivo.Unity60.Features",
         "asterivo.Unity60.Features.AI.Visual",
+        "asterivo.Unity60.Features.Templates.Common",
         "asterivo.Unity60.AI",
         "asterivo.Unity60.Player",
         "asterivo.Unity60.Camera",

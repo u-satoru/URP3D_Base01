@@ -7,7 +7,7 @@ namespace asterivo.Unity60.Core.Events
     /// ScriptableObject event for transmitting commands through the event system
     /// </summary>
     [CreateAssetMenu(fileName = "CommandEvent", menuName = "asterivo.Unity60/Events/Command Event")]
-    public class CommandGameEvent : GenericGameEvent<object> // Changed from ICommand to avoid circular dependency
+    public class CommandGameEvent : GameEvent<object> // Changed from ICommand to avoid circular dependency
     {
         [Header("Command Event Settings")]
         [SerializeField] private bool logCommandExecution = false;

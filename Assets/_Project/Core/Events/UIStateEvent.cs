@@ -7,7 +7,7 @@ namespace asterivo.Unity60.Core.Events
     /// UI状態変更イベント。UIパネルの表示・非表示やタイプ情報を含むイベントです。
     /// </summary>
     [CreateAssetMenu(fileName = "New UI State Event", menuName = "Game Events/UI State Event")]
-    public class UIStateEvent : GenericGameEvent<object> // Changed from UIStateData to object to avoid circular dependency
+    public class UIStateEvent : GameEvent<object> // Changed from UIStateData to object to avoid circular dependency
     {
     }
     

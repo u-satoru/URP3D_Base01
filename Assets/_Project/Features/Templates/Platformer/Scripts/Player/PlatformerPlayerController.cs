@@ -142,9 +142,9 @@ namespace asterivo.Unity60.Features.Templates.Platformer
             animator = GetComponent<Animator>();
 
             // カメラ参照の取得
-            if (Camera.main != null)
+            if (UnityEngine.Camera.main != null)
             {
-                cameraTransform = Camera.main.transform;
+                cameraTransform = UnityEngine.Camera.main.transform;
             }
         }
 
@@ -504,6 +504,42 @@ namespace asterivo.Unity60.Features.Templates.Platformer
             velocity = Vector3.zero;
             verticalVelocity = 0f;
             moveDirection = Vector3.zero;
+        }
+
+        #endregion
+
+        #region Public API Methods
+
+        /// <summary>
+        /// プレイヤーの現在の速度ベクトルを取得
+        /// カメラコントローラーから参照される
+        /// </summary>
+        /// <returns>現在の速度ベクトル</returns>
+        public Vector3 GetVelocity()
+        {
+            return velocity;
+        }
+
+        /// <summary>
+        /// プレイヤーがジャンプ中かどうかを判定
+        /// カメラコントローラーから参照される
+        /// </summary>
+        /// <returns>ジャンプ中の場合true</returns>
+        public bool IsJumping()
+        {
+            return !isGrounded && verticalVelocity > 0.1f;
+        }
+
+        /// <summary>
+        /// ターゲット設定（カメラ追従用）
+        /// 現在のバージョンでは実装なし（将来の拡張用）
+        /// </summary>
+        /// <param name="target">ターゲットTransform</param>
+        public void SetTarget(Transform target)
+        {
+            // 現在のバージョンでは特別な処理なし
+            // 将来の拡張でターゲッティングシステムを実装予定
+            Debug.Log($"[PlatformerPlayer] SetTarget called with: {target?.name ?? "null"}");
         }
 
         #endregion

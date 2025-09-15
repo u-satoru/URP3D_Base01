@@ -1,5 +1,7 @@
 using UnityEngine;
-using Cinemachine;
+using Unity.Cinemachine;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Features.Player.Scripts;
@@ -61,19 +63,19 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Camera
 
         [TabGroup("Cinemachine", "Virtual Cameras")]
         [Header("Cinemachine Virtual Cameras")]
-        [SerializeField] private CinemachineVirtualCamera followCamera;
-        [SerializeField] private CinemachineVirtualCamera aimCamera;
-        [SerializeField] private CinemachineVirtualCamera overviewCamera;
+        [SerializeField] private CinemachineCamera followCamera;
+        [SerializeField] private CinemachineCamera aimCamera;
+        [SerializeField] private CinemachineCamera overviewCamera;
 
         [TabGroup("Cinemachine", "Composers")]
         [Header("Cinemachine Composers")]
-        [SerializeField] private CinemachineFramingTransposer framingTransposer;
-        [SerializeField] private CinemachineComposer composer;
+        private CinemachineFramingTransposer framingTransposer;
+        private CinemachineComposer composer;
 
         [TabGroup("Cinemachine", "Settings")]
         [Header("Cinemachine Configuration")]
         [SerializeField, Range(0f, 10f)] private float cameraBlendTime = 1.5f;
-        [SerializeField] private CinemachineBlendDefinition.Style blendStyle = CinemachineBlendDefinition.Style.EaseInOut;
+        [SerializeField] private CinemachineBlendDefinition.Styles blendStyle = CinemachineBlendDefinition.Styles.EaseInOut;
 
         #endregion
 
@@ -104,7 +106,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Camera
         #region Service References
 
         private PlatformerPlayerController playerController;
-        private Camera mainCamera;
+        private UnityEngine.Camera mainCamera;
         private bool isInitialized = false;
 
         #endregion
@@ -128,6 +130,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Camera
         private void Awake()
         {
             InitializeCamera();
+            
+            var brain = FindObjectOfType<CinemachineBrain>();
+            if (brain != null)
+            {
+                brain.DefaultBlend.Style = blendStyle;
+                brain.DefaultBlend.Time = cameraBlendTime;
+            }
         }
 
         private void Start()
@@ -168,10 +177,10 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Camera
             try
             {
                 // メインカメラ取得
-                mainCamera = Camera.main;
+                mainCamera = UnityEngine.Camera.main;
                 if (mainCamera == null)
                 {
-                    mainCamera = FindFirstObjectByType<Camera>();
+                    mainCamera = FindFirstObjectByType<UnityEngine.Camera>();
                 }
 
                 // プレイヤーコントローラー取得
@@ -221,7 +230,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Camera
             GameObject followCamObj = new GameObject("PlatformerFollowCamera");
             followCamObj.transform.SetParent(transform);
 
-            followCamera = followCamObj.AddComponent<CinemachineVirtualCamera>();
+            followCamera = followCamObj.AddComponent<CinemachineCamera>();
             followCamera.Priority = 10;
 
             if (playerTarget != null)
@@ -231,10 +240,10 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Camera
             }
 
             // Transposerの設定
-            var transposer = followCamera.GetCinemachineComponent<CinemachineTransposer>();
+            var transposer = followCamera.GetComponent<CinemachineFollow>();
             if (transposer != null)
             {
-                transposer.m_FollowOffset = followOffset;
+                transposer.FollowOffset = followOffset;
             }
 
             LogDebug("[PlatformerCamera] ✅ Follow Virtual Camera created");
@@ -248,7 +257,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Camera
             if (followCamera != null)
             {
                 // Framing Transposer設定
-                framingTransposer = followCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+                framingTransposer = followCamera.GetComponent<CinemachineFramingTransposer>();
                 if (framingTransposer != null)
                 {
                     framingTransposer.m_XDamping = positionDamping;
@@ -257,7 +266,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Camera
                 }
 
                 // Composer設定
-                composer = followCamera.GetCinemachineComponent<CinemachineComposer>();
+                composer = followCamera.GetComponent<CinemachineComposer>();
                 if (composer != null)
                 {
                     composer.m_HorizontalDamping = rotationDamping;
@@ -298,7 +307,8 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Camera
         private void RegisterEventListeners()
         {
             // プレイヤーイベントリスナー登録
-            if (ServiceLocator.TryGetService<IEventLogger>(out var eventLogger))
+            var eventLogger = ServiceLocator.GetService<IEventLogger>();
+            if (eventLogger != null)
             {
                 // ジャンプイベント
                 // フォールイベント
@@ -482,10 +492,10 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Camera
             // Virtual Cameraの更新
             if (followCamera != null)
             {
-                var transposer = followCamera.GetCinemachineComponent<CinemachineTransposer>();
+                var transposer = followCamera.GetComponent<CinemachineFollow>();
                 if (transposer != null)
                 {
-                    transposer.m_FollowOffset = Vector3.Slerp(transposer.m_FollowOffset, adjustedOffset,
+                    transposer.FollowOffset = Vector3.Slerp(transposer.FollowOffset, adjustedOffset,
                         verticalFollowSpeed * Time.deltaTime);
                 }
             }
@@ -700,6 +710,16 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Camera
         }
 
         /// <summary>
+        /// ターゲット設定（SetPlayerTargetのエイリアス）
+        /// PlatformerTemplateManagerから呼び出される
+        /// </summary>
+        /// <param name="target">追従対象のTransform</param>
+        public void SetTarget(Transform target)
+        {
+            SetPlayerTarget(target);
+        }
+
+        /// <summary>
         /// カメラ設定の動的更新
         /// </summary>
         public void UpdateCameraSettings(Vector3 newOffset, float newFollowSpeed)
@@ -710,10 +730,10 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Camera
             // Virtual Cameraの設定更新
             if (followCamera != null)
             {
-                var transposer = followCamera.GetCinemachineComponent<CinemachineTransposer>();
+                var transposer = followCamera.GetComponent<CinemachineFollow>();
                 if (transposer != null)
                 {
-                    transposer.m_FollowOffset = newOffset;
+                    transposer.FollowOffset = newOffset;
                 }
             }
         }

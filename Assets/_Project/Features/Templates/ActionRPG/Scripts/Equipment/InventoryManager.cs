@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Features.Templates.ActionRPG.Equipment
@@ -32,12 +32,12 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Equipment
         private GameEvent onInventoryChanged;
 
         [BoxGroup("Events")]
-        // [SerializeField]
-        // private GameEvent<ItemData> onItemAdded; // TODO: Implement after creating ItemData class
+        [SerializeField]
+        private GameEvent<ItemData> onItemAdded;
 
         [BoxGroup("Events")]
-        // [SerializeField]
-        // private GameEvent<ItemData> onItemRemoved; // TODO: Implement after creating ItemData class
+        [SerializeField]
+        private GameEvent<ItemData> onItemRemoved;
 
         [BoxGroup("Events")]
         [SerializeField]
@@ -107,11 +107,8 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Equipment
         /// </summary>
         private void RegisterWithServices()
         {
-            if (ServiceLocator.Instance != null)
-            {
-                ServiceLocator.Instance.RegisterService<InventoryManager>(this);
-                LogDebug("[InventoryManager] Registered with ServiceLocator");
-            }
+            ServiceLocator.RegisterService<InventoryManager>(this);
+            LogDebug("[InventoryManager] Registered with ServiceLocator");
         }
 
         /// <summary>
@@ -119,11 +116,8 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Equipment
         /// </summary>
         private void UnregisterFromServices()
         {
-            if (ServiceLocator.Instance != null)
-            {
-                ServiceLocator.Instance.UnregisterService<InventoryManager>();
-                LogDebug("[InventoryManager] Unregistered from ServiceLocator");
-            }
+            ServiceLocator.UnregisterService<InventoryManager>();
+            LogDebug("[InventoryManager] Unregistered from ServiceLocator");
         }
 
         #region Item Management

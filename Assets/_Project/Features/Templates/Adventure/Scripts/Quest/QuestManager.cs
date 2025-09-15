@@ -4,7 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
+using GameEventTwoArgs = asterivo.Unity60.Core.Events.GameEvent<asterivo.Unity60.Features.Templates.Adventure.Quest.QuestData, asterivo.Unity60.Features.Templates.Adventure.Quest.QuestObjective>;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Features.Templates.Adventure.Dialogue;
+using asterivo.Unity60.Features.Templates.Adventure.Data;
+using asterivo.Unity60.Features.Templates.Adventure.Inventory;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Features.Templates.Adventure.Quest
@@ -24,7 +29,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Quest
         [Header("Event Channels")]
         [SerializeField] private QuestDataGameEvent onQuestStarted;
         [SerializeField] private QuestDataGameEvent onQuestCompleted;
-        // [SerializeField] private GameEvent<QuestData, QuestObjective> onObjectiveCompleted; // TODO: Implement after creating QuestObjective class
+        [SerializeField] private GameEventTwoArgs onObjectiveCompleted;
         [SerializeField] private QuestDataGameEvent onQuestFailed;
         [SerializeField] private GameEvent onQuestsUpdated;
         
@@ -87,7 +92,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Quest
         
         #region Initialization
         
-        private void Initialize()
+        public void Initialize()
         {
             if (questSettings == null)
             {
@@ -97,11 +102,8 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Quest
             
             IsActive = true;
             
-            // Register with Service Locator if available
-            if (ServiceLocator.Instance != null)
-            {
-                ServiceLocator.Instance.RegisterService<QuestManager>(this);
-            }
+            // Register with Service Locator
+            asterivo.Unity60.Core.ServiceLocator.RegisterService<QuestManager>(this);
             
             Debug.Log("[QuestManager] Quest system initialized successfully.");
         }
@@ -116,11 +118,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Quest
         
         private void Cleanup()
         {
-            if (ServiceLocator.Instance != null)
-            {
-                ServiceLocator.Instance.UnregisterService<QuestManager>();
-            }
-            
+            asterivo.Unity60.Core.ServiceLocator.UnregisterService<QuestManager>();
             IsActive = false;
         }
         
@@ -226,7 +224,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Quest
             completedQuests.Add(questData);
             
             // Handle rewards if specified
-            if (questSettings.enableRewards && questData.rewards != null && questData.rewards.Count > 0)
+            if (questSettings.EnableRewards && questData.rewards != null && questData.rewards.Count > 0)
             {
                 HandleQuestRewards(questData);
             }
@@ -327,7 +325,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Quest
         private void UpdateQuests()
         {
             // Update quest timers if enabled
-            if (questSettings.enableQuestTimers)
+            if (questSettings.EnableQuestTimers)
             {
                 for (int i = activeQuests.Count - 1; i >= 0; i--)
                 {
@@ -424,8 +422,224 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Quest
             Debug.Log($"[QuestManager] Failed Quests: {failedQuests.Count}");
             Debug.Log($"[QuestManager] Completion Rate: {questCompletionRate:P}");
         }
-        
+
         #endregion
+
+        #region Adventure Template Integration Methods
+
+        /// <summary>
+        /// Event fired when story phase changes - used by AdventureTemplateManager
+        /// </summary>
+        public event Action<string> OnStoryPhaseChanged;
+
+        /// <summary>
+        /// Event fired when dialogue is completed - used by AdventureTemplateManager
+        /// </summary>
+        public event Action<string> OnDialogueCompleted;
+
+        /// <summary>
+        /// Event fired when player makes a choice - used by AdventureTemplateManager
+        /// </summary>
+        public event Action<string> OnPlayerChoiceMade;
+
+        /// <summary>
+        /// Event fired when quest requires an item - used by AdventureTemplateManager
+        /// </summary>
+        public event Action<string> OnItemRequired;
+
+        /// <summary>
+        /// Event fired when quest rewards an item - used by AdventureTemplateManager
+        /// </summary>
+        public event Action<string> OnItemReward;
+
+        /// <summary>
+        /// Event fired when item is used in quest context - used by AdventureTemplateManager
+        /// </summary>
+        public event Action<string> OnItemUsed;
+
+        /// <summary>
+        /// Gets overall progress percentage across all active quests
+        /// </summary>
+        public float GetOverallProgressPercentage()
+        {
+            if (!IsActive || activeQuests.Count == 0)
+                return 0f;
+
+            float totalProgress = 0f;
+
+            foreach (var questInstance in activeQuests)
+            {
+                totalProgress += GetQuestProgress(questInstance.questData);
+            }
+
+            return totalProgress / activeQuests.Count;
+        }
+
+        /// <summary>
+        /// Triggers a quest by ID - alias for StartQuest
+        /// </summary>
+        public bool TriggerQuest(string questId)
+        {
+            if (string.IsNullOrEmpty(questId) || questSettings == null)
+                return false;
+
+            // Find quest data by ID
+            // TODO: Fix availableQuests property - QuestSettings doesn't have this property
+            // var questData = questSettings.availableQuests?.FirstOrDefault(q => q.questId == questId);
+            QuestData questData = null;
+            if (questData == null)
+            {
+                Debug.LogWarning($"[QuestManager] Quest with ID '{questId}' not found in quest settings.");
+                return false;
+            }
+
+            return StartQuest(questData);
+        }
+
+        /// <summary>
+        /// Gets quest data by ID
+        /// </summary>
+                /// <summary>
+        /// Gets the current state of a quest by ID
+        /// </summary>
+        public QuestState GetQuestState(string questId)
+        {
+            if (string.IsNullOrEmpty(questId))
+                return QuestState.None;
+
+            // Check active quests
+            if (activeQuests?.Any(q => q.questData.questId == questId) == true)
+                return QuestState.InProgress;
+
+            // Check completed quests
+            if (completedQuests?.Any(q => q.questId == questId) == true)
+                return QuestState.Completed;
+
+            // Check failed quests
+            if (failedQuests?.Any(q => q.questId == questId) == true)
+                return QuestState.Failed;
+
+            // Check if quest exists in settings but not started
+            // TODO: Fix availableQuests property - QuestSettings doesn't have this property
+            // var questData = questSettings?.availableQuests?.FirstOrDefault(q => q.questId == questId);
+            QuestData questData = null;
+            if (questData != null)
+                return QuestState.Available;
+
+            return QuestState.None;
+        }
+
+        /// <summary>
+        /// Gets quest data by ID
+        /// </summary>
+public QuestData GetQuest(string questId)
+        {
+            if (string.IsNullOrEmpty(questId) || questSettings == null)
+                return null;
+
+            // First check active quests
+            var activeQuest = activeQuests?.FirstOrDefault(q => q.questData.questId == questId);
+            if (activeQuest != null)
+                return activeQuest.questData;
+
+            // Then check all available quests in settings
+            // TODO: Fix availableQuests property - QuestSettings doesn't have this property
+            // return questSettings.availableQuests?.FirstOrDefault(q => q.questId == questId);
+            return null;
+        }
+
+        /// <summary>
+        /// Triggers story phase change event
+        /// </summary>
+        public void TriggerStoryPhaseChange(string phaseName)
+        {
+            OnStoryPhaseChanged?.Invoke(phaseName);
+            Debug.Log($"[QuestManager] Story phase changed to: {phaseName}");
+        }
+
+        /// <summary>
+        /// Triggers dialogue completion event
+        /// </summary>
+        public void TriggerDialogueCompleted(string dialogueId)
+        {
+            OnDialogueCompleted?.Invoke(dialogueId);
+            Debug.Log($"[QuestManager] Dialogue completed: {dialogueId}");
+        }
+
+        /// <summary>
+        /// Triggers player choice made event
+        /// </summary>
+        public void TriggerPlayerChoiceMade(string choiceId)
+        {
+            OnPlayerChoiceMade?.Invoke(choiceId);
+            Debug.Log($"[QuestManager] Player choice made: {choiceId}");
+        }
+
+        /// <summary>
+        /// Triggers item required event
+        /// </summary>
+        public void TriggerItemRequired(string itemId)
+        {
+            OnItemRequired?.Invoke(itemId);
+            Debug.Log($"[QuestManager] Item required: {itemId}");
+        }
+
+        /// <summary>
+        /// Triggers item reward event
+        /// </summary>
+        public void TriggerItemReward(string itemId)
+        {
+            OnItemReward?.Invoke(itemId);
+            Debug.Log($"[QuestManager] Item reward: {itemId}");
+        }
+
+        /// <summary>
+        /// Triggers item used event
+        /// </summary>
+        public void TriggerItemUsed(string itemId)
+        {
+            OnItemUsed?.Invoke(itemId);
+            Debug.Log($"[QuestManager] Item used: {itemId}");
+        }
+
+        
+
+        #region Adventure Template Trigger Methods
+
+        /// <summary>
+        /// Trigger method for story phase changes from AdventureTemplateManager
+        /// </summary>
+        public void TriggerStoryPhaseChanged(int storyPhase)
+        {
+            OnStoryPhaseChanged?.Invoke(storyPhase.ToString()); // Convert int to string for Action<string> event
+        }
+
+        /// <summary>
+        /// Trigger method for dialogue completion from AdventureTemplateManager
+        /// </summary>
+        public void TriggerDialogueCompleted(DialogueData dialogueData)
+        {
+            OnDialogueCompleted?.Invoke(dialogueData?.dialogueID ?? "Unknown"); // Use dialogueID instead of name property // Convert DialogueData to string for Action<string> event
+        }
+
+        /// <summary>
+        /// Trigger method for player choice from AdventureTemplateManager
+        /// </summary>
+        public void TriggerPlayerChoiceMade(int choiceIndex, string choiceText)
+        {
+            OnPlayerChoiceMade?.Invoke(choiceText); // Only pass choiceText as the event expects Action<string>
+        }
+
+        /// <summary>
+        /// Trigger method for item usage from AdventureTemplateManager
+        /// </summary>
+        public void TriggerItemUsed(AdventureItemData itemData)
+        {
+            OnItemUsed?.Invoke(itemData?.name ?? "Unknown"); // Convert AdventureItemData to string for Action<string> event
+        }
+
+        #endregion
+#endregion
     }
     
     /// <summary>

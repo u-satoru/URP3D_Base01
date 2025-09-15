@@ -61,7 +61,7 @@ namespace asterivo.Unity60.Player.States
         /// <summary>
         /// プレイヤーの状態が変更されたときに発行されるイベント。
         /// </summary>
-        [SerializeField] private GenericGameEvent<PlayerStateType> onStateChanged;
+        [SerializeField] private GameEvent<PlayerStateType> onStateChanged;
         /// <summary>
         /// プレイヤーの移動姿勢（立位、しゃがみなど）が変更されたときに発行されるイベント。
         /// </summary>

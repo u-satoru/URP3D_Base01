@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using UnityEngine;
 using asterivo.Unity60.Features.Templates.ActionRPG;
 using asterivo.Unity60.Features.Templates.ActionRPG.Character;
 using asterivo.Unity60.Features.Templates.ActionRPG.Equipment;
 using asterivo.Unity60.Features.Templates.ActionRPG.Combat;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Services;
 
 namespace asterivo.Unity60.Tests.Performance
@@ -53,8 +55,8 @@ namespace asterivo.Unity60.Tests.Performance
         {
             // Find system components
             characterProgression = FindFirstObjectByType<CharacterProgressionManager>();
-            inventoryManager = ServiceLocator.Instance?.GetService<InventoryManager>();
-            equipmentManager = ServiceLocator.Instance?.GetService<EquipmentManager>();
+            inventoryManager = ServiceLocator.GetService<InventoryManager>();
+            equipmentManager = ServiceLocator.GetService<EquipmentManager>();
             combatManager = FindFirstObjectByType<CombatManager>();
             statusEffectManager = FindFirstObjectByType<StatusEffectManager>();
 
@@ -103,7 +105,7 @@ namespace asterivo.Unity60.Tests.Performance
             for (int i = 0; i < measurementSamples; i++)
             {
                 stopwatch.Start();
-                characterProgression.GainExperience(100);
+                characterProgression.AddExperience(100);
                 stopwatch.Stop();
 
                 characterProgressionMetrics.AddSample("Experience Gain", stopwatch.Elapsed.TotalMilliseconds);
@@ -117,7 +119,7 @@ namespace asterivo.Unity60.Tests.Performance
             for (int i = 0; i < 10; i++)
             {
                 stopwatch.Start();
-                characterProgression.GainExperience(characterProgression.ExperienceToNextLevel);
+                characterProgression.AddExperience(characterProgression.ExperienceToNextLevel);
                 stopwatch.Stop();
 
                 characterProgressionMetrics.AddSample("Level Up", stopwatch.Elapsed.TotalMilliseconds);
@@ -266,14 +268,14 @@ namespace asterivo.Unity60.Tests.Performance
             for (int i = 0; i < measurementSamples; i++)
             {
                 stopwatch.Start();
-                health.TakeDamage(10f, gameObject);
+                health.TakeDamage(10, gameObject);
                 stopwatch.Stop();
 
                 combatMetrics.AddSample("Damage Calculation", stopwatch.Elapsed.TotalMilliseconds);
                 stopwatch.Reset();
 
                 // Heal back to full for next test
-                health.Heal(10f);
+                health.Heal(10);
 
                 if (i % 10 == 0) yield return null;
             }
@@ -346,7 +348,7 @@ namespace asterivo.Unity60.Tests.Performance
             PrintSystemMetrics("STATUS EFFECT SYSTEM", statusEffectMetrics);
 
             // Memory usage analysis
-            var memoryUsage = UnityEngine.Profiling.Profiler.GetTotalAllocatedMemory(0);
+            var memoryUsage = UnityEngine.Profiling.Profiler.GetTotalAllocatedMemoryLong();
             var memoryMB = memoryUsage / (1024 * 1024);
             LogDebug($"MEMORY USAGE: {memoryMB:F2} MB");
 
@@ -390,7 +392,7 @@ namespace asterivo.Unity60.Tests.Performance
             }
 
             // Memory optimization
-            var memoryUsage = UnityEngine.Profiling.Profiler.GetTotalAllocatedMemory(0);
+            var memoryUsage = UnityEngine.Profiling.Profiler.GetTotalAllocatedMemoryLong();
             if (memoryUsage > 100 * 1024 * 1024) // 100MB
             {
                 LogDebug("• Consider object pooling for frequently created objects");
@@ -402,34 +404,34 @@ namespace asterivo.Unity60.Tests.Performance
 
         #region Helper Methods
 
-        private ItemData CreateTestItem()
+        private asterivo.Unity60.Features.Templates.ActionRPG.Equipment.ItemData CreateTestItem()
         {
-            var item = ScriptableObject.CreateInstance<ItemData>();
+            var item = ScriptableObject.CreateInstance<asterivo.Unity60.Features.Templates.ActionRPG.Equipment.ItemData>();
             item.itemName = "Performance Test Item";
-            item.itemType = ItemType.Consumable;
+            item.itemType = asterivo.Unity60.Features.Templates.ActionRPG.Equipment.ItemType.Consumable;
             item.maxStackSize = 99;
             return item;
         }
 
-        private ItemData CreateTestWeapon()
+        private asterivo.Unity60.Features.Templates.ActionRPG.Equipment.ItemData CreateTestWeapon()
         {
-            var weapon = ScriptableObject.CreateInstance<ItemData>();
+            var weapon = ScriptableObject.CreateInstance<asterivo.Unity60.Features.Templates.ActionRPG.Equipment.ItemData>();
             weapon.itemName = "Performance Test Weapon";
-            weapon.itemType = ItemType.Weapon;
-            weapon.equipmentSlot = EquipmentSlot.MainHand;
+            weapon.itemType = asterivo.Unity60.Features.Templates.ActionRPG.Equipment.ItemType.Weapon;
+            weapon.equipmentSlot = asterivo.Unity60.Features.Templates.ActionRPG.Equipment.EquipmentSlot.MainHand;
             weapon.maxStackSize = 1;
-            weapon.stats = new EquipmentStats { attackPower = 10 };
+            weapon.stats = new asterivo.Unity60.Features.Templates.ActionRPG.Equipment.EquipmentStats { attackPower = 10 };
             return weapon;
         }
 
-        private ItemData CreateTestArmor()
+        private asterivo.Unity60.Features.Templates.ActionRPG.Equipment.ItemData CreateTestArmor()
         {
-            var armor = ScriptableObject.CreateInstance<ItemData>();
+            var armor = ScriptableObject.CreateInstance<asterivo.Unity60.Features.Templates.ActionRPG.Equipment.ItemData>();
             armor.itemName = "Performance Test Armor";
-            armor.itemType = ItemType.Armor;
-            armor.equipmentSlot = EquipmentSlot.Chest;
+            armor.itemType = asterivo.Unity60.Features.Templates.ActionRPG.Equipment.ItemType.Armor;
+            armor.equipmentSlot = asterivo.Unity60.Features.Templates.ActionRPG.Equipment.EquipmentSlot.Chest;
             armor.maxStackSize = 1;
-            armor.stats = new EquipmentStats { defense = 5 };
+            armor.stats = new asterivo.Unity60.Features.Templates.ActionRPG.Equipment.EquipmentStats { defense = 5 };
             return armor;
         }
 
@@ -445,12 +447,12 @@ namespace asterivo.Unity60.Tests.Performance
 
         private void LogDebug(string message)
         {
-            Debug.Log($"[ActionRPG Profiler] {message}");
+            UnityEngine.Debug.Log($"[ActionRPG Profiler] {message}");
         }
 
         private void LogWarning(string message)
         {
-            Debug.LogWarning($"[ActionRPG Profiler] {message}");
+            UnityEngine.Debug.LogWarning($"[ActionRPG Profiler] {message}");
         }
 
         #endregion

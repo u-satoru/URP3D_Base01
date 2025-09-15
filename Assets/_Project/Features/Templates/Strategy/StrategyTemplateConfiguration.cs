@@ -2,6 +2,10 @@ using UnityEngine;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Commands;
 using System.Collections.Generic;
+using asterivo.Unity60.Features.Templates.Strategy.Camera;
+using asterivo.Unity60.Features.Templates.Strategy.Units;
+using asterivo.Unity60.Features.Templates.Strategy.Resources;
+using asterivo.Unity60.Features.Templates.Strategy.Buildings;
 
 namespace asterivo.Unity60.Features.Templates.Strategy
 {
@@ -105,7 +109,7 @@ namespace asterivo.Unity60.Features.Templates.Strategy
         /// <summary>
         /// Strategyカメラシステムの初期設定
         /// </summary>
-        public void SetupRTSCamera(Camera mainCamera)
+        public void SetupRTSCamera(UnityEngine.Camera mainCamera)
         {
             if (mainCamera == null || !enableRTSCamera) return;
 
@@ -113,7 +117,7 @@ namespace asterivo.Unity60.Features.Templates.Strategy
             if (mainCamera.GetComponent<StrategyCameraController>() == null)
             {
                 var cameraController = mainCamera.gameObject.AddComponent<StrategyCameraController>();
-                cameraController.Initialize(this);
+                // StrategyCameraController initializes automatically in its Awake/Start methods
             }
 
             // Set initial position and rotation
@@ -138,7 +142,7 @@ namespace asterivo.Unity60.Features.Templates.Strategy
             {
                 var managerGO = new GameObject("UnitSelectionManager");
                 selectionManager = managerGO.AddComponent<StrategyUnitSelectionManager>();
-                selectionManager.Initialize(this);
+                selectionManager.Initialize();
             }
 
             // Setup selection UI
@@ -208,7 +212,10 @@ namespace asterivo.Unity60.Features.Templates.Strategy
             }
 
             // Initialize starting resources
-            resourceManager.SetResources(startingGold, startingWood, startingStone, startingFood);
+            resourceManager.SetResource(ResourceType.Gold, startingGold);
+            resourceManager.SetResource(ResourceType.Wood, startingWood);
+            resourceManager.SetResource(ResourceType.Stone, startingStone);
+            resourceManager.SetResource(ResourceType.Food, startingFood);
 
             // Setup resource UI
             SetupResourceUI();
@@ -371,14 +378,15 @@ namespace asterivo.Unity60.Features.Templates.Strategy
         {
             if (!enableMinimap) return;
 
+            // TODO: Implement StrategyMinimapManager
             // Find or create Minimap Manager
-            var minimapManager = FindObjectOfType<StrategyMinimapManager>();
-            if (minimapManager == null)
-            {
-                var managerGO = new GameObject("MinimapManager");
-                minimapManager = managerGO.AddComponent<StrategyMinimapManager>();
-                minimapManager.Initialize(this);
-            }
+            // var minimapManager = FindObjectOfType<StrategyMinimapManager>();
+            // if (minimapManager == null)
+            // {
+            //     var managerGO = new GameObject("MinimapManager");
+            //     minimapManager = managerGO.AddComponent<StrategyMinimapManager>();
+            //     minimapManager.Initialize(this);
+            // }
 
             // Setup minimap UI
             SetupMinimapUI();

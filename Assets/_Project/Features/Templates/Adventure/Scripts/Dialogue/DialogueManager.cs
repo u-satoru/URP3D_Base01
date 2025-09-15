@@ -336,7 +336,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Dialogue
             // Handle story phase changes
             if (!string.IsNullOrEmpty(choice.storyPhase))
             {
-                var adventureManager = ServiceLocator.Instance?.GetService<AdventureTemplateManager>();
+                var adventureManager = asterivo.Unity60.Core.ServiceLocator.GetService<AdventureTemplateManager>();
                 adventureManager?.UpdateStoryProgress(choice.storyPhase);
             }
             

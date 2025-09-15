@@ -23,7 +23,7 @@ namespace asterivo.Unity60.Camera.States
         [SerializeField] private AimSettings aimSettings;
         
         [Header("Events")]
-        [SerializeField] private GenericGameEvent<CameraStateType> onCameraStateChanged;
+        [SerializeField] private GameEvent<CameraStateType> onCameraStateChanged;
         
         private ICameraState currentState;
         private Dictionary<CameraStateType, ICameraState> states;

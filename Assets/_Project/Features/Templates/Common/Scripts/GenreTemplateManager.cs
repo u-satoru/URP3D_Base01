@@ -197,43 +197,62 @@ namespace asterivo.Unity60.Features.Templates.Common
             // イベント発行
             _onGenreChangeStarted?.Raise(newGenre);
             
-            try
+            // Execute transition phases with error handling
+            bool transitionSuccessful = true;
+
+            // Phase 1: データ保存（進捗保持の場合）
+            if (preserveProgress && _preserveProgressDuringTransition)
             {
-                // Phase 1: データ保存（進捗保持の場合）
-                if (preserveProgress && _preserveProgressDuringTransition)
-                {
-                    yield return StartCoroutine(SaveCurrentProgress());
-                    _transitionState.ProgressSaved = true;
-                }
-                
-                // Phase 2: 現在のテンプレート無効化
+                yield return StartCoroutine(SaveCurrentProgress());
+                _transitionState.ProgressSaved = true;
+                LogDebug("Progress saved successfully");
+            }
+            
+            // Phase 2: 現在のテンプレート無効化
+            if (transitionSuccessful)
+            {
                 yield return StartCoroutine(DeactivateCurrentTemplate());
                 _transitionState.PreviousTemplateDeactivated = true;
-                
-                // Phase 3: 新しいテンプレート適用
+                LogDebug("Previous template deactivated successfully");
+            }
+            
+            // Phase 3: 新しいテンプレート適用
+            if (transitionSuccessful)
+            {
                 _currentGenre = newGenre;
                 _currentTemplate = newTemplate;
                 yield return StartCoroutine(ActivateNewTemplate());
                 _transitionState.NewTemplateActivated = true;
-                
-                // Phase 4: シーン遷移（必要な場合）
-                if (_enableSceneTransition && ShouldTransitionScene(previousGenre, newGenre))
-                {
-                    yield return StartCoroutine(PerformSceneTransition());
-                    _transitionState.SceneTransitioned = true;
-                }
-                
-                // Phase 5: Configuration同期
+                LogDebug("New template activated successfully");
+            }
+            
+            // Phase 4: シーン遷移（必要な場合）
+            if (transitionSuccessful && _enableSceneTransition && ShouldTransitionScene(previousGenre, newGenre))
+            {
+                yield return StartCoroutine(PerformSceneTransition());
+                _transitionState.SceneTransitioned = true;
+                LogDebug("Scene transition completed successfully");
+            }
+            
+            // Phase 5: Configuration同期
+            if (transitionSuccessful)
+            {
                 SynchronizeConfiguration();
                 _transitionState.ConfigurationSynchronized = true;
-                
-                // Phase 6: データ復元（進捗保持の場合）
-                if (preserveProgress && _preserveProgressDuringTransition)
-                {
-                    yield return StartCoroutine(RestoreProgress());
-                    _transitionState.ProgressRestored = true;
-                }
-                
+                LogDebug("Configuration synchronized successfully");
+            }
+
+            // Phase 6: データ復元（進捗保持の場合）
+            if (transitionSuccessful && preserveProgress && _preserveProgressDuringTransition)
+            {
+                yield return StartCoroutine(RestoreProgress());
+                _transitionState.ProgressRestored = true;
+                LogDebug("Progress restored successfully");
+            }
+            
+            // Handle final result
+            if (transitionSuccessful)
+            {
                 _transitionState.Success = true;
                 _transitionState.EndTime = Time.time;
                 
@@ -242,24 +261,23 @@ namespace asterivo.Unity60.Features.Templates.Common
                 // イベント発行
                 _onGenreChangeCompleted?.Raise(newGenre);
             }
-            catch (System.Exception ex)
+            else
             {
-                LogError($"Genre transition failed: {ex.Message}");
-                
+                LogError("Genre transition failed during execution");
+
                 // ロールバック処理
-                yield return StartCoroutine(RollbackTransition(previousGenre));
-                
+                StartCoroutine(RollbackTransition(previousGenre));
+
                 _transitionState.Success = false;
-                _transitionState.ErrorMessage = ex.Message;
-                
+                _transitionState.ErrorMessage = "Genre transition failed during execution";
+
                 // イベント発行
                 _onGenreChangeFailed?.Raise();
             }
-            finally
-            {
-                _isTransitioning = false;
-                _transitionState.EndTime = Time.time;
-            }
+            
+            // Cleanup
+            _isTransitioning = false;
+            _transitionState.EndTime = Time.time;
         }
         
         #endregion

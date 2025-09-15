@@ -41,7 +41,7 @@ namespace asterivo.Unity60.Features.Templates.Common
             {
                 if (_instance == null)
                 {
-                    _instance = FindObjectOfType<GenreTemplateRegistry>();
+                    _instance = FindFirstObjectByType<GenreTemplateRegistry>();
                     if (_instance == null)
                     {
                         var go = new GameObject("GenreTemplateRegistry");

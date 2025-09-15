@@ -13,5 +13,5 @@ namespace asterivo.Unity60.Features.Templates.Common
     /// - ScriptableObjectによるデータ駆動設計
     /// </summary>
     [CreateAssetMenu(fileName = "New GenreType Event", menuName = "asterivo.Unity60/Templates/GenreType Event")]
-    public class GenreTypeGameEvent : GenericGameEvent<GenreType> { }
+    public class GenreTypeGameEvent : GameEvent<GenreType> { }
 }

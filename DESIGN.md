@@ -1,5 +1,12 @@
 # DESIGN.md - Unity 6 3Dゲーム基盤プロジェクト 技術設計書
 
+## アーキテクチャとデザインパターン
+- **ServiceLocator + Event駆駆動のハイブリッドアーキテクチャ（最重要）**:グローバルサービスへのアクセスとイベントベースの通信を組み合わせたハイブリッドアプローチ。
+- **イベント駆動型アーキテクチャ**: `GameEvent` を介したコンポーネント間の疎結合な連携。
+- **コマンドパターン**: ゲーム内のアクション（例：ダメージ、回復）をオブジェクトとしてカプセル化し、再利用と管理を容易にします。
+- **ObjectPool最適化**: 頻繁に作成・破棄されるコマンドオブジェクトをプール化し、メモリ効率とパフォーマンスを大幅に向上させます（95%のメモリ削減効果）。
+- **Scriptable Objectベースのデータ管理**: キャラクターのステータスやアイテム情報などをアセットとして管理。
+
 ## 文書管理情報
 
 - **ドキュメント種別**: 技術設計書（SDDフェーズ3: 設計）
@@ -257,7 +264,11 @@ flowchart TB
 ### Data Validation Strategy
 
 **実装方針**:
-- **Odin Validator統合**: データ整合性の自動検証
+- **Odin Inspector統合** : エディタ拡張とカスタムインスペクタ（[Sirenix](https://odininspector.com/)）
+- **Odin Validator統合**: データ整合性の自動検証（[Sirenix](https://odininspector.com/)）
+- **Odin Serializer統合**: 高度なシリアライゼーション（[Sirenix](https://odininspector.com/)）
+- **UniTask統合**: 非同期プログラミングライブラリ（[Cysharp](https://github.com/Cysharp/UniTask)）
+- **DOTween統合**: 高度なアニメーションとタイムライン制御（[Demigiant](http://dotween.demigiant.com/)）
 - **Custom Validation Rules**: ゲーム固有のビジネスルール実装
 - **Runtime Validation**: 実行時データ検証とエラーハンドリング
 - **Editor Tools**: Inspector UI拡張による直感的編集環境

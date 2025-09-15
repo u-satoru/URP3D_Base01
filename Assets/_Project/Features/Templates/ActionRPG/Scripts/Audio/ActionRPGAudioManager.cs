@@ -120,7 +120,17 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Audio
             
             Debug.Log("[ActionRPGAudioManager] オーディオシステム初期化完了");
         }
-        
+
+        /// <summary>
+        /// 外部からのオーディオマネージャー初期化
+        /// </summary>
+        public void Initialize()
+        {
+            InitializeAudioSystem();
+            SetupEventListeners();
+            Debug.Log("[ActionRPGAudioManager] External initialization completed");
+        }
+
         /// <summary>
         /// SFXオーディオプール初期化
         /// </summary>

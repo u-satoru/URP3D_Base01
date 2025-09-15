@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Features.Templates.ActionRPG.Equipment;
 
 namespace asterivo.Unity60.Features.Templates.ActionRPG.Inventory
 {
@@ -268,9 +269,11 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Inventory
             switch (item.Id)
             {
                 case "HealthPotion":
+                    // TODO: Implement CharacterStatsManager
                     // CharacterStatsManager 経由でヘルス回復
-                    var statsManager = GetComponent<CharacterStatsManager>();
-                    statsManager?.RestoreHealth(50f);
+                    // var statsManager = GetComponent<CharacterStatsManager>();
+                    // statsManager?.RestoreHealth(50f);
+                    Debug.Log("[ActionRPG] Health potion used - TODO: Implement health restoration");
                     break;
                     
                 case "ManaPotion":
@@ -367,15 +370,4 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.Inventory
         Quest          // クエストアイテム
     }
     
-    /// <summary>
-    /// アイテム品質
-    /// </summary>
-    public enum ItemRarity
-    {
-        Common,         // コモン（白）
-        Uncommon,       // アンコモン（緑）
-        Rare,          // レア（青）
-        Epic,          // エピック（紫）
-        Legendary      // レジェンダリー（橙）
-    }
 }

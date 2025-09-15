@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Components;
+
 using System.Linq;
 
 namespace asterivo.Unity60.Core.Commands
@@ -10,7 +11,7 @@ namespace asterivo.Unity60.Core.Commands
     /// コマンドパターンの中核をなすクラスです。
     /// コマンドの実行、およびUndo/Redoのためのコマンド履歴管理を担当します。
     /// </summary>
-    public class CommandInvoker : MonoBehaviour, IGameEventListener<object>
+    public class CommandInvoker : MonoBehaviour, ICommandInvoker, IGameEventListener<object>
     {
         [Header("Command Events")]
         [Tooltip("実行すべきコマンドを受け取るためのイベント")]
@@ -67,6 +68,9 @@ namespace asterivo.Unity60.Core.Commands
         /// </summary>
         private void Start()
         {
+            // ServiceLocatorにICommandInvokerとして登録
+            ServiceLocator.RegisterService<ICommandInvoker>(this);
+
             // コンポーネント参照からHealthターゲットを初期化
             if (playerHealthComponent != null)
             {

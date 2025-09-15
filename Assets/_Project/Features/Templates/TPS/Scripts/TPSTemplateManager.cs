@@ -17,6 +17,9 @@ namespace asterivo.Unity60.Features.Templates.TPS
     /// </summary>
     public class TPSTemplateManager : MonoBehaviour
     {
+        [TabGroup("TPS Template", "Configuration")]
+        [LabelText("TPS Configuration")]
+        [SerializeField] private TPSTemplateConfiguration configuration;
         [TabGroup("TPS Template", "Core Systems")]
         [LabelText("TPS Player")]
         [SerializeField] private TPSPlayerController tpsPlayer;
@@ -152,10 +155,22 @@ namespace asterivo.Unity60.Features.Templates.TPS
 
         private void InitializeTPS()
         {
-            // Initialize player
-            if (tpsPlayer != null)
+            // Configuration validation
+            if (configuration == null)
             {
-                tpsPlayer.Initialize(this);
+                UnityEngine.Debug.LogError("[TPS] TPSTemplateConfiguration is not assigned!");
+                return;
+            }
+
+            if (!configuration.ValidateConfiguration())
+            {
+                UnityEngine.Debug.LogError("[TPS] Invalid TPSTemplateConfiguration!");
+                return;
+            }
+            // Initialize player
+            if (tpsPlayer != null && configuration != null)
+            {
+                tpsPlayer.Initialize(configuration);
                 if (startingWeapon != null)
                 {
                     tpsPlayer.EquipWeapon(startingWeapon);
@@ -163,15 +178,15 @@ namespace asterivo.Unity60.Features.Templates.TPS
             }
 
             // Initialize camera
-            if (tpsCamera != null)
+            if (tpsCamera != null && configuration != null)
             {
-                tpsCamera.Initialize(tpsPlayer != null ? tpsPlayer.transform : transform);
+                tpsCamera.Initialize(tpsPlayer != null ? tpsPlayer.transform : transform, configuration);
             }
 
             // Initialize UI
-            if (tpsUI != null)
+            if (tpsUI != null && configuration != null)
             {
-                tpsUI.Initialize(this);
+                tpsUI.Initialize(configuration);
             }
 
             // Setup event listeners
@@ -305,5 +320,6 @@ namespace asterivo.Unity60.Features.Templates.TPS
         public Transform[] CoverPoints => coverPoints;
         public float CoverDetectionRange => coverDetectionRange;
         public bool AutoCoverDetection => autoCoverDetection;
+        public TPSTemplateConfiguration Configuration => configuration;
     }
 }

@@ -1,10 +1,13 @@
 using UnityEngine;
-using Cinemachine;
+using Unity.Cinemachine;
 using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Data;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Audio.Interfaces;
-using asterivo.Unity60.Features.Player.Scripts;
+using asterivo.Unity60.Player;
+using asterivo.Unity60.Features.AI.Visual;
+using asterivo.Unity60.Features.Templates.Stealth.Mechanics;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Features.Templates.Stealth
@@ -24,11 +27,11 @@ namespace asterivo.Unity60.Features.Templates.Stealth
 
         [TabGroup("Stealth Camera", "Camera References")]
         [Header("Cinemachine Virtual Cameras")]
-        [SerializeField] private CinemachineVirtualCamera normalCamera;
-        [SerializeField] private CinemachineVirtualCamera crouchCamera;
-        [SerializeField] private CinemachineVirtualCamera proneCamera;
-        [SerializeField] private CinemachineVirtualCamera coverCamera;
-        [SerializeField] private CinemachineVirtualCamera peekingCamera;
+        [SerializeField] private CinemachineCamera normalCamera;
+        [SerializeField] private CinemachineCamera crouchCamera;
+        [SerializeField] private CinemachineCamera proneCamera;
+        [SerializeField] private CinemachineCamera coverCamera;
+        [SerializeField] private CinemachineCamera peekingCamera;
 
         [TabGroup("Stealth Camera", "Detection Integration")]
         [Header("Detection Indicator Settings")]
@@ -77,11 +80,11 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         [SerializeField, ReadOnly] private bool isDetectionActive = false;
         [SerializeField, ReadOnly] private Vector3 lastKnownPosition;
 
-        private PlayerStealthController playerStealthController;
+        private StealthMechanics stealthMechanics;
         private IStealthAudioService stealthAudioService;
         private Transform playerTransform;
-        private Camera mainCamera;
-        private CinemachineVirtualCamera activeVirtualCamera;
+        private UnityEngine.Camera mainCamera;
+        private CinemachineCamera activeVirtualCamera;
 
         #endregion
 
@@ -130,17 +133,17 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             try
             {
                 // メインカメラの取得
-                mainCamera = Camera.main;
+                mainCamera = UnityEngine.Camera.main;
                 if (mainCamera == null)
                 {
-                    mainCamera = FindFirstObjectByType<Camera>();
+                    mainCamera = FindFirstObjectByType<UnityEngine.Camera>();
                 }
 
                 // プレイヤーコンポーネントの取得
-                playerStealthController = FindFirstObjectByType<PlayerStealthController>();
-                if (playerStealthController != null)
+                stealthMechanics = StealthMechanics.Instance;
+                if (stealthMechanics != null)
                 {
-                    playerTransform = playerStealthController.transform;
+                    playerTransform = stealthMechanics.transform;
                 }
 
                 // サービスの取得
@@ -226,7 +229,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         /// <summary>
         /// Virtual Cameraの基本設定
         /// </summary>
-        private void ConfigureVirtualCamera(CinemachineVirtualCamera vcam, float distance, float angle)
+        private void ConfigureVirtualCamera(CinemachineCamera vcam, float distance, float angle)
         {
             if (vcam == null) return;
 
@@ -238,53 +241,53 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             }
 
             // Composer設定
-            var composer = vcam.GetCinemachineComponent<CinemachineComposer>();
+            var composer = vcam.GetComponent<CinemachinePositionComposer>();
             if (composer == null)
             {
-                composer = vcam.AddCinemachineComponent<CinemachineComposer>();
+                composer = vcam.gameObject.AddComponent<CinemachinePositionComposer>();
             }
 
             // Transposer設定
-            var transposer = vcam.GetCinemachineComponent<CinemachineTransposer>();
+            var transposer = vcam.GetComponent<CinemachineFollow>();
             if (transposer == null)
             {
-                transposer = vcam.AddCinemachineComponent<CinemachineTransposer>();
+                transposer = vcam.gameObject.AddComponent<CinemachineFollow>();
             }
 
             // 距離とアングルの設定
-            transposer.m_FollowOffset = new Vector3(0f, distance * 0.6f, -distance);
-            composer.m_TrackedObjectOffset = new Vector3(0f, angle * 0.1f, 0f);
+            transposer.FollowOffset = new Vector3(0f, distance * 0.6f, -distance);
+            // composer.TrackedObjectOffset = new Vector3(0f, angle * 0.1f, 0f);
         }
 
         /// <summary>
         /// カバーカメラの特殊設定
         /// </summary>
-        private void ConfigureCoverCamera(CinemachineVirtualCamera vcam)
+        private void ConfigureCoverCamera(CinemachineCamera vcam)
         {
             // カバー時の肩越し視点設定
-            var transposer = vcam.GetCinemachineComponent<CinemachineTransposer>();
+            var transposer = vcam.GetComponent<CinemachineFollow>();
             if (transposer != null)
             {
-                transposer.m_FollowOffset = new Vector3(1.2f, 1.8f, -2f);
+                transposer.FollowOffset = new Vector3(1.2f, 1.8f, -2f);
             }
 
-            var composer = vcam.GetCinemachineComponent<CinemachineComposer>();
+            var composer = vcam.GetComponent<CinemachinePositionComposer>();
             if (composer != null)
             {
-                composer.m_TrackedObjectOffset = new Vector3(0.5f, 0.2f, 0f);
+                // composer.TrackedObjectOffset = new Vector3(0.5f, 0.2f, 0f);
             }
         }
 
         /// <summary>
         /// ピーキングカメラの特殊設定
         /// </summary>
-        private void ConfigurePeekingCamera(CinemachineVirtualCamera vcam)
+        private void ConfigurePeekingCamera(CinemachineCamera vcam)
         {
             // ピーキング時の視点設定
-            var transposer = vcam.GetCinemachineComponent<CinemachineTransposer>();
+            var transposer = vcam.GetComponent<CinemachineFollow>();
             if (transposer != null)
             {
-                transposer.m_FollowOffset = new Vector3(0.8f, 1.5f, -1.5f);
+                transposer.FollowOffset = new Vector3(0.8f, 1.5f, -1.5f);
             }
         }
 
@@ -327,27 +330,27 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         /// </summary>
         private void DetermineOptimalCameraMode()
         {
-            if (playerStealthController == null) return;
+            if (stealthMechanics == null) return;
 
             StealthCameraMode newMode = StealthCameraMode.Normal;
 
             // プレイヤーの状態を検査（StealthMovementControllerから情報取得）
-            var stealthMovement = playerStealthController.GetComponent<StealthMovementController>();
+            var stealthMovement = stealthMechanics.GetComponent<StealthMovementController>();
             if (stealthMovement != null)
             {
                 // 姿勢に基づくカメラモード決定
-                switch (stealthMovement.CurrentStance)
+                switch (stealthMovement.GetCurrentStance())
                 {
-                    case StealthStance.Standing:
+                    case MovementStance.Standing:
                         newMode = StealthCameraMode.Normal;
                         break;
-                    case StealthStance.Crouching:
+                    case MovementStance.Crouching:
                         newMode = StealthCameraMode.Crouch;
                         break;
-                    case StealthStance.Prone:
+                    case MovementStance.Prone:
                         newMode = StealthCameraMode.Prone;
                         break;
-                    case StealthStance.Cover:
+                    case MovementStance.Cover:
                         newMode = DetermineCoverMode(stealthMovement);
                         break;
                 }
@@ -371,7 +374,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         private StealthCameraMode DetermineCoverMode(StealthMovementController stealthMovement)
         {
             // ピーキング状態の確認
-            if (stealthMovement.IsPeeking)
+            // TODO: Add IsPeeking property to StealthMovementController
+            if (false) // stealthMovement.IsPeeking
             {
                 return StealthCameraMode.Peeking;
             }
@@ -392,7 +396,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             // Virtual Cameraの優先度設定
             ResetAllCameraPriorities();
 
-            CinemachineVirtualCamera targetCamera = GetCameraForMode(newMode);
+            CinemachineCamera targetCamera = GetCameraForMode(newMode);
             if (targetCamera != null)
             {
                 targetCamera.Priority = 10;
@@ -420,7 +424,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         /// <summary>
         /// モードに対応するカメラの取得
         /// </summary>
-        private CinemachineVirtualCamera GetCameraForMode(StealthCameraMode mode)
+        private CinemachineCamera GetCameraForMode(StealthCameraMode mode)
         {
             return mode switch
             {
@@ -444,11 +448,12 @@ namespace asterivo.Unity60.Features.Templates.Stealth
 
             if (activeVirtualCamera != null)
             {
-                var brain = CinemachineCore.Instance.GetActiveBrain(0);
-                if (brain != null)
-                {
-                    brain.m_DefaultBlend.m_Time = speed;
-                }
+                // TODO: Update CinemachineCore API for 3.1.4
+                // var brain = CinemachineCore.Instance.GetActiveBrain(0);
+                // if (brain != null)
+                // {
+                //     brain.m_DefaultBlend.m_Time = speed;
+                // }
             }
         }
 
@@ -471,7 +476,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             // カーブを使用したスムーズなトランジション
             if (activeVirtualCamera != null)
             {
-                var transposer = activeVirtualCamera.GetCinemachineComponent<CinemachineTransposer>();
+                var transposer = activeVirtualCamera.GetComponent<CinemachineFollow>();
                 if (transposer != null)
                 {
                     float t = Time.time % 1f;
@@ -538,14 +543,14 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         {
             if (activeVirtualCamera == null) return;
 
-            var transposer = activeVirtualCamera.GetCinemachineComponent<CinemachineTransposer>();
+            var transposer = activeVirtualCamera.GetComponent<CinemachineFollow>();
             if (transposer != null)
             {
-                Vector3 originalOffset = transposer.m_FollowOffset;
+                Vector3 originalOffset = transposer.FollowOffset;
                 Vector3 boostedOffset = originalOffset * shadowCameraBoost;
 
                 // スムーズな適用
-                transposer.m_FollowOffset = Vector3.Lerp(originalOffset, boostedOffset, Time.deltaTime * 2f);
+                transposer.FollowOffset = Vector3.Lerp(originalOffset, boostedOffset, Time.deltaTime * 2f);
             }
         }
 
@@ -579,30 +584,30 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         private void UpdateNPCDetectionIndicator(NPCVisualSensor npcSensor)
         {
             // NPCの警戒レベルに基づく色設定
-            Color indicatorColor = GetIndicatorColor(npcSensor.AlertLevel);
+            Color indicatorColor = GetIndicatorColor(npcSensor.GetCurrentAlertLevel());
 
-            // 画面上の位置計算
+            // 画面上のの位置計算
             Vector3 screenPosition = mainCamera.WorldToScreenPoint(npcSensor.transform.position);
 
             if (screenPosition.z > 0) // カメラの前方にいる場合
             {
                 // UI要素の更新（実装はUIシステムに依存）
-                DisplayDetectionIndicator(screenPosition, indicatorColor, npcSensor.AlertLevel);
+                DisplayDetectionIndicator(screenPosition, indicatorColor, npcSensor.GetCurrentAlertLevel());
             }
         }
 
         /// <summary>
         /// インジケーター色の取得
         /// </summary>
-        private Color GetIndicatorColor(AlertLevel alertLevel)
+        private Color GetIndicatorColor(asterivo.Unity60.Core.Data.AlertLevel alertLevel)
         {
             return alertLevel switch
             {
-                AlertLevel.None => undetectedColor,
-                AlertLevel.Low => suspiciousColor,
-                AlertLevel.Medium => suspiciousColor,
-                AlertLevel.High => alertColor,
-                AlertLevel.Combat => alertColor,
+                asterivo.Unity60.Core.Data.AlertLevel.Unaware => undetectedColor,
+                asterivo.Unity60.Core.Data.AlertLevel.Suspicious => suspiciousColor,
+                asterivo.Unity60.Core.Data.AlertLevel.Investigating => suspiciousColor,
+                asterivo.Unity60.Core.Data.AlertLevel.Alert => alertColor,
+                asterivo.Unity60.Core.Data.AlertLevel.Combat => alertColor,
                 _ => undetectedColor
             };
         }
@@ -610,7 +615,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         /// <summary>
         /// 検知インジケーターの表示
         /// </summary>
-        private void DisplayDetectionIndicator(Vector3 screenPosition, Color color, AlertLevel alertLevel)
+        private void DisplayDetectionIndicator(Vector3 screenPosition, Color color, asterivo.Unity60.Core.Data.AlertLevel alertLevel)
         {
             // UIシステムとの連携（実装はStealthUIManagerに委譲）
             // ここでは基本的な描画処理のみ
@@ -714,7 +719,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             LogDebug($"Cover Camera: {(coverCamera != null ? "✅ Found" : "❌ Missing")}");
             LogDebug($"Peeking Camera: {(peekingCamera != null ? "✅ Found" : "❌ Missing")}");
             LogDebug($"Main Light: {(mainDirectionalLight != null ? "✅ Found" : "❌ Missing")}");
-            LogDebug($"Player Controller: {(playerStealthController != null ? "✅ Found" : "❌ Missing")}");
+            LogDebug($"Player Controller: {(stealthMechanics != null ? "✅ Found" : "❌ Missing")}");
             LogDebug($"Current Mode: {currentMode}");
             LogDebug($"Shadow Level: {currentShadowLevel:F2}");
             LogDebug($"In Shadow: {isInShadow}");

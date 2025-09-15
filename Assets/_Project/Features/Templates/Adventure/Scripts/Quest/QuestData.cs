@@ -200,8 +200,15 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Quest
         // Runtime data (not serialized)
         [System.NonSerialized]
         public DateTime? completionTime;
-        
-        public bool IsCompleted => currentProgress >= targetAmount;
+
+        [System.NonSerialized]
+        private bool _isCompleted = false;
+
+        public bool IsCompleted
+        {
+            get => _isCompleted || (currentProgress >= targetAmount);
+            set => _isCompleted = value;
+        }
         
         public float ProgressPercentage => targetAmount > 0 ? (float)currentProgress / targetAmount : 0f;
         
@@ -209,6 +216,7 @@ namespace asterivo.Unity60.Features.Templates.Adventure.Quest
         {
             currentProgress = 0;
             completionTime = null;
+            _isCompleted = false;
         }
     }
     

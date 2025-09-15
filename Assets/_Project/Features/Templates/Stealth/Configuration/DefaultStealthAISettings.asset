@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7, type: 3}
+  m_Name: DefaultStealthAISettings
+  maxDetectionRange: 25.0
+  fieldOfViewAngle: 110.0
+  hearingRange: 15.0
+  patrolSpeed: 2.0
+  alertSpeed: 4.5
+  searchSpeed: 3.5
+  alertLevels:
+  - alertLevel: 0
+    levelName: Relaxed
+    detectionSensitivity: 1.0
+    movementSpeed: 2.0
+    fieldOfViewModifier: 1.0
+    reactionTime: 2.0
+    searchDuration: 0.0
+    description: Normal patrol behavior
+  - alertLevel: 1
+    levelName: Suspicious
+    detectionSensitivity: 1.3
+    movementSpeed: 2.5
+    fieldOfViewModifier: 1.2
+    reactionTime: 1.5
+    searchDuration: 10.0
+    description: Something seems off, increased awareness
+  - alertLevel: 2
+    levelName: Investigating
+    detectionSensitivity: 1.6
+    movementSpeed: 3.5
+    fieldOfViewModifier: 1.5
+    reactionTime: 1.0
+    searchDuration: 20.0
+    description: Actively searching for threats
+  - alertLevel: 3
+    levelName: Alert
+    detectionSensitivity: 2.0
+    movementSpeed: 4.5
+    fieldOfViewModifier: 1.8
+    reactionTime: 0.5
+    searchDuration: 45.0
+    description: Threat confirmed, maximum alertness
+  groupCoordinationSettings:
+    enableGroupCoordination: 1
+    maxCommunicationRange: 30.0
+    informationSharingDelay: 2.0
+    groupSearchEfficiency: 1.5
+    coordinatedPatrolDistance: 8.0
+    backupCallThreshold: 2
+    groupAlertEscalation: 1.2
+  learningSystemSettings:
+    enableAILearning: 1
+    playerBehaviorMemoryDuration: 300.0
+    routeAdaptationRate: 0.1
+    patternRecognitionThreshold: 3
+    adaptivePatrolling: 1
+    learningDecayRate: 0.02
+    maxLearningInstances: 10
+  performanceOptimization:
+    maxActiveNPCs: 50
+    lodDistances:
+    - 0.0
+    - 15.0
+    - 30.0
+    - 50.0
+    updateFrequencies:
+    - 60.0
+    - 30.0
+    - 15.0
+    - 5.0
+    enableFrameSpreadProcessing: 1
+    maxProcessingTimePerFrame: 0.1
+    cullingDistance: 100.0
+    enableOcclusionCulling: 1
+  debugSettings:
+    enableDebugVisualization: 0
+    showDetectionRanges: 0
+    showPatrolPaths: 0
+    showCommunicationLinks: 0
+    debugLogLevel: 1
