@@ -1,15 +1,15 @@
 [Licensing::Module] Trying to connect to existing licensing client channel...
-[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-16T13:25:13.864378Z"
+[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-16T22:21:15.5919085Z"
 [Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 26648, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
 [Licensing::Module] Error: LicensingClient has failed validation; ignoring
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.17.1+ae67fbc
-  Session Id:              df4c41fe18b048cf8bdb1b76b539f307
+  Session Id:              274898c09255459d9bf322424d6b46a6
   Correlation Id:          27ba378d00f61906260636ceec280eb9
-  External correlation Id: 4005534407188700280
+  External correlation Id: 7453474574587739711
   Machine Id:              6v8irZboPhn9pIeIA+kbS+sqP0M=
 [Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.01s, handshake: 0.08s)
-[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-16T13:25:13.9558115Z"
+[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-16T22:21:15.6807328Z"
 [Licensing::Module] Error: Access token is unavailable; failed to update
 [Licensing::Client] Successfully updated license
 Built from '6000.0/staging' branch; Version is '6000.0.42f1 (feb9a7235030) revision 16693671'; Using compiler version '193933523'; Build Type 'Release'
@@ -64,22 +64,22 @@ D:/UnityProjects/URP3D_Base01
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [28464]  Target information:
+Player connection [72524]  Target information:
 
-Player connection [28464]  * "[IP] 172.28.160.1 [Port] 55504 [Flags] 2 [Guid] 3692469974 [EditorId] 3692469974 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [72524]  * "[IP] 172.28.160.1 [Port] 55504 [Flags] 2 [Guid] 1327518531 [EditorId] 1327518531 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [28464]  * "[IP] 172.17.80.1 [Port] 55504 [Flags] 2 [Guid] 3692469974 [EditorId] 3692469974 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [72524]  * "[IP] 172.17.80.1 [Port] 55504 [Flags] 2 [Guid] 1327518531 [EditorId] 1327518531 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [28464]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 3692469974 [EditorId] 3692469974 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [72524]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 1327518531 [EditorId] 1327518531 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [28464]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 3692469974 [EditorId] 3692469974 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [72524]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 1327518531 [EditorId] 1327518531 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [28464] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [28464] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [72524] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [72524] Host joined alternative multi-casting on [225.0.0.222:34997]...
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
 [Physics::Module] Id: 0xdecafbad
-[Package Manager] Connected to IPC stream "Upm-12120" after 0.2 seconds.
+[Package Manager] Connected to IPC stream "Upm-102028" after 0.3 seconds.
 Library Redirect Path: Library/
 [Package Manager] Restoring resolved packages state from cache
 [Licensing::Client] Successfully resolved entitlement details
@@ -159,8 +159,8 @@ Library Redirect Path: Library/
 [Physics::Module] Threading Mode: Multi-Threaded
 [Subsystems] No new subsystems found in resolved package list.
 Package Manager log level set to [2]
-[Package Manager] Done registering packages in 0.24 seconds
-Refreshing native plugins compatible for Editor in 4.11 ms, found 3 plugins.
+[Package Manager] Done registering packages in 0.23 seconds
+Artifact Garbage Collection - Removed 2 unused hashed content filesRefreshing native plugins compatible for Editor in 1.79 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.0.42f1 (feb9a7235030)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Resources/UnitySubsystems
@@ -177,7 +177,7 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56120
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56028
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 ImportWorker Server TCP listen port: 0
@@ -190,46 +190,46 @@ Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 [Licensing::Client] Successfully resolved entitlement details
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
-Registered in 0.040634 seconds.
-- Loaded All Assemblies, in  0.542 seconds
+Registered in 0.056898 seconds.
+- Loaded All Assemblies, in  0.809 seconds
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 [usbmuxd] Send listen message
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 580 ms
+Android Extension - Scanning For ADB Devices 2332 ms
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.008 seconds
-Domain Reload Profiling: 1546ms
-	BeginReloadAssembly (183ms)
+- Finished resetting the current domain, in  2.845 seconds
+Domain Reload Profiling: 3647ms
+	BeginReloadAssembly (281ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (45ms)
-	RebuildNativeTypeToScriptingClass (12ms)
-	initialDomainReloadingComplete (103ms)
-	LoadAllAssembliesAndSetupDomain (194ms)
-		LoadAssemblies (179ms)
+		CreateAndSetChildDomain (2ms)
+	RebuildCommonClasses (70ms)
+	RebuildNativeTypeToScriptingClass (19ms)
+	initialDomainReloadingComplete (173ms)
+	LoadAllAssembliesAndSetupDomain (258ms)
+		LoadAssemblies (268ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (188ms)
-			TypeCache.Refresh (187ms)
-				TypeCache.ScanAssembly (171ms)
+		AnalyzeDomain (251ms)
+			TypeCache.Refresh (249ms)
+				TypeCache.ScanAssembly (231ms)
 			BuildScriptInfoCaches (0ms)
-			ResolveRequiredComponents (0ms)
-	FinalizeReload (1009ms)
+			ResolveRequiredComponents (1ms)
+	FinalizeReload (2846ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (974ms)
+		SetupLoadedEditorAssemblies (2793ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (720ms)
+			InitializePlatformSupportModulesInManaged (2509ms)
 			SetLoadedEditorAssemblies (5ms)
-			BeforeProcessingInitializeOnLoad (53ms)
-			ProcessInitializeOnLoadAttributes (130ms)
-			ProcessInitializeOnLoadMethodAttributes (65ms)
+			BeforeProcessingInitializeOnLoad (60ms)
+			ProcessInitializeOnLoadAttributes (138ms)
+			ProcessInitializeOnLoadMethodAttributes (82ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -237,11 +237,12 @@ Domain Reload Profiling: 1546ms
 [Licensing::Client] Successfully resolved entitlement details
 Application.AssetDatabase Initial Refresh Start
 YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
-'Assets/_Project/Tests/Results/fps-template-current-errors.txt' Amount of processed bytes '20720' does not match file size '19124'
 The contents of 'Assets/_Project/Core/Services/Interfaces/IStealthMechanicsService.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
+'Assets/_Project/Tests/Results/fps-template-current-errors.txt' Amount of processed bytes '20967' does not match file size '19193'
 The .meta file Assets/_Project/Core/Services/Interfaces/IStealthMechanicsService.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
 Assembly for Assembly Definition File 'Assets/_Project/Core/Optimization/asterivo.Unity60.Optimization.asmdef' will not be compiled, because it has no scripts associated with it.
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace ()
@@ -271,7 +272,7 @@ info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 37.2643ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 68.1339ms
 Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
 WorkingDir: D:/UnityProjects/URP3D_Base01
 info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
@@ -289,15 +290,15 @@ info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 78.9022ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 110.2424ms
 DisplayProgressbar: Compiling Scripts
 Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Tools\netcorerun\netcorerun.exe "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1900b0aE.dag.json" "Library/Bee/1900b0aE-inputdata.json" "Library\Bee\buildprogram0.traceevents"
 WorkingDir: D:/UnityProjects/URP3D_Base01
-ExitCode: 4 Duration: 0s500ms
+ExitCode: 4 Duration: 4s141ms
 Rebuilding DAG because FileSignature timestamp changed: Library/Bee/1900b0aE-inputdata.json
-[1072/1429  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
-*** Tundra requires additional run (0.43 seconds), 2 items updated, 1071 evaluated
-ExitCode: 0 Duration: 1s365ms
+[1052/1399  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra requires additional run (4.08 seconds), 2 items updated, 1051 evaluated
+ExitCode: 0 Duration: 1s941ms
 Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --dagfilejson="Library\Bee\1900b0aE.dag.json" --profile="Library/Bee/backend2.traceevents" ScriptAssemblies
 WorkingDir: D:/UnityProjects/URP3D_Base01
 info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
@@ -309,11 +310,11 @@ info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 3.2378ms
-ExitCode: 3 Duration: 1s24ms
-Finished compiling graph: 1433 nodes, 30427 flattened edges (23489 ToBuild, 246 ToUse), maximum node priority 2017
-[1072/1429  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
-[1409/1429  0s] Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.FPS.dll (+2 others)
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 4.8796ms
+ExitCode: 3 Duration: 1s328ms
+Finished compiling graph: 1403 nodes, 29450 flattened edges (22844 ToBuild, 240 ToUse), maximum node priority 1942
+[1052/1399  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[1383/1399  0s] Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.FPS.dll (+2 others)
 ##### CommandLine
 "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.FPS.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.FPS.rsp2"
 ##### Contents of Library\Bee\artifacts\1900b0aE.dag\asterivo.Unity60.Features.Templates.FPS.rsp
@@ -732,61 +733,54 @@ Finished compiling graph: 1433 nodes, 30427 flattened edges (23489 ToBuild, 246 
 -r:"Library/PackageCache/com.unity.visualscripting@b4d700247d4b/Editor/VisualScripting.Core/Dependencies/YamlDotNet/Unity.VisualScripting.YamlDotNet.dll"
 -r:"Library/PackageCache/com.unity.visualscripting@b4d700247d4b/Editor/VisualScripting.Core/EditorAssetResources/Unity.VisualScripting.TextureAssets.dll"
 -r:"Library/PackageCache/com.unity.visualscripting@b4d700247d4b/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Audio.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Commands.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Components.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Events.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Player.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/UniTask.Addressables.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UniTask.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/Unity.AI.Navigation.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Burst.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Cinemachine.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Timeline.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Mathematics.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.TextMeshPro.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
-"Assets/_Project/Features/Templates/FPS/Commands/DamageCommand.cs"
-"Assets/_Project/Features/Templates/FPS/Commands/FireCommand.cs"
-"Assets/_Project/Features/Templates/FPS/Commands/InteractCommand.cs"
-"Assets/_Project/Features/Templates/FPS/Commands/MovementCommand.cs"
-"Assets/_Project/Features/Templates/FPS/Commands/ReloadCommand.cs"
-"Assets/_Project/Features/Templates/FPS/Commands/WeaponSwitchCommand.cs"
-"Assets/_Project/Features/Templates/FPS/Data/CameraConfiguration.cs"
-"Assets/_Project/Features/Templates/FPS/Data/CameraState.cs"
-"Assets/_Project/Features/Templates/FPS/Data/DamageType.cs"
-"Assets/_Project/Features/Templates/FPS/Data/GameConfiguration.cs"
-"Assets/_Project/Features/Templates/FPS/Data/PlayerData.cs"
-"Assets/_Project/Features/Templates/FPS/Data/WeaponData.cs"
-"Assets/_Project/Features/Templates/FPS/Events/CombatEvent.cs"
-"Assets/_Project/Features/Templates/FPS/Events/FPSEventTypes.cs"
-"Assets/_Project/Features/Templates/FPS/Events/InputEvent.cs"
-"Assets/_Project/Features/Templates/FPS/Events/MovementData.cs"
-"Assets/_Project/Features/Templates/FPS/Events/MovementEvent.cs"
-"Assets/_Project/Features/Templates/FPS/Events/SystemEvent.cs"
-"Assets/_Project/Features/Templates/FPS/Events/UIEvent.cs"
-"Assets/_Project/Features/Templates/FPS/Events/WeaponEvent.cs"
-"Assets/_Project/Features/Templates/FPS/ObjectPools/BulletPool.cs"
-"Assets/_Project/Features/Templates/FPS/ObjectPools/CommandPool.cs"
-"Assets/_Project/Features/Templates/FPS/ObjectPools/EffectPool.cs"
-"Assets/_Project/Features/Templates/FPS/ObjectPools/GenericObjectPool.cs"
-"Assets/_Project/Features/Templates/FPS/ObjectPools/IObjectPool.cs"
-"Assets/_Project/Features/Templates/FPS/Services/FPSServiceLocator.cs"
-"Assets/_Project/Features/Templates/FPS/Services/IAmmoManager.cs"
-"Assets/_Project/Features/Templates/FPS/Services/ICombatManager.cs"
-"Assets/_Project/Features/Templates/FPS/Services/IEffectsService.cs"
-"Assets/_Project/Features/Templates/FPS/Services/IFPSCameraService.cs"
-"Assets/_Project/Features/Templates/FPS/Services/IFPSInputService.cs"
-"Assets/_Project/Features/Templates/FPS/Services/IFPSUIService.cs"
-"Assets/_Project/Features/Templates/FPS/Services/IInventoryService.cs"
-"Assets/_Project/Features/Templates/FPS/Services/IMovementService.cs"
-"Assets/_Project/Features/Templates/FPS/Services/Implementations/AmmoManager.cs"
-"Assets/_Project/Features/Templates/FPS/Services/Implementations/CombatManager.cs"
-"Assets/_Project/Features/Templates/FPS/Services/Implementations/EffectsService.cs"
-"Assets/_Project/Features/Templates/FPS/Services/Implementations/FPSCameraService.cs"
-"Assets/_Project/Features/Templates/FPS/Services/Implementations/FPSInputService.cs"
-"Assets/_Project/Features/Templates/FPS/Services/Implementations/FPSUIService.cs"
-"Assets/_Project/Features/Templates/FPS/Services/Implementations/TargetingService.cs"
-"Assets/_Project/Features/Templates/FPS/Services/Implementations/WeaponManager.cs"
-"Assets/_Project/Features/Templates/FPS/Services/ITargetingService.cs"
-"Assets/_Project/Features/Templates/FPS/Services/IWeaponManager.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPS_CameraSystem.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Combat/HealthComponent.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Combat/HitboxComponent.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Configuration/FPSAudioConfig.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Configuration/FPSMovementConfig.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Configuration/FPSPerformanceConfig.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Configuration/FPSUIConfig.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Configuration/GameModeConfig.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Configuration/PlayerStatsConfig.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Configuration/TTKBalanceConfig.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Configuration/WeaponLoadoutConfig.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Data/FPSCameraConfig.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Data/FPSTypes.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Data/RecoilPattern.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Data/WeaponData.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/FPS_Template_Config.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Services/FPSInputService.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Services/FPSUIService.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Services/Interfaces/IFPSInputService.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Services/Interfaces/IFPSService.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/Services/Interfaces/IFPSUIService.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/AmmoManager.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/HitScanStrategy.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/IShootingStrategy.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/ProjectileStrategy.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs"
+"Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/WeaponController.cs"
 -langversion:9.0
 /deterministic
 /optimize+
@@ -806,339 +800,91 @@ DOTNET_MULTILEVEL_LOOKUP=0
 ##### ExitCode
 1
 ##### Output
-Assets\_Project\Features\Templates\FPS\Commands\DamageCommand.cs(2,29): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\Interfaces\IFPSInputService.cs(14,14): warning CS0108: 'IFPSInputService.IsEnabled' hides inherited member 'IFPSService.IsEnabled'. Use the new keyword if hiding was intended.
 
-Assets\_Project\Features\Templates\FPS\Commands\FireCommand.cs(2,29): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(105,35): error CS1061: 'GameModeConfig' does not contain a definition for 'ApplyGameMode' and no accessible extension method 'ApplyGameMode' accepting a first argument of type 'GameModeConfig' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Commands\InteractCommand.cs(2,29): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(167,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
 
-Assets\_Project\Features\Templates\FPS\Commands\MovementCommand.cs(2,29): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(137,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
 
-Assets\_Project\Features\Templates\FPS\Commands\ReloadCommand.cs(2,29): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(156,33): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
-Assets\_Project\Features\Templates\FPS\Commands\WeaponSwitchCommand.cs(2,29): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(230,17): warning CS0219: The variable 'hitInfo' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\FPS\Events\MovementEvent.cs(2,29): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(351,24): error CS1929: 'PlayerStatsConfig' does not contain a definition for 'GetSpeedForState' and the best extension method overload 'PlayerStatsConfigExtensions.GetSpeedForState(FPSMovementConfig, FPSPlayerState)' requires a receiver of type 'FPSMovementConfig'
 
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(4,7): error CS0246: The type or namespace name 'Cinemachine' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(355,24): error CS1929: 'PlayerStatsConfig' does not contain a definition for 'GetSpeedForState' and the best extension method overload 'PlayerStatsConfigExtensions.GetSpeedForState(FPSMovementConfig, FPSPlayerState)' requires a receiver of type 'FPSMovementConfig'
 
-Assets\_Project\Features\Templates\FPS\Commands\WeaponSwitchCommand.cs(12,40): error CS0246: The type or namespace name 'ICommand' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(359,24): error CS1929: 'PlayerStatsConfig' does not contain a definition for 'GetSpeedForState' and the best extension method overload 'PlayerStatsConfigExtensions.GetSpeedForState(FPSMovementConfig, FPSPlayerState)' requires a receiver of type 'FPSMovementConfig'
 
-Assets\_Project\Features\Templates\FPS\Commands\WeaponSwitchCommand.cs(12,50): error CS0246: The type or namespace name 'IResettableCommand' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(474,42): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
 
-Assets\_Project\Features\Templates\FPS\Commands\FireCommand.cs(12,32): error CS0246: The type or namespace name 'ICommand' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(490,35): error CS1061: 'WeaponController' does not contain a definition for 'TryShoot' and no accessible extension method 'TryShoot' accepting a first argument of type 'WeaponController' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Commands\ReloadCommand.cs(12,34): error CS0246: The type or namespace name 'ICommand' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(624,51): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'jumpHeight' and no accessible extension method 'jumpHeight' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Commands\MovementCommand.cs(12,36): error CS0246: The type or namespace name 'ICommand' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(68,29): warning CS0067: The event 'FPSUIService.OnSettingsRequested' is never used
 
-Assets\_Project\Features\Templates\FPS\Commands\MovementCommand.cs(12,46): error CS0246: The type or namespace name 'IResettableCommand' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(69,29): warning CS0067: The event 'FPSUIService.OnQuitRequested' is never used
 
-Assets\_Project\Features\Templates\FPS\Commands\DamageCommand.cs(12,34): error CS0246: The type or namespace name 'ICommand' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(66,29): warning CS0067: The event 'FPSUIService.OnRestartRequested' is never used
 
-Assets\_Project\Features\Templates\FPS\Commands\ReloadCommand.cs(12,44): error CS0246: The type or namespace name 'IResettableCommand' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(65,29): warning CS0067: The event 'FPSUIService.OnResumeRequested' is never used
 
-Assets\_Project\Features\Templates\FPS\Commands\DamageCommand.cs(12,44): error CS0246: The type or namespace name 'IResettableCommand' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(67,29): warning CS0067: The event 'FPSUIService.OnMainMenuRequested' is never used
 
-Assets\_Project\Features\Templates\FPS\Commands\FireCommand.cs(12,42): error CS0246: The type or namespace name 'IResettableCommand' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Data\RecoilPattern.cs(40,39): warning CS0414: The field 'RecoilPattern._enableDebugVisualization' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\FPS\Commands\InteractCommand.cs(12,36): error CS0246: The type or namespace name 'ICommand' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(20,39): warning CS0414: The field 'FPSInputService._enableInputLogging' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\FPS\Commands\InteractCommand.cs(12,46): error CS0246: The type or namespace name 'IResettableCommand' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\CombatEvent.cs(15,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\ObjectPools\CommandPool.cs(71,52): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\ObjectPools\CommandPool.cs(104,73): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\ObjectPools\CommandPool.cs(120,88): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\CombatEvent.cs(46,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\ObjectPools\CommandPool.cs(139,96): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\CombatEvent.cs(77,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\CombatEvent.cs(108,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\CombatEvent.cs(109,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\InputEvent.cs(46,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\InputEvent.cs(77,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(29,63): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\SystemEvent.cs(15,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(215,42): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(237,100): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(237,17): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\SystemEvent.cs(46,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(251,45): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(251,78): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\SystemEvent.cs(47,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\MovementEvent.cs(11,34): error CS0246: The type or namespace name 'GameEvent<>' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\InputEvent.cs(15,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\SystemEvent.cs(137,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(262,45): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(262,78): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\SystemEvent.cs(138,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\UIEvent.cs(15,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\UIEvent.cs(108,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(273,37): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(273,70): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\SystemEvent.cs(103,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(282,39): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(282,72): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(133,43): error CS0246: The type or namespace name 'InputConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(293,17): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(153,16): error CS0246: The type or namespace name 'InputDeviceType' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\UIEvent.cs(46,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.IsFirstPerson'
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.MouseSensitivity'
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.FieldOfView'
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.CameraTransform'
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.SetFirstPersonMode(bool)'
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.SetAimingMode(bool)'
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.SetCameraPosition(Vector3)'
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.SetCameraRotation(Quaternion)'
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.SwitchCameraState(CameraState)'
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.OnViewModeChanged'
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(14,50): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\UIEvent.cs(77,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\WeaponEvent.cs(110,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\WeaponEvent.cs(16,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\WeaponEvent.cs(53,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Events\WeaponEvent.cs(54,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.MovementInput'
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.IsSprintPressed'
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.WeaponSwitchInput'
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.IsWeaponSwitchPressed'
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.OnSprintPressed'
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.OnSprintReleased'
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.OnWeaponSwitchPressed'
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.EnableInput(bool)'
-
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.SetInputMap(FPSInputMap)'
-*** Tundra build failed (0.98 seconds), 2 items updated, 1429 evaluated
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(67,22): warning CS0414: The field 'FPS_PlayerController._crouchInput' is assigned but its value is never used
+*** Tundra build failed (1.28 seconds), 2 items updated, 1399 evaluated
 ## Script Compilation Error for: Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.FPS.dll (+2 others)
 ## CmdLine: "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.FPS.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.FPS.rsp2"
 ## Output:
-Assets\_Project\Features\Templates\FPS\Commands\DamageCommand.cs(2,29): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\FireCommand.cs(2,29): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\InteractCommand.cs(2,29): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\MovementCommand.cs(2,29): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\ReloadCommand.cs(2,29): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\WeaponSwitchCommand.cs(2,29): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\MovementEvent.cs(2,29): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(4,7): error CS0246: The type or namespace name 'Cinemachine' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\WeaponSwitchCommand.cs(12,40): error CS0246: The type or namespace name 'ICommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\WeaponSwitchCommand.cs(12,50): error CS0246: The type or namespace name 'IResettableCommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\FireCommand.cs(12,32): error CS0246: The type or namespace name 'ICommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\ReloadCommand.cs(12,34): error CS0246: The type or namespace name 'ICommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\MovementCommand.cs(12,36): error CS0246: The type or namespace name 'ICommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\MovementCommand.cs(12,46): error CS0246: The type or namespace name 'IResettableCommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\DamageCommand.cs(12,34): error CS0246: The type or namespace name 'ICommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\ReloadCommand.cs(12,44): error CS0246: The type or namespace name 'IResettableCommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\DamageCommand.cs(12,44): error CS0246: The type or namespace name 'IResettableCommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\FireCommand.cs(12,42): error CS0246: The type or namespace name 'IResettableCommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\InteractCommand.cs(12,36): error CS0246: The type or namespace name 'ICommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\InteractCommand.cs(12,46): error CS0246: The type or namespace name 'IResettableCommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\CombatEvent.cs(15,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\ObjectPools\CommandPool.cs(71,52): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\ObjectPools\CommandPool.cs(104,73): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\ObjectPools\CommandPool.cs(120,88): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\CombatEvent.cs(46,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\ObjectPools\CommandPool.cs(139,96): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\CombatEvent.cs(77,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\CombatEvent.cs(108,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\CombatEvent.cs(109,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\InputEvent.cs(46,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\InputEvent.cs(77,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(29,63): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\SystemEvent.cs(15,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(215,42): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(237,100): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(237,17): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\SystemEvent.cs(46,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(251,45): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(251,78): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\SystemEvent.cs(47,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\MovementEvent.cs(11,34): error CS0246: The type or namespace name 'GameEvent<>' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\InputEvent.cs(15,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\SystemEvent.cs(137,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(262,45): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(262,78): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\SystemEvent.cs(138,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\UIEvent.cs(15,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\UIEvent.cs(108,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(273,37): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(273,70): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\SystemEvent.cs(103,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(282,39): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(282,72): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(133,43): error CS0246: The type or namespace name 'InputConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(293,17): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(153,16): error CS0246: The type or namespace name 'InputDeviceType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\UIEvent.cs(46,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.IsFirstPerson'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.MouseSensitivity'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.FieldOfView'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.CameraTransform'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.SetFirstPersonMode(bool)'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.SetAimingMode(bool)'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.SetCameraPosition(Vector3)'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.SetCameraRotation(Quaternion)'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.SwitchCameraState(CameraState)'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.OnViewModeChanged'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(14,50): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\UIEvent.cs(77,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\WeaponEvent.cs(110,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\WeaponEvent.cs(16,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\WeaponEvent.cs(53,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\WeaponEvent.cs(54,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.MovementInput'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.IsSprintPressed'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.WeaponSwitchInput'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.IsWeaponSwitchPressed'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.OnSprintPressed'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.OnSprintReleased'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.OnWeaponSwitchPressed'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.EnableInput(bool)'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.SetInputMap(FPSInputMap)'
+Assets\_Project\Features\Templates\FPS\Scripts\Services\Interfaces\IFPSInputService.cs(14,14): warning CS0108: 'IFPSInputService.IsEnabled' hides inherited member 'IFPSService.IsEnabled'. Use the new keyword if hiding was intended.
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(105,35): error CS1061: 'GameModeConfig' does not contain a definition for 'ApplyGameMode' and no accessible extension method 'ApplyGameMode' accepting a first argument of type 'GameModeConfig' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(167,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(137,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(156,33): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(230,17): warning CS0219: The variable 'hitInfo' is assigned but its value is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(351,24): error CS1929: 'PlayerStatsConfig' does not contain a definition for 'GetSpeedForState' and the best extension method overload 'PlayerStatsConfigExtensions.GetSpeedForState(FPSMovementConfig, FPSPlayerState)' requires a receiver of type 'FPSMovementConfig'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(355,24): error CS1929: 'PlayerStatsConfig' does not contain a definition for 'GetSpeedForState' and the best extension method overload 'PlayerStatsConfigExtensions.GetSpeedForState(FPSMovementConfig, FPSPlayerState)' requires a receiver of type 'FPSMovementConfig'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(359,24): error CS1929: 'PlayerStatsConfig' does not contain a definition for 'GetSpeedForState' and the best extension method overload 'PlayerStatsConfigExtensions.GetSpeedForState(FPSMovementConfig, FPSPlayerState)' requires a receiver of type 'FPSMovementConfig'
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(474,42): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(490,35): error CS1061: 'WeaponController' does not contain a definition for 'TryShoot' and no accessible extension method 'TryShoot' accepting a first argument of type 'WeaponController' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(624,51): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'jumpHeight' and no accessible extension method 'jumpHeight' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(68,29): warning CS0067: The event 'FPSUIService.OnSettingsRequested' is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(69,29): warning CS0067: The event 'FPSUIService.OnQuitRequested' is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(66,29): warning CS0067: The event 'FPSUIService.OnRestartRequested' is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(65,29): warning CS0067: The event 'FPSUIService.OnResumeRequested' is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(67,29): warning CS0067: The event 'FPSUIService.OnMainMenuRequested' is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Data\RecoilPattern.cs(40,39): warning CS0414: The field 'RecoilPattern._enableDebugVisualization' is assigned but its value is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(20,39): warning CS0414: The field 'FPSInputService._enableInputLogging' is assigned but its value is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(67,22): warning CS0414: The field 'FPS_PlayerController._crouchInput' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\FPS\Commands\DamageCommand.cs(2,29): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\FireCommand.cs(2,29): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\InteractCommand.cs(2,29): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\MovementCommand.cs(2,29): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\ReloadCommand.cs(2,29): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\WeaponSwitchCommand.cs(2,29): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\MovementEvent.cs(2,29): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(4,7): error CS0246: The type or namespace name 'Cinemachine' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\WeaponSwitchCommand.cs(12,40): error CS0246: The type or namespace name 'ICommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\WeaponSwitchCommand.cs(12,50): error CS0246: The type or namespace name 'IResettableCommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\FireCommand.cs(12,32): error CS0246: The type or namespace name 'ICommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\ReloadCommand.cs(12,34): error CS0246: The type or namespace name 'ICommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\MovementCommand.cs(12,36): error CS0246: The type or namespace name 'ICommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\MovementCommand.cs(12,46): error CS0246: The type or namespace name 'IResettableCommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\DamageCommand.cs(12,34): error CS0246: The type or namespace name 'ICommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\ReloadCommand.cs(12,44): error CS0246: The type or namespace name 'IResettableCommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\DamageCommand.cs(12,44): error CS0246: The type or namespace name 'IResettableCommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\FireCommand.cs(12,42): error CS0246: The type or namespace name 'IResettableCommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\InteractCommand.cs(12,36): error CS0246: The type or namespace name 'ICommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Commands\InteractCommand.cs(12,46): error CS0246: The type or namespace name 'IResettableCommand' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\CombatEvent.cs(15,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\ObjectPools\CommandPool.cs(71,52): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\ObjectPools\CommandPool.cs(104,73): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\ObjectPools\CommandPool.cs(120,88): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\CombatEvent.cs(46,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\ObjectPools\CommandPool.cs(139,96): error CS0234: The type or namespace name 'Commands' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\CombatEvent.cs(77,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\CombatEvent.cs(108,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\CombatEvent.cs(109,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\InputEvent.cs(46,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\InputEvent.cs(77,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(29,63): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\SystemEvent.cs(15,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(215,42): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(237,100): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(237,17): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\SystemEvent.cs(46,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(251,45): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(251,78): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\SystemEvent.cs(47,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\MovementEvent.cs(11,34): error CS0246: The type or namespace name 'GameEvent<>' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\InputEvent.cs(15,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\SystemEvent.cs(137,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(262,45): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(262,78): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\SystemEvent.cs(138,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\UIEvent.cs(15,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\UIEvent.cs(108,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(273,37): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(273,70): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\SystemEvent.cs(103,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(282,39): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(282,72): error CS0246: The type or namespace name 'CameraConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(133,43): error CS0246: The type or namespace name 'InputConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(293,17): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(153,16): error CS0246: The type or namespace name 'InputDeviceType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\UIEvent.cs(46,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.IsFirstPerson'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.MouseSensitivity'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.FieldOfView'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.CameraTransform'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.SetFirstPersonMode(bool)'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.SetAimingMode(bool)'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.SetCameraPosition(Vector3)'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.SetCameraRotation(Quaternion)'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.SwitchCameraState(CameraState)'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(12,37): error CS0535: 'FPSCameraService' does not implement interface member 'IFPSCameraService.OnViewModeChanged'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSCameraService.cs(14,50): error CS0246: The type or namespace name 'CinemachineVirtualCamera' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\UIEvent.cs(77,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\WeaponEvent.cs(110,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\WeaponEvent.cs(16,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\WeaponEvent.cs(53,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Events\WeaponEvent.cs(54,56): error CS0234: The type or namespace name 'Events' does not exist in the namespace 'asterivo.Unity60.Core' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.MovementInput'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.IsSprintPressed'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.WeaponSwitchInput'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.IsWeaponSwitchPressed'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.OnSprintPressed'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.OnSprintReleased'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.OnWeaponSwitchPressed'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.EnableInput(bool)'
-Assets\_Project\Features\Templates\FPS\Services\Implementations\FPSInputService.cs(11,36): error CS0535: 'FPSInputService' does not implement interface member 'IFPSInputService.SetInputMap(FPSInputMap)'
-AssetDatabase: script compilation time: 3.482280s
-'Assets/_Project/Tests/Results/fps-template-current-errors.txt' Amount of processed bytes '126466' does not match file size '27387'
+Assets\_Project\Features\Templates\FPS\Scripts\Services\Interfaces\IFPSInputService.cs(14,14): warning CS0108: 'IFPSInputService.IsEnabled' hides inherited member 'IFPSService.IsEnabled'. Use the new keyword if hiding was intended.
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(105,35): error CS1061: 'GameModeConfig' does not contain a definition for 'ApplyGameMode' and no accessible extension method 'ApplyGameMode' accepting a first argument of type 'GameModeConfig' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(167,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(137,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(156,33): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(230,17): warning CS0219: The variable 'hitInfo' is assigned but its value is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(351,24): error CS1929: 'PlayerStatsConfig' does not contain a definition for 'GetSpeedForState' and the best extension method overload 'PlayerStatsConfigExtensions.GetSpeedForState(FPSMovementConfig, FPSPlayerState)' requires a receiver of type 'FPSMovementConfig'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(355,24): error CS1929: 'PlayerStatsConfig' does not contain a definition for 'GetSpeedForState' and the best extension method overload 'PlayerStatsConfigExtensions.GetSpeedForState(FPSMovementConfig, FPSPlayerState)' requires a receiver of type 'FPSMovementConfig'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(359,24): error CS1929: 'PlayerStatsConfig' does not contain a definition for 'GetSpeedForState' and the best extension method overload 'PlayerStatsConfigExtensions.GetSpeedForState(FPSMovementConfig, FPSPlayerState)' requires a receiver of type 'FPSMovementConfig'
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(474,42): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(490,35): error CS1061: 'WeaponController' does not contain a definition for 'TryShoot' and no accessible extension method 'TryShoot' accepting a first argument of type 'WeaponController' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(624,51): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'jumpHeight' and no accessible extension method 'jumpHeight' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(68,29): warning CS0067: The event 'FPSUIService.OnSettingsRequested' is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(69,29): warning CS0067: The event 'FPSUIService.OnQuitRequested' is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(66,29): warning CS0067: The event 'FPSUIService.OnRestartRequested' is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(65,29): warning CS0067: The event 'FPSUIService.OnResumeRequested' is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(67,29): warning CS0067: The event 'FPSUIService.OnMainMenuRequested' is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Data\RecoilPattern.cs(40,39): warning CS0414: The field 'RecoilPattern._enableDebugVisualization' is assigned but its value is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(20,39): warning CS0414: The field 'FPSInputService._enableInputLogging' is assigned but its value is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(67,22): warning CS0414: The field 'FPS_PlayerController._crouchInput' is assigned but its value is never used
+AssetDatabase: script compilation time: 8.170024s
+'Assets/_Project/Tests/Results/fps-template-current-errors.txt' Amount of processed bytes '87675' does not match file size '26926'
 Scripts have compiler errors.
 Exiting without the bug reporter. Application will terminate with return code 1

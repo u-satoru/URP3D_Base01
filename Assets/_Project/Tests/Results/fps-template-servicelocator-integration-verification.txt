@@ -1,15 +1,15 @@
 [Licensing::Module] Trying to connect to existing licensing client channel...
-[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-16T21:43:03.6560509Z"
+[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-16T20:51:02.7489522Z"
 [Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 26648, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
 [Licensing::Module] Error: LicensingClient has failed validation; ignoring
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.17.1+ae67fbc
-  Session Id:              84fda4d3d08b427c8e1cb93028a48a68
+  Session Id:              9869ce1fcfee4c2cac3aac9bf55e0ffb
   Correlation Id:          27ba378d00f61906260636ceec280eb9
-  External correlation Id: 6997407526207192128
+  External correlation Id: 7278994558431283114
   Machine Id:              6v8irZboPhn9pIeIA+kbS+sqP0M=
-[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.01s, handshake: 0.07s)
-[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-16T21:43:03.7353822Z"
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.03s, handshake: 0.09s)
+[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-16T20:51:02.8687466Z"
 [Licensing::Module] Error: Access token is unavailable; failed to update
 [Licensing::Client] Successfully updated license
 Built from '6000.0/staging' branch; Version is '6000.0.42f1 (feb9a7235030) revision 16693671'; Using compiler version '193933523'; Build Type 'Release'
@@ -26,7 +26,7 @@ D:\UnityProjects\URP3D_Base01
 -batchmode
 -quit
 -logFile
-D:\UnityProjects\URP3D_Base01\Assets\_Project\Tests\Results\fps-template-final-compilation-verification.txt
+D:\UnityProjects\URP3D_Base01\Assets\_Project\Tests\Results\fps-template-servicelocator-integration-verification.txt
 Successfully changed project path to: D:\UnityProjects\URP3D_Base01
 D:/UnityProjects/URP3D_Base01
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -64,22 +64,22 @@ D:/UnityProjects/URP3D_Base01
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [97116]  Target information:
+Player connection [63248]  Target information:
 
-Player connection [97116]  * "[IP] 172.28.160.1 [Port] 55504 [Flags] 2 [Guid] 3740715967 [EditorId] 3740715967 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [63248]  * "[IP] 172.28.160.1 [Port] 55504 [Flags] 2 [Guid] 1487476105 [EditorId] 1487476105 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [97116]  * "[IP] 172.17.80.1 [Port] 55504 [Flags] 2 [Guid] 3740715967 [EditorId] 3740715967 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [63248]  * "[IP] 172.17.80.1 [Port] 55504 [Flags] 2 [Guid] 1487476105 [EditorId] 1487476105 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [97116]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 3740715967 [EditorId] 3740715967 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [63248]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 1487476105 [EditorId] 1487476105 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [97116]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 3740715967 [EditorId] 3740715967 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [63248]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 1487476105 [EditorId] 1487476105 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [97116] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [97116] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [63248] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [63248] Host joined alternative multi-casting on [225.0.0.222:34997]...
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
 [Physics::Module] Id: 0xdecafbad
-[Package Manager] Connected to IPC stream "Upm-2420" after 0.3 seconds.
+[Package Manager] Connected to IPC stream "Upm-80696" after 0.3 seconds.
 Library Redirect Path: Library/
 [Package Manager] Restoring resolved packages state from cache
 [Licensing::Client] Successfully resolved entitlement details
@@ -159,8 +159,8 @@ Library Redirect Path: Library/
 [Physics::Module] Threading Mode: Multi-Threaded
 [Subsystems] No new subsystems found in resolved package list.
 Package Manager log level set to [2]
-[Package Manager] Done registering packages in 0.22 seconds
-Refreshing native plugins compatible for Editor in 3.36 ms, found 3 plugins.
+[Package Manager] Done registering packages in 0.19 seconds
+Refreshing native plugins compatible for Editor in 1.84 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.0.42f1 (feb9a7235030)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Resources/UnitySubsystems
@@ -177,7 +177,7 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56420
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56696
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 ImportWorker Server TCP listen port: 0
@@ -190,46 +190,46 @@ Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 [Licensing::Client] Successfully resolved entitlement details
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
-Registered in 0.037972 seconds.
-- Loaded All Assemblies, in  0.587 seconds
+Registered in 0.045105 seconds.
+- Loaded All Assemblies, in  0.642 seconds
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 [usbmuxd] Send listen message
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 626 ms
+Android Extension - Scanning For ADB Devices 2269 ms
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.073 seconds
-Domain Reload Profiling: 1656ms
-	BeginReloadAssembly (208ms)
+- Finished resetting the current domain, in  2.667 seconds
+Domain Reload Profiling: 3303ms
+	BeginReloadAssembly (213ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (45ms)
-	RebuildNativeTypeToScriptingClass (10ms)
-	initialDomainReloadingComplete (96ms)
-	LoadAllAssembliesAndSetupDomain (222ms)
-		LoadAssemblies (205ms)
+	RebuildCommonClasses (51ms)
+	RebuildNativeTypeToScriptingClass (14ms)
+	initialDomainReloadingComplete (132ms)
+	LoadAllAssembliesAndSetupDomain (225ms)
+		LoadAssemblies (208ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (216ms)
-			TypeCache.Refresh (214ms)
-				TypeCache.ScanAssembly (198ms)
+		AnalyzeDomain (220ms)
+			TypeCache.Refresh (218ms)
+				TypeCache.ScanAssembly (202ms)
 			BuildScriptInfoCaches (0ms)
 			ResolveRequiredComponents (1ms)
-	FinalizeReload (1074ms)
+	FinalizeReload (2667ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1035ms)
+		SetupLoadedEditorAssemblies (2633ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (757ms)
-			SetLoadedEditorAssemblies (6ms)
-			BeforeProcessingInitializeOnLoad (57ms)
-			ProcessInitializeOnLoadAttributes (130ms)
-			ProcessInitializeOnLoadMethodAttributes (83ms)
+			InitializePlatformSupportModulesInManaged (2393ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (50ms)
+			ProcessInitializeOnLoadAttributes (119ms)
+			ProcessInitializeOnLoadMethodAttributes (66ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -238,7 +238,7 @@ Domain Reload Profiling: 1656ms
 Application.AssetDatabase Initial Refresh Start
 YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
 The contents of 'Assets/_Project/Core/Services/Interfaces/IStealthMechanicsService.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
-'Assets/_Project/Tests/Results/fps-template-final-compilation-verification.txt' Amount of processed bytes '20736' does not match file size '19140'
+'Assets/_Project/Tests/Results/fps-template-servicelocator-integration-verification.txt' Amount of processed bytes '20924' does not match file size '19150'
 The .meta file Assets/_Project/Core/Services/Interfaces/IStealthMechanicsService.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
@@ -272,7 +272,7 @@ info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 47.1484ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 45.5891ms
 Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
 WorkingDir: D:/UnityProjects/URP3D_Base01
 info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
@@ -283,7 +283,6 @@ warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
       Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Runtime.InteropServices.WindowsRuntime.dll" in favor of "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetStandard\Extensions\2.0.0\System.Runtime.InteropServices.WindowsRuntime.dll"
 warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
       Assembly system.componentmodel.composition has duplicate hint path. Ignoring "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.ComponentModel.Composition.dll" in favor of "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetStandard\compat\2.1.0\shims\netfx\System.ComponentModel.Composition.dll"
-DisplayProgressbar: Compiling Scripts
 info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
       Resolved Unity.Burst.Cecil, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e with Library\PackageCache\com.unity.burst@7a907cf5a459\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll
 info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
@@ -291,8 +290,29 @@ info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 516.2606ms
-ExitCode: 3 Duration: 0s941ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 87.0612ms
+DisplayProgressbar: Compiling Scripts
+Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Tools\netcorerun\netcorerun.exe "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1900b0aE.dag.json" "Library/Bee/1900b0aE-inputdata.json" "Library\Bee\buildprogram0.traceevents"
+WorkingDir: D:/UnityProjects/URP3D_Base01
+ExitCode: 4 Duration: 2s585ms
+Rebuilding DAG because FileSignature timestamp changed: Library/Bee/1900b0aE-inputdata.json
+[1052/1399  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra requires additional run (2.53 seconds), 2 items updated, 1051 evaluated
+ExitCode: 0 Duration: 1s390ms
+Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --dagfilejson="Library\Bee\1900b0aE.dag.json" --profile="Library/Bee/backend2.traceevents" ScriptAssemblies
+WorkingDir: D:/UnityProjects/URP3D_Base01
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Current configuration matches the requested one, skipping
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 5.9679ms
+ExitCode: 3 Duration: 0s915ms
+Finished compiling graph: 1403 nodes, 29365 flattened edges (22815 ToBuild, 240 ToUse), maximum node priority 1923
 [1052/1399  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
 [1383/1399  0s] Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.FPS.dll (+2 others)
 ##### CommandLine
@@ -713,15 +733,9 @@ ExitCode: 3 Duration: 0s941ms
 -r:"Library/PackageCache/com.unity.visualscripting@b4d700247d4b/Editor/VisualScripting.Core/Dependencies/YamlDotNet/Unity.VisualScripting.YamlDotNet.dll"
 -r:"Library/PackageCache/com.unity.visualscripting@b4d700247d4b/Editor/VisualScripting.Core/EditorAssetResources/Unity.VisualScripting.TextureAssets.dll"
 -r:"Library/PackageCache/com.unity.visualscripting@b4d700247d4b/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Audio.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Commands.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Events.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Player.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UniTask.Addressables.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UniTask.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Burst.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Cinemachine.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Mathematics.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.TextMeshPro.ref.dll"
@@ -732,13 +746,6 @@ ExitCode: 3 Duration: 0s941ms
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
 "Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPS_CameraSystem.cs"
 "Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs"
-"Assets/_Project/Features/Templates/FPS/Scripts/Combat/HealthComponent.cs"
-"Assets/_Project/Features/Templates/FPS/Scripts/Combat/HitboxComponent.cs"
-"Assets/_Project/Features/Templates/FPS/Scripts/Configuration/FPSAudioConfig.cs"
-"Assets/_Project/Features/Templates/FPS/Scripts/Configuration/FPSMovementConfig.cs"
-"Assets/_Project/Features/Templates/FPS/Scripts/Configuration/FPSPerformanceConfig.cs"
-"Assets/_Project/Features/Templates/FPS/Scripts/Configuration/FPSUIConfig.cs"
-"Assets/_Project/Features/Templates/FPS/Scripts/Configuration/GameModeConfig.cs"
 "Assets/_Project/Features/Templates/FPS/Scripts/Configuration/PlayerStatsConfig.cs"
 "Assets/_Project/Features/Templates/FPS/Scripts/Configuration/TTKBalanceConfig.cs"
 "Assets/_Project/Features/Templates/FPS/Scripts/Configuration/WeaponLoadoutConfig.cs"
@@ -779,272 +786,363 @@ DOTNET_MULTILEVEL_LOOKUP=0
 ##### ExitCode
 1
 ##### Output
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(2,7): error CS0246: The type or namespace name 'Cinemachine' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(3,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(3,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(4,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(2,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(4,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(5,24): error CS0234: The type or namespace name 'Player' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(5,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(4,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\AmmoManager.cs(2,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\HitScanStrategy.cs(2,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(2,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(4,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(2,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(3,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(4,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(5,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Data\RecoilPattern.cs(10,18): error CS0101: The namespace 'asterivo.Unity60.Features.Templates.FPS.Data' already contains a definition for 'RecoilPattern'
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(20,51): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(40,56): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(239,17): error CS0246: The type or namespace name 'CinemachineCamera' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(100,39): error CS0246: The type or namespace name 'HitboxComponent' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(60,57): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(60,100): error CS0234: The type or namespace name 'Player' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(281,13): error CS0246: The type or namespace name 'CinemachineBasicMultiChannelPerlin' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\AmmoManager.cs(30,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(68,16): error CS0246: The type or namespace name 'GameModeConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(16,34): error CS0246: The type or namespace name 'CinemachineCamera' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(218,34): error CS0246: The type or namespace name 'HealthComponent' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\AmmoManager.cs(31,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(82,62): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(82,105): error CS0234: The type or namespace name 'Player' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(17,34): error CS0246: The type or namespace name 'CinemachineCamera' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(16,30): error CS0246: The type or namespace name 'PlayerStateMachine' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(18,34): error CS0246: The type or namespace name 'CinemachineCamera' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\AmmoManager.cs(32,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(71,16): error CS0246: The type or namespace name 'FPSMovementConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(107,51): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(24,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(119,54): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\AmmoManager.cs(33,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(25,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(16,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(72,16): error CS0246: The type or namespace name 'FPSAudioConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(14,26): error CS0246: The type or namespace name 'IObjectPool<>' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(141,53): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(17,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(73,16): error CS0246: The type or namespace name 'FPSUIConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(86,35): error CS0246: The type or namespace name 'WeaponData' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(158,55): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(18,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(74,16): error CS0246: The type or namespace name 'FPSPerformanceConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(182,53): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(19,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(77,16): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(160,41): error CS0246: The type or namespace name 'RecoilPattern' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(20,34): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(78,16): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(206,56): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(79,16): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(25,34): error CS0246: The type or namespace name 'PlayerStateMachine' could not be found (are you missing a using directive or an assembly reference?)
+
 Assets\_Project\Features\Templates\FPS\Scripts\Services\Interfaces\IFPSInputService.cs(14,14): warning CS0108: 'IFPSInputService.IsEnabled' hides inherited member 'IFPSService.IsEnabled'. Use the new keyword if hiding was intended.
 
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(137,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(27,34): error CS0118: 'Camera' is a namespace but is used like a type
 
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(159,46): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(16,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(163,50): error CS0118: 'Camera' is a namespace but is used like a type
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(80,16): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(163,33): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(17,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(21,17): error CS1739: The best overload for 'ObjectPool' does not have a parameter named 'onGet'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(40,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(166,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(81,16): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Configuration\FPSPerformanceConfig.cs(71,13): warning CS0618: 'QualitySettings.masterTextureLimit' is obsolete: 'masterTextureLimit has been deprecated. Use globalTextureMipmapLimit instead (UnityUpgradable) -> globalTextureMipmapLimit'
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(48,17): error CS0246: The type or namespace name 'WeaponData' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\HitScanStrategy.cs(148,41): error CS0012: The type 'IHealthTarget' is defined in an assembly that is not referenced. You must add a reference to assembly 'asterivo.Unity60.Core.Components, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(41,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(110,55): error CS1503: Argument 2: cannot convert from 'asterivo.Unity60.Features.Templates.FPS.Player.FPS_PlayerController.FPSPlayerState' to 'asterivo.Unity60.Features.Templates.FPS.Data.FPSPlayerState'
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(32,34): error CS0246: The type or namespace name 'GameModeConfig' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(126,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Idle'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(42,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(127,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(39,34): error CS0246: The type or namespace name 'FPSMovementConfig' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(128,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(43,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(129,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(42,34): error CS0246: The type or namespace name 'FPSAudioConfig' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(102,45): error CS1061: 'HitboxComponent' does not contain a definition for 'GetHealthComponent' and no accessible extension method 'GetHealthComponent' accepting a first argument of type 'HitboxComponent' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(45,34): error CS0246: The type or namespace name 'FPSUIConfig' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(314,86): error CS1061: 'ReadOnlyArray<InputControl>' does not contain a definition for 'Any' and no accessible extension method 'Any' accepting a first argument of type 'ReadOnlyArray<InputControl>' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(44,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(230,17): warning CS0219: The variable 'hitInfo' is assigned but its value is never used
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(48,34): error CS0246: The type or namespace name 'FPSPerformanceConfig' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(105,35): error CS1061: 'GameModeConfig' does not contain a definition for 'ApplyGameMode' and no accessible extension method 'ApplyGameMode' accepting a first argument of type 'GameModeConfig' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(55,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(358,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(45,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(362,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(52,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(366,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(56,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(379,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(53,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(383,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(54,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(387,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(57,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(103,66): error CS1061: 'WeaponData' does not contain a definition for 'recoilPattern' and no accessible extension method 'recoilPattern' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(55,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(113,52): error CS1061: 'WeaponData' does not contain a definition for 'recoilPattern' and no accessible extension method 'recoilPattern' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(56,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Data\RecoilPattern.cs(277,49): error CS0117: 'WeaponType' does not contain a definition for 'SniperRifle'
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(163,86): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(167,67): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(172,90): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(174,74): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(220,24): error CS1061: 'HealthComponent' does not contain a definition for 'IsDead' and no accessible extension method 'IsDead' accepting a first argument of type 'HealthComponent' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(230,17): error CS0117: 'DamageCommand' does not contain a definition for 'TargetHealth'
-
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(231,17): error CS0117: 'DamageCommand' does not contain a definition for 'DamageAmount'
-
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(232,17): error CS0117: 'DamageCommand' does not contain a definition for 'DamageSource'
-
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(233,17): error CS0117: 'DamageCommand' does not contain a definition for 'HitType'
-
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(247,32): error CS1061: 'HealthComponent' does not contain a definition for 'IsDead' and no accessible extension method 'IsDead' accepting a first argument of type 'HealthComponent' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(256,32): error CS1061: 'HealthComponent' does not contain a definition for 'IsDead' and no accessible extension method 'IsDead' accepting a first argument of type 'HealthComponent' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(142,27): error CS1061: 'RecoilSystem' does not contain a definition for 'SetRecoilPattern' and no accessible extension method 'SetRecoilPattern' accepting a first argument of type 'RecoilSystem' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(350,24): error CS1061: 'TrailRenderer' does not contain a definition for 'color' and no accessible extension method 'color' accepting a first argument of type 'TrailRenderer' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(497,35): error CS1061: 'WeaponController' does not contain a definition for 'TryShoot' and no accessible extension method 'TryShoot' accepting a first argument of type 'WeaponController' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(259,31): error CS1955: Non-invocable member 'AmmoManager.CanReload' cannot be used like a method.
-
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(631,51): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'jumpHeight' and no accessible extension method 'jumpHeight' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(473,42): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
-
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(487,28): error CS0117: 'HitboxType' does not contain a definition for 'Arms'
-
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(488,28): error CS0117: 'HitboxType' does not contain a definition for 'Legs'
-
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(66,29): warning CS0067: The event 'FPSUIService.OnRestartRequested' is never used
-
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(69,29): warning CS0067: The event 'FPSUIService.OnQuitRequested' is never used
-
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(65,29): warning CS0067: The event 'FPSUIService.OnResumeRequested' is never used
-
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(68,29): warning CS0067: The event 'FPSUIService.OnSettingsRequested' is never used
-
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(67,29): warning CS0067: The event 'FPSUIService.OnMainMenuRequested' is never used
-
-Assets\_Project\Features\Templates\FPS\Scripts\Data\RecoilPattern.cs(40,39): warning CS0414: The field 'RecoilPattern._enableDebugVisualization' is assigned but its value is never used
-
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(74,22): warning CS0414: The field 'FPS_PlayerController._crouchInput' is assigned but its value is never used
-
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(19,39): warning CS0414: The field 'FPSInputService._enableInputLogging' is assigned but its value is never used
-*** Tundra build failed (0.85 seconds), 2 items updated, 1399 evaluated
-STDOUT:
-[ApiUpdater] Total time: 1139ms, Parse response file: 83ms, Collect updater configs: 152ms, Update: 901ms, Save: 3ms Files: 1 modified / 11 visited / 30 total (Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.FPS.dll).
-STDERR:
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/ProjectileStrategy.cs(21,17): error CS1739: 'ObjectPool' に最も適しているオーバーロードには 'onGet' という名前のパラメーターがありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/FPS_Template_Config.cs(105,35): error CS1061: 'GameModeConfig' に 'ApplyGameMode' の定義が含まれておらず、型 'GameModeConfig' の最初の引数を受け付けるアクセス可能な拡張メソッド 'ApplyGameMode' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(110,55): error CS1503: 引数 2: は 'asterivo.Unity60.Features.Templates.FPS.Player.FPS_PlayerController.FPSPlayerState' から 'asterivo.Unity60.Features.Templates.FPS.Data.FPSPlayerState' へ変換することはできません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(126,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Idle' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(127,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Crouching' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(128,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Walking' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(129,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Running' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(103,66): error CS1061: 'WeaponData' に 'recoilPattern' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'recoilPattern' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(113,52): error CS1061: 'WeaponData' に 'recoilPattern' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'recoilPattern' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(102,45): error CS1061: 'HitboxComponent' に 'GetHealthComponent' の定義が含まれておらず、型 'HitboxComponent' の最初の引数を受け付けるアクセス可能な拡張メソッド 'GetHealthComponent' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(163,86): error CS1061: 'float[]' に 'length' の定義が含まれておらず、型 'float[]' の最初の引数を受け付けるアクセス可能な拡張メソッド 'length' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(167,67): error CS1061: 'float[]' に 'length' の定義が含まれておらず、型 'float[]' の最初の引数を受け付けるアクセス可能な拡張メソッド 'length' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(172,90): error CS1061: 'float[]' に 'length' の定義が含まれておらず、型 'float[]' の最初の引数を受け付けるアクセス可能な拡張メソッド 'length' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(174,74): error CS1061: 'float[]' に 'length' の定義が含まれておらず、型 'float[]' の最初の引数を受け付けるアクセス可能な拡張メソッド 'length' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(159,46): error CS0234: 型または名前空間の名前 'main' が名前空間 'asterivo.Unity60.Features.Templates.FPS.Camera' に存在しません (アセンブリ参照があることを確認してください)
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(163,50): error CS0118: 'Camera' は 名前空間 ですが、種類 のように使用されています
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Data/RecoilPattern.cs(277,49): error CS0117: 'WeaponType' に 'SniperRifle' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(220,24): error CS1061: 'HealthComponent' に 'IsDead' の定義が含まれておらず、型 'HealthComponent' の最初の引数を受け付けるアクセス可能な拡張メソッド 'IsDead' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(230,17): error CS0117: 'DamageCommand' に 'TargetHealth' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(231,17): error CS0117: 'DamageCommand' に 'DamageAmount' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(232,17): error CS0117: 'DamageCommand' に 'DamageSource' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(233,17): error CS0117: 'DamageCommand' に 'HitType' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(247,32): error CS1061: 'HealthComponent' に 'IsDead' の定義が含まれておらず、型 'HealthComponent' の最初の引数を受け付けるアクセス可能な拡張メソッド 'IsDead' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(256,32): error CS1061: 'HealthComponent' に 'IsDead' の定義が含まれておらず、型 'HealthComponent' の最初の引数を受け付けるアクセス可能な拡張メソッド 'IsDead' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/HitScanStrategy.cs(148,41): error CS0012: 型 'IHealthTarget' は、参照されていないアセンブリに定義されています。アセンブリ 'asterivo.Unity60.Core.Components, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null' に参照を追加する必要があります。
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/ProjectileStrategy.cs(350,24): error CS1061: 'TrailRenderer' に 'color' の定義が含まれておらず、型 'TrailRenderer' の最初の引数を受け付けるアクセス可能な拡張メソッド 'color' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(358,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Crouching' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(362,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Running' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(366,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Walking' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(379,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Crouching' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(383,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Running' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(387,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Walking' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/WeaponController.cs(142,27): error CS1061: 'RecoilSystem' に 'SetRecoilPattern' の定義が含まれておらず、型 'RecoilSystem' の最初の引数を受け付けるアクセス可能な拡張メソッド 'SetRecoilPattern' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(497,35): error CS1061: 'WeaponController' に 'TryShoot' の定義が含まれておらず、型 'WeaponController' の最初の引数を受け付けるアクセス可能な拡張メソッド 'TryShoot' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(487,28): error CS0117: 'HitboxType' に 'Arms' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(488,28): error CS0117: 'HitboxType' に 'Legs' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(631,51): error CS1061: 'PlayerStatsConfig' に 'jumpHeight' の定義が含まれておらず、型 'PlayerStatsConfig' の最初の引数を受け付けるアクセス可能な拡張メソッド 'jumpHeight' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Services/FPSInputService.cs(314,86): error CS1061: 'ReadOnlyArray<InputControl>' に 'Any' の定義が含まれておらず、型 'ReadOnlyArray<InputControl>' の最初の引数を受け付けるアクセス可能な拡張メソッド 'Any' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/WeaponController.cs(259,31): error CS1955: 実行不可能なメンバー 'AmmoManager.CanReload' をメソッドのように使用することはできません。
-[API Updater] Updated Files:
-Skipping ScriptUpdater consent dialog. Consent declined based on command line parameters.
-Finished running ScriptUpdaters
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(58,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+*** Tundra build failed (0.87 seconds), 2 items updated, 1399 evaluated
 ## Script Compilation Error for: Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.FPS.dll (+2 others)
 ## CmdLine: "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.FPS.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.FPS.rsp2"
 ## Output:
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(2,7): error CS0246: The type or namespace name 'Cinemachine' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(3,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(3,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(4,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(2,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(4,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(5,24): error CS0234: The type or namespace name 'Player' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(5,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(4,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\AmmoManager.cs(2,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\HitScanStrategy.cs(2,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(2,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(4,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(2,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(3,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(4,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(5,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Data\RecoilPattern.cs(10,18): error CS0101: The namespace 'asterivo.Unity60.Features.Templates.FPS.Data' already contains a definition for 'RecoilPattern'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(20,51): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(40,56): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(239,17): error CS0246: The type or namespace name 'CinemachineCamera' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(100,39): error CS0246: The type or namespace name 'HitboxComponent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(60,57): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(60,100): error CS0234: The type or namespace name 'Player' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(281,13): error CS0246: The type or namespace name 'CinemachineBasicMultiChannelPerlin' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\AmmoManager.cs(30,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(68,16): error CS0246: The type or namespace name 'GameModeConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(16,34): error CS0246: The type or namespace name 'CinemachineCamera' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(218,34): error CS0246: The type or namespace name 'HealthComponent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\AmmoManager.cs(31,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(82,62): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(82,105): error CS0234: The type or namespace name 'Player' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(17,34): error CS0246: The type or namespace name 'CinemachineCamera' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(16,30): error CS0246: The type or namespace name 'PlayerStateMachine' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(18,34): error CS0246: The type or namespace name 'CinemachineCamera' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\AmmoManager.cs(32,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(71,16): error CS0246: The type or namespace name 'FPSMovementConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(107,51): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(24,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(119,54): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\AmmoManager.cs(33,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(25,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(16,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(72,16): error CS0246: The type or namespace name 'FPSAudioConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(14,26): error CS0246: The type or namespace name 'IObjectPool<>' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(141,53): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(17,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(73,16): error CS0246: The type or namespace name 'FPSUIConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(86,35): error CS0246: The type or namespace name 'WeaponData' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(158,55): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(18,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(74,16): error CS0246: The type or namespace name 'FPSPerformanceConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(182,53): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(19,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(77,16): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(160,41): error CS0246: The type or namespace name 'RecoilPattern' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(20,34): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(78,16): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(206,56): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(79,16): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(25,34): error CS0246: The type or namespace name 'PlayerStateMachine' could not be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Services\Interfaces\IFPSInputService.cs(14,14): warning CS0108: 'IFPSInputService.IsEnabled' hides inherited member 'IFPSService.IsEnabled'. Use the new keyword if hiding was intended.
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(137,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(159,46): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(163,50): error CS0118: 'Camera' is a namespace but is used like a type
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(163,33): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(21,17): error CS1739: The best overload for 'ObjectPool' does not have a parameter named 'onGet'
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(166,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
-Assets\_Project\Features\Templates\FPS\Scripts\Configuration\FPSPerformanceConfig.cs(71,13): warning CS0618: 'QualitySettings.masterTextureLimit' is obsolete: 'masterTextureLimit has been deprecated. Use globalTextureMipmapLimit instead (UnityUpgradable) -> globalTextureMipmapLimit'
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\HitScanStrategy.cs(148,41): error CS0012: The type 'IHealthTarget' is defined in an assembly that is not referenced. You must add a reference to assembly 'asterivo.Unity60.Core.Components, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.
-Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(110,55): error CS1503: Argument 2: cannot convert from 'asterivo.Unity60.Features.Templates.FPS.Player.FPS_PlayerController.FPSPlayerState' to 'asterivo.Unity60.Features.Templates.FPS.Data.FPSPlayerState'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(126,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Idle'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(127,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(128,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(129,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(102,45): error CS1061: 'HitboxComponent' does not contain a definition for 'GetHealthComponent' and no accessible extension method 'GetHealthComponent' accepting a first argument of type 'HitboxComponent' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(314,86): error CS1061: 'ReadOnlyArray<InputControl>' does not contain a definition for 'Any' and no accessible extension method 'Any' accepting a first argument of type 'ReadOnlyArray<InputControl>' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(230,17): warning CS0219: The variable 'hitInfo' is assigned but its value is never used
-Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(105,35): error CS1061: 'GameModeConfig' does not contain a definition for 'ApplyGameMode' and no accessible extension method 'ApplyGameMode' accepting a first argument of type 'GameModeConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(358,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(362,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(366,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(379,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(383,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(387,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(103,66): error CS1061: 'WeaponData' does not contain a definition for 'recoilPattern' and no accessible extension method 'recoilPattern' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(113,52): error CS1061: 'WeaponData' does not contain a definition for 'recoilPattern' and no accessible extension method 'recoilPattern' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\RecoilPattern.cs(277,49): error CS0117: 'WeaponType' does not contain a definition for 'SniperRifle'
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(163,86): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(167,67): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(172,90): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(174,74): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(220,24): error CS1061: 'HealthComponent' does not contain a definition for 'IsDead' and no accessible extension method 'IsDead' accepting a first argument of type 'HealthComponent' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(230,17): error CS0117: 'DamageCommand' does not contain a definition for 'TargetHealth'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(231,17): error CS0117: 'DamageCommand' does not contain a definition for 'DamageAmount'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(232,17): error CS0117: 'DamageCommand' does not contain a definition for 'DamageSource'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(233,17): error CS0117: 'DamageCommand' does not contain a definition for 'HitType'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(247,32): error CS1061: 'HealthComponent' does not contain a definition for 'IsDead' and no accessible extension method 'IsDead' accepting a first argument of type 'HealthComponent' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(256,32): error CS1061: 'HealthComponent' does not contain a definition for 'IsDead' and no accessible extension method 'IsDead' accepting a first argument of type 'HealthComponent' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(142,27): error CS1061: 'RecoilSystem' does not contain a definition for 'SetRecoilPattern' and no accessible extension method 'SetRecoilPattern' accepting a first argument of type 'RecoilSystem' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(350,24): error CS1061: 'TrailRenderer' does not contain a definition for 'color' and no accessible extension method 'color' accepting a first argument of type 'TrailRenderer' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(497,35): error CS1061: 'WeaponController' does not contain a definition for 'TryShoot' and no accessible extension method 'TryShoot' accepting a first argument of type 'WeaponController' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(259,31): error CS1955: Non-invocable member 'AmmoManager.CanReload' cannot be used like a method.
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(631,51): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'jumpHeight' and no accessible extension method 'jumpHeight' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(473,42): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(487,28): error CS0117: 'HitboxType' does not contain a definition for 'Arms'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(488,28): error CS0117: 'HitboxType' does not contain a definition for 'Legs'
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(66,29): warning CS0067: The event 'FPSUIService.OnRestartRequested' is never used
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(69,29): warning CS0067: The event 'FPSUIService.OnQuitRequested' is never used
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(65,29): warning CS0067: The event 'FPSUIService.OnResumeRequested' is never used
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(68,29): warning CS0067: The event 'FPSUIService.OnSettingsRequested' is never used
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(67,29): warning CS0067: The event 'FPSUIService.OnMainMenuRequested' is never used
-Assets\_Project\Features\Templates\FPS\Scripts\Data\RecoilPattern.cs(40,39): warning CS0414: The field 'RecoilPattern._enableDebugVisualization' is assigned but its value is never used
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(74,22): warning CS0414: The field 'FPS_PlayerController._crouchInput' is assigned but its value is never used
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(19,39): warning CS0414: The field 'FPSInputService._enableInputLogging' is assigned but its value is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(27,34): error CS0118: 'Camera' is a namespace but is used like a type
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(16,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(80,16): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(17,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(40,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(81,16): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(48,17): error CS0246: The type or namespace name 'WeaponData' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(41,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(32,34): error CS0246: The type or namespace name 'GameModeConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(42,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(39,34): error CS0246: The type or namespace name 'FPSMovementConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(43,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(42,34): error CS0246: The type or namespace name 'FPSAudioConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(45,34): error CS0246: The type or namespace name 'FPSUIConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(44,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(48,34): error CS0246: The type or namespace name 'FPSPerformanceConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(55,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(45,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(52,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(56,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(53,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(54,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(57,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(55,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(56,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(58,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
 
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(2,7): error CS0246: The type or namespace name 'Cinemachine' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(3,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(3,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(4,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(2,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(4,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(5,24): error CS0234: The type or namespace name 'Player' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(5,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(4,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\AmmoManager.cs(2,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\HitScanStrategy.cs(2,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(2,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(4,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(2,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(3,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(4,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(5,24): error CS0234: The type or namespace name 'Core' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Data\RecoilPattern.cs(10,18): error CS0101: The namespace 'asterivo.Unity60.Features.Templates.FPS.Data' already contains a definition for 'RecoilPattern'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(20,51): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(40,56): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(239,17): error CS0246: The type or namespace name 'CinemachineCamera' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(100,39): error CS0246: The type or namespace name 'HitboxComponent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(60,57): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(60,100): error CS0234: The type or namespace name 'Player' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(281,13): error CS0246: The type or namespace name 'CinemachineBasicMultiChannelPerlin' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\AmmoManager.cs(30,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(68,16): error CS0246: The type or namespace name 'GameModeConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(16,34): error CS0246: The type or namespace name 'CinemachineCamera' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(218,34): error CS0246: The type or namespace name 'HealthComponent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\AmmoManager.cs(31,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(82,62): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(82,105): error CS0234: The type or namespace name 'Player' does not exist in the namespace 'asterivo.Unity60' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(17,34): error CS0246: The type or namespace name 'CinemachineCamera' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(16,30): error CS0246: The type or namespace name 'PlayerStateMachine' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(18,34): error CS0246: The type or namespace name 'CinemachineCamera' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\AmmoManager.cs(32,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(71,16): error CS0246: The type or namespace name 'FPSMovementConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(107,51): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(24,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(119,54): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\AmmoManager.cs(33,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(25,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(16,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(72,16): error CS0246: The type or namespace name 'FPSAudioConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(14,26): error CS0246: The type or namespace name 'IObjectPool<>' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(141,53): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(17,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(73,16): error CS0246: The type or namespace name 'FPSUIConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(86,35): error CS0246: The type or namespace name 'WeaponData' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(158,55): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(18,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(74,16): error CS0246: The type or namespace name 'FPSPerformanceConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(182,53): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(19,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(77,16): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(160,41): error CS0246: The type or namespace name 'RecoilPattern' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(20,34): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(78,16): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(206,56): error CS0246: The type or namespace name 'PlayerStatsConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(79,16): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(25,34): error CS0246: The type or namespace name 'PlayerStateMachine' could not be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Services\Interfaces\IFPSInputService.cs(14,14): warning CS0108: 'IFPSInputService.IsEnabled' hides inherited member 'IFPSService.IsEnabled'. Use the new keyword if hiding was intended.
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(137,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(159,46): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(163,50): error CS0118: 'Camera' is a namespace but is used like a type
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(163,33): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(21,17): error CS1739: The best overload for 'ObjectPool' does not have a parameter named 'onGet'
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(166,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
-Assets\_Project\Features\Templates\FPS\Scripts\Configuration\FPSPerformanceConfig.cs(71,13): warning CS0618: 'QualitySettings.masterTextureLimit' is obsolete: 'masterTextureLimit has been deprecated. Use globalTextureMipmapLimit instead (UnityUpgradable) -> globalTextureMipmapLimit'
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\HitScanStrategy.cs(148,41): error CS0012: The type 'IHealthTarget' is defined in an assembly that is not referenced. You must add a reference to assembly 'asterivo.Unity60.Core.Components, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.
-Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(110,55): error CS1503: Argument 2: cannot convert from 'asterivo.Unity60.Features.Templates.FPS.Player.FPS_PlayerController.FPSPlayerState' to 'asterivo.Unity60.Features.Templates.FPS.Data.FPSPlayerState'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(126,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Idle'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(127,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(128,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(129,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(102,45): error CS1061: 'HitboxComponent' does not contain a definition for 'GetHealthComponent' and no accessible extension method 'GetHealthComponent' accepting a first argument of type 'HitboxComponent' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(314,86): error CS1061: 'ReadOnlyArray<InputControl>' does not contain a definition for 'Any' and no accessible extension method 'Any' accepting a first argument of type 'ReadOnlyArray<InputControl>' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(230,17): warning CS0219: The variable 'hitInfo' is assigned but its value is never used
-Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(105,35): error CS1061: 'GameModeConfig' does not contain a definition for 'ApplyGameMode' and no accessible extension method 'ApplyGameMode' accepting a first argument of type 'GameModeConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(358,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(362,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(366,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(379,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(383,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(387,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(103,66): error CS1061: 'WeaponData' does not contain a definition for 'recoilPattern' and no accessible extension method 'recoilPattern' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(113,52): error CS1061: 'WeaponData' does not contain a definition for 'recoilPattern' and no accessible extension method 'recoilPattern' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\RecoilPattern.cs(277,49): error CS0117: 'WeaponType' does not contain a definition for 'SniperRifle'
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(163,86): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(167,67): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(172,90): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(174,74): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(220,24): error CS1061: 'HealthComponent' does not contain a definition for 'IsDead' and no accessible extension method 'IsDead' accepting a first argument of type 'HealthComponent' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(230,17): error CS0117: 'DamageCommand' does not contain a definition for 'TargetHealth'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(231,17): error CS0117: 'DamageCommand' does not contain a definition for 'DamageAmount'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(232,17): error CS0117: 'DamageCommand' does not contain a definition for 'DamageSource'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(233,17): error CS0117: 'DamageCommand' does not contain a definition for 'HitType'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(247,32): error CS1061: 'HealthComponent' does not contain a definition for 'IsDead' and no accessible extension method 'IsDead' accepting a first argument of type 'HealthComponent' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(256,32): error CS1061: 'HealthComponent' does not contain a definition for 'IsDead' and no accessible extension method 'IsDead' accepting a first argument of type 'HealthComponent' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(142,27): error CS1061: 'RecoilSystem' does not contain a definition for 'SetRecoilPattern' and no accessible extension method 'SetRecoilPattern' accepting a first argument of type 'RecoilSystem' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(350,24): error CS1061: 'TrailRenderer' does not contain a definition for 'color' and no accessible extension method 'color' accepting a first argument of type 'TrailRenderer' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(497,35): error CS1061: 'WeaponController' does not contain a definition for 'TryShoot' and no accessible extension method 'TryShoot' accepting a first argument of type 'WeaponController' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(259,31): error CS1955: Non-invocable member 'AmmoManager.CanReload' cannot be used like a method.
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(631,51): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'jumpHeight' and no accessible extension method 'jumpHeight' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(473,42): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(487,28): error CS0117: 'HitboxType' does not contain a definition for 'Arms'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(488,28): error CS0117: 'HitboxType' does not contain a definition for 'Legs'
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(66,29): warning CS0067: The event 'FPSUIService.OnRestartRequested' is never used
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(69,29): warning CS0067: The event 'FPSUIService.OnQuitRequested' is never used
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(65,29): warning CS0067: The event 'FPSUIService.OnResumeRequested' is never used
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(68,29): warning CS0067: The event 'FPSUIService.OnSettingsRequested' is never used
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(67,29): warning CS0067: The event 'FPSUIService.OnMainMenuRequested' is never used
-Assets\_Project\Features\Templates\FPS\Scripts\Data\RecoilPattern.cs(40,39): warning CS0414: The field 'RecoilPattern._enableDebugVisualization' is assigned but its value is never used
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(74,22): warning CS0414: The field 'FPS_PlayerController._crouchInput' is assigned but its value is never used
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(19,39): warning CS0414: The field 'FPSInputService._enableInputLogging' is assigned but its value is never used
-AssetDatabase: script compilation time: 2.462427s
-'Assets/_Project/Tests/Results/fps-template-final-compilation-verification.txt' Amount of processed bytes '121797' does not match file size '83077'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(27,34): error CS0118: 'Camera' is a namespace but is used like a type
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(16,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(80,16): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(17,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(40,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(81,16): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(48,17): error CS0246: The type or namespace name 'WeaponData' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(41,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(32,34): error CS0246: The type or namespace name 'GameModeConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(42,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(39,34): error CS0246: The type or namespace name 'FPSMovementConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(43,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(42,34): error CS0246: The type or namespace name 'FPSAudioConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(45,34): error CS0246: The type or namespace name 'FPSUIConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(44,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(48,34): error CS0246: The type or namespace name 'FPSPerformanceConfig' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(55,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(45,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(52,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(56,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(53,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(54,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(57,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(55,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(56,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(58,34): error CS0246: The type or namespace name 'GameEvent' could not be found (are you missing a using directive or an assembly reference?)
+AssetDatabase: script compilation time: 5.620263s
+'Assets/_Project/Tests/Results/fps-template-servicelocator-integration-verification.txt' Amount of processed bytes '130403' does not match file size '26907'
 Scripts have compiler errors.
 Exiting without the bug reporter. Application will terminate with return code 1

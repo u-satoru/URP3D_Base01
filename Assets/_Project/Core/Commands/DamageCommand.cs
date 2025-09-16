@@ -12,6 +12,39 @@ namespace asterivo.Unity60.Core.Commands
         private IHealthTarget _target;
         private int _damageAmount;
         private string _elementType;
+        private GameObject _damageSource;
+        private string _hitType;
+
+        // Properties for object initializer syntax (FPS Template compatibility)
+        public IHealthTarget TargetHealth
+        {
+            get => _target;
+            set => _target = value;
+        }
+
+        public int DamageAmount
+        {
+            get => _damageAmount;
+            set => _damageAmount = value;
+        }
+
+        public GameObject DamageSource
+        {
+            get => _damageSource;
+            set => _damageSource = value;
+        }
+
+        public string HitType
+        {
+            get => _hitType;
+            set => _hitType = value;
+        }
+
+        public string ElementType
+        {
+            get => _elementType;
+            set => _elementType = value;
+        }
 
         public bool CanUndo => true;
 
@@ -57,6 +90,8 @@ namespace asterivo.Unity60.Core.Commands
             _target = null;
             _damageAmount = 0;
             _elementType = null;
+            _damageSource = null;
+            _hitType = null;
         }
 
         public void Initialize(params object[] parameters)

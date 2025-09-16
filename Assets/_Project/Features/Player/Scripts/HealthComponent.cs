@@ -96,6 +96,12 @@ namespace asterivo.Unity60.Player
     public bool IsInvulnerable => isInvulnerable;
 
     /// <summary>
+    /// エンティティが死亡しているかどうかを取得します
+    /// </summary>
+    /// <value>体力が0以下の場合はtrue、生存している場合はfalse</value>
+    public bool IsDead => currentHealth <= 0;
+
+    /// <summary>
     /// 指定した量だけ体力を回復します
     /// </summary>
     /// <param name="amount">回復量。正の整数値を指定してください</param>

@@ -1,15 +1,15 @@
 [Licensing::Module] Trying to connect to existing licensing client channel...
-[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-16T21:19:12.8948639Z"
+[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-16T21:27:48.8553864Z"
 [Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 26648, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
 [Licensing::Module] Error: LicensingClient has failed validation; ignoring
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.17.1+ae67fbc
-  Session Id:              29957c718d8f4edb958ae37735d5991b
+  Session Id:              dd4c00f5bc5b427592f0cf38b7edca63
   Correlation Id:          27ba378d00f61906260636ceec280eb9
-  External correlation Id: 4989220978597027179
+  External correlation Id: 5678425445305819280
   Machine Id:              6v8irZboPhn9pIeIA+kbS+sqP0M=
-[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.03s, handshake: 0.06s)
-[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-16T21:19:12.9884512Z"
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.03s, handshake: 0.09s)
+[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-16T21:27:48.9704374Z"
 [Licensing::Module] Error: Access token is unavailable; failed to update
 [Licensing::Client] Successfully updated license
 Built from '6000.0/staging' branch; Version is '6000.0.42f1 (feb9a7235030) revision 16693671'; Using compiler version '193933523'; Build Type 'Release'
@@ -26,7 +26,7 @@ D:\UnityProjects\URP3D_Base01
 -batchmode
 -quit
 -logFile
-D:\UnityProjects\URP3D_Base01\Assets\_Project\Tests\Results\post-basic-fixes-verification.txt
+D:\UnityProjects\URP3D_Base01\Assets\_Project\Tests\Results\weapondata-fix-verification.txt
 Successfully changed project path to: D:\UnityProjects\URP3D_Base01
 D:/UnityProjects/URP3D_Base01
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -64,22 +64,22 @@ D:/UnityProjects/URP3D_Base01
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [73532]  Target information:
+Player connection [28600]  Target information:
 
-Player connection [73532]  * "[IP] 172.28.160.1 [Port] 55504 [Flags] 2 [Guid] 3088801727 [EditorId] 3088801727 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [28600]  * "[IP] 172.28.160.1 [Port] 55504 [Flags] 2 [Guid] 1340172352 [EditorId] 1340172352 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [73532]  * "[IP] 172.17.80.1 [Port] 55504 [Flags] 2 [Guid] 3088801727 [EditorId] 3088801727 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [28600]  * "[IP] 172.17.80.1 [Port] 55504 [Flags] 2 [Guid] 1340172352 [EditorId] 1340172352 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [73532]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 3088801727 [EditorId] 3088801727 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [28600]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 1340172352 [EditorId] 1340172352 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [73532]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 3088801727 [EditorId] 3088801727 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [28600]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 1340172352 [EditorId] 1340172352 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [73532] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [73532] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [28600] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [28600] Host joined alternative multi-casting on [225.0.0.222:34997]...
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
 [Physics::Module] Id: 0xdecafbad
-[Package Manager] Connected to IPC stream "Upm-29312" after 0.3 seconds.
+[Package Manager] Connected to IPC stream "Upm-70700" after 0.3 seconds.
 Library Redirect Path: Library/
 [Package Manager] Restoring resolved packages state from cache
 [Licensing::Client] Successfully resolved entitlement details
@@ -159,8 +159,8 @@ Library Redirect Path: Library/
 [Physics::Module] Threading Mode: Multi-Threaded
 [Subsystems] No new subsystems found in resolved package list.
 Package Manager log level set to [2]
-[Package Manager] Done registering packages in 0.14 seconds
-Refreshing native plugins compatible for Editor in 3.41 ms, found 3 plugins.
+[Package Manager] Done registering packages in 0.16 seconds
+Refreshing native plugins compatible for Editor in 1.94 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.0.42f1 (feb9a7235030)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Resources/UnitySubsystems
@@ -177,7 +177,7 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56312
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56700
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 ImportWorker Server TCP listen port: 0
@@ -190,55 +190,55 @@ Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 [Licensing::Client] Successfully resolved entitlement details
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
-Registered in 0.040400 seconds.
-- Loaded All Assemblies, in  0.644 seconds
+Registered in 0.043656 seconds.
+- Loaded All Assemblies, in  0.677 seconds
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 [usbmuxd] Send listen message
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 646 ms
+Android Extension - Scanning For ADB Devices 462 ms
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.113 seconds
-Domain Reload Profiling: 1748ms
-	BeginReloadAssembly (197ms)
+- Finished resetting the current domain, in  1.156 seconds
+Domain Reload Profiling: 1826ms
+	BeginReloadAssembly (219ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (69ms)
+	RebuildCommonClasses (50ms)
 	RebuildNativeTypeToScriptingClass (13ms)
-	initialDomainReloadingComplete (108ms)
-	LoadAllAssembliesAndSetupDomain (247ms)
-		LoadAssemblies (194ms)
+	initialDomainReloadingComplete (122ms)
+	LoadAllAssembliesAndSetupDomain (263ms)
+		LoadAssemblies (216ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (241ms)
-			TypeCache.Refresh (239ms)
-				TypeCache.ScanAssembly (223ms)
+		AnalyzeDomain (256ms)
+			TypeCache.Refresh (254ms)
+				TypeCache.ScanAssembly (235ms)
 			BuildScriptInfoCaches (0ms)
-			ResolveRequiredComponents (0ms)
-	FinalizeReload (1113ms)
+			ResolveRequiredComponents (1ms)
+	FinalizeReload (1157ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1076ms)
+		SetupLoadedEditorAssemblies (1082ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (772ms)
-			SetLoadedEditorAssemblies (7ms)
-			BeforeProcessingInitializeOnLoad (60ms)
-			ProcessInitializeOnLoadAttributes (149ms)
-			ProcessInitializeOnLoadMethodAttributes (88ms)
+			InitializePlatformSupportModulesInManaged (623ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (64ms)
+			ProcessInitializeOnLoadAttributes (261ms)
+			ProcessInitializeOnLoadMethodAttributes (129ms)
 			AfterProcessingInitializeOnLoad (0ms)
-			EditorAssembliesLoaded (0ms)
+			EditorAssembliesLoaded (2ms)
 		ExecutionOrderSort2 (0ms)
 		AwakeInstancesAfterBackupRestoration (0ms)
 [Licensing::Client] Successfully resolved entitlement details
 Application.AssetDatabase Initial Refresh Start
 YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
 The contents of 'Assets/_Project/Core/Services/Interfaces/IStealthMechanicsService.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
-'Assets/_Project/Tests/Results/post-basic-fixes-verification.txt' Amount of processed bytes '20899' does not match file size '19127'
+'Assets/_Project/Tests/Results/weapondata-fix-verification.txt' Amount of processed bytes '20898' does not match file size '19125'
 The .meta file Assets/_Project/Core/Services/Interfaces/IStealthMechanicsService.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
@@ -272,7 +272,7 @@ info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 48.9030ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 51.9279ms
 Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
 WorkingDir: D:/UnityProjects/URP3D_Base01
 info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
@@ -283,16 +283,16 @@ warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
       Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Runtime.InteropServices.WindowsRuntime.dll" in favor of "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetStandard\Extensions\2.0.0\System.Runtime.InteropServices.WindowsRuntime.dll"
 warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
       Assembly system.componentmodel.composition has duplicate hint path. Ignoring "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.ComponentModel.Composition.dll" in favor of "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetStandard\compat\2.1.0\shims\netfx\System.ComponentModel.Composition.dll"
-DisplayProgressbar: Compiling Scripts
 info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
       Resolved Unity.Burst.Cecil, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e with Library\PackageCache\com.unity.burst@7a907cf5a459\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll
+DisplayProgressbar: Compiling Scripts
 info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
       Resolved Mono.Cecil, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e with Library\PackageCache\com.unity.nuget.mono-cecil@d6f9955a5d5f\Mono.Cecil.dll
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 96.8778ms
-ExitCode: 3 Duration: 0s833ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 117.1802ms
+ExitCode: 3 Duration: 0s812ms
 [1052/1399  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
 [1383/1399  0s] Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.FPS.dll (+2 others)
 ##### CommandLine
@@ -781,6 +781,38 @@ DOTNET_MULTILEVEL_LOOKUP=0
 ##### Output
 Assets\_Project\Features\Templates\FPS\Scripts\Services\Interfaces\IFPSInputService.cs(14,14): warning CS0108: 'IFPSInputService.IsEnabled' hides inherited member 'IFPSService.IsEnabled'. Use the new keyword if hiding was intended.
 
+Assets\_Project\Features\Templates\FPS\Scripts\Configuration\FPSPerformanceConfig.cs(71,13): warning CS0618: 'QualitySettings.masterTextureLimit' is obsolete: 'masterTextureLimit has been deprecated. Use globalTextureMipmapLimit instead (UnityUpgradable) -> globalTextureMipmapLimit'
+
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(166,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
+
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(105,35): error CS1061: 'GameModeConfig' does not contain a definition for 'ApplyGameMode' and no accessible extension method 'ApplyGameMode' accepting a first argument of type 'GameModeConfig' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(19,35): error CS0246: The type or namespace name 'ObjectPool<>' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(137,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(142,27): error CS1061: 'RecoilSystem' does not contain a definition for 'SetRecoilPattern' and no accessible extension method 'SetRecoilPattern' accepting a first argument of type 'RecoilSystem' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(94,73): error CS1061: 'WeaponData' does not contain a definition for 'weaponName' and no accessible extension method 'weaponName' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(176,24): error CS1061: 'Rigidbody' does not contain a definition for 'gravityScale' and no accessible extension method 'gravityScale' accepting a first argument of type 'Rigidbody' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\HitScanStrategy.cs(148,41): error CS0012: The type 'IHealthTarget' is defined in an assembly that is not referenced. You must add a reference to assembly 'asterivo.Unity60.Core.Components, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(133,21): error CS0103: The name '_firstPersonCamera' does not exist in the current context
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(138,46): error CS0103: The name '_weaponCamera' does not exist in the current context
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(140,25): error CS0103: The name '_weaponCamera' does not exist in the current context
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(146,25): error CS0103: The name '_firstPersonCamera' does not exist in the current context
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(153,25): error CS0103: The name '_aimingCamera' does not exist in the current context
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(155,25): error CS0103: The name '_aimingCamera' does not exist in the current context
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(160,25): error CS0103: The name '_firstPersonCamera' does not exist in the current context
+
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(27,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
 
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(27,71): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'walkSpeed' and no accessible extension method 'walkSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
@@ -797,6 +829,12 @@ Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtension
 
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(31,29): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'walkSpeed' and no accessible extension method 'walkSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(102,45): error CS1061: 'HitboxComponent' does not contain a definition for 'GetHealthComponent' and no accessible extension method 'GetHealthComponent' accepting a first argument of type 'HitboxComponent' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(103,66): error CS1061: 'WeaponData' does not contain a definition for 'recoilPattern' and no accessible extension method 'recoilPattern' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(113,52): error CS1061: 'WeaponData' does not contain a definition for 'recoilPattern' and no accessible extension method 'recoilPattern' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
+
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(47,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Idle'
 
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(48,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
@@ -804,6 +842,28 @@ Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtension
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(49,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
 
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(50,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(188,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(189,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(191,17): error CS0103: The name '_weaponCamera' does not exist in the current context
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(192,17): error CS0103: The name '_weaponCamera' does not exist in the current context
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(194,17): error CS0103: The name '_aimingCamera' does not exist in the current context
+
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(195,17): error CS0103: The name '_aimingCamera' does not exist in the current context
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(163,86): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(167,67): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(172,90): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(174,74): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(230,17): warning CS0219: The variable 'hitInfo' is assigned but its value is never used
 
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(68,82): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'walkSpeed' and no accessible extension method 'walkSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 
@@ -817,21 +877,7 @@ Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtension
 
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(73,29): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'walkSpeed' and no accessible extension method 'walkSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(105,35): error CS1061: 'GameModeConfig' does not contain a definition for 'ApplyGameMode' and no accessible extension method 'ApplyGameMode' accepting a first argument of type 'GameModeConfig' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\Configuration\FPSPerformanceConfig.cs(71,13): warning CS0618: 'QualitySettings.masterTextureLimit' is obsolete: 'masterTextureLimit has been deprecated. Use globalTextureMipmapLimit instead (UnityUpgradable) -> globalTextureMipmapLimit'
-
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(159,46): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(163,50): error CS0118: 'Camera' is a namespace but is used like a type
-
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(163,33): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(19,35): error CS0246: The type or namespace name 'ObjectPool<>' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(166,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
-
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(102,45): error CS1061: 'HitboxComponent' does not contain a definition for 'GetHealthComponent' and no accessible extension method 'GetHealthComponent' accepting a first argument of type 'HitboxComponent' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(314,86): error CS1061: 'ReadOnlyArray<InputControl>' does not contain a definition for 'Any' and no accessible extension method 'Any' accepting a first argument of type 'ReadOnlyArray<InputControl>' could be found (are you missing a using directive or an assembly reference?)
 
 Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(62,29): error CS1061: 'IObjectPool<Projectile>' does not contain a definition for 'Release' and no accessible extension method 'Release' accepting a first argument of type 'IObjectPool<Projectile>' could be found (are you missing a using directive or an assembly reference?)
 
@@ -849,35 +895,17 @@ Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(247,32): e
 
 Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(256,32): error CS1061: 'HealthComponent' does not contain a definition for 'IsDead' and no accessible extension method 'IsDead' accepting a first argument of type 'HealthComponent' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(176,24): error CS1061: 'Rigidbody' does not contain a definition for 'gravityScale' and no accessible extension method 'gravityScale' accepting a first argument of type 'Rigidbody' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(222,30): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(129,20): error CS1061: 'WeaponStats' does not contain a definition for 'shotsFired' and no accessible extension method 'shotsFired' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(259,31): error CS1955: Non-invocable member 'AmmoManager.CanReload' cannot be used like a method.
 
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(130,20): error CS1061: 'WeaponStats' does not contain a definition for 'shotsHit' and no accessible extension method 'shotsHit' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(270,30): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(131,20): error CS1061: 'WeaponStats' does not contain a definition for 'damageDealt' and no accessible extension method 'damageDealt' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(159,46): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(132,20): error CS1061: 'WeaponStats' does not contain a definition for 'accuracy' and no accessible extension method 'accuracy' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(163,50): error CS0118: 'Camera' is a namespace but is used like a type
 
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(132,38): error CS1061: 'WeaponStats' does not contain a definition for 'shotsFired' and no accessible extension method 'shotsFired' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(132,69): error CS1061: 'WeaponStats' does not contain a definition for 'shotsHit' and no accessible extension method 'shotsHit' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(132,87): error CS1061: 'WeaponStats' does not contain a definition for 'shotsFired' and no accessible extension method 'shotsFired' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(141,20): error CS1061: 'WeaponStats' does not contain a definition for 'shotsFired' and no accessible extension method 'shotsFired' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(142,20): error CS1061: 'WeaponStats' does not contain a definition for 'shotsHit' and no accessible extension method 'shotsHit' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(143,20): error CS1061: 'WeaponStats' does not contain a definition for 'damageDealt' and no accessible extension method 'damageDealt' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(144,20): error CS1061: 'WeaponStats' does not contain a definition for 'accuracy' and no accessible extension method 'accuracy' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(94,73): error CS1061: 'WeaponData' does not contain a definition for 'weaponName' and no accessible extension method 'weaponName' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(230,17): warning CS0219: The variable 'hitInfo' is assigned but its value is never used
-
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(137,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(163,33): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(126,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Idle'
 
@@ -893,91 +921,9 @@ Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtension
 
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(129,71): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'staminaDrainRate' and no accessible extension method 'staminaDrainRate' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(103,66): error CS1061: 'WeaponData' does not contain a definition for 'recoilPattern' and no accessible extension method 'recoilPattern' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(113,52): error CS1061: 'WeaponData' does not contain a definition for 'recoilPattern' and no accessible extension method 'recoilPattern' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(163,86): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(167,67): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(172,90): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(174,74): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(358,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
-
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(362,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
-
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(366,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\HitScanStrategy.cs(148,41): error CS0012: The type 'IHealthTarget' is defined in an assembly that is not referenced. You must add a reference to assembly 'asterivo.Unity60.Core.Components, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.
-
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(379,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
-
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(383,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
-
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(387,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
-
 Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(350,24): error CS1061: 'TrailRenderer' does not contain a definition for 'color' and no accessible extension method 'color' accepting a first argument of type 'TrailRenderer' could be found (are you missing a using directive or an assembly reference?)
 
 Assets\_Project\Features\Templates\FPS\Scripts\Data\RecoilPattern.cs(277,49): error CS0117: 'WeaponType' does not contain a definition for 'SniperRifle'
-
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(497,35): error CS1061: 'WeaponController' does not contain a definition for 'TryShoot' and no accessible extension method 'TryShoot' accepting a first argument of type 'WeaponController' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(133,21): error CS0103: The name '_firstPersonCamera' does not exist in the current context
-
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(138,46): error CS0103: The name '_weaponCamera' does not exist in the current context
-
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(140,25): error CS0103: The name '_weaponCamera' does not exist in the current context
-
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(146,25): error CS0103: The name '_firstPersonCamera' does not exist in the current context
-
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(153,25): error CS0103: The name '_aimingCamera' does not exist in the current context
-
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(155,25): error CS0103: The name '_aimingCamera' does not exist in the current context
-
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(160,25): error CS0103: The name '_firstPersonCamera' does not exist in the current context
-
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(188,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
-
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(189,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
-
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(191,17): error CS0103: The name '_weaponCamera' does not exist in the current context
-
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(192,17): error CS0103: The name '_weaponCamera' does not exist in the current context
-
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(194,17): error CS0103: The name '_aimingCamera' does not exist in the current context
-
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(195,17): error CS0103: The name '_aimingCamera' does not exist in the current context
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(124,44): error CS1061: 'WeaponData' does not contain a definition for 'GetTimeBetweenShots' and no accessible extension method 'GetTimeBetweenShots' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(127,60): error CS1061: 'WeaponData' does not contain a definition for 'ShotType' and no accessible extension method 'ShotType' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(129,75): error CS1061: 'WeaponData' does not contain a definition for 'ShotType' and no accessible extension method 'ShotType' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(139,48): error CS1061: 'WeaponData' does not contain a definition for 'AmmoConfig' and no accessible extension method 'AmmoConfig' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(142,27): error CS1061: 'RecoilSystem' does not contain a definition for 'SetRecoilPattern' and no accessible extension method 'SetRecoilPattern' accepting a first argument of type 'RecoilSystem' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(148,46): error CS1061: 'WeaponData' does not contain a definition for 'FireMode' and no accessible extension method 'FireMode' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(185,32): error CS1061: 'WeaponData' does not contain a definition for 'IsFullAuto' and no accessible extension method 'IsFullAuto' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(631,51): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'jumpHeight' and no accessible extension method 'jumpHeight' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(222,30): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
-
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(259,31): error CS1955: Non-invocable member 'AmmoManager.CanReload' cannot be used like a method.
-
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(473,42): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
-
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(487,28): error CS0117: 'HitboxType' does not contain a definition for 'Arms'
-
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(488,28): error CS0117: 'HitboxType' does not contain a definition for 'Legs'
-
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(270,30): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
 
 Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(364,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
 
@@ -997,57 +943,49 @@ Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(376,17
 
 Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(394,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
 
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(314,86): error CS1061: 'ReadOnlyArray<InputControl>' does not contain a definition for 'Any' and no accessible extension method 'Any' accepting a first argument of type 'ReadOnlyArray<InputControl>' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(473,42): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
 
 Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(449,30): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
 
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(320,34): error CS1061: 'IAudioService' does not contain a definition for 'PlaySFX' and no accessible extension method 'PlaySFX' accepting a first argument of type 'IAudioService' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(487,28): error CS0117: 'HitboxType' does not contain a definition for 'Arms'
 
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(345,34): error CS1061: 'IAudioService' does not contain a definition for 'PlaySFX' and no accessible extension method 'PlaySFX' accepting a first argument of type 'IAudioService' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(488,28): error CS0117: 'HitboxType' does not contain a definition for 'Legs'
 
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(363,32): error CS1061: 'WeaponData' does not contain a definition for 'MuzzleFlashPrefab' and no accessible extension method 'MuzzleFlashPrefab' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(358,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
 
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(365,56): error CS1061: 'WeaponData' does not contain a definition for 'MuzzleFlashPrefab' and no accessible extension method 'MuzzleFlashPrefab' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(362,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
 
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(481,56): error CS1061: 'WeaponData' does not contain a definition for 'GetTTK' and no accessible extension method 'GetTTK' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(366,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
 
-Assets\_Project\Features\Templates\FPS\Scripts\Configuration\WeaponLoadoutConfig.cs(113,32): error CS1061: 'WeaponData' does not contain a definition for 'GetTTK' and no accessible extension method 'GetTTK' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(379,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
 
-Assets\_Project\Features\Templates\FPS\Scripts\Configuration\WeaponLoadoutConfig.cs(146,49): error CS1061: 'WeaponData' does not contain a definition for 'GetTTK' and no accessible extension method 'GetTTK' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(383,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(387,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(497,35): error CS1061: 'WeaponController' does not contain a definition for 'TryShoot' and no accessible extension method 'TryShoot' accepting a first argument of type 'WeaponController' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(631,51): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'jumpHeight' and no accessible extension method 'jumpHeight' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(69,29): warning CS0067: The event 'FPSUIService.OnQuitRequested' is never used
 
 Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(65,29): warning CS0067: The event 'FPSUIService.OnResumeRequested' is never used
 
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(69,29): warning CS0067: The event 'FPSUIService.OnQuitRequested' is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(66,29): warning CS0067: The event 'FPSUIService.OnRestartRequested' is never used
 
 Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(67,29): warning CS0067: The event 'FPSUIService.OnMainMenuRequested' is never used
 
 Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(68,29): warning CS0067: The event 'FPSUIService.OnSettingsRequested' is never used
-
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(66,29): warning CS0067: The event 'FPSUIService.OnRestartRequested' is never used
 
 Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(74,22): warning CS0414: The field 'FPS_PlayerController._crouchInput' is assigned but its value is never used
 
 Assets\_Project\Features\Templates\FPS\Scripts\Data\RecoilPattern.cs(40,39): warning CS0414: The field 'RecoilPattern._enableDebugVisualization' is assigned but its value is never used
 
 Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(19,39): warning CS0414: The field 'FPSInputService._enableInputLogging' is assigned but its value is never used
-*** Tundra build failed (0.74 seconds), 2 items updated, 1399 evaluated
+*** Tundra build failed (0.65 seconds), 2 items updated, 1399 evaluated
 STDOUT:
-[ApiUpdater] Total time: 1506ms, Parse response file: 63ms, Collect updater configs: 162ms, Update: 1278ms, Save: 3ms Files: 1 modified / 14 visited / 30 total (Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.FPS.dll).
+[ApiUpdater] Total time: 1137ms, Parse response file: 76ms, Collect updater configs: 97ms, Update: 961ms, Save: 3ms Files: 1 modified / 12 visited / 30 total (Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.FPS.dll).
 STDERR:
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/FPS_Template_Config.cs(105,35): error CS1061: 'GameModeConfig' に 'ApplyGameMode' の定義が含まれておらず、型 'GameModeConfig' の最初の引数を受け付けるアクセス可能な拡張メソッド 'ApplyGameMode' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(94,73): error CS1061: 'WeaponData' に 'weaponName' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'weaponName' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(159,46): error CS0234: 型または名前空間の名前 'main' が名前空間 'asterivo.Unity60.Features.Templates.FPS.Camera' に存在しません (アセンブリ参照があることを確認してください)
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(163,50): error CS0118: 'Camera' は 名前空間 ですが、種類 のように使用されています
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/ProjectileStrategy.cs(176,24): error CS1061: 'Rigidbody' に 'gravityScale' の定義が含まれておらず、型 'Rigidbody' の最初の引数を受け付けるアクセス可能な拡張メソッド 'gravityScale' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/ProjectileStrategy.cs(19,35): error CS0246: 型または名前空間の名前 'ObjectPool<>' が見つかりませんでした (using ディレクティブまたはアセンブリ参照が指定されていることを確認してください)
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(103,66): error CS1061: 'WeaponData' に 'recoilPattern' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'recoilPattern' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(113,52): error CS1061: 'WeaponData' に 'recoilPattern' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'recoilPattern' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(163,86): error CS1061: 'float[]' に 'length' の定義が含まれておらず、型 'float[]' の最初の引数を受け付けるアクセス可能な拡張メソッド 'length' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(167,67): error CS1061: 'float[]' に 'length' の定義が含まれておらず、型 'float[]' の最初の引数を受け付けるアクセス可能な拡張メソッド 'length' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(172,90): error CS1061: 'float[]' に 'length' の定義が含まれておらず、型 'float[]' の最初の引数を受け付けるアクセス可能な拡張メソッド 'length' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(174,74): error CS1061: 'float[]' に 'length' の定義が含まれておらず、型 'float[]' の最初の引数を受け付けるアクセス可能な拡張メソッド 'length' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(102,45): error CS1061: 'HitboxComponent' に 'GetHealthComponent' の定義が含まれておらず、型 'HitboxComponent' の最初の引数を受け付けるアクセス可能な拡張メソッド 'GetHealthComponent' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/ProjectileStrategy.cs(62,29): error CS1061: 'IObjectPool<Projectile>' に 'Release' の定義が含まれておらず、型 'IObjectPool<Projectile>' の最初の引数を受け付けるアクセス可能な拡張メソッド 'Release' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(27,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Walking' の定義がありません
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(27,71): error CS1061: 'PlayerStatsConfig' に 'walkSpeed' の定義が含まれておらず、型 'PlayerStatsConfig' の最初の引数を受け付けるアクセス可能な拡張メソッド 'walkSpeed' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(28,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Running' の定義がありません
@@ -1060,32 +998,13 @@ STDERR:
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(48,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Crouching' の定義がありません
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(49,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Walking' の定義がありません
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(50,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Running' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(358,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Crouching' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(362,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Running' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(366,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Walking' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(220,24): error CS1061: 'HealthComponent' に 'IsDead' の定義が含まれておらず、型 'HealthComponent' の最初の引数を受け付けるアクセス可能な拡張メソッド 'IsDead' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(230,17): error CS0117: 'DamageCommand' に 'TargetHealth' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(231,17): error CS0117: 'DamageCommand' に 'DamageAmount' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(232,17): error CS0117: 'DamageCommand' に 'DamageSource' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(233,17): error CS0117: 'DamageCommand' に 'HitType' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(247,32): error CS1061: 'HealthComponent' に 'IsDead' の定義が含まれておらず、型 'HealthComponent' の最初の引数を受け付けるアクセス可能な拡張メソッド 'IsDead' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(256,32): error CS1061: 'HealthComponent' に 'IsDead' の定義が含まれておらず、型 'HealthComponent' の最初の引数を受け付けるアクセス可能な拡張メソッド 'IsDead' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/FPS_Template_Config.cs(105,35): error CS1061: 'GameModeConfig' に 'ApplyGameMode' の定義が含まれておらず、型 'GameModeConfig' の最初の引数を受け付けるアクセス可能な拡張メソッド 'ApplyGameMode' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(68,82): error CS1061: 'PlayerStatsConfig' に 'walkSpeed' の定義が含まれておらず、型 'PlayerStatsConfig' の最初の引数を受け付けるアクセス可能な拡張メソッド 'walkSpeed' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(69,82): error CS1061: 'PlayerStatsConfig' に 'runSpeed' の定義が含まれておらず、型 'PlayerStatsConfig' の最初の引数を受け付けるアクセス可能な拡張メソッド 'runSpeed' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(70,84): error CS1061: 'PlayerStatsConfig' に 'crouchSpeed' の定義が含まれておらず、型 'PlayerStatsConfig' の最初の引数を受け付けるアクセス可能な拡張メソッド 'crouchSpeed' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(71,82): error CS1061: 'PlayerStatsConfig' に 'walkSpeed' の定義が含まれておらず、型 'PlayerStatsConfig' の最初の引数を受け付けるアクセス可能な拡張メソッド 'walkSpeed' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(72,80): error CS1061: 'PlayerStatsConfig' に 'crouchSpeed' の定義が含まれておらず、型 'PlayerStatsConfig' の最初の引数を受け付けるアクセス可能な拡張メソッド 'crouchSpeed' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(73,29): error CS1061: 'PlayerStatsConfig' に 'walkSpeed' の定義が含まれておらず、型 'PlayerStatsConfig' の最初の引数を受け付けるアクセス可能な拡張メソッド 'walkSpeed' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(379,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Crouching' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(383,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Running' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(387,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Walking' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Data/WeaponData.cs(129,20): error CS1061: 'WeaponStats' に 'shotsFired' の定義が含まれておらず、型 'WeaponStats' の最初の引数を受け付けるアクセス可能な拡張メソッド 'shotsFired' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Data/WeaponData.cs(130,20): error CS1061: 'WeaponStats' に 'shotsHit' の定義が含まれておらず、型 'WeaponStats' の最初の引数を受け付けるアクセス可能な拡張メソッド 'shotsHit' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Data/WeaponData.cs(131,20): error CS1061: 'WeaponStats' に 'damageDealt' の定義が含まれておらず、型 'WeaponStats' の最初の引数を受け付けるアクセス可能な拡張メソッド 'damageDealt' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Data/WeaponData.cs(132,20): error CS1061: 'WeaponStats' に 'accuracy' の定義が含まれておらず、型 'WeaponStats' の最初の引数を受け付けるアクセス可能な拡張メソッド 'accuracy' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Data/WeaponData.cs(132,38): error CS1061: 'WeaponStats' に 'shotsFired' の定義が含まれておらず、型 'WeaponStats' の最初の引数を受け付けるアクセス可能な拡張メソッド 'shotsFired' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Data/WeaponData.cs(132,69): error CS1061: 'WeaponStats' に 'shotsHit' の定義が含まれておらず、型 'WeaponStats' の最初の引数を受け付けるアクセス可能な拡張メソッド 'shotsHit' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Data/WeaponData.cs(132,87): error CS1061: 'WeaponStats' に 'shotsFired' の定義が含まれておらず、型 'WeaponStats' の最初の引数を受け付けるアクセス可能な拡張メソッド 'shotsFired' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(126,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Idle' の定義がありません
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(127,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Crouching' の定義がありません
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(127,73): error CS1061: 'PlayerStatsConfig' に 'staminaDrainRate' の定義が含まれておらず、型 'PlayerStatsConfig' の最初の引数を受け付けるアクセス可能な拡張メソッド 'staminaDrainRate' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
@@ -1093,12 +1012,20 @@ STDERR:
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(128,71): error CS1061: 'PlayerStatsConfig' に 'staminaDrainRate' の定義が含まれておらず、型 'PlayerStatsConfig' の最初の引数を受け付けるアクセス可能な拡張メソッド 'staminaDrainRate' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(129,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Running' の定義がありません
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/PlayerStatsConfigExtensions.cs(129,71): error CS1061: 'PlayerStatsConfig' に 'staminaDrainRate' の定義が含まれておらず、型 'PlayerStatsConfig' の最初の引数を受け付けるアクセス可能な拡張メソッド 'staminaDrainRate' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Data/WeaponData.cs(141,20): error CS1061: 'WeaponStats' に 'shotsFired' の定義が含まれておらず、型 'WeaponStats' の最初の引数を受け付けるアクセス可能な拡張メソッド 'shotsFired' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Data/WeaponData.cs(142,20): error CS1061: 'WeaponStats' に 'shotsHit' の定義が含まれておらず、型 'WeaponStats' の最初の引数を受け付けるアクセス可能な拡張メソッド 'shotsHit' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Data/WeaponData.cs(143,20): error CS1061: 'WeaponStats' に 'damageDealt' の定義が含まれておらず、型 'WeaponStats' の最初の引数を受け付けるアクセス可能な拡張メソッド 'damageDealt' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Data/WeaponData.cs(144,20): error CS1061: 'WeaponStats' に 'accuracy' の定義が含まれておらず、型 'WeaponStats' の最初の引数を受け付けるアクセス可能な拡張メソッド 'accuracy' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Data/RecoilPattern.cs(277,49): error CS0117: 'WeaponType' に 'SniperRifle' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(497,35): error CS1061: 'WeaponController' に 'TryShoot' の定義が含まれておらず、型 'WeaponController' の最初の引数を受け付けるアクセス可能な拡張メソッド 'TryShoot' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/ProjectileStrategy.cs(176,24): error CS1061: 'Rigidbody' に 'gravityScale' の定義が含まれておらず、型 'Rigidbody' の最初の引数を受け付けるアクセス可能な拡張メソッド 'gravityScale' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(102,45): error CS1061: 'HitboxComponent' に 'GetHealthComponent' の定義が含まれておらず、型 'HitboxComponent' の最初の引数を受け付けるアクセス可能な拡張メソッド 'GetHealthComponent' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(94,73): error CS1061: 'WeaponData' に 'weaponName' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'weaponName' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/ProjectileStrategy.cs(19,35): error CS0246: 型または名前空間の名前 'ObjectPool<>' が見つかりませんでした (using ディレクティブまたはアセンブリ参照が指定されていることを確認してください)
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(159,46): error CS0234: 型または名前空間の名前 'main' が名前空間 'asterivo.Unity60.Features.Templates.FPS.Camera' に存在しません (アセンブリ参照があることを確認してください)
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(163,50): error CS0118: 'Camera' は 名前空間 ですが、種類 のように使用されています
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(220,24): error CS1061: 'HealthComponent' に 'IsDead' の定義が含まれておらず、型 'HealthComponent' の最初の引数を受け付けるアクセス可能な拡張メソッド 'IsDead' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(230,17): error CS0117: 'DamageCommand' に 'TargetHealth' の定義がありません
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(231,17): error CS0117: 'DamageCommand' に 'DamageAmount' の定義がありません
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(232,17): error CS0117: 'DamageCommand' に 'DamageSource' の定義がありません
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(233,17): error CS0117: 'DamageCommand' に 'HitType' の定義がありません
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(247,32): error CS1061: 'HealthComponent' に 'IsDead' の定義が含まれておらず、型 'HealthComponent' の最初の引数を受け付けるアクセス可能な拡張メソッド 'IsDead' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(256,32): error CS1061: 'HealthComponent' に 'IsDead' の定義が含まれておらず、型 'HealthComponent' の最初の引数を受け付けるアクセス可能な拡張メソッド 'IsDead' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/ProjectileStrategy.cs(62,29): error CS1061: 'IObjectPool<Projectile>' に 'Release' の定義が含まれておらず、型 'IObjectPool<Projectile>' の最初の引数を受け付けるアクセス可能な拡張メソッド 'Release' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPS_CameraSystem.cs(133,21): error CS0103: 現在のコンテキストに '_firstPersonCamera' という名前は存在しません
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPS_CameraSystem.cs(138,46): error CS0103: 現在のコンテキストに '_weaponCamera' という名前は存在しません
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPS_CameraSystem.cs(140,25): error CS0103: 現在のコンテキストに '_weaponCamera' という名前は存在しません
@@ -1113,10 +1040,24 @@ STDERR:
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPS_CameraSystem.cs(194,17): error CS0103: 現在のコンテキストに '_aimingCamera' という名前は存在しません
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPS_CameraSystem.cs(195,17): error CS0103: 現在のコンテキストに '_aimingCamera' という名前は存在しません
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPS_CameraSystem.cs(222,30): error CS0234: 型または名前空間の名前 'main' が名前空間 'asterivo.Unity60.Features.Templates.FPS.Camera' に存在しません (アセンブリ参照があることを確認してください)
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/HitScanStrategy.cs(148,41): error CS0012: 型 'IHealthTarget' は、参照されていないアセンブリに定義されています。アセンブリ 'asterivo.Unity60.Core.Components, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null' に参照を追加する必要があります。
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(103,66): error CS1061: 'WeaponData' に 'recoilPattern' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'recoilPattern' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(113,52): error CS1061: 'WeaponData' に 'recoilPattern' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'recoilPattern' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/WeaponController.cs(142,27): error CS1061: 'RecoilSystem' に 'SetRecoilPattern' の定義が含まれておらず、型 'RecoilSystem' の最初の引数を受け付けるアクセス可能な拡張メソッド 'SetRecoilPattern' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Data/RecoilPattern.cs(277,49): error CS0117: 'WeaponType' に 'SniperRifle' の定義がありません
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(163,86): error CS1061: 'float[]' に 'length' の定義が含まれておらず、型 'float[]' の最初の引数を受け付けるアクセス可能な拡張メソッド 'length' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(167,67): error CS1061: 'float[]' に 'length' の定義が含まれておらず、型 'float[]' の最初の引数を受け付けるアクセス可能な拡張メソッド 'length' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(172,90): error CS1061: 'float[]' に 'length' の定義が含まれておらず、型 'float[]' の最初の引数を受け付けるアクセス可能な拡張メソッド 'length' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/RecoilSystem.cs(174,74): error CS1061: 'float[]' に 'length' の定義が含まれておらず、型 'float[]' の最初の引数を受け付けるアクセス可能な拡張メソッド 'length' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPS_CameraSystem.cs(270,30): error CS0234: 型または名前空間の名前 'main' が名前空間 'asterivo.Unity60.Features.Templates.FPS.Camera' に存在しません (アセンブリ参照があることを確認してください)
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/ProjectileStrategy.cs(350,24): error CS1061: 'TrailRenderer' に 'color' の定義が含まれておらず、型 'TrailRenderer' の最初の引数を受け付けるアクセス可能な拡張メソッド 'color' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(631,51): error CS1061: 'PlayerStatsConfig' に 'jumpHeight' の定義が含まれておらず、型 'PlayerStatsConfig' の最初の引数を受け付けるアクセス可能な拡張メソッド 'jumpHeight' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/HitScanStrategy.cs(148,41): error CS0012: 型 'IHealthTarget' は、参照されていないアセンブリに定義されています。アセンブリ 'asterivo.Unity60.Core.Components, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null' に参照を追加する必要があります。
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(358,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Crouching' の定義がありません
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(362,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Running' の定義がありません
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(366,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Walking' の定義がありません
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(379,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Crouching' の定義がありません
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(383,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Running' の定義がありません
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(387,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' に 'Walking' の定義がありません
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(487,28): error CS0117: 'HitboxType' に 'Arms' の定義がありません
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(488,28): error CS0117: 'HitboxType' に 'Legs' の定義がありません
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPS_CameraSystem.cs(364,17): error CS0103: 現在のコンテキストに '_firstPersonCamera' という名前は存在しません
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPS_CameraSystem.cs(366,17): error CS0103: 現在のコンテキストに '_firstPersonCamera' という名前は存在しません
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPS_CameraSystem.cs(367,17): error CS0103: 現在のコンテキストに '_firstPersonCamera' という名前は存在しません
@@ -1126,25 +1067,12 @@ STDERR:
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPS_CameraSystem.cs(375,17): error CS0103: 現在のコンテキストに '_weaponCamera' という名前は存在しません
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPS_CameraSystem.cs(376,17): error CS0103: 現在のコンテキストに '_weaponCamera' という名前は存在しません
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPS_CameraSystem.cs(394,17): error CS0103: 現在のコンテキストに '_firstPersonCamera' という名前は存在しません
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/ProjectileStrategy.cs(350,24): error CS1061: 'TrailRenderer' に 'color' の定義が含まれておらず、型 'TrailRenderer' の最初の引数を受け付けるアクセス可能な拡張メソッド 'color' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(497,35): error CS1061: 'WeaponController' に 'TryShoot' の定義が含まれておらず、型 'WeaponController' の最初の引数を受け付けるアクセス可能な拡張メソッド 'TryShoot' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPS_CameraSystem.cs(449,30): error CS0234: 型または名前空間の名前 'main' が名前空間 'asterivo.Unity60.Features.Templates.FPS.Camera' に存在しません (アセンブリ参照があることを確認してください)
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/WeaponController.cs(124,44): error CS1061: 'WeaponData' に 'GetTimeBetweenShots' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'GetTimeBetweenShots' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/WeaponController.cs(127,60): error CS1061: 'WeaponData' に 'ShotType' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'ShotType' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/WeaponController.cs(129,75): error CS1061: 'WeaponData' に 'ShotType' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'ShotType' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/WeaponController.cs(139,48): error CS1061: 'WeaponData' に 'AmmoConfig' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'AmmoConfig' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/WeaponController.cs(142,27): error CS1061: 'RecoilSystem' に 'SetRecoilPattern' の定義が含まれておらず、型 'RecoilSystem' の最初の引数を受け付けるアクセス可能な拡張メソッド 'SetRecoilPattern' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/WeaponController.cs(148,46): error CS1061: 'WeaponData' に 'FireMode' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'FireMode' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/WeaponController.cs(185,32): error CS1061: 'WeaponData' に 'IsFullAuto' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'IsFullAuto' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/WeaponController.cs(259,31): error CS1955: 実行不可能なメンバー 'AmmoManager.CanReload' をメソッドのように使用することはできません。
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(487,28): error CS0117: 'HitboxType' に 'Arms' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Combat/CombatSystem.cs(488,28): error CS0117: 'HitboxType' に 'Legs' の定義がありません
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/WeaponController.cs(320,34): error CS1061: 'IAudioService' に 'PlaySFX' の定義が含まれておらず、型 'IAudioService' の最初の引数を受け付けるアクセス可能な拡張メソッド 'PlaySFX' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/WeaponController.cs(345,34): error CS1061: 'IAudioService' に 'PlaySFX' の定義が含まれておらず、型 'IAudioService' の最初の引数を受け付けるアクセス可能な拡張メソッド 'PlaySFX' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/WeaponController.cs(363,32): error CS1061: 'WeaponData' に 'MuzzleFlashPrefab' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'MuzzleFlashPrefab' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/WeaponController.cs(365,56): error CS1061: 'WeaponData' に 'MuzzleFlashPrefab' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'MuzzleFlashPrefab' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/WeaponSystem/WeaponController.cs(481,56): error CS1061: 'WeaponData' に 'GetTTK' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'GetTTK' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Configuration/WeaponLoadoutConfig.cs(113,32): error CS1061: 'WeaponData' に 'GetTTK' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'GetTTK' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
+[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Player/FPS_PlayerController.cs(631,51): error CS1061: 'PlayerStatsConfig' に 'jumpHeight' の定義が含まれておらず、型 'PlayerStatsConfig' の最初の引数を受け付けるアクセス可能な拡張メソッド 'jumpHeight' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
 [Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Services/FPSInputService.cs(314,86): error CS1061: 'ReadOnlyArray<InputControl>' に 'Any' の定義が含まれておらず、型 'ReadOnlyArray<InputControl>' の最初の引数を受け付けるアクセス可能な拡張メソッド 'Any' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
-[Script Updater] Assets/_Project/Features/Templates/FPS/Scripts/Configuration/WeaponLoadoutConfig.cs(146,49): error CS1061: 'WeaponData' に 'GetTTK' の定義が含まれておらず、型 'WeaponData' の最初の引数を受け付けるアクセス可能な拡張メソッド 'GetTTK' が見つかりませんでした。using ディレクティブまたはアセンブリ参照が不足していないことを確認してください
 [API Updater] Updated Files:
 Skipping ScriptUpdater consent dialog. Consent declined based on command line parameters.
 Finished running ScriptUpdaters
@@ -1152,6 +1080,22 @@ Finished running ScriptUpdaters
 ## CmdLine: "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.FPS.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.FPS.rsp2"
 ## Output:
 Assets\_Project\Features\Templates\FPS\Scripts\Services\Interfaces\IFPSInputService.cs(14,14): warning CS0108: 'IFPSInputService.IsEnabled' hides inherited member 'IFPSService.IsEnabled'. Use the new keyword if hiding was intended.
+Assets\_Project\Features\Templates\FPS\Scripts\Configuration\FPSPerformanceConfig.cs(71,13): warning CS0618: 'QualitySettings.masterTextureLimit' is obsolete: 'masterTextureLimit has been deprecated. Use globalTextureMipmapLimit instead (UnityUpgradable) -> globalTextureMipmapLimit'
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(166,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(105,35): error CS1061: 'GameModeConfig' does not contain a definition for 'ApplyGameMode' and no accessible extension method 'ApplyGameMode' accepting a first argument of type 'GameModeConfig' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(19,35): error CS0246: The type or namespace name 'ObjectPool<>' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(137,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(142,27): error CS1061: 'RecoilSystem' does not contain a definition for 'SetRecoilPattern' and no accessible extension method 'SetRecoilPattern' accepting a first argument of type 'RecoilSystem' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(94,73): error CS1061: 'WeaponData' does not contain a definition for 'weaponName' and no accessible extension method 'weaponName' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(176,24): error CS1061: 'Rigidbody' does not contain a definition for 'gravityScale' and no accessible extension method 'gravityScale' accepting a first argument of type 'Rigidbody' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\HitScanStrategy.cs(148,41): error CS0012: The type 'IHealthTarget' is defined in an assembly that is not referenced. You must add a reference to assembly 'asterivo.Unity60.Core.Components, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(133,21): error CS0103: The name '_firstPersonCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(138,46): error CS0103: The name '_weaponCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(140,25): error CS0103: The name '_weaponCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(146,25): error CS0103: The name '_firstPersonCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(153,25): error CS0103: The name '_aimingCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(155,25): error CS0103: The name '_aimingCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(160,25): error CS0103: The name '_firstPersonCamera' does not exist in the current context
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(27,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(27,71): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'walkSpeed' and no accessible extension method 'walkSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(28,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
@@ -1160,24 +1104,31 @@ Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtension
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(29,73): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'crouchSpeed' and no accessible extension method 'crouchSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(30,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Idle'
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(31,29): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'walkSpeed' and no accessible extension method 'walkSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(102,45): error CS1061: 'HitboxComponent' does not contain a definition for 'GetHealthComponent' and no accessible extension method 'GetHealthComponent' accepting a first argument of type 'HitboxComponent' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(103,66): error CS1061: 'WeaponData' does not contain a definition for 'recoilPattern' and no accessible extension method 'recoilPattern' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(113,52): error CS1061: 'WeaponData' does not contain a definition for 'recoilPattern' and no accessible extension method 'recoilPattern' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(47,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Idle'
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(48,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(49,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(50,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(188,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(189,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(191,17): error CS0103: The name '_weaponCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(192,17): error CS0103: The name '_weaponCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(194,17): error CS0103: The name '_aimingCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(195,17): error CS0103: The name '_aimingCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(163,86): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(167,67): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(172,90): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(174,74): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(230,17): warning CS0219: The variable 'hitInfo' is assigned but its value is never used
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(68,82): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'walkSpeed' and no accessible extension method 'walkSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(69,82): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'runSpeed' and no accessible extension method 'runSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(70,84): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'crouchSpeed' and no accessible extension method 'crouchSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(71,82): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'walkSpeed' and no accessible extension method 'walkSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(72,80): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'crouchSpeed' and no accessible extension method 'crouchSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(73,29): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'walkSpeed' and no accessible extension method 'walkSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(105,35): error CS1061: 'GameModeConfig' does not contain a definition for 'ApplyGameMode' and no accessible extension method 'ApplyGameMode' accepting a first argument of type 'GameModeConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Configuration\FPSPerformanceConfig.cs(71,13): warning CS0618: 'QualitySettings.masterTextureLimit' is obsolete: 'masterTextureLimit has been deprecated. Use globalTextureMipmapLimit instead (UnityUpgradable) -> globalTextureMipmapLimit'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(159,46): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(163,50): error CS0118: 'Camera' is a namespace but is used like a type
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(163,33): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(19,35): error CS0246: The type or namespace name 'ObjectPool<>' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(166,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(102,45): error CS1061: 'HitboxComponent' does not contain a definition for 'GetHealthComponent' and no accessible extension method 'GetHealthComponent' accepting a first argument of type 'HitboxComponent' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(314,86): error CS1061: 'ReadOnlyArray<InputControl>' does not contain a definition for 'Any' and no accessible extension method 'Any' accepting a first argument of type 'ReadOnlyArray<InputControl>' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(62,29): error CS1061: 'IObjectPool<Projectile>' does not contain a definition for 'Release' and no accessible extension method 'Release' accepting a first argument of type 'IObjectPool<Projectile>' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(220,24): error CS1061: 'HealthComponent' does not contain a definition for 'IsDead' and no accessible extension method 'IsDead' accepting a first argument of type 'HealthComponent' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(230,17): error CS0117: 'DamageCommand' does not contain a definition for 'TargetHealth'
@@ -1186,21 +1137,12 @@ Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(232,17): e
 Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(233,17): error CS0117: 'DamageCommand' does not contain a definition for 'HitType'
 Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(247,32): error CS1061: 'HealthComponent' does not contain a definition for 'IsDead' and no accessible extension method 'IsDead' accepting a first argument of type 'HealthComponent' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(256,32): error CS1061: 'HealthComponent' does not contain a definition for 'IsDead' and no accessible extension method 'IsDead' accepting a first argument of type 'HealthComponent' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(176,24): error CS1061: 'Rigidbody' does not contain a definition for 'gravityScale' and no accessible extension method 'gravityScale' accepting a first argument of type 'Rigidbody' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(129,20): error CS1061: 'WeaponStats' does not contain a definition for 'shotsFired' and no accessible extension method 'shotsFired' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(130,20): error CS1061: 'WeaponStats' does not contain a definition for 'shotsHit' and no accessible extension method 'shotsHit' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(131,20): error CS1061: 'WeaponStats' does not contain a definition for 'damageDealt' and no accessible extension method 'damageDealt' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(132,20): error CS1061: 'WeaponStats' does not contain a definition for 'accuracy' and no accessible extension method 'accuracy' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(132,38): error CS1061: 'WeaponStats' does not contain a definition for 'shotsFired' and no accessible extension method 'shotsFired' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(132,69): error CS1061: 'WeaponStats' does not contain a definition for 'shotsHit' and no accessible extension method 'shotsHit' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(132,87): error CS1061: 'WeaponStats' does not contain a definition for 'shotsFired' and no accessible extension method 'shotsFired' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(141,20): error CS1061: 'WeaponStats' does not contain a definition for 'shotsFired' and no accessible extension method 'shotsFired' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(142,20): error CS1061: 'WeaponStats' does not contain a definition for 'shotsHit' and no accessible extension method 'shotsHit' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(143,20): error CS1061: 'WeaponStats' does not contain a definition for 'damageDealt' and no accessible extension method 'damageDealt' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(144,20): error CS1061: 'WeaponStats' does not contain a definition for 'accuracy' and no accessible extension method 'accuracy' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(94,73): error CS1061: 'WeaponData' does not contain a definition for 'weaponName' and no accessible extension method 'weaponName' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(230,17): warning CS0219: The variable 'hitInfo' is assigned but its value is never used
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(137,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(222,30): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(259,31): error CS1955: Non-invocable member 'AmmoManager.CanReload' cannot be used like a method.
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(270,30): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(159,46): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(163,50): error CS0118: 'Camera' is a namespace but is used like a type
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(163,33): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(126,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Idle'
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(127,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(127,73): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'staminaDrainRate' and no accessible extension method 'staminaDrainRate' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
@@ -1208,49 +1150,8 @@ Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtension
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(128,71): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'staminaDrainRate' and no accessible extension method 'staminaDrainRate' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(129,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(129,71): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'staminaDrainRate' and no accessible extension method 'staminaDrainRate' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(103,66): error CS1061: 'WeaponData' does not contain a definition for 'recoilPattern' and no accessible extension method 'recoilPattern' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(113,52): error CS1061: 'WeaponData' does not contain a definition for 'recoilPattern' and no accessible extension method 'recoilPattern' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(163,86): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(167,67): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(172,90): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(174,74): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(358,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(362,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(366,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\HitScanStrategy.cs(148,41): error CS0012: The type 'IHealthTarget' is defined in an assembly that is not referenced. You must add a reference to assembly 'asterivo.Unity60.Core.Components, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(379,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(383,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(387,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
 Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(350,24): error CS1061: 'TrailRenderer' does not contain a definition for 'color' and no accessible extension method 'color' accepting a first argument of type 'TrailRenderer' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Data\RecoilPattern.cs(277,49): error CS0117: 'WeaponType' does not contain a definition for 'SniperRifle'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(497,35): error CS1061: 'WeaponController' does not contain a definition for 'TryShoot' and no accessible extension method 'TryShoot' accepting a first argument of type 'WeaponController' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(133,21): error CS0103: The name '_firstPersonCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(138,46): error CS0103: The name '_weaponCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(140,25): error CS0103: The name '_weaponCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(146,25): error CS0103: The name '_firstPersonCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(153,25): error CS0103: The name '_aimingCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(155,25): error CS0103: The name '_aimingCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(160,25): error CS0103: The name '_firstPersonCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(188,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(189,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(191,17): error CS0103: The name '_weaponCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(192,17): error CS0103: The name '_weaponCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(194,17): error CS0103: The name '_aimingCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(195,17): error CS0103: The name '_aimingCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(124,44): error CS1061: 'WeaponData' does not contain a definition for 'GetTimeBetweenShots' and no accessible extension method 'GetTimeBetweenShots' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(127,60): error CS1061: 'WeaponData' does not contain a definition for 'ShotType' and no accessible extension method 'ShotType' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(129,75): error CS1061: 'WeaponData' does not contain a definition for 'ShotType' and no accessible extension method 'ShotType' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(139,48): error CS1061: 'WeaponData' does not contain a definition for 'AmmoConfig' and no accessible extension method 'AmmoConfig' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(142,27): error CS1061: 'RecoilSystem' does not contain a definition for 'SetRecoilPattern' and no accessible extension method 'SetRecoilPattern' accepting a first argument of type 'RecoilSystem' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(148,46): error CS1061: 'WeaponData' does not contain a definition for 'FireMode' and no accessible extension method 'FireMode' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(185,32): error CS1061: 'WeaponData' does not contain a definition for 'IsFullAuto' and no accessible extension method 'IsFullAuto' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(631,51): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'jumpHeight' and no accessible extension method 'jumpHeight' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(222,30): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(259,31): error CS1955: Non-invocable member 'AmmoManager.CanReload' cannot be used like a method.
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(473,42): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(487,28): error CS0117: 'HitboxType' does not contain a definition for 'Arms'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(488,28): error CS0117: 'HitboxType' does not contain a definition for 'Legs'
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(270,30): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(364,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
 Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(366,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
 Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(367,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
@@ -1260,25 +1161,44 @@ Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(374,17
 Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(375,17): error CS0103: The name '_weaponCamera' does not exist in the current context
 Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(376,17): error CS0103: The name '_weaponCamera' does not exist in the current context
 Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(394,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(314,86): error CS1061: 'ReadOnlyArray<InputControl>' does not contain a definition for 'Any' and no accessible extension method 'Any' accepting a first argument of type 'ReadOnlyArray<InputControl>' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(473,42): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
 Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(449,30): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(320,34): error CS1061: 'IAudioService' does not contain a definition for 'PlaySFX' and no accessible extension method 'PlaySFX' accepting a first argument of type 'IAudioService' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(345,34): error CS1061: 'IAudioService' does not contain a definition for 'PlaySFX' and no accessible extension method 'PlaySFX' accepting a first argument of type 'IAudioService' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(363,32): error CS1061: 'WeaponData' does not contain a definition for 'MuzzleFlashPrefab' and no accessible extension method 'MuzzleFlashPrefab' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(365,56): error CS1061: 'WeaponData' does not contain a definition for 'MuzzleFlashPrefab' and no accessible extension method 'MuzzleFlashPrefab' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(481,56): error CS1061: 'WeaponData' does not contain a definition for 'GetTTK' and no accessible extension method 'GetTTK' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Configuration\WeaponLoadoutConfig.cs(113,32): error CS1061: 'WeaponData' does not contain a definition for 'GetTTK' and no accessible extension method 'GetTTK' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Configuration\WeaponLoadoutConfig.cs(146,49): error CS1061: 'WeaponData' does not contain a definition for 'GetTTK' and no accessible extension method 'GetTTK' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(65,29): warning CS0067: The event 'FPSUIService.OnResumeRequested' is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(487,28): error CS0117: 'HitboxType' does not contain a definition for 'Arms'
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(488,28): error CS0117: 'HitboxType' does not contain a definition for 'Legs'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(358,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(362,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(366,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(379,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(383,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(387,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(497,35): error CS1061: 'WeaponController' does not contain a definition for 'TryShoot' and no accessible extension method 'TryShoot' accepting a first argument of type 'WeaponController' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(631,51): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'jumpHeight' and no accessible extension method 'jumpHeight' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(69,29): warning CS0067: The event 'FPSUIService.OnQuitRequested' is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(65,29): warning CS0067: The event 'FPSUIService.OnResumeRequested' is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(66,29): warning CS0067: The event 'FPSUIService.OnRestartRequested' is never used
 Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(67,29): warning CS0067: The event 'FPSUIService.OnMainMenuRequested' is never used
 Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(68,29): warning CS0067: The event 'FPSUIService.OnSettingsRequested' is never used
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(66,29): warning CS0067: The event 'FPSUIService.OnRestartRequested' is never used
 Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(74,22): warning CS0414: The field 'FPS_PlayerController._crouchInput' is assigned but its value is never used
 Assets\_Project\Features\Templates\FPS\Scripts\Data\RecoilPattern.cs(40,39): warning CS0414: The field 'RecoilPattern._enableDebugVisualization' is assigned but its value is never used
 Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(19,39): warning CS0414: The field 'FPSInputService._enableInputLogging' is assigned but its value is never used
 
 Assets\_Project\Features\Templates\FPS\Scripts\Services\Interfaces\IFPSInputService.cs(14,14): warning CS0108: 'IFPSInputService.IsEnabled' hides inherited member 'IFPSService.IsEnabled'. Use the new keyword if hiding was intended.
+Assets\_Project\Features\Templates\FPS\Scripts\Configuration\FPSPerformanceConfig.cs(71,13): warning CS0618: 'QualitySettings.masterTextureLimit' is obsolete: 'masterTextureLimit has been deprecated. Use globalTextureMipmapLimit instead (UnityUpgradable) -> globalTextureMipmapLimit'
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(166,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
+Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(105,35): error CS1061: 'GameModeConfig' does not contain a definition for 'ApplyGameMode' and no accessible extension method 'ApplyGameMode' accepting a first argument of type 'GameModeConfig' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(19,35): error CS0246: The type or namespace name 'ObjectPool<>' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(137,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(142,27): error CS1061: 'RecoilSystem' does not contain a definition for 'SetRecoilPattern' and no accessible extension method 'SetRecoilPattern' accepting a first argument of type 'RecoilSystem' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(94,73): error CS1061: 'WeaponData' does not contain a definition for 'weaponName' and no accessible extension method 'weaponName' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(176,24): error CS1061: 'Rigidbody' does not contain a definition for 'gravityScale' and no accessible extension method 'gravityScale' accepting a first argument of type 'Rigidbody' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\HitScanStrategy.cs(148,41): error CS0012: The type 'IHealthTarget' is defined in an assembly that is not referenced. You must add a reference to assembly 'asterivo.Unity60.Core.Components, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(133,21): error CS0103: The name '_firstPersonCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(138,46): error CS0103: The name '_weaponCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(140,25): error CS0103: The name '_weaponCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(146,25): error CS0103: The name '_firstPersonCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(153,25): error CS0103: The name '_aimingCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(155,25): error CS0103: The name '_aimingCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(160,25): error CS0103: The name '_firstPersonCamera' does not exist in the current context
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(27,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(27,71): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'walkSpeed' and no accessible extension method 'walkSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(28,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
@@ -1287,24 +1207,31 @@ Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtension
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(29,73): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'crouchSpeed' and no accessible extension method 'crouchSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(30,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Idle'
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(31,29): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'walkSpeed' and no accessible extension method 'walkSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(102,45): error CS1061: 'HitboxComponent' does not contain a definition for 'GetHealthComponent' and no accessible extension method 'GetHealthComponent' accepting a first argument of type 'HitboxComponent' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(103,66): error CS1061: 'WeaponData' does not contain a definition for 'recoilPattern' and no accessible extension method 'recoilPattern' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(113,52): error CS1061: 'WeaponData' does not contain a definition for 'recoilPattern' and no accessible extension method 'recoilPattern' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(47,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Idle'
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(48,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(49,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(50,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(188,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(189,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(191,17): error CS0103: The name '_weaponCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(192,17): error CS0103: The name '_weaponCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(194,17): error CS0103: The name '_aimingCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(195,17): error CS0103: The name '_aimingCamera' does not exist in the current context
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(163,86): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(167,67): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(172,90): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(174,74): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(230,17): warning CS0219: The variable 'hitInfo' is assigned but its value is never used
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(68,82): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'walkSpeed' and no accessible extension method 'walkSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(69,82): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'runSpeed' and no accessible extension method 'runSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(70,84): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'crouchSpeed' and no accessible extension method 'crouchSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(71,82): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'walkSpeed' and no accessible extension method 'walkSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(72,80): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'crouchSpeed' and no accessible extension method 'crouchSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(73,29): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'walkSpeed' and no accessible extension method 'walkSpeed' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\FPS_Template_Config.cs(105,35): error CS1061: 'GameModeConfig' does not contain a definition for 'ApplyGameMode' and no accessible extension method 'ApplyGameMode' accepting a first argument of type 'GameModeConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Configuration\FPSPerformanceConfig.cs(71,13): warning CS0618: 'QualitySettings.masterTextureLimit' is obsolete: 'masterTextureLimit has been deprecated. Use globalTextureMipmapLimit instead (UnityUpgradable) -> globalTextureMipmapLimit'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(159,46): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(163,50): error CS0118: 'Camera' is a namespace but is used like a type
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(163,33): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(19,35): error CS0246: The type or namespace name 'ObjectPool<>' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(166,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(102,45): error CS1061: 'HitboxComponent' does not contain a definition for 'GetHealthComponent' and no accessible extension method 'GetHealthComponent' accepting a first argument of type 'HitboxComponent' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(314,86): error CS1061: 'ReadOnlyArray<InputControl>' does not contain a definition for 'Any' and no accessible extension method 'Any' accepting a first argument of type 'ReadOnlyArray<InputControl>' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(62,29): error CS1061: 'IObjectPool<Projectile>' does not contain a definition for 'Release' and no accessible extension method 'Release' accepting a first argument of type 'IObjectPool<Projectile>' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(220,24): error CS1061: 'HealthComponent' does not contain a definition for 'IsDead' and no accessible extension method 'IsDead' accepting a first argument of type 'HealthComponent' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(230,17): error CS0117: 'DamageCommand' does not contain a definition for 'TargetHealth'
@@ -1313,21 +1240,12 @@ Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(232,17): e
 Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(233,17): error CS0117: 'DamageCommand' does not contain a definition for 'HitType'
 Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(247,32): error CS1061: 'HealthComponent' does not contain a definition for 'IsDead' and no accessible extension method 'IsDead' accepting a first argument of type 'HealthComponent' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(256,32): error CS1061: 'HealthComponent' does not contain a definition for 'IsDead' and no accessible extension method 'IsDead' accepting a first argument of type 'HealthComponent' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(176,24): error CS1061: 'Rigidbody' does not contain a definition for 'gravityScale' and no accessible extension method 'gravityScale' accepting a first argument of type 'Rigidbody' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(129,20): error CS1061: 'WeaponStats' does not contain a definition for 'shotsFired' and no accessible extension method 'shotsFired' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(130,20): error CS1061: 'WeaponStats' does not contain a definition for 'shotsHit' and no accessible extension method 'shotsHit' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(131,20): error CS1061: 'WeaponStats' does not contain a definition for 'damageDealt' and no accessible extension method 'damageDealt' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(132,20): error CS1061: 'WeaponStats' does not contain a definition for 'accuracy' and no accessible extension method 'accuracy' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(132,38): error CS1061: 'WeaponStats' does not contain a definition for 'shotsFired' and no accessible extension method 'shotsFired' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(132,69): error CS1061: 'WeaponStats' does not contain a definition for 'shotsHit' and no accessible extension method 'shotsHit' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(132,87): error CS1061: 'WeaponStats' does not contain a definition for 'shotsFired' and no accessible extension method 'shotsFired' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(141,20): error CS1061: 'WeaponStats' does not contain a definition for 'shotsFired' and no accessible extension method 'shotsFired' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(142,20): error CS1061: 'WeaponStats' does not contain a definition for 'shotsHit' and no accessible extension method 'shotsHit' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(143,20): error CS1061: 'WeaponStats' does not contain a definition for 'damageDealt' and no accessible extension method 'damageDealt' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Data\WeaponData.cs(144,20): error CS1061: 'WeaponStats' does not contain a definition for 'accuracy' and no accessible extension method 'accuracy' accepting a first argument of type 'WeaponStats' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(94,73): error CS1061: 'WeaponData' does not contain a definition for 'weaponName' and no accessible extension method 'weaponName' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(230,17): warning CS0219: The variable 'hitInfo' is assigned but its value is never used
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(137,33): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(222,30): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(259,31): error CS1955: Non-invocable member 'AmmoManager.CanReload' cannot be used like a method.
+Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(270,30): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(159,46): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(163,50): error CS0118: 'Camera' is a namespace but is used like a type
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(163,33): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(126,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Idle'
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(127,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(127,73): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'staminaDrainRate' and no accessible extension method 'staminaDrainRate' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
@@ -1335,49 +1253,8 @@ Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtension
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(128,71): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'staminaDrainRate' and no accessible extension method 'staminaDrainRate' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(129,53): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
 Assets\_Project\Features\Templates\FPS\Scripts\Player\PlayerStatsConfigExtensions.cs(129,71): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'staminaDrainRate' and no accessible extension method 'staminaDrainRate' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(103,66): error CS1061: 'WeaponData' does not contain a definition for 'recoilPattern' and no accessible extension method 'recoilPattern' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(113,52): error CS1061: 'WeaponData' does not contain a definition for 'recoilPattern' and no accessible extension method 'recoilPattern' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(163,86): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(167,67): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(172,90): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\RecoilSystem.cs(174,74): error CS1061: 'float[]' does not contain a definition for 'length' and no accessible extension method 'length' accepting a first argument of type 'float[]' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(358,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(362,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(366,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\HitScanStrategy.cs(148,41): error CS0012: The type 'IHealthTarget' is defined in an assembly that is not referenced. You must add a reference to assembly 'asterivo.Unity60.Core.Components, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(379,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(383,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(387,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
 Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\ProjectileStrategy.cs(350,24): error CS1061: 'TrailRenderer' does not contain a definition for 'color' and no accessible extension method 'color' accepting a first argument of type 'TrailRenderer' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Data\RecoilPattern.cs(277,49): error CS0117: 'WeaponType' does not contain a definition for 'SniperRifle'
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(497,35): error CS1061: 'WeaponController' does not contain a definition for 'TryShoot' and no accessible extension method 'TryShoot' accepting a first argument of type 'WeaponController' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(133,21): error CS0103: The name '_firstPersonCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(138,46): error CS0103: The name '_weaponCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(140,25): error CS0103: The name '_weaponCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(146,25): error CS0103: The name '_firstPersonCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(153,25): error CS0103: The name '_aimingCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(155,25): error CS0103: The name '_aimingCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(160,25): error CS0103: The name '_firstPersonCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(188,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(189,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(191,17): error CS0103: The name '_weaponCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(192,17): error CS0103: The name '_weaponCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(194,17): error CS0103: The name '_aimingCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(195,17): error CS0103: The name '_aimingCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(124,44): error CS1061: 'WeaponData' does not contain a definition for 'GetTimeBetweenShots' and no accessible extension method 'GetTimeBetweenShots' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(127,60): error CS1061: 'WeaponData' does not contain a definition for 'ShotType' and no accessible extension method 'ShotType' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(129,75): error CS1061: 'WeaponData' does not contain a definition for 'ShotType' and no accessible extension method 'ShotType' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(139,48): error CS1061: 'WeaponData' does not contain a definition for 'AmmoConfig' and no accessible extension method 'AmmoConfig' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(142,27): error CS1061: 'RecoilSystem' does not contain a definition for 'SetRecoilPattern' and no accessible extension method 'SetRecoilPattern' accepting a first argument of type 'RecoilSystem' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(148,46): error CS1061: 'WeaponData' does not contain a definition for 'FireMode' and no accessible extension method 'FireMode' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(185,32): error CS1061: 'WeaponData' does not contain a definition for 'IsFullAuto' and no accessible extension method 'IsFullAuto' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(631,51): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'jumpHeight' and no accessible extension method 'jumpHeight' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(222,30): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(259,31): error CS1955: Non-invocable member 'AmmoManager.CanReload' cannot be used like a method.
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(473,42): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(487,28): error CS0117: 'HitboxType' does not contain a definition for 'Arms'
-Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(488,28): error CS0117: 'HitboxType' does not contain a definition for 'Legs'
-Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(270,30): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(364,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
 Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(366,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
 Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(367,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
@@ -1387,24 +1264,27 @@ Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(374,17
 Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(375,17): error CS0103: The name '_weaponCamera' does not exist in the current context
 Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(376,17): error CS0103: The name '_weaponCamera' does not exist in the current context
 Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(394,17): error CS0103: The name '_firstPersonCamera' does not exist in the current context
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(314,86): error CS1061: 'ReadOnlyArray<InputControl>' does not contain a definition for 'Any' and no accessible extension method 'Any' accepting a first argument of type 'ReadOnlyArray<InputControl>' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(473,42): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
 Assets\_Project\Features\Templates\FPS\Scripts\Camera\FPS_CameraSystem.cs(449,30): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Templates.FPS.Camera' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(320,34): error CS1061: 'IAudioService' does not contain a definition for 'PlaySFX' and no accessible extension method 'PlaySFX' accepting a first argument of type 'IAudioService' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(345,34): error CS1061: 'IAudioService' does not contain a definition for 'PlaySFX' and no accessible extension method 'PlaySFX' accepting a first argument of type 'IAudioService' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(363,32): error CS1061: 'WeaponData' does not contain a definition for 'MuzzleFlashPrefab' and no accessible extension method 'MuzzleFlashPrefab' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(365,56): error CS1061: 'WeaponData' does not contain a definition for 'MuzzleFlashPrefab' and no accessible extension method 'MuzzleFlashPrefab' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\WeaponSystem\WeaponController.cs(481,56): error CS1061: 'WeaponData' does not contain a definition for 'GetTTK' and no accessible extension method 'GetTTK' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Configuration\WeaponLoadoutConfig.cs(113,32): error CS1061: 'WeaponData' does not contain a definition for 'GetTTK' and no accessible extension method 'GetTTK' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Configuration\WeaponLoadoutConfig.cs(146,49): error CS1061: 'WeaponData' does not contain a definition for 'GetTTK' and no accessible extension method 'GetTTK' accepting a first argument of type 'WeaponData' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(65,29): warning CS0067: The event 'FPSUIService.OnResumeRequested' is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(487,28): error CS0117: 'HitboxType' does not contain a definition for 'Arms'
+Assets\_Project\Features\Templates\FPS\Scripts\Combat\CombatSystem.cs(488,28): error CS0117: 'HitboxType' does not contain a definition for 'Legs'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(358,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(362,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(366,69): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(379,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Crouching'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(383,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Running'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(387,74): error CS0117: 'FPS_PlayerController.FPSPlayerState' does not contain a definition for 'Walking'
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(497,35): error CS1061: 'WeaponController' does not contain a definition for 'TryShoot' and no accessible extension method 'TryShoot' accepting a first argument of type 'WeaponController' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(631,51): error CS1061: 'PlayerStatsConfig' does not contain a definition for 'jumpHeight' and no accessible extension method 'jumpHeight' accepting a first argument of type 'PlayerStatsConfig' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(69,29): warning CS0067: The event 'FPSUIService.OnQuitRequested' is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(65,29): warning CS0067: The event 'FPSUIService.OnResumeRequested' is never used
+Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(66,29): warning CS0067: The event 'FPSUIService.OnRestartRequested' is never used
 Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(67,29): warning CS0067: The event 'FPSUIService.OnMainMenuRequested' is never used
 Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(68,29): warning CS0067: The event 'FPSUIService.OnSettingsRequested' is never used
-Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSUIService.cs(66,29): warning CS0067: The event 'FPSUIService.OnRestartRequested' is never used
 Assets\_Project\Features\Templates\FPS\Scripts\Player\FPS_PlayerController.cs(74,22): warning CS0414: The field 'FPS_PlayerController._crouchInput' is assigned but its value is never used
 Assets\_Project\Features\Templates\FPS\Scripts\Data\RecoilPattern.cs(40,39): warning CS0414: The field 'RecoilPattern._enableDebugVisualization' is assigned but its value is never used
 Assets\_Project\Features\Templates\FPS\Scripts\Services\FPSInputService.cs(19,39): warning CS0414: The field 'FPSInputService._enableInputLogging' is assigned but its value is never used
-AssetDatabase: script compilation time: 3.078871s
-'Assets/_Project/Tests/Results/post-basic-fixes-verification.txt' Amount of processed bytes '204337' does not match file size '102454'
+AssetDatabase: script compilation time: 2.550696s
+'Assets/_Project/Tests/Results/weapondata-fix-verification.txt' Amount of processed bytes '169885' does not match file size '145665'
 Scripts have compiler errors.
 Exiting without the bug reporter. Application will terminate with return code 1
