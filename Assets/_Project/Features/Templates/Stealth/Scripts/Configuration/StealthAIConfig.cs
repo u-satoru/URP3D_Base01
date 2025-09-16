@@ -7,8 +7,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Configuration
     /// NPCの検知システム、学習機能、パフォーマンス設定
     /// 50体NPC同時稼働、0.1ms/frame要件対応
     /// </summary>
-    [System.Serializable]
-    public class StealthAIConfig
+    [CreateAssetMenu(menuName = "Stealth/AI Config", fileName = "StealthAIConfig")]
+    public class StealthAIConfig : ScriptableObject
     {
         [Header("Detection Integration")]
         [Tooltip("NPCの視覚センサー設定")]
@@ -38,6 +38,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Configuration
         [Range(1f, 10f)]
         [Tooltip("学習速度倍率")]
         public float LearningRate = 2f;
+
+        [Range(0.1f, 2f)]
+        [Tooltip("疑心レベル減衰速度")]
+        public float SuspicionDecayRate = 0.5f;
 
         [Tooltip("協調検出機能の有効化")]
         public bool EnableCooperativeDetection = true;

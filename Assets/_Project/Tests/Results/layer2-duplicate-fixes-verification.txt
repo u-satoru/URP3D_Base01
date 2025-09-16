@@ -1,15 +1,15 @@
 [Licensing::Module] Trying to connect to existing licensing client channel...
-[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-15T08:23:32.6318323Z"
+[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-16T06:52:52.6491994Z"
 [Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 26648, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
 [Licensing::Module] Error: LicensingClient has failed validation; ignoring
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.17.1+ae67fbc
-  Session Id:              6bc4106026ff40afb586176beb5048f1
+  Session Id:              d6e298ddf2694e2d9112b43e0c93650d
   Correlation Id:          27ba378d00f61906260636ceec280eb9
-  External correlation Id: 8435531211308554255
+  External correlation Id: 7578119734218823868
   Machine Id:              6v8irZboPhn9pIeIA+kbS+sqP0M=
-[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.03s, handshake: 0.06s)
-[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-15T08:23:32.7198437Z"
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.01s, handshake: 0.07s)
+[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-16T06:52:52.7363284Z"
 [Licensing::Module] Error: Access token is unavailable; failed to update
 [Licensing::Client] Successfully updated license
 Built from '6000.0/staging' branch; Version is '6000.0.42f1 (feb9a7235030) revision 16693671'; Using compiler version '193933523'; Build Type 'Release'
@@ -64,22 +64,22 @@ D:/UnityProjects/URP3D_Base01
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [65880]  Target information:
+Player connection [74340]  Target information:
 
-Player connection [65880]  * "[IP] 172.28.160.1 [Port] 55504 [Flags] 2 [Guid] 1048783305 [EditorId] 1048783305 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [74340]  * "[IP] 172.28.160.1 [Port] 55504 [Flags] 2 [Guid] 2183614560 [EditorId] 2183614560 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [65880]  * "[IP] 172.17.80.1 [Port] 55504 [Flags] 2 [Guid] 1048783305 [EditorId] 1048783305 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [74340]  * "[IP] 172.17.80.1 [Port] 55504 [Flags] 2 [Guid] 2183614560 [EditorId] 2183614560 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [65880]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 1048783305 [EditorId] 1048783305 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [74340]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 2183614560 [EditorId] 2183614560 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [65880]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 1048783305 [EditorId] 1048783305 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [74340]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 2183614560 [EditorId] 2183614560 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [65880] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [65880] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [74340] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [74340] Host joined alternative multi-casting on [225.0.0.222:34997]...
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
 [Physics::Module] Id: 0xdecafbad
-[Package Manager] Connected to IPC stream "Upm-1924" after 0.3 seconds.
+[Package Manager] Connected to IPC stream "Upm-82852" after 0.4 seconds.
 Library Redirect Path: Library/
 [Package Manager] Restoring resolved packages state from cache
 [Licensing::Client] Successfully resolved entitlement details
@@ -159,8 +159,8 @@ Library Redirect Path: Library/
 [Physics::Module] Threading Mode: Multi-Threaded
 [Subsystems] No new subsystems found in resolved package list.
 Package Manager log level set to [2]
-[Package Manager] Done registering packages in 0.21 seconds
-Refreshing native plugins compatible for Editor in 2.96 ms, found 3 plugins.
+[Package Manager] Done registering packages in 0.18 seconds
+Refreshing native plugins compatible for Editor in 3.54 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.0.42f1 (feb9a7235030)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Resources/UnitySubsystems
@@ -177,7 +177,7 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56924
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56852
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 ImportWorker Server TCP listen port: 0
@@ -190,53 +190,56 @@ Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 [Licensing::Client] Successfully resolved entitlement details
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
-Registered in 0.047570 seconds.
-- Loaded All Assemblies, in  0.737 seconds
+Registered in 0.045843 seconds.
+- Loaded All Assemblies, in  0.707 seconds
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 [usbmuxd] Send listen message
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 1489 ms
+Android Extension - Scanning For ADB Devices 890 ms
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.966 seconds
-Domain Reload Profiling: 2695ms
-	BeginReloadAssembly (239ms)
+- Finished resetting the current domain, in  1.410 seconds
+Domain Reload Profiling: 2109ms
+	BeginReloadAssembly (210ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (47ms)
-	RebuildNativeTypeToScriptingClass (15ms)
-	initialDomainReloadingComplete (136ms)
-	LoadAllAssembliesAndSetupDomain (293ms)
-		LoadAssemblies (234ms)
+	RebuildCommonClasses (53ms)
+	RebuildNativeTypeToScriptingClass (17ms)
+	initialDomainReloadingComplete (141ms)
+	LoadAllAssembliesAndSetupDomain (278ms)
+		LoadAssemblies (205ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (283ms)
-			TypeCache.Refresh (281ms)
-				TypeCache.ScanAssembly (257ms)
+		AnalyzeDomain (269ms)
+			TypeCache.Refresh (266ms)
+				TypeCache.ScanAssembly (245ms)
 			BuildScriptInfoCaches (0ms)
 			ResolveRequiredComponents (1ms)
-	FinalizeReload (1967ms)
+	FinalizeReload (1411ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1916ms)
+		SetupLoadedEditorAssemblies (1360ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (1649ms)
-			SetLoadedEditorAssemblies (3ms)
-			BeforeProcessingInitializeOnLoad (57ms)
-			ProcessInitializeOnLoadAttributes (138ms)
-			ProcessInitializeOnLoadMethodAttributes (69ms)
+			InitializePlatformSupportModulesInManaged (1061ms)
+			SetLoadedEditorAssemblies (5ms)
+			BeforeProcessingInitializeOnLoad (70ms)
+			ProcessInitializeOnLoadAttributes (150ms)
+			ProcessInitializeOnLoadMethodAttributes (73ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
 		AwakeInstancesAfterBackupRestoration (0ms)
 [Licensing::Client] Successfully resolved entitlement details
 Application.AssetDatabase Initial Refresh Start
-'Assets/_Project/Tests/Results/layer2-duplicate-fixes-verification.txt' Amount of processed bytes '20634' does not match file size '19132'
+YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
+The contents of 'Assets/_Project/Core/Services/Interfaces/IStealthMechanicsService.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
+'Assets/_Project/Tests/Results/layer2-duplicate-fixes-verification.txt' Amount of processed bytes '20731' does not match file size '19326'
+The .meta file Assets/_Project/Core/Services/Interfaces/IStealthMechanicsService.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
 [ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
@@ -269,7 +272,7 @@ info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 70.9507ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 55.2691ms
 Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
 WorkingDir: D:/UnityProjects/URP3D_Base01
 info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
@@ -287,9 +290,9 @@ info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 113.0434ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 104.7564ms
 DisplayProgressbar: Compiling Scripts
-ExitCode: 3 Duration: 0s608ms
+ExitCode: 3 Duration: 0s750ms
 [1073/1429  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
 [1413/1429  0s] Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.dll (+2 others)
 ##### CommandLine
@@ -717,6 +720,7 @@ ExitCode: 3 Duration: 0s608ms
 -r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Components.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Debug.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Events.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Lifecycle.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Services.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Shared.ref.dll"
@@ -735,25 +739,39 @@ ExitCode: 3 Duration: 0s608ms
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
+"Assets/_Project/Features/Templates/Stealth/Scripts/AI/StealthAICoordinator.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Camera/StealthCameraController.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthAIConfig.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthAudioConfig.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthEnvironmentConfig.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthMechanicsConfig.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthPerformanceConfig.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthProgressionConfig.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthTutorialConfig.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthUIConfig.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Data/StealthDetectionEvent.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Data/StealthState.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Data/StealthTutorialData.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Data/StealthTypes.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Environment/EnvironmentalElement.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Environment/HidingSpot.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Environment/HidingSpotInteractionCommand.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Environment/StealthEnvironmentManager.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Events/StealthEventChannels.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Events/StealthEventData.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Events/StealthGameEvents.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Gameplay/StealthGameplayManager.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Integration/StealthLearnAndGrowIntegrator.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Interaction/EnvironmentalInteraction.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Mechanics/StealthMechanics.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Mechanics/StealthMechanicsController.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthAISettings.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthAudioSettings.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthCameraSettings.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthLearningSettings.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthMissionSettings.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthPlayerSettings.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthUIConfig.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/StealthTemplateConfiguration.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/StealthTemplateManager.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/StealthTemplateValidator.cs"
@@ -777,263 +795,179 @@ DOTNET_MULTILEVEL_LOOKUP=0
 ##### ExitCode
 1
 ##### Output
-Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthAISettings.cs(319,37): error CS0102: The type 'StealthAISettings' already contains a definition for 'InvestigationPattern'
+Assets\_Project\Features\Templates\Stealth\Scripts\Camera\StealthCameraController.cs(380,17): warning CS0162: Unreachable code detected
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(82,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(106,40): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(82,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(108,34): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(83,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(110,39): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(83,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(112,30): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(84,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(131,37): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(84,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(184,35): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(85,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(191,34): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(85,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(198,36): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(93,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(554,17): error CS0117: 'CooperativeDetectionData' does not contain a definition for 'DetectingNPC'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(93,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(555,17): error CS0117: 'CooperativeDetectionData' does not contain a definition for 'Target'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(94,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(556,17): error CS0117: 'CooperativeDetectionData' does not contain a definition for 'OriginalDetectionType'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(94,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(557,17): error CS0117: 'CooperativeDetectionData' does not contain a definition for 'DetectionTime'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(95,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(558,17): error CS0117: 'CooperativeDetectionData' does not contain a definition for 'SuspicionLevel'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(95,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(595,50): error CS1061: 'CooperativeDetectionData' does not contain a definition for 'SuspicionLevel' and no accessible extension method 'SuspicionLevel' accepting a first argument of type 'CooperativeDetectionData' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(96,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(601,60): error CS1061: 'CooperativeDetectionData' does not contain a definition for 'Target' and no accessible extension method 'Target' accepting a first argument of type 'CooperativeDetectionData' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(96,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(601,73): error CS1061: 'CooperativeDetectionData' does not contain a definition for 'SuspicionLevel' and no accessible extension method 'SuspicionLevel' accepting a first argument of type 'CooperativeDetectionData' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1374,10): error CS0246: The type or namespace name 'TabGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(601,101): error CS1061: 'CooperativeDetectionData' does not contain a definition for 'DetectionTime' and no accessible extension method 'DetectionTime' accepting a first argument of type 'CooperativeDetectionData' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1374,10): error CS0246: The type or namespace name 'TabGroup' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(602,86): error CS1061: 'CooperativeDetectionData' does not contain a definition for 'DetectionTime' and no accessible extension method 'DetectionTime' accepting a first argument of type 'CooperativeDetectionData' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1375,10): error CS0246: The type or namespace name 'TitleAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(445,44): warning CS0618: 'Profiler.GetTotalAllocatedMemory()' is obsolete: 'GetTotalAllocatedMemory has been deprecated since it is limited to 4GB. Please use GetTotalAllocatedMemoryLong() instead.'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1375,10): error CS0246: The type or namespace name 'Title' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(944,17): warning CS0162: Unreachable code detected
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1377,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(616,73): error CS1061: 'CooperativeDetectionData' does not contain a definition for 'DetectionTime' and no accessible extension method 'DetectionTime' accepting a first argument of type 'CooperativeDetectionData' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1377,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(831,97): error CS1061: 'DetectedTarget' does not contain a definition for 'Transform' and no accessible extension method 'Transform' accepting a first argument of type 'DetectedTarget' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1378,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(66,39): warning CS0414: The field 'StealthLearningSettings.enableAdaptiveDifficulty' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1378,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(68,39): warning CS0414: The field 'StealthLearningSettings.enableProgressiveUnlock' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1375,94): error CS0103: The name 'TitleAlignments' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(490,44): warning CS0414: The field 'EnvironmentalInteraction.DistractionItem.distractionDuration' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1384,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(52,39): warning CS0414: The field 'StealthGameplayManager.enableNPCCommunication' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1384,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(107,39): warning CS0414: The field 'StealthLearningSettings.enableRealTimeHints' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1390,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(108,39): warning CS0414: The field 'StealthLearningSettings.enableInteractiveHighlights' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1390,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(32,39): warning CS0414: The field 'StealthAICoordinator._enablePerformanceOptimization' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1396,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(39,40): warning CS0414: The field 'StealthEventChannels._eventProcessingTimeLimit' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1396,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(36,52): warning CS0414: The field 'StealthGameplayManager.difficultyLevel' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1402,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(982,40): warning CS0414: The field 'NPCPatrolController.waitTime' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1402,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(110,39): warning CS0414: The field 'StealthLearningSettings.enableTutorialSkipping' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1403,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(987,22): warning CS0414: The field 'NPCPatrolController.isPatrolling' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1403,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(109,40): warning CS0414: The field 'StealthLearningSettings.hintDisplayDelay' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1466,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(69,39): warning CS0414: The field 'StealthLearningSettings.enableSkillValidation' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1466,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(37,38): warning CS0414: The field 'StealthEventChannels._maxEventsPerFrame' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1467,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(40,59): warning CS0414: The field 'StealthTemplateValidator.testDurationOverride' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1467,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(67,59): warning CS0414: The field 'StealthLearningSettings.learningSpeedMultiplier' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1490,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(40,39): warning CS0414: The field 'StealthEventChannels._enableEventBatching' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1490,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1537,10): error CS0246: The type or namespace name 'TabGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1537,10): error CS0246: The type or namespace name 'TabGroup' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1538,10): error CS0246: The type or namespace name 'TitleAttribute' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1538,10): error CS0246: The type or namespace name 'Title' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1540,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1540,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1541,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1541,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1538,96): error CS0103: The name 'TitleAlignments' does not exist in the current context
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1548,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1548,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1604,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1604,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1605,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1605,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1633,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1633,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1666,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1666,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1667,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1667,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-*** Tundra build failed (0.55 seconds), 2 items updated, 1429 evaluated
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(533,44): warning CS0414: The field 'EnvironmentalInteraction.HidingSpot.hidingEffectiveness' is assigned but its value is never used
+*** Tundra build failed (0.70 seconds), 2 items updated, 1429 evaluated
 ## Script Compilation Error for: Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.dll (+2 others)
 ## CmdLine: "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.rsp2"
 ## Output:
-Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthAISettings.cs(319,37): error CS0102: The type 'StealthAISettings' already contains a definition for 'InvestigationPattern'
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(82,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(82,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(83,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(83,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(84,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(84,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(85,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(85,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(93,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(93,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(94,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(94,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(95,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(95,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(96,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(96,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1374,10): error CS0246: The type or namespace name 'TabGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1374,10): error CS0246: The type or namespace name 'TabGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1375,10): error CS0246: The type or namespace name 'TitleAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1375,10): error CS0246: The type or namespace name 'Title' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1377,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1377,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1378,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1378,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1375,94): error CS0103: The name 'TitleAlignments' does not exist in the current context
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1384,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1384,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1390,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1390,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1396,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1396,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1402,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1402,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1403,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1403,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1466,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1466,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1467,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1467,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1490,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1490,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1537,10): error CS0246: The type or namespace name 'TabGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1537,10): error CS0246: The type or namespace name 'TabGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1538,10): error CS0246: The type or namespace name 'TitleAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1538,10): error CS0246: The type or namespace name 'Title' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1540,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1540,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1541,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1541,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1538,96): error CS0103: The name 'TitleAlignments' does not exist in the current context
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1548,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1548,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1604,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1604,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1605,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1605,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1633,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1633,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1666,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1666,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1667,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1667,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Camera\StealthCameraController.cs(380,17): warning CS0162: Unreachable code detected
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(106,40): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(108,34): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(110,39): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(112,30): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(131,37): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(184,35): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(191,34): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(198,36): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(554,17): error CS0117: 'CooperativeDetectionData' does not contain a definition for 'DetectingNPC'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(555,17): error CS0117: 'CooperativeDetectionData' does not contain a definition for 'Target'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(556,17): error CS0117: 'CooperativeDetectionData' does not contain a definition for 'OriginalDetectionType'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(557,17): error CS0117: 'CooperativeDetectionData' does not contain a definition for 'DetectionTime'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(558,17): error CS0117: 'CooperativeDetectionData' does not contain a definition for 'SuspicionLevel'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(595,50): error CS1061: 'CooperativeDetectionData' does not contain a definition for 'SuspicionLevel' and no accessible extension method 'SuspicionLevel' accepting a first argument of type 'CooperativeDetectionData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(601,60): error CS1061: 'CooperativeDetectionData' does not contain a definition for 'Target' and no accessible extension method 'Target' accepting a first argument of type 'CooperativeDetectionData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(601,73): error CS1061: 'CooperativeDetectionData' does not contain a definition for 'SuspicionLevel' and no accessible extension method 'SuspicionLevel' accepting a first argument of type 'CooperativeDetectionData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(601,101): error CS1061: 'CooperativeDetectionData' does not contain a definition for 'DetectionTime' and no accessible extension method 'DetectionTime' accepting a first argument of type 'CooperativeDetectionData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(602,86): error CS1061: 'CooperativeDetectionData' does not contain a definition for 'DetectionTime' and no accessible extension method 'DetectionTime' accepting a first argument of type 'CooperativeDetectionData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(445,44): warning CS0618: 'Profiler.GetTotalAllocatedMemory()' is obsolete: 'GetTotalAllocatedMemory has been deprecated since it is limited to 4GB. Please use GetTotalAllocatedMemoryLong() instead.'
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(944,17): warning CS0162: Unreachable code detected
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(616,73): error CS1061: 'CooperativeDetectionData' does not contain a definition for 'DetectionTime' and no accessible extension method 'DetectionTime' accepting a first argument of type 'CooperativeDetectionData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(831,97): error CS1061: 'DetectedTarget' does not contain a definition for 'Transform' and no accessible extension method 'Transform' accepting a first argument of type 'DetectedTarget' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(66,39): warning CS0414: The field 'StealthLearningSettings.enableAdaptiveDifficulty' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(68,39): warning CS0414: The field 'StealthLearningSettings.enableProgressiveUnlock' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(490,44): warning CS0414: The field 'EnvironmentalInteraction.DistractionItem.distractionDuration' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(52,39): warning CS0414: The field 'StealthGameplayManager.enableNPCCommunication' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(107,39): warning CS0414: The field 'StealthLearningSettings.enableRealTimeHints' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(108,39): warning CS0414: The field 'StealthLearningSettings.enableInteractiveHighlights' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(32,39): warning CS0414: The field 'StealthAICoordinator._enablePerformanceOptimization' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(39,40): warning CS0414: The field 'StealthEventChannels._eventProcessingTimeLimit' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(36,52): warning CS0414: The field 'StealthGameplayManager.difficultyLevel' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(982,40): warning CS0414: The field 'NPCPatrolController.waitTime' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(110,39): warning CS0414: The field 'StealthLearningSettings.enableTutorialSkipping' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(987,22): warning CS0414: The field 'NPCPatrolController.isPatrolling' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(109,40): warning CS0414: The field 'StealthLearningSettings.hintDisplayDelay' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(69,39): warning CS0414: The field 'StealthLearningSettings.enableSkillValidation' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(37,38): warning CS0414: The field 'StealthEventChannels._maxEventsPerFrame' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(40,59): warning CS0414: The field 'StealthTemplateValidator.testDurationOverride' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(67,59): warning CS0414: The field 'StealthLearningSettings.learningSpeedMultiplier' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(40,39): warning CS0414: The field 'StealthEventChannels._enableEventBatching' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(533,44): warning CS0414: The field 'EnvironmentalInteraction.HidingSpot.hidingEffectiveness' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthAISettings.cs(319,37): error CS0102: The type 'StealthAISettings' already contains a definition for 'InvestigationPattern'
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(82,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(82,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(83,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(83,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(84,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(84,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(85,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(85,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(93,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(93,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(94,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(94,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(95,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(95,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(96,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(96,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1374,10): error CS0246: The type or namespace name 'TabGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1374,10): error CS0246: The type or namespace name 'TabGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1375,10): error CS0246: The type or namespace name 'TitleAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1375,10): error CS0246: The type or namespace name 'Title' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1377,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1377,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1378,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1378,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1375,94): error CS0103: The name 'TitleAlignments' does not exist in the current context
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1384,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1384,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1390,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1390,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1396,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1396,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1402,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1402,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1403,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1403,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1466,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1466,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1467,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1467,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1490,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1490,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1537,10): error CS0246: The type or namespace name 'TabGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1537,10): error CS0246: The type or namespace name 'TabGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1538,10): error CS0246: The type or namespace name 'TitleAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1538,10): error CS0246: The type or namespace name 'Title' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1540,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1540,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1541,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1541,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1538,96): error CS0103: The name 'TitleAlignments' does not exist in the current context
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1548,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1548,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1604,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1604,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1605,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1605,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1633,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1633,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1666,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1666,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1667,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1667,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-AssetDatabase: script compilation time: 1.419686s
-'Assets/_Project/Tests/Results/layer2-duplicate-fixes-verification.txt' Amount of processed bytes '112431' does not match file size '26324'
+Assets\_Project\Features\Templates\Stealth\Scripts\Camera\StealthCameraController.cs(380,17): warning CS0162: Unreachable code detected
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(106,40): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(108,34): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(110,39): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(112,30): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(131,37): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(184,35): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(191,34): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(198,36): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(554,17): error CS0117: 'CooperativeDetectionData' does not contain a definition for 'DetectingNPC'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(555,17): error CS0117: 'CooperativeDetectionData' does not contain a definition for 'Target'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(556,17): error CS0117: 'CooperativeDetectionData' does not contain a definition for 'OriginalDetectionType'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(557,17): error CS0117: 'CooperativeDetectionData' does not contain a definition for 'DetectionTime'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(558,17): error CS0117: 'CooperativeDetectionData' does not contain a definition for 'SuspicionLevel'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(595,50): error CS1061: 'CooperativeDetectionData' does not contain a definition for 'SuspicionLevel' and no accessible extension method 'SuspicionLevel' accepting a first argument of type 'CooperativeDetectionData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(601,60): error CS1061: 'CooperativeDetectionData' does not contain a definition for 'Target' and no accessible extension method 'Target' accepting a first argument of type 'CooperativeDetectionData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(601,73): error CS1061: 'CooperativeDetectionData' does not contain a definition for 'SuspicionLevel' and no accessible extension method 'SuspicionLevel' accepting a first argument of type 'CooperativeDetectionData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(601,101): error CS1061: 'CooperativeDetectionData' does not contain a definition for 'DetectionTime' and no accessible extension method 'DetectionTime' accepting a first argument of type 'CooperativeDetectionData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(602,86): error CS1061: 'CooperativeDetectionData' does not contain a definition for 'DetectionTime' and no accessible extension method 'DetectionTime' accepting a first argument of type 'CooperativeDetectionData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(445,44): warning CS0618: 'Profiler.GetTotalAllocatedMemory()' is obsolete: 'GetTotalAllocatedMemory has been deprecated since it is limited to 4GB. Please use GetTotalAllocatedMemoryLong() instead.'
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(944,17): warning CS0162: Unreachable code detected
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(616,73): error CS1061: 'CooperativeDetectionData' does not contain a definition for 'DetectionTime' and no accessible extension method 'DetectionTime' accepting a first argument of type 'CooperativeDetectionData' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(831,97): error CS1061: 'DetectedTarget' does not contain a definition for 'Transform' and no accessible extension method 'Transform' accepting a first argument of type 'DetectedTarget' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(66,39): warning CS0414: The field 'StealthLearningSettings.enableAdaptiveDifficulty' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(68,39): warning CS0414: The field 'StealthLearningSettings.enableProgressiveUnlock' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(490,44): warning CS0414: The field 'EnvironmentalInteraction.DistractionItem.distractionDuration' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(52,39): warning CS0414: The field 'StealthGameplayManager.enableNPCCommunication' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(107,39): warning CS0414: The field 'StealthLearningSettings.enableRealTimeHints' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(108,39): warning CS0414: The field 'StealthLearningSettings.enableInteractiveHighlights' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(32,39): warning CS0414: The field 'StealthAICoordinator._enablePerformanceOptimization' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(39,40): warning CS0414: The field 'StealthEventChannels._eventProcessingTimeLimit' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(36,52): warning CS0414: The field 'StealthGameplayManager.difficultyLevel' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(982,40): warning CS0414: The field 'NPCPatrolController.waitTime' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(110,39): warning CS0414: The field 'StealthLearningSettings.enableTutorialSkipping' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(987,22): warning CS0414: The field 'NPCPatrolController.isPatrolling' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(109,40): warning CS0414: The field 'StealthLearningSettings.hintDisplayDelay' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(69,39): warning CS0414: The field 'StealthLearningSettings.enableSkillValidation' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(37,38): warning CS0414: The field 'StealthEventChannels._maxEventsPerFrame' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(40,59): warning CS0414: The field 'StealthTemplateValidator.testDurationOverride' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(67,59): warning CS0414: The field 'StealthLearningSettings.learningSpeedMultiplier' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(40,39): warning CS0414: The field 'StealthEventChannels._enableEventBatching' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(533,44): warning CS0414: The field 'EnvironmentalInteraction.HidingSpot.hidingEffectiveness' is assigned but its value is never used
+AssetDatabase: script compilation time: 1.494714s
+'Assets/_Project/Tests/Results/layer2-duplicate-fixes-verification.txt' Amount of processed bytes '105072' does not match file size '26873'
 Scripts have compiler errors.
 Exiting without the bug reporter. Application will terminate with return code 1

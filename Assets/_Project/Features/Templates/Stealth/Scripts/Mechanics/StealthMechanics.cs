@@ -738,6 +738,46 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
             eventLogger?.Log($"[StealthMechanics] Exited hiding spot");
         }
 
+        /// <summary>
+        /// 環境による隠蔽効果を適用（設計書準拠）
+        /// </summary>
+        public void ApplyEnvironmentalConcealment(float concealmentFactor, string concealmentType = "environment")
+        {
+            // 環境隠蔽効果を現在の可視性に適用
+            float modifiedVisibility = currentVisibility * (1f - Mathf.Clamp01(concealmentFactor));
+            currentVisibility = Mathf.Clamp01(modifiedVisibility);
+
+            eventLogger?.Log($"[StealthMechanics] Applied environmental concealment: {concealmentType}, factor: {concealmentFactor}");
+        }
+
+        /// <summary>
+        /// 光による露出効果を適用（設計書準拠）
+        /// </summary>
+        public void ApplyLightExposure(float lightIntensity, Vector3 lightDirection)
+        {
+            // 光の強度に基づいて可視性を上昇
+            float lightExposure = lightIntensity * lightVisibilityCurve.Evaluate(lightIntensity);
+            currentVisibility = Mathf.Clamp01(currentVisibility + lightExposure * 0.3f);
+
+            eventLogger?.Log($"[StealthMechanics] Applied light exposure: intensity {lightIntensity}");
+        }
+
+        /// <summary>
+        /// 隠れ場所との相互作用（設計書準拠）
+        /// </summary>
+        public void InteractWithHidingSpot(Transform hidingSpot, float effectiveness = 0.8f)
+        {
+            if (hidingSpot == null) return;
+
+            // 隠れ場所の効果を適用
+            EnterHidingSpot(hidingSpot);
+
+            // 効果の強度を適用
+            currentVisibility *= (1f - effectiveness);
+
+            eventLogger?.Log($"[StealthMechanics] Interacted with hiding spot: {hidingSpot.name}, effectiveness: {effectiveness}");
+        }
+
         #endregion
         
         #region Editor

@@ -85,6 +85,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Configuration
         [Tooltip("Learn & Grow チュートリアル有効化")]
         public bool EnableLearnAndGrowTutorials = true;
 
+        [SerializeField]
+        [Tooltip("学習進捗パネルを表示するかどうか（Learn & Grow価値実現）")]
+        public bool ShowLearningProgress = true;
+
         [Range(0.5f, 5f)]
         [Tooltip("チュートリアル開始遅延時間")]
         public float TutorialStartDelay = 1.5f;

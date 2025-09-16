@@ -606,6 +606,23 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
             }
         }
 
+        /// <summary>
+        /// Interact with a hiding spot (delegates to StealthMechanics service)
+        /// </summary>
+        /// <param name="hidingSpot">The hiding spot to interact with</param>
+        public void InteractWithHidingSpot(IHidingSpot hidingSpot)
+        {
+            var stealthMechanics = asterivo.Unity60.Core.ServiceLocator.GetService<asterivo.Unity60.Features.Templates.Stealth.Mechanics.StealthMechanics>();
+            if (stealthMechanics != null && hidingSpot?.HidingTransform != null)
+            {
+                stealthMechanics.InteractWithHidingSpot(hidingSpot.HidingTransform);
+            }
+            else
+            {
+                UnityEngine.Debug.LogWarning("[StealthMechanicsController] StealthMechanics service not found or hiding spot invalid, cannot interact with hiding spot");
+            }
+        }
+
         #endregion
     }
 
@@ -618,12 +635,15 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
     {
         /// <summary>隠蔽レベル（0.0～1.0）</summary>
         float ConcealmentLevel { get; }
-        
+
         /// <summary>スポット名</summary>
         string SpotName { get; }
-        
+
         /// <summary>プレイヤーが利用可能かどうか</summary>
         bool IsAvailable { get; }
+
+        /// <summary>隠れ場所のTransform</summary>
+        Transform HidingTransform { get; }
     }
 
     /// <summary>

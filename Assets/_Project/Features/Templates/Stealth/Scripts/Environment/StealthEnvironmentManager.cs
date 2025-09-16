@@ -415,7 +415,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
                 if (stealthController != null)
                 {
                     var exposure = DefaultLightExposureMultiplier * influence;
-                    stealthController.ApplyLightExposure(exposure);
+                    var lightDirection = Vector3.down; // Default downward light direction
+                    stealthController.ApplyLightExposure(exposure, lightDirection);
                 }
             }
         }

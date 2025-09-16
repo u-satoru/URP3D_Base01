@@ -9,6 +9,7 @@ using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Features.Player.Scripts;
 using asterivo.Unity60.Player;
 using asterivo.Unity60.Features.Templates.Stealth.UI;
+using asterivo.Unity60.Features.Templates.Stealth.Data;
 using Sirenix.OdinInspector;
 using UnityEngine.AI;
 
@@ -515,7 +516,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                 // Update UI
                 if (uiManager != null)
                 {
-                    uiManager.UpdateGlobalAlertLevel(globalAlertLevel);
+                    uiManager.UpdateGlobalAlertLevel(ConvertGlobalToAIAlertLevel(globalAlertLevel));
                 }
             }
         }
@@ -596,13 +597,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                 {
                     LogDebug("[StealthGameplayManager] ⏰ 5 minutes remaining!");
                     if (uiManager != null)
-                        uiManager.ShowTimeWarning("5分残り");
+                        uiManager.ShowTimeWarning(missionTimeRemaining);
                 }
                 else if (missionTimeRemaining == 60f) // 1 minute remaining
                 {
                     LogDebug("[StealthGameplayManager] ⚠️ 1 minute remaining!");
                     if (uiManager != null)
-                        uiManager.ShowTimeWarning("1分残り");
+                        uiManager.ShowTimeWarning(missionTimeRemaining);
                 }
             }
 
@@ -675,7 +676,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             // UI Updates
             if (uiManager != null)
             {
-                uiManager.ShowGameEndScreen(success, reason, finalScore, objectivesCompleted, totalObjectives);
+                string endMessage = $"{reason} - Score: {finalScore}, Objectives: {objectivesCompleted}/{totalObjectives}";
+                uiManager.ShowGameEndScreen(success, endMessage);
             }
 
             // Events
@@ -842,6 +844,25 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             }
 
             LogDebug("[StealthGameplayManager] Game state reset to initial conditions");
+        }
+
+        #endregion
+
+        #region Type Conversion Helper Methods
+
+        /// <summary>
+        /// GlobalAlertLevelをAIAlertLevelに変換（設計書準拠）
+        /// </summary>
+        private AIAlertLevel ConvertGlobalToAIAlertLevel(GlobalAlertLevel globalLevel)
+        {
+            return globalLevel switch
+            {
+                GlobalAlertLevel.Normal => AIAlertLevel.Unaware,
+                GlobalAlertLevel.Suspicious => AIAlertLevel.Suspicious,
+                GlobalAlertLevel.Heightened => AIAlertLevel.Investigating,
+                GlobalAlertLevel.FullAlert => AIAlertLevel.Alert,
+                _ => AIAlertLevel.Unaware
+            };
         }
 
         #endregion

@@ -1,15 +1,15 @@
 [Licensing::Module] Trying to connect to existing licensing client channel...
-[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-15T10:14:03.3137929Z"
+[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-16T05:04:21.8862086Z"
 [Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 26648, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
 [Licensing::Module] Error: LicensingClient has failed validation; ignoring
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.17.1+ae67fbc
-  Session Id:              34fd0fc1273d4911bd214273f349e091
+  Session Id:              e673fa12e62a4cb897312618346638a4
   Correlation Id:          27ba378d00f61906260636ceec280eb9
-  External correlation Id: 7735063506561609580
+  External correlation Id: 1551725504711880300
   Machine Id:              6v8irZboPhn9pIeIA+kbS+sqP0M=
-[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.03s, handshake: 0.05s)
-[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-15T10:14:03.3950805Z"
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.02s, handshake: 0.06s)
+[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-16T05:04:21.9664295Z"
 [Licensing::Module] Error: Access token is unavailable; failed to update
 [Licensing::Client] Successfully updated license
 Built from '6000.0/staging' branch; Version is '6000.0.42f1 (feb9a7235030) revision 16693671'; Using compiler version '193933523'; Build Type 'Release'
@@ -64,22 +64,22 @@ D:/UnityProjects/URP3D_Base01
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [9444]  Target information:
+Player connection [33480]  Target information:
 
-Player connection [9444]  * "[IP] 172.28.160.1 [Port] 55504 [Flags] 2 [Guid] 4266729190 [EditorId] 4266729190 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [33480]  * "[IP] 172.28.160.1 [Port] 55504 [Flags] 2 [Guid] 109605305 [EditorId] 109605305 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [9444]  * "[IP] 172.17.80.1 [Port] 55504 [Flags] 2 [Guid] 4266729190 [EditorId] 4266729190 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [33480]  * "[IP] 172.17.80.1 [Port] 55504 [Flags] 2 [Guid] 109605305 [EditorId] 109605305 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [9444]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 4266729190 [EditorId] 4266729190 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [33480]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 109605305 [EditorId] 109605305 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [9444]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 4266729190 [EditorId] 4266729190 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [33480]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 109605305 [EditorId] 109605305 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [9444] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [9444] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [33480] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [33480] Host joined alternative multi-casting on [225.0.0.222:34997]...
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
 [Physics::Module] Id: 0xdecafbad
-[Package Manager] Connected to IPC stream "Upm-32840" after 0.3 seconds.
+[Package Manager] Connected to IPC stream "Upm-18956" after 0.4 seconds.
 Library Redirect Path: Library/
 [Package Manager] Restoring resolved packages state from cache
 [Licensing::Client] Successfully resolved entitlement details
@@ -159,8 +159,8 @@ Library Redirect Path: Library/
 [Physics::Module] Threading Mode: Multi-Threaded
 [Subsystems] No new subsystems found in resolved package list.
 Package Manager log level set to [2]
-[Package Manager] Done registering packages in 0.13 seconds
-Artifact Garbage Collection - Removed 1 unused hashed content filesRefreshing native plugins compatible for Editor in 1.45 ms, found 3 plugins.
+[Package Manager] Done registering packages in 0.28 seconds
+Refreshing native plugins compatible for Editor in 2.69 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.0.42f1 (feb9a7235030)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Resources/UnitySubsystems
@@ -177,7 +177,7 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56840
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56956
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 ImportWorker Server TCP listen port: 0
@@ -190,55 +190,60 @@ Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 [Licensing::Client] Successfully resolved entitlement details
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
-Registered in 0.044799 seconds.
-- Loaded All Assemblies, in  0.551 seconds
+Registered in 0.054591 seconds.
+- Loaded All Assemblies, in  0.679 seconds
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 [usbmuxd] Send listen message
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 2580 ms
+Android Extension - Scanning For ADB Devices 885 ms
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  2.991 seconds
-Domain Reload Profiling: 3537ms
-	BeginReloadAssembly (170ms)
+- Finished resetting the current domain, in  1.597 seconds
+Domain Reload Profiling: 2270ms
+	BeginReloadAssembly (241ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (49ms)
-	RebuildNativeTypeToScriptingClass (11ms)
-	initialDomainReloadingComplete (107ms)
-	LoadAllAssembliesAndSetupDomain (208ms)
-		LoadAssemblies (166ms)
+	RebuildCommonClasses (47ms)
+	RebuildNativeTypeToScriptingClass (15ms)
+	initialDomainReloadingComplete (125ms)
+	LoadAllAssembliesAndSetupDomain (244ms)
+		LoadAssemblies (236ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (204ms)
-			TypeCache.Refresh (201ms)
-				TypeCache.ScanAssembly (185ms)
+		AnalyzeDomain (237ms)
+			TypeCache.Refresh (235ms)
+				TypeCache.ScanAssembly (217ms)
 			BuildScriptInfoCaches (0ms)
 			ResolveRequiredComponents (1ms)
-	FinalizeReload (2992ms)
+	FinalizeReload (1598ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (2955ms)
+		SetupLoadedEditorAssemblies (1535ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (2716ms)
-			SetLoadedEditorAssemblies (4ms)
-			BeforeProcessingInitializeOnLoad (49ms)
-			ProcessInitializeOnLoadAttributes (119ms)
-			ProcessInitializeOnLoadMethodAttributes (67ms)
+			InitializePlatformSupportModulesInManaged (1056ms)
+			SetLoadedEditorAssemblies (8ms)
+			BeforeProcessingInitializeOnLoad (111ms)
+			ProcessInitializeOnLoadAttributes (230ms)
+			ProcessInitializeOnLoadMethodAttributes (130ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
 		AwakeInstancesAfterBackupRestoration (0ms)
 [Licensing::Client] Successfully resolved entitlement details
 Application.AssetDatabase Initial Refresh Start
-'Assets/_Project/Tests/Results/stealth-template-compile-check.txt' Amount of processed bytes '20690' does not match file size '19188'
+YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
+The contents of 'Assets/_Project/Core/Services/Interfaces/IStealthMechanicsService.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
+The .meta file Assets/_Project/Core/Services/Interfaces/IStealthMechanicsService.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+A meta data file (.meta) exists but its asset 'Assets/_Project/Features/Templates/Platformer/Scripts/Interfaces/ICheckpointService.cs' can't be found. When moving or deleting files outside of Unity, please ensure that the corresponding .meta file is moved or deleted along with it.
+A meta data file (.meta) exists but its asset 'Assets/_Project/Features/Templates/Platformer/Scripts/Interfaces/IPlatformerAudioService.cs' can't be found. When moving or deleting files outside of Unity, please ensure that the corresponding .meta file is moved or deleted along with it.
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
 Assembly for Assembly Definition File 'Assets/_Project/Core/Optimization/asterivo.Unity60.Optimization.asmdef' will not be compiled, because it has no scripts associated with it.
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace ()
@@ -268,7 +273,7 @@ info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 44.3659ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 79.1256ms
 Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
 WorkingDir: D:/UnityProjects/URP3D_Base01
 info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
@@ -286,15 +291,15 @@ info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 100.5271ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 128.8954ms
 DisplayProgressbar: Compiling Scripts
 Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Tools\netcorerun\netcorerun.exe "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1900b0aE.dag.json" "Library/Bee/1900b0aE-inputdata.json" "Library\Bee\buildprogram0.traceevents"
 WorkingDir: D:/UnityProjects/URP3D_Base01
-ExitCode: 4 Duration: 2s336ms
+ExitCode: 4 Duration: 0s687ms
 Rebuilding DAG because FileSignature timestamp changed: Library/Bee/1900b0aE-inputdata.json
-[1073/1429  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
-*** Tundra requires additional run (2.27 seconds), 2 items updated, 1072 evaluated
-ExitCode: 0 Duration: 1s166ms
+[1072/1429  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra requires additional run (0.63 seconds), 3 items updated, 1071 evaluated
+ExitCode: 0 Duration: 1s677ms
 Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --dagfilejson="Library\Bee\1900b0aE.dag.json" --profile="Library/Bee/backend2.traceevents" ScriptAssemblies
 WorkingDir: D:/UnityProjects/URP3D_Base01
 info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
@@ -306,11 +311,530 @@ info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 1.6657ms
-ExitCode: 3 Duration: 0s957ms
-Finished compiling graph: 1433 nodes, 30265 flattened edges (23433 ToBuild, 246 ToUse), maximum node priority 2013
-[1073/1429  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
-[1413/1429  0s] Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.dll (+2 others)
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 3.5177ms
+ExitCode: 3 Duration: 1s350ms
+Finished compiling graph: 1433 nodes, 30496 flattened edges (23510 ToBuild, 246 ToUse), maximum node priority 2033
+[ 748/1429  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Platformer.rsp
+[1072/1429  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[1409/1429  0s] Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Platformer.dll (+2 others)
+##### CommandLine
+"C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Platformer.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Platformer.rsp2"
+##### Contents of Library\Bee\artifacts\1900b0aE.dag\asterivo.Unity60.Features.Templates.Platformer.rsp
+-target:library
+-out:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Platformer.dll"
+-refout:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Platformer.ref.dll"
+-define:UNITY_6000_0_42
+-define:UNITY_6000_0
+-define:UNITY_6000
+-define:UNITY_5_3_OR_NEWER
+-define:UNITY_5_4_OR_NEWER
+-define:UNITY_5_5_OR_NEWER
+-define:UNITY_5_6_OR_NEWER
+-define:UNITY_2017_1_OR_NEWER
+-define:UNITY_2017_2_OR_NEWER
+-define:UNITY_2017_3_OR_NEWER
+-define:UNITY_2017_4_OR_NEWER
+-define:UNITY_2018_1_OR_NEWER
+-define:UNITY_2018_2_OR_NEWER
+-define:UNITY_2018_3_OR_NEWER
+-define:UNITY_2018_4_OR_NEWER
+-define:UNITY_2019_1_OR_NEWER
+-define:UNITY_2019_2_OR_NEWER
+-define:UNITY_2019_3_OR_NEWER
+-define:UNITY_2019_4_OR_NEWER
+-define:UNITY_2020_1_OR_NEWER
+-define:UNITY_2020_2_OR_NEWER
+-define:UNITY_2020_3_OR_NEWER
+-define:UNITY_2021_1_OR_NEWER
+-define:UNITY_2021_2_OR_NEWER
+-define:UNITY_2021_3_OR_NEWER
+-define:UNITY_2022_1_OR_NEWER
+-define:UNITY_2022_2_OR_NEWER
+-define:UNITY_2022_3_OR_NEWER
+-define:UNITY_2023_1_OR_NEWER
+-define:UNITY_2023_2_OR_NEWER
+-define:UNITY_2023_3_OR_NEWER
+-define:UNITY_6000_0_OR_NEWER
+-define:PLATFORM_ARCH_64
+-define:UNITY_64
+-define:UNITY_INCLUDE_TESTS
+-define:ENABLE_AR
+-define:ENABLE_AUDIO
+-define:ENABLE_CACHING
+-define:ENABLE_CLOTH
+-define:ENABLE_EVENT_QUEUE
+-define:ENABLE_MICROPHONE
+-define:ENABLE_MULTIPLE_DISPLAYS
+-define:ENABLE_PHYSICS
+-define:ENABLE_TEXTURE_STREAMING
+-define:ENABLE_VIRTUALTEXTURING
+-define:ENABLE_LZMA
+-define:ENABLE_UNITYEVENTS
+-define:ENABLE_VR
+-define:ENABLE_WEBCAM
+-define:ENABLE_UNITYWEBREQUEST
+-define:ENABLE_WWW
+-define:ENABLE_CLOUD_SERVICES
+-define:ENABLE_CLOUD_SERVICES_ADS
+-define:ENABLE_CLOUD_SERVICES_USE_WEBREQUEST
+-define:ENABLE_CLOUD_SERVICES_CRASH_REPORTING
+-define:ENABLE_CLOUD_SERVICES_PURCHASING
+-define:ENABLE_CLOUD_SERVICES_ANALYTICS
+-define:ENABLE_CLOUD_SERVICES_BUILD
+-define:ENABLE_EDITOR_GAME_SERVICES
+-define:ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT
+-define:ENABLE_CLOUD_LICENSE
+-define:ENABLE_EDITOR_HUB_LICENSE
+-define:ENABLE_WEBSOCKET_CLIENT
+-define:ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API
+-define:ENABLE_DIRECTOR_AUDIO
+-define:ENABLE_DIRECTOR_TEXTURE
+-define:ENABLE_MANAGED_JOBS
+-define:ENABLE_MANAGED_TRANSFORM_JOBS
+-define:ENABLE_MANAGED_ANIMATION_JOBS
+-define:ENABLE_MANAGED_AUDIO_JOBS
+-define:ENABLE_MANAGED_UNITYTLS
+-define:INCLUDE_DYNAMIC_GI
+-define:ENABLE_SCRIPTING_GC_WBARRIERS
+-define:PLATFORM_SUPPORTS_MONO
+-define:RENDER_SOFTWARE_CURSOR
+-define:ENABLE_MARSHALLING_TESTS
+-define:ENABLE_VIDEO
+-define:ENABLE_NAVIGATION_OFFMESHLINK_TO_NAVMESHLINK
+-define:ENABLE_ACCELERATOR_CLIENT_DEBUGGING
+-define:TEXTCORE_1_0_OR_NEWER
+-define:EDITOR_ONLY_NAVMESH_BUILDER_DEPRECATED
+-define:PLATFORM_STANDALONE_WIN
+-define:PLATFORM_STANDALONE
+-define:UNITY_STANDALONE_WIN
+-define:UNITY_STANDALONE
+-define:ENABLE_RUNTIME_GI
+-define:ENABLE_MOVIES
+-define:ENABLE_NETWORK
+-define:ENABLE_NVIDIA
+-define:ENABLE_AMD
+-define:ENABLE_CRUNCH_TEXTURE_COMPRESSION
+-define:ENABLE_OUT_OF_PROCESS_CRASH_HANDLER
+-define:ENABLE_CLUSTER_SYNC
+-define:ENABLE_CLUSTERINPUT
+-define:PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP
+-define:GFXDEVICE_WAITFOREVENT_MESSAGEPUMP
+-define:PLATFORM_USES_EXPLICIT_MEMORY_MANAGER_INITIALIZER
+-define:PLATFORM_SUPPORTS_WAIT_FOR_PRESENTATION
+-define:PLATFORM_SUPPORTS_SPLIT_GRAPHICS_JOBS
+-define:ENABLE_MONO
+-define:NET_STANDARD_2_0
+-define:NET_STANDARD
+-define:NET_STANDARD_2_1
+-define:NETSTANDARD
+-define:NETSTANDARD2_1
+-define:ENABLE_PROFILER
+-define:DEBUG
+-define:TRACE
+-define:UNITY_ASSERTIONS
+-define:UNITY_EDITOR
+-define:UNITY_EDITOR_64
+-define:UNITY_EDITOR_WIN
+-define:ENABLE_UNITY_COLLECTIONS_CHECKS
+-define:ENABLE_BURST_AOT
+-define:UNITY_TEAM_LICENSE
+-define:ENABLE_CUSTOM_RENDER_TEXTURE
+-define:ENABLE_DIRECTOR
+-define:ENABLE_LOCALIZATION
+-define:ENABLE_SPRITES
+-define:ENABLE_TERRAIN
+-define:ENABLE_TILEMAP
+-define:ENABLE_TIMELINE
+-define:ENABLE_INPUT_SYSTEM
+-define:ENABLE_LEGACY_INPUT_MANAGER
+-define:TEXTCORE_FONT_ENGINE_1_5_OR_NEWER
+-define:TEXTCORE_TEXT_ENGINE_1_5_OR_NEWER
+-define:DOTWEEN
+-define:ODIN_INSPECTOR
+-define:ODIN_INSPECTOR_3
+-define:ODIN_INSPECTOR_3_1
+-define:ODIN_INSPECTOR_3_2
+-define:ODIN_INSPECTOR_3_3
+-define:ODIN_VALIDATOR
+-define:ODIN_VALIDATOR_3_1
+-define:ODIN_VALIDATOR_3_2
+-define:ODIN_VALIDATOR_3_3
+-define:CINEMACHINE_3_1_4
+-define:CSHARP_7_OR_LATER
+-define:CSHARP_7_3_OR_NEWER
+-r:"Assets/Plugins/Demigiant/DemiLib/Core/DemiLib.dll"
+-r:"Assets/Plugins/Demigiant/DemiLib/Core/Editor/DemiEditor.dll"
+-r:"Assets/Plugins/Demigiant/DOTween/DOTween.dll"
+-r:"Assets/Plugins/Demigiant/DOTween/Editor/DOTweenEditor.dll"
+-r:"Assets/Plugins/Demigiant/DOTweenPro/DOTweenPro.dll"
+-r:"Assets/Plugins/Demigiant/DOTweenPro/Editor/DOTweenProEditor.dll"
+-r:"Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll"
+-r:"Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll"
+-r:"Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinValidator.Editor.dll"
+-r:"Assets/Plugins/Sirenix/Assemblies/Sirenix.Reflection.Editor.dll"
+-r:"Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll"
+-r:"Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.dll"
+-r:"Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.dll"
+-r:"Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEditor.Graphs.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.AccessibilityModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.AdaptivePerformanceModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.BuildProfileModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreBusinessMetricsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.DeviceSimulatorModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.DiagnosticsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.EditorToolbarModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.EmbreeModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.GIModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.GraphicsStateCollectionSerializerModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.GraphViewModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.GridAndSnapModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.GridModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.MultiplayerModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.Physics2DModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.PhysicsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.PresetsUIModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.PropertiesModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.QuickSearchModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.SafeModeModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.SceneTemplateModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.SceneViewModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.ShaderFoundryModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.SketchUpModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.SpriteMaskModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.SpriteShapeModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.SubstanceModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.TerrainModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.TextCoreFontEngineModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.TextCoreTextEngineModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.TextRenderingModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.TilemapModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.TreeModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.UIAutomationModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.UIBuilderModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.UIElementsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.UIElementsSamplesModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.UmbraModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.VFXModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.VideoModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.XRModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.AccessibilityModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.AndroidJNIModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.AnimationModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.ARModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.AssetBundleModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.AudioModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.ContentLoadModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.CrashReportingModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.DirectorModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.DSPGraphModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.GameCenterModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.GIModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.GraphicsStateCollectionSerializerModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.GridModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.HierarchyCoreModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.HotReloadModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.ImageConversionModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.IMGUIModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.InputForUIModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.InputLegacyModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.InputModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.JSONSerializeModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.LocalizationModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.MarshallingModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.MultiplayerModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.ParticleSystemModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.PerformanceReportingModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.Physics2DModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.PhysicsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.PropertiesModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.ScreenCaptureModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.ShaderVariantAnalyticsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.SharedInternalsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteMaskModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteShapeModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.StreamingModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.SubstanceModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.SubsystemsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainPhysicsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.TextCoreFontEngineModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.TextCoreTextEngineModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.TextRenderingModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.TilemapModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.TLSModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UIElementsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UIModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UmbraModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsCommonModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityConnectModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityCurlModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityTestProtocolModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAssetBundleModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAudioModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestTextureModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestWWWModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.VehiclesModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.VFXModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.VideoModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.VirtualTexturingModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.VRModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/mscorlib.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.ComponentModel.Composition.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Core.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Data.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Drawing.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.IO.Compression.FileSystem.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Net.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Numerics.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Runtime.Serialization.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.ServiceModel.Web.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Transactions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Web.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Windows.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Xml.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Xml.Linq.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Xml.Serialization.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/Microsoft.Win32.Primitives.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.AppContext.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Buffers.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.Concurrent.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.NonGeneric.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.Specialized.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.EventBasedAsync.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.Primitives.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.TypeConverter.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Console.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Data.Common.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Contracts.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Debug.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.FileVersionInfo.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Process.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.StackTrace.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.TextWriterTraceListener.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Tools.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.TraceSource.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Tracing.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Drawing.Primitives.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Dynamic.Runtime.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Globalization.Calendars.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Globalization.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Globalization.Extensions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.Compression.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.Compression.ZipFile.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.DriveInfo.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.Primitives.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.Watcher.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.IsolatedStorage.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.MemoryMappedFiles.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.Pipes.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.UnmanagedMemoryStream.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.Expressions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.Parallel.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.Queryable.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Memory.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Http.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.NameResolution.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.NetworkInformation.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Ping.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Primitives.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Requests.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Security.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Sockets.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.WebHeaderCollection.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.WebSockets.Client.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.WebSockets.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Numerics.Vectors.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ObjectModel.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.DispatchProxy.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Emit.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Emit.ILGeneration.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Emit.Lightweight.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Extensions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Primitives.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Resources.Reader.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Resources.ResourceManager.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Resources.Writer.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.CompilerServices.VisualC.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Extensions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Handles.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.InteropServices.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.InteropServices.RuntimeInformation.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Numerics.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Formatters.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Json.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Primitives.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Xml.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Claims.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Algorithms.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Csp.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Encoding.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Primitives.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.X509Certificates.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Principal.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.SecureString.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Text.Encoding.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Text.Encoding.Extensions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Text.RegularExpressions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Overlapped.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Tasks.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Tasks.Extensions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Tasks.Parallel.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Thread.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.ThreadPool.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Timer.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ValueTuple.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.ReaderWriter.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XDocument.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XmlDocument.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XmlSerializer.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XPath.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XPath.XDocument.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/Extensions/2.0.0/System.Runtime.InteropServices.WindowsRuntime.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/ref/2.1.0/netstandard.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/Unity.Android.Gradle.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/Unity.Android.Types.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.Apple.Extensions.Common.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll"
+-r:"Library/PackageCache/com.unity.collab-proxy@ab839cc7d2ad/Lib/Editor/log4netPlastic.dll"
+-r:"Library/PackageCache/com.unity.collab-proxy@ab839cc7d2ad/Lib/Editor/Unity.Plastic.Antlr3.Runtime.dll"
+-r:"Library/PackageCache/com.unity.collab-proxy@ab839cc7d2ad/Lib/Editor/Unity.Plastic.Newtonsoft.Json.dll"
+-r:"Library/PackageCache/com.unity.collab-proxy@ab839cc7d2ad/Lib/Editor/unityplastic.dll"
+-r:"Library/PackageCache/com.unity.collections@56bff8827a7e/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll"
+-r:"Library/PackageCache/com.unity.ext.nunit@60ef35ffd3cd/net40/unity-custom/nunit.framework.dll"
+-r:"Library/PackageCache/com.unity.nuget.mono-cecil@d6f9955a5d5f/Mono.Cecil.dll"
+-r:"Library/PackageCache/com.unity.nuget.newtonsoft-json@74deb55db2a0/Runtime/Newtonsoft.Json.dll"
+-r:"Library/PackageCache/com.unity.visualscripting@b4d700247d4b/Editor/VisualScripting.Core/Dependencies/DotNetZip/Unity.VisualScripting.IonicZip.dll"
+-r:"Library/PackageCache/com.unity.visualscripting@b4d700247d4b/Editor/VisualScripting.Core/Dependencies/YamlDotNet/Unity.VisualScripting.YamlDotNet.dll"
+-r:"Library/PackageCache/com.unity.visualscripting@b4d700247d4b/Editor/VisualScripting.Core/EditorAssetResources/Unity.VisualScripting.TextureAssets.dll"
+-r:"Library/PackageCache/com.unity.visualscripting@b4d700247d4b/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Camera.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Audio.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Commands.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Components.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Debug.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Events.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Lifecycle.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Services.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Shared.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Templates.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Common.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Player.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Cinemachine.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Collections.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Mathematics.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.TextMeshPro.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
+-analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
+-analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
+-analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Collectibles/Collectible.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Collectibles/CollectibleManager.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Commands/CollectItemCommand.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Controllers/JumpController.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Controllers/PlayerController.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Core/PlatformerServiceInitializer.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Data/PlatformerConfigurationData.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Platforms/PlatformManager.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Services/CheckpointService.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Services/CollectionService.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Services/Interfaces/ICheckpointService.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Services/Interfaces/ICollectionService.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Services/Interfaces/ILevelGenerationService.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Services/Interfaces/IPlatformerAudioService.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Services/Interfaces/IPlatformerGameManager.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Services/Interfaces/IPlatformerInputService.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Services/Interfaces/IPlatformerPhysicsService.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Services/Interfaces/IPlatformerUIService.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Services/LevelGenerationService.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Services/PlatformerAudioService.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Services/PlatformerGameManager.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Services/PlatformerInputService.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Services/PlatformerPhysicsService.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Services/PlatformerUIService.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerAudioSettings.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerCheckpointSettings.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerCollectionSettings.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerGameplaySettings.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerInputSettings.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerLearningSettings.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerLevelSettings.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerPhysicsSettings.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerUISettings.cs"
+"Assets/_Project/Features/Templates/Platformer/Scripts/Testing/PlatformerGameplayVerification.cs"
+-langversion:9.0
+/deterministic
+/optimize+
+/debug:portable
+/nologo
+/RuntimeMetadataVersion:v4.0.30319
+/nowarn:0169
+/nowarn:0649
+/nowarn:0282
+/nowarn:1701
+/nowarn:1702
+/utf8output
+/preferreduilang:en-US
+/additionalfile:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Platformer.UnityAdditionalFile.txt"
+##### Custom Environment Variables
+DOTNET_MULTILEVEL_LOOKUP=0
+##### ExitCode
+1
+##### Output
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\CheckpointService.cs(15,38): error CS0535: 'CheckpointService' does not implement interface member 'ICheckpointService.SetCheckpoint(Vector3)'
+
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\CheckpointService.cs(15,38): error CS0535: 'CheckpointService' does not implement interface member 'ICheckpointService.HasCheckpoint'
+
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.PlayJumpSound()'
+
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.PlayLandSound()'
+
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.PlayCollectibleSound()'
+
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.PlayDamageSound()'
+
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.PlayBackgroundMusic()'
+
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.StopBackgroundMusic()'
+
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0737: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.SetMasterVolume(float)'. 'PlatformerAudioService.SetMasterVolume(float)' cannot implement an interface member because it is not public.
+
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.SetSfxVolume(float)'
+
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.SetMusicVolume(float)'
+[1410/1429  0s] Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.dll (+2 others)
 ##### CommandLine
 "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.rsp2"
 ##### Contents of Library\Bee\artifacts\1900b0aE.dag\asterivo.Unity60.Features.Templates.Stealth.rsp
@@ -736,6 +1260,7 @@ Finished compiling graph: 1433 nodes, 30265 flattened edges (23433 ToBuild, 246 
 -r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Components.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Debug.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Events.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Lifecycle.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Services.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Shared.ref.dll"
@@ -767,6 +1292,7 @@ Finished compiling graph: 1433 nodes, 30265 flattened edges (23433 ToBuild, 246 
 "Assets/_Project/Features/Templates/Stealth/Scripts/Data/StealthDetectionEvent.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Data/StealthState.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Data/StealthTutorialData.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Data/StealthTypes.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Environment/EnvironmentalElement.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Environment/HidingSpot.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Environment/HidingSpotInteractionCommand.cs"
@@ -808,219 +1334,213 @@ DOTNET_MULTILEVEL_LOOKUP=0
 ##### ExitCode
 1
 ##### Output
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(10,51): error CS0234: The type or namespace name 'Configuration' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(182,35): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(7,51): error CS0234: The type or namespace name 'Data' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(189,34): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(3,51): error CS0234: The type or namespace name 'Configuration' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(196,36): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(2,51): error CS0234: The type or namespace name 'Configuration' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Camera\StealthCameraController.cs(380,17): warning CS0162: Unreachable code detected
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthGameEvents.cs(3,51): error CS0234: The type or namespace name 'Configuration' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(106,40): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(11,51): error CS0234: The type or namespace name 'Data' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(108,34): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(7,51): error CS0234: The type or namespace name 'Configuration' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(110,39): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(8,51): error CS0234: The type or namespace name 'Data' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(112,30): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\HidingSpotInteractionCommand.cs(12,59): error CS0535: 'HidingSpotInteractionCommand' does not implement interface member 'IResettableCommand.Initialize(params object[])'
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(366,39): error CS1061: 'StealthMechanics' does not contain a definition for 'ApplyEnvironmentalConcealment' and no accessible extension method 'ApplyEnvironmentalConcealment' accepting a first argument of type 'StealthMechanics' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Data\StealthDetectionEvent.cs(12,42): error CS0535: 'StealthDetectionEvent' does not implement interface member 'IResettableCommand.Initialize(params object[])'
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(380,39): error CS1061: 'StealthMechanics' does not contain a definition for 'ApplyEnvironmentalConcealment' and no accessible extension method 'ApplyEnvironmentalConcealment' accepting a first argument of type 'StealthMechanics' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Data\StealthDetectionEvent.cs(12,42): error CS0535: 'StealthDetectionEvent' does not implement interface member 'ICommand.CanUndo'
+Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(131,37): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(60,57): error CS0246: The type or namespace name 'AIAlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(418,39): error CS1061: 'StealthMechanics' does not contain a definition for 'ApplyLightExposure' and no accessible extension method 'ApplyLightExposure' accepting a first argument of type 'StealthMechanics' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(60,80): error CS0246: The type or namespace name 'AIAlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(437,41): error CS1061: 'StealthEnvironmentConfig' does not contain a definition for 'InteractionRadius' and no accessible extension method 'InteractionRadius' accepting a first argument of type 'StealthEnvironmentConfig' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(52,16): error CS0246: The type or namespace name 'AIAlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(666,40): error CS1061: 'StealthAIConfig' does not contain a definition for 'SuspicionDecayRate' and no accessible extension method 'SuspicionDecayRate' accepting a first argument of type 'StealthAIConfig' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(53,16): error CS0246: The type or namespace name 'AIAlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(777,95): error CS1061: 'StealthAIConfig' does not contain a definition for 'name' and no accessible extension method 'name' accepting a first argument of type 'StealthAIConfig' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(152,101): error CS0246: The type or namespace name 'NoiseZoneType' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(818,13): error CS7036: There is no argument given that corresponds to the required formal parameter 'target' of 'StealthAICoordinator.ShareDetectionWithNearbyNPCs(MonoBehaviour, Transform, CooperativeDetectionData)'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(209,16): error CS0246: The type or namespace name 'AudioEffectType' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(830,17): error CS0103: The name '_enableDebugging' does not exist in the current context
 
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(71,52): error CS0104: 'AlertLevel' is an ambiguous reference between 'asterivo.Unity60.Features.AI.Audio.AlertLevel' and 'asterivo.Unity60.Core.Data.AlertLevel'
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(602,36): error CS1061: 'StealthMechanicsController' does not contain a definition for 'InteractWithHidingSpot' and no accessible extension method 'InteractWithHidingSpot' accepting a first argument of type 'StealthMechanicsController' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(148,16): error CS0246: The type or namespace name 'NoiseZoneType' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(518,54): error CS1503: Argument 1: cannot convert from 'asterivo.Unity60.Features.Templates.Stealth.GlobalAlertLevel' to 'asterivo.Unity60.Features.Templates.Stealth.Data.AIAlertLevel'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(299,50): error CS0246: The type or namespace name 'StealthUIElement' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(445,44): warning CS0618: 'Profiler.GetTotalAllocatedMemory()' is obsolete: 'GetTotalAllocatedMemory has been deprecated since it is limited to 4GB. Please use GetTotalAllocatedMemoryLong() instead.'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(149,16): error CS0246: The type or namespace name 'AudioEffectType' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(733,50): error CS1061: 'StealthUIConfig' does not contain a definition for 'ShowLearningProgress' and no accessible extension method 'ShowLearningProgress' accepting a first argument of type 'StealthUIConfig' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(293,16): error CS0246: The type or namespace name 'StealthUIElement' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(599,51): error CS1503: Argument 1: cannot convert from 'string' to 'float'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(242,81): error CS0246: The type or namespace name 'AudioEffectType' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(605,51): error CS1503: Argument 1: cannot convert from 'string' to 'float'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(272,61): error CS0246: The type or namespace name 'PlayerMovementState' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(678,27): error CS1501: No overload for method 'ShowGameEndScreen' takes 5 arguments
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(236,16): error CS0246: The type or namespace name 'AudioEffectType' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(944,17): warning CS0162: Unreachable code detected
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(266,16): error CS0246: The type or namespace name 'PlayerMovementState' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(40,39): warning CS0414: The field 'StealthEventChannels._enableEventBatching' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Configuration\StealthProgressionConfig.cs(92,10): error CS0592: Attribute 'Header' is not valid on this declaration type. It is only valid on 'property, indexer, field' declarations.
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(35,52): warning CS0414: The field 'StealthGameplayManager.difficultyLevel' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(376,16): error CS0246: The type or namespace name 'MinimapObjectType' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(961,40): warning CS0414: The field 'NPCPatrolController.waitTime' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(535,22): error CS0051: Inconsistent accessibility: parameter type 'StealthLearnAndGrowIntegrator.StealthSkill' is less accessible than method 'StealthLearnAndGrowIntegrator.GetSkillProgress(StealthLearnAndGrowIntegrator.StealthSkill)'
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(40,59): warning CS0414: The field 'StealthTemplateValidator.testDurationOverride' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(408,71): error CS0246: The type or namespace name 'TutorialStepType' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(490,44): warning CS0414: The field 'EnvironmentalInteraction.DistractionItem.distractionDuration' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(401,16): error CS0246: The type or namespace name 'TutorialStepType' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(109,40): warning CS0414: The field 'StealthLearningSettings.hintDisplayDelay' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(23,34): error CS0246: The type or namespace name 'StealthTemplateConfiguration' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(110,39): warning CS0414: The field 'StealthLearningSettings.enableTutorialSkipping' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(632,43): error CS0535: 'EnterHidingSpotCommand' does not implement interface member 'ICommand.CanUndo'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(31,39): warning CS0414: The field 'StealthAICoordinator._enablePerformanceOptimization' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(676,42): error CS0535: 'ExitHidingSpotCommand' does not implement interface member 'ICommand.CanUndo'
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(69,39): warning CS0414: The field 'StealthLearningSettings.enableSkillValidation' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(392,46): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(533,44): warning CS0414: The field 'EnvironmentalInteraction.HidingSpot.hidingEffectiveness' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(403,47): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(966,22): warning CS0414: The field 'NPCPatrolController.isPatrolling' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(27,17): error CS0246: The type or namespace name 'StealthMechanicsController' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(108,39): warning CS0414: The field 'StealthLearningSettings.enableInteractiveHighlights' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(28,17): error CS0246: The type or namespace name 'StealthAICoordinator' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(51,39): warning CS0414: The field 'StealthGameplayManager.enableNPCCommunication' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(29,17): error CS0246: The type or namespace name 'StealthEnvironmentManager' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(39,40): warning CS0414: The field 'StealthEventChannels._eventProcessingTimeLimit' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(30,17): error CS0246: The type or namespace name 'StealthUIManager' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(107,39): warning CS0414: The field 'StealthLearningSettings.enableRealTimeHints' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(39,17): error CS0246: The type or namespace name 'StealthPerformanceMonitor' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(67,59): warning CS0414: The field 'StealthLearningSettings.learningSpeedMultiplier' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(826,49): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(66,39): warning CS0414: The field 'StealthLearningSettings.enableAdaptiveDifficulty' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(42,17): error CS0246: The type or namespace name 'StealthTutorialSystem' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(37,38): warning CS0414: The field 'StealthEventChannels._maxEventsPerFrame' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(838,42): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(68,39): warning CS0414: The field 'StealthLearningSettings.enableProgressiveUnlock' is assigned but its value is never used
+*** Tundra build failed (1.30 seconds), 4 items updated, 1429 evaluated
+## Script Compilation Error for: Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Platformer.dll (+2 others)
+## CmdLine: "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Platformer.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Platformer.rsp2"
+## Output:
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\CheckpointService.cs(15,38): error CS0535: 'CheckpointService' does not implement interface member 'ICheckpointService.SetCheckpoint(Vector3)'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\CheckpointService.cs(15,38): error CS0535: 'CheckpointService' does not implement interface member 'ICheckpointService.HasCheckpoint'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.PlayJumpSound()'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.PlayLandSound()'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.PlayCollectibleSound()'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.PlayDamageSound()'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.PlayBackgroundMusic()'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.StopBackgroundMusic()'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0737: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.SetMasterVolume(float)'. 'PlatformerAudioService.SetMasterVolume(float)' cannot implement an interface member because it is not public.
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.SetSfxVolume(float)'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.SetMusicVolume(float)'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(43,17): error CS0246: The type or namespace name 'StealthProgressionTracker' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(854,45): error CS0246: The type or namespace name 'StealthDetectionData' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(24,34): error CS0246: The type or namespace name 'StealthDetectionEventChannel' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(66,34): error CS0246: The type or namespace name 'StealthDetectionEventChannel' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(78,17): error CS0246: The type or namespace name 'StealthMechanicsController' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(79,17): error CS0246: The type or namespace name 'StealthAICoordinator' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(84,17): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(80,17): error CS0246: The type or namespace name 'StealthUIManager' could not be found (are you missing a using directive or an assembly reference?)
-*** Tundra build failed (0.92 seconds), 2 items updated, 1429 evaluated
 ## Script Compilation Error for: Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.dll (+2 others)
 ## CmdLine: "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.rsp2"
 ## Output:
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(10,51): error CS0234: The type or namespace name 'Configuration' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(7,51): error CS0234: The type or namespace name 'Data' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(3,51): error CS0234: The type or namespace name 'Configuration' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(2,51): error CS0234: The type or namespace name 'Configuration' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthGameEvents.cs(3,51): error CS0234: The type or namespace name 'Configuration' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(11,51): error CS0234: The type or namespace name 'Data' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(7,51): error CS0234: The type or namespace name 'Configuration' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(8,51): error CS0234: The type or namespace name 'Data' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\HidingSpotInteractionCommand.cs(12,59): error CS0535: 'HidingSpotInteractionCommand' does not implement interface member 'IResettableCommand.Initialize(params object[])'
-Assets\_Project\Features\Templates\Stealth\Scripts\Data\StealthDetectionEvent.cs(12,42): error CS0535: 'StealthDetectionEvent' does not implement interface member 'IResettableCommand.Initialize(params object[])'
-Assets\_Project\Features\Templates\Stealth\Scripts\Data\StealthDetectionEvent.cs(12,42): error CS0535: 'StealthDetectionEvent' does not implement interface member 'ICommand.CanUndo'
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(60,57): error CS0246: The type or namespace name 'AIAlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(60,80): error CS0246: The type or namespace name 'AIAlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(52,16): error CS0246: The type or namespace name 'AIAlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(53,16): error CS0246: The type or namespace name 'AIAlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(152,101): error CS0246: The type or namespace name 'NoiseZoneType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(209,16): error CS0246: The type or namespace name 'AudioEffectType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(71,52): error CS0104: 'AlertLevel' is an ambiguous reference between 'asterivo.Unity60.Features.AI.Audio.AlertLevel' and 'asterivo.Unity60.Core.Data.AlertLevel'
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(148,16): error CS0246: The type or namespace name 'NoiseZoneType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(299,50): error CS0246: The type or namespace name 'StealthUIElement' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(149,16): error CS0246: The type or namespace name 'AudioEffectType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(293,16): error CS0246: The type or namespace name 'StealthUIElement' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(242,81): error CS0246: The type or namespace name 'AudioEffectType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(272,61): error CS0246: The type or namespace name 'PlayerMovementState' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(236,16): error CS0246: The type or namespace name 'AudioEffectType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(266,16): error CS0246: The type or namespace name 'PlayerMovementState' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Configuration\StealthProgressionConfig.cs(92,10): error CS0592: Attribute 'Header' is not valid on this declaration type. It is only valid on 'property, indexer, field' declarations.
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(376,16): error CS0246: The type or namespace name 'MinimapObjectType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(535,22): error CS0051: Inconsistent accessibility: parameter type 'StealthLearnAndGrowIntegrator.StealthSkill' is less accessible than method 'StealthLearnAndGrowIntegrator.GetSkillProgress(StealthLearnAndGrowIntegrator.StealthSkill)'
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(408,71): error CS0246: The type or namespace name 'TutorialStepType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(401,16): error CS0246: The type or namespace name 'TutorialStepType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(23,34): error CS0246: The type or namespace name 'StealthTemplateConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(632,43): error CS0535: 'EnterHidingSpotCommand' does not implement interface member 'ICommand.CanUndo'
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(676,42): error CS0535: 'ExitHidingSpotCommand' does not implement interface member 'ICommand.CanUndo'
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(392,46): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(403,47): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(27,17): error CS0246: The type or namespace name 'StealthMechanicsController' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(28,17): error CS0246: The type or namespace name 'StealthAICoordinator' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(29,17): error CS0246: The type or namespace name 'StealthEnvironmentManager' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(30,17): error CS0246: The type or namespace name 'StealthUIManager' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(39,17): error CS0246: The type or namespace name 'StealthPerformanceMonitor' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(826,49): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(42,17): error CS0246: The type or namespace name 'StealthTutorialSystem' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(838,42): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(43,17): error CS0246: The type or namespace name 'StealthProgressionTracker' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(854,45): error CS0246: The type or namespace name 'StealthDetectionData' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(24,34): error CS0246: The type or namespace name 'StealthDetectionEventChannel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(66,34): error CS0246: The type or namespace name 'StealthDetectionEventChannel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(78,17): error CS0246: The type or namespace name 'StealthMechanicsController' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(79,17): error CS0246: The type or namespace name 'StealthAICoordinator' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(84,17): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(80,17): error CS0246: The type or namespace name 'StealthUIManager' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(182,35): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(189,34): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(196,36): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\Camera\StealthCameraController.cs(380,17): warning CS0162: Unreachable code detected
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(106,40): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(108,34): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(110,39): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(112,30): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(366,39): error CS1061: 'StealthMechanics' does not contain a definition for 'ApplyEnvironmentalConcealment' and no accessible extension method 'ApplyEnvironmentalConcealment' accepting a first argument of type 'StealthMechanics' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(380,39): error CS1061: 'StealthMechanics' does not contain a definition for 'ApplyEnvironmentalConcealment' and no accessible extension method 'ApplyEnvironmentalConcealment' accepting a first argument of type 'StealthMechanics' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(131,37): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(418,39): error CS1061: 'StealthMechanics' does not contain a definition for 'ApplyLightExposure' and no accessible extension method 'ApplyLightExposure' accepting a first argument of type 'StealthMechanics' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(437,41): error CS1061: 'StealthEnvironmentConfig' does not contain a definition for 'InteractionRadius' and no accessible extension method 'InteractionRadius' accepting a first argument of type 'StealthEnvironmentConfig' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(666,40): error CS1061: 'StealthAIConfig' does not contain a definition for 'SuspicionDecayRate' and no accessible extension method 'SuspicionDecayRate' accepting a first argument of type 'StealthAIConfig' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(777,95): error CS1061: 'StealthAIConfig' does not contain a definition for 'name' and no accessible extension method 'name' accepting a first argument of type 'StealthAIConfig' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(818,13): error CS7036: There is no argument given that corresponds to the required formal parameter 'target' of 'StealthAICoordinator.ShareDetectionWithNearbyNPCs(MonoBehaviour, Transform, CooperativeDetectionData)'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(830,17): error CS0103: The name '_enableDebugging' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(602,36): error CS1061: 'StealthMechanicsController' does not contain a definition for 'InteractWithHidingSpot' and no accessible extension method 'InteractWithHidingSpot' accepting a first argument of type 'StealthMechanicsController' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(518,54): error CS1503: Argument 1: cannot convert from 'asterivo.Unity60.Features.Templates.Stealth.GlobalAlertLevel' to 'asterivo.Unity60.Features.Templates.Stealth.Data.AIAlertLevel'
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(445,44): warning CS0618: 'Profiler.GetTotalAllocatedMemory()' is obsolete: 'GetTotalAllocatedMemory has been deprecated since it is limited to 4GB. Please use GetTotalAllocatedMemoryLong() instead.'
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(733,50): error CS1061: 'StealthUIConfig' does not contain a definition for 'ShowLearningProgress' and no accessible extension method 'ShowLearningProgress' accepting a first argument of type 'StealthUIConfig' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(599,51): error CS1503: Argument 1: cannot convert from 'string' to 'float'
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(605,51): error CS1503: Argument 1: cannot convert from 'string' to 'float'
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(678,27): error CS1501: No overload for method 'ShowGameEndScreen' takes 5 arguments
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(944,17): warning CS0162: Unreachable code detected
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(40,39): warning CS0414: The field 'StealthEventChannels._enableEventBatching' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(35,52): warning CS0414: The field 'StealthGameplayManager.difficultyLevel' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(961,40): warning CS0414: The field 'NPCPatrolController.waitTime' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(40,59): warning CS0414: The field 'StealthTemplateValidator.testDurationOverride' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(490,44): warning CS0414: The field 'EnvironmentalInteraction.DistractionItem.distractionDuration' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(109,40): warning CS0414: The field 'StealthLearningSettings.hintDisplayDelay' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(110,39): warning CS0414: The field 'StealthLearningSettings.enableTutorialSkipping' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(31,39): warning CS0414: The field 'StealthAICoordinator._enablePerformanceOptimization' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(69,39): warning CS0414: The field 'StealthLearningSettings.enableSkillValidation' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(533,44): warning CS0414: The field 'EnvironmentalInteraction.HidingSpot.hidingEffectiveness' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(966,22): warning CS0414: The field 'NPCPatrolController.isPatrolling' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(108,39): warning CS0414: The field 'StealthLearningSettings.enableInteractiveHighlights' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(51,39): warning CS0414: The field 'StealthGameplayManager.enableNPCCommunication' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(39,40): warning CS0414: The field 'StealthEventChannels._eventProcessingTimeLimit' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(107,39): warning CS0414: The field 'StealthLearningSettings.enableRealTimeHints' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(67,59): warning CS0414: The field 'StealthLearningSettings.learningSpeedMultiplier' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(66,39): warning CS0414: The field 'StealthLearningSettings.enableAdaptiveDifficulty' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(37,38): warning CS0414: The field 'StealthEventChannels._maxEventsPerFrame' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(68,39): warning CS0414: The field 'StealthLearningSettings.enableProgressiveUnlock' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(10,51): error CS0234: The type or namespace name 'Configuration' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(7,51): error CS0234: The type or namespace name 'Data' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(3,51): error CS0234: The type or namespace name 'Configuration' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(2,51): error CS0234: The type or namespace name 'Configuration' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthGameEvents.cs(3,51): error CS0234: The type or namespace name 'Configuration' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(11,51): error CS0234: The type or namespace name 'Data' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(7,51): error CS0234: The type or namespace name 'Configuration' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(8,51): error CS0234: The type or namespace name 'Data' does not exist in the namespace 'asterivo.Unity60.Features.Templates.Stealth' (are you missing an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\HidingSpotInteractionCommand.cs(12,59): error CS0535: 'HidingSpotInteractionCommand' does not implement interface member 'IResettableCommand.Initialize(params object[])'
-Assets\_Project\Features\Templates\Stealth\Scripts\Data\StealthDetectionEvent.cs(12,42): error CS0535: 'StealthDetectionEvent' does not implement interface member 'IResettableCommand.Initialize(params object[])'
-Assets\_Project\Features\Templates\Stealth\Scripts\Data\StealthDetectionEvent.cs(12,42): error CS0535: 'StealthDetectionEvent' does not implement interface member 'ICommand.CanUndo'
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(60,57): error CS0246: The type or namespace name 'AIAlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(60,80): error CS0246: The type or namespace name 'AIAlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(52,16): error CS0246: The type or namespace name 'AIAlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(53,16): error CS0246: The type or namespace name 'AIAlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(152,101): error CS0246: The type or namespace name 'NoiseZoneType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(209,16): error CS0246: The type or namespace name 'AudioEffectType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(71,52): error CS0104: 'AlertLevel' is an ambiguous reference between 'asterivo.Unity60.Features.AI.Audio.AlertLevel' and 'asterivo.Unity60.Core.Data.AlertLevel'
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(148,16): error CS0246: The type or namespace name 'NoiseZoneType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(299,50): error CS0246: The type or namespace name 'StealthUIElement' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(149,16): error CS0246: The type or namespace name 'AudioEffectType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(293,16): error CS0246: The type or namespace name 'StealthUIElement' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(242,81): error CS0246: The type or namespace name 'AudioEffectType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(272,61): error CS0246: The type or namespace name 'PlayerMovementState' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(236,16): error CS0246: The type or namespace name 'AudioEffectType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(266,16): error CS0246: The type or namespace name 'PlayerMovementState' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Configuration\StealthProgressionConfig.cs(92,10): error CS0592: Attribute 'Header' is not valid on this declaration type. It is only valid on 'property, indexer, field' declarations.
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(376,16): error CS0246: The type or namespace name 'MinimapObjectType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(535,22): error CS0051: Inconsistent accessibility: parameter type 'StealthLearnAndGrowIntegrator.StealthSkill' is less accessible than method 'StealthLearnAndGrowIntegrator.GetSkillProgress(StealthLearnAndGrowIntegrator.StealthSkill)'
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(408,71): error CS0246: The type or namespace name 'TutorialStepType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventData.cs(401,16): error CS0246: The type or namespace name 'TutorialStepType' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(23,34): error CS0246: The type or namespace name 'StealthTemplateConfiguration' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(632,43): error CS0535: 'EnterHidingSpotCommand' does not implement interface member 'ICommand.CanUndo'
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(676,42): error CS0535: 'ExitHidingSpotCommand' does not implement interface member 'ICommand.CanUndo'
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(392,46): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(403,47): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(27,17): error CS0246: The type or namespace name 'StealthMechanicsController' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(28,17): error CS0246: The type or namespace name 'StealthAICoordinator' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(29,17): error CS0246: The type or namespace name 'StealthEnvironmentManager' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(30,17): error CS0246: The type or namespace name 'StealthUIManager' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(39,17): error CS0246: The type or namespace name 'StealthPerformanceMonitor' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(826,49): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(42,17): error CS0246: The type or namespace name 'StealthTutorialSystem' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(838,42): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(43,17): error CS0246: The type or namespace name 'StealthProgressionTracker' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(854,45): error CS0246: The type or namespace name 'StealthDetectionData' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(24,34): error CS0246: The type or namespace name 'StealthDetectionEventChannel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(66,34): error CS0246: The type or namespace name 'StealthDetectionEventChannel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(78,17): error CS0246: The type or namespace name 'StealthMechanicsController' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(79,17): error CS0246: The type or namespace name 'StealthAICoordinator' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(84,17): error CS0246: The type or namespace name 'AlertLevel' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(80,17): error CS0246: The type or namespace name 'StealthUIManager' could not be found (are you missing a using directive or an assembly reference?)
-AssetDatabase: script compilation time: 5.063517s
-'Assets/_Project/Tests/Results/stealth-template-compile-check.txt' Amount of processed bytes '110062' does not match file size '26249'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\CheckpointService.cs(15,38): error CS0535: 'CheckpointService' does not implement interface member 'ICheckpointService.SetCheckpoint(Vector3)'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\CheckpointService.cs(15,38): error CS0535: 'CheckpointService' does not implement interface member 'ICheckpointService.HasCheckpoint'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.PlayJumpSound()'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.PlayLandSound()'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.PlayCollectibleSound()'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.PlayDamageSound()'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.PlayBackgroundMusic()'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.StopBackgroundMusic()'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0737: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.SetMasterVolume(float)'. 'PlatformerAudioService.SetMasterVolume(float)' cannot implement an interface member because it is not public.
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.SetSfxVolume(float)'
+Assets\_Project\Features\Templates\Platformer\Scripts\Services\PlatformerAudioService.cs(15,43): error CS0535: 'PlatformerAudioService' does not implement interface member 'IPlatformerAudioService.SetMusicVolume(float)'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(182,35): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(189,34): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(196,36): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\Camera\StealthCameraController.cs(380,17): warning CS0162: Unreachable code detected
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(106,40): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(108,34): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(110,39): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(112,30): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(366,39): error CS1061: 'StealthMechanics' does not contain a definition for 'ApplyEnvironmentalConcealment' and no accessible extension method 'ApplyEnvironmentalConcealment' accepting a first argument of type 'StealthMechanics' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(380,39): error CS1061: 'StealthMechanics' does not contain a definition for 'ApplyEnvironmentalConcealment' and no accessible extension method 'ApplyEnvironmentalConcealment' accepting a first argument of type 'StealthMechanics' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(131,37): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(418,39): error CS1061: 'StealthMechanics' does not contain a definition for 'ApplyLightExposure' and no accessible extension method 'ApplyLightExposure' accepting a first argument of type 'StealthMechanics' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(437,41): error CS1061: 'StealthEnvironmentConfig' does not contain a definition for 'InteractionRadius' and no accessible extension method 'InteractionRadius' accepting a first argument of type 'StealthEnvironmentConfig' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(666,40): error CS1061: 'StealthAIConfig' does not contain a definition for 'SuspicionDecayRate' and no accessible extension method 'SuspicionDecayRate' accepting a first argument of type 'StealthAIConfig' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(777,95): error CS1061: 'StealthAIConfig' does not contain a definition for 'name' and no accessible extension method 'name' accepting a first argument of type 'StealthAIConfig' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(818,13): error CS7036: There is no argument given that corresponds to the required formal parameter 'target' of 'StealthAICoordinator.ShareDetectionWithNearbyNPCs(MonoBehaviour, Transform, CooperativeDetectionData)'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(830,17): error CS0103: The name '_enableDebugging' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(602,36): error CS1061: 'StealthMechanicsController' does not contain a definition for 'InteractWithHidingSpot' and no accessible extension method 'InteractWithHidingSpot' accepting a first argument of type 'StealthMechanicsController' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(518,54): error CS1503: Argument 1: cannot convert from 'asterivo.Unity60.Features.Templates.Stealth.GlobalAlertLevel' to 'asterivo.Unity60.Features.Templates.Stealth.Data.AIAlertLevel'
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(445,44): warning CS0618: 'Profiler.GetTotalAllocatedMemory()' is obsolete: 'GetTotalAllocatedMemory has been deprecated since it is limited to 4GB. Please use GetTotalAllocatedMemoryLong() instead.'
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(733,50): error CS1061: 'StealthUIConfig' does not contain a definition for 'ShowLearningProgress' and no accessible extension method 'ShowLearningProgress' accepting a first argument of type 'StealthUIConfig' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(599,51): error CS1503: Argument 1: cannot convert from 'string' to 'float'
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(605,51): error CS1503: Argument 1: cannot convert from 'string' to 'float'
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(678,27): error CS1501: No overload for method 'ShowGameEndScreen' takes 5 arguments
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(944,17): warning CS0162: Unreachable code detected
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(40,39): warning CS0414: The field 'StealthEventChannels._enableEventBatching' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(35,52): warning CS0414: The field 'StealthGameplayManager.difficultyLevel' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(961,40): warning CS0414: The field 'NPCPatrolController.waitTime' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(40,59): warning CS0414: The field 'StealthTemplateValidator.testDurationOverride' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(490,44): warning CS0414: The field 'EnvironmentalInteraction.DistractionItem.distractionDuration' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(109,40): warning CS0414: The field 'StealthLearningSettings.hintDisplayDelay' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(110,39): warning CS0414: The field 'StealthLearningSettings.enableTutorialSkipping' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(31,39): warning CS0414: The field 'StealthAICoordinator._enablePerformanceOptimization' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(69,39): warning CS0414: The field 'StealthLearningSettings.enableSkillValidation' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(533,44): warning CS0414: The field 'EnvironmentalInteraction.HidingSpot.hidingEffectiveness' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(966,22): warning CS0414: The field 'NPCPatrolController.isPatrolling' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(108,39): warning CS0414: The field 'StealthLearningSettings.enableInteractiveHighlights' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(51,39): warning CS0414: The field 'StealthGameplayManager.enableNPCCommunication' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(39,40): warning CS0414: The field 'StealthEventChannels._eventProcessingTimeLimit' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(107,39): warning CS0414: The field 'StealthLearningSettings.enableRealTimeHints' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(67,59): warning CS0414: The field 'StealthLearningSettings.learningSpeedMultiplier' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(66,39): warning CS0414: The field 'StealthLearningSettings.enableAdaptiveDifficulty' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(37,38): warning CS0414: The field 'StealthEventChannels._maxEventsPerFrame' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(68,39): warning CS0414: The field 'StealthLearningSettings.enableProgressiveUnlock' is assigned but its value is never used
+AssetDatabase: script compilation time: 4.572677s
+'Assets/_Project/Tests/Results/stealth-template-compile-check.txt' Amount of processed bytes '162403' does not match file size '27953'
 Scripts have compiler errors.
 Exiting without the bug reporter. Application will terminate with return code 1

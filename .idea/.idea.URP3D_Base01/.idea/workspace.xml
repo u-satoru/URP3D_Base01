@@ -1,46 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="bc3aea34-f43d-4ce2-ab23-b05a4ab88bf8" name="変更" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Core/Audio/StealthAudioCoordinator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Core/Audio/StealthAudioCoordinator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Core/Audio/asterivo.Unity60.Core.Audio.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Core/Audio/asterivo.Unity60.Core.Audio.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Core/Editor/asterivo.Unity60.Core.Editor.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Core/Editor/asterivo.Unity60.Core.Editor.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Core/Services/asterivo.Unity60.Core.Services.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Core/Services/asterivo.Unity60.Core.Services.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/AI/Scripts/asterivo.Unity60.AI.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/AI/Scripts/asterivo.Unity60.AI.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/AI/Visual/asterivo.Unity60.Features.AI.Visual.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/AI/Visual/asterivo.Unity60.Features.AI.Visual.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Camera/Scripts/asterivo.Unity60.Camera.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Camera/Scripts/asterivo.Unity60.Camera.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Player/Audio/asterivo.Unity60.Features.Player.Audio.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Player/Audio/asterivo.Unity60.Features.Player.Audio.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Player/Scripts/States/DetailedPlayerStateMachine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Player/Scripts/States/DetailedPlayerStateMachine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Player/Scripts/asterivo.Unity60.Player.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Player/Scripts/asterivo.Unity60.Player.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/ActionRPG/Scripts/asterivo.Unity60.Features.Templates.ActionRPG.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/ActionRPG/Scripts/asterivo.Unity60.Features.Templates.ActionRPG.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Adventure/asterivo.Unity60.Features.Templates.Adventure.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Adventure/asterivo.Unity60.Features.Templates.Adventure.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Common/Scripts/asterivo.Unity60.Features.Templates.Common.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Common/Scripts/asterivo.Unity60.Features.Templates.Common.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/asterivo.Unity60.Features.Templates.FPS.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/asterivo.Unity60.Features.Templates.FPS.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/asterivo.Unity60.Features.Templates.Platformer.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/asterivo.Unity60.Features.Templates.Platformer.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.URP3D_Base01/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.URP3D_Base01/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Camera/PlatformerCameraController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Camera/PlatformerCameraController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/PlatformerTemplateConfiguration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/PlatformerTemplateConfiguration.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/PlatformerTemplateManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/PlatformerTemplateManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Player/PlatformerPlayerController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Player/PlatformerPlayerController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerCameraSettings.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerCameraSettings.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerCollectibleSettings.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerCollectibleSettings.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerLearningSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerLearningSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerPhysicsSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerPhysicsSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerPlatformSettings.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerPlatformSettings.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerPlayerSettings.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerPlayerSettings.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/UI/PlatformerUIManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/UI/PlatformerUIManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/AI/StealthAICoordinator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/AI/StealthAICoordinator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthAIConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthAIConfig.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthEnvironmentConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthEnvironmentConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthMechanicsConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthMechanicsConfig.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthUIConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthUIConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Data/StealthTypes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Data/StealthTypes.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Environment/EnvironmentalElement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Environment/EnvironmentalElement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Environment/HidingSpot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Environment/HidingSpot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Environment/HidingSpotInteractionCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Environment/HidingSpotInteractionCommand.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Environment/StealthEnvironmentManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Environment/StealthEnvironmentManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Events/StealthGameEvents.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Events/StealthGameEvents.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Gameplay/StealthGameplayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Gameplay/StealthGameplayManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Mechanics/StealthMechanics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Mechanics/StealthMechanics.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/StealthTemplateManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/StealthTemplateManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/UI/StealthUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/UI/StealthUIManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/asterivo.Unity60.Features.Templates.Stealth.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/asterivo.Unity60.Features.Templates.Stealth.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/TPS/Scripts/asterivo.Unity60.Features.Templates.TPS.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/TPS/Scripts/asterivo.Unity60.Features.Templates.TPS.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/asterivo.Unity60.Features.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/asterivo.Unity60.Features.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Core/Editor/Setup/asterivo.Unity60.Tests.Core.Editor.Setup.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Core/Editor/Setup/asterivo.Unity60.Tests.Core.Editor.Setup.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Core/Editor/asterivo.Unity60.Tests.Core.Editor.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Core/Editor/asterivo.Unity60.Tests.Core.Editor.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Core/Services/asterivo.Unity60.Tests.Core.Services.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Core/Services/asterivo.Unity60.Tests.Core.Services.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Features/AI/Visual/asterivo.Unity60.AI.Visual.Tests.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Features/AI/Visual/asterivo.Unity60.AI.Visual.Tests.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Integration/asterivo.Unity60.Tests.Integration.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Integration/asterivo.Unity60.Tests.Integration.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Performance/asterivo.Unity60.Tests.Performance.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Performance/asterivo.Unity60.Tests.Performance.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Results/servicelocator-using-directive-success.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Results/servicelocator-using-directive-success.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Runtime/asterivo.Unity60.Tests.Runtime.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Runtime/asterivo.Unity60.Tests.Runtime.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/asterivo.Unity60.Tests.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/asterivo.Unity60.Tests.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Mechanics/StealthMechanicsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Mechanics/StealthMechanicsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Results/platformer-template-compilation-verification.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Results/platformer-template-compilation-verification.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Results/stealth-template-compile-check.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Results/stealth-template-compile-check.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +45,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
@@ -59,19 +55,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.anthropic.code.plugin.settings",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Unity エディターにアタッチ.Unity エディターにアタッチ">
     <configuration name="ユニットテスト (バッチモード)" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Unity.exe" />
@@ -138,18 +138,24 @@
       <updated>1757969855342</updated>
       <workItem from="1757969860010" duration="180000" />
       <workItem from="1757970071724" duration="67000" />
+      <workItem from="1757980282099" duration="696000" />
+      <workItem from="1757990489239" duration="661000" />
+      <workItem from="1757991180705" duration="594000" />
+      <workItem from="1758001192915" duration="568000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityProjectDiscoverer">
     <option name="hasUnityReference" value="true" />
     <option name="unityProject" value="true" />
     <option name="unityProjectFolder" value="true" />
   </component>
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
@@ -170,5 +176,9 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

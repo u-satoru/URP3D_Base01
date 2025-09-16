@@ -37,6 +37,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         
         // IHidingSpot インターフェース実装
         public string SpotName => _spotName;
+        public Transform HidingTransform => transform;
 
         // Events
         public event Action<HidingSpot> OnPlayerEntered;

@@ -1,15 +1,15 @@
 [Licensing::Module] Trying to connect to existing licensing client channel...
-[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-15T08:24:18.740882Z"
+[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-16T06:56:00.3290876Z"
 [Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 26648, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
 [Licensing::Module] Error: LicensingClient has failed validation; ignoring
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.17.1+ae67fbc
-  Session Id:              48d07c15aa114652ba8dec07a57d5829
+  Session Id:              657678b100534f95affd488ff186bc00
   Correlation Id:          27ba378d00f61906260636ceec280eb9
-  External correlation Id: 3095518102504473007
+  External correlation Id: 5965014520608642037
   Machine Id:              6v8irZboPhn9pIeIA+kbS+sqP0M=
-[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.03s, handshake: 0.06s)
-[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-15T08:24:18.833919Z"
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.01s, handshake: 0.08s)
+[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-16T06:56:00.4245069Z"
 [Licensing::Module] Error: Access token is unavailable; failed to update
 [Licensing::Client] Successfully updated license
 Built from '6000.0/staging' branch; Version is '6000.0.42f1 (feb9a7235030) revision 16693671'; Using compiler version '193933523'; Build Type 'Release'
@@ -64,22 +64,22 @@ D:/UnityProjects/URP3D_Base01
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [68096]  Target information:
+Player connection [87160]  Target information:
 
-Player connection [68096]  * "[IP] 172.28.160.1 [Port] 55504 [Flags] 2 [Guid] 1264739270 [EditorId] 1264739270 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [87160]  * "[IP] 172.28.160.1 [Port] 55504 [Flags] 2 [Guid] 216766526 [EditorId] 216766526 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [68096]  * "[IP] 172.17.80.1 [Port] 55504 [Flags] 2 [Guid] 1264739270 [EditorId] 1264739270 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [87160]  * "[IP] 172.17.80.1 [Port] 55504 [Flags] 2 [Guid] 216766526 [EditorId] 216766526 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [68096]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 1264739270 [EditorId] 1264739270 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [87160]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 216766526 [EditorId] 216766526 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [68096]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 1264739270 [EditorId] 1264739270 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [87160]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 216766526 [EditorId] 216766526 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [68096] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [68096] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [87160] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [87160] Host joined alternative multi-casting on [225.0.0.222:34997]...
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
 [Physics::Module] Id: 0xdecafbad
-[Package Manager] Connected to IPC stream "Upm-76136" after 0.4 seconds.
+[Package Manager] Connected to IPC stream "Upm-52092" after 0.4 seconds.
 Library Redirect Path: Library/
 [Package Manager] Restoring resolved packages state from cache
 [Licensing::Client] Successfully resolved entitlement details
@@ -159,8 +159,8 @@ Library Redirect Path: Library/
 [Physics::Module] Threading Mode: Multi-Threaded
 [Subsystems] No new subsystems found in resolved package list.
 Package Manager log level set to [2]
-[Package Manager] Done registering packages in 0.18 seconds
-Refreshing native plugins compatible for Editor in 2.41 ms, found 3 plugins.
+[Package Manager] Done registering packages in 0.15 seconds
+Refreshing native plugins compatible for Editor in 2.52 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.0.42f1 (feb9a7235030)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Resources/UnitySubsystems
@@ -177,7 +177,7 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56136
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56092
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 ImportWorker Server TCP listen port: 0
@@ -190,53 +190,56 @@ Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 [Licensing::Client] Successfully resolved entitlement details
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
-Registered in 0.045890 seconds.
-- Loaded All Assemblies, in  0.615 seconds
+Registered in 0.040646 seconds.
+- Loaded All Assemblies, in  0.716 seconds
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 [usbmuxd] Send listen message
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 1457 ms
+Android Extension - Scanning For ADB Devices 711 ms
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.905 seconds
-Domain Reload Profiling: 2518ms
-	BeginReloadAssembly (216ms)
+- Finished resetting the current domain, in  1.280 seconds
+Domain Reload Profiling: 1988ms
+	BeginReloadAssembly (243ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (46ms)
-	RebuildNativeTypeToScriptingClass (14ms)
-	initialDomainReloadingComplete (110ms)
-	LoadAllAssembliesAndSetupDomain (223ms)
-		LoadAssemblies (209ms)
+	RebuildCommonClasses (52ms)
+	RebuildNativeTypeToScriptingClass (20ms)
+	initialDomainReloadingComplete (120ms)
+	LoadAllAssembliesAndSetupDomain (271ms)
+		LoadAssemblies (237ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (216ms)
-			TypeCache.Refresh (214ms)
-				TypeCache.ScanAssembly (196ms)
+		AnalyzeDomain (265ms)
+			TypeCache.Refresh (262ms)
+				TypeCache.ScanAssembly (241ms)
 			BuildScriptInfoCaches (0ms)
 			ResolveRequiredComponents (1ms)
-	FinalizeReload (1909ms)
+	FinalizeReload (1281ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1863ms)
+		SetupLoadedEditorAssemblies (1229ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (1598ms)
-			SetLoadedEditorAssemblies (6ms)
-			BeforeProcessingInitializeOnLoad (59ms)
-			ProcessInitializeOnLoadAttributes (132ms)
-			ProcessInitializeOnLoadMethodAttributes (68ms)
+			InitializePlatformSupportModulesInManaged (877ms)
+			SetLoadedEditorAssemblies (5ms)
+			BeforeProcessingInitializeOnLoad (67ms)
+			ProcessInitializeOnLoadAttributes (176ms)
+			ProcessInitializeOnLoadMethodAttributes (104ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
 		AwakeInstancesAfterBackupRestoration (0ms)
 [Licensing::Client] Successfully resolved entitlement details
 Application.AssetDatabase Initial Refresh Start
-'Assets/_Project/Tests/Results/layer2-final-duplicate-fixes-verification.txt' Amount of processed bytes '20639' does not match file size '19137'
+YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
+The contents of 'Assets/_Project/Core/Services/Interfaces/IStealthMechanicsService.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
+'Assets/_Project/Tests/Results/layer2-final-duplicate-fixes-verification.txt' Amount of processed bytes '20904' does not match file size '20632'
+The .meta file Assets/_Project/Core/Services/Interfaces/IStealthMechanicsService.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
 [ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
@@ -269,7 +272,7 @@ info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 51.2983ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 74.9631ms
 Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
 WorkingDir: D:/UnityProjects/URP3D_Base01
 info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
@@ -287,748 +290,387 @@ info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 105.3311ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 139.0585ms
 DisplayProgressbar: Compiling Scripts
-ExitCode: 3 Duration: 0s663ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      Processing assembly Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.dll, with 138 defines and 297 references
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running Unity.Jobs.CodeGen.JobsILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Resolved Unity.Collections, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null with Library\Bee\artifacts\1900b0aE.dag\Unity.Collections.dll
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Resolved UnityEditor.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null with C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Managed\UnityEngine\UnityEditor.CoreModule.dll
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Resolved UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null with C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly application/grpc - - 200 - application/grpc 477.9225ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-firstpass.dll, with 138 defines and 352 references
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running Unity.Jobs.CodeGen.JobsILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Resolved Unity.Burst.Cecil.Rocks, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e with Library\PackageCache\com.unity.burst@7a907cf5a459\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly application/grpc - - 200 - application/grpc 356.6028ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor-firstpass.dll, with 136 defines and 376 references
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running Unity.Jobs.CodeGen.JobsILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly application/grpc - - 200 - application/grpc 11.4084ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll, with 136 defines and 377 references
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running Unity.Jobs.CodeGen.JobsILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly application/grpc - - 200 - application/grpc 17.2228ms
+ExitCode: 0 Duration: 9s802ms
 [1073/1429  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
 [1413/1429  0s] Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.dll (+2 others)
-##### CommandLine
-"C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.rsp2"
-##### Contents of Library\Bee\artifacts\1900b0aE.dag\asterivo.Unity60.Features.Templates.Stealth.rsp
--target:library
--out:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.dll"
--refout:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.ref.dll"
--define:UNITY_6000_0_42
--define:UNITY_6000_0
--define:UNITY_6000
--define:UNITY_5_3_OR_NEWER
--define:UNITY_5_4_OR_NEWER
--define:UNITY_5_5_OR_NEWER
--define:UNITY_5_6_OR_NEWER
--define:UNITY_2017_1_OR_NEWER
--define:UNITY_2017_2_OR_NEWER
--define:UNITY_2017_3_OR_NEWER
--define:UNITY_2017_4_OR_NEWER
--define:UNITY_2018_1_OR_NEWER
--define:UNITY_2018_2_OR_NEWER
--define:UNITY_2018_3_OR_NEWER
--define:UNITY_2018_4_OR_NEWER
--define:UNITY_2019_1_OR_NEWER
--define:UNITY_2019_2_OR_NEWER
--define:UNITY_2019_3_OR_NEWER
--define:UNITY_2019_4_OR_NEWER
--define:UNITY_2020_1_OR_NEWER
--define:UNITY_2020_2_OR_NEWER
--define:UNITY_2020_3_OR_NEWER
--define:UNITY_2021_1_OR_NEWER
--define:UNITY_2021_2_OR_NEWER
--define:UNITY_2021_3_OR_NEWER
--define:UNITY_2022_1_OR_NEWER
--define:UNITY_2022_2_OR_NEWER
--define:UNITY_2022_3_OR_NEWER
--define:UNITY_2023_1_OR_NEWER
--define:UNITY_2023_2_OR_NEWER
--define:UNITY_2023_3_OR_NEWER
--define:UNITY_6000_0_OR_NEWER
--define:PLATFORM_ARCH_64
--define:UNITY_64
--define:UNITY_INCLUDE_TESTS
--define:ENABLE_AR
--define:ENABLE_AUDIO
--define:ENABLE_CACHING
--define:ENABLE_CLOTH
--define:ENABLE_EVENT_QUEUE
--define:ENABLE_MICROPHONE
--define:ENABLE_MULTIPLE_DISPLAYS
--define:ENABLE_PHYSICS
--define:ENABLE_TEXTURE_STREAMING
--define:ENABLE_VIRTUALTEXTURING
--define:ENABLE_LZMA
--define:ENABLE_UNITYEVENTS
--define:ENABLE_VR
--define:ENABLE_WEBCAM
--define:ENABLE_UNITYWEBREQUEST
--define:ENABLE_WWW
--define:ENABLE_CLOUD_SERVICES
--define:ENABLE_CLOUD_SERVICES_ADS
--define:ENABLE_CLOUD_SERVICES_USE_WEBREQUEST
--define:ENABLE_CLOUD_SERVICES_CRASH_REPORTING
--define:ENABLE_CLOUD_SERVICES_PURCHASING
--define:ENABLE_CLOUD_SERVICES_ANALYTICS
--define:ENABLE_CLOUD_SERVICES_BUILD
--define:ENABLE_EDITOR_GAME_SERVICES
--define:ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT
--define:ENABLE_CLOUD_LICENSE
--define:ENABLE_EDITOR_HUB_LICENSE
--define:ENABLE_WEBSOCKET_CLIENT
--define:ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API
--define:ENABLE_DIRECTOR_AUDIO
--define:ENABLE_DIRECTOR_TEXTURE
--define:ENABLE_MANAGED_JOBS
--define:ENABLE_MANAGED_TRANSFORM_JOBS
--define:ENABLE_MANAGED_ANIMATION_JOBS
--define:ENABLE_MANAGED_AUDIO_JOBS
--define:ENABLE_MANAGED_UNITYTLS
--define:INCLUDE_DYNAMIC_GI
--define:ENABLE_SCRIPTING_GC_WBARRIERS
--define:PLATFORM_SUPPORTS_MONO
--define:RENDER_SOFTWARE_CURSOR
--define:ENABLE_MARSHALLING_TESTS
--define:ENABLE_VIDEO
--define:ENABLE_NAVIGATION_OFFMESHLINK_TO_NAVMESHLINK
--define:ENABLE_ACCELERATOR_CLIENT_DEBUGGING
--define:TEXTCORE_1_0_OR_NEWER
--define:EDITOR_ONLY_NAVMESH_BUILDER_DEPRECATED
--define:PLATFORM_STANDALONE_WIN
--define:PLATFORM_STANDALONE
--define:UNITY_STANDALONE_WIN
--define:UNITY_STANDALONE
--define:ENABLE_RUNTIME_GI
--define:ENABLE_MOVIES
--define:ENABLE_NETWORK
--define:ENABLE_NVIDIA
--define:ENABLE_AMD
--define:ENABLE_CRUNCH_TEXTURE_COMPRESSION
--define:ENABLE_OUT_OF_PROCESS_CRASH_HANDLER
--define:ENABLE_CLUSTER_SYNC
--define:ENABLE_CLUSTERINPUT
--define:PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP
--define:GFXDEVICE_WAITFOREVENT_MESSAGEPUMP
--define:PLATFORM_USES_EXPLICIT_MEMORY_MANAGER_INITIALIZER
--define:PLATFORM_SUPPORTS_WAIT_FOR_PRESENTATION
--define:PLATFORM_SUPPORTS_SPLIT_GRAPHICS_JOBS
--define:ENABLE_MONO
--define:NET_STANDARD_2_0
--define:NET_STANDARD
--define:NET_STANDARD_2_1
--define:NETSTANDARD
--define:NETSTANDARD2_1
--define:ENABLE_PROFILER
--define:DEBUG
--define:TRACE
--define:UNITY_ASSERTIONS
--define:UNITY_EDITOR
--define:UNITY_EDITOR_64
--define:UNITY_EDITOR_WIN
--define:ENABLE_UNITY_COLLECTIONS_CHECKS
--define:ENABLE_BURST_AOT
--define:UNITY_TEAM_LICENSE
--define:ENABLE_CUSTOM_RENDER_TEXTURE
--define:ENABLE_DIRECTOR
--define:ENABLE_LOCALIZATION
--define:ENABLE_SPRITES
--define:ENABLE_TERRAIN
--define:ENABLE_TILEMAP
--define:ENABLE_TIMELINE
--define:ENABLE_INPUT_SYSTEM
--define:ENABLE_LEGACY_INPUT_MANAGER
--define:TEXTCORE_FONT_ENGINE_1_5_OR_NEWER
--define:TEXTCORE_TEXT_ENGINE_1_5_OR_NEWER
--define:DOTWEEN
--define:ODIN_INSPECTOR
--define:ODIN_INSPECTOR_3
--define:ODIN_INSPECTOR_3_1
--define:ODIN_INSPECTOR_3_2
--define:ODIN_INSPECTOR_3_3
--define:ODIN_VALIDATOR
--define:ODIN_VALIDATOR_3_1
--define:ODIN_VALIDATOR_3_2
--define:ODIN_VALIDATOR_3_3
--define:CSHARP_7_OR_LATER
--define:CSHARP_7_3_OR_NEWER
--r:"Assets/Plugins/Demigiant/DemiLib/Core/DemiLib.dll"
--r:"Assets/Plugins/Demigiant/DemiLib/Core/Editor/DemiEditor.dll"
--r:"Assets/Plugins/Demigiant/DOTween/DOTween.dll"
--r:"Assets/Plugins/Demigiant/DOTween/Editor/DOTweenEditor.dll"
--r:"Assets/Plugins/Demigiant/DOTweenPro/DOTweenPro.dll"
--r:"Assets/Plugins/Demigiant/DOTweenPro/Editor/DOTweenProEditor.dll"
--r:"Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll"
--r:"Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll"
--r:"Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinValidator.Editor.dll"
--r:"Assets/Plugins/Sirenix/Assemblies/Sirenix.Reflection.Editor.dll"
--r:"Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll"
--r:"Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.dll"
--r:"Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.dll"
--r:"Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEditor.Graphs.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.AccessibilityModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.AdaptivePerformanceModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.BuildProfileModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreBusinessMetricsModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.DeviceSimulatorModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.DiagnosticsModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.EditorToolbarModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.EmbreeModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.GIModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.GraphicsStateCollectionSerializerModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.GraphViewModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.GridAndSnapModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.GridModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.MultiplayerModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.Physics2DModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.PhysicsModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.PresetsUIModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.PropertiesModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.QuickSearchModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.SafeModeModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.SceneTemplateModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.SceneViewModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.ShaderFoundryModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.SketchUpModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.SpriteMaskModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.SpriteShapeModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.SubstanceModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.TerrainModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.TextCoreFontEngineModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.TextCoreTextEngineModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.TextRenderingModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.TilemapModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.TreeModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.UIAutomationModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.UIBuilderModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.UIElementsModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.UIElementsSamplesModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.UmbraModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.VFXModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.VideoModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEditor.XRModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.AccessibilityModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.AndroidJNIModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.AnimationModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.ARModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.AssetBundleModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.AudioModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.ContentLoadModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.CrashReportingModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.DirectorModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.DSPGraphModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.GameCenterModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.GIModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.GraphicsStateCollectionSerializerModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.GridModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.HierarchyCoreModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.HotReloadModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.ImageConversionModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.IMGUIModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.InputForUIModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.InputLegacyModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.InputModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.JSONSerializeModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.LocalizationModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.MarshallingModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.MultiplayerModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.ParticleSystemModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.PerformanceReportingModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.Physics2DModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.PhysicsModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.PropertiesModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.ScreenCaptureModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.ShaderVariantAnalyticsModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.SharedInternalsModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteMaskModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteShapeModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.StreamingModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.SubstanceModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.SubsystemsModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainPhysicsModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.TextCoreFontEngineModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.TextCoreTextEngineModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.TextRenderingModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.TilemapModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.TLSModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UIElementsModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UIModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UmbraModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsCommonModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityConnectModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityCurlModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityTestProtocolModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAssetBundleModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAudioModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestTextureModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestWWWModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.VehiclesModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.VFXModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.VideoModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.VirtualTexturingModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.VRModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/mscorlib.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.ComponentModel.Composition.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Core.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Data.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Drawing.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.IO.Compression.FileSystem.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Net.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Numerics.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Runtime.Serialization.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.ServiceModel.Web.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Transactions.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Web.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Windows.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Xml.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Xml.Linq.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Xml.Serialization.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/Microsoft.Win32.Primitives.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.AppContext.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Buffers.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.Concurrent.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.NonGeneric.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.Specialized.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.EventBasedAsync.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.Primitives.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.TypeConverter.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Console.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Data.Common.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Contracts.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Debug.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.FileVersionInfo.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Process.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.StackTrace.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.TextWriterTraceListener.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Tools.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.TraceSource.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Tracing.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Drawing.Primitives.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Dynamic.Runtime.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Globalization.Calendars.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Globalization.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Globalization.Extensions.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.Compression.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.Compression.ZipFile.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.DriveInfo.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.Primitives.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.Watcher.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.IsolatedStorage.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.MemoryMappedFiles.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.Pipes.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.UnmanagedMemoryStream.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.Expressions.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.Parallel.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.Queryable.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Memory.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Http.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.NameResolution.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.NetworkInformation.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Ping.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Primitives.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Requests.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Security.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Sockets.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.WebHeaderCollection.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.WebSockets.Client.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.WebSockets.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Numerics.Vectors.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ObjectModel.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.DispatchProxy.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Emit.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Emit.ILGeneration.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Emit.Lightweight.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Extensions.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Primitives.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Resources.Reader.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Resources.ResourceManager.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Resources.Writer.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.CompilerServices.VisualC.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Extensions.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Handles.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.InteropServices.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.InteropServices.RuntimeInformation.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Numerics.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Formatters.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Json.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Primitives.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Xml.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Claims.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Algorithms.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Csp.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Encoding.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Primitives.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.X509Certificates.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Principal.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.SecureString.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Text.Encoding.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Text.Encoding.Extensions.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Text.RegularExpressions.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Overlapped.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Tasks.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Tasks.Extensions.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Tasks.Parallel.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Thread.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.ThreadPool.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Timer.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ValueTuple.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.ReaderWriter.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XDocument.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XmlDocument.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XmlSerializer.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XPath.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XPath.XDocument.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/Extensions/2.0.0/System.Runtime.InteropServices.WindowsRuntime.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/NetStandard/ref/2.1.0/netstandard.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/Unity.Android.Gradle.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/Unity.Android.Types.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.Apple.Extensions.Common.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll"
--r:"Library/PackageCache/com.unity.collab-proxy@ab839cc7d2ad/Lib/Editor/log4netPlastic.dll"
--r:"Library/PackageCache/com.unity.collab-proxy@ab839cc7d2ad/Lib/Editor/Unity.Plastic.Antlr3.Runtime.dll"
--r:"Library/PackageCache/com.unity.collab-proxy@ab839cc7d2ad/Lib/Editor/Unity.Plastic.Newtonsoft.Json.dll"
--r:"Library/PackageCache/com.unity.collab-proxy@ab839cc7d2ad/Lib/Editor/unityplastic.dll"
--r:"Library/PackageCache/com.unity.collections@56bff8827a7e/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll"
--r:"Library/PackageCache/com.unity.ext.nunit@60ef35ffd3cd/net40/unity-custom/nunit.framework.dll"
--r:"Library/PackageCache/com.unity.nuget.mono-cecil@d6f9955a5d5f/Mono.Cecil.dll"
--r:"Library/PackageCache/com.unity.nuget.newtonsoft-json@74deb55db2a0/Runtime/Newtonsoft.Json.dll"
--r:"Library/PackageCache/com.unity.visualscripting@b4d700247d4b/Editor/VisualScripting.Core/Dependencies/DotNetZip/Unity.VisualScripting.IonicZip.dll"
--r:"Library/PackageCache/com.unity.visualscripting@b4d700247d4b/Editor/VisualScripting.Core/Dependencies/YamlDotNet/Unity.VisualScripting.YamlDotNet.dll"
--r:"Library/PackageCache/com.unity.visualscripting@b4d700247d4b/Editor/VisualScripting.Core/EditorAssetResources/Unity.VisualScripting.TextureAssets.dll"
--r:"Library/PackageCache/com.unity.visualscripting@b4d700247d4b/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.AI.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Camera.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Audio.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Commands.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Components.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Debug.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Events.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Services.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.Shared.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.AI.Visual.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Common.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Player.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Stealth.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Cinemachine.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Collections.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Mathematics.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/Unity.TextMeshPro.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
--analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
--analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
--analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Camera/StealthCameraController.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthAIConfig.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthAudioConfig.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthEnvironmentConfig.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthMechanicsConfig.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthTutorialConfig.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthUIConfig.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Events/StealthEventChannels.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Events/StealthEventData.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Events/StealthGameEvents.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Gameplay/StealthGameplayManager.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Interaction/EnvironmentalInteraction.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Mechanics/StealthMechanics.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthAISettings.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthAudioSettings.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthCameraSettings.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthLearningSettings.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthMissionSettings.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthPlayerSettings.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/StealthTemplateConfiguration.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/StealthTemplateManager.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/StealthTemplateValidator.cs"
-"Assets/_Project/Features/Templates/Stealth/Scripts/UI/StealthUIManager.cs"
--langversion:9.0
-/deterministic
-/optimize+
-/debug:portable
-/nologo
-/RuntimeMetadataVersion:v4.0.30319
-/nowarn:0169
-/nowarn:0649
-/nowarn:0282
-/nowarn:1701
-/nowarn:1702
-/utf8output
-/preferreduilang:en-US
-/additionalfile:"Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.UnityAdditionalFile.txt"
-##### Custom Environment Variables
-DOTNET_MULTILEVEL_LOOKUP=0
-##### ExitCode
-1
-##### Output
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(82,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(184,35): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(82,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(191,34): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(83,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(198,36): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(83,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(106,40): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(84,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(108,34): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(84,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(110,39): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(85,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(112,30): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(85,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(131,37): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(93,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Camera\StealthCameraController.cs(380,17): warning CS0162: Unreachable code detected
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(93,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(944,17): warning CS0162: Unreachable code detected
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(94,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(445,44): warning CS0618: 'Profiler.GetTotalAllocatedMemory()' is obsolete: 'GetTotalAllocatedMemory has been deprecated since it is limited to 4GB. Please use GetTotalAllocatedMemoryLong() instead.'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(94,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(32,39): warning CS0414: The field 'StealthAICoordinator._enablePerformanceOptimization' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(95,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(107,39): warning CS0414: The field 'StealthLearningSettings.enableRealTimeHints' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(95,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(69,39): warning CS0414: The field 'StealthLearningSettings.enableSkillValidation' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(96,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(52,39): warning CS0414: The field 'StealthGameplayManager.enableNPCCommunication' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(96,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(36,52): warning CS0414: The field 'StealthGameplayManager.difficultyLevel' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1374,10): error CS0246: The type or namespace name 'TabGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(37,38): warning CS0414: The field 'StealthEventChannels._maxEventsPerFrame' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1374,10): error CS0246: The type or namespace name 'TabGroup' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(982,40): warning CS0414: The field 'NPCPatrolController.waitTime' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1375,10): error CS0246: The type or namespace name 'TitleAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(110,39): warning CS0414: The field 'StealthLearningSettings.enableTutorialSkipping' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1375,10): error CS0246: The type or namespace name 'Title' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(109,40): warning CS0414: The field 'StealthLearningSettings.hintDisplayDelay' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1377,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(66,39): warning CS0414: The field 'StealthLearningSettings.enableAdaptiveDifficulty' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1377,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(39,40): warning CS0414: The field 'StealthEventChannels._eventProcessingTimeLimit' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1378,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(40,59): warning CS0414: The field 'StealthTemplateValidator.testDurationOverride' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1378,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(108,39): warning CS0414: The field 'StealthLearningSettings.enableInteractiveHighlights' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1375,94): error CS0103: The name 'TitleAlignments' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(987,22): warning CS0414: The field 'NPCPatrolController.isPatrolling' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1384,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(67,59): warning CS0414: The field 'StealthLearningSettings.learningSpeedMultiplier' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1384,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(490,44): warning CS0414: The field 'EnvironmentalInteraction.DistractionItem.distractionDuration' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1390,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(533,44): warning CS0414: The field 'EnvironmentalInteraction.HidingSpot.hidingEffectiveness' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1390,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(40,39): warning CS0414: The field 'StealthEventChannels._enableEventBatching' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1396,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(68,39): warning CS0414: The field 'StealthLearningSettings.enableProgressiveUnlock' is assigned but its value is never used
+[1414/1429  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-firstpass.dll (+2 others)
+[1415/1429  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/asterivo.Unity60.Features.Templates.Stealth.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.dll, with 138 defines and 297 references
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1396,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1402,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
+running Unity.Jobs.CodeGen.JobsILPostProcessor
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1402,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1416/1429  0s] CopyFiles Library/ScriptAssemblies/asterivo.Unity60.Features.Templates.Stealth.pdb
+[1417/1429  0s] CopyFiles Library/ScriptAssemblies/asterivo.Unity60.Features.Templates.Stealth.dll
+[1418/1429  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Assembly-CSharp-firstpass.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-firstpass.dll, with 138 defines and 352 references
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1403,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1403,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
+running Unity.Jobs.CodeGen.JobsILPostProcessor
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1466,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1419/1429  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-firstpass.pdb
+[1420/1429  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll
+[BUSY       6s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor-firstpass.dll (+2 others)
+[1421/1429  7s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor-firstpass.dll (+2 others)
+[1422/1429  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Assembly-CSharp-Editor-firstpass.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor-firstpass.dll, with 136 defines and 376 references
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1466,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1467,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
+running Unity.Jobs.CodeGen.JobsILPostProcessor
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1467,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1423/1429  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor-firstpass.pdb
+[1424/1429  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor-firstpass.dll
+[1425/1429  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)
+[1426/1429  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Assembly-CSharp-Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll, with 136 defines and 377 references
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1490,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1490,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
+running Unity.Jobs.CodeGen.JobsILPostProcessor
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1537,10): error CS0246: The type or namespace name 'TabGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1427/1429  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb
+[1428/1429  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+*** Tundra build success (9.74 seconds), 17 items updated, 1429 evaluated
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(184,35): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(191,34): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(198,36): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(106,40): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(108,34): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(110,39): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(112,30): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(131,37): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Camera\StealthCameraController.cs(380,17): warning CS0162: Unreachable code detected
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(944,17): warning CS0162: Unreachable code detected
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(445,44): warning CS0618: 'Profiler.GetTotalAllocatedMemory()' is obsolete: 'GetTotalAllocatedMemory has been deprecated since it is limited to 4GB. Please use GetTotalAllocatedMemoryLong() instead.'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(32,39): warning CS0414: The field 'StealthAICoordinator._enablePerformanceOptimization' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(107,39): warning CS0414: The field 'StealthLearningSettings.enableRealTimeHints' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(69,39): warning CS0414: The field 'StealthLearningSettings.enableSkillValidation' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(52,39): warning CS0414: The field 'StealthGameplayManager.enableNPCCommunication' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(36,52): warning CS0414: The field 'StealthGameplayManager.difficultyLevel' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(37,38): warning CS0414: The field 'StealthEventChannels._maxEventsPerFrame' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(982,40): warning CS0414: The field 'NPCPatrolController.waitTime' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(110,39): warning CS0414: The field 'StealthLearningSettings.enableTutorialSkipping' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(109,40): warning CS0414: The field 'StealthLearningSettings.hintDisplayDelay' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(66,39): warning CS0414: The field 'StealthLearningSettings.enableAdaptiveDifficulty' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(39,40): warning CS0414: The field 'StealthEventChannels._eventProcessingTimeLimit' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(40,59): warning CS0414: The field 'StealthTemplateValidator.testDurationOverride' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(108,39): warning CS0414: The field 'StealthLearningSettings.enableInteractiveHighlights' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(987,22): warning CS0414: The field 'NPCPatrolController.isPatrolling' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(67,59): warning CS0414: The field 'StealthLearningSettings.learningSpeedMultiplier' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(490,44): warning CS0414: The field 'EnvironmentalInteraction.DistractionItem.distractionDuration' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(533,44): warning CS0414: The field 'EnvironmentalInteraction.HidingSpot.hidingEffectiveness' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(40,39): warning CS0414: The field 'StealthEventChannels._enableEventBatching' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(68,39): warning CS0414: The field 'StealthLearningSettings.enableProgressiveUnlock' is assigned but its value is never used
+AssetDatabase: script compilation time: 10.643069s
+'Assets/_Project/Tests/Results/layer2-final-duplicate-fixes-verification.txt' Amount of processed bytes '50936' does not match file size '30289'
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in 11.816 seconds
+'Packages/com.unity.cinemachine/Editor/Editors/CinemachineVirtualCameraBaseEditor.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+'Packages/com.unity.cinemachine/Editor/Obsolete/CinemachineVirtualCameraBaseEditor.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+'Assets/_Project/Tests/Results/layer2-final-duplicate-fixes-verification.txt' Amount of processed bytes '51765' does not match file size '51116'
+Refreshing native plugins compatible for Editor in 1.42 ms, found 3 plugins.
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-URP3D_Base01
+[AsmdefValidator] Found 0 violations
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+asterivo.Unity60.Core.Editor.AsmdefDependencyValidator:ValidateAndReport () (at Assets/_Project/Core/Editor/AsmdefDependencyValidator.cs:61)
+asterivo.Unity60.Core.Editor.AsmdefDependencyValidator:AutoValidateOnLoad () (at Assets/_Project/Core/Editor/AsmdefDependencyValidator.cs:32)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadMethodAttributes ()
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1537,10): error CS0246: The type or namespace name 'TabGroup' could not be found (are you missing a using directive or an assembly reference?)
+(Filename: Assets/_Project/Core/Editor/AsmdefDependencyValidator.cs Line: 61)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1538,10): error CS0246: The type or namespace name 'TitleAttribute' could not be found (are you missing a using directive or an assembly reference?)
+[AsmdefValidator] OK: Core asmdef dependency direction validated.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+asterivo.Unity60.Core.Editor.AsmdefDependencyValidator:ValidateAndReport () (at Assets/_Project/Core/Editor/AsmdefDependencyValidator.cs:73)
+asterivo.Unity60.Core.Editor.AsmdefDependencyValidator:AutoValidateOnLoad () (at Assets/_Project/Core/Editor/AsmdefDependencyValidator.cs:32)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadMethodAttributes ()
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1538,10): error CS0246: The type or namespace name 'Title' could not be found (are you missing a using directive or an assembly reference?)
+(Filename: Assets/_Project/Core/Editor/AsmdefDependencyValidator.cs Line: 73)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1540,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  7.715 seconds
+Domain Reload Profiling: 19524ms
+	BeginReloadAssembly (401ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (11ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (145ms)
+	RebuildCommonClasses (45ms)
+	RebuildNativeTypeToScriptingClass (15ms)
+	initialDomainReloadingComplete (76ms)
+	LoadAllAssembliesAndSetupDomain (11273ms)
+		LoadAssemblies (9327ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (2126ms)
+			TypeCache.Refresh (1977ms)
+				TypeCache.ScanAssembly (1949ms)
+			BuildScriptInfoCaches (118ms)
+			ResolveRequiredComponents (24ms)
+	FinalizeReload (7715ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (7464ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (64ms)
+			SetLoadedEditorAssemblies (13ms)
+			BeforeProcessingInitializeOnLoad (252ms)
+			ProcessInitializeOnLoadAttributes (6874ms)
+			ProcessInitializeOnLoadMethodAttributes (247ms)
+			AfterProcessingInitializeOnLoad (13ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (13ms)
+'Assets/_Project/Tests/Results/layer2-final-duplicate-fixes-verification.txt' Amount of processed bytes '55931' does not match file size '52324'
+Start importing Assets/_Project/Tests/Results/final-servicelocator-compliance-verification.txt using Guid(b061aaa35155e544fa54fc9f53c30a56) (TextScriptImporter) -> (artifact id: '0ec43478a88e270dc1903786d6c1e69f') in 0.035472 seconds
+Start importing Assets/_Project/Tests/Results/layer2-duplicate-errors-verification.txt using Guid(82ff414bacb435f49a68b4d5307cb6fc) (TextScriptImporter) -> (artifact id: 'a8ff8de81d0b6e8d64b7e26ce82141f5') in 0.0030814 seconds
+Start importing Assets/_Project/Tests/Results/platformeruiservice-fix-verification.txt using Guid(6338a83494134d74484fe0d4fb392f05) (TextScriptImporter) -> (artifact id: '4f2947c994597c1e4aec6a21012f8454') in 0.0048364 seconds
+Start importing Assets/_Project/Tests/Results/stealth-template-manager-layer2-final-verification.txt using Guid(63c86bf6a4a31db4d9134566c37be9cf) (TextScriptImporter) -> (artifact id: 'eec7fa8dfa3459de3600841c89b0eac6') in 0.0048461 seconds
+Start importing Assets/_Project/Tests/Results/platformer-audioservice-fix-verification.txt using Guid(c3481c3955779f74d9d4643280605db7) (TextScriptImporter) -> (artifact id: '5961a80813d19347af05384844271083') in 0.0130538 seconds
+Start importing Assets/_Project/Tests/Results/platformer-template-compilation-verification.txt using Guid(3428cbe8e8417fe4d9ffb40565265ff4) (TextScriptImporter) -> (artifact id: '446445413bf12fa00a751855e3cda4a8') in 0.0044165 seconds
+Start importing Assets/_Project/Tests/Results/platformer-intermediate-verification.txt using Guid(84cc21553b61efe4d98c4ae1561bb67f) (TextScriptImporter) -> (artifact id: '3f0227400a2ad5d3e18a3b9a91b60754') in 0.0064045 seconds
+Start importing Assets/_Project/Tests/Results/platformer-audioservice-errors-resolved-verification.txt using Guid(0513d36e652cf71469ca005f7f12b459) (TextScriptImporter) -> (artifact id: '0ca5cff03a0a07d521a5dd311afaed5b') in 0.0093009 seconds
+Start importing Assets/_Project/Tests/Results/platformer-audio-service-final-verification.txt using Guid(15575cd79b3ecd441919dd8c1910d708) (TextScriptImporter) -> (artifact id: '8600515aded38b8529d4807db03df543') in 0.006928 seconds
+Start importing Assets/_Project/Tests/Results/platformer-collectionservice-fix-verification.txt using Guid(a70b22c38104f394eb0aaddb1ce0f151) (TextScriptImporter) -> (artifact id: '9cd881138f3af38ca194816b5d6f1004') in 0.0065944 seconds
+Start importing Assets/_Project/Tests/Results/layer2-duplicate-fixes-verification.txt using Guid(a856ec15fc8272849876fb66435e1d7e) (TextScriptImporter) -> (artifact id: 'abe28d6b9a6c1da10516aafbeb835b9b') in 0.0050204 seconds
+Start importing Assets/_Project/Tests/Results/platformerinputservice-fix-verification.txt using Guid(4a686aaf9f2480f4ca62bd08cfe0474c) (TextScriptImporter) -> (artifact id: 'a6ec8752162449dd342d522ab21eee84') in 0.0066193 seconds
+Start importing Assets/_Project/Tests/Results/platformer-audioservice-final-fix-verification.txt using Guid(9ec86abcef8a9464b98d024a2621a7da) (TextScriptImporter) -> (artifact id: 'b930f4ba3232e0c0dc9a43b6f21d0e7e') in 0.0070942 seconds
+Start importing Assets/_Project/Tests/Results/platformer-final-verification.txt using Guid(8f3ee02f58715a541938619b55190d0c) (TextScriptImporter) -> (artifact id: '84667bd142f6b500da21deac5006597c') in 0.0057673 seconds
+Refreshing native plugins compatible for Editor in 1.66 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=0f720f9ceda20a34381aa29cb4ba5d20): Total: 31.923 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	Summary:
+		Imports: total=14 (actual=14, local cache=0, cache server=0)
+		Asset DB Process Time: managed=8 ms, native=8864 ms
+		Asset DB Callback time: managed=492 ms, native=7 ms
+		Scripting: domain reloads=1, domain reload time=11817 ms, compile time=10645 ms, other=87 ms
+		Project Asset Count: scripts=1669, non-scripts=2962
+		Asset File Changes: new=0, changed=2, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 3.776ms
+	ApplyChangesToAssetFolders: 0.748ms
+	Scan: 447.194ms
+	OnSourceAssetsModified: 1.326ms
+	CategorizeAssetsWithTransientArtifact: 108.018ms
+	ProcessAssetsWithTransientArtifactChanges: 148.834ms
+	CategorizeAssets: 84.052ms
+	ImportOutOfDateAssets: 7858.650ms (-2918.831ms without children)
+		ImportManagerImport: 130.014ms (2.612ms without children)
+			ImportInProcess: 127.233ms
+			UpdateCategorizedAssets: 0.168ms
+		CompileScripts: 10644.941ms
+		ReloadNativeAssets: 0.014ms
+		UnloadImportedAssets: 0.656ms
+		ReloadImportedAssets: 0.002ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 1.088ms
+		InitializingProgressBar: 0.011ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 0.755ms
+	PostProcessAllAssets: 491.526ms
+	Hotreload: 6.276ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.001ms
+	UnloadStreamsBegin: 3.181ms
+	PersistCurrentRevisions: 0.884ms
+	UnloadStreamsEnd: 0.002ms
+	GenerateScriptTypeHashes: 4.972ms
+	Untracked: 22768.642ms
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1540,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
+Application.AssetDatabase Initial Refresh End
+Scanning for USB devices : 8.507ms
+Initializing Unity extensions:
+[Licensing::Client] Successfully resolved entitlement details
+Unloading 61 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 7619 unused Assets / (6.3 MB). Loaded Objects now: 8346.
+Memory consumption went from 219.7 MB to 213.5 MB.
+Total: 54.634600 ms (FindLiveObjects: 0.848200 ms CreateObjectMapping: 0.768500 ms MarkObjects: 44.835100 ms  DeleteObjects: 8.152200 ms)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1541,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
+Batchmode quit successfully invoked - shutting down!
+Curl error 42: Callback aborted
+Killing ADB server in 0.1213722 seconds.
+[Physics::Module] Cleanup current backned.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input System polling thread exited.
+Input System module state changed to: Shutdown.
+[Licensing::IpcConnector] License Notification channel disconnected successfully.
+[Licensing::IpcConnector] License Client channel disconnected successfully.
+AcceleratorClientConnectionCallback - disconnected - :0
+Cleanup mono
+abort_threads: Failed aborting id: 0000000000016460, mono_thread_manage will ignore it
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1541,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
+abort_threads: Failed aborting id: 000000000000D3EC, mono_thread_manage will ignore it
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1538,96): error CS0103: The name 'TitleAlignments' does not exist in the current context
+abort_threads: Failed aborting id: 000000000000E8FC, mono_thread_manage will ignore it
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1548,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
+abort_threads: Failed aborting id: 0000000000016460, mono_thread_manage will ignore it
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1548,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
+abort_threads: Failed aborting id: 000000000000E8FC, mono_thread_manage will ignore it
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1604,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1604,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1605,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1605,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1633,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1633,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1666,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1666,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1667,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1667,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-*** Tundra build failed (0.60 seconds), 2 items updated, 1429 evaluated
-## Script Compilation Error for: Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.dll (+2 others)
-## CmdLine: "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.rsp2"
-## Output:
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(82,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(82,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(83,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(83,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(84,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(84,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(85,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(85,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(93,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(93,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(94,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(94,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(95,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(95,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(96,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(96,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1374,10): error CS0246: The type or namespace name 'TabGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1374,10): error CS0246: The type or namespace name 'TabGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1375,10): error CS0246: The type or namespace name 'TitleAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1375,10): error CS0246: The type or namespace name 'Title' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1377,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1377,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1378,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1378,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1375,94): error CS0103: The name 'TitleAlignments' does not exist in the current context
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1384,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1384,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1390,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1390,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1396,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1396,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1402,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1402,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1403,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1403,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1466,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1466,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1467,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1467,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1490,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1490,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1537,10): error CS0246: The type or namespace name 'TabGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1537,10): error CS0246: The type or namespace name 'TabGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1538,10): error CS0246: The type or namespace name 'TitleAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1538,10): error CS0246: The type or namespace name 'Title' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1540,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1540,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1541,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1541,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1538,96): error CS0103: The name 'TitleAlignments' does not exist in the current context
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1548,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1548,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1604,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1604,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1605,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1605,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1633,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1633,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1666,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1666,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1667,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1667,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(82,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(82,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(83,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(83,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(84,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(84,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(85,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(85,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(93,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(93,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(94,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(94,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(95,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(95,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(96,26): error CS0246: The type or namespace name 'ReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(96,26): error CS0246: The type or namespace name 'ReadOnly' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1374,10): error CS0246: The type or namespace name 'TabGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1374,10): error CS0246: The type or namespace name 'TabGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1375,10): error CS0246: The type or namespace name 'TitleAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1375,10): error CS0246: The type or namespace name 'Title' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1377,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1377,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1378,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1378,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1375,94): error CS0103: The name 'TitleAlignments' does not exist in the current context
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1384,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1384,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1390,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1390,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1396,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1396,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1402,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1402,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1403,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1403,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1466,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1466,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1467,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1467,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1490,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1490,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1537,10): error CS0246: The type or namespace name 'TabGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1537,10): error CS0246: The type or namespace name 'TabGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1538,10): error CS0246: The type or namespace name 'TitleAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1538,10): error CS0246: The type or namespace name 'Title' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1540,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1540,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1541,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1541,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1538,96): error CS0103: The name 'TitleAlignments' does not exist in the current context
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1548,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1548,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1604,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1604,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1605,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1605,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1633,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1633,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1666,10): error CS0246: The type or namespace name 'BoxGroupAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1666,10): error CS0246: The type or namespace name 'BoxGroup' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1667,10): error CS0246: The type or namespace name 'ButtonAttribute' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(1667,10): error CS0246: The type or namespace name 'Button' could not be found (are you missing a using directive or an assembly reference?)
-AssetDatabase: script compilation time: 1.303676s
-Scripts have compiler errors.
-Exiting without the bug reporter. Application will terminate with return code 1
+debugger-agent: Unable to listen on 3976
+[usbmuxd] Stop listen thread
+[usbmuxd] Error: 
+[usbmuxd] Listen thread exiting
+Exiting batchmode successfully now!
+Exiting without the bug reporter. Application will terminate with return code 0

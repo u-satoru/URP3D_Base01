@@ -29,6 +29,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Configuration
         [Tooltip("相互作用可能距離")]
         public float MaxInteractionDistance = 3f;
 
+        [Range(0.5f, 5f)]
+        [Tooltip("基本相互作用半径（InteractionRadius）")]
+        public float InteractionRadius = 2.0f;
+
         [Tooltip("相互作用時のハイライト表示")]
         public bool ShowInteractionHighlights = true;
 

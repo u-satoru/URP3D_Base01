@@ -9,6 +9,7 @@ using asterivo.Unity60.Features.AI.Visual;
 using asterivo.Unity60.Features.AI.Audio;
 using asterivo.Unity60.Features.Templates.Stealth.Configuration;
 using asterivo.Unity60.Features.Templates.Stealth.Data;
+using asterivo.Unity60.Features.Templates.Stealth.Events;
 using asterivo.Unity60.Features.Templates.Stealth.Mechanics;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.AI
@@ -40,6 +41,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.AI
         [Header("Debug Settings")]
         [SerializeField] private bool _showDebugInfo = false;
         [SerializeField] private bool _enableAIVisualization = true;
+        [SerializeField] private bool _enableDebugging = false;
 
         #endregion
 
@@ -79,7 +81,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.AI
 
         // Detection Coordination
         private readonly Dictionary<Transform, List<MonoBehaviour>> _targetDetectors = new();
-        private readonly List<CooperativeDetectionData> _cooperativeDetections = new();
+        private readonly List<InternalCooperativeData> _cooperativeDetections = new();
 
         // Update Management for 50 NPCs performance optimization
         private float _lastUpdateTime = 0f;
@@ -547,7 +549,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.AI
         {
             if (!IsCooperativeDetectionActive || target?.transform == null) return;
 
-            var cooperativeData = new CooperativeDetectionData
+            var cooperativeData = new InternalCooperativeData
             {
                 DetectingNPC = detectingNPC,
                 Target = target.transform,
@@ -565,6 +567,26 @@ namespace asterivo.Unity60.Features.Templates.Stealth.AI
         /// <summary>
         /// 近接NPCとの検知情報共有
         /// </summary>
+        // Overload for InternalCooperativeData
+        private void ShareDetectionWithNearbyNPCs(MonoBehaviour detectingNPC, Transform target, InternalCooperativeData data)
+        {
+            float shareRange = _config?.CooperativeDetectionRange ?? 20f;
+            Vector3 detectingPos = detectingNPC.transform.position;
+
+            foreach (var otherNPC in _registeredNPCs)
+            {
+                if (otherNPC == detectingNPC || otherNPC == null) continue;
+
+                float distance = Vector3.Distance(detectingPos, otherNPC.transform.position);
+                if (distance <= shareRange)
+                {
+                    // 情報を共有
+                    ShareDetectionInfo(otherNPC, data);
+                }
+            }
+        }
+
+        // Overload for CooperativeDetectionData (event struct)
         private void ShareDetectionWithNearbyNPCs(MonoBehaviour detectingNPC, Transform target, CooperativeDetectionData data)
         {
             float shareRange = _config?.CooperativeDetectionRange ?? 20f;
@@ -584,9 +606,9 @@ namespace asterivo.Unity60.Features.Templates.Stealth.AI
         }
 
         /// <summary>
-        /// 検知情報の共有
+        /// 検知情報の共有 (InternalCooperativeData overload)
         /// </summary>
-        private void ShareDetectionInfo(MonoBehaviour receivingNPC, CooperativeDetectionData data)
+        private void ShareDetectionInfo(MonoBehaviour receivingNPC, InternalCooperativeData data)
         {
             // 疑心レベルの軽微な上昇
             float currentSuspicion = _suspicionLevels.GetValueOrDefault(receivingNPC, 0f);
@@ -598,6 +620,32 @@ namespace asterivo.Unity60.Features.Templates.Stealth.AI
             {
                 var sharedTarget = new DetectedTarget(data.Target, data.SuspicionLevel * 0.5f, data.DetectionTime);
                 memory.RecordDetection(sharedTarget, DetectionType.Cooperative, data.DetectionTime);
+            }
+
+            // 警戒レベル更新
+            UpdateAIAlertLevel(receivingNPC, _suspicionLevels[receivingNPC]);
+        }
+
+        /// <summary>
+        /// 検知情報の共有 (CooperativeDetectionData overload)
+        /// </summary>
+        private void ShareDetectionInfo(MonoBehaviour receivingNPC, CooperativeDetectionData data)
+        {
+            // 疑心レベルの軽微な上昇
+            float currentSuspicion = _suspicionLevels.GetValueOrDefault(receivingNPC, 0f);
+            float sharedSuspicionIncrease = data.CombinedConfidenceLevel * 0.3f; // 共有情報は30%の影響
+            _suspicionLevels[receivingNPC] = Mathf.Clamp01(currentSuspicion + sharedSuspicionIncrease);
+
+            // メモリに記録（協調情報として）
+            if (_npcMemories.TryGetValue(receivingNPC, out var memory))
+            {
+                // SharedPlayerPositionからTargetを特定（仮実装）
+                var playerTransform = GameObject.FindGameObjectWithTag("Player")?.transform;
+                if (playerTransform != null)
+                {
+                    var sharedTarget = new DetectedTarget(playerTransform, data.CombinedConfidenceLevel * 0.5f, Time.time);
+                    memory.RecordDetection(sharedTarget, DetectionType.Cooperative, Time.time);
+                }
             }
 
             // 警戒レベル更新
@@ -815,7 +863,19 @@ namespace asterivo.Unity60.Features.Templates.Stealth.AI
             }
 
             // 協調検知システムへの通知
-            ShareDetectionWithNearbyNPCs(detectionEvent);
+            if (detectionEvent.DetectingNPC != null && detectionEvent.Target != null)
+            {
+                var cooperativeData = new CooperativeDetectionData
+                {
+                    ParticipatingNPCIds = new string[] { detectionEvent.DetectingNPC.name },
+                    SharedPlayerPosition = detectionEvent.Target.transform.position,
+                    CombinedConfidenceLevel = detectionEvent.SuspicionLevel,
+                    PrimaryDetectionType = DetectionType.Visual,
+                    CooperationRange = 20f,
+                    CooperationReason = "Detection event triggered cooperation"
+                };
+                ShareDetectionWithNearbyNPCs(detectionEvent.DetectingNPC, detectionEvent.Target.transform, cooperativeData);
+            }
         }
 
         #endregion
@@ -930,9 +990,9 @@ namespace asterivo.Unity60.Features.Templates.Stealth.AI
     }
 
     /// <summary>
-    /// 協調検知データ
+    /// 内部協調検知データ（AICoordinator専用）
     /// </summary>
-    public class CooperativeDetectionData
+    public class InternalCooperativeData
     {
         public MonoBehaviour DetectingNPC;
         public Transform Target;

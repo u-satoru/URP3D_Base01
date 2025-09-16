@@ -1,267 +1,277 @@
 using UnityEngine;
-using Sirenix.OdinInspector;
 
-namespace asterivo.Unity60.Features.Templates.Platformer
+namespace asterivo.Unity60.Features.Templates.Platformer.Settings
 {
     /// <summary>
-    /// プラットフォーマー物理設定クラス
-    /// 15分ゲームプレイ最適化物理パラメータ管理
+    /// Platformer物理設定：Jump & Movement Physics システム
+    /// ScriptableObject基盤：ノンプログラマーでもバランス調整可能
+    /// ServiceLocator統合：物理演算の中央管理
     /// </summary>
-    [System.Serializable]
-    public class PlatformerPhysicsSettings
+    [CreateAssetMenu(fileName = "PlatformerPhysicsSettings", menuName = "Platformer Template/Settings/Physics Settings")]
+    public class PlatformerPhysicsSettings : ScriptableObject
     {
-        [BoxGroup("Basic Physics")]
-        [LabelText("重力（-9.81f標準）"), Range(-30f, 0f)]
-        [SerializeField] private float gravity = -9.81f;
+        [Header("Jump Physics")]
+        [SerializeField, Range(1f, 50f)] private float _jumpForce = 12f;
+        [SerializeField, Range(0.1f, 5f)] private float _jumpHeight = 2.5f;
+        [SerializeField, Range(0.1f, 2f)] private float _timeToJumpApex = 0.4f;
+        [SerializeField, Range(1, 5)] private int _maxJumpCount = 2; // Double jump
+        [SerializeField] private bool _variableJumpHeight = true;
+        [SerializeField, Range(0.1f, 1f)] private float _jumpCutoff = 0.5f;
 
-        [LabelText("ジャンプ力"), Range(5f, 20f)]
-        [SerializeField] private float jumpForce = 12f;
+        [Header("Gravity & Fall")]
+        [SerializeField, Range(0.5f, 10f)] private float _gravityScale = 3f;
+        [SerializeField, Range(1f, 10f)] private float _fallMultiplier = 2.5f;
+        [SerializeField, Range(1f, 5f)] private float _lowJumpMultiplier = 2f;
+        [SerializeField, Range(5f, 50f)] private float _maxFallSpeed = 25f;
 
-        [LabelText("最大ジャンプ回数"), Range(1, 3)]
-        [SerializeField] private int maxJumps = 2;
+        [Header("Movement")]
+        [SerializeField, Range(1f, 20f)] private float _moveSpeed = 8f;
+        [SerializeField, Range(0.1f, 2f)] private float _acceleration = 1.2f;
+        [SerializeField, Range(0.1f, 2f)] private float _deceleration = 1.5f;
+        [SerializeField, Range(0f, 1f)] private float _airControl = 0.8f;
 
-        [BoxGroup("Advanced Physics")]
-        [LabelText("落下時重力倍率"), Range(1f, 5f)]
-        [SerializeField] private float fallGravityMultiplier = 2.5f;
+        [Header("Ground Detection")]
+        [SerializeField, Range(0.01f, 1f)] private float _groundCheckDistance = 0.2f;
+        [SerializeField, Range(0.01f, 0.5f)] private float _groundCheckRadius = 0.3f;
+        [SerializeField] private LayerMask _groundLayerMask = 1;
+        [SerializeField, Range(0f, 1f)] private float _coyoteTime = 0.2f; // Grace period after leaving ground
+        [SerializeField, Range(0f, 1f)] private float _jumpBufferTime = 0.2f; // Early jump input buffer
 
-        [LabelText("低ジャンプ時重力倍率"), Range(1f, 5f)]
-        [SerializeField] private float lowJumpGravityMultiplier = 2f;
+        [Header("Wall Physics")]
+        [SerializeField] private bool _enableWallJump = true;
+        [SerializeField, Range(1f, 20f)] private float _wallJumpForce = 10f;
+        [SerializeField, Range(0f, 2f)] private float _wallSlideSpeed = 2f;
+        [SerializeField, Range(0.01f, 1f)] private float _wallCheckDistance = 0.6f;
+        [SerializeField] private LayerMask _wallLayerMask = 1;
 
-        [LabelText("ターミナル速度"), Range(10f, 50f)]
-        [SerializeField] private float terminalVelocity = 30f;
+        [Header("Performance Settings")]
+        [SerializeField, Range(10, 120)] private int _physicsUpdateRate = 60; // FPS for physics
+        [SerializeField] private bool _enablePhysicsOptimization = true;
+        [SerializeField] private bool _useFixedDeltaTime = true;
 
-        [BoxGroup("Coyote Time & Jump Buffer")]
-        [LabelText("コヨーテタイム有効")]
-        [SerializeField] private bool enableCoyoteTime = true;
+        [Header("Debug Settings")]
+        [SerializeField] private bool _showDebugGizmos = true;
+        [SerializeField] private Color _groundCheckColor = Color.green;
+        [SerializeField] private Color _wallCheckColor = Color.red;
 
-        [LabelText("コヨーテタイム時間"), Range(0.05f, 0.5f)]
-        [ShowIf("enableCoyoteTime")]
-        [SerializeField] private float coyoteTime = 0.15f;
+        // 計算済みプロパティ（パフォーマンス最適化）
+        private float _calculatedGravity;
+        private float _calculatedJumpVelocity;
+        private bool _isDirty = true;
 
-        [LabelText("ジャンプバッファ有効")]
-        [SerializeField] private bool enableJumpBuffer = true;
+        // プロパティ公開（ServiceLocator経由アクセス）
+        public float JumpForce => _jumpForce;
+        public float JumpHeight => _jumpHeight;
+        public float TimeToJumpApex => _timeToJumpApex;
+        public int MaxJumpCount => _maxJumpCount;
+        public bool VariableJumpHeight => _variableJumpHeight;
+        public float JumpCutoff => _jumpCutoff;
 
-        [LabelText("ジャンプバッファ時間"), Range(0.05f, 0.5f)]
-        [ShowIf("enableJumpBuffer")]
-        [SerializeField] private float jumpBufferTime = 0.2f;
+        public float GravityScale => _gravityScale;
+        public float FallMultiplier => _fallMultiplier;
+        public float LowJumpMultiplier => _lowJumpMultiplier;
+        public float MaxFallSpeed => _maxFallSpeed;
 
-        [BoxGroup("Wall Physics")]
-        [LabelText("壁ジャンプ有効")]
-        [SerializeField] private bool enableWallJump = true;
+        public float MoveSpeed => _moveSpeed;
+        public float Acceleration => _acceleration;
+        public float Deceleration => _deceleration;
+        public float AirControl => _airControl;
 
-        [LabelText("壁ジャンプ力"), Range(5f, 20f)]
-        [ShowIf("enableWallJump")]
-        [SerializeField] private float wallJumpForce = 10f;
+        public float GroundCheckDistance => _groundCheckDistance;
+        public float GroundCheckRadius => _groundCheckRadius;
+        public LayerMask GroundLayerMask => _groundLayerMask;
+        public float CoyoteTime => _coyoteTime;
+        public float JumpBufferTime => _jumpBufferTime;
 
-        [LabelText("壁滑り有効")]
-        [SerializeField] private bool enableWallSlide = true;
+        public bool EnableWallJump => _enableWallJump;
+        public float WallJumpForce => _wallJumpForce;
+        public float WallSlideSpeed => _wallSlideSpeed;
+        public float WallCheckDistance => _wallCheckDistance;
+        public LayerMask WallLayerMask => _wallLayerMask;
 
-        [LabelText("壁滑り速度"), Range(1f, 10f)]
-        [ShowIf("enableWallSlide")]
-        [SerializeField] private float wallSlideSpeed = 3f;
+        public int PhysicsUpdateRate => _physicsUpdateRate;
+        public bool EnablePhysicsOptimization => _enablePhysicsOptimization;
+        public bool UseFixedDeltaTime => _useFixedDeltaTime;
 
-        [BoxGroup("Ground Detection")]
-        [LabelText("地面レイヤーマスク")]
-        [SerializeField] private LayerMask groundLayerMask = 1;
+        public bool ShowDebugGizmos => _showDebugGizmos;
+        public Color GroundCheckColor => _groundCheckColor;
+        public Color WallCheckColor => _wallCheckColor;
 
-        [LabelText("地面検知半径"), Range(0.1f, 1f)]
-        [SerializeField] private float groundCheckRadius = 0.3f;
-
-        [LabelText("地面検知オフセット")]
-        [SerializeField] private Vector2 groundCheckOffset = new Vector2(0f, -1f);
-
-        [BoxGroup("Optimization")]
-        [LabelText("物理更新頻度"), Range(30, 120)]
-        [SerializeField] private int physicsUpdateRate = 60;
-
-        [LabelText("睡眠しきい値"), Range(0.1f, 2f)]
-        [SerializeField] private float sleepThreshold = 0.5f;
-
-        #region Public Properties
-        public float Gravity => gravity;
-        public float JumpForce => jumpForce;
-        public int MaxJumps => maxJumps;
-        public float FallGravityMultiplier => fallGravityMultiplier;
-        public float LowJumpGravityMultiplier => lowJumpGravityMultiplier;
-        public float TerminalVelocity => terminalVelocity;
-        public bool EnableCoyoteTime => enableCoyoteTime;
-        public float CoyoteTime => coyoteTime;
-        public bool EnableJumpBuffer => enableJumpBuffer;
-        public float JumpBufferTime => jumpBufferTime;
-        public bool EnableWallJump => enableWallJump;
-        public float WallJumpForce => wallJumpForce;
-        public bool EnableWallSlide => enableWallSlide;
-        public float WallSlideSpeed => wallSlideSpeed;
-        public LayerMask GroundLayerMask => groundLayerMask;
-        public float GroundCheckRadius => groundCheckRadius;
-        public Vector2 GroundCheckOffset => groundCheckOffset;
-        public int PhysicsUpdateRate => physicsUpdateRate;
-        public float SleepThreshold => sleepThreshold;
-        #endregion
-
-        #region Initialization & Validation
-        public void Initialize()
+        /// <summary>
+        /// 物理演算計算済みプロパティ：パフォーマンス最適化
+        /// リアルタイム計算回避のため事前計算結果を使用
+        /// </summary>
+        public float CalculatedGravity
         {
-            // 物理設定の妥当性確認
-            gravity = Mathf.Clamp(gravity, -30f, 0f);
-            jumpForce = Mathf.Clamp(jumpForce, 5f, 20f);
-            maxJumps = Mathf.Clamp(maxJumps, 1, 3);
-
-            Debug.Log($"[PlatformerPhysics] Initialized: Gravity={gravity}, Jump={jumpForce}, MaxJumps={maxJumps}");
+            get
+            {
+                if (_isDirty) RecalculatePhysics();
+                return _calculatedGravity;
+            }
         }
 
-        public bool Validate()
+        public float CalculatedJumpVelocity
+        {
+            get
+            {
+                if (_isDirty) RecalculatePhysics();
+                return _calculatedJumpVelocity;
+            }
+        }
+
+        /// <summary>
+        /// 物理演算値の事前計算：60FPS安定動作保証
+        /// </summary>
+        private void RecalculatePhysics()
+        {
+            // gravity = 2 * jumpHeight / timeToJumpApex^2
+            _calculatedGravity = -(2 * _jumpHeight) / Mathf.Pow(_timeToJumpApex, 2);
+
+            // jumpVelocity = gravity * timeToJumpApex
+            _calculatedJumpVelocity = Mathf.Abs(_calculatedGravity) * _timeToJumpApex;
+
+            _isDirty = false;
+        }
+
+        /// <summary>
+        /// 設定値検証：起動時整合性確認
+        /// </summary>
+        public bool ValidateSettings()
         {
             bool isValid = true;
 
-            // 重力検証
-            if (gravity >= 0)
+            // Jump設定の妥当性
+            if (_jumpForce <= 0 || _jumpHeight <= 0 || _timeToJumpApex <= 0)
             {
-                Debug.LogError("[PlatformerPhysics] Gravity must be negative");
+                Debug.LogError("Invalid jump settings: Force, Height, and TimeToApex must be positive.");
                 isValid = false;
             }
 
-            // ジャンプ力検証
-            if (jumpForce <= 0)
+            // Movement設定の妥当性
+            if (_moveSpeed <= 0 || _acceleration <= 0 || _deceleration <= 0)
             {
-                Debug.LogError("[PlatformerPhysics] Jump force must be positive");
+                Debug.LogError("Invalid movement settings: Speed, Acceleration, and Deceleration must be positive.");
                 isValid = false;
             }
 
-            // 落下重力倍率検証
-            if (fallGravityMultiplier < 1f)
+            // 物理演算値の再計算
+            if (isValid)
             {
-                Debug.LogError("[PlatformerPhysics] Fall gravity multiplier must be >= 1");
-                isValid = false;
-            }
-
-            // 時間設定検証
-            if (enableCoyoteTime && (coyoteTime <= 0 || coyoteTime > 1f))
-            {
-                Debug.LogError("[PlatformerPhysics] Invalid coyote time duration");
-                isValid = false;
-            }
-
-            if (enableJumpBuffer && (jumpBufferTime <= 0 || jumpBufferTime > 1f))
-            {
-                Debug.LogError("[PlatformerPhysics] Invalid jump buffer time duration");
-                isValid = false;
+                RecalculatePhysics();
             }
 
             return isValid;
         }
 
-        public void ApplyRecommendedSettings()
-        {
-            // 15分ゲームプレイ最適化設定
-            gravity = -12f;                    // やや軽快な重力
-            jumpForce = 14f;                  // 気持ちよいジャンプ感
-            maxJumps = 2;                     // ダブルジャンプ対応
-            fallGravityMultiplier = 2.8f;      // 落下時の重量感
-            lowJumpGravityMultiplier = 2.2f;   // 短押し調整
-            terminalVelocity = 25f;           // 適度な落下上限
-
-            enableCoyoteTime = true;
-            coyoteTime = 0.12f;               // プレイヤーフレンドリー
-            enableJumpBuffer = true;
-            jumpBufferTime = 0.15f;           // 入力受付猶予
-
-            enableWallJump = true;
-            wallJumpForce = 12f;              // ジャンプと同等
-            enableWallSlide = true;
-            wallSlideSpeed = 2.5f;            // 制御可能な滑り
-
-            groundCheckRadius = 0.25f;        // 適度な検知範囲
-            groundCheckOffset = new Vector2(0f, -0.9f);
-
-            physicsUpdateRate = 60;           // 標準更新頻度
-            sleepThreshold = 0.3f;           // パフォーマンス最適化
-
-            Debug.Log("[PlatformerPhysics] Applied recommended settings for 15-minute gameplay");
-        }
-        #endregion
-
-        #region Physics Calculations
         /// <summary>
-        /// 現在の重力値を計算（状況に応じた重力倍率適用）
+        /// デフォルト設定：Learn & Grow価値実現
+        /// 初心者向け推奨値の適用
         /// </summary>
-        /// <param name="isRising">上昇中かどうか</param>
-        /// <param name="isLowJump">低ジャンプかどうか</param>
-        /// <returns>適用重力値</returns>
-        public float CalculateCurrentGravity(bool isRising, bool isLowJump)
+        public void SetToDefault()
         {
-            if (isRising && isLowJump)
-            {
-                return gravity * lowJumpGravityMultiplier;
-            }
-            else if (!isRising)
-            {
-                return gravity * fallGravityMultiplier;
-            }
-            return gravity;
+            _jumpForce = 12f;
+            _jumpHeight = 2.5f;
+            _timeToJumpApex = 0.4f;
+            _maxJumpCount = 2;
+            _variableJumpHeight = true;
+            _jumpCutoff = 0.5f;
+
+            _gravityScale = 3f;
+            _fallMultiplier = 2.5f;
+            _lowJumpMultiplier = 2f;
+            _maxFallSpeed = 25f;
+
+            _moveSpeed = 8f;
+            _acceleration = 1.2f;
+            _deceleration = 1.5f;
+            _airControl = 0.8f;
+
+            _groundCheckDistance = 0.2f;
+            _groundCheckRadius = 0.3f;
+            _groundLayerMask = 1;
+            _coyoteTime = 0.2f;
+            _jumpBufferTime = 0.2f;
+
+            _enableWallJump = true;
+            _wallJumpForce = 10f;
+            _wallSlideSpeed = 2f;
+            _wallCheckDistance = 0.6f;
+            _wallLayerMask = 1;
+
+            _physicsUpdateRate = 60;
+            _enablePhysicsOptimization = true;
+            _useFixedDeltaTime = true;
+
+            _showDebugGizmos = true;
+            _groundCheckColor = Color.green;
+            _wallCheckColor = Color.red;
+
+            _isDirty = true;
+            Debug.Log("PlatformerPhysicsSettings set to default values.");
         }
 
         /// <summary>
-        /// ジャンプ高度の計算
+        /// パフォーマンス最適化設定：60FPS安定動作
         /// </summary>
-        /// <param name="jumpNumber">ジャンプ回数（1-3）</param>
-        /// <returns>予想ジャンプ高度</returns>
-        public float CalculateJumpHeight(int jumpNumber = 1)
+        public void OptimizeForPerformance()
         {
-            float effectiveJumpForce = jumpForce;
+            _physicsUpdateRate = 60;
+            _enablePhysicsOptimization = true;
+            _useFixedDeltaTime = true;
+            _showDebugGizmos = false; // デバッグ描画無効化
 
-            // 複数回ジャンプの場合は若干減衰
-            if (jumpNumber > 1)
-            {
-                effectiveJumpForce *= Mathf.Pow(0.9f, jumpNumber - 1);
-            }
+            // 計算処理軽減設定
+            _groundCheckDistance = 0.15f; // 少し短縮
+            _wallCheckDistance = 0.5f; // 少し短縮
 
-            // v² = u² + 2as より高度計算
-            return (effectiveJumpForce * effectiveJumpForce) / (2 * Mathf.Abs(gravity));
+            _isDirty = true;
+            Debug.Log("PlatformerPhysicsSettings optimized for 60FPS performance.");
         }
 
         /// <summary>
-        /// 壁ジャンプベクトルの計算
+        /// 学習向け設定：わかりやすい物理挙動
         /// </summary>
-        /// <param name="wallNormal">壁の法線ベクトル</param>
-        /// <returns>壁ジャンプベクトル</returns>
-        public Vector2 CalculateWallJumpVector(Vector2 wallNormal)
+        public void OptimizeForLearning()
         {
-            if (!enableWallJump) return Vector2.zero;
+            // より予測しやすい物理挙動
+            _jumpHeight = 3f; // 少し高く
+            _timeToJumpApex = 0.5f; // 少しゆっくり
+            _fallMultiplier = 2f; // 落下をマイルドに
+            _airControl = 1f; // 空中制御を完全に
 
-            // 壁から離れる方向 + 上方向
-            Vector2 awayFromWall = wallNormal.normalized;
-            Vector2 upward = Vector2.up;
+            // 初心者に優しい設定
+            _coyoteTime = 0.3f; // 猶予時間延長
+            _jumpBufferTime = 0.3f; // 入力バッファ延長
+            _variableJumpHeight = true; // 可変ジャンプ有効
 
-            // 45度角度での壁ジャンプ
-            Vector2 jumpDirection = (awayFromWall + upward).normalized;
-            return jumpDirection * wallJumpForce;
+            _showDebugGizmos = true; // 学習用ビジュアル有効
+
+            _isDirty = true;
+            Debug.Log("PlatformerPhysicsSettings optimized for learning experience.");
         }
-        #endregion
 
-        #region Editor Support
+        /// <summary>
+        /// 値変更時の自動再計算トリガー
+        /// </summary>
+        private void OnValidate()
+        {
+            _isDirty = true;
+        }
+
 #if UNITY_EDITOR
-        [Button("Test Jump Height Calculation")]
-        [PropertySpace(10)]
-        public void TestJumpHeightCalculation()
+        /// <summary>
+        /// エディタ用デバッグ情報表示
+        /// </summary>
+        [ContextMenu("Show Calculated Values")]
+        private void ShowCalculatedValues()
         {
-            for (int i = 1; i <= maxJumps; i++)
-            {
-                float height = CalculateJumpHeight(i);
-                Debug.Log($"Jump {i}: Height = {height:F2}m");
-            }
-        }
-
-        [Button("Validate Physics Settings")]
-        public void EditorValidate()
-        {
-            bool isValid = Validate();
-            string message = isValid ?
-                "✅ Physics settings are valid!" :
-                "❌ Physics settings validation failed!";
-            Debug.Log($"[PlatformerPhysics] {message}");
+            RecalculatePhysics();
+            Debug.Log("=== Calculated Physics Values ===");
+            Debug.Log($"Calculated Gravity: {_calculatedGravity:F2}");
+            Debug.Log($"Calculated Jump Velocity: {_calculatedJumpVelocity:F2}");
+            Debug.Log($"Max Jump Height: {_jumpHeight:F2}m");
+            Debug.Log($"Time to Apex: {_timeToJumpApex:F2}s");
         }
 #endif
-        #endregion
     }
 }
