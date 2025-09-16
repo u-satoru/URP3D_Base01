@@ -6,41 +6,59 @@
   <component name="ChangeListManager">
     <list default="true" id="bc3aea34-f43d-4ce2-ab23-b05a4ab88bf8" name="変更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.URP3D_Base01/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.URP3D_Base01/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Camera/PlatformerCameraController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Camera/PlatformerCameraController.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/PlatformerTemplateConfiguration.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/PlatformerTemplateConfiguration.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/PlatformerTemplateManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/PlatformerTemplateManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Player/PlatformerPlayerController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Player/PlatformerPlayerController.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerCameraSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerCameraSettings.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerCollectibleSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerCollectibleSettings.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerLearningSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerLearningSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerPhysicsSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerPhysicsSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerPlatformSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerPlatformSettings.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerPlayerSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/Settings/PlatformerPlayerSettings.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/UI/PlatformerUIManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/UI/PlatformerUIManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/AI/StealthAICoordinator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/AI/StealthAICoordinator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthAIConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthAIConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthEnvironmentConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthEnvironmentConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthUIConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthUIConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Environment/StealthEnvironmentManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Environment/StealthEnvironmentManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Gameplay/StealthGameplayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Gameplay/StealthGameplayManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Mechanics/StealthMechanics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Mechanics/StealthMechanics.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Mechanics/StealthMechanicsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Mechanics/StealthMechanicsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Results/platformer-template-compilation-verification.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Results/platformer-template-compilation-verification.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Results/stealth-template-compile-check.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Results/stealth-template-compile-check.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/FPS_Template_Documentation.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/FPS_Template_Documentation.md.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/AI.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/AI/FPSAIIntegration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/AI/FPSAIIntegration.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/AI/FPSEnemyController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/AI/FPSEnemyController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Camera.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPSCameraController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPSCameraController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPSMouseLook.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Camera/FPSMouseLook.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Combat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Combat/FPSHealthSystem.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Combat/FPSHealthSystem.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/FPSTemplateConfiguration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/FPSTemplateConfiguration.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/FPSTemplateManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/FPSTemplateManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Player.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Player/FPSPlayerController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Player/FPSPlayerController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/UI.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/UI/FPSUIManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/UI/FPSUIManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Weapons.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Weapons/Commands.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Weapons/Commands/ReloadCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Weapons/Commands/ReloadCommand.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Weapons/Commands/ShootCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Weapons/Commands/ShootCommand.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Weapons/FPSWeaponManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Weapons/FPSWeaponManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Weapons/IWeapon.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Weapons/IWeapon.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Weapons/WeaponData.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Weapons/WeaponData.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Weapons/WeaponSystem.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/Weapons/WeaponSystem.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/asterivo.Unity60.Features.Templates.FPS.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/asterivo.Unity60.Features.Templates.FPS.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Results/eventlistener-fixes-verification.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Results/eventlistener-fixes-verification.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CLAUDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/CLAUDE.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DpaMonitoringSettings">
+    <option name="firstShow" value="false" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -61,6 +79,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "Unity エディターにアタッチ.Unity エディターにアタッチ.executor": "Debug",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
@@ -97,13 +116,15 @@
       <option name="MIXED_MODE_DEBUG" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="Unity エディターにアタッチ" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Unity エディターにアタッチ" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="75756">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="75756" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list />
+        <list>
+          <MonoRuntime />
+        </list>
       </option>
       <option name="selectedOptions">
         <list />
@@ -142,6 +163,7 @@
       <workItem from="1757990489239" duration="661000" />
       <workItem from="1757991180705" duration="594000" />
       <workItem from="1758001192915" duration="568000" />
+      <workItem from="1758024517556" duration="3511000" />
     </task>
     <servers />
   </component>

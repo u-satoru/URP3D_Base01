@@ -74,5 +74,6 @@
             "source": "PowerShell",
             "args": ["-NoExit", "-Command", "chcp 65001 > $null; Clear-Host"]
         }
-    }
+    },
+    "dotnet.preferCSharpExtension": true
 }
