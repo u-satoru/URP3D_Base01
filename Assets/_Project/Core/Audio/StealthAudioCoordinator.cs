@@ -925,6 +925,75 @@ namespace asterivo.Unity60.Core.Audio
             }
         }
 
+        /// <summary>
+        /// プレイヤーが隠蔽状態に入った時の音響調整
+        /// </summary>
+        /// <param name="concealmentLevel">隠蔽レベル (0.0 - 1.0)</param>
+        public void OnPlayerConcealed(float concealmentLevel)
+        {
+            if (!IsInitialized)
+            {
+                var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                if (eventLogger != null)
+                {
+                    eventLogger.LogWarning("[StealthAudioCoordinator] System not initialized for OnPlayerConcealed");
+                }
+                return;
+            }
+
+            // 隠蔽レベルに応じたステルス音響調整
+            AdjustStealthAudio(concealmentLevel);
+
+            // マスキング効果の適用
+            ApplyAudioMasking(concealmentLevel * 0.8f);
+
+            // ステルスモードの強制有効化
+            SetOverrideStealthMode(true);
+
+            if (FeatureFlags.EnableDebugLogging)
+            {
+                var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                if (eventLogger != null)
+                {
+                    eventLogger.Log($"[StealthAudioCoordinator] Player concealed with level: {concealmentLevel:F2}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// プレイヤーが露出状態になった時の音響調整
+        /// </summary>
+        public void OnPlayerExposed()
+        {
+            if (!IsInitialized)
+            {
+                var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                if (eventLogger != null)
+                {
+                    eventLogger.LogWarning("[StealthAudioCoordinator] System not initialized for OnPlayerExposed");
+                }
+                return;
+            }
+
+            // ステルス音響調整を解除
+            AdjustStealthAudio(0f);
+
+            // マスキング効果を解除
+            ApplyAudioMasking(0f);
+
+            // ステルスモードオーバーライドを解除
+            ClearStealthModeOverride();
+
+            if (FeatureFlags.EnableDebugLogging)
+            {
+                var eventLogger = ServiceLocator.GetService<IEventLogger>();
+                if (eventLogger != null)
+                {
+                    eventLogger.Log("[StealthAudioCoordinator] Player exposed, audio adjustments cleared");
+                }
+            }
+        }
+
         #endregion
 
         #endregion

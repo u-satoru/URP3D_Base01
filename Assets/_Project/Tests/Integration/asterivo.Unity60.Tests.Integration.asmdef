@@ -15,7 +15,10 @@
         "asterivo.Unity60.Features.Templates.ActionRPG",
         "asterivo.Unity60.Features.Templates.Common",
         "asterivo.Unity60.Player",
-        "Unity.Timeline"
+        "Unity.Timeline",
+        "asterivo.Unity60.Camera",
+        "asterivo.Unity60.Core.Debug",
+        "asterivo.Unity60.Core.Lifecycle"
     ],
     "includePlatforms": [
         "Editor"

@@ -52,7 +52,7 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.UI
         
         [Header("ミニマップ")]
         [SerializeField] private GameObject minimapContainer;
-        [SerializeField] private Camera minimapCamera;
+        [SerializeField] private UnityEngine.Camera minimapCamera;
         [SerializeField] private RectTransform minimapFrame;
         [SerializeField] private bool enableMinimap = true;
         
@@ -335,7 +335,7 @@ namespace asterivo.Unity60.Features.Templates.ActionRPG.UI
         {
             if (damageNumberPrefab == null || damageNumberParent == null) return;
             
-            Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldPosition + damageNumberOffset);
+            Vector3 screenPosition = UnityEngine.Camera.main.WorldToScreenPoint(worldPosition + damageNumberOffset);
             
             var damageNumberObj = Instantiate(damageNumberPrefab, damageNumberParent);
             var rectTransform = damageNumberObj.GetComponent<RectTransform>();

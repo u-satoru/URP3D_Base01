@@ -1,5 +1,6 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Commands;
+using asterivo.Unity60.Core.Data;
 using asterivo.Unity60.Features.AI.Visual;
 
 namespace asterivo.Unity60.Features.Templates.Stealth

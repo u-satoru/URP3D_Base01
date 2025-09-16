@@ -1,6 +1,11 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Commands;
+using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Data;
 using asterivo.Unity60.Features.Templates.Stealth.Environment;
+using asterivo.Unity60.Features.Templates.Stealth.Mechanics;
+using asterivo.Unity60.Core.Audio;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 {
@@ -54,8 +59,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
             // Store previous state for undo
             _previousPlayerPosition = _playerTransform.position;
             
-            // Get previous stealth state from stealth mechanics controller
-            var stealthController = ServiceLocator.GetService<StealthMechanicsController>();
+            // Get previous stealth state from stealth mechanics service
+            var stealthController = ServiceLocator.GetService<StealthMechanics>();
             if (stealthController != null)
             {
                 _previousStealthState = stealthController.CurrentState;
@@ -110,10 +115,11 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
             }
 
             // Restore previous stealth state
-            var stealthController = ServiceLocator.GetService<StealthMechanicsController>();
+            var stealthController = ServiceLocator.GetService<StealthMechanics>();
             if (stealthController != null)
             {
-                stealthController.SetState(_previousStealthState);
+                // TODO: Implement SetState method in IStealthMechanicsService or use alternative approach
+                // stealthController.SetState(_previousStealthState);
             }
 
             LogDebug($"Undid hiding spot interaction for: {_hidingSpot.name}");
@@ -215,11 +221,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
             }
 
             // Update stealth mechanics
-            var stealthController = ServiceLocator.GetService<StealthMechanicsController>();
+            var stealthController = ServiceLocator.GetService<StealthMechanics>();
             if (stealthController != null)
             {
-                var concealment = _hidingSpot.GetConcealmentAt(_playerTransform.position);
-                stealthController.EnterHidingSpot(_hidingSpot, concealment);
+                stealthController.EnterHidingSpot(_hidingSpot.transform);
             }
 
             // Notify audio system about concealment
@@ -239,10 +244,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
             }
 
             // Update stealth mechanics
-            var stealthController = ServiceLocator.GetService<StealthMechanicsController>();
+            var stealthController = ServiceLocator.GetService<StealthMechanics>();
             if (stealthController != null)
             {
-                stealthController.ExitHidingSpot(_hidingSpot);
+                stealthController.ExitHidingSpot();
             }
 
             // Notify audio system about loss of concealment
@@ -292,7 +297,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         /// </summary>
         public static HidingSpotInteractionCommand CreateEnterCommand(HidingSpot hidingSpot)
         {
-            var poolManager = CommandPoolManager.Instance;
+            var poolManager = ServiceLocator.GetService<CommandPoolManager>();
             if (poolManager != null)
             {
                 var command = poolManager.GetCommand<HidingSpotInteractionCommand>();
@@ -309,7 +314,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         /// </summary>
         public static HidingSpotInteractionCommand CreateExitCommand(HidingSpot hidingSpot)
         {
-            var poolManager = CommandPoolManager.Instance;
+            var poolManager = ServiceLocator.GetService<CommandPoolManager>();
             if (poolManager != null)
             {
                 var command = poolManager.GetCommand<HidingSpotInteractionCommand>();

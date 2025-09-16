@@ -261,7 +261,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             var startTime = Time.realtimeSinceStartup;
             
             // Validate all 6 modular settings are properly assigned
-            var settings = new (string name, UnityEngine.Object setting)[]
+            var settings = new (string name, object setting)[]
             {
                 ("Mechanics Config", templateConfig?.MechanicsConfig),
                 ("AI Config", templateConfig?.AIConfig),

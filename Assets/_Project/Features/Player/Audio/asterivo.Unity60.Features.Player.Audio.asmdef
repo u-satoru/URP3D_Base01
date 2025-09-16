@@ -6,7 +6,14 @@
         "asterivo.Unity60.Core.Audio",
         "asterivo.Unity60.Core.Events", 
         "asterivo.Unity60.Player",
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "asterivo.Unity60.Camera",
+        "asterivo.Unity60.Core.Commands",
+        "asterivo.Unity60.Core.Components",
+        "asterivo.Unity60.Core.Debug",
+        "asterivo.Unity60.Core.Lifecycle",
+        "asterivo.Unity60.Core.Services",
+        "asterivo.Unity60.Core.Shared"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

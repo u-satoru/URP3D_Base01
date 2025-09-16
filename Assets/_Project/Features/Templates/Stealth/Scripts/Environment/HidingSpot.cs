@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using asterivo.Unity60.Features.Templates.Stealth.Mechanics;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Environment
 {
@@ -8,12 +9,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
     /// Provides concealment for the player from AI detection
     /// </summary>
     [RequireComponent(typeof(Collider))]
-    public class HidingSpot : MonoBehaviour
+    public class HidingSpot : MonoBehaviour, IHidingSpot
     {
         [Header("Concealment Properties")]
         [SerializeField, Range(0f, 1f)] private float _concealmentLevel = 0.8f;
         [SerializeField] private int _capacity = 1;
         [SerializeField] private float _influenceRadius = 2f;
+        [SerializeField] private string _spotName = "Hiding Spot";
 
         [Header("Interaction Settings")]
         [SerializeField] private bool _requiresInteraction = false;
@@ -32,6 +34,9 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         public bool IsAvailable => _currentOccupants < _capacity;
         public float InfluenceRadius => _influenceRadius;
         public bool RequiresInteraction => _requiresInteraction;
+        
+        // IHidingSpot インターフェース実装
+        public string SpotName => _spotName;
 
         // Events
         public event Action<HidingSpot> OnPlayerEntered;

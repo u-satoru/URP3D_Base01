@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="bc3aea34-f43d-4ce2-ab23-b05a4ab88bf8" name="変更" comment="">
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Core/Audio/StealthAudioCoordinator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Core/Audio/StealthAudioCoordinator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Core/Audio/asterivo.Unity60.Core.Audio.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Core/Audio/asterivo.Unity60.Core.Audio.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Core/Editor/asterivo.Unity60.Core.Editor.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Core/Editor/asterivo.Unity60.Core.Editor.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Core/Services/asterivo.Unity60.Core.Services.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Core/Services/asterivo.Unity60.Core.Services.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/AI/Scripts/asterivo.Unity60.AI.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/AI/Scripts/asterivo.Unity60.AI.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/AI/Visual/asterivo.Unity60.Features.AI.Visual.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/AI/Visual/asterivo.Unity60.Features.AI.Visual.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Camera/Scripts/asterivo.Unity60.Camera.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Camera/Scripts/asterivo.Unity60.Camera.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Player/Audio/asterivo.Unity60.Features.Player.Audio.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Player/Audio/asterivo.Unity60.Features.Player.Audio.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Player/Scripts/States/DetailedPlayerStateMachine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Player/Scripts/States/DetailedPlayerStateMachine.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Player/Scripts/asterivo.Unity60.Player.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Player/Scripts/asterivo.Unity60.Player.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/ActionRPG/Scripts/asterivo.Unity60.Features.Templates.ActionRPG.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/ActionRPG/Scripts/asterivo.Unity60.Features.Templates.ActionRPG.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Adventure/asterivo.Unity60.Features.Templates.Adventure.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Adventure/asterivo.Unity60.Features.Templates.Adventure.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Common/Scripts/asterivo.Unity60.Features.Templates.Common.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Common/Scripts/asterivo.Unity60.Features.Templates.Common.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/asterivo.Unity60.Features.Templates.FPS.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/FPS/Scripts/asterivo.Unity60.Features.Templates.FPS.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/asterivo.Unity60.Features.Templates.Platformer.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Platformer/Scripts/asterivo.Unity60.Features.Templates.Platformer.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthEnvironmentConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthEnvironmentConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthMechanicsConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthMechanicsConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthUIConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthUIConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Data/StealthTypes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Data/StealthTypes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Environment/EnvironmentalElement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Environment/EnvironmentalElement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Environment/HidingSpot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Environment/HidingSpot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Environment/HidingSpotInteractionCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Environment/HidingSpotInteractionCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Environment/StealthEnvironmentManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Environment/StealthEnvironmentManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Events/StealthGameEvents.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Events/StealthGameEvents.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Mechanics/StealthMechanics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/Mechanics/StealthMechanics.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/StealthTemplateManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/StealthTemplateManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/UI/StealthUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/UI/StealthUIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/asterivo.Unity60.Features.Templates.Stealth.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/Stealth/Scripts/asterivo.Unity60.Features.Templates.Stealth.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/Templates/TPS/Scripts/asterivo.Unity60.Features.Templates.TPS.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/Templates/TPS/Scripts/asterivo.Unity60.Features.Templates.TPS.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Features/asterivo.Unity60.Features.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Features/asterivo.Unity60.Features.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Core/Editor/Setup/asterivo.Unity60.Tests.Core.Editor.Setup.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Core/Editor/Setup/asterivo.Unity60.Tests.Core.Editor.Setup.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Core/Editor/asterivo.Unity60.Tests.Core.Editor.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Core/Editor/asterivo.Unity60.Tests.Core.Editor.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Core/Services/asterivo.Unity60.Tests.Core.Services.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Core/Services/asterivo.Unity60.Tests.Core.Services.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Features/AI/Visual/asterivo.Unity60.AI.Visual.Tests.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Features/AI/Visual/asterivo.Unity60.AI.Visual.Tests.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Integration/asterivo.Unity60.Tests.Integration.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Integration/asterivo.Unity60.Tests.Integration.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Performance/asterivo.Unity60.Tests.Performance.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Performance/asterivo.Unity60.Tests.Performance.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Results/servicelocator-using-directive-success.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Results/servicelocator-using-directive-success.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/Runtime/asterivo.Unity60.Tests.Runtime.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/Runtime/asterivo.Unity60.Tests.Runtime.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Project/Tests/asterivo.Unity60.Tests.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Project/Tests/asterivo.Unity60.Tests.asmdef" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="32kgCAxk9QyTygjQJ8K32CpBrMQ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Unity エディターにアタッチ.Unity エディターにアタッチ">
+    <configuration name="ユニットテスト (バッチモード)" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Unity.exe" />
+      <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath D:\UnityProjects\URP3D_Base01 -testResults Logs/results.xml -logFile Logs/Editor.log -testPlatform EditMode -debugCodeOptimization" />
+      <option name="WORKING_DIRECTORY" value="D:\UnityProjects\URP3D_Base01" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="ENV_FILE_PATHS" value="" />
+      <option name="REDIRECT_INPUT_PATH" value="" />
+      <option name="PTY_MODE" value="Auto" />
+      <option name="MIXED_MODE_DEBUG" value="0" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unity の起動" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Unity.exe" />
+      <option name="PROGRAM_PARAMETERS" value="-projectPath D:\UnityProjects\URP3D_Base01 -debugCodeOptimization" />
+      <option name="WORKING_DIRECTORY" value="D:\UnityProjects\URP3D_Base01" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="ENV_FILE_PATHS" value="" />
+      <option name="REDIRECT_INPUT_PATH" value="" />
+      <option name="PTY_MODE" value="Auto" />
+      <option name="MIXED_MODE_DEBUG" value="0" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unity エディターにアタッチ" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="runtimes">
+        <list />
+      </option>
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="useMixedMode" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unity エディターにアタッチして再生" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="runtimes">
+        <list />
+      </option>
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="useMixedMode" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="デバイスにアタッチ" type="UnityDevicePlayer" factoryName="UnityAttachToDevicePlayer">
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="デフォルトタスク">
+      <changelist id="bc3aea34-f43d-4ce2-ab23-b05a4ab88bf8" name="変更" comment="" />
+      <created>1757969855342</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1757969855342</updated>
+      <workItem from="1757969860010" duration="180000" />
+      <workItem from="1757970071724" duration="67000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
+  <component name="UnityProjectDiscoverer">
+    <option name="hasUnityReference" value="true" />
+    <option name="unityProject" value="true" />
+    <option name="unityProjectFolder" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.OperationCanceledException" breakIfHandledByOtherCode="false" displayValue="System.OperationCanceledException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.Tasks.TaskCanceledException" breakIfHandledByOtherCode="false" displayValue="System.Threading.Tasks.TaskCanceledException" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

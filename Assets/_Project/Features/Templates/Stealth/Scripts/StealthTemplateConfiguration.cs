@@ -12,6 +12,14 @@ namespace asterivo.Unity60.Features.Templates.Stealth
     [CreateAssetMenu(menuName = "Templates/Stealth/StealthTemplateConfig")]
     public class StealthTemplateConfig : ScriptableObject
     {
+        [Header("Template Identity")]
+        [SerializeField] private string _templateName = "Stealth Template";
+        [SerializeField] private string _templateVersion = "1.0.0";
+
+        [Header("Target Metrics")]
+        [SerializeField] private float _targetGameplayDuration = 15.0f; // 15-minute gameplay target
+        [SerializeField] private float _estimatedLearningTime = 12.0f; // 12 hours learning target (70% reduction from 40 hours)
+
         [Header("Core Stealth Systems")]
         [SerializeField] private StealthMechanicsConfig _mechanics;
         [SerializeField] private StealthAIConfig _aiConfiguration;
@@ -32,6 +40,12 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         [SerializeField] private GameEvent _onDetectionLevelChanged;
         [SerializeField] private GameEvent _onEnvironmentInteraction;
 
+        // Template Identity Properties
+        public string templateName => _templateName;
+        public string templateVersion => _templateVersion;
+        public float targetGameplayDuration => _targetGameplayDuration;
+        public float estimatedLearningTime => _estimatedLearningTime;
+
         // Properties with validation
         public StealthMechanicsConfig Mechanics => _mechanics;
         public StealthAIConfig AIConfiguration => _aiConfiguration;
@@ -41,6 +55,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         public StealthTutorialConfig TutorialConfig => _tutorialConfig;
         public StealthProgressionConfig ProgressionConfig => _progressionConfig;
         public StealthPerformanceConfig PerformanceConfig => _performanceConfig;
+
+        // Aliases for backward compatibility
+        public StealthMechanicsConfig MechanicsConfig => _mechanics;
+        public StealthAIConfig AIConfig => _aiConfiguration;
+        public StealthEnvironmentConfig EnvironmentConfig => _environment;
+        public StealthAudioConfig AudioConfig => _audioSettings;
+        public StealthUIConfig UIConfig => _uiSettings;
 
         // Event Channel Properties
         public GameEvent OnStealthStateChanged => _onStealthStateChanged;

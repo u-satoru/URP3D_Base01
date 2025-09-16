@@ -22,7 +22,8 @@
         "Unity.TextMeshPro",
         "Unity.Mathematics",
         "Unity.Collections",
-        "Sirenix.OdinInspector.Attributes"
+        "Sirenix.OdinInspector.Attributes",
+        "asterivo.Unity60.Core.Lifecycle"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

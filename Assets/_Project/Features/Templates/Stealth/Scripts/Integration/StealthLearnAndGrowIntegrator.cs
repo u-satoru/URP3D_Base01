@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Core.Data;
 using asterivo.Unity60.Features.Templates.Stealth.Mechanics;
 using asterivo.Unity60.Features.Templates.Stealth.AI;
 using asterivo.Unity60.Features.Templates.Stealth.Environment;
@@ -188,23 +189,26 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Integration
             // StealthMechanicsController Events
             if (_mechanicsController != null)
             {
-                _mechanicsController.OnStealthStateChanged += HandleStealthStateChanged;
-                _mechanicsController.OnSuccessfulStealth += HandleSuccessfulStealthAction;
+                // TODO: Implement proper event system integration once events are implemented
+                // _mechanicsController.OnStealthStateChanged += HandleStealthStateChanged;
+                // _mechanicsController.OnSuccessfulStealth += HandleSuccessfulStealthAction;
             }
             
             // StealthAICoordinator Events
             if (_aiCoordinator != null)
             {
-                _aiCoordinator.OnPlayerDetected += HandlePlayerDetected;
-                _aiCoordinator.OnPlayerLost += HandlePlayerLost;
-                _aiCoordinator.OnCooperativeDetection += HandleCooperativeDetection;
+                // TODO: Implement proper AI coordinator event integration
+                // _aiCoordinator.OnPlayerDetected += HandlePlayerDetected;
+                // _aiCoordinator.OnPlayerLost += HandlePlayerLost;
+                // _aiCoordinator.OnCooperativeDetection += HandleCooperativeDetection;
             }
             
             // StealthEnvironmentManager Events
             if (_environmentManager != null)
             {
-                _environmentManager.OnHidingSpotEntered += HandleHidingSpotUsage;
-                _environmentManager.OnEnvironmentalInteraction += HandleEnvironmentalInteraction;
+                // TODO: Implement proper environment manager event integration
+                // _environmentManager.OnHidingSpotEntered += HandleHidingSpotUsage;
+                // _environmentManager.OnEnvironmentalInteraction += HandleEnvironmentalInteraction;
             }
         }
         
@@ -212,21 +216,24 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Integration
         {
             if (_mechanicsController != null)
             {
-                _mechanicsController.OnStealthStateChanged -= HandleStealthStateChanged;
-                _mechanicsController.OnSuccessfulStealth -= HandleSuccessfulStealthAction;
+                // TODO: Implement proper event system unregistration once events are implemented
+                // _mechanicsController.OnStealthStateChanged -= HandleStealthStateChanged;
+                // _mechanicsController.OnSuccessfulStealth -= HandleSuccessfulStealthAction;
             }
             
             if (_aiCoordinator != null)
             {
-                _aiCoordinator.OnPlayerDetected -= HandlePlayerDetected;
-                _aiCoordinator.OnPlayerLost -= HandlePlayerLost;
-                _aiCoordinator.OnCooperativeDetection -= HandleCooperativeDetection;
+                // TODO: Implement proper AI coordinator event unregistration
+                // _aiCoordinator.OnPlayerDetected -= HandlePlayerDetected;
+                // _aiCoordinator.OnPlayerLost -= HandlePlayerLost;
+                // _aiCoordinator.OnCooperativeDetection -= HandleCooperativeDetection;
             }
             
             if (_environmentManager != null)
             {
-                _environmentManager.OnHidingSpotEntered -= HandleHidingSpotUsage;
-                _environmentManager.OnEnvironmentalInteraction -= HandleEnvironmentalInteraction;
+                // TODO: Implement proper environment manager event unregistration
+                // _environmentManager.OnHidingSpotEntered -= HandleHidingSpotUsage;
+                // _environmentManager.OnEnvironmentalInteraction -= HandleEnvironmentalInteraction;
             }
         }
         

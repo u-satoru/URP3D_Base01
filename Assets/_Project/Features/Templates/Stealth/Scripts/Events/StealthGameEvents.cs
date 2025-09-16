@@ -1,5 +1,6 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Core.Data;
 using asterivo.Unity60.Features.Templates.Stealth.Configuration;
 using asterivo.Unity60.Features.Templates.Stealth.Data;
 
@@ -269,6 +270,16 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Events
             {
                 Debug.Log("✅ 15-minute gameplay readiness achieved!");
             }
+        }
+
+        /// <summary>
+        /// Debug logging helper method
+        /// </summary>
+        private void LogDebug(string message)
+        {
+            #if UNITY_EDITOR || DEVELOPMENT_BUILD
+            Debug.Log(message);
+            #endif
         }
     }
 

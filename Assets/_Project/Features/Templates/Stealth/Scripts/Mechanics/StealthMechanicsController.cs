@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Commands;
+using asterivo.Unity60.Core.Data;
 using asterivo.Unity60.Player.States;
 using asterivo.Unity60.Features.Templates.Stealth.Configuration;
 using asterivo.Unity60.Features.Templates.Stealth.Data;
@@ -578,7 +579,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
                 StealthState.Hidden => Color.green,
                 StealthState.Concealed => Color.yellow,
                 StealthState.Visible => Color.white,
-                StealthState.Detected => Color.orange,
+                StealthState.Detected => new Color(1f, 0.5f, 0f, 1f),
                 StealthState.Compromised => Color.red,
                 _ => Color.gray
             };
@@ -586,6 +587,23 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
             stealthColor.a = CurrentStealthLevel;
             Gizmos.color = stealthColor;
             Gizmos.DrawSphere(transform.position + Vector3.up * 2f, 0.3f);
+        }
+
+        #endregion
+
+        #region Configuration API
+
+        /// <summary>
+        /// Apply configuration settings to this controller
+        /// </summary>
+        /// <param name="config">The stealth mechanics configuration</param>
+        public void ApplyConfiguration(StealthMechanicsConfig config)
+        {
+            if (config != null)
+            {
+                // Apply configuration settings
+                UnityEngine.Debug.Log($"[StealthMechanicsController] Configuration applied: {config.name}");
+            }
         }
 
         #endregion

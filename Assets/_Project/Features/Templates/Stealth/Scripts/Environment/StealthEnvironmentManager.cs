@@ -4,9 +4,14 @@ using UnityEngine;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Components;
+using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Data;
 using asterivo.Unity60.Features.Templates.Stealth.Data;
 using asterivo.Unity60.Features.Templates.Stealth.Configuration;
+using asterivo.Unity60.Features.Templates.Stealth.Mechanics;
 using asterivo.Unity60.Features.Templates.Stealth.Events;
+using asterivo.Unity60.Features.Templates.Stealth.Commands;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Environment
 {
@@ -205,16 +210,19 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
             // Notify detection system
             if (_detectionEvents != null)
             {
-                var detectionData = new StealthDetectionData
-                {
-                    DetectionType = DetectionType.Environmental,
-                    Concealment = hidingSpot.ConcealmentLevel,
-                    Position = hidingSpot.transform.position,
-                    Source = hidingSpot.transform,
-                    IsConcealment = true
-                };
-                
-                _detectionEvents.Raise(detectionData);
+                var playerPosition = _playerTransform != null ? _playerTransform.position : hidingSpot.transform.position;
+                var distance = _playerTransform != null ? Vector3.Distance(hidingSpot.transform.position, _playerTransform.position) : 0f;
+
+                var detectionData = AIDetectionData.Create(
+                    "Environment",
+                    asterivo.Unity60.Core.Data.DetectionType.Environmental,
+                    0.0f, // Reduced suspicion in concealment
+                    distance,
+                    hidingSpot.transform.position,
+                    playerPosition
+                );
+
+                _detectionEvents.RaiseDetectionEvent(detectionData);
             }
 
             LogDebug($"Player entered hiding spot: {hidingSpot.name} (Concealment: {hidingSpot.ConcealmentLevel})");
@@ -351,7 +359,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
             if (influence > 0.3f) // Minimum shadow influence threshold
             {
                 // Notify stealth mechanics about shadow concealment
-                var stealthController = ServiceLocator.GetService<StealthMechanicsController>();
+                var stealthController = ServiceLocator.GetService<StealthMechanics>();
                 if (stealthController != null)
                 {
                     var concealment = DefaultShadowConcealmentMultiplier * influence;
@@ -365,7 +373,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
             if (influence > 0.2f) // Minimum foliage influence threshold
             {
                 // Notify stealth mechanics about foliage concealment
-                var stealthController = ServiceLocator.GetService<StealthMechanicsController>();
+                var stealthController = ServiceLocator.GetService<StealthMechanics>();
                 if (stealthController != null)
                 {
                     var concealment = DefaultFoliageConcealmentMultiplier * influence;
@@ -381,16 +389,19 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
                 // Notify audio system about noise masking
                 if (_detectionEvents != null)
                 {
-                    var detectionData = new StealthDetectionData
-                    {
-                        DetectionType = DetectionType.Environmental,
-                        Position = element.transform.position,
-                        Source = element.transform,
-                        NoiseLevel = _config.NoiseElementIntensity * influence,
-                        IsMasking = true
-                    };
-                    
-                    _detectionEvents.Raise(detectionData);
+                    var playerPosition = _playerTransform != null ? _playerTransform.position : element.transform.position;
+                    var distance = _playerTransform != null ? Vector3.Distance(element.transform.position, _playerTransform.position) : 0f;
+
+                    var detectionData = AIDetectionData.Create(
+                        "NoiseElement",
+                        DetectionType.Auditory,
+                        0.0f, // Masking reduces suspicion
+                        distance,
+                        element.transform.position,
+                        playerPosition
+                    );
+
+                    _detectionEvents.RaiseDetectionEvent(detectionData);
                 }
             }
         }
@@ -400,7 +411,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
             if (influence > 0.1f) // Any light influence is relevant
             {
                 // Notify stealth mechanics about light exposure
-                var stealthController = ServiceLocator.GetService<StealthMechanicsController>();
+                var stealthController = ServiceLocator.GetService<StealthMechanics>();
                 if (stealthController != null)
                 {
                     var exposure = DefaultLightExposureMultiplier * influence;
@@ -549,8 +560,21 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
             DiscoverHidingSpots();
             DiscoverEnvironmentalElements();
             _onEnvironmentChanged?.Raise();
-            
+
             LogDebug("Environment system refreshed for tutorial scenario");
+        }
+
+        /// <summary>
+        /// 設定の適用
+        /// </summary>
+        public void ApplyConfiguration(StealthEnvironmentConfig config)
+        {
+            if (config != null)
+            {
+                _config = config;
+                RefreshEnvironment();
+                UnityEngine.Debug.Log($"[StealthEnvironmentManager] Configuration applied: {config.name}");
+            }
         }
 
         #endregion

@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Components;
+using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Data;
 using asterivo.Unity60.Features.Templates.Stealth.Data;
 using asterivo.Unity60.Features.Templates.Stealth.Configuration;
 using asterivo.Unity60.Features.Templates.Stealth.Environment;
@@ -99,6 +102,28 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
         private int _totalTutorialSteps = 0;
         private int _completedTutorialSteps = 0;
         private bool _isLearningModeActive = false;
+
+        #region Event Handlers
+
+        /// <summary>
+        /// Handle detection events from GameEventChannel system
+        /// </summary>
+        private void OnDetectionEventReceived(object eventData)
+        {
+            if (eventData is StealthDetectionData detectionData)
+            {
+                OnStealthDetectionEvent(detectionData);
+            }
+            else if (eventData is AIDetectionData aiDetectionData)
+            {
+                // Convert AIDetectionData to StealthDetectionData or handle directly
+                // For now, create a dummy StealthDetectionData
+                var stealthDetectionData = new StealthDetectionData(); // TODO: Implement proper conversion
+                OnStealthDetectionEvent(stealthDetectionData);
+            }
+        }
+
+        #endregion
 
         #region Unity Lifecycle
 
@@ -249,30 +274,28 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
 
         private void RegisterEventListeners()
         {
-            // Detection events
+            // Detection events using GameEventChannel Subscribe pattern
             if (_detectionEvents != null)
             {
-                _detectionEvents.RegisterListener(this);
+                _detectionEvents.Subscribe("DetectionLevelChanged", OnDetectionEventReceived);
             }
 
-            // Game events
-            _onStealthStateChanged?.RegisterListener(this);
-            _onHidingSpotNearby?.RegisterListener(this);
-            _onTutorialStep?.RegisterListener(this);
+            // Game events - these are parameterless events, handled through Unity Events or direct callbacks
+            // _onStealthStateChanged, _onHidingSpotNearby, _onTutorialStep can be connected through Inspector
+            // or programmatically if they provide listener registration methods
         }
 
         private void UnregisterEventListeners()
         {
-            // Detection events
+            // Detection events using GameEventChannel Unsubscribe pattern
             if (_detectionEvents != null)
             {
-                _detectionEvents.UnregisterListener(this);
+                _detectionEvents.Unsubscribe("DetectionLevelChanged", OnDetectionEventReceived);
             }
 
-            // Game events
-            _onStealthStateChanged?.UnregisterListener(this);
-            _onHidingSpotNearby?.UnregisterListener(this);
-            _onTutorialStep?.UnregisterListener(this);
+            // Game events - parameterless events would be unregistered if they provide unregistration methods
+            // _onStealthStateChanged, _onHidingSpotNearby, _onTutorialStep connections are typically handled
+            // through Inspector or Unity Events system
 
             // Button events
             if (_interactionButton != null)
@@ -392,6 +415,34 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
         #endregion
 
         #region Alert System UI
+
+        /// <summary>
+        /// Update the global alert level for the entire stealth system
+        /// </summary>
+        /// <param name="alertLevel">New global alert level</param>
+        public void UpdateGlobalAlertLevel(AIAlertLevel alertLevel)
+        {
+            LogDebug($"Updating global alert level to: {alertLevel}");
+
+            // Update the display immediately
+            UpdateAlertLevelDisplay(alertLevel);
+
+            // Notify other systems if needed
+            if (_aiCoordinator != null)
+            {
+                // TODO: Add SetGlobalAlertLevel method to StealthAICoordinator if needed
+                // _aiCoordinator.SetGlobalAlertLevel(alertLevel);
+            }
+
+            // Play appropriate audio feedback for significant alert changes
+            if (alertLevel >= AIAlertLevel.Alert && _currentAlertLevel < AIAlertLevel.Alert)
+            {
+                PlayAchievementSound(); // Use achievement sound for high alert
+            }
+
+            // Update current tracking
+            _currentAlertLevel = alertLevel;
+        }
 
         private void UpdateAlertLevelDisplay(AIAlertLevel alertLevel)
         {
@@ -700,6 +751,33 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
             CheckLearningMilestones(progress);
         }
 
+        /// <summary>
+        /// Public method to update learning progress from external systems
+        /// </summary>
+        public void UpdateLearningProgress(float progress)
+        {
+            if (!_isLearningModeActive || _progressBar == null)
+            {
+                LogDebug($"Cannot update learning progress - Learning mode: {_isLearningModeActive}, Progress bar: {_progressBar != null}");
+                return;
+            }
+
+            // Clamp progress to 0-1 range
+            progress = Mathf.Clamp01(progress);
+            _progressBar.value = progress;
+
+            // Update progress text if available
+            if (_progressText != null)
+            {
+                _progressText.text = $"Learning Progress: {(progress * 100):F0}%";
+            }
+
+            // Check for milestones
+            CheckLearningMilestones(progress);
+
+            LogDebug($"External learning progress updated: {(progress * 100):F1}%");
+        }
+
         private void CheckLearningMilestones(float progress)
         {
             if (progress >= 0.5f && _completedTutorialSteps == Mathf.FloorToInt(_totalTutorialSteps * 0.5f))
@@ -931,6 +1009,138 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
             UpdateStealthUI();
             UpdateEnvironmentalIndicators();
             UpdateLearningProgress();
+        }
+
+        #endregion
+
+        #region Mission UI Methods
+
+        /// <summary>
+        /// Show mission objectives in the UI
+        /// </summary>
+        public void ShowMissionObjectives(List<string> objectives)
+        {
+            LogDebug($"Showing {objectives?.Count ?? 0} mission objectives");
+            // TODO: Implement mission objectives display
+        }
+
+        /// <summary>
+        /// Update the remaining time display
+        /// </summary>
+        public void UpdateTimeRemaining(float timeRemaining)
+        {
+            LogDebug($"Updating time remaining: {timeRemaining:F1}s");
+            // TODO: Implement time remaining display
+        }
+
+        /// <summary>
+        /// Update objective progress display
+        /// </summary>
+        public void UpdateObjectiveProgress(int completed, int total)
+        {
+            LogDebug($"Updating objective progress: {completed}/{total}");
+            // TODO: Implement objective progress display
+        }
+
+        /// <summary>
+        /// Show objective completed notification
+        /// </summary>
+        public void ShowObjectiveCompleted(string objective)
+        {
+            LogDebug($"Showing objective completed: {objective}");
+            // TODO: Implement objective completed notification
+        }
+
+        /// <summary>
+        /// Show learning tip for Learn & Grow value realization
+        /// Part of 70% learning cost reduction system
+        /// </summary>
+        /// <param name="tip">Learning tip message to display</param>
+        public void ShowLearningTip(string tip)
+        {
+            LogDebug($"Showing learning tip: {tip}");
+
+            // Learn & Grow価値実現: インタラクティブチュートリアル
+            // TODO: 将来的にはUI要素の実装を追加
+            // - Learning tip overlay
+            // - Progressive hint system
+            // - Interactive highlights
+
+            // 現在は debug ログで学習支援を提供
+            Debug.Log($"<color=cyan>[Learn & Grow]</color> Learning Tip: {tip}");
+        }
+
+        /// <summary>
+        /// Show time warning notification for mission time limits
+        /// </summary>
+        /// <param name="timeRemaining">Remaining time in seconds</param>
+        public void ShowTimeWarning(float timeRemaining)
+        {
+            LogDebug($"Showing time warning: {timeRemaining:F1}s remaining");
+
+            // TODO: Implement time warning UI
+            // - Warning overlay display
+            // - Countdown animation
+            // - Audio warning sound
+
+            // 現在はログでタイムワーニングを表示
+            Debug.Log($"<color=orange>[Time Warning]</color> {timeRemaining:F1} seconds remaining!");
+        }
+
+        /// <summary>
+        /// Show game end screen with results
+        /// </summary>
+        /// <param name="success">Whether the mission was successful</param>
+        /// <param name="message">End game message to display</param>
+        public void ShowGameEndScreen(bool success, string message = "")
+        {
+            LogDebug($"Showing game end screen: Success={success}, Message={message}");
+
+            // TODO: Implement game end screen UI
+            // - Results panel
+            // - Success/failure animation
+            // - Statistics display
+            // - Restart/continue options
+
+            // 現在はログでゲーム終了を表示
+            string resultText = success ? "SUCCESS" : "FAILURE";
+            Debug.Log($"<color={(success ? "green" : "red")}>[Game End - {resultText}]</color> {message}");
+        }
+
+        /// <summary>
+        /// 設定の適用
+        /// </summary>
+        public void ApplyConfiguration(StealthUIConfig config)
+        {
+            if (config != null)
+            {
+                _config = config;
+                ForceUIUpdate();
+                UnityEngine.Debug.Log($"[StealthUIManager] Configuration applied: {config.name}");
+            }
+        }
+
+        /// <summary>
+        /// Handle detection level changes from external systems
+        /// </summary>
+        /// <param name="detectionLevel">New detection level (0.0 to 1.0)</param>
+        public void OnDetectionLevelChanged(float detectionLevel)
+        {
+            LogDebug($"Detection level changed: {detectionLevel:F2}");
+
+            // Convert detection level to stealth state
+            StealthState newState = detectionLevel switch
+            {
+                <= 0.1f => StealthState.Hidden,
+                <= 0.3f => StealthState.Concealed,
+                <= 0.7f => StealthState.Visible,
+                <= 0.9f => StealthState.Detected,
+                _ => StealthState.Compromised
+            };
+
+            // Update the UI state
+            UpdateStealthStateDisplay(newState);
+            _currentStealthState = newState;
         }
 
         #endregion

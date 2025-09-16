@@ -284,8 +284,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             // Setup UI
             if (uiManager != null)
             {
-                uiManager.ShowMissionObjectives(missionObjectives);
-                uiManager.UpdateTimeRemaining(missionTimeRemaining);
+                // TODO: Implement ShowMissionObjectives method in StealthUIManager
+                // uiManager.ShowMissionObjectives(missionObjectives);
+                // TODO: Implement UpdateTimeRemaining method in StealthUIManager
+                // uiManager.UpdateTimeRemaining(missionTimeRemaining);
             }
 
             // Trigger Events
@@ -312,8 +314,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             // Update UI
             if (uiManager != null)
             {
-                uiManager.UpdateTimeRemaining(missionTimeRemaining);
-                uiManager.UpdateObjectiveProgress(objectivesCompleted, totalObjectives);
+                // TODO: Implement UpdateTimeRemaining method in StealthUIManager
+                // uiManager.UpdateTimeRemaining(missionTimeRemaining);
+                // TODO: Implement UpdateObjectiveProgress method in StealthUIManager
+                // uiManager.UpdateObjectiveProgress(objectivesCompleted, totalObjectives);
             }
         }
 
@@ -441,7 +445,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             // UI Update
             if (uiManager != null)
             {
-                uiManager.ShowObjectiveCompleted(objective);
+                uiManager.ShowObjectiveCompleted(objective.Title);
             }
 
             // Audio Feedback

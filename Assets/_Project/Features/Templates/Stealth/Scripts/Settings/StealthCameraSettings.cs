@@ -315,7 +315,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Settings
                 FromState = "StealthCrouch",
                 ToState = "StealthCover",
                 BlendTime = 0.2f,
-                BlendCurve = AnimationCurve.EaseIn(0f, 0f, 1f, 1f)
+                BlendCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f)
             }
         };
 

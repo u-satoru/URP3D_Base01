@@ -17,7 +17,8 @@
         "UnityEditor.TestRunner",
         "Unity.InputSystem",
         "Unity.Cinemachine",
-        "UniTask"
+        "UniTask",
+        "asterivo.Unity60.Core.Debug"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

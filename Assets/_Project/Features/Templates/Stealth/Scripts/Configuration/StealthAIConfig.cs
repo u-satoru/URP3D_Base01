@@ -42,6 +42,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Configuration
         [Tooltip("協調検出機能の有効化")]
         public bool EnableCooperativeDetection = true;
 
+        [Range(5f, 50f)]
+        [Tooltip("協調検出範囲（メートル）")]
+        public float CooperativeDetectionRange = 20f;
+
         [Header("Performance Scaling")]
         [Range(1, 100)]
         [Tooltip("最大同時稼働NPC数")]

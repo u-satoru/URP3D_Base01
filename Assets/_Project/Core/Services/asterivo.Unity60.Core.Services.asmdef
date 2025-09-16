@@ -8,8 +8,11 @@
         "asterivo.Unity60.Core.Commands",
         "asterivo.Unity60.Core.Lifecycle",
         "asterivo.Unity60.Core.Debug",
+        "asterivo.Unity60.Core.Data",
         "Unity.InputSystem",
-        "UniTask"
+        "UniTask",
+        "asterivo.Unity60.Core.Components",
+        "asterivo.Unity60.Core.Shared"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

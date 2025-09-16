@@ -12,7 +12,8 @@
         "asterivo.Unity60.Core.Components",
         "Unity.InputSystem",
         "Unity.Cinemachine",
-        "UniTask"
+        "UniTask",
+        "asterivo.Unity60.Core.Lifecycle"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

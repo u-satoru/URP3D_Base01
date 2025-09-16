@@ -1,4 +1,5 @@
 using UnityEngine;
+using asterivo.Unity60.Core.Data;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Data
 {
@@ -48,7 +49,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Data
         Distortion = 4,      // ディストーション
         Echo = 5,            // エコー
         Masking = 6,         // マスキング
-        DynamicRange = 7     // ダイナミックレンジ圧縮
+        DynamicRange = 7,    // ダイナミックレンジ圧縮
+        Footstep = 8,        // 足音
+        Movement = 9,        // 移動音
+        Voice = 10           // 音声
     }
 
     /// <summary>
@@ -79,7 +83,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Data
         Minimap = 3,          // ミニマップ
         InteractionPrompt = 4, // インタラクションプロンプト
         StealthTutorial = 5,   // ステルスチュートリアル
-        ProgressHUD = 6        // 進捗HUD
+        ProgressHUD = 6,       // 進捗HUD
+        StealthIndicator = 7   // ステルスインジケーター
     }
 
     /// <summary>
@@ -90,11 +95,12 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Data
     {
         Player = 0,           // プレイヤー
         Enemy = 1,            // 敵
-        Objective = 2,        // 目標
-        HidingSpot = 3,      // 隠れ場所
-        NoiseSource = 4,     // ノイズ発生源
-        InteractableItem = 5, // インタラクト可能アイテム
-        ExitPoint = 6         // 脱出ポイント
+        NPC = 2,             // NPC
+        Objective = 3,        // 目標
+        HidingSpot = 4,      // 隠れ場所
+        NoiseSource = 5,     // ノイズ発生源
+        InteractableItem = 6, // インタラクト可能アイテム
+        ExitPoint = 7         // 脱出ポイント
     }
 
     /// <summary>
@@ -125,7 +131,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Data
         public float SuspicionLevel;
         public Vector3 LastKnownPosition;
         public float DetectionTime;
-        public DetectionType DetectionType;
+        public asterivo.Unity60.Core.Data.DetectionType DetectionType;
         public bool IsPlayerVisible;
         public float NoiseLevel;
         public float DistanceToPlayer;
@@ -139,7 +145,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Data
                 SuspicionLevel = suspicion,
                 LastKnownPosition = lastPos,
                 DetectionTime = Time.time,
-                DetectionType = DetectionType.Visual,
+                DetectionType = asterivo.Unity60.Core.Data.DetectionType.Visual,
                 IsPlayerVisible = false,
                 NoiseLevel = 0f,
                 DistanceToPlayer = 0f
@@ -147,14 +153,4 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Data
         }
     }
 
-    /// <summary>
-    /// 検知種別
-    /// </summary>
-    public enum DetectionType
-    {
-        Visual = 0,       // 視覚検知
-        Auditory = 1,     // 聴覚検知
-        Proximity = 2,    // 近接検知
-        Evidence = 3      // 証拠発見
-    }
 }

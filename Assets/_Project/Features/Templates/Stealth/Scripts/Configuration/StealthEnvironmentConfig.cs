@@ -7,8 +7,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Configuration
     /// 環境相互作用、隠蔽場所、環境効果の設定
     /// Learn & Grow価値実現のための環境学習支援
     /// </summary>
-    [System.Serializable]
-    public class StealthEnvironmentConfig
+    [CreateAssetMenu(menuName = "Stealth/Environment Config", fileName = "StealthEnvironmentConfig")]
+    public class StealthEnvironmentConfig : ScriptableObject
     {
         [Header("Hiding Spots Configuration")]
         [Tooltip("隠蔽場所の自動検出")]
@@ -72,9 +72,21 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Configuration
         [Tooltip("環境効果の更新間隔（秒）")]
         public float EnvironmentUpdateInterval = 10f;
 
+        [Range(0.01f, 1f)]
+        [Tooltip("システム更新間隔")]
+        public float UpdateInterval = 0.1f;
+
         [Range(10, 100)]
         [Tooltip("同時処理する環境オブジェクト数上限")]
         public int MaxConcurrentEnvironmentalEffects = 50;
+
+        [Range(0f, 1f)]
+        [Tooltip("デフォルト隠蔽レベル")]
+        public float DefaultConcealmentLevel = 0.5f;
+
+        [Range(1, 50)]
+        [Tooltip("隠蔽場所のデフォルト収容能力")]
+        public int DefaultCapacity = 10;
 
         /// <summary>
         /// デフォルト設定の適用
@@ -96,7 +108,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Configuration
             ShowInteractionTutorialHints = true;
             BeginnerConcealmentBonus = 1.3f;
             EnvironmentUpdateInterval = 10f;
+            UpdateInterval = 0.1f;
             MaxConcurrentEnvironmentalEffects = 50;
+            DefaultConcealmentLevel = 0.5f;
+            DefaultCapacity = 10;
         }
 
         /// <summary>

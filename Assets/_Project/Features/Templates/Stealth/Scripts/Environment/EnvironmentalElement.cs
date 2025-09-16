@@ -144,7 +144,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
             if (_renderer != null)
             {
                 var material = _renderer.material;
-                var color = Color.Lerp(Color.brown, Color.green, _currentIntensity);
+                var color = Color.Lerp(new Color(0.6f, 0.4f, 0.2f), Color.green, _currentIntensity);
                 material.color = color;
             }
         }
@@ -226,7 +226,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
                     break;
                     
                 case EnvironmentalElementType.Foliage:
-                    var foliageColor = Color.Lerp(Color.brown, Color.green, _currentIntensity);
+                    var foliageColor = Color.Lerp(new Color(0.6f, 0.4f, 0.2f), Color.green, _currentIntensity);
                     material.color = foliageColor;
                     break;
             }

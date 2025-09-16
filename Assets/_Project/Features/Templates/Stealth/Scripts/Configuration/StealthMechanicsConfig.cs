@@ -10,22 +10,103 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Configuration
     [System.Serializable]
     public class StealthMechanicsConfig
     {
+        [Header("Core Stealth System")]
+        [Tooltip("設定名")]
+        public string name = "Stealth Mechanics Configuration";
+
+        [Tooltip("ステルスメカニクスを有効にするか")]
+        public bool enableStealthMechanics = true;
+
+        [Range(0.01f, 1f)]
+        [Tooltip("システム更新間隔")]
+        public float updateInterval = 0.1f;
+
+        [Range(0f, 1f)]
+        [Tooltip("基本可視性レベル")]
+        public float baseVisibility = 0.5f;
+
         [Header("Player Stealth Mechanics")]
         [Range(0f, 1f)]
         [Tooltip("しゃがみ時のステルス効果倍率")]
         public float BaseCrouchStealthMultiplier = 0.3f;
 
         [Range(0f, 1f)]
+        [Tooltip("しゃがみ時の可視性修正値")]
+        public float crouchVisibilityModifier = 0.3f;
+
+        [Range(0f, 1f)]
+        [Tooltip("歩行時のステルス効果倍率")]
+        public float WalkingStealthMultiplier = 0.6f;
+
+        [Range(0f, 1f)]
+        [Tooltip("走行時のステルス効果倍率")]
+        public float RunningStealthMultiplier = 1.0f;
+
+        [Range(0f, 1f)]
         [Tooltip("伏せ時のステルス効果倍率（最高レベル）")]
         public float ProneStealthMultiplier = 0.1f;
+
+        [Range(0f, 1f)]
+        [Tooltip("伏せ時の可視性修正値")]
+        public float proneVisibilityModifier = 0.1f;
 
         [Range(0f, 2f)]
         [Tooltip("移動時のノイズ生成倍率")]
         public float MovementNoiseMultiplier = 1.0f;
 
+        [Range(0f, 2f)]
+        [Tooltip("移動時の可視性修正値")]
+        public float movementVisibilityModifier = 1.0f;
+
         [Range(0f, 5f)]
         [Tooltip("環境音によるマスキング効果範囲")]
         public float EnvironmentMaskingRange = 2.0f;
+
+        [Header("Detection System")]
+        [Range(0.1f, 2f)]
+        [Tooltip("検知レベル減衰率")]
+        public float detectionDecayRate = 0.5f;
+
+        [Range(0.1f, 2f)]
+        [Tooltip("警戒レベル減衰率")]
+        public float alertDecayRate = 0.3f;
+
+        [Range(1f, 20f)]
+        [Tooltip("カバー検知半径")]
+        public float coverDetectionRadius = 5.0f;
+
+        [Range(0f, 1f)]
+        [Tooltip("影による可視性削減")]
+        public float shadowVisibilityReduction = 0.3f;
+
+        [Range(0f, 1f)]
+        [Tooltip("植物による可視性削減")]
+        public float foliageVisibilityReduction = 0.4f;
+
+        [Range(5f, 50f)]
+        [Tooltip("最大検知範囲")]
+        public float maxDetectionRange = 25.0f;
+
+        [Range(1f, 10f)]
+        [Tooltip("即座検知範囲")]
+        public float instantDetectionRange = 3.0f;
+
+        [Header("Audio & Noise System")]
+        [Range(0f, 1f)]
+        [Tooltip("基本ノイズレベル")]
+        public float baseNoiseLevel = 0.1f;
+
+        [Range(0f, 1f)]
+        [Tooltip("歩行時のノイズレベル")]
+        public float walkNoiseLevel = 0.3f;
+
+        [Range(0f, 1f)]
+        [Tooltip("走行時のノイズレベル")]
+        public float runNoiseLevel = 0.8f;
+
+        [Range(0f, 1f)]
+        [Tooltip("しゃがみ時のノイズ削減効果")]
+        public float crouchNoiseReduction = 0.6f;
 
         [Header("Hiding Mechanics")]
         [Tooltip("隠れ場所として認識するレイヤー")]
@@ -59,16 +140,42 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Configuration
         [Tooltip("初心者向けステルス効果ボーナス")]
         public float BeginnerStealthBonus = 1.2f;
 
+        [Range(0f, 1f)]
+        [Tooltip("チュートリアル用の基本ステルスレベル（学習支援）")]
+        public float TutorialBaseStealthLevel = 0.3f;
+
+        [Tooltip("チュートリアル用デバッグ情報の表示")]
+        public bool ShowTutorialDebugInfo = true;
+
         /// <summary>
         /// デフォルト設定の適用
         /// Learn & Grow価値実現のための最適化済み設定
         /// </summary>
         public void ApplyDefaultSettings()
         {
+            enableStealthMechanics = true;
+            updateInterval = 0.1f;
+            baseVisibility = 0.5f;
             BaseCrouchStealthMultiplier = 0.3f;
+            crouchVisibilityModifier = 0.3f;
+            WalkingStealthMultiplier = 0.6f;
+            RunningStealthMultiplier = 1.0f;
             ProneStealthMultiplier = 0.1f;
+            proneVisibilityModifier = 0.1f;
             MovementNoiseMultiplier = 1.0f;
+            movementVisibilityModifier = 1.0f;
             EnvironmentMaskingRange = 2.0f;
+            detectionDecayRate = 0.5f;
+            alertDecayRate = 0.3f;
+            coverDetectionRadius = 5.0f;
+            shadowVisibilityReduction = 0.3f;
+            foliageVisibilityReduction = 0.4f;
+            maxDetectionRange = 25.0f;
+            instantDetectionRange = 3.0f;
+            baseNoiseLevel = 0.1f;
+            walkNoiseLevel = 0.3f;
+            runNoiseLevel = 0.8f;
+            crouchNoiseReduction = 0.6f;
             HidingEffectiveness = 0.8f;
             HidingDetectionRadius = 1.5f;
             InteractionRange = 2.0f;
@@ -76,6 +183,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Configuration
             AllowMovementDuringInteraction = false;
             UseTutorialFriendlySettings = true;
             BeginnerStealthBonus = 1.2f;
+            TutorialBaseStealthLevel = 0.3f;
+            ShowTutorialDebugInfo = true;
         }
 
         /// <summary>
@@ -84,10 +193,29 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Configuration
         /// </summary>
         public void ApplyAdvancedSettings()
         {
+            enableStealthMechanics = true;
+            updateInterval = 0.05f;
+            baseVisibility = 0.7f;
             BaseCrouchStealthMultiplier = 0.5f;
+            crouchVisibilityModifier = 0.5f;
+            WalkingStealthMultiplier = 0.8f;
+            RunningStealthMultiplier = 1.2f;
             ProneStealthMultiplier = 0.2f;
+            proneVisibilityModifier = 0.2f;
             MovementNoiseMultiplier = 1.5f;
+            movementVisibilityModifier = 1.5f;
             EnvironmentMaskingRange = 1.5f;
+            detectionDecayRate = 0.3f;
+            alertDecayRate = 0.2f;
+            coverDetectionRadius = 3.0f;
+            shadowVisibilityReduction = 0.2f;
+            foliageVisibilityReduction = 0.3f;
+            maxDetectionRange = 30.0f;
+            instantDetectionRange = 2.0f;
+            baseNoiseLevel = 0.2f;
+            walkNoiseLevel = 0.5f;
+            runNoiseLevel = 1.0f;
+            crouchNoiseReduction = 0.4f;
             HidingEffectiveness = 0.6f;
             HidingDetectionRadius = 2.0f;
             InteractionRange = 1.5f;
@@ -95,6 +223,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Configuration
             AllowMovementDuringInteraction = false;
             UseTutorialFriendlySettings = false;
             BeginnerStealthBonus = 1.0f;
+            TutorialBaseStealthLevel = 0.1f;
+            ShowTutorialDebugInfo = false;
         }
 
         /// <summary>

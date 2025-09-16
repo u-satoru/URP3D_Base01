@@ -11,7 +11,8 @@
         "asterivo.Unity60.Core.Debug",
         "asterivo.Unity60.Core.Shared",
         "asterivo.Unity60.Stealth",
-        "asterivo.Unity60.Features.AI.Visual"
+        "asterivo.Unity60.Features.AI.Visual",
+        "asterivo.Unity60.Core.Lifecycle"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

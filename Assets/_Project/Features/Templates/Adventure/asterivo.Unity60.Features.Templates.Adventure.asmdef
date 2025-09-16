@@ -11,7 +11,11 @@
         "Unity.Cinemachine",
         "Unity.InputSystem",
         "Unity.TextMeshPro",
-        "Sirenix.OdinInspector.Attributes"
+        "Sirenix.OdinInspector.Attributes",
+        "asterivo.Unity60.Core.Components",
+        "asterivo.Unity60.Core.Debug",
+        "asterivo.Unity60.Core.Lifecycle",
+        "asterivo.Unity60.Core.Shared"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

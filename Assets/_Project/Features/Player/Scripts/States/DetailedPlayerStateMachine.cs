@@ -92,6 +92,12 @@ namespace asterivo.Unity60.Player.States
         
         // 状態変更イベント
         public event System.Action<PlayerState, PlayerState> OnLegacyStateChanged;
+
+        /// <summary>
+        /// プレイヤー状態変更イベント (新しいPlayerStateType用)
+        /// StealthMechanicsController等の他システムが購読可能
+        /// </summary>
+        public event System.Action<PlayerStateType> OnStateChanged;
         
         /// <summary>
         /// プレイヤーのCharacterControllerコンポーネント。
@@ -225,7 +231,10 @@ namespace asterivo.Unity60.Player.States
             
             // 新しいイベントシステム
             onStateChanged?.Raise(currentStateType);
-            
+
+            // C#イベント（StealthMechanicsController等向け）
+            OnStateChanged?.Invoke(currentStateType);
+
             // レガシー互換性の状態変更
             UpdateLegacyState(newStateType);
             

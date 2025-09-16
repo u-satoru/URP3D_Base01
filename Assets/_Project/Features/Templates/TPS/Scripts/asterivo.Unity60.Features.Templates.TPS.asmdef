@@ -18,7 +18,10 @@
         "asterivo.Unity60.Camera",
         "Unity.InputSystem",
         "Unity.Cinemachine",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "asterivo.Unity60.Core.Lifecycle",
+        "asterivo.Unity60.Core.Shared",
+        "asterivo.Unity60.Stealth"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
