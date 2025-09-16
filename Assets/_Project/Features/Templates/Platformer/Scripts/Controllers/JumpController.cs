@@ -200,11 +200,11 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
             {
                 _jumpInputReleased = true;
 
-                if (_rigidbody.velocity.y > 0)
+                if (_rigidbody.linearVelocity.y > 0)
                 {
-                    var velocity = _rigidbody.velocity;
+                    var velocity = _rigidbody.linearVelocity;
                     velocity.y *= _jumpCutMultiplier;
-                    _rigidbody.velocity = velocity;
+                    _rigidbody.linearVelocity = velocity;
 
                     LogDebug($"Jump cut applied. New velocity: {velocity.y:F2}");
                 }
@@ -213,7 +213,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
 
         private void UpdateJumpState()
         {
-            var velocity = _rigidbody.velocity;
+            var velocity = _rigidbody.linearVelocity;
 
             // ジャンプ状態判定
             bool wasJumping = _isJumping;
@@ -273,9 +273,9 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
             Vector2 jumpVelocity = _physicsService.CalculateJumpVelocity(effectivelyGrounded, _currentJumpCount);
 
             // ジャンプ実行
-            var velocity = _rigidbody.velocity;
+            var velocity = _rigidbody.linearVelocity;
             velocity.y = jumpVelocity.y;
-            _rigidbody.velocity = velocity;
+            _rigidbody.linearVelocity = velocity;
 
             // ジャンプ回数更新
             if (!effectivelyGrounded)
@@ -384,15 +384,15 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
                      $"Is Falling: {_isFalling}\n" +
                      $"Coyote Time Remaining: {Mathf.Max(0, _coyoteTime - (Time.time - _lastGroundedTime)):F2}\n" +
                      $"Jump Buffer Active: {(_jumpBufferPressTime >= 0 && Time.time - _jumpBufferPressTime <= _jumpBufferTime)}\n" +
-                     $"Velocity Y: {_rigidbody.velocity.y:F2}");
+                     $"Velocity Y: {_rigidbody.linearVelocity.y:F2}");
         }
 
         // 外部制御API
         public void ForceJump(float jumpVelocity)
         {
-            var velocity = _rigidbody.velocity;
+            var velocity = _rigidbody.linearVelocity;
             velocity.y = jumpVelocity;
-            _rigidbody.velocity = velocity;
+            _rigidbody.linearVelocity = velocity;
 
             _currentJumpCount = Mathf.Max(1, _currentJumpCount);
             _jumpInputReleased = false;

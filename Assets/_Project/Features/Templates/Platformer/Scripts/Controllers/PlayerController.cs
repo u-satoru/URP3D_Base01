@@ -280,7 +280,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
             }
 
             // Rigidbody2Dに速度適用
-            _rigidbody.velocity = _velocity;
+            _rigidbody.linearVelocity = _velocity;
         }
 
         private void UpdateSpriteDirection()
@@ -689,7 +689,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             transform.position = position;
             _velocity = Vector2.zero;
-            _rigidbody.velocity = Vector2.zero;
+            _rigidbody.linearVelocity = Vector2.zero;
         }
 
         public void AddLife(int amount = 1)

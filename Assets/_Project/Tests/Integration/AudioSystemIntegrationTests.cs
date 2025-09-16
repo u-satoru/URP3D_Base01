@@ -5,6 +5,7 @@ using System.Collections;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Audio;
+using asterivo.Unity60.Core.Audio.Services;
 using asterivo.Unity60.Core.Shared;
 
 namespace asterivo.Unity60.Tests.Integration
@@ -429,7 +430,7 @@ namespace asterivo.Unity60.Tests.Integration
         {
             // 実際のマネージャーコンポーネントをセットアップ
             var audioManager = testGameObject.AddComponent<AudioManager>();
-            var spatialManager = testGameObject.AddComponent<SpatialAudioManager>();
+            var spatialManager = testGameObject.AddComponent<SpatialAudioService>();
             var effectManager = testGameObject.AddComponent<EffectManager>();
             var updateCoordinator = testGameObject.AddComponent<AudioUpdateCoordinator>();
             
