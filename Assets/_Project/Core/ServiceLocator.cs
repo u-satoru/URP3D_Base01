@@ -160,12 +160,13 @@ namespace asterivo.Unity60.Core
         {
             services.Clear();
             factories.Clear();
+            namedServices.Clear();
             typeNameCache.Clear();
-            
+
             // 統計リセット
             System.Threading.Interlocked.Exchange(ref accessCount, 0);
             System.Threading.Interlocked.Exchange(ref hitCount, 0);
-            
+
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log("[ServiceLocator] All services cleared");
 #endif
@@ -176,7 +177,7 @@ namespace asterivo.Unity60.Core
         /// </summary>
         public static int GetServiceCount()
         {
-            return services.Count + factories.Count;
+            return services.Count + factories.Count + namedServices.Count;
         }
         
         /// <summary>
@@ -203,7 +204,81 @@ namespace asterivo.Unity60.Core
             // パフォーマンス統計も表示
             LogPerformanceStats();
         }
-        
+
+        // String-based service registration for scenarios requiring named services
+        private static readonly ConcurrentDictionary<string, object> namedServices = new ConcurrentDictionary<string, object>();
+
+        /// <summary>
+        /// 名前付きサービスを登録（文字列キー）
+        /// </summary>
+        public static void RegisterService<T>(string key, T service) where T : class
+        {
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentException("Service key cannot be null or empty", nameof(key));
+            if (service == null)
+                throw new ArgumentNullException(nameof(service));
+
+            var wasReplaced = namedServices.ContainsKey(key);
+            namedServices[key] = service;
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (wasReplaced)
+            {
+                UnityEngine.Debug.LogWarning($"[ServiceLocator] Named service '{key}' replaced");
+            }
+            else
+            {
+                UnityEngine.Debug.Log($"[ServiceLocator] Named service '{key}' registered");
+            }
+#endif
+        }
+
+        /// <summary>
+        /// 名前付きサービスを取得（文字列キー）
+        /// </summary>
+        public static T GetService<T>(string key) where T : class
+        {
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentException("Service key cannot be null or empty", nameof(key));
+
+            System.Threading.Interlocked.Increment(ref accessCount);
+
+            if (namedServices.TryGetValue(key, out var service))
+            {
+                System.Threading.Interlocked.Increment(ref hitCount);
+                if (service is T typedService)
+                {
+                    return typedService;
+                }
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                UnityEngine.Debug.LogError($"[ServiceLocator] Service '{key}' exists but is not of type {typeof(T).Name}");
+#endif
+            }
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            UnityEngine.Debug.LogWarning($"[ServiceLocator] Named service '{key}' not found");
+#endif
+            return null;
+        }
+
+        /// <summary>
+        /// 名前付きサービスを削除（文字列キー）
+        /// </summary>
+        public static void UnregisterService(string key)
+        {
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentException("Service key cannot be null or empty", nameof(key));
+
+            var removed = namedServices.TryRemove(key, out _);
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (removed)
+            {
+                UnityEngine.Debug.Log($"[ServiceLocator] Named service '{key}' unregistered");
+            }
+#endif
+        }
+
         /// <summary>
         /// Type名を取得（キャッシュ利用でパフォーマンス最適化）
         /// </summary>

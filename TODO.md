@@ -286,16 +286,11 @@
 │   │   │   ├─ Equipment Management（装備管理システム）
 │   │   │   ├─ Skill Trees Integration（スキルツリー統合）
 │   │   │   └─ asterivo.Unity60.Features.Templates.ActionRPG.*名前空間適用
-│   │   ├─ [ ] Adventure Template Configuration
-│   │   │   ├─ Dialogue Systems（ダイアログシステム）
-│   │   │   ├─ Inventory Management（インベントリ管理）
-│   │   │   ├─ Quest System Framework（クエストシステムフレームワーク）
-│   │   │   └─ asterivo.Unity60.Features.Templates.Adventure.*名前空間適用
-│   │   └─ [ ] Strategy Template Configuration
-│   │       ├─ RTS Camera Controls（RTS視点カメラ制御）
-│   │       ├─ Unit Selection Systems（ユニット選択システム）
-│   │       ├─ Resource Management UI（リソース管理UI）
-│   │       └─ asterivo.Unity60.Features.Templates.Strategy.*名前空間適用
+│   │   └─ [ ] Adventure Template Configuration
+│   │       ├─ Dialogue Systems（ダイアログシステム）
+│   │       ├─ Inventory Management（インベントリ管理）
+│   │       ├─ Quest System Framework（クエストシステムフレームワーク）
+│   │       └─ asterivo.Unity60.Features.Templates.Adventure.*名前空間適用
 ├─ ⏳ Layer 2: Runtime Template Management + 学習システム統合
 │   ├─ [ ] **TemplateManager ( **ServiceLocatorが使えるか検討** 無理な場合、Singletonを使う) + 学習支援システム実装**
 │   │   ├─ Configuration Synchronization（設定の即座同期）

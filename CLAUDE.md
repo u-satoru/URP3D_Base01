@@ -21,7 +21,7 @@
 ## 対応プラットフォーム
 - iOS
 - Android
-- Windows（開発テスト用）
+- Windows
 
 ## 主な機能
 
@@ -234,6 +234,9 @@
 -   `com.unity.cinemachine`: 高度なカメラ制御
 -   `com.unity.ai.navigation`: ナビゲーションと経路探索
 -   `com.unity.test-framework`: ユニットテストとプレイモードテスト
+-   `com.unity.timeline`: タイムラインとカットシーン制御
+-   `com.unity.addressables`: アセット管理と動的ロード
+-   `com.unity.probuilder`: 3Dモデリングとレベルデザイン
 -   `UniTask`: 非同期プログラミングライブラリ（[Cysharp](https://github.com/Cysharp/UniTask)）
 
 ## サードパーティ製アセット/ライブラリ
