@@ -1,15 +1,15 @@
 [Licensing::Module] Trying to connect to existing licensing client channel...
-[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-17T01:00:57.7642676Z"
+[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-17T00:19:06.8801246Z"
 [Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 26648, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
 [Licensing::Module] Error: LicensingClient has failed validation; ignoring
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.17.1+ae67fbc
-  Session Id:              4d4cf6d90e37489d8046d6c39d4b2179
+  Session Id:              40135300b8de412b8c6ba2200328b733
   Correlation Id:          27ba378d00f61906260636ceec280eb9
-  External correlation Id: 5546768521638184128
+  External correlation Id: 973630267978628602
   Machine Id:              6v8irZboPhn9pIeIA+kbS+sqP0M=
-[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.01s, handshake: 0.07s)
-[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-17T01:00:57.8447364Z"
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.03s, handshake: 0.11s)
+[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-17T00:19:07.0182054Z"
 [Licensing::Module] Error: Access token is unavailable; failed to update
 [Licensing::Client] Successfully updated license
 Built from '6000.0/staging' branch; Version is '6000.0.42f1 (feb9a7235030) revision 16693671'; Using compiler version '193933523'; Build Type 'Release'
@@ -26,7 +26,7 @@ D:\UnityProjects\URP3D_Base01
 -batchmode
 -quit
 -logFile
-D:\UnityProjects\URP3D_Base01\Assets\_Project\Tests\Results\stealth-template-final-compilation-verification.txt
+D:\UnityProjects\URP3D_Base01\Assets\_Project\Tests\Results\stealth-service-fix-verification.txt
 Successfully changed project path to: D:\UnityProjects\URP3D_Base01
 D:/UnityProjects/URP3D_Base01
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -64,22 +64,22 @@ D:/UnityProjects/URP3D_Base01
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [89336]  Target information:
+Player connection [47340]  Target information:
 
-Player connection [89336]  * "[IP] 172.28.160.1 [Port] 55504 [Flags] 2 [Guid] 1432423621 [EditorId] 1432423621 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [47340]  * "[IP] 172.28.160.1 [Port] 55504 [Flags] 2 [Guid] 1686747002 [EditorId] 1686747002 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [89336]  * "[IP] 172.17.80.1 [Port] 55504 [Flags] 2 [Guid] 1432423621 [EditorId] 1432423621 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [47340]  * "[IP] 172.17.80.1 [Port] 55504 [Flags] 2 [Guid] 1686747002 [EditorId] 1686747002 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [89336]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 1432423621 [EditorId] 1432423621 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [47340]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 1686747002 [EditorId] 1686747002 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [89336]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 1432423621 [EditorId] 1432423621 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [47340]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 1686747002 [EditorId] 1686747002 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [89336] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [89336] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [47340] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [47340] Host joined alternative multi-casting on [225.0.0.222:34997]...
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
 [Physics::Module] Id: 0xdecafbad
-[Package Manager] Connected to IPC stream "Upm-97488" after 0.5 seconds.
+[Package Manager] Connected to IPC stream "Upm-69868" after 0.4 seconds.
 Library Redirect Path: Library/
 [Package Manager] Restoring resolved packages state from cache
 [Licensing::Client] Successfully resolved entitlement details
@@ -159,8 +159,8 @@ Library Redirect Path: Library/
 [Physics::Module] Threading Mode: Multi-Threaded
 [Subsystems] No new subsystems found in resolved package list.
 Package Manager log level set to [2]
-[Package Manager] Done registering packages in 0.25 seconds
-Refreshing native plugins compatible for Editor in 3.55 ms, found 3 plugins.
+[Package Manager] Done registering packages in 0.32 seconds
+Refreshing native plugins compatible for Editor in 2.47 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.0.42f1 (feb9a7235030)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Resources/UnitySubsystems
@@ -177,7 +177,7 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56488
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56868
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 ImportWorker Server TCP listen port: 0
@@ -190,46 +190,46 @@ Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 [Licensing::Client] Successfully resolved entitlement details
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
-Registered in 0.055718 seconds.
-- Loaded All Assemblies, in  0.912 seconds
+Registered in 0.051207 seconds.
+- Loaded All Assemblies, in  0.807 seconds
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 [usbmuxd] Send listen message
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 856 ms
+Android Extension - Scanning For ADB Devices 847 ms
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.597 seconds
-Domain Reload Profiling: 2503ms
-	BeginReloadAssembly (351ms)
+- Finished resetting the current domain, in  1.491 seconds
+Domain Reload Profiling: 2284ms
+	BeginReloadAssembly (227ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (76ms)
-	RebuildNativeTypeToScriptingClass (16ms)
-	initialDomainReloadingComplete (148ms)
-	LoadAllAssembliesAndSetupDomain (313ms)
-		LoadAssemblies (343ms)
+	RebuildCommonClasses (58ms)
+	RebuildNativeTypeToScriptingClass (20ms)
+	initialDomainReloadingComplete (162ms)
+	LoadAllAssembliesAndSetupDomain (325ms)
+		LoadAssemblies (222ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (303ms)
-			TypeCache.Refresh (300ms)
-				TypeCache.ScanAssembly (275ms)
+		AnalyzeDomain (313ms)
+			TypeCache.Refresh (310ms)
+				TypeCache.ScanAssembly (287ms)
 			BuildScriptInfoCaches (0ms)
 			ResolveRequiredComponents (1ms)
-	FinalizeReload (1598ms)
+	FinalizeReload (1492ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1528ms)
+		SetupLoadedEditorAssemblies (1425ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (1061ms)
-			SetLoadedEditorAssemblies (6ms)
-			BeforeProcessingInitializeOnLoad (86ms)
-			ProcessInitializeOnLoadAttributes (254ms)
-			ProcessInitializeOnLoadMethodAttributes (120ms)
+			InitializePlatformSupportModulesInManaged (1063ms)
+			SetLoadedEditorAssemblies (5ms)
+			BeforeProcessingInitializeOnLoad (63ms)
+			ProcessInitializeOnLoadAttributes (195ms)
+			ProcessInitializeOnLoadMethodAttributes (98ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -237,7 +237,7 @@ Domain Reload Profiling: 2503ms
 [Licensing::Client] Successfully resolved entitlement details
 Application.AssetDatabase Initial Refresh Start
 YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
-'Assets/_Project/Tests/Results/stealth-template-final-compilation-verification.txt' Amount of processed bytes '20647' does not match file size '19300'
+'Assets/_Project/Tests/Results/stealth-service-fix-verification.txt' Amount of processed bytes '20727' does not match file size '19284'
 The contents of 'Assets/_Project/Core/Services/Interfaces/IStealthMechanicsService.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
 The .meta file Assets/_Project/Core/Services/Interfaces/IStealthMechanicsService.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
@@ -272,7 +272,7 @@ info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 72.2817ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 81.9146ms
 Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
 WorkingDir: D:/UnityProjects/URP3D_Base01
 info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
@@ -290,15 +290,23 @@ info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 138.1883ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 141.0912ms
 DisplayProgressbar: Compiling Scripts
 ## Script Compilation Error for: Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.dll (+2 others)
 ## CmdLine: "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.rsp2"
 ## Output:
-Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(117,66): error CS0426: The type name 'StealthInteractionType' does not exist in the type 'StealthInteractionCommand'
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEvents.cs(137,16): error CS0246: The type or namespace name 'StealthStatistics' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEvents.cs(140,16): error CS0246: The type or namespace name 'StealthStatistics' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEvents.cs(115,16): error CS0246: The type or namespace name 'StealthInteractionType' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthInCoverState.cs(29,17): error CS0118: 'Camera' is a namespace but is used like a type
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(937,45): error CS0104: 'StealthDetectionData' is an ambiguous reference between 'asterivo.Unity60.Features.Templates.Stealth.Data.StealthDetectionData' and 'asterivo.Unity60.Features.Templates.Stealth.Events.StealthDetectionData'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(117,66): error CS0426: The type name 'StealthInteractionType' does not exist in the type 'StealthInteractionCommand'
-ExitCode: 3 Duration: 0s974ms
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEvents.cs(137,16): error CS0246: The type or namespace name 'StealthStatistics' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEvents.cs(140,16): error CS0246: The type or namespace name 'StealthStatistics' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEvents.cs(115,16): error CS0246: The type or namespace name 'StealthInteractionType' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthInCoverState.cs(29,17): error CS0118: 'Camera' is a namespace but is used like a type
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(937,45): error CS0104: 'StealthDetectionData' is an ambiguous reference between 'asterivo.Unity60.Features.Templates.Stealth.Data.StealthDetectionData' and 'asterivo.Unity60.Features.Templates.Stealth.Events.StealthDetectionData'
+ExitCode: 3 Duration: 0s960ms
 [1052/1399  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
 [1383/1399  0s] Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.dll (+2 others)
 ##### CommandLine
@@ -816,9 +824,17 @@ DOTNET_MULTILEVEL_LOOKUP=0
 ##### ExitCode
 1
 ##### Output
-Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(117,66): error CS0426: The type name 'StealthInteractionType' does not exist in the type 'StealthInteractionCommand'
-*** Tundra build failed (0.77 seconds), 2 items updated, 1399 evaluated
-AssetDatabase: script compilation time: 2.071353s
-'Assets/_Project/Tests/Results/stealth-template-final-compilation-verification.txt' Amount of processed bytes '74224' does not match file size '26898'
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEvents.cs(137,16): error CS0246: The type or namespace name 'StealthStatistics' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEvents.cs(140,16): error CS0246: The type or namespace name 'StealthStatistics' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEvents.cs(115,16): error CS0246: The type or namespace name 'StealthInteractionType' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthInCoverState.cs(29,17): error CS0118: 'Camera' is a namespace but is used like a type
+
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(937,45): error CS0104: 'StealthDetectionData' is an ambiguous reference between 'asterivo.Unity60.Features.Templates.Stealth.Data.StealthDetectionData' and 'asterivo.Unity60.Features.Templates.Stealth.Events.StealthDetectionData'
+*** Tundra build failed (0.81 seconds), 2 items updated, 1399 evaluated
+AssetDatabase: script compilation time: 2.267261s
+'Assets/_Project/Tests/Results/stealth-service-fix-verification.txt' Amount of processed bytes '77041' does not match file size '23543'
 Scripts have compiler errors.
 Exiting without the bug reporter. Application will terminate with return code 1

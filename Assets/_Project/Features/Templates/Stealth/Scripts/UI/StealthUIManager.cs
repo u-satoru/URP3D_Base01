@@ -110,7 +110,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
         /// </summary>
         private void OnDetectionEventReceived(object eventData)
         {
-            if (eventData is StealthDetectionData detectionData)
+            if (eventData is asterivo.Unity60.Features.Templates.Stealth.Events.StealthDetectionData detectionData)
             {
                 OnStealthDetectionEvent(detectionData);
             }
@@ -118,7 +118,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
             {
                 // Convert AIDetectionData to StealthDetectionData or handle directly
                 // For now, create a dummy StealthDetectionData
-                var stealthDetectionData = new StealthDetectionData(); // TODO: Implement proper conversion
+                var stealthDetectionData = new asterivo.Unity60.Features.Templates.Stealth.Events.StealthDetectionData(); // TODO: Implement proper conversion
                 OnStealthDetectionEvent(stealthDetectionData);
             }
         }
@@ -934,7 +934,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
 
         #region Event Handlers
 
-        public void OnStealthDetectionEvent(StealthDetectionData detectionData)
+        public void OnStealthDetectionEvent(asterivo.Unity60.Features.Templates.Stealth.Events.StealthDetectionData detectionData)
         {
             // Handle detection event updates
             // TODO: Add IsConcealment property to StealthDetectionData

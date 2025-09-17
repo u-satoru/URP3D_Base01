@@ -1,15 +1,15 @@
 [Licensing::Module] Trying to connect to existing licensing client channel...
-[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-15T23:20:56.3076377Z"
+[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-17T00:25:02.0948313Z"
 [Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 26648, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
 [Licensing::Module] Error: LicensingClient has failed validation; ignoring
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.17.1+ae67fbc
-  Session Id:              1a3b796c945146cc938afcb55a8b0ab0
+  Session Id:              88e472685e9c4ec98ca66b693757ff3d
   Correlation Id:          27ba378d00f61906260636ceec280eb9
-  External correlation Id: 372249938795004464
+  External correlation Id: 6804353738375244672
   Machine Id:              6v8irZboPhn9pIeIA+kbS+sqP0M=
-[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.03s, handshake: 0.08s)
-[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-15T23:20:56.4172696Z"
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.01s, handshake: 0.09s)
+[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-17T00:25:02.1960044Z"
 [Licensing::Module] Error: Access token is unavailable; failed to update
 [Licensing::Client] Successfully updated license
 Built from '6000.0/staging' branch; Version is '6000.0.42f1 (feb9a7235030) revision 16693671'; Using compiler version '193933523'; Build Type 'Release'
@@ -64,22 +64,22 @@ D:/UnityProjects/URP3D_Base01
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [86004]  Target information:
+Player connection [2168]  Target information:
 
-Player connection [86004]  * "[IP] 172.28.160.1 [Port] 55504 [Flags] 2 [Guid] 2681388665 [EditorId] 2681388665 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [2168]  * "[IP] 172.28.160.1 [Port] 55504 [Flags] 2 [Guid] 2777808152 [EditorId] 2777808152 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [86004]  * "[IP] 172.17.80.1 [Port] 55504 [Flags] 2 [Guid] 2681388665 [EditorId] 2681388665 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [2168]  * "[IP] 172.17.80.1 [Port] 55504 [Flags] 2 [Guid] 2777808152 [EditorId] 2777808152 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [86004]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 2681388665 [EditorId] 2681388665 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [2168]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 2777808152 [EditorId] 2777808152 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [86004]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 2681388665 [EditorId] 2681388665 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [2168]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 2777808152 [EditorId] 2777808152 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [86004] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [86004] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [2168] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [2168] Host joined alternative multi-casting on [225.0.0.222:34997]...
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
 [Physics::Module] Id: 0xdecafbad
-[Package Manager] Connected to IPC stream "Upm-90788" after 0.3 seconds.
+[Package Manager] Connected to IPC stream "Upm-6828" after 0.3 seconds.
 Library Redirect Path: Library/
 [Package Manager] Restoring resolved packages state from cache
 [Licensing::Client] Successfully resolved entitlement details
@@ -159,8 +159,8 @@ Library Redirect Path: Library/
 [Physics::Module] Threading Mode: Multi-Threaded
 [Subsystems] No new subsystems found in resolved package list.
 Package Manager log level set to [2]
-[Package Manager] Done registering packages in 0.22 seconds
-Refreshing native plugins compatible for Editor in 3.14 ms, found 3 plugins.
+[Package Manager] Done registering packages in 0.24 seconds
+Refreshing native plugins compatible for Editor in 2.83 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.0.42f1 (feb9a7235030)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Resources/UnitySubsystems
@@ -177,7 +177,7 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56788
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56828
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 ImportWorker Server TCP listen port: 0
@@ -190,46 +190,46 @@ Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 [Licensing::Client] Successfully resolved entitlement details
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
-Registered in 0.054764 seconds.
-- Loaded All Assemblies, in  0.705 seconds
+Registered in 0.064125 seconds.
+- Loaded All Assemblies, in  0.883 seconds
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 [usbmuxd] Send listen message
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 742 ms
+Android Extension - Scanning For ADB Devices 828 ms
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.241 seconds
-Domain Reload Profiling: 1939ms
-	BeginReloadAssembly (225ms)
+- Finished resetting the current domain, in  1.330 seconds
+Domain Reload Profiling: 2197ms
+	BeginReloadAssembly (196ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (59ms)
-	RebuildNativeTypeToScriptingClass (18ms)
-	initialDomainReloadingComplete (135ms)
-	LoadAllAssembliesAndSetupDomain (260ms)
-		LoadAssemblies (220ms)
+	RebuildCommonClasses (46ms)
+	RebuildNativeTypeToScriptingClass (14ms)
+	initialDomainReloadingComplete (200ms)
+	LoadAllAssembliesAndSetupDomain (409ms)
+		LoadAssemblies (193ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (254ms)
-			TypeCache.Refresh (251ms)
-				TypeCache.ScanAssembly (235ms)
+		AnalyzeDomain (399ms)
+			TypeCache.Refresh (396ms)
+				TypeCache.ScanAssembly (374ms)
 			BuildScriptInfoCaches (0ms)
 			ResolveRequiredComponents (1ms)
-	FinalizeReload (1242ms)
+	FinalizeReload (1331ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1195ms)
+		SetupLoadedEditorAssemblies (1281ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (872ms)
-			SetLoadedEditorAssemblies (10ms)
-			BeforeProcessingInitializeOnLoad (77ms)
-			ProcessInitializeOnLoadAttributes (157ms)
-			ProcessInitializeOnLoadMethodAttributes (80ms)
+			InitializePlatformSupportModulesInManaged (988ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (70ms)
+			ProcessInitializeOnLoadAttributes (146ms)
+			ProcessInitializeOnLoadMethodAttributes (72ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -237,12 +237,11 @@ Domain Reload Profiling: 1939ms
 [Licensing::Client] Successfully resolved entitlement details
 Application.AssetDatabase Initial Refresh Start
 YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
+'Assets/_Project/Tests/Results/current-compilation-check.txt' Amount of processed bytes '20712' does not match file size '19270'
 The contents of 'Assets/_Project/Core/Services/Interfaces/IStealthMechanicsService.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
-'Assets/_Project/Tests/Results/current-compilation-check.txt' Amount of processed bytes '20720' does not match file size '19122'
 The .meta file Assets/_Project/Core/Services/Interfaces/IStealthMechanicsService.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
-[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
 Assembly for Assembly Definition File 'Assets/_Project/Core/Optimization/asterivo.Unity60.Optimization.asmdef' will not be compiled, because it has no scripts associated with it.
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace ()
@@ -272,7 +271,7 @@ info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 43.7570ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 59.6972ms
 Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
 WorkingDir: D:/UnityProjects/URP3D_Base01
 info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
@@ -291,10 +290,10 @@ info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 635.1218ms
-ExitCode: 3 Duration: 1s119ms
-[1073/1429  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
-[1413/1429  0s] Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.dll (+2 others)
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 563.0872ms
+ExitCode: 3 Duration: 0s973ms
+[1052/1399  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[1383/1399  0s] Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.dll (+2 others)
 ##### CommandLine
 "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.rsp2"
 ##### Contents of Library\Bee\artifacts\1900b0aE.dag\asterivo.Unity60.Features.Templates.Stealth.rsp
@@ -741,6 +740,10 @@ ExitCode: 3 Duration: 1s119ms
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
 "Assets/_Project/Features/Templates/Stealth/Scripts/AI/StealthAICoordinator.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Camera/StealthCameraController.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Commands/StealthAbilityCommand.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Commands/StealthCommandManager.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Commands/StealthInteractionCommand.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Commands/StealthMovementCommand.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthAIConfig.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthAudioConfig.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Configuration/StealthEnvironmentConfig.cs"
@@ -754,23 +757,35 @@ ExitCode: 3 Duration: 1s119ms
 "Assets/_Project/Features/Templates/Stealth/Scripts/Data/StealthTutorialData.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Data/StealthTypes.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Environment/EnvironmentalElement.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Environment/EnvironmentConcealmentZone.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Environment/HidingSpot.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Environment/HidingSpotInteractionCommand.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Environment/IConcealmentZone.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Environment/LightAndShadowSubsystem.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Environment/StealthEnvironmentManager.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Events/StealthEventChannels.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Events/StealthEventData.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Events/StealthEvents.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Events/StealthGameEvents.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Gameplay/StealthGameplayManager.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Integration/StealthLearnAndGrowIntegrator.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Interaction/EnvironmentalInteraction.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Mechanics/StealthMechanics.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Mechanics/StealthMechanicsController.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Player/States/StealthCrouchingState.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Player/States/StealthInCoverState.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Player/States/StealthProneState.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Player/StealthStateManager.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Services/ConcealmentManager.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Services/IStealthService.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Services/StealthService.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthAISettings.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthAudioSettings.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthCameraSettings.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthLearningSettings.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthMissionSettings.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthPlayerSettings.cs"
+"Assets/_Project/Features/Templates/Stealth/Scripts/Settings/StealthUIConfig.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/StealthTemplateConfiguration.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/StealthTemplateManager.cs"
 "Assets/_Project/Features/Templates/Stealth/Scripts/StealthTemplateValidator.cs"
@@ -794,7 +809,67 @@ DOTNET_MULTILEVEL_LOOKUP=0
 ##### ExitCode
 1
 ##### Output
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\HidingSpotInteractionCommand.cs(63,63): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(113,30): error CS0104: 'StealthDetectionData' is an ambiguous reference between 'asterivo.Unity60.Features.Templates.Stealth.Data.StealthDetectionData' and 'asterivo.Unity60.Features.Templates.Stealth.Events.StealthDetectionData'
+
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(121,48): error CS0104: 'StealthDetectionData' is an ambiguous reference between 'asterivo.Unity60.Features.Templates.Stealth.Data.StealthDetectionData' and 'asterivo.Unity60.Features.Templates.Stealth.Events.StealthDetectionData'
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(66,54): error CS0117: 'CommandPoolManager' does not contain a definition for 'Instance'
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(75,33): error CS1061: 'CommandPoolManager' does not contain a definition for 'CreatePool' and no accessible extension method 'CreatePool' accepting a first argument of type 'CommandPoolManager' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(76,33): error CS1061: 'CommandPoolManager' does not contain a definition for 'CreatePool' and no accessible extension method 'CreatePool' accepting a first argument of type 'CommandPoolManager' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(77,33): error CS1061: 'CommandPoolManager' does not contain a definition for 'CreatePool' and no accessible extension method 'CreatePool' accepting a first argument of type 'CommandPoolManager' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(88,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthAbilityCommand.cs(67,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthAbilityCommand.cs(68,35): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(98,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(123,35): error CS0029: Cannot implicitly convert type 'string' to 'asterivo.Unity60.Features.Templates.Stealth.Services.StealthInteractionType'
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(124,17): error CS0117: 'EnvironmentalInteractionData' does not contain a definition for 'TargetObjectId'
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(126,17): error CS0117: 'EnvironmentalInteractionData' does not contain a definition for 'Duration'
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(127,17): error CS0117: 'EnvironmentalInteractionData' does not contain a definition for 'PlayerId'
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(128,29): error CS0029: Cannot implicitly convert type 'System.DateTime' to 'float'
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthMovementCommand.cs(61,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthMovementCommand.cs(62,35): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(232,17): error CS1503: Argument 2: cannot convert from 'asterivo.Unity60.Features.Templates.Stealth.Commands.StealthInteractionCommand.StealthInteractionType' to 'asterivo.Unity60.Features.Templates.Stealth.Services.StealthInteractionType'
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(243,53): error CS0118: 'Camera' is a namespace but is used like a type
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Camera\StealthCameraController.cs(380,17): warning CS0162: Unreachable code detected
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Services\StealthService.cs(144,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(392,29): error CS1061: 'IStealthService' does not contain a definition for 'SetPlayerConcealment' and no accessible extension method 'SetPlayerConcealment' accepting a first argument of type 'IStealthService' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(184,35): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(191,34): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(198,36): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(446,29): error CS1061: 'IStealthService' does not contain a definition for 'SetPlayerConcealment' and no accessible extension method 'SetPlayerConcealment' accepting a first argument of type 'IStealthService' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Services\ConcealmentManager.cs(83,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Services\ConcealmentManager.cs(112,13): error CS0103: The name 'ServiceLocator' does not exist in the current context
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(466,65): error CS0118: 'Camera' is a namespace but is used like a type
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Services\ConcealmentManager.cs(121,33): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\EnvironmentConcealmentZone.cs(147,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
 
 Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(106,40): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
@@ -804,293 +879,248 @@ Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGr
 
 Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(112,30): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(182,35): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthProneState.cs(37,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
 
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(189,34): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthProneState.cs(67,64): error CS1061: 'StealthMovementController' does not contain a definition for 'GetCurrentNoiseLevel' and no accessible extension method 'GetCurrentNoiseLevel' accepting a first argument of type 'StealthMovementController' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(196,36): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(448,45): error CS0411: The type arguments for method 'CommandPoolManager.GetStatistics<TCommand>()' cannot be inferred from the usage. Try specifying the type arguments explicitly.
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\HidingSpotInteractionCommand.cs(118,63): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(449,26): error CS1061: 'CommandStatistics' does not contain a definition for 'ObjectsInUse' and no accessible extension method 'ObjectsInUse' accepting a first argument of type 'CommandStatistics' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(449,55): error CS1061: 'CommandStatistics' does not contain a definition for 'ObjectsInUse' and no accessible extension method 'ObjectsInUse' accepting a first argument of type 'CommandStatistics' could be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(449,76): error CS1061: 'CommandStatistics' does not contain a definition for 'ObjectsAvailable' and no accessible extension method 'ObjectsAvailable' accepting a first argument of type 'CommandStatistics' could be found (are you missing a using directive or an assembly reference?)
 
 Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(131,37): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(378,28): error CS0122: 'StealthUIManager.UpdateLearningProgress()' is inaccessible due to its protection level
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\StealthStateManager.cs(111,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(167,48): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthCrouchingState.cs(34,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(167,74): error CS1503: Argument 1: cannot convert from 'asterivo.Unity60.Features.Templates.Stealth.Mechanics.StealthMechanics' to 'IStealthMechanicsService'
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthCrouchingState.cs(64,64): error CS1061: 'StealthMovementController' does not contain a definition for 'GetCurrentNoiseLevel' and no accessible extension method 'GetCurrentNoiseLevel' accepting a first argument of type 'StealthMovementController' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\HidingSpotInteractionCommand.cs(224,63): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\LightAndShadowSubsystem.cs(115,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\HidingSpotInteractionCommand.cs(247,63): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthInCoverState.cs(38,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(448,50): error CS1503: Argument 1: cannot convert from 'asterivo.Unity60.Features.Templates.Stealth.StealthMissionObjective' to 'string'
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthInCoverState.cs(72,29): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Camera' (are you missing an assembly reference?)
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Camera\StealthCameraController.cs(380,17): warning CS0162: Unreachable code detected
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthInCoverState.cs(72,61): error CS0118: 'Camera' is a namespace but is used like a type
 
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(666,40): error CS1061: 'StealthAIConfig' does not contain a definition for 'SuspicionDecayRate' and no accessible extension method 'SuspicionDecayRate' accepting a first argument of type 'StealthAIConfig' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthInCoverState.cs(72,44): error CS0103: The name 'FindObjectOfType' does not exist in the current context
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(385,41): error CS1503: Argument 1: cannot convert from 'object' to 'UnityEngine.MonoBehaviour'
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\LightAndShadowSubsystem.cs(150,33): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(397,43): error CS1503: Argument 1: cannot convert from 'object' to 'UnityEngine.MonoBehaviour'
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\LightAndShadowSubsystem.cs(163,43): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(407,36): error CS1061: 'object' does not contain a definition for 'IsSystemReady' and no accessible extension method 'IsSystemReady' accepting a first argument of type 'object' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(412,40): error CS1061: 'object' does not contain a definition for 'GetOverallProgress' and no accessible extension method 'GetOverallProgress' accepting a first argument of type 'object' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(417,40): error CS1061: 'object' does not contain a definition for 'IsBasicGameplayReady' and no accessible extension method 'IsBasicGameplayReady' accepting a first argument of type 'object' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(424,33): error CS1061: 'object' does not contain a definition for 'StartQuickLearning' and no accessible extension method 'StartQuickLearning' accepting a first argument of type 'object' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(777,95): error CS1061: 'StealthAIConfig' does not contain a definition for 'name' and no accessible extension method 'name' accepting a first argument of type 'StealthAIConfig' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(492,32): error CS1061: 'StealthAICoordinator' does not contain a definition for 'OnDetectionEvent' and no accessible extension method 'OnDetectionEvent' accepting a first argument of type 'StealthAICoordinator' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(498,28): error CS1061: 'StealthUIManager' does not contain a definition for 'OnDetectionLevelChanged' and no accessible extension method 'OnDetectionLevelChanged' accepting a first argument of type 'StealthUIManager' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(535,28): error CS1061: 'StealthUIManager' does not contain a definition for 'OnDetectionLevelChanged' and no accessible extension method 'OnDetectionLevelChanged' accepting a first argument of type 'StealthUIManager' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(602,36): error CS1061: 'StealthMechanicsController' does not contain a definition for 'InteractWithHidingSpot' and no accessible extension method 'InteractWithHidingSpot' accepting a first argument of type 'StealthMechanicsController' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(518,54): error CS1503: Argument 1: cannot convert from 'asterivo.Unity60.Features.Templates.Stealth.GlobalAlertLevel' to 'asterivo.Unity60.Features.Templates.Stealth.Data.AIAlertLevel'
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanics.cs(292,68): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(528,41): error CS1061: 'StealthMechanicsConfig' does not contain a definition for 'TutorialBaseStealthLevel' and no accessible extension method 'TutorialBaseStealthLevel' accepting a first argument of type 'StealthMechanicsConfig' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(529,38): error CS1061: 'StealthMechanicsConfig' does not contain a definition for 'ShowTutorialDebugInfo' and no accessible extension method 'ShowTutorialDebugInfo' accepting a first argument of type 'StealthMechanicsConfig' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(361,67): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(375,67): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(605,101): error CS1061: 'StealthMechanicsConfig' does not contain a definition for 'name' and no accessible extension method 'name' accepting a first argument of type 'StealthMechanicsConfig' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(241,74): error CS1061: 'StealthTemplateConfig' does not contain a definition for 'templateName' and no accessible extension method 'templateName' accepting a first argument of type 'StealthTemplateConfig' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(242,72): error CS1061: 'StealthTemplateConfig' does not contain a definition for 'templateVersion' and no accessible extension method 'templateVersion' accepting a first argument of type 'StealthTemplateConfig' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(249,51): error CS1061: 'StealthTemplateConfig' does not contain a definition for 'targetGameplayDuration' and no accessible extension method 'targetGameplayDuration' accepting a first argument of type 'StealthTemplateConfig' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(250,49): error CS1061: 'StealthTemplateConfig' does not contain a definition for 'estimatedLearningTime' and no accessible extension method 'estimatedLearningTime' accepting a first argument of type 'StealthTemplateConfig' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(733,50): error CS1061: 'StealthUIConfig' does not contain a definition for 'ShowLearningProgress' and no accessible extension method 'ShowLearningProgress' accepting a first argument of type 'StealthUIConfig' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(413,67): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(599,35): error CS1061: 'StealthUIManager' does not contain a definition for 'ShowTimeWarning' and no accessible extension method 'ShowTimeWarning' accepting a first argument of type 'StealthUIManager' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(605,35): error CS1061: 'StealthUIManager' does not contain a definition for 'ShowTimeWarning' and no accessible extension method 'ShowTimeWarning' accepting a first argument of type 'StealthUIManager' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(266,38): error CS0029: Cannot implicitly convert type 'asterivo.Unity60.Features.Templates.Stealth.Configuration.StealthMechanicsConfig' to 'UnityEngine.Object'
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(267,31): error CS0029: Cannot implicitly convert type 'asterivo.Unity60.Features.Templates.Stealth.Configuration.StealthAIConfig' to 'UnityEngine.Object'
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(268,34): error CS0029: Cannot implicitly convert type 'asterivo.Unity60.Features.Templates.Stealth.Configuration.StealthAudioConfig' to 'UnityEngine.Object'
-
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(271,37): error CS0029: Cannot implicitly convert type 'asterivo.Unity60.Features.Templates.Stealth.Configuration.StealthTutorialConfig' to 'UnityEngine.Object'
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(678,27): error CS1061: 'StealthUIManager' does not contain a definition for 'ShowGameEndScreen' and no accessible extension method 'ShowGameEndScreen' accepting a first argument of type 'StealthUIManager' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(436,41): error CS1061: 'StealthEnvironmentConfig' does not contain a definition for 'InteractionRadius' and no accessible extension method 'InteractionRadius' accepting a first argument of type 'StealthEnvironmentConfig' could be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(917,17): warning CS0162: Unreachable code detected
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(944,17): warning CS0162: Unreachable code detected
 
 Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(445,44): warning CS0618: 'Profiler.GetTotalAllocatedMemory()' is obsolete: 'GetTotalAllocatedMemory has been deprecated since it is limited to 4GB. Please use GetTotalAllocatedMemoryLong() instead.'
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanics.cs(716,67): error CS0117: 'StealthState' does not contain a definition for 'Exposed'
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanics.cs(717,37): error CS0117: 'StealthState' does not contain a definition for 'Sneaking'
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(966,22): warning CS0414: The field 'NPCPatrolController.isPatrolling' is assigned but its value is never used
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(108,39): warning CS0414: The field 'StealthLearningSettings.enableInteractiveHighlights' is assigned but its value is never used
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(110,39): warning CS0414: The field 'StealthLearningSettings.enableTutorialSkipping' is assigned but its value is never used
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(35,52): warning CS0414: The field 'StealthGameplayManager.difficultyLevel' is assigned but its value is never used
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(533,44): warning CS0414: The field 'EnvironmentalInteraction.HidingSpot.hidingEffectiveness' is assigned but its value is never used
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(40,39): warning CS0414: The field 'StealthEventChannels._enableEventBatching' is assigned but its value is never used
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(51,39): warning CS0414: The field 'StealthGameplayManager.enableNPCCommunication' is assigned but its value is never used
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(107,39): warning CS0414: The field 'StealthLearningSettings.enableRealTimeHints' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthInCoverState.cs(19,40): warning CS0414: The field 'StealthInCoverState.coverNoiseReduction' is assigned but its value is never used
 
 Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(68,39): warning CS0414: The field 'StealthLearningSettings.enableProgressiveUnlock' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(961,40): warning CS0414: The field 'NPCPatrolController.waitTime' is assigned but its value is never used
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(490,44): warning CS0414: The field 'EnvironmentalInteraction.DistractionItem.distractionDuration' is assigned but its value is never used
-
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(31,39): warning CS0414: The field 'StealthAICoordinator._enablePerformanceOptimization' is assigned but its value is never used
-
-Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(69,39): warning CS0414: The field 'StealthLearningSettings.enableSkillValidation' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(32,39): warning CS0414: The field 'StealthAICoordinator._enablePerformanceOptimization' is assigned but its value is never used
 
 Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(67,59): warning CS0414: The field 'StealthLearningSettings.learningSpeedMultiplier' is assigned but its value is never used
 
+Assets\_Project\Features\Templates\Stealth\Scripts\Services\StealthService.cs(28,41): warning CS0414: The field 'StealthService._stealthAudioChannelName' is assigned but its value is never used
+
 Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(109,40): warning CS0414: The field 'StealthLearningSettings.hintDisplayDelay' is assigned but its value is never used
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(533,44): warning CS0414: The field 'EnvironmentalInteraction.HidingSpot.hidingEffectiveness' is assigned but its value is never used
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(982,40): warning CS0414: The field 'NPCPatrolController.waitTime' is assigned but its value is never used
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(107,39): warning CS0414: The field 'StealthLearningSettings.enableRealTimeHints' is assigned but its value is never used
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(987,22): warning CS0414: The field 'NPCPatrolController.isPatrolling' is assigned but its value is never used
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(108,39): warning CS0414: The field 'StealthLearningSettings.enableInteractiveHighlights' is assigned but its value is never used
 
 Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(39,40): warning CS0414: The field 'StealthEventChannels._eventProcessingTimeLimit' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(37,38): warning CS0414: The field 'StealthEventChannels._maxEventsPerFrame' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\LightAndShadowSubsystem.cs(34,23): warning CS0414: The field 'LightAndShadowSubsystem._shadowRaycastDistance' is assigned but its value is never used
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\EnvironmentConcealmentZone.cs(34,23): warning CS0414: The field 'EnvironmentConcealmentZone._exitDelay' is assigned but its value is never used
 
 Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(66,39): warning CS0414: The field 'StealthLearningSettings.enableAdaptiveDifficulty' is assigned but its value is never used
 
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(490,44): warning CS0414: The field 'EnvironmentalInteraction.DistractionItem.distractionDuration' is assigned but its value is never used
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(69,39): warning CS0414: The field 'StealthLearningSettings.enableSkillValidation' is assigned but its value is never used
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(36,52): warning CS0414: The field 'StealthGameplayManager.difficultyLevel' is assigned but its value is never used
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(37,38): warning CS0414: The field 'StealthEventChannels._maxEventsPerFrame' is assigned but its value is never used
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(52,39): warning CS0414: The field 'StealthGameplayManager.enableNPCCommunication' is assigned but its value is never used
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(40,39): warning CS0414: The field 'StealthEventChannels._enableEventBatching' is assigned but its value is never used
+
 Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(40,59): warning CS0414: The field 'StealthTemplateValidator.testDurationOverride' is assigned but its value is never used
-*** Tundra build failed (1.07 seconds), 2 items updated, 1429 evaluated
+
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(110,39): warning CS0414: The field 'StealthLearningSettings.enableTutorialSkipping' is assigned but its value is never used
+*** Tundra build failed (0.90 seconds), 2 items updated, 1399 evaluated
 ## Script Compilation Error for: Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.dll (+2 others)
 ## CmdLine: "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Stealth.rsp2"
 ## Output:
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\HidingSpotInteractionCommand.cs(63,63): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(113,30): error CS0104: 'StealthDetectionData' is an ambiguous reference between 'asterivo.Unity60.Features.Templates.Stealth.Data.StealthDetectionData' and 'asterivo.Unity60.Features.Templates.Stealth.Events.StealthDetectionData'
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(121,48): error CS0104: 'StealthDetectionData' is an ambiguous reference between 'asterivo.Unity60.Features.Templates.Stealth.Data.StealthDetectionData' and 'asterivo.Unity60.Features.Templates.Stealth.Events.StealthDetectionData'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(66,54): error CS0117: 'CommandPoolManager' does not contain a definition for 'Instance'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(75,33): error CS1061: 'CommandPoolManager' does not contain a definition for 'CreatePool' and no accessible extension method 'CreatePool' accepting a first argument of type 'CommandPoolManager' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(76,33): error CS1061: 'CommandPoolManager' does not contain a definition for 'CreatePool' and no accessible extension method 'CreatePool' accepting a first argument of type 'CommandPoolManager' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(77,33): error CS1061: 'CommandPoolManager' does not contain a definition for 'CreatePool' and no accessible extension method 'CreatePool' accepting a first argument of type 'CommandPoolManager' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(88,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthAbilityCommand.cs(67,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthAbilityCommand.cs(68,35): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(98,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(123,35): error CS0029: Cannot implicitly convert type 'string' to 'asterivo.Unity60.Features.Templates.Stealth.Services.StealthInteractionType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(124,17): error CS0117: 'EnvironmentalInteractionData' does not contain a definition for 'TargetObjectId'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(126,17): error CS0117: 'EnvironmentalInteractionData' does not contain a definition for 'Duration'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(127,17): error CS0117: 'EnvironmentalInteractionData' does not contain a definition for 'PlayerId'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(128,29): error CS0029: Cannot implicitly convert type 'System.DateTime' to 'float'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthMovementCommand.cs(61,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthMovementCommand.cs(62,35): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(232,17): error CS1503: Argument 2: cannot convert from 'asterivo.Unity60.Features.Templates.Stealth.Commands.StealthInteractionCommand.StealthInteractionType' to 'asterivo.Unity60.Features.Templates.Stealth.Services.StealthInteractionType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(243,53): error CS0118: 'Camera' is a namespace but is used like a type
+Assets\_Project\Features\Templates\Stealth\Scripts\Camera\StealthCameraController.cs(380,17): warning CS0162: Unreachable code detected
+Assets\_Project\Features\Templates\Stealth\Scripts\Services\StealthService.cs(144,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(392,29): error CS1061: 'IStealthService' does not contain a definition for 'SetPlayerConcealment' and no accessible extension method 'SetPlayerConcealment' accepting a first argument of type 'IStealthService' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(184,35): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(191,34): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(198,36): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(446,29): error CS1061: 'IStealthService' does not contain a definition for 'SetPlayerConcealment' and no accessible extension method 'SetPlayerConcealment' accepting a first argument of type 'IStealthService' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Services\ConcealmentManager.cs(83,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Services\ConcealmentManager.cs(112,13): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(466,65): error CS0118: 'Camera' is a namespace but is used like a type
+Assets\_Project\Features\Templates\Stealth\Scripts\Services\ConcealmentManager.cs(121,33): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\EnvironmentConcealmentZone.cs(147,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
 Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(106,40): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(108,34): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(110,39): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(112,30): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(182,35): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(189,34): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(196,36): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\HidingSpotInteractionCommand.cs(118,63): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthProneState.cs(37,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthProneState.cs(67,64): error CS1061: 'StealthMovementController' does not contain a definition for 'GetCurrentNoiseLevel' and no accessible extension method 'GetCurrentNoiseLevel' accepting a first argument of type 'StealthMovementController' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(448,45): error CS0411: The type arguments for method 'CommandPoolManager.GetStatistics<TCommand>()' cannot be inferred from the usage. Try specifying the type arguments explicitly.
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(449,26): error CS1061: 'CommandStatistics' does not contain a definition for 'ObjectsInUse' and no accessible extension method 'ObjectsInUse' accepting a first argument of type 'CommandStatistics' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(449,55): error CS1061: 'CommandStatistics' does not contain a definition for 'ObjectsInUse' and no accessible extension method 'ObjectsInUse' accepting a first argument of type 'CommandStatistics' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(449,76): error CS1061: 'CommandStatistics' does not contain a definition for 'ObjectsAvailable' and no accessible extension method 'ObjectsAvailable' accepting a first argument of type 'CommandStatistics' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(131,37): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
-Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(378,28): error CS0122: 'StealthUIManager.UpdateLearningProgress()' is inaccessible due to its protection level
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(167,48): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(167,74): error CS1503: Argument 1: cannot convert from 'asterivo.Unity60.Features.Templates.Stealth.Mechanics.StealthMechanics' to 'IStealthMechanicsService'
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\HidingSpotInteractionCommand.cs(224,63): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\HidingSpotInteractionCommand.cs(247,63): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(448,50): error CS1503: Argument 1: cannot convert from 'asterivo.Unity60.Features.Templates.Stealth.StealthMissionObjective' to 'string'
-Assets\_Project\Features\Templates\Stealth\Scripts\Camera\StealthCameraController.cs(380,17): warning CS0162: Unreachable code detected
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(666,40): error CS1061: 'StealthAIConfig' does not contain a definition for 'SuspicionDecayRate' and no accessible extension method 'SuspicionDecayRate' accepting a first argument of type 'StealthAIConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(385,41): error CS1503: Argument 1: cannot convert from 'object' to 'UnityEngine.MonoBehaviour'
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(397,43): error CS1503: Argument 1: cannot convert from 'object' to 'UnityEngine.MonoBehaviour'
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(407,36): error CS1061: 'object' does not contain a definition for 'IsSystemReady' and no accessible extension method 'IsSystemReady' accepting a first argument of type 'object' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(412,40): error CS1061: 'object' does not contain a definition for 'GetOverallProgress' and no accessible extension method 'GetOverallProgress' accepting a first argument of type 'object' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(417,40): error CS1061: 'object' does not contain a definition for 'IsBasicGameplayReady' and no accessible extension method 'IsBasicGameplayReady' accepting a first argument of type 'object' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(424,33): error CS1061: 'object' does not contain a definition for 'StartQuickLearning' and no accessible extension method 'StartQuickLearning' accepting a first argument of type 'object' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(777,95): error CS1061: 'StealthAIConfig' does not contain a definition for 'name' and no accessible extension method 'name' accepting a first argument of type 'StealthAIConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(492,32): error CS1061: 'StealthAICoordinator' does not contain a definition for 'OnDetectionEvent' and no accessible extension method 'OnDetectionEvent' accepting a first argument of type 'StealthAICoordinator' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(498,28): error CS1061: 'StealthUIManager' does not contain a definition for 'OnDetectionLevelChanged' and no accessible extension method 'OnDetectionLevelChanged' accepting a first argument of type 'StealthUIManager' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(535,28): error CS1061: 'StealthUIManager' does not contain a definition for 'OnDetectionLevelChanged' and no accessible extension method 'OnDetectionLevelChanged' accepting a first argument of type 'StealthUIManager' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(602,36): error CS1061: 'StealthMechanicsController' does not contain a definition for 'InteractWithHidingSpot' and no accessible extension method 'InteractWithHidingSpot' accepting a first argument of type 'StealthMechanicsController' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(518,54): error CS1503: Argument 1: cannot convert from 'asterivo.Unity60.Features.Templates.Stealth.GlobalAlertLevel' to 'asterivo.Unity60.Features.Templates.Stealth.Data.AIAlertLevel'
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanics.cs(292,68): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(528,41): error CS1061: 'StealthMechanicsConfig' does not contain a definition for 'TutorialBaseStealthLevel' and no accessible extension method 'TutorialBaseStealthLevel' accepting a first argument of type 'StealthMechanicsConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(529,38): error CS1061: 'StealthMechanicsConfig' does not contain a definition for 'ShowTutorialDebugInfo' and no accessible extension method 'ShowTutorialDebugInfo' accepting a first argument of type 'StealthMechanicsConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(361,67): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(375,67): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(605,101): error CS1061: 'StealthMechanicsConfig' does not contain a definition for 'name' and no accessible extension method 'name' accepting a first argument of type 'StealthMechanicsConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(241,74): error CS1061: 'StealthTemplateConfig' does not contain a definition for 'templateName' and no accessible extension method 'templateName' accepting a first argument of type 'StealthTemplateConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(242,72): error CS1061: 'StealthTemplateConfig' does not contain a definition for 'templateVersion' and no accessible extension method 'templateVersion' accepting a first argument of type 'StealthTemplateConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(249,51): error CS1061: 'StealthTemplateConfig' does not contain a definition for 'targetGameplayDuration' and no accessible extension method 'targetGameplayDuration' accepting a first argument of type 'StealthTemplateConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(250,49): error CS1061: 'StealthTemplateConfig' does not contain a definition for 'estimatedLearningTime' and no accessible extension method 'estimatedLearningTime' accepting a first argument of type 'StealthTemplateConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(733,50): error CS1061: 'StealthUIConfig' does not contain a definition for 'ShowLearningProgress' and no accessible extension method 'ShowLearningProgress' accepting a first argument of type 'StealthUIConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(413,67): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(599,35): error CS1061: 'StealthUIManager' does not contain a definition for 'ShowTimeWarning' and no accessible extension method 'ShowTimeWarning' accepting a first argument of type 'StealthUIManager' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(605,35): error CS1061: 'StealthUIManager' does not contain a definition for 'ShowTimeWarning' and no accessible extension method 'ShowTimeWarning' accepting a first argument of type 'StealthUIManager' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(266,38): error CS0029: Cannot implicitly convert type 'asterivo.Unity60.Features.Templates.Stealth.Configuration.StealthMechanicsConfig' to 'UnityEngine.Object'
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(267,31): error CS0029: Cannot implicitly convert type 'asterivo.Unity60.Features.Templates.Stealth.Configuration.StealthAIConfig' to 'UnityEngine.Object'
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(268,34): error CS0029: Cannot implicitly convert type 'asterivo.Unity60.Features.Templates.Stealth.Configuration.StealthAudioConfig' to 'UnityEngine.Object'
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(271,37): error CS0029: Cannot implicitly convert type 'asterivo.Unity60.Features.Templates.Stealth.Configuration.StealthTutorialConfig' to 'UnityEngine.Object'
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(678,27): error CS1061: 'StealthUIManager' does not contain a definition for 'ShowGameEndScreen' and no accessible extension method 'ShowGameEndScreen' accepting a first argument of type 'StealthUIManager' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(436,41): error CS1061: 'StealthEnvironmentConfig' does not contain a definition for 'InteractionRadius' and no accessible extension method 'InteractionRadius' accepting a first argument of type 'StealthEnvironmentConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(917,17): warning CS0162: Unreachable code detected
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\StealthStateManager.cs(111,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthCrouchingState.cs(34,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthCrouchingState.cs(64,64): error CS1061: 'StealthMovementController' does not contain a definition for 'GetCurrentNoiseLevel' and no accessible extension method 'GetCurrentNoiseLevel' accepting a first argument of type 'StealthMovementController' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\LightAndShadowSubsystem.cs(115,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthInCoverState.cs(38,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthInCoverState.cs(72,29): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Camera' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthInCoverState.cs(72,61): error CS0118: 'Camera' is a namespace but is used like a type
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthInCoverState.cs(72,44): error CS0103: The name 'FindObjectOfType' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\LightAndShadowSubsystem.cs(150,33): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\LightAndShadowSubsystem.cs(163,43): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(944,17): warning CS0162: Unreachable code detected
 Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(445,44): warning CS0618: 'Profiler.GetTotalAllocatedMemory()' is obsolete: 'GetTotalAllocatedMemory has been deprecated since it is limited to 4GB. Please use GetTotalAllocatedMemoryLong() instead.'
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanics.cs(716,67): error CS0117: 'StealthState' does not contain a definition for 'Exposed'
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanics.cs(717,37): error CS0117: 'StealthState' does not contain a definition for 'Sneaking'
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(966,22): warning CS0414: The field 'NPCPatrolController.isPatrolling' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(108,39): warning CS0414: The field 'StealthLearningSettings.enableInteractiveHighlights' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(110,39): warning CS0414: The field 'StealthLearningSettings.enableTutorialSkipping' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(35,52): warning CS0414: The field 'StealthGameplayManager.difficultyLevel' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(533,44): warning CS0414: The field 'EnvironmentalInteraction.HidingSpot.hidingEffectiveness' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(40,39): warning CS0414: The field 'StealthEventChannels._enableEventBatching' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(51,39): warning CS0414: The field 'StealthGameplayManager.enableNPCCommunication' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(107,39): warning CS0414: The field 'StealthLearningSettings.enableRealTimeHints' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthInCoverState.cs(19,40): warning CS0414: The field 'StealthInCoverState.coverNoiseReduction' is assigned but its value is never used
 Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(68,39): warning CS0414: The field 'StealthLearningSettings.enableProgressiveUnlock' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(961,40): warning CS0414: The field 'NPCPatrolController.waitTime' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(490,44): warning CS0414: The field 'EnvironmentalInteraction.DistractionItem.distractionDuration' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(31,39): warning CS0414: The field 'StealthAICoordinator._enablePerformanceOptimization' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(69,39): warning CS0414: The field 'StealthLearningSettings.enableSkillValidation' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(32,39): warning CS0414: The field 'StealthAICoordinator._enablePerformanceOptimization' is assigned but its value is never used
 Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(67,59): warning CS0414: The field 'StealthLearningSettings.learningSpeedMultiplier' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Services\StealthService.cs(28,41): warning CS0414: The field 'StealthService._stealthAudioChannelName' is assigned but its value is never used
 Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(109,40): warning CS0414: The field 'StealthLearningSettings.hintDisplayDelay' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(533,44): warning CS0414: The field 'EnvironmentalInteraction.HidingSpot.hidingEffectiveness' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(982,40): warning CS0414: The field 'NPCPatrolController.waitTime' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(107,39): warning CS0414: The field 'StealthLearningSettings.enableRealTimeHints' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(987,22): warning CS0414: The field 'NPCPatrolController.isPatrolling' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(108,39): warning CS0414: The field 'StealthLearningSettings.enableInteractiveHighlights' is assigned but its value is never used
 Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(39,40): warning CS0414: The field 'StealthEventChannels._eventProcessingTimeLimit' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(37,38): warning CS0414: The field 'StealthEventChannels._maxEventsPerFrame' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\LightAndShadowSubsystem.cs(34,23): warning CS0414: The field 'LightAndShadowSubsystem._shadowRaycastDistance' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\EnvironmentConcealmentZone.cs(34,23): warning CS0414: The field 'EnvironmentConcealmentZone._exitDelay' is assigned but its value is never used
 Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(66,39): warning CS0414: The field 'StealthLearningSettings.enableAdaptiveDifficulty' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(490,44): warning CS0414: The field 'EnvironmentalInteraction.DistractionItem.distractionDuration' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(69,39): warning CS0414: The field 'StealthLearningSettings.enableSkillValidation' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(36,52): warning CS0414: The field 'StealthGameplayManager.difficultyLevel' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(37,38): warning CS0414: The field 'StealthEventChannels._maxEventsPerFrame' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(52,39): warning CS0414: The field 'StealthGameplayManager.enableNPCCommunication' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(40,39): warning CS0414: The field 'StealthEventChannels._enableEventBatching' is assigned but its value is never used
 Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(40,59): warning CS0414: The field 'StealthTemplateValidator.testDurationOverride' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(110,39): warning CS0414: The field 'StealthLearningSettings.enableTutorialSkipping' is assigned but its value is never used
 
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\HidingSpotInteractionCommand.cs(63,63): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(113,30): error CS0104: 'StealthDetectionData' is an ambiguous reference between 'asterivo.Unity60.Features.Templates.Stealth.Data.StealthDetectionData' and 'asterivo.Unity60.Features.Templates.Stealth.Events.StealthDetectionData'
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(121,48): error CS0104: 'StealthDetectionData' is an ambiguous reference between 'asterivo.Unity60.Features.Templates.Stealth.Data.StealthDetectionData' and 'asterivo.Unity60.Features.Templates.Stealth.Events.StealthDetectionData'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(66,54): error CS0117: 'CommandPoolManager' does not contain a definition for 'Instance'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(75,33): error CS1061: 'CommandPoolManager' does not contain a definition for 'CreatePool' and no accessible extension method 'CreatePool' accepting a first argument of type 'CommandPoolManager' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(76,33): error CS1061: 'CommandPoolManager' does not contain a definition for 'CreatePool' and no accessible extension method 'CreatePool' accepting a first argument of type 'CommandPoolManager' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(77,33): error CS1061: 'CommandPoolManager' does not contain a definition for 'CreatePool' and no accessible extension method 'CreatePool' accepting a first argument of type 'CommandPoolManager' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(88,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthAbilityCommand.cs(67,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthAbilityCommand.cs(68,35): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(98,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(123,35): error CS0029: Cannot implicitly convert type 'string' to 'asterivo.Unity60.Features.Templates.Stealth.Services.StealthInteractionType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(124,17): error CS0117: 'EnvironmentalInteractionData' does not contain a definition for 'TargetObjectId'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(126,17): error CS0117: 'EnvironmentalInteractionData' does not contain a definition for 'Duration'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(127,17): error CS0117: 'EnvironmentalInteractionData' does not contain a definition for 'PlayerId'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(128,29): error CS0029: Cannot implicitly convert type 'System.DateTime' to 'float'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthMovementCommand.cs(61,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthMovementCommand.cs(62,35): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(232,17): error CS1503: Argument 2: cannot convert from 'asterivo.Unity60.Features.Templates.Stealth.Commands.StealthInteractionCommand.StealthInteractionType' to 'asterivo.Unity60.Features.Templates.Stealth.Services.StealthInteractionType'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(243,53): error CS0118: 'Camera' is a namespace but is used like a type
+Assets\_Project\Features\Templates\Stealth\Scripts\Camera\StealthCameraController.cs(380,17): warning CS0162: Unreachable code detected
+Assets\_Project\Features\Templates\Stealth\Scripts\Services\StealthService.cs(144,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(392,29): error CS1061: 'IStealthService' does not contain a definition for 'SetPlayerConcealment' and no accessible extension method 'SetPlayerConcealment' accepting a first argument of type 'IStealthService' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(184,35): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(191,34): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(198,36): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(446,29): error CS1061: 'IStealthService' does not contain a definition for 'SetPlayerConcealment' and no accessible extension method 'SetPlayerConcealment' accepting a first argument of type 'IStealthService' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Services\ConcealmentManager.cs(83,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Services\ConcealmentManager.cs(112,13): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthInteractionCommand.cs(466,65): error CS0118: 'Camera' is a namespace but is used like a type
+Assets\_Project\Features\Templates\Stealth\Scripts\Services\ConcealmentManager.cs(121,33): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\EnvironmentConcealmentZone.cs(147,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
 Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(106,40): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(108,34): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(110,39): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(112,30): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(182,35): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(189,34): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(196,36): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\HidingSpotInteractionCommand.cs(118,63): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthProneState.cs(37,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthProneState.cs(67,64): error CS1061: 'StealthMovementController' does not contain a definition for 'GetCurrentNoiseLevel' and no accessible extension method 'GetCurrentNoiseLevel' accepting a first argument of type 'StealthMovementController' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(448,45): error CS0411: The type arguments for method 'CommandPoolManager.GetStatistics<TCommand>()' cannot be inferred from the usage. Try specifying the type arguments explicitly.
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(449,26): error CS1061: 'CommandStatistics' does not contain a definition for 'ObjectsInUse' and no accessible extension method 'ObjectsInUse' accepting a first argument of type 'CommandStatistics' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(449,55): error CS1061: 'CommandStatistics' does not contain a definition for 'ObjectsInUse' and no accessible extension method 'ObjectsInUse' accepting a first argument of type 'CommandStatistics' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Commands\StealthCommandManager.cs(449,76): error CS1061: 'CommandStatistics' does not contain a definition for 'ObjectsAvailable' and no accessible extension method 'ObjectsAvailable' accepting a first argument of type 'CommandStatistics' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(131,37): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
-Assets\_Project\Features\Templates\Stealth\Scripts\Integration\StealthLearnAndGrowIntegrator.cs(378,28): error CS0122: 'StealthUIManager.UpdateLearningProgress()' is inaccessible due to its protection level
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(167,48): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(167,74): error CS1503: Argument 1: cannot convert from 'asterivo.Unity60.Features.Templates.Stealth.Mechanics.StealthMechanics' to 'IStealthMechanicsService'
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\HidingSpotInteractionCommand.cs(224,63): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\HidingSpotInteractionCommand.cs(247,63): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(448,50): error CS1503: Argument 1: cannot convert from 'asterivo.Unity60.Features.Templates.Stealth.StealthMissionObjective' to 'string'
-Assets\_Project\Features\Templates\Stealth\Scripts\Camera\StealthCameraController.cs(380,17): warning CS0162: Unreachable code detected
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(666,40): error CS1061: 'StealthAIConfig' does not contain a definition for 'SuspicionDecayRate' and no accessible extension method 'SuspicionDecayRate' accepting a first argument of type 'StealthAIConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(385,41): error CS1503: Argument 1: cannot convert from 'object' to 'UnityEngine.MonoBehaviour'
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(397,43): error CS1503: Argument 1: cannot convert from 'object' to 'UnityEngine.MonoBehaviour'
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(407,36): error CS1061: 'object' does not contain a definition for 'IsSystemReady' and no accessible extension method 'IsSystemReady' accepting a first argument of type 'object' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(412,40): error CS1061: 'object' does not contain a definition for 'GetOverallProgress' and no accessible extension method 'GetOverallProgress' accepting a first argument of type 'object' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(417,40): error CS1061: 'object' does not contain a definition for 'IsBasicGameplayReady' and no accessible extension method 'IsBasicGameplayReady' accepting a first argument of type 'object' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(424,33): error CS1061: 'object' does not contain a definition for 'StartQuickLearning' and no accessible extension method 'StartQuickLearning' accepting a first argument of type 'object' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(777,95): error CS1061: 'StealthAIConfig' does not contain a definition for 'name' and no accessible extension method 'name' accepting a first argument of type 'StealthAIConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(492,32): error CS1061: 'StealthAICoordinator' does not contain a definition for 'OnDetectionEvent' and no accessible extension method 'OnDetectionEvent' accepting a first argument of type 'StealthAICoordinator' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(498,28): error CS1061: 'StealthUIManager' does not contain a definition for 'OnDetectionLevelChanged' and no accessible extension method 'OnDetectionLevelChanged' accepting a first argument of type 'StealthUIManager' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateManager.cs(535,28): error CS1061: 'StealthUIManager' does not contain a definition for 'OnDetectionLevelChanged' and no accessible extension method 'OnDetectionLevelChanged' accepting a first argument of type 'StealthUIManager' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(602,36): error CS1061: 'StealthMechanicsController' does not contain a definition for 'InteractWithHidingSpot' and no accessible extension method 'InteractWithHidingSpot' accepting a first argument of type 'StealthMechanicsController' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(518,54): error CS1503: Argument 1: cannot convert from 'asterivo.Unity60.Features.Templates.Stealth.GlobalAlertLevel' to 'asterivo.Unity60.Features.Templates.Stealth.Data.AIAlertLevel'
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanics.cs(292,68): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(528,41): error CS1061: 'StealthMechanicsConfig' does not contain a definition for 'TutorialBaseStealthLevel' and no accessible extension method 'TutorialBaseStealthLevel' accepting a first argument of type 'StealthMechanicsConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(529,38): error CS1061: 'StealthMechanicsConfig' does not contain a definition for 'ShowTutorialDebugInfo' and no accessible extension method 'ShowTutorialDebugInfo' accepting a first argument of type 'StealthMechanicsConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(361,67): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(375,67): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanicsController.cs(605,101): error CS1061: 'StealthMechanicsConfig' does not contain a definition for 'name' and no accessible extension method 'name' accepting a first argument of type 'StealthMechanicsConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(241,74): error CS1061: 'StealthTemplateConfig' does not contain a definition for 'templateName' and no accessible extension method 'templateName' accepting a first argument of type 'StealthTemplateConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(242,72): error CS1061: 'StealthTemplateConfig' does not contain a definition for 'templateVersion' and no accessible extension method 'templateVersion' accepting a first argument of type 'StealthTemplateConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(249,51): error CS1061: 'StealthTemplateConfig' does not contain a definition for 'targetGameplayDuration' and no accessible extension method 'targetGameplayDuration' accepting a first argument of type 'StealthTemplateConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(250,49): error CS1061: 'StealthTemplateConfig' does not contain a definition for 'estimatedLearningTime' and no accessible extension method 'estimatedLearningTime' accepting a first argument of type 'StealthTemplateConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(733,50): error CS1061: 'StealthUIConfig' does not contain a definition for 'ShowLearningProgress' and no accessible extension method 'ShowLearningProgress' accepting a first argument of type 'StealthUIConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(413,67): error CS0246: The type or namespace name 'IStealthMechanicsService' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(599,35): error CS1061: 'StealthUIManager' does not contain a definition for 'ShowTimeWarning' and no accessible extension method 'ShowTimeWarning' accepting a first argument of type 'StealthUIManager' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(605,35): error CS1061: 'StealthUIManager' does not contain a definition for 'ShowTimeWarning' and no accessible extension method 'ShowTimeWarning' accepting a first argument of type 'StealthUIManager' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(266,38): error CS0029: Cannot implicitly convert type 'asterivo.Unity60.Features.Templates.Stealth.Configuration.StealthMechanicsConfig' to 'UnityEngine.Object'
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(267,31): error CS0029: Cannot implicitly convert type 'asterivo.Unity60.Features.Templates.Stealth.Configuration.StealthAIConfig' to 'UnityEngine.Object'
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(268,34): error CS0029: Cannot implicitly convert type 'asterivo.Unity60.Features.Templates.Stealth.Configuration.StealthAudioConfig' to 'UnityEngine.Object'
-Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(271,37): error CS0029: Cannot implicitly convert type 'asterivo.Unity60.Features.Templates.Stealth.Configuration.StealthTutorialConfig' to 'UnityEngine.Object'
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(678,27): error CS1061: 'StealthUIManager' does not contain a definition for 'ShowGameEndScreen' and no accessible extension method 'ShowGameEndScreen' accepting a first argument of type 'StealthUIManager' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\Environment\StealthEnvironmentManager.cs(436,41): error CS1061: 'StealthEnvironmentConfig' does not contain a definition for 'InteractionRadius' and no accessible extension method 'InteractionRadius' accepting a first argument of type 'StealthEnvironmentConfig' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(917,17): warning CS0162: Unreachable code detected
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\StealthStateManager.cs(111,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthCrouchingState.cs(34,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthCrouchingState.cs(64,64): error CS1061: 'StealthMovementController' does not contain a definition for 'GetCurrentNoiseLevel' and no accessible extension method 'GetCurrentNoiseLevel' accepting a first argument of type 'StealthMovementController' could be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\LightAndShadowSubsystem.cs(115,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthInCoverState.cs(38,31): error CS0103: The name 'ServiceLocator' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthInCoverState.cs(72,29): error CS0234: The type or namespace name 'main' does not exist in the namespace 'asterivo.Unity60.Features.Camera' (are you missing an assembly reference?)
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthInCoverState.cs(72,61): error CS0118: 'Camera' is a namespace but is used like a type
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthInCoverState.cs(72,44): error CS0103: The name 'FindObjectOfType' does not exist in the current context
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\LightAndShadowSubsystem.cs(150,33): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\LightAndShadowSubsystem.cs(163,43): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\_Project\Features\Templates\Stealth\Scripts\UI\StealthUIManager.cs(944,17): warning CS0162: Unreachable code detected
 Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(445,44): warning CS0618: 'Profiler.GetTotalAllocatedMemory()' is obsolete: 'GetTotalAllocatedMemory has been deprecated since it is limited to 4GB. Please use GetTotalAllocatedMemoryLong() instead.'
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanics.cs(716,67): error CS0117: 'StealthState' does not contain a definition for 'Exposed'
-Assets\_Project\Features\Templates\Stealth\Scripts\Mechanics\StealthMechanics.cs(717,37): error CS0117: 'StealthState' does not contain a definition for 'Sneaking'
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(966,22): warning CS0414: The field 'NPCPatrolController.isPatrolling' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(108,39): warning CS0414: The field 'StealthLearningSettings.enableInteractiveHighlights' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(110,39): warning CS0414: The field 'StealthLearningSettings.enableTutorialSkipping' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(35,52): warning CS0414: The field 'StealthGameplayManager.difficultyLevel' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(533,44): warning CS0414: The field 'EnvironmentalInteraction.HidingSpot.hidingEffectiveness' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(40,39): warning CS0414: The field 'StealthEventChannels._enableEventBatching' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(51,39): warning CS0414: The field 'StealthGameplayManager.enableNPCCommunication' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(107,39): warning CS0414: The field 'StealthLearningSettings.enableRealTimeHints' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Player\States\StealthInCoverState.cs(19,40): warning CS0414: The field 'StealthInCoverState.coverNoiseReduction' is assigned but its value is never used
 Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(68,39): warning CS0414: The field 'StealthLearningSettings.enableProgressiveUnlock' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(961,40): warning CS0414: The field 'NPCPatrolController.waitTime' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(490,44): warning CS0414: The field 'EnvironmentalInteraction.DistractionItem.distractionDuration' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(31,39): warning CS0414: The field 'StealthAICoordinator._enablePerformanceOptimization' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(69,39): warning CS0414: The field 'StealthLearningSettings.enableSkillValidation' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\AI\StealthAICoordinator.cs(32,39): warning CS0414: The field 'StealthAICoordinator._enablePerformanceOptimization' is assigned but its value is never used
 Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(67,59): warning CS0414: The field 'StealthLearningSettings.learningSpeedMultiplier' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Services\StealthService.cs(28,41): warning CS0414: The field 'StealthService._stealthAudioChannelName' is assigned but its value is never used
 Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(109,40): warning CS0414: The field 'StealthLearningSettings.hintDisplayDelay' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(533,44): warning CS0414: The field 'EnvironmentalInteraction.HidingSpot.hidingEffectiveness' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(982,40): warning CS0414: The field 'NPCPatrolController.waitTime' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(107,39): warning CS0414: The field 'StealthLearningSettings.enableRealTimeHints' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(987,22): warning CS0414: The field 'NPCPatrolController.isPatrolling' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(108,39): warning CS0414: The field 'StealthLearningSettings.enableInteractiveHighlights' is assigned but its value is never used
 Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(39,40): warning CS0414: The field 'StealthEventChannels._eventProcessingTimeLimit' is assigned but its value is never used
-Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(37,38): warning CS0414: The field 'StealthEventChannels._maxEventsPerFrame' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\LightAndShadowSubsystem.cs(34,23): warning CS0414: The field 'LightAndShadowSubsystem._shadowRaycastDistance' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Environment\EnvironmentConcealmentZone.cs(34,23): warning CS0414: The field 'EnvironmentConcealmentZone._exitDelay' is assigned but its value is never used
 Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(66,39): warning CS0414: The field 'StealthLearningSettings.enableAdaptiveDifficulty' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Interaction\EnvironmentalInteraction.cs(490,44): warning CS0414: The field 'EnvironmentalInteraction.DistractionItem.distractionDuration' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(69,39): warning CS0414: The field 'StealthLearningSettings.enableSkillValidation' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(36,52): warning CS0414: The field 'StealthGameplayManager.difficultyLevel' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(37,38): warning CS0414: The field 'StealthEventChannels._maxEventsPerFrame' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Gameplay\StealthGameplayManager.cs(52,39): warning CS0414: The field 'StealthGameplayManager.enableNPCCommunication' is assigned but its value is never used
+Assets\_Project\Features\Templates\Stealth\Scripts\Events\StealthEventChannels.cs(40,39): warning CS0414: The field 'StealthEventChannels._enableEventBatching' is assigned but its value is never used
 Assets\_Project\Features\Templates\Stealth\Scripts\StealthTemplateValidator.cs(40,59): warning CS0414: The field 'StealthTemplateValidator.testDurationOverride' is assigned but its value is never used
-AssetDatabase: script compilation time: 1.753589s
-'Assets/_Project/Tests/Results/current-compilation-check.txt' Amount of processed bytes '133291' does not match file size '112915'
+Assets\_Project\Features\Templates\Stealth\Scripts\Settings\StealthLearningSettings.cs(110,39): warning CS0414: The field 'StealthLearningSettings.enableTutorialSkipping' is assigned but its value is never used
+AssetDatabase: script compilation time: 1.690065s
 Scripts have compiler errors.
 Exiting without the bug reporter. Application will terminate with return code 1
