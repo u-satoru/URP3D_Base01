@@ -27,52 +27,7 @@
 
 ## 4. 各共通機能の詳細な分析と提案
 
-### 4.1. 汎用的なキャラクター制御システム (Generic Character Controller)
-
-- **現状の課題**: 各テンプレートで個別にプレイヤーの移動や物理挙動を実装すると、類似コードが散在し、保守性が低下します。特に、接地判定や坂道での挙動などは共通化すべきロジックです。
-- **提案**:
-    1.  キャラクターの物理的な移動（歩行、走行、ジャンプ等）を扱う、物理ベースの`CharacterMover`コンポーネントを`Core`層に作成します。
-    2.  キャラクターの状態（待機、歩行、ジャンプ、カバーなど）を管理する`StateMachine`の**基盤**（`IState`インターフェース、`BaseState`クラス、`StateMachine`クラス）を`Core`層に配置します。
-- **Core層への配置理由**: キャラクターの物理的な移動と状態管理の論理的枠組みは、全ての3Dゲームで必要となる最も基本的な機能です。これらを`Core`に置くことで、`Features`層は「どのような状態を持つか」「入力に対してどう振る舞うか」という、よりゲームデザインに近い部分に集中できます。
-- **実装方針**:
-    - **Core層 (`asterivo.Unity60.Core.Character`)**:
-        - `CharacterMover.cs`: `Rigidbody`への力適用、接地判定、速度制限などの物理挙動を提供。外部から`Move(direction)`や`Jump(force)`といった命令を受け付けます。
-        - `StateMachine.cs`, `IState.cs`: 状態遷移を管理する汎用的なステートマシンシステム。
-    - **Features層 (`asterivo.Unity60.Features.Player`)**:
-        - `PlayerController.cs`: `InputService`からのイベントを購読し、`CharacterMover`に具体的な移動命令を与えます。
-        - `PlayerIdleState.cs`, `PlayerWalkState.cs`, `PlayerCoverState.cs`など: `IState`を実装した、ジャンル特有の具体的な状態クラス群。
-
-### 4.2. 汎用的なインタラクションシステム (Generic Interaction System)
-
-- **現状の課題**: アイテム取得、ドアの開閉、スイッチ操作など、オブジェクトとのインタラクションは各テンプレートで必要ですが、個別の実装は非効率です。
-- **提案**:
-    1.  `IInteractable`インターフェースを`Core`層に定義します。
-    2.  プレイヤー側に、前方にある`IInteractable`オブジェクトを検知し、入力に応じてインタラクションを実行する`Interactor`コンポーネントを`Core`層に作成します。
-- **Core層への配置理由**: 「オブジェクトに近づいて何かアクションを起こす」という概念は、ゲームジャンルを問わない普遍的なメカニクスです。この仕組みを`Core`で提供することで、`Features`層はインタラクションの「具体的な中身」を実装することに集中できます。
-- **実装方針**:
-    - **Core層 (`asterivo.Unity60.Core.Interaction`)**:
-        - `IInteractable.cs`: `void Interact(Interactor interactor);`と、UI表示用のプロパティ（例: `string InteractionPrompt { get; }`）を持つインターフェース。
-        - `Interactor.cs`: カメラの前方にRaycastを飛ばし、`IInteractable`を検知して`Interact()`を呼び出す。検知した際に`OnInteractableFound`イベントを発行します。
-    - **Features層**:
-        - `Door.cs`, `PickupItem.cs`: `IInteractable`を実装した、ゲーム固有のオブジェクト。
-        - `InteractionUI.cs`: `OnInteractableFound`イベントを購読し、「Eキーで開く」のようなUIを表示します。
-
-### 4.3. 汎用的なカメラ制御システム (Generic Camera Control System)
-
-- **現状の課題**: FPSの一人称視点、TPSの三人称・肩越し視点、Platformerの追従カメラなど、カメラ要件は多様ですが、状態の切り替えや管理の仕組みは共通化できます。
-- **提案**:
-    1.  `DESIGN.md`で言及されている`CinemachineIntegration`および`CameraStateMachine`の基盤部分を`Core`層に配置します。
-    2.  `Core`層では、カメラ状態（例: `FirstPerson`, `ThirdPerson`, `Aim`, `Cover`）を管理し、イベントに応じてスムーズに切り替えるための汎用的なステートマシンを提供します。
-- **Core層への配置理由**: カメラの状態管理と遷移の仕組みは、特定のゲームロジックから独立した技術的な基盤です。データ駆動設計（`ScriptableObject`）と組み合わせることで、`Core`の汎用システムと`Features`の個別設定を綺麗に分離できます。
-- **実装方針**:
-    - **Core層 (`asterivo.Unity60.Core.Camera`)**:
-        - `CameraService.cs`: 現在のカメラ状態を管理し、`GameEvent`に応じて`CameraStateMachine`の状態を遷移させる`ServiceLocator`登録サービス。
-        - `CameraStateMachine.cs`, `ICameraState.cs`: カメラ用の汎用ステートマシン。
-    - **Features層 (`asterivo.Unity60.Features.Camera`)**:
-        - `ThirdPersonCameraState.cs`, `AimingCameraState.cs`: `ICameraState`を実装した具体的なカメラ状態。
-        - `CameraSettings.asset`: 各状態に対応する`CinemachineVirtualCamera`のプレハブや設定を保持する`ScriptableObject`。
-
-### 4.4. 汎用的な入力管理システム (Generic Input Management System)
+### 4.1. 汎用的な入力管理システム (Generic Input Management System)
 
 - **現状の課題**: UnityのInput Systemは強力ですが、各機能が直接参照すると密結合になります。入力処理を抽象化する層が必要です。
 - **提案**:
@@ -87,7 +42,7 @@
         - `PlayerController.cs`: `InputEvents`を購読し、キャラクターの制御を行う。
         - `WeaponController.cs`: `OnFireInputPressed`を購読し、射撃処理を行う。
 
-### 4.5. 汎用的な体力・ダメージシステム (Generic Health & Damage System)
+### 4.2. 汎用的な体力・ダメージシステム (Generic Health & Damage System)
 
 - **現状の課題**: FPSでの被弾、Stealthでの発見後のダメージ、Platformerでの敵との接触など、ダメージを受ける概念は広く共通しています。
 - **提案**:
@@ -103,11 +58,68 @@
         - `HealthBarUI.cs`: `OnHealthChanged`イベントを購読し、UIの表示を更新する。
         - `Projectile.cs`: 敵に衝突した際に、`CommandInvoker`を通じて`DamageCommand`を発行する。
 
-## 5. 結論と次のステップ
+### 4.3. 汎用的なキャラクター制御システム (Generic Character Controller)
+
+- **現状の課題**: 各テンプレートで個別にプレイヤーの移動や物理挙動を実装すると、類似コードが散在し、保守性が低下します。特に、接地判定や坂道での挙動などは共通化すべきロジックです。
+- **提案**:
+    1.  キャラクターの物理的な移動（歩行、走行、ジャンプ等）を扱う、物理ベースの`CharacterMover`コンポーネントを`Core`層に作成します。
+    2.  キャラクターの状態（待機、歩行、ジャンプ、カバーなど）を管理する`StateMachine`の**基盤**（`IState`インターフェース、`BaseState`クラス、`StateMachine`クラス）を`Core`層に配置します。
+- **Core層への配置理由**: キャラクターの物理的な移動と状態管理の論理的枠組みは、全ての3Dゲームで必要となる最も基本的な機能です。これらを`Core`に置くことで、`Features`層は「どのような状態を持つか」「入力に対してどう振る舞うか」という、よりゲームデザインに近い部分に集中できます。
+- **実装方針**:
+    - **Core層 (`asterivo.Unity60.Core.Character`)**:
+        - `CharacterMover.cs`: `Rigidbody`への力適用、接地判定、速度制限などの物理挙動を提供。外部から`Move(direction)`や`Jump(force)`といった命令を受け付けます。
+        - `StateMachine.cs`, `IState.cs`: 状態遷移を管理する汎用的なステートマシンシステム。
+    - **Features層 (`asterivo.Unity60.Features.Player`)**:
+        - `PlayerController.cs`: `InputService`からのイベントを購読し、`CharacterMover`に具体的な移動命令を与えます。
+        - `PlayerIdleState.cs`, `PlayerWalkState.cs`, `PlayerCoverState.cs`など: `IState`を実装した、ジャンル特有の具体的な状態クラス群。
+
+### 4.4. 汎用的なインタラクションシステム (Generic Interaction System)
+
+- **現状の課題**: アイテム取得、ドアの開閉、スイッチ操作など、オブジェクトとのインタラクションは各テンプレートで必要ですが、個別の実装は非効率です。
+- **提案**:
+    1.  `IInteractable`インターフェースを`Core`層に定義します。
+    2.  プレイヤー側に、前方にある`IInteractable`オブジェクトを検知し、入力に応じてインタラクションを実行する`Interactor`コンポーネントを`Core`層に作成します。
+- **Core層への配置理由**: 「オブジェクトに近づいて何かアクションを起こす」という概念は、ゲームジャンルを問わない普遍的なメカニクスです。この仕組みを`Core`で提供することで、`Features`層はインタラクションの「具体的な中身」を実装することに集中できます。
+- **実装方針**:
+    - **Core層 (`asterivo.Unity60.Core.Interaction`)**:
+        - `IInteractable.cs`: `void Interact(Interactor interactor);`と、UI表示用のプロパティ（例: `string InteractionPrompt { get; }`）を持つインターフェース。
+        - `Interactor.cs`: カメラの前方にRaycastを飛ばし、`IInteractable`を検知して`Interact()`を呼び出す。検知した際に`OnInteractableFound`イベントを発行します。
+    - **Features層**:
+        - `Door.cs`, `PickupItem.cs`: `IInteractable`を実装した、ゲーム固有のオブジェクト。
+        - `InteractionUI.cs`: `OnInteractableFound`イベントを購読し、「Eキーで開く」のようなUIを表示します。
+
+### 4.5. 汎用的なカメラ制御システム (Generic Camera Control System)
+
+- **現状の課題**: FPSの一人称視点、TPSの三人称・肩越し視点、Platformerの追従カメラなど、カメラ要件は多様ですが、状態の切り替えや管理の仕組みは共通化できます。
+- **提案**:
+    1.  `DESIGN.md`で言及されている`CinemachineIntegration`および`CameraStateMachine`の基盤部分を`Core`層に配置します。
+    2.  `Core`層では、カメラ状態（例: `FirstPerson`, `ThirdPerson`, `Aim`, `Cover`）を管理し、イベントに応じてスムーズに切り替えるための汎用的なステートマシンを提供します。
+- **Core層への配置理由**: カメラの状態管理と遷移の仕組みは、特定のゲームロジックから独立した技術的な基盤です。データ駆動設計（`ScriptableObject`）と組み合わせることで、`Core`の汎用システムと`Features`の個別設定を綺麗に分離できます。
+- **実装方針**:
+    - **Core層 (`asterivo.Unity60.Core.Camera`)**:
+        - `CameraService.cs`: 現在のカメラ状態を管理し、`GameEvent`に応じて`CameraStateMachine`の状態を遷移させる`ServiceLocator`登録サービス。
+        - `CameraStateMachine.cs`, `ICameraState.cs`: カメラ用の汎用ステートマシン。
+    - **Features層 (`asterivo.Unity60.Features.Camera`)**:
+        - `ThirdPersonCameraState.cs`, `AimingCameraState.cs`: `ICameraState`を実装した具体的なカメラ状態。
+        - `CameraSettings.asset`: 各状態に対応する`CinemachineVirtualCamera`のプレハブや設定を保持する`ScriptableObject`。
+
+## 5. 優先度付けとリファクタリング戦略
+
+以下に、依存関係と影響範囲を考慮したリファクタリングの推奨順序を示します。
+
+| 優先度 | 機能 | 理由 |
+| :--- | :--- | :--- |
+| **1 (Highest)** | **入力管理システム** | 全てのキャラクター操作やUIインタラクションの起点となる最も基本的なシステム。他のシステムがこのシステムのイベントを購読するため、最初に確立すべき。 |
+| **2 (High)** | **体力・ダメージシステム** | ゲームのコアメカニクスでありながら、他のシステムとの依存関係が比較的薄く、独立して実装・テストしやすい。コマンドパターンとの親和性も高い。 |
+| **3 (Medium)** | **キャラクター制御システム** | `入力管理システム`に依存。キャラクターの物理的な挙動と状態管理の基盤であり、ゲームプレイの根幹をなすため、早期の実装が望ましい。 |
+| **4 (Low)** | **インタラクションシステム** | `入力管理システム`と`キャラクター制御システム`に依存。「キャラクターが、特定の入力で、何かをする」という流れを確立した後に実装するのが自然。 |
+| **5 (Lowest)** | **カメラ制御システム** | `キャラクター制御システム`（キャラクターの位置）と`StateMachine`（キャラクターの状態）に強く依存。キャラクターが完全に動作するようになった後に実装するのが最も効率的。 |
+
+## 6. 結論と次のステップ
 
 上記で提案した5つのシステムを`Core`層にリファクタリングすることにより、`Features`層はより高レベルなゲームロジックの実装に集中でき、テンプレート間のコード重複を劇的に削減できます。これにより、開発効率と保守性が大幅に向上し、「**究極のUnity 6ベーステンプレート**」というプロジェクトのビジョン達成に大きく貢献します。
 
 **次のステップ**:
-1.  この分析結果に基づき、具体的なリファクタリング計画を`TASKS.md`に落とし込む。
-2.  まずは`InputService`と`HealthComponent`から着手し、段階的にリファクタリングを進める。
+1.  この分析結果と優先度に基づき、具体的なリファクタリング計画を`TASKS.md`に落とし込む。
+2.  優先度1の`入力管理システム`から着手し、段階的にリファクタリングを進める。
 3.  各リファクタリング完了後、既存のテンプレートが正常に動作することを保証するためのテストを整備する。
