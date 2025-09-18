@@ -1,10 +1,10 @@
 using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Data;
 using UnityEngine;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
-using asterivo.Unity60.Core;
 using Sirenix.OdinInspector;
 using asterivo.Unity60.Core.Audio.Interfaces;
 
@@ -277,11 +277,10 @@ namespace asterivo.Unity60.Core.Audio.Services
             
             string bgmName = level switch
             {
-                AlertLevel.None => "Normal",
-                AlertLevel.Low => "Suspicious", 
-                AlertLevel.Medium => "Alert",
-                AlertLevel.High => "Combat",
-                AlertLevel.Combat => "Combat",
+                AlertLevel.Relaxed => "Normal",
+                AlertLevel.Suspicious => "Suspicious",
+                AlertLevel.Investigating => "Alert",
+                AlertLevel.Alert => "Combat",
                 _ => "Normal"
             };
             

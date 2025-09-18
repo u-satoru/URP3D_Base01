@@ -6,6 +6,7 @@ using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core.Data;
 using asterivo.Unity60.Features.Player.Scripts;
 using asterivo.Unity60.Player;
 using asterivo.Unity60.Features.Templates.Stealth.UI;
@@ -293,7 +294,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
 
             // Trigger Events
             onGameStarted?.Raise();
-            stealthAudioService?.SetAlertLevelMusic(AlertLevel.None);
+            stealthAudioService?.SetAlertLevelMusic(AlertLevel.Relaxed);
 
             LogDebug("[StealthGameplayManager] ✅ Stealth gameplay started - 15 minutes begins now!");
         }
@@ -536,10 +537,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                 {
                     var npcAlertLevel = npc.GetCurrentAlertLevel();
 
-                    if (npcAlertLevel >= AlertLevel.Medium)
+                    if (npcAlertLevel >= AlertLevel.Investigating)
                         alertNPCs++;
 
-                    if (npcAlertLevel >= AlertLevel.High)
+                    if (npcAlertLevel >= AlertLevel.Alert)
                         highAlertNPCs++;
                 }
             }
@@ -733,11 +734,11 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         {
             return globalLevel switch
             {
-                GlobalAlertLevel.Normal => AlertLevel.None,
-                GlobalAlertLevel.Suspicious => AlertLevel.Low,
-                GlobalAlertLevel.Heightened => AlertLevel.Medium,
-                GlobalAlertLevel.FullAlert => AlertLevel.High,
-                _ => AlertLevel.None
+                GlobalAlertLevel.Normal => AlertLevel.Relaxed,
+                GlobalAlertLevel.Suspicious => AlertLevel.Suspicious,
+                GlobalAlertLevel.Heightened => AlertLevel.Investigating,
+                GlobalAlertLevel.FullAlert => AlertLevel.Alert,
+                _ => AlertLevel.Relaxed
             };
         }
 
@@ -980,7 +981,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         [SerializeField] private Transform[] patrolPoints;
         [SerializeField] private float moveSpeed = 2f;
         [SerializeField] private float waitTime = 2f;
-        [SerializeField] private AlertLevel currentAlertLevel = AlertLevel.None;
+        [SerializeField] private AlertLevel currentAlertLevel = AlertLevel.Relaxed;
 
         private NavMeshAgent navAgent;
         private int currentPatrolIndex = 0;
@@ -1020,7 +1021,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         {
             transform.position = initialPosition;
             transform.rotation = initialRotation;
-            currentAlertLevel = AlertLevel.None;
+            currentAlertLevel = AlertLevel.Relaxed;
             currentPatrolIndex = 0;
             isPatrolling = false;
         }

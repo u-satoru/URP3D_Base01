@@ -1,4 +1,5 @@
 using UnityEngine;
+using asterivo.Unity60.Core.Data;
 
 namespace asterivo.Unity60.Core.Audio.Interfaces
 {
@@ -52,17 +53,5 @@ namespace asterivo.Unity60.Core.Audio.Interfaces
         /// </summary>
         /// <param name="withBonus">ボーナス付きかどうか</param>
         void PlayObjectiveCompleteSound(bool withBonus);
-    }
-    
-    /// <summary>
-    /// 警戒レベル
-    /// </summary>
-    public enum AlertLevel
-    {
-        None,       // 通常
-        Low,        // 低警戒
-        Medium,     // 中警戒
-        High,       // 高警戒
-        Combat      // 戦闘中
     }
 }

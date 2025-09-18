@@ -46,10 +46,7 @@ namespace asterivo.Unity60.Core.Events
             
             // イベントログに記録（簡略化版）
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            if (FeatureFlags.EnableDebugLogging)
-            {
-                UnityEngine.Debug.Log($"[GameEvent] {name} raised to {listeners.Count} listeners");
-            }
+            UnityEngine.Debug.Log($"[GameEvent] {name} raised to {listeners.Count} listeners");
             #endif
             
             // 優先度でソート（必要時のみ）

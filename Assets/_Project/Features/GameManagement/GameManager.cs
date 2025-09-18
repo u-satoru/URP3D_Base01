@@ -62,7 +62,7 @@ namespace asterivo.Unity60.Core
         
 
         [Header("Game Data")]
-        [SerializeField] private GameData gameData;
+        [SerializeField] private asterivo.Unity60.Core.Data.GameData gameData;
         [SerializeField] private float gameTime = 0f;
 
         [Header("Settings")]
@@ -187,7 +187,7 @@ namespace asterivo.Unity60.Core
 
         private void InitializeGameManager()
         {
-            if (gameData == null) gameData = new GameData();
+            if (gameData == null) gameData = new asterivo.Unity60.Core.Data.GameData();
             InitializeInput();
             Log("GameManager initialized");
         }

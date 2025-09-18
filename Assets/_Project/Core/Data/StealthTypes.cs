@@ -1,3 +1,6 @@
+using UnityEngine;
+using System;
+
 namespace asterivo.Unity60.Core.Data
 {
     /// <summary>
@@ -64,5 +67,155 @@ namespace asterivo.Unity60.Core.Data
 
         /// <summary>完全隠蔽 - ロッカー、隠し部屋等</summary>
         Complete = 4
+    }
+
+    /// <summary>
+    /// AI警戒レベル - NPCの警戒状態を4段階で管理
+    /// </summary>
+    public enum AlertLevel
+    {
+        /// <summary>平常状態 - 通常のパトロール</summary>
+        Relaxed = 0,
+
+        /// <summary>疑念状態 - 何か異常を感じている</summary>
+        Suspicious = 1,
+
+        /// <summary>調査状態 - 積極的に異常を調査中</summary>
+        Investigating = 2,
+
+        /// <summary>警戒状態 - 目標を確認、追跡中</summary>
+        Alert = 3
+    }
+
+    /// <summary>
+    /// プレイヤーの移動姿勢
+    /// </summary>
+    public enum MovementStance
+    {
+        /// <summary>立ち姿勢 - 通常移動</summary>
+        Standing,
+
+        /// <summary>しゃがみ姿勢 - 静音移動</summary>
+        Crouching,
+
+        /// <summary>伏せ姿勢 - 最大隠蔽</summary>
+        Prone,
+
+        /// <summary>走行姿勢 - 高速移動</summary>
+        Running
+    }
+
+    /// <summary>
+    /// 警戒状態情報 - AI警戒システムの詳細情報
+    /// </summary>
+    [Serializable]
+    public class AlertStateInfo
+    {
+        public AlertLevel currentLevel;
+        public AlertLevel previousLevel;
+        public float suspicionValue;
+        public Vector3 lastKnownPosition;
+        public float timeInCurrentState;
+        public string triggeredBy;
+        public DateTime timestamp;
+
+        public AlertStateInfo()
+        {
+            currentLevel = AlertLevel.Relaxed;
+            previousLevel = AlertLevel.Relaxed;
+            suspicionValue = 0f;
+            lastKnownPosition = Vector3.zero;
+            timeInCurrentState = 0f;
+            triggeredBy = "";
+            timestamp = DateTime.Now;
+        }
+
+        public AlertStateInfo(AlertLevel level, float suspicion, Vector3 position, string trigger)
+        {
+            currentLevel = level;
+            previousLevel = AlertLevel.Relaxed;
+            suspicionValue = suspicion;
+            lastKnownPosition = position;
+            timeInCurrentState = 0f;
+            triggeredBy = trigger;
+            timestamp = DateTime.Now;
+        }
+    }
+
+    /// <summary>
+    /// 検知情報 - センサーによる検知の詳細データ
+    /// </summary>
+    [Serializable]
+    public class DetectionInfo
+    {
+        public DetectionType type;
+        public float confidence;
+        public Vector3 detectedPosition;
+        public Vector3 detectedDirection;
+        public float distance;
+        public GameObject detectedObject;
+        public DateTime detectionTime;
+        public bool isConfirmed;
+
+        public DetectionInfo()
+        {
+            type = DetectionType.Visual;
+            confidence = 0f;
+            detectedPosition = Vector3.zero;
+            detectedDirection = Vector3.forward;
+            distance = 0f;
+            detectedObject = null;
+            detectionTime = DateTime.Now;
+            isConfirmed = false;
+        }
+
+        public DetectionInfo(DetectionType detectionType, float conf, Vector3 pos, GameObject target)
+        {
+            type = detectionType;
+            confidence = conf;
+            detectedPosition = pos;
+            detectedDirection = Vector3.forward;
+            distance = 0f;
+            detectedObject = target;
+            detectionTime = DateTime.Now;
+            isConfirmed = false;
+        }
+    }
+
+    /// <summary>
+    /// ステルス移動情報 - 移動に関する詳細データ
+    /// </summary>
+    [Serializable]
+    public class StealthMovementInfo
+    {
+        public MovementStance stance;
+        public Vector3 velocity;
+        public float noiseLevel;
+        public float visibilityLevel;
+        public bool isInCover;
+        public ConcealmentLevel concealmentLevel;
+        public DateTime timestamp;
+
+        public StealthMovementInfo()
+        {
+            stance = MovementStance.Standing;
+            velocity = Vector3.zero;
+            noiseLevel = 1f;
+            visibilityLevel = 1f;
+            isInCover = false;
+            concealmentLevel = ConcealmentLevel.None;
+            timestamp = DateTime.Now;
+        }
+
+        public StealthMovementInfo(MovementStance movementStance, Vector3 vel, float noise, float visibility)
+        {
+            stance = movementStance;
+            velocity = vel;
+            noiseLevel = noise;
+            visibilityLevel = visibility;
+            isInCover = false;
+            concealmentLevel = ConcealmentLevel.None;
+            timestamp = DateTime.Now;
+        }
     }
 }

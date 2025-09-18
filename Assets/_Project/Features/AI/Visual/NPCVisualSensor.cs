@@ -158,7 +158,7 @@ namespace asterivo.Unity60.Features.AI.Visual
         [BoxGroup("Debug/Runtime Info/Current State")]
         [ShowInInspector, ReadOnly]
         [LabelText("Current Alert Level")]
-        private AlertLevel currentAlertLevel = AlertLevel.Unaware;
+        private AlertLevel currentAlertLevel = AlertLevel.Relaxed;
         
         [BoxGroup("Debug/Runtime Info/Current State")]
         [ShowInInspector, ReadOnly]
@@ -643,7 +643,7 @@ namespace asterivo.Unity60.Features.AI.Visual
             alertStateEvent?.Raise(stateInfo);
             
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            Debug.Log($"<color=cyan>[NPCVisualSensor]</color> {gameObject.name}: Alert state changed - Level: {stateInfo.currentLevel}, Timer: {stateInfo.alertTimer:F2}s");
+            Debug.Log($"<color=cyan>[NPCVisualSensor]</color> {gameObject.name}: Alert state changed - Level: {stateInfo.currentLevel}, Suspicion: {stateInfo.suspicionValue:F2}");
             #endif
         }
         

@@ -23,7 +23,7 @@ namespace asterivo.Unity60.Features.AI.States
         [TabGroup("AI Control", "State Management")]
         [ReadOnly]
         [LabelText("Alert Level")]
-        [SerializeField] private AlertLevel currentAlertLevel = AlertLevel.Unaware;
+        [SerializeField] private AlertLevel currentAlertLevel = AlertLevel.Relaxed;
         
         [TabGroup("AI Control", "Components")]
         [Required]
@@ -212,14 +212,14 @@ namespace asterivo.Unity60.Features.AI.States
         {
             AlertLevel newLevel = stateType switch
             {
-                AIStateType.Idle => AlertLevel.Unaware,
-                AIStateType.Patrol => AlertLevel.Unaware,
+                AIStateType.Idle => AlertLevel.Relaxed,
+                AIStateType.Patrol => AlertLevel.Relaxed,
                 AIStateType.Suspicious => AlertLevel.Suspicious,
                 AIStateType.Investigating => AlertLevel.Investigating,
-                AIStateType.Searching => AlertLevel.Searching,
+                AIStateType.Searching => AlertLevel.Investigating,
                 AIStateType.Alert => AlertLevel.Alert,
-                AIStateType.Combat => AlertLevel.Combat,
-                _ => AlertLevel.Unaware
+                AIStateType.Combat => AlertLevel.Alert,
+                _ => AlertLevel.Relaxed
             };
             
             if (currentAlertLevel != newLevel)

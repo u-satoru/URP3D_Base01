@@ -63,7 +63,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
             // 既存StealthMovement統合
             if (stateMachine.StealthMovement != null)
             {
-                stateMachine.StealthMovement.SetStance(Core.Data.MovementStance.Cover);
+                stateMachine.StealthMovement.SetStance(Core.Data.MovementStance.Crouching);
             }
 
             // ピーキング可能性判定

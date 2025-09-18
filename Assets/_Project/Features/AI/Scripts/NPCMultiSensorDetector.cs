@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Data;
 using CoreAlertLevel = asterivo.Unity60.Core.Data.AlertLevel;
@@ -77,7 +78,7 @@ namespace asterivo.Unity60.Features.AI
         [TabGroup("Multi-Sensor", "Debug Info")]
         [ShowInInspector, ReadOnly]
         [LabelText("Current Alert Level")]
-        private CoreAlertLevel currentAlertLevel = CoreAlertLevel.Unaware;
+        private AlertLevel currentAlertLevel = AlertLevel.Relaxed;
         
         [ShowInInspector, ReadOnly]
         [LabelText("Integrated Detection Score")]
@@ -403,13 +404,13 @@ namespace asterivo.Unity60.Features.AI
             }
         }
         
-        private CoreAlertLevel CalculateAlertLevel(float detectionScore)
+        private AlertLevel CalculateAlertLevel(float detectionScore)
         {
-            if (detectionScore >= alertThreshold) return CoreAlertLevel.Alert;
-            if (detectionScore >= integrationThreshold * 1.5f) return CoreAlertLevel.Searching;
-            if (detectionScore >= integrationThreshold) return CoreAlertLevel.Investigating;
-            if (detectionScore > 0.1f) return CoreAlertLevel.Suspicious;
-            return CoreAlertLevel.Unaware;
+            if (detectionScore >= alertThreshold) return AlertLevel.Alert;
+            if (detectionScore >= integrationThreshold * 1.5f) return AlertLevel.Investigating;
+            if (detectionScore >= integrationThreshold) return AlertLevel.Investigating;
+            if (detectionScore > 0.1f) return AlertLevel.Suspicious;
+            return AlertLevel.Relaxed;
         }
         
         private void OnAlertLevelChanged()
@@ -438,11 +439,11 @@ namespace asterivo.Unity60.Features.AI
         
         private void UpdateTargetDetectionInfo(Transform target, float visualScore, float auditoryScore)
         {
-            DetectionInfo info = new DetectionInfo(visualScore, auditoryScore, target.position)
+            DetectionInfo info = new DetectionInfo(DetectionType.Visual, CalculateIntegratedScore(visualScore, auditoryScore), target.position, target.gameObject)
             {
-                suspicionLevel = CalculateIntegratedScore(visualScore, auditoryScore),
-                timeSinceLastSeen = 0f,
-                detectorId = gameObject.GetInstanceID()
+                confidence = CalculateIntegratedScore(visualScore, auditoryScore),
+                distance = Vector3.Distance(transform.position, target.position),
+                isConfirmed = CalculateIntegratedScore(visualScore, auditoryScore) > 0.7f
             };
             
             targetDetectionInfo[target] = info;
@@ -467,13 +468,14 @@ namespace asterivo.Unity60.Features.AI
         
         private void CleanupOldDetections()
         {
-            integratedDetections.RemoveAll(detection => 
+            integratedDetections.RemoveAll(detection =>
                 Time.time - detection.detectionTime > temporalWindow);
                 
             var keysToRemove = new List<Transform>();
             foreach (var kvp in targetDetectionInfo)
             {
-                if (Time.time - kvp.Value.timeSinceLastSeen > temporalWindow)
+                float timeSinceDetection = (float)(DateTime.Now - kvp.Value.detectionTime).TotalSeconds;
+                if (timeSinceDetection > temporalWindow)
                     keysToRemove.Add(kvp.Key);
             }
             

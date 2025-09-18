@@ -26,7 +26,7 @@ namespace asterivo.Unity60.Player.States
 
             if (stateMachine.StealthMovement != null)
             {
-                stateMachine.StealthMovement.SetStance(Core.Data.MovementStance.Cover);
+                stateMachine.StealthMovement.SetStance(Core.Data.MovementStance.Crouching);
             }
         }
 

@@ -480,7 +480,7 @@ namespace asterivo.Unity60.Features.AI.Visual.Editor
         {
             return level switch
             {
-                AlertLevel.Unaware => Color.green,
+                AlertLevel.Relaxed => Color.green,
                 AlertLevel.Suspicious => Color.yellow,
                 AlertLevel.Investigating => new Color(1f, 0.5f, 0f), // Orange
                 AlertLevel.Alert => Color.red,

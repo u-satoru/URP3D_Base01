@@ -49,11 +49,17 @@ namespace asterivo.Unity60.Features.AI.Visual
         [SerializeField] private float calmDownTime = 5f;
         
         [BoxGroup("Timers")]
+        [PropertyRange(1f, 10f)]
+        [LabelText("Suspicious Time")]
+        [SuffixLabel("s")]
+        [SerializeField] private float suspiciousTime = 4f;
+
+        [BoxGroup("Timers")]
         [PropertyRange(2f, 15f)]
         [LabelText("Investigation Time")]
         [SuffixLabel("s")]
         [SerializeField] private float investigationTime = 8f;
-        
+
         [BoxGroup("Timers")]
         [PropertyRange(5f, 30f)]
         [LabelText("Search Time")]
@@ -67,12 +73,12 @@ namespace asterivo.Unity60.Features.AI.Visual
         [ReadOnly]
         [ShowInInspector]
         [LabelText("Current Alert Level")]
-        private AlertLevel currentAlertLevel = AlertLevel.Unaware;
+        private AlertLevel currentAlertLevel = AlertLevel.Relaxed;
         
         [ReadOnly]
         [ShowInInspector]
         [LabelText("Previous Alert Level")]
-        private AlertLevel previousAlertLevel = AlertLevel.Unaware;
+        private AlertLevel previousAlertLevel = AlertLevel.Relaxed;
         
         [ReadOnly]
         [ShowInInspector]
@@ -128,8 +134,8 @@ public float TimeInCurrentLevel => timeInCurrentLevel;
             if (settings != null)
                 alertSettings = settings;
             
-            currentAlertLevel = AlertLevel.Unaware;
-            previousAlertLevel = AlertLevel.Unaware;
+            currentAlertLevel = AlertLevel.Relaxed;
+            previousAlertLevel = AlertLevel.Relaxed;
             alertIntensity = 0f;
             timeInCurrentLevel = 0f;
             timeSinceLastDetection = 0f;
@@ -153,6 +159,7 @@ public float TimeInCurrentLevel => timeInCurrentLevel;
                 investigatingToAlertThreshold = 0.8f,
                 decayRate = 0.3f,
                 calmDownTime = 5f,
+                suspiciousTime = 4f,
                 investigationTime = 8f,
                 searchTime = 15f
             };
@@ -205,20 +212,46 @@ public float TimeInCurrentLevel => timeInCurrentLevel;
         {
             switch (currentAlertLevel)
             {
+                case AlertLevel.Relaxed:
+                    ProcessRelaxedState(deltaTime);
+                    break;
+
+                case AlertLevel.Suspicious:
+                    ProcessSuspiciousState(deltaTime);
+                    break;
+
                 case AlertLevel.Investigating:
                     ProcessInvestigatingState(deltaTime);
                     break;
-                    
-                case AlertLevel.Searching:
-                    ProcessSearchingState(deltaTime);
-                    break;
-                    
+
                 case AlertLevel.Alert:
                     ProcessAlertState(deltaTime);
                     break;
             }
         }
-        
+
+        private void ProcessRelaxedState(float deltaTime)
+        {
+            // Relaxed state - normal patrol behavior
+            // Gradually reduce any residual alert intensity
+            if (alertIntensity > 0f)
+            {
+                alertIntensity -= alertDecayRate * deltaTime * 0.5f; // Slower decay in relaxed state
+                alertIntensity = Mathf.Max(0f, alertIntensity);
+                OnAlertIntensityChanged?.Invoke(alertIntensity);
+            }
+        }
+
+        private void ProcessSuspiciousState(float deltaTime)
+        {
+            // Suspicious state - cautious investigation
+            // If no further detections, decay back to relaxed
+            if (timeInCurrentLevel >= suspiciousTime)
+            {
+                TransitionToAlertLevel(AlertLevel.Relaxed);
+            }
+        }
+
         private void ProcessInvestigatingState(float deltaTime)
         {
             if (timeInCurrentLevel >= investigationTime)
@@ -278,7 +311,7 @@ public float TimeInCurrentLevel => timeInCurrentLevel;
             else if (alertIntensity >= suspiciousThreshold)
                 return AlertLevel.Suspicious;
             else
-                return AlertLevel.Unaware;
+                return AlertLevel.Relaxed;
         }
         
         /// <summary>
@@ -295,12 +328,13 @@ public float TimeInCurrentLevel => timeInCurrentLevel;
             // 状態変更の通知
             OnAlertLevelChanged?.Invoke(previousAlertLevel, currentAlertLevel);
             
-            AlertStateInfo stateInfo = new AlertStateInfo(currentAlertLevel)
+            AlertStateInfo stateInfo = new AlertStateInfo(
+                currentAlertLevel,
+                alertIntensity,
+                investigationPoint ?? Vector3.zero,
+                "AlertLevelTransition")
             {
-                previousLevel = previousAlertLevel,
-                alertTimer = timeInCurrentLevel,
-                investigationPoint = investigationPoint ?? Vector3.zero,
-                isGlobalAlert = currentAlertLevel >= AlertLevel.Alert
+                previousLevel = previousAlertLevel
             };
             
             OnAlertStateChanged?.Invoke(stateInfo);
@@ -345,7 +379,7 @@ public float TimeInCurrentLevel => timeInCurrentLevel;
         /// </summary>
         public void ResetAlertState()
         {
-            TransitionToAlertLevel(AlertLevel.Unaware);
+            TransitionToAlertLevel(AlertLevel.Relaxed);
             alertIntensity = 0f;
             isAutoDecaying = false;
             timeSinceLastDetection = 0f;
@@ -366,7 +400,7 @@ public float TimeInCurrentLevel => timeInCurrentLevel;
         
         private void TransitionToSearching()
         {
-            TransitionToAlertLevel(AlertLevel.Searching);
+            TransitionToAlertLevel(AlertLevel.Investigating);
         }
         
         #endregion
@@ -409,7 +443,10 @@ public float TimeInCurrentLevel => timeInCurrentLevel;
         
         [LabelText("Calm Down Time")]
         public float calmDownTime = 5f;
-        
+
+        [LabelText("Suspicious Time")]
+        public float suspiciousTime = 4f;
+
         [LabelText("Investigation Time")]
         public float investigationTime = 8f;
         

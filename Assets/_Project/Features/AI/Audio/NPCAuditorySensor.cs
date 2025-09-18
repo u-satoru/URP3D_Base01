@@ -4,6 +4,7 @@ using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Core.Data;
 
 namespace asterivo.Unity60.Features.AI.Audio
 {
@@ -410,16 +411,6 @@ namespace asterivo.Unity60.Features.AI.Audio
         }
     }
     
-    /// <summary>
-    /// NPCの警戒レベル
-    /// </summary>
-    public enum AlertLevel
-    {
-        Relaxed,        // リラックス状態
-        Suspicious,     // 疑わしい音を検出
-        Investigating,  // 調査状態
-        Alert           // 警戒状態
-    }
-    
+
     #endregion
 }

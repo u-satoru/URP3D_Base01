@@ -1,6 +1,7 @@
 using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
+using asterivo.Unity60.Core.Data;
 using asterivo.Unity60.Core.Debug;
 
 namespace asterivo.Unity60.Tests.Core.Services
@@ -85,7 +86,7 @@ namespace asterivo.Unity60.Tests.Core.Services
                 EventLogger.LogStatic("[TEST] ✅ PlayDistraction method works");
 
                 // SetAlertLevelMusicテスト
-                service.SetAlertLevelMusic(AlertLevel.Low);
+                service.SetAlertLevelMusic(AlertLevel.Suspicious);
                 EventLogger.LogStatic("[TEST] ✅ SetAlertLevelMusic method works");
 
                 // ApplyAudioMaskingテスト

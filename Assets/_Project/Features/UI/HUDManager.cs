@@ -10,7 +10,7 @@ using DG.Tweening.Core;
 
 using Sirenix.OdinInspector;
 
-namespace asterivo.Unity60.Core.UI
+namespace asterivo.Unity60.Features.UI
 {
     /// <summary>
     /// ゲーム内HUD（Heads-Up Display）を管理するクラス。

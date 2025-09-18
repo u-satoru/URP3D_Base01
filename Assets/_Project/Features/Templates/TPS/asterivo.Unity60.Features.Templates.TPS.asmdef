@@ -2,14 +2,14 @@
     "name": "asterivo.Unity60.Features.Templates.TPS",
     "rootNamespace": "asterivo.Unity60.Features.Templates.TPS",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:4307f53044263cf4b835bd812fc161dc",
-        "GUID:2665a8d13d1b3f18800f46e256720795",
-        "GUID:ae7b7a5fb01e34bb1a33d0e8ddc8b6ee",
-        "GUID:84651a3751eca9349aac36a66bba901b",
-        "GUID:593a5b492d29ac6448b1ebf7f035ef33",
-        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+        "asterivo.Unity60.Core",
+        "asterivo.Unity60.Core.Events",
+        "asterivo.Unity60.Core.Services",
+        "asterivo.Unity60.Features",
+        "Unity.InputSystem",
+        "Unity.Cinemachine",
+        "UniTask",
+        "Unity.TestFramework"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

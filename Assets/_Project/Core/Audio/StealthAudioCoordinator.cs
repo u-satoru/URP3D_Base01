@@ -5,6 +5,7 @@ using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Audio.Interfaces;
+using asterivo.Unity60.Core.Data;
 // using asterivo.Unity60.Core.Services; // Removed to avoid circular dependency
 using Sirenix.OdinInspector;
 using asterivo.Unity60.Core.Helpers;
@@ -363,11 +364,10 @@ namespace asterivo.Unity60.Core.Audio
             // TODO: 警戒レベルに応じたBGM切り替え
             string bgmName = level switch
             {
-                AlertLevel.None => "Normal",
-                AlertLevel.Low => "Suspicious",
-                AlertLevel.Medium => "Alert",
-                AlertLevel.High => "Combat",
-                AlertLevel.Combat => "Combat",
+                AlertLevel.Relaxed => "Normal",
+                AlertLevel.Suspicious => "Suspicious",
+                AlertLevel.Investigating => "Alert",
+                AlertLevel.Alert => "Combat",
                 _ => "Normal"
             };
             

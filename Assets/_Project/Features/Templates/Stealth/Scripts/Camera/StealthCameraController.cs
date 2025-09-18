@@ -350,9 +350,6 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                     case MovementStance.Prone:
                         newMode = StealthCameraMode.Prone;
                         break;
-                    case MovementStance.Cover:
-                        newMode = DetermineCoverMode(stealthMovement);
-                        break;
                 }
 
                 // 影の状態による調整
@@ -603,11 +600,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         {
             return alertLevel switch
             {
-                asterivo.Unity60.Core.Data.AlertLevel.Unaware => undetectedColor,
+                asterivo.Unity60.Core.Data.AlertLevel.Relaxed => undetectedColor,
                 asterivo.Unity60.Core.Data.AlertLevel.Suspicious => suspiciousColor,
                 asterivo.Unity60.Core.Data.AlertLevel.Investigating => suspiciousColor,
                 asterivo.Unity60.Core.Data.AlertLevel.Alert => alertColor,
-                asterivo.Unity60.Core.Data.AlertLevel.Combat => alertColor,
                 _ => undetectedColor
             };
         }

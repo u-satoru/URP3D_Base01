@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
+using asterivo.Unity60.Core.Data;
 
 namespace asterivo.Unity60.Tests.Helpers
 {
@@ -763,7 +764,7 @@ public void Play3DSound(string soundId, Vector3 position, float maxDistance = 50
             PlayDistractionCallCount = 0;
             LastDistractionPosition = Vector3.zero;
             LastDistractionRadius = 0f;
-            LastAlertLevel = AlertLevel.None;
+            LastAlertLevel = AlertLevel.Relaxed;
             LastMaskingLevel = 0f;
             NotifyAuditorySensorsCallCount = 0;
             LastSensorOrigin = Vector3.zero;

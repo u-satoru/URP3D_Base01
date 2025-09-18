@@ -273,7 +273,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.AI
             float memoryRetention = _config?.MemoryRetentionTime ?? 30f;
             _npcMemories[npcComponent] = new StealthAIMemory(memoryRetention);
             _suspicionLevels[npcComponent] = 0f;
-            _alertLevels[npcComponent] = asterivo.Unity60.Core.Data.AlertLevel.Unaware;
+            _alertLevels[npcComponent] = asterivo.Unity60.Core.Data.AlertLevel.Relaxed;
         }
 
         /// <summary>
@@ -476,10 +476,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth.AI
             {
                 multiplier *= alertLevel switch
                 {
-                    asterivo.Unity60.Core.Data.AlertLevel.Unaware => 0.8f,
+                    asterivo.Unity60.Core.Data.AlertLevel.Relaxed => 0.8f,
                     asterivo.Unity60.Core.Data.AlertLevel.Suspicious => 1.0f,
-                    asterivo.Unity60.Core.Data.AlertLevel.Alert => 1.2f,
-                    asterivo.Unity60.Core.Data.AlertLevel.Combat => 1.5f,
+                    asterivo.Unity60.Core.Data.AlertLevel.Investigating => 1.2f,
+                    asterivo.Unity60.Core.Data.AlertLevel.Alert => 1.5f,
                     _ => 1.0f
                 };
             }
@@ -516,10 +516,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth.AI
         {
             asterivo.Unity60.Core.Data.AlertLevel newAlertLevel = suspicionLevel switch
             {
-                <= 0.2f => asterivo.Unity60.Core.Data.AlertLevel.Unaware,
+                <= 0.2f => asterivo.Unity60.Core.Data.AlertLevel.Relaxed,
                 <= 0.5f => asterivo.Unity60.Core.Data.AlertLevel.Suspicious,
                 <= 0.7f => asterivo.Unity60.Core.Data.AlertLevel.Alert,
-                _ => asterivo.Unity60.Core.Data.AlertLevel.Combat
+                _ => asterivo.Unity60.Core.Data.AlertLevel.Alert
             };
 
             if (_alertLevels.TryGetValue(npcComponent, out var currentLevel) && currentLevel != newAlertLevel)

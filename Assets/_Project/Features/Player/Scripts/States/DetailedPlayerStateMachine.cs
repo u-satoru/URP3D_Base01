@@ -256,7 +256,7 @@ namespace asterivo.Unity60.Player.States
             {
                 PlayerStateType.Crouching => MovementStance.Crouching,
                 PlayerStateType.Prone => MovementStance.Prone,
-                PlayerStateType.InCover => MovementStance.Cover,
+                PlayerStateType.InCover => MovementStance.Crouching, // Cover state uses crouching posture
                 _ => MovementStance.Standing
             };
             

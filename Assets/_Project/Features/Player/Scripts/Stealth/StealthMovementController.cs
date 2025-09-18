@@ -358,11 +358,11 @@ namespace asterivo.Unity60.Player
             currentMovementInfo = new StealthMovementInfo
             {
                 stance = currentStance,
-                noiseRadius = currentNoiseLevel * 10f, // 騒音レベルを半径に変換
-                visibilityModifier = currentVisibility,
-                moveSpeedModifier = currentMode.moveSpeed / 4f, //基準速度(歩行)に対する倍率
-                isInShadow = isInShadow,
-                lightLevel = lightLevel
+                velocity = GetComponent<Rigidbody>()?.linearVelocity ?? Vector3.zero,
+                noiseLevel = currentNoiseLevel, // 騒音レベル
+                visibilityLevel = currentVisibility, // 視認性レベル
+                isInCover = isInShadow, // 隠蔽状態
+                concealmentLevel = isInShadow ? ConcealmentLevel.Medium : ConcealmentLevel.None
             };
             
             onMovementInfoChanged?.Raise(currentMovementInfo);

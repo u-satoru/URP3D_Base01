@@ -469,7 +469,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
             NPCVisualSensor[] visualSensors = FindObjectsByType<NPCVisualSensor>(FindObjectsSortMode.None);
             
             float highestDetection = 0f;
-            AlertLevel highestAlert = AlertLevel.Unaware;
+            AlertLevel highestAlert = AlertLevel.Relaxed;
             
             foreach (var sensor in visualSensors)
             {
@@ -529,7 +529,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
             if (previousAlertLevel != currentAlertLevel)
             {
                 onAlertLevelChanged?.Raise();
-                stealthAudioService?.SetAlertLevelMusic(ConvertToAudioAlertLevel(currentAlertLevel));
+                stealthAudioService?.SetAlertLevelMusic(currentAlertLevel);
             }
         }
         
@@ -637,11 +637,11 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         
         private AlertLevel CalculateAlertLevel(float detectionValue)
         {
-            if (detectionValue < 0.2f) return AlertLevel.Unaware;
+            if (detectionValue < 0.2f) return AlertLevel.Relaxed;
             if (detectionValue < 0.4f) return AlertLevel.Suspicious;
             if (detectionValue < 0.6f) return AlertLevel.Investigating;
             if (detectionValue < 0.8f) return AlertLevel.Alert;
-            return AlertLevel.Combat;
+            return AlertLevel.Alert;
         }
         
         #endregion
@@ -690,7 +690,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         {
             isDetected = false;
             detectionLevel = 0f;
-            currentAlertLevel = AlertLevel.Unaware;
+            currentAlertLevel = AlertLevel.Relaxed;
             onEnterStealth?.Raise();
         }
         
@@ -833,22 +833,6 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
 
         #region Helper Methods
 
-        /// <summary>
-        /// Data.AlertLevel を Audio.Interfaces.AlertLevel に変換
-        /// </summary>
-        private asterivo.Unity60.Core.Audio.Interfaces.AlertLevel ConvertToAudioAlertLevel(AlertLevel dataAlertLevel)
-        {
-            return dataAlertLevel switch
-            {
-                AlertLevel.Unaware => asterivo.Unity60.Core.Audio.Interfaces.AlertLevel.None,
-                AlertLevel.Suspicious => asterivo.Unity60.Core.Audio.Interfaces.AlertLevel.Low,
-                AlertLevel.Investigating => asterivo.Unity60.Core.Audio.Interfaces.AlertLevel.Medium,
-                AlertLevel.Searching => asterivo.Unity60.Core.Audio.Interfaces.AlertLevel.Medium,
-                AlertLevel.Alert => asterivo.Unity60.Core.Audio.Interfaces.AlertLevel.High,
-                AlertLevel.Combat => asterivo.Unity60.Core.Audio.Interfaces.AlertLevel.Combat,
-                _ => asterivo.Unity60.Core.Audio.Interfaces.AlertLevel.None
-            };
-        }
 
         #endregion
     }
