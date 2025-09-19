@@ -228,7 +228,7 @@ namespace asterivo.Unity60.Tests.Helpers
 
             // MainCameraの作成（AudioListenerが必要）
             var cameraGO = CreateTestGameObject("TestMainCamera");
-            var camera = cameraGO.AddComponent<Camera>();
+            var camera = cameraGO.AddComponent<UnityEngine.Camera>();
             camera.tag = "MainCamera";
 
             return new AudioTestContext
@@ -794,7 +794,7 @@ public void Play3DSound(string soundId, Vector3 position, float maxDistance = 50
     public class AudioTestContext
     {
         public AudioListener AudioListener { get; set; }
-        public Camera MainCamera { get; set; }
+        public UnityEngine.Camera MainCamera { get; set; }
     }
 
     /// <summary>

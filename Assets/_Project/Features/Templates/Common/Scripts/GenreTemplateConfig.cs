@@ -48,6 +48,13 @@ namespace asterivo.Unity60.Features.Templates.Common
         [SerializeField] private bool _hasInteractiveTutorial = false;
         [SerializeField] private string _tutorialScenePath;
         [SerializeField] private List<string> _learningObjectives = new List<string>();
+
+        [Header("テンプレート機能設定")]
+        [SerializeField] private string _version = "1.0.0";
+        [SerializeField] private List<string> _requiredComponents = new List<string>();
+        [SerializeField] private List<string> _optionalComponents = new List<string>();
+        [SerializeField] private List<string> _specialFeatures = new List<string>();
+        [SerializeField] private bool _requiresNetworking = false;
         
         [Header("パフォーマンス設定")]
         [SerializeField] private int _maxNPCCount = 10;
@@ -94,6 +101,16 @@ namespace asterivo.Unity60.Features.Templates.Common
         public int MaxNPCCount => _maxNPCCount;
         public bool RequiresOptimization => _requiresOptimization;
         public IReadOnlyList<string> PerformanceNotes => _performanceNotes.AsReadOnly();
+
+        // Template Feature Properties
+        public string Version => _version;
+        public IReadOnlyList<string> RequiredComponents => _requiredComponents.AsReadOnly();
+        public IReadOnlyList<string> OptionalComponents => _optionalComponents.AsReadOnly();
+        public IReadOnlyList<string> SpecialFeatures => _specialFeatures.AsReadOnly();
+        public bool RequiresNetworking => _requiresNetworking;
+
+        // Audio requirement helper property
+        public bool RequiresAudio => _useStealthAudio || !string.IsNullOrEmpty(_audioMixerPath);
         
         /// <summary>
         /// ジャンルの優先度を取得

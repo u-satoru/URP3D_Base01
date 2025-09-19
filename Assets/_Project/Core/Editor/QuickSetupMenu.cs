@@ -259,8 +259,8 @@ namespace asterivo.Unity60.Core.Editor
             }
             
             // Cameraの設定を最適化
-            Camera[] cameras = Object.FindObjectsByType<Camera>(FindObjectsSortMode.None);
-            foreach (Camera cam in cameras)
+            UnityEngine.Camera[] cameras = Object.FindObjectsByType<UnityEngine.Camera>(FindObjectsSortMode.None);
+            foreach (UnityEngine.Camera cam in cameras)
             {
                 cam.allowMSAA = true;
                 cam.allowDynamicResolution = true;

@@ -1,7 +1,7 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Features.Camera.Commands.Definitions;
-using asterivo.Unity60.Camera.States;
+using asterivo.Unity60.Features.Camera.States;
 
 namespace asterivo.Unity60.Features.Camera.Commands
 {

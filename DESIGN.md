@@ -12,7 +12,7 @@
 - **ドキュメント種別**: 技術設計書（SDDフェーズ3: 設計）
 - **生成元**: REQUIREMENTS.md - Unity 6 3Dゲーム基盤プロジェクト 形式化された要件定義
 - **対象読者**: アーキテクト、シニア開発者、技術リード、実装担当者
-- **整合性状態**: CLAUDE.md、REQUIREMENTS.md（FR-5アクションRPG追加、FR番号更新済み）との完全整合性確保済み
+- **整合性状態**: REQUIREMENTS.md（FR-3階層化ステートマシン、FR-4嗅覚センサー統合）との完全整合性確保済み
 
 ## 設計原則とアーキテクチャビジョン
 
@@ -29,7 +29,7 @@
 
 1. **Event-Driven Architecture First**: ScriptableObjectベースのイベントチャネル（GameEvent）による疎結合設計
 2. **Command + ObjectPool統合**: Factory+Registry+ObjectPool統合で95%メモリ削減、67%速度改善
-3. **State-Driven Behavior**: Dictionary<StateType, IState>による高速状態管理
+3. **Hierarchical State-Driven Behavior**: 階層化ステートマシン（HSM）による複雑かつ再利用可能な状態管理
 4. **Data-Configuration Driven**: ScriptableObjectによるデータ資産化
 5. **SDD統合品質保証**: 5段階フェーズ管理 + MCPサーバー統合
 
@@ -45,7 +45,7 @@ flowchart TD
     A --> D["✅ ServiceLocator基盤"]
     A --> E["✅ 基本データ構造・インターフェース"]
     A --> F["✅ オーディオシステム基盤"]
-    A --> G["✅ ステートマシン基盤"]
+    A --> G["✅ 階層化ステートマシン（HSM）基盤"]
     A --> H["✅ 共通ユーティリティ"]
 
     classDef coreLayer fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000
@@ -84,7 +84,7 @@ flowchart TD
 #### 名前空間一貫性設計（3層分離）
 
 **基本構造**:
-- `asterivo.Unity60.Core.*` - 基盤システム（Events, Commands, Services, Audio）
+- `asterivo.Unity60.Core.*` - 基盤システム（Events, Commands, Services, Audio, StateMachine）
 - `asterivo.Unity60.Features.*` - 機能実装（Player, AI, Camera, ActionRPG）
 - `asterivo.Unity60.Tests.*` - テスト環境
 
@@ -115,6 +115,18 @@ flowchart TD
 
 **実装**: CommandPoolManager.cs、95%メモリ削減と67%速度改善実現
 
+#### 1.3 Hierarchical State Machine (HSM) Architecture
+- **要件ID**: FR-3.4
+- **配置**: `Assets/_Project/Core/Patterns/StateMachine`
+- **構成**:
+  - `HierarchicalStateMachine.cs`: 状態の階層構造、遷移、ライフサイクルを管理するコアクラス。
+  - `IState.cs`: 状態の基本インターフェース。`OnEnter`, `OnUpdate`, `OnExit`メソッドに加え、親子関係を定義するためのプロパティを持つように拡張。
+  - `StateFactory.cs`: 状態オブジェクトの生成と再利用を管理するファクトリ。
+- **設計**:
+  - **状態のネスト**: `IState`実装クラスが`SubStates`のリストを持つことで、親子関係を表現。
+  - **ロジックの継承**: `HierarchicalStateMachine`が現在の状態を更新する際、ルートから現在のアクティブな子状態までのすべての親状態の`OnUpdate`を順番に呼び出す。
+  - **イベント駆動**: 状態遷移は`GameEvent`によってトリガーされ、`HierarchicalStateMachine`がそれをリッスンして適切な状態変更を行う。
+
 ### Layer 2: Feature System Layer（機能システム層）
 
 **Feature層原則**: Core基盤活用、ジャンル特化実装、Event駆動連携
@@ -122,47 +134,53 @@ flowchart TD
 #### 2.1 State Machine System Design
 
 **配置**: `Assets/_Project/Features/{Camera,AI,Player}`
+**基盤**: すべてのステートマシンは、Core層の`Hierarchical State Machine (HSM) Architecture` (`FR-3.4`) を基盤として実装する。
 
 ##### Camera State Machine
 - **4状態**: FirstPerson、ThirdPerson、Aim、Cover
-- **実装**: ICameraState、Cinemachine 3.1統合、Dictionary高速検索
+- **実装**: `ICameraState`、Cinemachine 3.1統合。HSMを利用し、例えば`ThirdPerson`状態の中に`Aim`状態をサブステートとしてネストさせ、共通のカメラ制御ロジックを親状態で管理する。
 
 ##### AI State Machine
 - **7状態**: Idle→Patrol→Suspicious→Investigating→Searching→Alert→Combat
+- **実装**: NavMeshAgent統合、Behavior Tree、Memory System。HSMを利用し、`Alert`状態が`Searching`と`Combat`をサブステートとして持つなど、より複雑な行動遷移を管理する。
 - **制御**: SuspicionLevel (0.0-1.0)による段階的状態遷移
-- **実装**: NavMeshAgent統合、Behavior Tree、Memory System
 
-#### 2.2 Stealth Audio System
+#### 2.2 Multi-Modal AI Sensor System
 
+##### 2.2.1 Auditory Sensor System
 **構成**:
 - Core層: `asterivo.Unity60.Core.Audio`（基盤）
 - Feature層: `asterivo.Unity60.Features.Stealth.Audio`（ステルス特化）
-
 **機能**: StealthAudioCoordinator（中央制御）、NPCAuditorySensor（3D距離減衰）、DynamicAudioEnvironment（環境マスキング）
 
-#### 2.3 AI Visual Sensor System
-
+##### 2.2.2 Visual Sensor System
 **配置**: `Assets/_Project/Features/AI/Sensors`
-
 **構成**:
 - NPCVisualSensor: 継続的視界スキャン、多重判定システム
 - 4段階警戒: Relaxed→Suspicious→Investigating→Alert
 - パフォーマンス: 10-20Hz可変頻度、LOD、フレーム分散
-
 **性能要件**: NPCあたり5KB、1フレーム0.1ms以下、50体同時稼働対応
 
-**統合**: SensorFusionProcessorによる視覚・聴覚センサー統合、AIStateMachine連携
+##### 2.2.3 Olfactory Sensor System (新規)
+- **要件ID**: FR-4.4
+- **配置**: `Assets/_Project/Features/AI/Sensors`
+- **構成**:
+  - `NPCOlfactorySensor.cs`: NPCにアタッチし、嗅覚検知ロジックを担う。
+  - `OdorSource.cs`: 匂いを発生させるオブジェクト（プレイヤー、アイテム等）にアタッチ。匂いの種類、強度、持続時間を設定可能。
+  - `WindSystem.cs`: （Serviceとして）シーン全体の風向・風速を管理し、匂いの伝播に影響を与える。
+- **データ**: `OdorProfile.asset` (ScriptableObject) で匂いの種類ごとの基本パラメータを定義。
+- **統合**: `StealthSensorCoordinator`が`WindSystem`と連携し、各`NPCOlfactorySensor`に環境情報を提供する。
 
-#### 2.4 Action RPG System
+##### 2.2.4 Sensor Fusion
+**統合**: `StealthSensorCoordinator`が視覚・聴覚・嗅覚センサーからの情報を集約し、総合的な警戒レベルを決定して`AIStateMachine`に通知する。各センサーからの入力には重み付けを行い、状況に応じて優先度を変更する。
+
+#### 2.3 Action RPG System
 
 **配置**: `Assets/_Project/Features/ActionRPG/`
-
 **構成**:
 - CharacterStatsManager: レベル・経験値・スキルツリー管理
 - InventoryManager: アイテム・装備管理システム
 - Core統合: Events/Commands/ScriptableObjectデータ活用
-
-
 **Core連携**: Events（レベルアップ・アイテム・装備・ステータス）、Commands（経験値・取得・装備・使用）、Services（統計・インベントリ・装備）
 
 ### Layer 3: Integration Layer（統合層）
@@ -170,7 +188,6 @@ flowchart TD
 #### 3.1 Cinemachine Integration
 
 **配置**: `Assets/_Project/Features/Camera/Cinemachine`
-
 **構成**: CinemachineIntegration（Singleton、VirtualCamera管理）、CameraConfig（ScriptableObject設定）
 
 #### 3.2 Input System Integration（Feature層実装）
@@ -227,10 +244,11 @@ flowchart TB
         B3["NPCBehaviorData.asset"]
     end
 
-    subgraph "Audio"
-        C1["StealthAudioConfig.asset"]
-        C2["EnvironmentAudioData.asset"]
-        C3["SFXLibrary.asset"]
+    subgraph "Sensors"
+        C1["VisualSensorSettings.asset"]
+        C2["AuditorySensorSettings.asset"]
+        C3["OlfactorySensorSettings.asset"]
+        C4["OdorProfile.asset"]
     end
 
     subgraph "Camera"
@@ -243,22 +261,16 @@ flowchart TB
         E2["EventChannels.asset"]
     end
 
-    A --> B1
-    A --> B2
-    A --> B3
-    A --> C1
-    A --> C2
-    A --> C3
-    A --> D1
-    A --> D2
-    A --> E1
-    A --> E2
+    A --> B1; A --> B2; A --> B3
+    A --> C1; A --> C2; A --> C3; A --> C4
+    A --> D1; A --> D2
+    A --> E1; A --> E2
 
     classDef root fill:#e3f2fd,stroke:#1976d2,stroke-width:3px,color:#000
     classDef asset fill:#f5f5f5,stroke:#616161,stroke-width:1px,color:#000
 
     class A root
-    class B1,B2,B3,C1,C2,C3,D1,D2,E1,E2 asset
+    class B1,B2,B3,C1,C2,C3,C4,D1,D2,E1,E2 asset
 ```
 
 ### Data Validation Strategy
@@ -321,7 +333,7 @@ public class OptimizedCommandPool<T> : IObjectPool<T> where T : class, IResettab
 - **Batch Event Processing**: フレーム末尾でのイベント一括処理
 
 #### State Machine最適化
-- **Dictionary<StateType, IState>**: 定数時間状態検索
+- **Hierarchical Update Loop**: 親から子への効率的な更新呼び出し。
 - **State Context Pooling**: Context構造体の再利用
 - **Transition Rule Caching**: 遷移ルールの事前計算
 
@@ -367,34 +379,35 @@ flowchart TB
 - **Reference Checker**: 参照関係の依存性分析
 - **Performance Audit**: システム設定の最適化提案
 
-#### AI Visual Sensor Debugger（新規追加）
+#### AI Sensor Debugger Suite
 ```mermaid
 flowchart TB
-    subgraph "Visual Sensor Debug Tools"
-        subgraph "Scene View Visualization"
-            A["視界範囲の表示"]
-            B["検出目標の表示"]
-            C["記憶位置の表示"]
-            D["予測軌道の表示"]
+    subgraph "Sensor Debug Tools"
+        subgraph "Visual Sensor"
+            A["視界範囲"]
+            B["検出目標"]
         end
 
-        subgraph "Custom Inspector Window"
-            E["リアルタイムデバッグ情報"]
-            F["警戒レベル表示"]
-            G["アクティブ目標リスト"]
-            H["メモリ使用状況"]
+        subgraph "Auditory Sensor"
+            C["聴覚範囲"]
+            D["音源位置"]
+        end
+
+        subgraph "Olfactory Sensor"
+            E["匂い範囲（風向考慮）"]
+            F["匂い発生源"]
+        end
+
+        subgraph "Shared Inspector"
+            G["リアルタイムデバッグ情報"]
+            H["総合警戒レベル"]
+            I["アクティブ目標リスト"]
         end
     end
-
-    classDef sceneView fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000
-    classDef inspector fill:#e8f5e8,stroke:#388e3c,stroke-width:2px,color:#000
-
-    class A,B,C,D sceneView
-    class E,F,G,H inspector
 ```
 
 **デバッグ機能実装**:
-- **Gizmos描画**: OnDrawGizmosSelectedでの視覚的表示
+- **Gizmos描画**: OnDrawGizmosSelectedでの各センサー範囲の視覚的表示
 - **リアルタイム監視**: Play Mode中の状態更新表示
 - **パフォーマンス測定**: Unity Profiler統合
 - **ログ出力**: 構造化ログによる詳細トレース
@@ -816,7 +829,7 @@ public class DebugConfiguration : ScriptableObject
 **Clone & Create 価値**: 30分→1分（97%短縮）、Unity Editor API自動化、エラー予防システム、進捗可視化
 
 ##### A.2 Game Genre Templates System
-**7ジャンル対応**: FPS（一人称カメラ・射撃・戦闘UI）、TPS（三人称・カバー・エイミング）、Platformer（ジャンプ物理・コレクタブル・レベル設計）、Stealth（AI検知・ステルス・環境相互作用）、Adventure（ダイアログ・インベントリ・クエスト）、Strategy（RTSカメラ・ユニット選択・リソース管理）、Action RPG（キャラ成長・装備・戦闘）
+**7ジャンル対応**: FPS（一人称カメラ・射撃・戦闘UI）、TPS（三人称・カバー・エイミング）、Platformer（ジャンプ物理・コレクタブル・レベル設計）、Stealth（AI検知・ステルス・環境相互作用）、Survival Horror（リソース管理・心理的恐怖）、Adventure（ダイアログ・インベントリ・クエスト）、Action RPG（キャラ成長・装備・戦闘）
 
 **Runtime管理**: TemplateManager（動的切り替え・状態保持・アセット管理・設定同期）、TemplateTransitionSystem（シーン遷移・データ移行・進捗保持）
 
@@ -874,7 +887,7 @@ public class DebugConfiguration : ScriptableObject
 #### Learn & Grow 価値の技術実現  
 - **70%学習コスト削減**: 40時間→12時間のインタラクティブチュートリアルエンジン
 - **段階的成長支援**: 5段階学習システム（基礎→応用→実践→カスタマイズ→出版）
-- **7ジャンル完全対応**: FPS/TPS/Platformer/Stealth/Adventure/Strategy/ActionRPG
+- **7ジャンル完全対応**: FPS/TPS/Platformer/Stealth/Survival Horror/Adventure/ActionRPG
 
 #### Ship & Scale 価値の技術実現
 - **プロダクション品質**: エラー０・警告０のクリーン実装基盤

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace asterivo.Unity60.Camera.States
+namespace asterivo.Unity60.Features.Camera.States
 {
     public class ThirdPersonCameraState : ICameraState
     {
@@ -59,11 +59,33 @@ namespace asterivo.Unity60.Camera.States
             {
                 stateMachine.TransitionToState(CameraStateMachine.CameraStateType.FirstPerson);
             }
-            
+
             if (Input.GetMouseButton(1))
             {
                 stateMachine.TransitionToState(CameraStateMachine.CameraStateType.Aim);
             }
+        }
+
+        public void OnResetRequested(CameraStateMachine stateMachine)
+        {
+            // Reset camera rotation to default values
+            currentX = 0f;
+            currentY = 30f;
+
+            // Reset to default values if ThirdPersonSettings are available
+            if (stateMachine.ThirdPersonSettings != null)
+            {
+                mouseSensitivity = stateMachine.ThirdPersonSettings.mouseSensitivity;
+                currentDistance = stateMachine.ThirdPersonSettings.cameraDistance;
+                minDistance = stateMachine.ThirdPersonSettings.minDistance;
+                maxDistance = stateMachine.ThirdPersonSettings.maxDistance;
+                offset = stateMachine.ThirdPersonSettings.shoulderOffset;
+                stateMachine.MainCamera.fieldOfView = stateMachine.ThirdPersonSettings.fieldOfView;
+            }
+
+            // Reset cursor state
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
         
         private void HandleMouseLook(CameraStateMachine stateMachine)

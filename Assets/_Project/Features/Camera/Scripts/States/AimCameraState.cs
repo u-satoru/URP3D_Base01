@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace asterivo.Unity60.Camera.States
+namespace asterivo.Unity60.Features.Camera.States
 {
     public class AimCameraState : ICameraState
     {
@@ -45,6 +45,22 @@ namespace asterivo.Unity60.Camera.States
             if (!Input.GetMouseButton(1))
             {
                 stateMachine.ReturnToPreviousState();
+            }
+        }
+
+        public void OnResetRequested(CameraStateMachine stateMachine)
+        {
+            // Reset camera rotation to default values
+            currentX = 0f;
+            currentY = 30f;
+
+            // Reset to default values if AimSettings are available
+            if (stateMachine.AimSettings != null)
+            {
+                mouseSensitivity = stateMachine.AimSettings.aimSensitivity;
+                aimDistance = stateMachine.AimSettings.aimDistance;
+                aimOffset = stateMachine.AimSettings.aimOffset;
+                stateMachine.MainCamera.fieldOfView = stateMachine.AimSettings.aimFieldOfView;
             }
         }
         

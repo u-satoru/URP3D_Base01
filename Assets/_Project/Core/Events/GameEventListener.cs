@@ -7,7 +7,7 @@ namespace asterivo.Unity60.Core.Events
     /// GameEventのリスナーコンポーネント
     /// UnityEventを介してInspectorから応答を設定可能
     /// </summary>
-    public class GameEventListener : MonoBehaviour
+    public class GameEventListener : MonoBehaviour, IGameEventListener
     {
         [Header("Event Settings")]
         [SerializeField] private GameEvent gameEvent;

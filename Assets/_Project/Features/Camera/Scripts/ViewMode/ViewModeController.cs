@@ -3,7 +3,7 @@ using Debug = UnityEngine.Debug;
 using System.Collections;
 using asterivo.Unity60.Core.Events;
 
-namespace asterivo.Unity60.Camera
+namespace asterivo.Unity60.Features.Camera.ViewMode
 {
     /// <summary>
     /// カメラの表示モードを定義する列挙型

@@ -13,7 +13,7 @@ using CameraState = asterivo.Unity60.Camera.CameraState;
 using CoreCameraState = asterivo.Unity60.Core.Events.CameraState;
 using CoreCameraStateEvent = asterivo.Unity60.Core.Events.CameraStateEvent;
 
-namespace asterivo.Unity60.Camera
+namespace asterivo.Unity60.Features.Camera.Cinemachine
 {
     /// <summary>
     /// Cinemachine 3.1統合カメラシステム

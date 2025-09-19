@@ -151,7 +151,7 @@ namespace asterivo.Unity60.Core.Services
         /// <summary>
         /// Get main camera component
         /// </summary>
-        Camera GetMainCamera();
+        UnityEngine.Camera GetMainCamera();
 
         /// <summary>
         /// Apply screen shake effect (TPS Template compatibility)

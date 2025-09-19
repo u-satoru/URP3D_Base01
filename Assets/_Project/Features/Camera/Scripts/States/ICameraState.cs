@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace asterivo.Unity60.Camera.States
+namespace asterivo.Unity60.Features.Camera.States
 {
     /// <summary>
     /// カメラの各状態が実装すべきインターフェース
@@ -115,22 +115,44 @@ namespace asterivo.Unity60.Camera.States
         /// - ズーム・FOV変更入力
         /// - 視点切り替え入力（一人称⇔三人称）
         /// - エイム・カバー等の特殊状態への遷移入力
-        /// 
+        ///
         /// 入力処理の設計方針：
         /// - 各カメラ状態で異なる入力マッピングが可能
         /// - 感度設定の状態別適用（エイム時の低感度等）
         /// - 入力の状態依存フィルタリング（移動中のカメラ制限等）
-        /// 
+        ///
         /// プラットフォーム対応：
         /// - PC: マウス入力による高精度制御
         /// - コンソール: アナログスティックによる直感的制御
         /// - モバイル: タッチ入力による簡易制御
-        /// 
+        ///
         /// 例外処理：
         /// - カーソルロック中の入力無効化
         /// - UIアクティブ時の入力遮断
         /// - ポーズ中の入力停止
         /// </remarks>
         void HandleInput(CameraStateMachine stateMachine);
+
+        /// <summary>
+        /// カメラリセット要求時の処理
+        /// </summary>
+        /// <param name="stateMachine">このカメラ状態を管理するステートマシン</param>
+        /// <remarks>
+        /// 実行内容例：
+        /// - カメラ位置・回転の初期状態への復帰
+        /// - Cinemachineカメラパラメータのリセット
+        /// - 視点補間・ズーム状態の初期化
+        /// - 状態固有の設定値の復元
+        ///
+        /// 呼び出しタイミング：
+        /// - プレイヤーの明示的なリセット要求時
+        /// - 異常な状態からの回復時
+        /// - デバッグ目的でのカメラ状態クリア時
+        ///
+        /// 注意事項：
+        /// リセットは即座に実行されるため、滑らかな遷移よりも
+        /// 確実な状態復帰を優先する
+        /// </remarks>
+        void OnResetRequested(CameraStateMachine stateMachine);
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace asterivo.Unity60.Camera.States
+namespace asterivo.Unity60.Features.Camera.States
 {
     public class CoverCameraState : ICameraState
     {
@@ -56,10 +56,26 @@ namespace asterivo.Unity60.Camera.States
             {
                 stateMachine.TransitionToState(CameraStateMachine.CameraStateType.ThirdPerson);
             }
-            
+
             if (Input.GetMouseButton(1))
             {
                 stateMachine.TransitionToState(CameraStateMachine.CameraStateType.Aim);
+            }
+        }
+
+        public void OnResetRequested(CameraStateMachine stateMachine)
+        {
+            // Reset peek state
+            isPeeking = false;
+            currentPeekDirection = PeekDirection.None;
+
+            // Reset to default values if CoverSettings are available
+            if (stateMachine.CoverSettings != null)
+            {
+                coverDistance = stateMachine.CoverSettings.coverDistance;
+                coverHeight = stateMachine.CoverSettings.coverHeight;
+                coverOffset = stateMachine.CoverSettings.cameraOffset;
+                stateMachine.MainCamera.fieldOfView = stateMachine.CoverSettings.fieldOfView;
             }
         }
         

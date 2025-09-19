@@ -171,11 +171,11 @@ namespace asterivo.Unity60.Core.Editor
 
         private static void SetupGameplayCamera()
         {
-            Camera mainCamera = Camera.main;
+            UnityEngine.Camera mainCamera = UnityEngine.Camera.main;
             if (mainCamera == null)
             {
                 GameObject cameraGO = new GameObject("Main Camera");
-                mainCamera = cameraGO.AddComponent<Camera>();
+                mainCamera = cameraGO.AddComponent<UnityEngine.Camera>();
                 cameraGO.tag = "MainCamera";
             }
 

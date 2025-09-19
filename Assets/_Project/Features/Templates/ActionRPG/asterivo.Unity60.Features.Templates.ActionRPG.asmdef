@@ -1,0 +1,30 @@
+{
+    "name": "asterivo.Unity60.Features.Templates.ActionRPG",
+    "rootNamespace": "asterivo.Unity60.Features.ActionRPG",
+    "references": [
+        "asterivo.Unity60.Core",
+        "asterivo.Unity60.Core.Audio",
+        "asterivo.Unity60.Core.Services",
+        "asterivo.Unity60.Core.Shared",
+        "asterivo.Unity60.Core.Lifecycle",
+        "asterivo.Unity60.Core.Events",
+        "asterivo.Unity60.Core.Components",
+        "asterivo.Unity60.Core.Combat",
+        "asterivo.Unity60.Core.Interaction",
+        "asterivo.Unity60.Features",
+        "asterivo.Unity60.Features.Templates.Common",
+        "Unity.TextMeshPro",
+        "Unity.InputSystem",
+        "Unity.Timeline",
+        "Unity.Cinemachine"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

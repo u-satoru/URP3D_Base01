@@ -1,6 +1,7 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Features.Camera.Commands.Definitions;
+using asterivo.Unity60.Features.Camera.States;
 
 namespace asterivo.Unity60.Features.Camera.Commands
 {
@@ -10,7 +11,7 @@ namespace asterivo.Unity60.Features.Camera.Commands
     /// </summary>
     public class CameraShoulderSwitchCommand : ICommand
     {
-        private readonly asterivo.Unity60.Camera.States.CameraStateMachine cameraSystem;
+        private readonly CameraStateMachine cameraSystem;
         private readonly CameraShoulderSwitchCommandDefinition.ShoulderAngle targetAngle;
         private readonly Vector3 targetOffset;
         private readonly float transitionSpeed;
@@ -27,7 +28,7 @@ namespace asterivo.Unity60.Features.Camera.Commands
         /// コンストラクタ
         /// </summary>
         public CameraShoulderSwitchCommand(
-            asterivo.Unity60.Camera.States.CameraStateMachine cameraSystem,
+            CameraStateMachine cameraSystem,
             CameraShoulderSwitchCommandDefinition.ShoulderAngle targetAngle,
             Vector3 targetOffset,
             float transitionSpeed = 10f,

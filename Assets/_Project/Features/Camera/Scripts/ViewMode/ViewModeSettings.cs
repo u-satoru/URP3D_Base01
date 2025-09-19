@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace asterivo.Unity60.Camera
+namespace asterivo.Unity60.Features.Camera.ViewMode
 {
     [System.Serializable]
     public abstract class ViewModeSettings : ScriptableObject
@@ -54,11 +54,22 @@ namespace asterivo.Unity60.Camera
     {
         [Header("Third Person Specific")]
         public float cameraDistance = 5f;
+        public float distance = 5f; // Alias for cameraDistance
         public float minDistance = 1f;
         public float maxDistance = 10f;
         public Vector3 shoulderOffset = new Vector3(0.5f, 0f, 0f);
         public bool autoRotateWithPlayer = false;
         public float autoRotateSpeed = 5f;
+        
+        [Header("Camera Movement")]
+        public float zoomSpeed = 3f;
+        public float rotationSpeed = 100f;
+        public float height = 1.5f;
+        public float followSpeed = 5f;
+        
+        [Header("Look Constraints")]
+        public float minVerticalAngle = -30f;
+        public float maxVerticalAngle = 60f;
         
         private void Reset()
         {
@@ -68,6 +79,13 @@ namespace asterivo.Unity60.Camera
             aimFieldOfView = 50f;
             mouseSensitivity = 2f;
             cameraDistance = 5f;
+            distance = 5f;
+            zoomSpeed = 3f;
+            rotationSpeed = 100f;
+            height = 1.5f;
+            followSpeed = 5f;
+            minVerticalAngle = -30f;
+            maxVerticalAngle = 60f;
             enableCollisionDetection = true;
         }
     }

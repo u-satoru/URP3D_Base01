@@ -177,7 +177,7 @@ namespace asterivo.Unity60.Core.Editor.Setup
 
         private void ApplyGenreSceneSettings()
         {
-            var mainCamera = Camera.main;
+            var mainCamera = UnityEngine.Camera.main;
             if (mainCamera == null) return;
 
             switch (config.selectedGenre)

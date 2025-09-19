@@ -23,7 +23,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #pragma warning disable CS0618 // Type or member is obsolete
         private SpatialAudioManager spatialAudioManager;
         #pragma warning restore CS0618 // Type or member is obsolete
-        private Camera testCamera;
+        private UnityEngine.Camera testCamera;
 
         [SetUp]
         public void SetUp()
@@ -39,7 +39,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
             spatialAudioManager = spatialAudioManagerObject.AddComponent<SpatialAudioManager>();
             
             // AudioListenerコンポーネントの追加（空間オーディオに必要）
-            testCamera = Camera.main;
+            testCamera = UnityEngine.Camera.main;
             if (testCamera != null && testCamera.GetComponent<AudioListener>() == null)
             {
                 testCamera.gameObject.AddComponent<AudioListener>();

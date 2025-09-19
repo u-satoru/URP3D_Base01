@@ -13,10 +13,10 @@ namespace asterivo.Unity60.Core.Events
     public class GameEvent : ScriptableObject
     {
         // リスナーのHashSetによる高速管理
-        private readonly HashSet<GameEventListener> listeners = new HashSet<GameEventListener>();
-        
+        private readonly HashSet<IGameEventListener> listeners = new HashSet<IGameEventListener>();
+
         // 優先度ソート済みリスナーリスト（キャッシュ）
-        private List<GameEventListener> sortedListeners;
+        private List<IGameEventListener> sortedListeners;
         private bool isDirty = true;
         
         #if UNITY_EDITOR
@@ -88,7 +88,7 @@ namespace asterivo.Unity60.Core.Events
         /// <summary>
         /// リスナーを登録
         /// </summary>
-        public void RegisterListener(GameEventListener listener)
+        public void RegisterListener(IGameEventListener listener)
         {
             if (listener == null) return;
             
@@ -108,7 +108,7 @@ namespace asterivo.Unity60.Core.Events
         /// <summary>
         /// リスナーを解除
         /// </summary>
-        public void UnregisterListener(GameEventListener listener)
+        public void UnregisterListener(IGameEventListener listener)
         {
             if (listener == null) return;
             
@@ -173,7 +173,15 @@ namespace asterivo.Unity60.Core.Events
             {
                 if (listener != null)
                 {
-                    UnityEngine.Debug.Log($"  - {listener.gameObject.name} (Priority: {listener.Priority})", listener);
+                    var component = listener as Component;
+                    if (component != null)
+                    {
+                        UnityEngine.Debug.Log($"  - {component.gameObject.name}.{listener.GetType().Name} (Priority: {listener.Priority})", component);
+                    }
+                    else
+                    {
+                        UnityEngine.Debug.Log($"  - {listener.GetType().Name} (Priority: {listener.Priority})");
+                    }
                 }
             }
         }

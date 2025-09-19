@@ -112,10 +112,10 @@ namespace asterivo.Unity60.Features.Templates.TPS.Player.StateMachine
         /// </summary>
         protected Vector3 GetCameraRelativeMovement(Vector2 input)
         {
-            if (Camera.main == null) return Vector3.zero;
+            if (UnityEngine.Camera.main == null) return Vector3.zero;
 
-            Vector3 forward = Camera.main.transform.forward;
-            Vector3 right = Camera.main.transform.right;
+            Vector3 forward = UnityEngine.Camera.main.transform.forward;
+            Vector3 right = UnityEngine.Camera.main.transform.right;
 
             // Remove Y component to keep movement horizontal
             forward.y = 0f;

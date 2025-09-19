@@ -64,12 +64,12 @@ namespace asterivo.Unity60.Features.Camera.Commands.Definitions
         public bool CanExecute(object context = null)
         {
             // カメラシステムが存在することを確認
-            if (context is asterivo.Unity60.Camera.States.CameraStateMachine cameraSystem)
+            if (context is asterivo.Unity60.Features.Camera.States.CameraStateMachine cameraSystem)
             {
                 // 三人称視点またはエイム状態の時のみ実行可能
                 var currentState = cameraSystem.GetCurrentStateType();
-                return currentState == asterivo.Unity60.Camera.States.CameraStateMachine.CameraStateType.ThirdPerson ||
-                       currentState == asterivo.Unity60.Camera.States.CameraStateMachine.CameraStateType.Aim;
+                return currentState == asterivo.Unity60.Features.Camera.States.CameraStateMachine.CameraStateType.ThirdPerson ||
+                       currentState == asterivo.Unity60.Features.Camera.States.CameraStateMachine.CameraStateType.Aim;
             }
 
             return false;
@@ -83,7 +83,7 @@ namespace asterivo.Unity60.Features.Camera.Commands.Definitions
             if (!CanExecute(context))
                 return null;
                 
-            if (context is asterivo.Unity60.Camera.States.CameraStateMachine cameraSystem)
+            if (context is asterivo.Unity60.Features.Camera.States.CameraStateMachine cameraSystem)
             {
                 return new CameraShoulderSwitchCommand(
                     cameraSystem, 

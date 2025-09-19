@@ -11,8 +11,8 @@ namespace asterivo.Unity60.Core.Events
     [CreateAssetMenu(fileName = "New Vector2 Game Event", menuName = "asterivo.Unity60/Events/Vector2 Game Event")]
     public class Vector2GameEvent : ScriptableObject
     {
-        private readonly HashSet<Vector2GameEventListener> listeners = new HashSet<Vector2GameEventListener>();
-        private List<Vector2GameEventListener> sortedListeners;
+        private readonly HashSet<IGameEventListener<Vector2>> listeners = new HashSet<IGameEventListener<Vector2>>();
+        private List<IGameEventListener<Vector2>> sortedListeners;
         private bool isDirty = true;
         
         #if UNITY_EDITOR
@@ -46,7 +46,7 @@ namespace asterivo.Unity60.Core.Events
             // 優先度順でリスナーに通知
             for (int i = 0; i < sortedListeners.Count; i++)
             {
-                if (sortedListeners[i] != null && sortedListeners[i].gameObject.activeInHierarchy)
+                if (sortedListeners[i] != null && sortedListeners[i].enabled)
                 {
                     sortedListeners[i].OnEventRaised(value);
                 }
@@ -56,7 +56,7 @@ namespace asterivo.Unity60.Core.Events
         /// <summary>
         /// リスナーを登録
         /// </summary>
-        public void RegisterListener(Vector2GameEventListener listener)
+        public void RegisterListener(IGameEventListener<Vector2> listener)
         {
             if (listener == null) return;
             
@@ -72,7 +72,7 @@ namespace asterivo.Unity60.Core.Events
         /// <summary>
         /// リスナーを解除
         /// </summary>
-        public void UnregisterListener(Vector2GameEventListener listener)
+        public void UnregisterListener(IGameEventListener<Vector2> listener)
         {
             if (listener == null) return;
             
@@ -92,13 +92,13 @@ namespace asterivo.Unity60.Core.Events
         {
             if (sortedListeners == null)
             {
-                sortedListeners = new List<Vector2GameEventListener>();
+                sortedListeners = new List<IGameEventListener<Vector2>>();
             }
-            
+
             sortedListeners.Clear();
             sortedListeners.AddRange(listeners.Where(l => l != null));
             sortedListeners.Sort((a, b) => b.Priority.CompareTo(a.Priority));
-            
+
             isDirty = false;
         }
         
@@ -106,7 +106,7 @@ namespace asterivo.Unity60.Core.Events
         /// <summary>
         /// エディタ用のリスナー情報取得
         /// </summary>
-        public IReadOnlyCollection<Vector2GameEventListener> GetListeners()
+        public IReadOnlyCollection<IGameEventListener<Vector2>> GetListeners()
         {
             return listeners;
         }

@@ -4,9 +4,31 @@ using UnityEngine.Events;
 namespace asterivo.Unity60.Core.Events
 {
     /// <summary>
+    /// 基本のイベントリスナーインターフェース（パラメータなし）。
+    /// 非ジェネリックGameEventシステムで使用されます。
+    /// </summary>
+    public interface IGameEventListener
+    {
+        /// <summary>
+        /// イベントが発生した際に呼び出されるメソッド。
+        /// </summary>
+        void OnEventRaised();
+
+        /// <summary>
+        /// Priority for event processing (higher values process first)
+        /// </summary>
+        int Priority => 0;
+
+        /// <summary>
+        /// Whether this listener is enabled and should receive events
+        /// </summary>
+        bool enabled => true;
+    }
+
+    /// <summary>
     /// 型付きイベントリスナーのインターフェース。
     /// GameEventシステムでイベントを受け取るコンポーネントが実装すべきインターフェースです。
-    /// 
+    ///
     /// 使用例：
     /// - プレイヤーのHPが変化した時の通知受信
     /// - アイテム収集時の通知受信
@@ -25,6 +47,11 @@ namespace asterivo.Unity60.Core.Events
         /// Priority for event processing (higher values process first)
         /// </summary>
         int Priority => 0;
+
+        /// <summary>
+        /// Whether this listener is enabled and should receive events
+        /// </summary>
+        bool enabled => true;
     }
     
     /// <summary>
