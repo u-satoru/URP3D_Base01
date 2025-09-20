@@ -1,104 +1,244 @@
-# TODO.md - Unity 6 3Dゲーム基盤プロジェクト 統合実装管理
+# TODO.md - 3層アーキテクチャ移行 実行タスク管理
 
-## アーキテクチャとデザインパターン
-- **ServiceLocator + Event駆駆動のハイブリッドアーキテクチャ（最重要）**:グローバルサービスへのアクセスとイベントベースの通信を組み合わせたハイブリッドアプローチ。
-- **イベント駆動型アーキテクチャ**: `GameEvent` を介したコンポーネント間の疎結合な連携。
-- **コマンドパターン**: ゲーム内のアクション（例：ダメージ、回復）をオブジェクトとしてカプセル化し、再利用と管理を容易にします。
-- **ObjectPool最適化**: 頻繁に作成・破棄されるコマンドオブジェクトをプール化し、メモリ効率とパフォーマンスを大幅に向上させます（95%のメモリ削減効果）。
-- **Scriptable Objectベースのデータ管理**: キャラクターのステータスやアイテム情報などをアセットとして管理。
+## 📊 移行進捗ダッシュボード
 
-## 文書管理情報
+**最終更新**: 2025年9月20日 15:30
+**現在フェーズ**: Phase 1 準備フェーズ
+**全体進捗**: 🟦⬜⬜⬜⬜⬜⬜⬜⬜⬜ 0% (0/13タスク完了)
 
-- **ドキュメント種別**: 統合実装管理
-- **生成元**: TASKS.md 全体戦略 + 実装進捗統合
-- **対象読者**: 開発者、プロジェクトマネージャー
-- **更新日**: 2025年9月19日（実装検証・進捗更新）
-- **ステータス**: 🎉 **Phase 3, Step 1: Core Architecture Refactoring 完了 (5/5 完了)**
-- **🔄最新更新**: TASK-010 Core Architecture Refactoring全サブタスク完了！Input、Health&Damage、Character Control、Interaction、Camera Systemの包括的実装を達成。TASK-004 Template実装が開始可能に。
+### 今週の目標
+- [ ] Phase 1 準備フェーズの完了（6タスク）
+- [ ] Phase 2 Feature層整理の開始
 
----
-
-## 🏆 プロジェクト現状サマリー
-
-### ✅ **Phase 1 & 2: 基盤構築とセットアップ完了**
-- **成果**: ステルスゲームの基本機能、AI検知システム、プレイヤー状態管理、そして1分でプロジェクトを開始できるインタラクティブセットアップウィザードが完成済み。
-- **価値**: `Clone & Create`の核心価値を実現し、プロジェクトの技術的基盤を確立。
+## 🏗️ アーキテクチャ移行の目的
+現在の2層構造（`Core` ← `Feature`）から、新たに `Template` 層を追加した3層アーキテクチャ（`Core` ← `Feature` ← `Template`）へ移行し、以下を実現：
+- ✨ **再利用性の最大化**: Core/Feature層の他プロジェクトでの再利用
+- 🚀 **プロトタイピング速度向上**: テンプレート複製による高速開発
+- 👥 **非プログラマーとの連携強化**: Template層でのデザイナー作業領域確立
 
 ---
 
-## ✅ **TASK-010 Core Architecture Refactoring 完全完了実績**
+## 🔥 本日の優先タスク（2025/09/20）
 
-### **🎉【完了】TASK-010: Core Architecture Refactoring (5/5 全サブタスク)**
+### 🎯 最優先: Template層の基盤構築
+```bash
+# 実行時間: 約5分
+# 以下のコマンドをPowerShell 7で実行
+```
 
-**2025年9月19日検証済み**: Core層の包括的リファクタリングが完全実装されていることを確認。以下の全システムが達成済み：
+#### 1. ディレクトリ構造の作成 [推定: 5分]
+```powershell
+# Template層のディレクトリを一括作成
+$templatePath = "D:\UnityProjects\URP3D_Base01\Assets\_Project\Features\Templates"
+$genres = @("Common", "Stealth", "SurvivalHorror", "Platformer", "FPS", "TPS", "Adventure", "ActionRPG")
 
-#### ✅ **TASK-010.1**: Generic Input Management System
-- `InputService.cs` - IInputManager完全実装（ServiceLocator統合、全主要入力対応）
-- `InputEventChannels.cs` - ScriptableObjectベース中央管理システム
-- 専用Input Assembly作成（循環依存問題解決）
+foreach ($genre in $genres) {
+    New-Item -ItemType Directory -Force -Path "$templatePath\$genre"
+    New-Item -ItemType Directory -Force -Path "$templatePath\$genre\Scenes"
+    New-Item -ItemType Directory -Force -Path "$templatePath\$genre\Prefabs"
+    New-Item -ItemType Directory -Force -Path "$templatePath\$genre\Data"
+}
+```
+- [ ] コマンド実行
+- [ ] ディレクトリ構造確認
+- [ ] Unity上での認識確認
 
-#### ✅ **TASK-010.2**: Generic Health & Damage System
-- `HealthComponent.cs` - 汎用体力管理システム（Combat Assembly）
-- `DamageCommand.cs`, `HealCommand.cs` - Command Pattern統合
-
-#### ✅ **TASK-010.3**: Generic Character Control System
-- `CharacterMover.cs` - 物理挙動・状態管理基盤（Character Assembly）
-- StateMachine基盤とCore層状態管理
-
-#### ✅ **TASK-010.4**: Generic Interaction System
-- `IInteractable.cs`, `Interactor.cs` - 汎用インタラクションシステム（Interaction Assembly）
-
-#### ✅ **TASK-010.5**: Generic Camera Control System
-- `CameraService.cs`, `CameraStateMachine.cs` - Cinemachine統合（Camera Assembly）
-
-**実装密度**: 設計書想定5-7日を大幅に上回る品質と網羅性を達成
-
----
-
-## 🚀 **Next Actions: Phase 3 Step 2 - Template Implementation**
-
-### **🎯【最優先実行】TASK-004: Ultimate Template Phase-1統合 (Priority Critical)**
-
-**目的**: Core層基盤を活用して7ジャンルのゲームテンプレートを実装し、Learn & Grow価値を実現する。
-
-**工数**: 6-7日 | **担当**: @AI | **依存**: ✅TASK-010完了（依存解決済み）
-
-**⚠️ 現在のブロッカー**: Template実装にコンパイルエラーが存在
-- GenreTemplateConfig: 'version', 'requiredComponents'プロパティ未実装
-- ActionRPG Template: ItemDataプロパティの構造不整合
-- ServiceLocator参照問題（一部テンプレート）
-
-#### **📋 実装対象テンプレート（優先度順）**
-
-- **Stealth Template**: ✅AI Detection Systems基盤完成、ステルスメカニクス統合必要
-- **Platformer Template**: ジャンプ物理・コレクタブルシステム
-- **FPS/TPS Template**: 一人称・三人称カメラ統合、戦闘システム基盤
-- **Action RPG Template**: キャラクター成長・装備システム統合
-
-**完了条件**: 各ジャンル15分ゲームプレイ実現、Learn & Grow価値70%学習コスト削減達成
+#### 2. Assembly Definition作成 [推定: 10分]
+- [ ] `Assets/_Project/Features/Templates/` に以下のファイルを作成
+  - ファイル名: `asterivo.Unity60.Features.Templates.asmdef`
+- [ ] Migration_TASKS.mdのJSON内容を設定
+- [ ] Unityエディタでコンパイルエラーがないことを確認
+- [ ] 依存関係のテスト（Template→Feature→Core）
 
 ---
 
-## 📊 **全タスク統合進捗管理**
+## 📅 今週の実行計画
 
-### **Phase別完了状況サマリー**
+### 月曜日（09/20） - Phase 1開始
+- [x] 移行計画書の作成
+- [x] TASKSファイルの作成
+- [x] TODO.mdの作成
+- [ ] **タスク1.1**: Template層ディレクトリ作成 ⏰15:45
+- [ ] **タスク1.2**: Assembly Definition設定 ⏰16:00
 
-| Phase | 名称 | 状況 | 進捗率 | 核心価値 | 主要タスク |
-|-------|------|------|--------|----------|----------|
-| **1** | 🏗️ 基盤構築 | ✅完了 | 100% | 技術基盤 | TASK-001,002,005 |
-| **2** | 🚀 Clone & Create | ✅完了 | 100% | 97%時間短縮 | TASK-003 |
-| **3** | 📚 Learn & Grow | 🎯**進行中** | 50% | 70%学習コスト削減 | ✅**TASK-010 (Core Refactoring完了)**, 🎯TASK-004 |
-| **4** | 🏭 Ship & Scale | ⏳待機 | 0% | プロダクション対応 | TASK-007 |
-| **5** | 🌐 Community & Ecosystem | ⏳待機 | 0% | AI連携・エコシステム | TASK-006,008 |
+### 火曜日（09/21） - 名前空間移行準備
+- [ ] **タスク1.3.1**: 既存スクリプトの名前空間調査
+  - [ ] Core層のスクリプト数カウント
+  - [ ] Feature層のスクリプト数カウント
+  - [ ] 影響範囲の特定
+- [ ] 名前空間移行スクリプトの作成
 
-### **現在の全体状況詳細（Critical優先度タスク中心）**
-| Phase | タスク | 優先度 | 状況 | Next Action |
-|-------|--------|-------|------|-------------|
-| **3** | **TASK-010 Core Refactoring** | **Critical** | ✅**完了 (5/5完了)** | **完了済み - 全Core基盤実装達成** |
-| **3** | **TASK-004 Template Phase-1** | **Critical** | ⚠️**ブロック中** | **コンパイルエラー解決 → Template実装開始** |
-| **4** | TASK-007 Template Phase-2 | **Critical** | ⏳待機 | TASK-004完了後 |
-| **5** | TASK-006 SDD Integration | **Medium** | ⏳待機 | Phase 4完了後 |
+### 水曜日（09/22） - 名前空間移行実行
+- [ ] **タスク1.3.2**: 名前空間の一括変更
+  - [ ] バックアップの作成
+  - [ ] 自動置換の実行
+  - [ ] コンパイルエラーの解消
+- [ ] **タスク1.3.3**: asmdefのrootNamespace設定
+
+### 木曜日（09/23） - Phase 2準備
+- [ ] **タスク2.1**: ジャンル固有アセットの調査開始
+  - [ ] ステルス関連アセットのリスト作成
+  - [ ] 移動対象の特定
+
+### 金曜日（09/24） - Phase 2実行
+- [ ] **タスク2.1**: 移動計画の完成
+- [ ] レビューとフィードバック
 
 ---
 
-*このTODO.mdは、現在のスプリントで集中すべき最優先タスクを具体的に示します。✅Core層リファクタリングの完了により、🎯Template実装（TASK-004）への移行準備が整いました。コンパイルエラー解決が次の最重要課題です。*
+## 📝 実行中タスクの詳細
+
+### 🚧 現在作業中
+**タスク**: なし
+**開始時刻**: -
+**作業内容**: -
+**ブロッカー**: なし
+
+### ⏸️ 一時停止中
+なし
+
+### ⚠️ ブロック中のタスク
+なし
+
+---
+
+## ✅ 完了タスク履歴
+
+### 2025年9月20日
+- [x] 3層アーキテクチャ移行計画書（Migration_Plan.md）作成
+- [x] 移行タスク管理シート（Migration_TASKS.md）作成
+- [x] TODO.md作成
+
+---
+
+## 📋 バックログ（優先度順）
+
+### High Priority（今週中）
+1. [ ] Phase 1: Template層の基盤構築
+2. [ ] Phase 1: 名前空間の移行
+3. [ ] Phase 2: アセット調査
+
+### Medium Priority（来週）
+1. [ ] Phase 3: Stealthテンプレート構築
+2. [ ] Phase 3: 動作検証
+3. [ ] ドキュメント更新
+
+### Low Priority（再来週以降）
+1. [ ] 他のジャンルテンプレート構築
+2. [ ] パフォーマンステスト
+3. [ ] 最終レビュー
+
+---
+
+## 🔍 名前空間移行チェックリスト
+
+### 事前準備
+- [ ] プロジェクト全体のバックアップ
+- [ ] Gitブランチの作成（`feature/3-layer-architecture`）
+- [ ] 現在の名前空間使用状況の調査
+
+### Core層
+- [ ] `_Project.Core` → `asterivo.Unity60.Core` への変更
+- [ ] サブ名前空間の確認と変更
+  - [ ] `.Services`
+  - [ ] `.Events`
+  - [ ] `.Commands`
+  - [ ] `.Patterns`
+
+### Feature層
+- [ ] `_Project.Features` → `asterivo.Unity60.Features` への変更
+- [ ] サブ名前空間の確認と変更
+  - [ ] `.Player`
+  - [ ] `.AI`
+  - [ ] `.Camera`
+  - [ ] `.Combat`
+
+### Template層（新規）
+- [ ] `asterivo.Unity60.Features.Templates` の設定
+- [ ] ジャンル別サブ名前空間の設定
+  - [ ] `.Stealth`
+  - [ ] `.SurvivalHorror`
+  - [ ] `.Platformer`
+  - [ ] `.FPS`
+  - [ ] `.TPS`
+  - [ ] `.Adventure`
+  - [ ] `.ActionRPG`
+
+---
+
+## 📊 メトリクス・KPI
+
+| 指標 | 目標 | 現在値 | 状態 |
+|------|------|--------|------|
+| **Phase 1完了率** | 100% | 0% | 🔴 |
+| **コンパイルエラー** | 0 | - | ⏸️ |
+| **テストカバレッジ** | 80% | - | ⏸️ |
+| **移行済みスクリプト** | 100% | 0% | 🔴 |
+
+---
+
+## 🚨 リスク管理
+
+### 識別済みリスク
+| リスク | 影響 | 対策 | 状態 |
+|--------|------|------|------|
+| 名前空間変更による参照切れ | 🔴高 | 段階的移行・自動テスト | 監視中 |
+| Assembly定義の循環参照 | 🟡中 | 依存関係の事前確認 | 未発生 |
+| 既存機能への影響 | 🔴高 | 包括的テスト実施 | 準備中 |
+
+### 緊急時対応
+```bash
+# ロールバック手順
+git stash
+git checkout main
+# または
+git reset --hard HEAD~1
+```
+
+---
+
+## 📝 作業メモ・注意事項
+
+### ⚠️ 重要な注意点
+1. **Unity Editorを開いたまま作業する**
+   - コンパイルエラーを即座に検知
+   - Assembly Definitionの影響を確認
+
+2. **こまめなコミット**
+   - 各タスク完了ごとにGitコミット
+   - 問題発生時の切り分けを容易に
+
+3. **テストの実行**
+   - 名前空間変更後は必ずPlayModeテスト実行
+   - ユニットテストの全実行
+
+### 💡 Tips
+- PowerShell 7を使用してディレクトリ作成を自動化
+- Visual StudioやRiderの一括置換機能を活用
+- Unity Test Runnerで継続的にテスト実行
+
+---
+
+## 🔗 関連ドキュメント
+
+- [移行計画書](Assets/_Project/Docs/Works/20250920_1500/3-Layer_Architecture_Migration_Plan.md)
+- [タスク管理シート](Assets/_Project/Docs/Works/20250920_1500/3-Layer_Architecture_Migration_TASKS.md)
+- [SPEC.md](SPEC.md)
+- [REQUIREMENTS.md](REQUIREMENTS.md)
+- [DESIGN.md](DESIGN.md)
+
+---
+
+## 📞 エスカレーション
+
+### 技術的な問題
+- Assembly Definition関連 → Unity Forum確認
+- 名前空間競合 → チームレビュー実施
+
+### スケジュール調整
+- Phase 1遅延 → Phase 2開始を調整
+- リソース不足 → タスク優先度の再評価
+
+---
+
+**次回更新予定**: 2025年9月20日 17:00（タスク1.1, 1.2完了後）
