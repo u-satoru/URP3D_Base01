@@ -7,7 +7,7 @@
       "dependencies": {
         "com.unity.nuget.newtonsoft-json": "3.0.2"
       },
-      "hash": "94ad8dea5085c26fd1fa4503d13bafd2964b06ce"
+      "hash": "6e72b333092ec099e1712784d2289547cc6db1a1"
     },
     "com.cysharp.unitask": {
       "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
@@ -52,7 +52,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.animation.rigging": {
-      "version": "1.3.0",
+      "version": "1.3.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {
