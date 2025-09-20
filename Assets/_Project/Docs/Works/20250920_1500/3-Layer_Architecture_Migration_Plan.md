@@ -77,6 +77,18 @@
     ```
 -   **完了条件**: `asmdef` が作成され、依存関係が正しく設定されていること。`Template` 層のスクリプトから `Feature` 層と `Core` 層のクラスを参照でき、逆ができないことを確認する。
 
+#### **タスク1.3: 名前空間の移行**
+-   **方法**: 既存の全スクリプトの名前空間を `_Project.*` から `asterivo.Unity60.*` 階層へ移行する。
+-   **具体的なルール**:
+    -   **Core層**: `namespace asterivo.Unity60.Core;` もしくは `namespace asterivo.Unity60.Core.{SubCategory};`
+    -   **Feature層**: `namespace asterivo.Unity60.Features.{FeatureName};`
+    -   **Template層**: `namespace asterivo.Unity60.Features.Templates.{GenreName};`
+-   **作業内容**:
+    1.  全 C# スクリプトファイル内の `namespace` 宣言を新しい規約に従って変更する。
+    2.  名前空間の変更に伴い、影響を受けるすべてのスクリプトで `using` ディレクティブを更新する。
+    3.  `Core`, `Feature`, `Templates` の各 `asmdef` ファイルに `"rootNamespace"` を設定し、エディタでの新規スクリプト作成時に正しい名前空間が自動的に付与されるようにする。
+-   **完了条件**: プロジェクトから `namespace _Project` で始まる名前空間が一掃され、コンパイルエラーが発生しないこと。
+
 ### Phase 2: Feature層の整理 (Feature Layer Organization) - 優先度: High
 
 #### **タスク2.1: ジャンル固有のアセットを特定する**
