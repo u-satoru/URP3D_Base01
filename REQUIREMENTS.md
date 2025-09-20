@@ -14,8 +14,8 @@
 - **生成元**: SPEC.md - Unity 6 3Dゲーム基盤プロジェクト 初期構想・要件定義
 - **トレーサビリティ**: SPEC.md の核心価値と実装方針を形式化し、後続 DESIGN.md 生成の基盤として機能
 - **対象読者**: 開発者、アーキテクト、プロジェクトマネージャー
-- **更新日**: 2025年9月20日（UniTask統合・サードパーティライブラリ要件追加）
-- **整合性状態**: SPEC.md v3.2 との完全整合性確保済み（サードパーティライブラリ明記）
+- **更新日**: 2025年9月20日（Service Locator優先順位変更・コアシステム要件整合）
+- **整合性状態**: SPEC.md v3.3 との完全整合性確保済み（アーキテクチャ優先順位明確化）
 
 ## プロジェクト識別情報
 
@@ -96,19 +96,24 @@
 
 ### FR-1: コアアーキテクチャシステム
 
-#### FR-1.1 ServiceLocator + Event駆動ハイブリッドアーキテクチャ
+#### FR-1.1 ServiceLocator + Event駆動ハイブリッドアーキテクチャ（最重要）
 - **要件ID**: FR-1.1
-- **優先度**: 最高（Critical）
+- **優先度**: 最高（Critical） - **コアアーキテクチャの第1優先事項**
 - **要件**: グローバルサービスへの統一アクセスとイベントベース通信の統合
 - **詳細仕様**:
-  - `ServiceLocator.cs`: 全グローバルサービスの登録・取得を管理
+  - `ServiceLocator.cs`: 全グローバルサービス（オーディオ/ゲームマネージャー等）の登録・取得を管理
   - `IService`インターフェース: サービス基本契約
-  - `GameEvent<T>`: 型安全なイベントチャネル
-  - Singletonパターンの完全排除
+  - `GameEvent<T>`: 型安全なイベントチャネルとの連携
+  - Singletonパターンの完全排除（ServiceLocatorで代替）
+  - 依存性注入不要、可読性・保守性向上
+- **実装効果**:
+  - 関心事の分離・拡張性・再利用性・メンテナンス性向上
+  - イベント駆動型と組み合わせた疎結合通信の実現
 - **受入条件**:
   - 全サービスがServiceLocator経由でアクセス可能
   - イベント通信による疎結合実現
   - Singletonパターン使用箇所ゼロ
+  - Core層でのServiceLocator積極活用
 
 #### FR-1.2 イベント駆動アーキテクチャ
 - **要件ID**: FR-1.2
@@ -124,19 +129,25 @@
   - イベントによる完全な疎結合通信
   - メモリリーク防止（WeakReference使用）
 
-#### FR-1.3 コマンドパターン実装
+#### FR-1.3 コマンドパターン＋ObjectPool統合実装
 - **要件ID**: FR-1.3
-- **優先度**: 高（Must Have）
-- **要件**: アクションのカプセル化と実行管理
+- **優先度**: 最高（Critical）
+- **要件**: アクションのカプセル化と実行管理、ObjectPoolによる最適化統合
 - **詳細仕様**:
   - `ICommand`インターフェース: Execute/Undo/CanUndo
   - `CommandInvoker.cs`: コマンド実行管理
   - `CommandHistory.cs`: 実行履歴管理
+  - Factory+Registry+ObjectPool統合実装
+  - DamageCommand, HealCommand等の再利用可能コマンドシステム
   - Undo/Redoサポート
+- **期待効果**:
+  - 95%メモリ削減効果
+  - 67%実行速度改善
 - **受入条件**:
   - 全ゲームアクションがコマンド化
   - Undo機能の完全実装
   - コマンド履歴の永続化対応
+  - ObjectPoolによるメモリ最適化達成
 
 #### FR-1.4 ObjectPool最適化システム
 - **要件ID**: FR-1.4
@@ -799,11 +810,16 @@
 | サードパーティ依存 | 中 | 中 | ライセンス管理、代替案準備 |
 
 ### 制約事項
-- **Unity版本**: 6000.0.42f1固定（LTS）
+- **Unity版本**: 6000.0.42f1固定（最新LTS）
+- **Render Pipeline**: Universal Render Pipeline (URP)
+- **Scripting Backend**: Mono
+- **API Compatibility Level**: .NET Standard 2.1
 - **DIフレームワーク**: 使用禁止（ServiceLocatorで代替）
 - **Singletonパターン**: 使用禁止（ServiceLocatorで代替）
 - **マルチプレイヤー**: 非対応（シングルプレイヤー専用）
-- **プラットフォーム**: Windows優先、iOS/Android対応、コンソール非対応
+- **優先プラットフォーム**: Windows（開発・テスト用）
+- **対応プラットフォーム**: iOS, Android
+- **非対応プラットフォーム**: Console（PlayStation, Xbox, Nintendo Switch）
 
 ## 次フェーズへの引き継ぎ
 

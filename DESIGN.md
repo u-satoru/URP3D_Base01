@@ -1,18 +1,19 @@
 # DESIGN.md - Unity 6 3Dゲーム基盤プロジェクト 技術設計書
 
 ## アーキテクチャとデザインパターン
-- **ServiceLocator + Event駆駆動のハイブリッドアーキテクチャ（最重要）**:グローバルサービスへのアクセスとイベントベースの通信を組み合わせたハイブリッドアプローチ。
-- **イベント駆動型アーキテクチャ**: `GameEvent` を介したコンポーネント間の疎結合な連携。
-- **コマンドパターン**: ゲーム内のアクション（例：ダメージ、回復）をオブジェクトとしてカプセル化し、再利用と管理を容易にします。
-- **ObjectPool最適化**: 頻繁に作成・破棄されるコマンドオブジェクトをプール化し、メモリ効率とパフォーマンスを大幅に向上させます（95%のメモリ削減効果）。
-- **Scriptable Objectベースのデータ管理**: キャラクターのステータスやアイテム情報などをアセットとして管理。
+- **ServiceLocator + Event駆動のハイブリッドアーキテクチャ（最重要・第1優先事項）**: グローバルサービス（オーディオ/ゲームマネージャー等）へのアクセスとイベントベースの通信を組み合わせたハイブリッドアプローチ。Singletonパターンは使用禁止、ServiceLocatorで完全代替。
+- **イベント駆動型アーキテクチャ**: `GameEvent` を介したコンポーネント間の疎結合な連携。ServiceLocatorとの統合による柔軟な通信実現。
+- **コマンドパターン + ObjectPool統合**: ゲーム内アクションのカプセル化とFactory+Registry+ObjectPool統合による最適化（95%メモリ削減・67%速度改善）。
+- **Scriptable Objectベースのデータ管理**: キャラクターステータス・アイテム情報等のアセット管理による、ノンプログラマー対応のデータ駆動設計。
+- **階層化ステートマシン（HSM）**: Player、Camera、AIの複雑な状態管理を階層化により実現。
 
 ## 文書管理情報
 
 - **ドキュメント種別**: 技術設計書（SDDフェーズ3: 設計）
-- **生成元**: REQUIREMENTS.md - Unity 6 3Dゲーム基盤プロジェクト 形式化された要件定義
+- **生成元**: REQUIREMENTS.md v3.3 - Unity 6 3Dゲーム基盤プロジェクト 形式化された要件定義
 - **対象読者**: アーキテクト、シニア開発者、技術リード、実装担当者
-- **整合性状態**: REQUIREMENTS.md（FR-3階層化ステートマシン、FR-4嗅覚センサー統合）との完全整合性確保済み
+- **更新日**: 2025年9月20日（ServiceLocator最優先化・Core層積極活用方針明確化）
+- **整合性状態**: SPEC.md v3.3、REQUIREMENTS.md v3.3との完全整合性確保済み（アーキテクチャ優先順位反映）
 
 ## 設計原則とアーキテクチャビジョン
 
@@ -25,13 +26,13 @@
 - **Ship & Scale**: プロダクション対応設計（プロトタイプ→本番完全対応）
 - **Community & Ecosystem**: 拡張可能エコシステム基盤
 
-### 5つの核心設計思想
+### 5つの核心設計思想（優先順位付き）
 
-1. **Event-Driven Architecture First**: ScriptableObjectベースのイベントチャネル（GameEvent）による疎結合設計
-2. **Command + ObjectPool統合**: Factory+Registry+ObjectPool統合で95%メモリ削減、67%速度改善
-3. **Hierarchical State-Driven Behavior**: 階層化ステートマシン（HSM）による複雑かつ再利用可能な状態管理
-4. **Data-Configuration Driven**: ScriptableObjectによるデータ資産化
-5. **SDD統合品質保証**: 5段階フェーズ管理 + MCPサーバー統合
+1. **ServiceLocator + Event駆動ハイブリッド最優先**: Core層でのServiceLocator積極活用とイベント駆動の統合により、依存性注入不要で可読性・保守性を向上
+2. **Command + ObjectPool統合**: Factory+Registry+ObjectPool統合で95%メモリ削減、67%速度改善を実現
+3. **Event-Driven Architecture**: ScriptableObjectベースのイベントチャネル（GameEvent）による完全な疎結合設計
+4. **Hierarchical State-Driven Behavior**: 階層化ステートマシン（HSM）による複雑かつ再利用可能な状態管理
+5. **Data-Configuration Driven**: ScriptableObjectによるデータ資産化とノンプログラマー対応
 
 ## システムアーキテクチャ設計
 
@@ -40,19 +41,21 @@
 #### Core層の責任範囲 (`Assets/_Project/Core`)
 ```mermaid
 flowchart TD
-    A["Core Layer<br/>(asterivo.Unity60.Core.*)"] --> B["✅ イベント駆動アーキテクチャ基盤"]
-    A --> C["✅ コマンドパターン + ObjectPool統合"]
-    A --> D["✅ ServiceLocator基盤"]
+    A["Core Layer<br/>(asterivo.Unity60.Core.*)"] --> B["🔴 ServiceLocator基盤（最優先）"]
+    A --> C["✅ イベント駆動アーキテクチャ基盤"]
+    A --> D["✅ コマンドパターン + ObjectPool統合"]
     A --> E["✅ 基本データ構造・インターフェース"]
     A --> F["✅ オーディオシステム基盤"]
     A --> G["✅ 階層化ステートマシン（HSM）基盤"]
     A --> H["✅ 共通ユーティリティ"]
 
     classDef coreLayer fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000
+    classDef priority fill:#ffcdd2,stroke:#d32f2f,stroke-width:3px,color:#000
     classDef coreFeature fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px,color:#000
 
     class A coreLayer
-    class B,C,D,E,F,G,H coreFeature
+    class B priority
+    class C,D,E,F,G,H coreFeature
 ```
 
 #### Feature層の責任範囲 (`Assets/_Project/Features`)
@@ -77,9 +80,11 @@ flowchart TD
 
 #### 分離原則の技術実装
 - **依存関係制御**: Core層 ← Feature層（一方向依存）
-- **通信方式**: Event駆動によるCore↔Feature間の疎結合通信
+- **ServiceLocator活用**: Core層のServiceLocatorを通じたサービスアクセス
+- **通信方式**: Event駆動 + ServiceLocatorによるCore↔Feature間の疎結合通信
 - **名前空間分離**: `asterivo.Unity60.Core.*` vs `asterivo.Unity60.Features.*`
 - **Assembly Definition分離**: Core.asmdef, Features.asmdef
+- **Singleton禁止**: すべてのグローバルサービスはServiceLocator経由でアクセス
 
 #### 名前空間一貫性設計（3層分離）
 
@@ -89,24 +94,103 @@ flowchart TD
 - `asterivo.Unity60.Tests.*` - テスト環境
 
 **制約**:
-- Core→Feature参照禁止（Event駆動通信のみ）
+- Core→Feature参照禁止（Event駆動通信 + ServiceLocator経由）
+- Singletonパターン使用禁止（ServiceLocatorで完全代替）
 - Assembly Definition制御による依存関係強制
 - `_Project.*`新規使用禁止（段階的移行）
+- DIフレームワーク（Zenject、VContainer等）使用禁止
 
 ### Layer 1: Core Foundation Layer（基盤層）
 
-#### 1.1 Event System Architecture
+#### 1.1 ServiceLocator Architecture（最優先・第1実装事項）
+
+**コア機能**:
+- `ServiceLocator.cs`: 全グローバルサービスの統一管理（オーディオ/ゲーム/入力マネージャー等）
+- `IService`インターフェース: サービス基本契約の定義
+- 依存性注入フレームワーク不要の軽量実装
+- Singletonパターンの完全排除と代替機能
+
+**技術実装詳細**:
+```csharp
+namespace asterivo.Unity60.Core.Services
+{
+    public static class ServiceLocator
+    {
+        private static readonly Dictionary<Type, IService> _services = new();
+        private static readonly object _lock = new();
+        
+        public static void Register<T>(T service) where T : IService
+        {
+            lock (_lock)
+            {
+                var type = typeof(T);
+                if (_services.ContainsKey(type))
+                {
+                    ProjectLogger.Warning(LogCategory.Core, 
+                        $"Service {type.Name} is already registered. Replacing.");
+                }
+                _services[type] = service;
+                service.Initialize();
+            }
+        }
+        
+        public static T Get<T>() where T : IService
+        {
+            lock (_lock)
+            {
+                var type = typeof(T);
+                if (_services.TryGetValue(type, out var service))
+                {
+                    return (T)service;
+                }
+                
+                ProjectLogger.Error(LogCategory.Core, 
+                    $"Service {type.Name} not found. Register it first.");
+                return default;
+            }
+        }
+        
+        public static void Clear()
+        {
+            lock (_lock)
+            {
+                foreach (var service in _services.Values)
+                {
+                    service.Shutdown();
+                }
+                _services.Clear();
+            }
+        }
+    }
+    
+    public interface IService
+    {
+        void Initialize();
+        void Shutdown();
+    }
+}
+```
+
+**Core層統合戦略**:
+- AudioManager: `ServiceLocator.Register<IAudioManager>(audioManager);`
+- GameManager: `ServiceLocator.Register<IGameManager>(gameManager);`
+- InputManager: `ServiceLocator.Register<IInputManager>(inputManager);`
+- SaveManager: `ServiceLocator.Register<ISaveManager>(saveManager);`
+
+#### 1.2 Event System Architecture（ServiceLocatorとの統合）
 
 **コア機能**:
 - GameEvent<T>: 型安全なイベントチャネル（Raise/Listen）
+- ServiceLocatorとの連携によるイベント管理
 - HashSet<T>によるO(1)リスナー管理
 - 優先度制御とメモリリーク防止
 
 **実装**:
 - GameEvent.cs, GameEventListener.cs, EventChannelRegistry.cs
 - WeakReference自動解放、UniTask非同期対応
+- ServiceLocator経由でのEventManagerアクセス
 
-#### 1.2 Command + ObjectPool Integration Architecture
+#### 1.3 Command + ObjectPool Integration Architecture
 
 **3層構造**:
 - Interface Layer: ICommand（Execute/Undo/CanUndo）、IResettableCommand
@@ -115,17 +199,20 @@ flowchart TD
 
 **実装**: CommandPoolManager.cs、95%メモリ削減と67%速度改善実現
 
-#### 1.3 Hierarchical State Machine (HSM) Architecture
-- **要件ID**: FR-3.4
+#### 1.4 Hierarchical State Machine (HSM) Architecture
+- **要件ID**: FR-3.1
 - **配置**: `Assets/_Project/Core/Patterns/StateMachine`
 - **構成**:
-  - `HierarchicalStateMachine.cs`: 状態の階層構造、遷移、ライフサイクルを管理するコアクラス。
-  - `IState.cs`: 状態の基本インターフェース。`OnEnter`, `OnUpdate`, `OnExit`メソッドに加え、親子関係を定義するためのプロパティを持つように拡張。
-  - `StateFactory.cs`: 状態オブジェクトの生成と再利用を管理するファクトリ。
+  - `HierarchicalStateMachine.cs`: 状態の階層構造、遷移、ライフサイクルを管理するコアクラス
+  - `IState.cs`: 状態の基本インターフェース。`OnEnter`, `OnUpdate`, `OnExit`メソッドと親子関係定義
+  - `StateFactory.cs`: 状態オブジェクトの生成と再利用を管理するファクトリ
+- **ServiceLocator統合**:
+  - StateManagerをServiceLocatorに登録して中央管理
+  - 各ステートマシンがServiceLocator経由で必要なサービスにアクセス
 - **設計**:
-  - **状態のネスト**: `IState`実装クラスが`SubStates`のリストを持つことで、親子関係を表現。
-  - **ロジックの継承**: `HierarchicalStateMachine`が現在の状態を更新する際、ルートから現在のアクティブな子状態までのすべての親状態の`OnUpdate`を順番に呼び出す。
-  - **イベント駆動**: 状態遷移は`GameEvent`によってトリガーされ、`HierarchicalStateMachine`がそれをリッスンして適切な状態変更を行う。
+  - **状態のネスト**: `IState`実装クラスが`SubStates`のリストを持つことで、親子関係を表現
+  - **ロジックの継承**: ルートから現在のアクティブな子状態までのすべての親状態の`OnUpdate`を順番に呼び出す
+  - **イベント駆動**: 状態遷移は`GameEvent`によってトリガーされ、適切な状態変更を実行
 
 ### Layer 2: Feature System Layer（機能システム層）
 
@@ -873,9 +960,88 @@ public class DebugConfiguration : ScriptableObject
 **優先順位**: 情報収集（ddg-search→context7→deepwiki）、実装（context7→unityMCP→git）、3Dコンテンツ（blender-mcp→unityMCP→git）
 **ハイブリッド開発**: AI（コード生成・技術調査・文書作成）、人間（アーキテクチャ判断・品質検証・戦略決定）
 
+## ServiceLocator統合実装例
+
+### ゲーム起動時のサービス初期化
+
+```csharp
+namespace asterivo.Unity60.Core
+{
+    public class GameBootstrapper : MonoBehaviour
+    {
+        [SerializeField] private AudioManagerConfig _audioConfig;
+        [SerializeField] private GameManagerConfig _gameConfig;
+        [SerializeField] private InputManagerConfig _inputConfig;
+        
+        private void Awake()
+        {
+            InitializeCoreServices();
+            InitializeFeatureServices();
+        }
+        
+        private void InitializeCoreServices()
+        {
+            // AudioManagerの登録
+            var audioManager = new AudioManager(_audioConfig);
+            ServiceLocator.Register<IAudioManager>(audioManager);
+            
+            // GameManagerの登録
+            var gameManager = new GameManager(_gameConfig);
+            ServiceLocator.Register<IGameManager>(gameManager);
+            
+            // InputManagerの登録
+            var inputManager = new InputManager(_inputConfig);
+            ServiceLocator.Register<IInputManager>(inputManager);
+            
+            // EventManagerの登録
+            var eventManager = new EventManager();
+            ServiceLocator.Register<IEventManager>(eventManager);
+            
+            ProjectLogger.Info(LogCategory.Core, "Core services initialized via ServiceLocator");
+        }
+        
+        private void OnDestroy()
+        {
+            ServiceLocator.Clear();
+        }
+    }
+}
+```
+
+### Feature層からのサービス利用例
+
+```csharp
+namespace asterivo.Unity60.Features.Player
+{
+    public class PlayerController : MonoBehaviour
+    {
+        private IAudioManager _audioManager;
+        private IInputManager _inputManager;
+        private IEventManager _eventManager;
+        
+        private void Start()
+        {
+            // ServiceLocator経由でサービスを取得
+            _audioManager = ServiceLocator.Get<IAudioManager>();
+            _inputManager = ServiceLocator.Get<IInputManager>();
+            _eventManager = ServiceLocator.Get<IEventManager>();
+            
+            // イベントの購読
+            _eventManager.Subscribe<PlayerDamagedEvent>(OnPlayerDamaged);
+        }
+        
+        private void OnPlayerDamaged(PlayerDamagedEvent evt)
+        {
+            // ServiceLocator経由で取得したサービスを使用
+            _audioManager.PlaySound("PlayerHurt");
+        }
+    }
+}
+```
+
 ## まとめ・SDD統合による価値実現
 
-この技術設計書は、**SPEC.md v3.0 究極テンプレートビジョン → REQUIREMENTS.md 形式化要件 → 本技術設計書**の完全なトレーサビリティを確保し、以下の価値実現を技術的に保証します：
+この技術設計書は、**SPEC.md v3.3 究極テンプレートビジョン → REQUIREMENTS.md v3.3 形式化要件 → 本技術設計書**の完全なトレーサビリティを確保し、以下の価値実現を技術的に保証します：
 
 ### 4つの核心価値実現のための完全設計基盤
 
@@ -917,4 +1083,21 @@ public class DebugConfiguration : ScriptableObject
 
 この技術設計により、**REQUIREMENTS.md FR-8 究極テンプレートロードマップと Core/Feature層分離アーキテクチャ**の技術的実現が完全に可能となり、次のフェーズ（TASKS.md → 実装・検証）への確実な移行を保証します。
 
-**設計完了状態**: ✅ REQUIREMENTS.md 完全対応（FR-5アクションRPG + FR-8ロードマップ）、Core/Feature分離強化、技術実装準備完了
+### ServiceLocator最優先化による効果
+
+1. **開発効率の向上**:
+   - 依存性注入フレームワーク不要による学習コスト削減
+   - Singletonパターン排除による保守性向上
+   - 統一されたサービスアクセスパターン
+
+2. **アーキテクチャの簡潔性**:
+   - Core層でのServiceLocator中央管理
+   - Feature層からの簡潔なサービスアクセス
+   - イベント駆動との効果的な統合
+
+3. **拡張性の確保**:
+   - 新規サービスの容易な追加
+   - 既存コードへの影響最小化
+   - テスタビリティの向上
+
+**設計完了状態**: ✅ SPEC.md v3.3・REQUIREMENTS.md v3.3 完全対応、ServiceLocator最優先実装、Core/Feature分離強化、技術実装準備完了
