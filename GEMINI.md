@@ -127,7 +127,7 @@
 -   `Assets/_Project/Scenes`: **[廃止予定]** シーンは原則として `Template` 層 (`Assets/_Project/Features/Templates/[ジャンル名]/Scenes`) に配置します。
 -   `Assets/_Project/Logs` : システムログファイル。 **ログファイルは必ずここに配置してください**。
 -   `Assets/_Project/Docs`: プロジェクト関連のドキュメント。 **ドキュメントは必ずここに配置してください**。
--   `Assets/_Project/Docs/Works`: 作業報告フォルダ（YYYYMMDD_HHMM）でフォルダを作成し、 @SPEC.md、@REQUIREMENTS.md、@DESIGN.md、@TASKS.md、@TODO.md など、各ファイルのスナップショットを保管します。 作業報告は `WORKS_LOG.md` に記録してください。 **作業報告は必ずここに配置してください**。
+-   `Assets/_Project/Docs/Works`: 作業報告フォルダ（YYYYMMDD_HHMM）でフォルダを作成し、 (例: `SPEC.md`, `REQUIREMENTS.md` など)、各ファイルのスナップショットを保管します。 作業報告は `WORKS_LOG.md` に記録してください。 **作業報告は必ずここに配置してください**。
 -   `Assets/_Project/ThirdParty`: サードパーティ製アセットのラッピング。
 -   `Assets/Plugins`: サードパーティ製アセット。 **直接編集しないでください**。
 
