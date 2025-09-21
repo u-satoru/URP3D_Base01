@@ -1,0 +1,13 @@
+{
+  "servers": {
+    "Unity-MCP": {
+      "type": "stdio",
+      "command": "D:/UnityProjects/URP3D_Base01/Library/mcp-server/win-x64/unity-mcp-server.exe",
+      "args": [
+        "--port=8080",
+        "--plugin-timeout=10000",
+        "--client-transport=stdio"
+      ]
+    }
+  }
+}
