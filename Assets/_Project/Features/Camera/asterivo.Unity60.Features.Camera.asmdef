@@ -1,0 +1,21 @@
+{
+    "name": "asterivo.Unity60.Features.Camera",
+    "rootNamespace": "asterivo.Unity60.Features.Camera",
+    "references": [
+        "asterivo.Unity60.Core",
+        "asterivo.Unity60.Core.Events",
+        "asterivo.Unity60.Core.Services",
+        "Unity.Cinemachine",
+        "Unity.InputSystem",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

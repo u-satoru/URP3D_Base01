@@ -1,0 +1,21 @@
+{
+    "name": "asterivo.Unity60.Features.GameManagement",
+    "rootNamespace": "asterivo.Unity60.Features.GameManagement",
+    "references": [
+        "asterivo.Unity60.Core",
+        "asterivo.Unity60.Core.Events",
+        "asterivo.Unity60.Core.Services",
+        "asterivo.Unity60.Core.Commands",
+        "Unity.InputSystem",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

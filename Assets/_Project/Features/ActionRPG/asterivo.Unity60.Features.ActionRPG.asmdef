@@ -1,0 +1,22 @@
+{
+    "name": "asterivo.Unity60.Features.ActionRPG",
+    "rootNamespace": "asterivo.Unity60.Features.ActionRPG",
+    "references": [
+        "asterivo.Unity60.Core",
+        "asterivo.Unity60.Core.Events",
+        "asterivo.Unity60.Core.Services",
+        "asterivo.Unity60.Core.Commands",
+        "asterivo.Unity60.Features",
+        "Unity.InputSystem",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
