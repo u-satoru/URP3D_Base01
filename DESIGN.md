@@ -46,6 +46,13 @@ Assets/_Project/
 - **Assembly Definition強制**: コンパイル時チェック
 - **通信方式**: GameEvent経由のイベント駆動通信
 
+### 1.3 名前空間規約
+- **Root**: `asterivo.Unity60`
+- **Core層**: `asterivo.Unity60.Core.*`
+- **Feature層**: `asterivo.Unity60.Features.*`
+- **Template層**: `asterivo.Unity60.Features.Templates.*`
+- **Tests**: `asterivo.Unity60.Tests.*`
+
 ## 2. コアパターン実装設計
 
 ### 2.1 ServiceLocator + Event駆動ハイブリッド

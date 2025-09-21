@@ -114,7 +114,7 @@
 - **Command Line Interface**: PowerShell 7を使用してください。従来のコマンドプロンプト（cmd）ではなく、PowerShell 7を推奨します。これにより、最新のコマンドレット機能とUnity CLIツールとの互換性が向上します。
 - **タイムゾーン**: 日本標準時 (JST, UTC+9)
 - **日付形式**: `YYYYMMDD_HHMM`（例: `20231005_1430`）
-- **コンパイル**: **コンパイルはUnityエディタ内で行ってください。外部ツールでのコンパイルはサポートされていません。**
+- **コンパイル**: **コンパイルは Unity Editor 内で行ってください。バッチモードでのコンパイルする場合は、起動している Unity Editor のインスタンスを指定してください。**
 
 ## ディレクトリ構成
 
@@ -141,7 +141,7 @@
 - `SPEC.md` - 初期構想・要件定義（人間作成） : @SPEC.md
 - `REQUIREMENTS.md` - 形式化された要件（AI生成） : @REQUIREMENTS.md
 - `DESIGN.md` - 技術設計書（AI生成） : @DESIGN.md
-- `TASKS.md` - 実装タスク一覧（AI生成） : @TASKS.md
+- `TASKS.md` - 実装タスク一覧（AI生成） : TASKS.md
 - `TODO.md` - 進行中タスク管理（人間作成）
 
 
