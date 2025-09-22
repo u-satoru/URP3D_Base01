@@ -41,16 +41,16 @@ sequenceDiagram
     loop Every Frame
         PlayerController->>Interactor: Update()
         Interactor->>Door: Physics.Raycast()
-        Note right of Interactor: IInteractableを検知
+        Note right of Interactor: "IInteractableを検知"
         Interactor->>InteractionUI: RaiseEvent(OnInteractableFound)
-        InteractionUI->>InteractionUI: Show Prompt ("開ける")
+        InteractionUI->>InteractionUI: "Show Prompt (開ける)"
     end
 
-    PlayerController->>InputManager: Player presses 'E' key
+    PlayerController->>InputManager: "Player presses 'E' key"
     InputManager->>Interactor: IsInteractionPressed() -> true
     Interactor->>CommandInvoker: ExecuteCommand(new InteractCommand(Door))
     CommandInvoker->>Door: Interact()
-    Door->>Door: Play open animation
+    Door->>Door: "Play open animation"
 ```
 
 ## 4. 実装計画
