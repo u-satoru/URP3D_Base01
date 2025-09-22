@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="3" result="Passed" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2025-09-22 14:22:17Z" end-time="2025-09-22 14:22:17Z" duration="0.0564017">
+  <test-suite type="TestSuite" id="1000" name="TestAdventureProject" fullname="TestAdventureProject" runstate="Runnable" testcasecount="507" result="Passed" start-time="2025-09-22 14:22:17Z" end-time="2025-09-22 14:22:17Z" duration="0.056402" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1233" name="asterivo.Unity60.Tests.dll" fullname="D:/UnityProjects/URP3D_Base01/Library/ScriptAssemblies/asterivo.Unity60.Tests.dll" runstate="Runnable" testcasecount="210" result="Passed" start-time="2025-09-22 14:22:17Z" end-time="2025-09-22 14:22:17Z" duration="0.043466" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="68792" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestFixture" id="1001" name="SimpleTest" fullname="SimpleTest" classname="SimpleTest" runstate="Runnable" testcasecount="3" result="Passed" start-time="2025-09-22 14:22:17Z" end-time="2025-09-22 14:22:17Z" duration="0.039502" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1004" name="SimpleTest_Math_ShouldCalculateCorrectly" fullname="SimpleTest.SimpleTest_Math_ShouldCalculateCorrectly" methodname="SimpleTest_Math_ShouldCalculateCorrectly" classname="SimpleTest" runstate="Runnable" seed="1681616796" result="Passed" start-time="2025-09-22 14:22:17Z" end-time="2025-09-22 14:22:17Z" duration="0.017904" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[[SimpleTest] Math test: 2 + 3 = 5
+]]></output>
+        </test-case>
+        <test-case id="1002" name="SimpleTest_ShouldPass" fullname="SimpleTest.SimpleTest_ShouldPass" methodname="SimpleTest_ShouldPass" classname="SimpleTest" runstate="Runnable" seed="840159347" result="Passed" start-time="2025-09-22 14:22:17Z" end-time="2025-09-22 14:22:17Z" duration="0.001099" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[[SimpleTest] Basic test execution confirmed
+]]></output>
+        </test-case>
+        <test-case id="1003" name="SimpleTest_Unity_ShouldHaveCorrectVersion" fullname="SimpleTest.SimpleTest_Unity_ShouldHaveCorrectVersion" methodname="SimpleTest_Unity_ShouldHaveCorrectVersion" classname="SimpleTest" runstate="Runnable" seed="1799383523" result="Passed" start-time="2025-09-22 14:22:17Z" end-time="2025-09-22 14:22:17Z" duration="0.002033" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[[SimpleTest] Unity version: 6000.0.42f1
+Saving results to: C:/Users/homul/AppData/LocalLow/Generated Project/TestAdventureProject\TestResults.xml
+]]></output>
+        </test-case>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

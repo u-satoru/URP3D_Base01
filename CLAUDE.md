@@ -352,6 +352,8 @@ mcp__UnityMCP__manage_menu_item(
 
 ## テスト実行とレポート生成方針
 
+**⚠️ Unity 6 重要情報**: Unity 6では `-runTests` と `-quit` フラグを同時に使用できません。詳細は [`Unity6_Test_Execution_Guide.md`](Assets/_Project/Docs/Unity6_Test_Execution_Guide.md) を必ず参照してください。
+
 このプロジェクトでは、機械処理用と人間可読用の2つの形式でテスト結果を出力することを標準とします。
 
 ### レポート形式
@@ -379,9 +381,11 @@ Tests/Results/
 
 2. **バッチモード**: CI/CD環境での自動実行
    ```bash
-   Unity.exe -projectPath . -batchmode -runTests 
-   -testResults Tests/Results/test-results.xml 
-   -logFile Tests/Results/test-log.txt -quit
+   # Unity 6 では -quit フラグを使用しないこと！
+   Unity.exe -projectPath . -batchmode -runTests
+   -testResults Tests/Results/test-results.xml
+   -logFile Tests/Results/test-log.txt
+   # 注意: -quit フラグは Unity 6 で -runTests と併用不可
    ```
 
 3. **レポート生成**: テスト実行後の自動分析・文書化

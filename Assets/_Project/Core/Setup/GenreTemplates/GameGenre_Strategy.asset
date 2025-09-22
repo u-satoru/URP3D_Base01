@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab365c267ad1a79488ce93e6b46dbefb, type: 3}
+  m_Name: GameGenre_Strategy
+  m_EditorClassIdentifier: 
+  genreType: 5
+  displayName: Real-Time Strategy
+  description: "\u30EA\u30A2\u30EB\u30BF\u30A4\u30E0\u30B9\u30C8\u30E9\u30C6\u30B8\u30FC\u30B2\u30FC\u30E0\u3002\u591A\u6570\u306E\u30E6\u30CB\u30C3\u30C8\u3092\u6307\u63EE\u3057\u3066\u6226\u7565\u7684\u306A\u5224\u65AD\u3067\u52DD\u5229\u3092\u76EE\u6307\u3057\u307E\u3059\u3002"
+  previewImage: {fileID: 0}
+  previewVideo: {fileID: 0}
+  previewAudio: {fileID: 0}
+  cameraConfig:
+    firstPersonView: 0
+    thirdPersonView: 1
+    defaultFOV: 45
+    thirdPersonOffset: {x: 0, y: 15, z: -10}
+    mouseSensitivity: 2
+    invertY: 0
+    smoothTime: 0.12
+    useCinemachine: 1
+    virtualCameraPreset: FreeLook
+  movementConfig:
+    walkSpeed: 3
+    runSpeed: 6
+    jumpHeight: 1.5
+    crouchEnabled: 0
+    proneEnabled: 0
+    rollEnabled: 0
+    wallJumpEnabled: 0
+    gravity: -9.81
+    groundCheckDistance: 0.1
+    groundLayers:
+      serializedVersion: 2
+      m_Bits: 1
+  aiConfig:
+    maxNPCCount: 50
+    recommendedNPCCount: 5
+    visualSensorEnabled: 1
+    auditorySensorEnabled: 0
+    defaultDetectionRange: 10
+    defaultFOV: 90
+    pathfindingEnabled: 1
+    combatAIEnabled: 1
+    stealthAIEnabled: 0
+    defaultAIBehavior: Patrol
+  audioConfig:
+    use3DAudio: 1
+    useStealthAudio: 0
+    useEnvironmentalAudio: 1
+    useDynamicMusic: 0
+    masterVolume: 1
+    musicVolume: 0.7
+    sfxVolume: 0.8
+    voiceVolume: 0.9
+  requiredModules: []
+  recommendedModules: []
+  optionalModules: []
+  performanceProfile:
+    targetFrameRate: 60
+    vsyncEnabled: 0
+    maxTextureSize: 2048
+    shadowResolution: 1024
+    frustumCullingEnabled: 1
+    occlusionCullingEnabled: 1
+    lodBias: 0.7
+    maximumLODLevel: 0
+  projectSettings:
+    targetPlatforms: 020000000b00000008000000
+    developmentBuild: 1
+    scriptDebugging: 1
+    qualityLevel: High
+    hdrEnabled: 1
+    msaaEnabled: 0
+    msaaLevel: 2
+    newInputSystemEnabled: 1
+    legacyInputEnabled: 0
