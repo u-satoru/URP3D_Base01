@@ -58,18 +58,18 @@ namespace asterivo.Unity60.Features.Templates.FPS.Player
         /// <param name="config">FPSMovementConfig</param>
         /// <param name="state">PlayerStateType</param>
         /// <returns>移動速度</returns>
-        public static float GetSpeedForLegacyState(this FPSMovementConfig config, asterivo.Unity60.Player.States.PlayerStateType state)
+        public static float GetSpeedForLegacyState(this FPSMovementConfig config, asterivo.Unity60.Features.Player.States.PlayerStateType state)
         {
             if (config == null) return 5.0f;
 
             return state switch
             {
-                asterivo.Unity60.Player.States.PlayerStateType.Idle => 0f,
-                asterivo.Unity60.Player.States.PlayerStateType.Walking => config.WalkSpeed,
-                asterivo.Unity60.Player.States.PlayerStateType.Running => config.RunSpeed,
-                asterivo.Unity60.Player.States.PlayerStateType.Crouching => config.CrouchSpeed,
-                asterivo.Unity60.Player.States.PlayerStateType.Jumping => config.WalkSpeed, // ジャンプ中は歩行速度
-                asterivo.Unity60.Player.States.PlayerStateType.Prone => config.CrouchSpeed * 0.5f, // 伏せは更に遅い
+                asterivo.Unity60.Features.Player.States.PlayerStateType.Idle => 0f,
+                asterivo.Unity60.Features.Player.States.PlayerStateType.Walking => config.WalkSpeed,
+                asterivo.Unity60.Features.Player.States.PlayerStateType.Running => config.RunSpeed,
+                asterivo.Unity60.Features.Player.States.PlayerStateType.Crouching => config.CrouchSpeed,
+                asterivo.Unity60.Features.Player.States.PlayerStateType.Jumping => config.WalkSpeed, // ジャンプ中は歩行速度
+                asterivo.Unity60.Features.Player.States.PlayerStateType.Prone => config.CrouchSpeed * 0.5f, // 伏せは更に遅い
                 _ => config.WalkSpeed
             };
         }
@@ -80,19 +80,19 @@ namespace asterivo.Unity60.Features.Templates.FPS.Player
         /// <param name="config">PlayerStatsConfig</param>
         /// <param name="state">PlayerStateType</param>
         /// <returns>ノイズレベル（0.0-1.0）</returns>
-        public static float GetNoiseLevelForLegacyState(this PlayerStatsConfig config, asterivo.Unity60.Player.States.PlayerStateType state)
+        public static float GetNoiseLevelForLegacyState(this PlayerStatsConfig config, asterivo.Unity60.Features.Player.States.PlayerStateType state)
         {
             if (config == null) return 1.0f;
 
             return state switch
             {
-                asterivo.Unity60.Player.States.PlayerStateType.Idle => 0.0f,
-                asterivo.Unity60.Player.States.PlayerStateType.Prone => 0.1f,
-                asterivo.Unity60.Player.States.PlayerStateType.Crouching => 0.2f,
-                asterivo.Unity60.Player.States.PlayerStateType.Walking => 0.5f,
-                asterivo.Unity60.Player.States.PlayerStateType.Running => 1.0f,
-                asterivo.Unity60.Player.States.PlayerStateType.Jumping => 0.8f, // ジャンプは大きな音
-                asterivo.Unity60.Player.States.PlayerStateType.Rolling => 0.7f, // ローリングも音がする
+                asterivo.Unity60.Features.Player.States.PlayerStateType.Idle => 0.0f,
+                asterivo.Unity60.Features.Player.States.PlayerStateType.Prone => 0.1f,
+                asterivo.Unity60.Features.Player.States.PlayerStateType.Crouching => 0.2f,
+                asterivo.Unity60.Features.Player.States.PlayerStateType.Walking => 0.5f,
+                asterivo.Unity60.Features.Player.States.PlayerStateType.Running => 1.0f,
+                asterivo.Unity60.Features.Player.States.PlayerStateType.Jumping => 0.8f, // ジャンプは大きな音
+                asterivo.Unity60.Features.Player.States.PlayerStateType.Rolling => 0.7f, // ローリングも音がする
                 _ => 0.5f
             };
         }

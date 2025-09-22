@@ -1,6 +1,6 @@
 using asterivo.Unity60.Core.Commands;
 
-namespace asterivo.Unity60.Player.Commands
+namespace asterivo.Unity60.Features.Player.Commands
 {
     /// <summary>
     /// カバー解除コマンド定義 - カバー状態からの離脱を制御

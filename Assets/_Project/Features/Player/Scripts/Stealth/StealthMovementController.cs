@@ -2,7 +2,7 @@ using UnityEngine;
 using asterivo.Unity60.Core.Data;
 using asterivo.Unity60.Core.Events;
 
-namespace asterivo.Unity60.Player
+namespace asterivo.Unity60.Features.Player
 {
     /// <summary>
     /// プレイヤーのステルス行動（姿勢、騒音、視認性）を総合的に管理します。

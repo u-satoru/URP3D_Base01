@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Player.States;
+using asterivo.Unity60.Features.Player.States;
 using asterivo.Unity60.Features.Templates.FPS.Data;
 using asterivo.Unity60.Features.Templates.FPS.WeaponSystem;
 using asterivo.Unity60.Features.Templates.FPS.Configuration;

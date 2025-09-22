@@ -5,6 +5,8 @@
         "asterivo.Unity60.Core",
         "asterivo.Unity60.Core.Events",
         "asterivo.Unity60.Core.Services",
+        "asterivo.Unity60.Core.Debug",
+        "asterivo.Unity60.Core.Audio",
         "Unity.InputSystem",
         "UniTask"
     ],

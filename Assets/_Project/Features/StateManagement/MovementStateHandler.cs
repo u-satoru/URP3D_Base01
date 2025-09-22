@@ -1,7 +1,7 @@
-using asterivo.Unity60.Core.Player;
+using asterivo.Unity60.Features.Player;
 using asterivo.Unity60.Core.Patterns;
 
-namespace asterivo.Unity60.Core.Patterns.StateHandlers
+namespace asterivo.Unity60.Features.StateManagement
 {
     /// <summary>
     /// 移動系状態の基底ハンドラー

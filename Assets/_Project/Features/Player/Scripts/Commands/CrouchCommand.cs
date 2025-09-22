@@ -2,9 +2,9 @@ using UnityEngine;
 using Debug = UnityEngine.Debug;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Commands.Definitions;
-using asterivo.Unity60.Player.States;
+using asterivo.Unity60.Features.Player.States;
 
-namespace asterivo.Unity60.Player.Commands
+namespace asterivo.Unity60.Features.Player.Commands
 {
     /// <summary>
     /// しゃがみコマンド - プレイヤーの姿勢変更を実行

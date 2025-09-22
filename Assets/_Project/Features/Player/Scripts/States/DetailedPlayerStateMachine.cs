@@ -3,9 +3,9 @@ using Debug = UnityEngine.Debug;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Data;
-using asterivo.Unity60.Core.Player;
+using asterivo.Unity60.Features.Player;
 
-namespace asterivo.Unity60.Player.States
+namespace asterivo.Unity60.Features.Player.States
 {
     /// <summary>
     /// プレイヤーの行動状態を定義します。

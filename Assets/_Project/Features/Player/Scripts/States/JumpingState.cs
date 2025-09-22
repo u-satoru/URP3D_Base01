@@ -1,11 +1,10 @@
 
 using UnityEngine;
 
-namespace asterivo.Unity60.Player.States
+namespace asterivo.Unity60.Features.Player.States
 {
     /// <summary>
-    /// プレイヤーのジャンプ状態を管理するクラス。
-    /// </summary>
+    /// プレイヤーのジャンプ状態を管琁E��るクラス、E    /// </summary>
     public class JumpingState : IPlayerState
     {
         private Vector3 _playerVelocity;
@@ -14,10 +13,8 @@ namespace asterivo.Unity60.Player.States
         private float _gravityValue = -9.81f;
 
         /// <summary>
-        /// 状態が開始されたときに呼び出されます。
-        /// プレイヤーに上方向の速度を与えてジャンプさせます。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+        /// 状態が開始されたときに呼び出されます、E        /// プレイヤーに上方向�E速度を与えてジャンプさせます、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
         public void Enter(DetailedPlayerStateMachine stateMachine)
         {
             _isGrounded = false;
@@ -30,18 +27,15 @@ namespace asterivo.Unity60.Player.States
         }
 
         /// <summary>
-        /// 状態が終了したときに呼び出されます。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+        /// 状態が終亁E��たときに呼び出されます、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
         public void Exit(DetailedPlayerStateMachine stateMachine)
         {
         }
 
         /// <summary>
-        /// 毎フレーム呼び出されます。
-        /// 着地判定を行います。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+        /// 毎フレーム呼び出されます、E        /// 着地判定を行います、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
         public void Update(DetailedPlayerStateMachine stateMachine)
         {
             _isGrounded = stateMachine.CharacterController.isGrounded;
@@ -52,10 +46,8 @@ namespace asterivo.Unity60.Player.States
         }
 
         /// <summary>
-        /// 固定フレームレートで呼び出されます。
-        /// 重力を適用し、プレイヤーを移動させます。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+        /// 固定フレームレートで呼び出されます、E        /// 重力を適用し、�Eレイヤーを移動させます、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
         public void FixedUpdate(DetailedPlayerStateMachine stateMachine)
         {
             if (stateMachine.CharacterController == null) return;
@@ -65,11 +57,10 @@ namespace asterivo.Unity60.Player.States
         }
 
         /// <summary>
-        /// プレイヤーの入力を処理します。（この状態では入力は無視されます）
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
-        /// <param name="moveInput">移動入力。</param>
-        /// <param name="jumpInput">ジャンプ入力。</param>
+        /// プレイヤーの入力を処琁E��ます。（この状態では入力�E無視されます！E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
+        /// <param name="moveInput">移動�E力、E/param>
+        /// <param name="jumpInput">ジャンプ�E力、E/param>
         public void HandleInput(DetailedPlayerStateMachine stateMachine, Vector2 moveInput, bool jumpInput)
         {
             // ジャンプ中は他の入力を受け付けない

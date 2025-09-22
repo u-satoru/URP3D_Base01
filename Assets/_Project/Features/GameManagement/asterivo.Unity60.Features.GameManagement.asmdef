@@ -6,6 +6,11 @@
         "asterivo.Unity60.Core.Events",
         "asterivo.Unity60.Core.Services",
         "asterivo.Unity60.Core.Commands",
+        "asterivo.Unity60.Core.Audio",
+        "asterivo.Unity60.Core.Data",
+        "asterivo.Unity60.Core.Components",
+        "asterivo.Unity60.Core.Helpers",
+        "asterivo.Unity60.Player",
         "Unity.InputSystem",
         "UniTask"
     ],

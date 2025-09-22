@@ -1,8 +1,8 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Commands;
-using asterivo.Unity60.Player.States;
+using asterivo.Unity60.Features.Player.States;
 
-namespace asterivo.Unity60.Player.Commands
+namespace asterivo.Unity60.Features.Player.Commands
 {
     /// <summary>
     /// プレイヤーをカバー状態から離脱させるコマンドです。

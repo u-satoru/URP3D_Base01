@@ -2,7 +2,7 @@
 # Optimized configuration to prevent conflicts with third-party assets
 
 # Default behavior: auto-detect text files but don't enforce line endings globally
-* text=auto
+* text=auto eol=lf
 
 # Explicitly exclude third-party and binary directories from line ending processing
 Assets/Plugins/** -text
@@ -67,6 +67,9 @@ Assets/_Project/**/*.cs text eol=lf
 # Project root files
 *.cs text eol=lf
 *.md text eol=lf
+*.shader eol=lf
+*.cginc eol=lf
+*.asmdef eol=lf
 *.json text eol=lf
 *.txt text eol=lf
 *.xml text eol=lf

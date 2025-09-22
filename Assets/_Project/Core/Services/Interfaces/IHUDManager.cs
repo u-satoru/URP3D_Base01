@@ -1,5 +1,4 @@
 using UnityEngine;
-using asterivo.Unity60.Core.Player;
 
 namespace asterivo.Unity60.Core.Services
 {
@@ -33,8 +32,8 @@ namespace asterivo.Unity60.Core.Services
         /// <summary>
         /// Update player state display
         /// </summary>
-        /// <param name="state">Current player state</param>
-        void UpdatePlayerStateDisplay(PlayerState state);
+        /// <param name="stateName">Name of the current player state</param>
+        void UpdatePlayerStateDisplay(string stateName);
 
         /// <summary>
         /// Show or hide crosshair

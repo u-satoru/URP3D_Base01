@@ -9,7 +9,7 @@ using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Debug;
 using Sirenix.OdinInspector;
 
-namespace asterivo.Unity60.Player
+namespace asterivo.Unity60.Features.Player
 {
     /// <summary>
     /// プレイヤーの入力を処理し、対応するコマンド定義をイベントとして発行します。

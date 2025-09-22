@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Data;
-using asterivo.Unity60.Player.States;
+using asterivo.Unity60.Features.Player.States;
 using asterivo.Unity60.Features.Templates.Stealth.Configuration;
 using asterivo.Unity60.Features.Templates.Stealth.Data;
 

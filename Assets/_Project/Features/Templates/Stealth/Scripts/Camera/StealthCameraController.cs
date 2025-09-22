@@ -4,8 +4,11 @@ using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Data;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Audio.Interfaces;
-using asterivo.Unity60.Player;
+using asterivo.Unity60.Features.Player;
+using asterivo.Unity60.Features.Player.States;
+// using asterivo.Unity60.Features.Player.Stealth; // Fixed: namespace doesn't exist
 using asterivo.Unity60.Features.AI.Visual;
 using asterivo.Unity60.Features.Templates.Stealth.Mechanics;
 using Sirenix.OdinInspector;

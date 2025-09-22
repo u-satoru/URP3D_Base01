@@ -1,7 +1,7 @@
 using UnityEngine;
-using asterivo.Unity60.Player.States;
+using asterivo.Unity60.Features.Player.States;
 
-namespace asterivo.Unity60.Player.Commands
+namespace asterivo.Unity60.Features.Player.Commands
 {
     /// <summary>
     /// プレイヤーコマンド実行時に必要なコンテクスト情報を提供するクラス

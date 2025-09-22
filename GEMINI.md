@@ -266,6 +266,7 @@
 ## **注意事項**
 - **コーディング規約の遵守**: 新しいコードを記述する際やリファクタリングを行う際は、必ず [`CODING_CONVENTIONS.md`](Assets/_Project/Docs/CODING_CONVENTIONS.md) に記載された規約を遵守してください。
 - **Core層インターフェース設計ガイドラインの遵守**: Core層のインターフェースを設計・実装する際は、[`CORE_INTERFACE_DESIGN_GUIDELINES.md`](Assets/_Project/Docs/CORE_INTERFACE_DESIGN_GUIDELINES.md) の原則を必ず遵守してください。
+- **ユニットテスト実装ガイドラインの遵守**: 新規機能の実装やバグ修正を行う際は、必ず [`UNIT_TESTING_GUIDELINES.md`](Assets/_Project/Docs/UNIT_TESTING_GUIDELINES.md) に従ってテストを記述してください。
 - **新しい機能は必ず `Assets/_Project/Features` に追加**: 新しい機能やモジュールは必ず `Assets/_Project/Features` に追加してください。**機能コードはCoreに混在させないでください**。これにより、コードベースの可読性と保守性が向上します。
 - **テストケースを必ず作成**: 新しい機能や修正を加える際には、必ず対応するユニットテストとプレイモードテストを `Assets/_Project/Tests` に作成してください。これにより、コードの品質と安定性が維持されます。
 - **サードパーティ製アセットの直接編集禁止**: `Assets/Plugins` フォルダ内のアセットは直接編集しないでください。必要な変更は、可能な限り拡張やラッピングを通じて行い、将来のアップデートでの互換性を保つようにしてください。  

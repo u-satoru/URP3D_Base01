@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Core.Player;
+using asterivo.Unity60.Features.Player;
 
-namespace asterivo.Unity60.Player.States
+namespace asterivo.Unity60.Features.Player.States
 {
     /// <summary>
     /// プレイヤーの状態管理を行うステートマシン（シンプル版）

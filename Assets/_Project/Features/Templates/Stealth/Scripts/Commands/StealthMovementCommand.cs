@@ -3,7 +3,7 @@ using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Features.Templates.Stealth.Services;
-using asterivo.Unity60.Player.States;
+using asterivo.Unity60.Features.Player.States;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 {

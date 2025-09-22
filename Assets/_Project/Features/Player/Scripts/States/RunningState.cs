@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace asterivo.Unity60.Player.States
+namespace asterivo.Unity60.Features.Player.States
 {
     /// <summary>
     /// プレイヤーの走行状態を管理するクラス。

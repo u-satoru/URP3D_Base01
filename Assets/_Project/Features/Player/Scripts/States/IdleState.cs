@@ -1,37 +1,23 @@
 using UnityEngine;
 
-namespace asterivo.Unity60.Player.States
+namespace asterivo.Unity60.Features.Player.States
 {
     /// <summary>
-    /// プレイヤーの待機状態を管理するクラス
+    /// プレイヤーの征E��状態を管琁E��るクラス
     /// </summary>
     /// <remarks>
-    /// 設計思想：
-    /// このクラスはStateパターンの具体的な状態（ConcreteState）として実装されています。
-    /// プレイヤーが静止している際の基本状態であり、他の全ての状態への遷移の出発点となります。
+    /// 設計思想�E�E    /// こ�EクラスはStateパターンの具体的な状態！EoncreteState�E�として実裁E��れてぁE��す、E    /// プレイヤーが静止してぁE��際�E基本状態であり、他�E全ての状態への遷移の出発点となります、E    /// 
+    /// 状態�E移条件�E�E    /// - 移動�E力！EoveInput.magnitude > 0.1f�E��E Walking状慁E    /// - ジャンプ�E力！EumpInput == true�E��E Jumping状慁E    /// 
+    /// 状態�E特徴�E�E    /// - アイドル時間の計測�E�封E��皁E��アニメーション制御めE��殊動作�Eトリガーに使用可能�E�E    /// - Standing姿勢の設定（スチE��ス系との連携�E�E    /// - 最小�E力閾値�E�E.1f�E�による誤入力フィルタリング
     /// 
-    /// 状態遷移条件：
-    /// - 移動入力（moveInput.magnitude > 0.1f）→ Walking状態
-    /// - ジャンプ入力（jumpInput == true）→ Jumping状態
-    /// 
-    /// 状態の特徴：
-    /// - アイドル時間の計測（将来的なアニメーション制御や特殊動作のトリガーに使用可能）
-    /// - Standing姿勢の設定（ステルス系との連携）
-    /// - 最小入力閾値（0.1f）による誤入力フィルタリング
-    /// 
-    /// 使用例：
-    /// ステートマシンがIdleStateに遷移すると、プレイヤーは立位姿勢で静止し、
-    /// 入力待ち状態となります。適切な入力が検出されると他の状態に遷移します。
-    /// </remarks>
+    /// 使用例！E    /// スチE�Eト�EシンがIdleStateに遷移すると、�Eレイヤーは立位姿勢で静止し、E    /// 入力征E��状態となります。適刁E��入力が検�Eされると他�E状態に遷移します、E    /// </remarks>
     public class IdleState : IPlayerState
     {
         private float idleTime;
         
         /// <summary>
-        /// 状態が開始されたときに呼び出されます。
-        /// 待機時間をリセットし、プレイヤーの姿勢を立位に設定します。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+        /// 状態が開始されたときに呼び出されます、E        /// 征E��時間をリセチE��し、�Eレイヤーの姿勢を立位に設定します、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
         public void Enter(DetailedPlayerStateMachine stateMachine)
         {
             idleTime = 0f;
@@ -43,51 +29,40 @@ namespace asterivo.Unity60.Player.States
         }
         
         /// <summary>
-        /// 状態が終了したときに呼び出されます。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+        /// 状態が終亁E��たときに呼び出されます、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
         public void Exit(DetailedPlayerStateMachine stateMachine)
         {
         }
         
         /// <summary>
-        /// 毎フレーム呼び出されます。
-        /// 待機時間をカウントアップします。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+        /// 毎フレーム呼び出されます、E        /// 征E��時間をカウントアチE�Eします、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
         public void Update(DetailedPlayerStateMachine stateMachine)
         {
             idleTime += Time.deltaTime;
         }
         
         /// <summary>
-        /// 固定フレームレートで呼び出されます。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+        /// 固定フレームレートで呼び出されます、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
         public void FixedUpdate(DetailedPlayerStateMachine stateMachine)
         {
         }
 
         /// <summary>
-        /// プレイヤーの入力を処理し、他の状態への遷移を判断します
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン</param>
-        /// <param name="moveInput">移動入力（X軸：左右、Y軸：前後）</param>
-        /// <param name="jumpInput">ジャンプ入力フラグ</param>
+        /// プレイヤーの入力を処琁E��、他�E状態への遷移を判断しまぁE        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン</param>
+        /// <param name="moveInput">移動�E力！E軸�E�左右、Y軸�E�前後！E/param>
+        /// <param name="jumpInput">ジャンプ�E力フラグ</param>
         /// <remarks>
-        /// 遷移優先順位：
-        /// 1. ジャンプ入力：最優先でJumping状態に遷移（return文で処理終了）
-        /// 2. 移動入力：入力強度が閾値（0.1f）を超えた場合、Walking状態に遷移
+        /// 遷移優先頁E��！E        /// 1. ジャンプ�E力：最優先でJumping状態に遷移�E�Eeturn斁E��処琁E��亁E��E        /// 2. 移動�E力：�E力強度が閾値�E�E.1f�E�を趁E��た場合、Walking状態に遷移
         /// 
-        /// 設計上の考慮事項：
-        /// - ジャンプを移動より優先することで、移動しながらのジャンプでも確実にジャンプが実行される
-        /// - 0.1fの閾値により、コントローラーのドリフトや微小な入力ノイズを除去
-        /// - 状態遷移はTransitionToStateメソッドを通じて行い、適切なEnter/Exit処理を保証
+        /// 設計上�E老E�E事頁E��E        /// - ジャンプを移動より優先することで、移動しながらのジャンプでも確実にジャンプが実行される
+        /// - 0.1fの閾値により、コントローラーのドリフトめE��小な入力ノイズを除去
+        /// - 状態�E移はTransitionToStateメソチE��を通じて行い、E��刁E��Enter/Exit処琁E��保証
         /// 
-        /// 注意事項：
-        /// - この状態では移動処理は行わず、状態遷移の判定のみ実行
-        /// - 実際の移動処理は遷移先の状態（Walking等）で実装
-        /// </remarks>
+        /// 注意事頁E��E        /// - こ�E状態では移動�E琁E�E行わず、状態�E移の判定�Eみ実衁E        /// - 実際の移動�E琁E�E遷移先�E状態！Ealking等）で実裁E        /// </remarks>
         public void HandleInput(DetailedPlayerStateMachine stateMachine, Vector2 moveInput, bool jumpInput)
         {
             if (jumpInput)

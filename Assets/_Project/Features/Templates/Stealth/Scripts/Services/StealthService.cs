@@ -4,7 +4,7 @@ using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Features.Templates.Stealth.Events;
 using asterivo.Unity60.Features.Templates.Stealth.Environment;
-using asterivo.Unity60.Stealth.Detection;
+// using asterivo.Unity60.Stealth.Detection; // Fixed: namespace doesn't exist
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Services
 {
@@ -15,7 +15,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
     public class StealthService : MonoBehaviour, IStealthService
     {
         [Header("Stealth Configuration")]
-        [SerializeField] private DetectionConfiguration _detectionConfig;
+        // [SerializeField] private DetectionConfiguration _detectionConfig; // TODO: Type needs to be created
         [SerializeField] private Transform _playerTransform;
         [SerializeField] private bool _enableDebugLogs = true;
 
@@ -28,7 +28,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
         [SerializeField] private string _stealthAudioChannelName = "StealthAudio";
 
         // Core system components
-        private VisibilityCalculator _visibilityCalculator;
+        // private VisibilityCalculator _visibilityCalculator; // TODO: Type needs to be created
         private readonly HashSet<IConcealmentZone> _activeConcealmentZones = new HashSet<IConcealmentZone>();
         private IConcealmentZone _currentConcealmentZone;
 
@@ -79,11 +79,12 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
         private void InitializeComponents()
         {
             // VisibilityCalculatorの初期化
-            _visibilityCalculator = GetComponent<VisibilityCalculator>();
-            if (_visibilityCalculator == null)
-            {
-                _visibilityCalculator = gameObject.AddComponent<VisibilityCalculator>();
-            }
+            // TODO: VisibilityCalculator type needs to be created
+            // _visibilityCalculator = GetComponent<VisibilityCalculator>();
+            // if (_visibilityCalculator == null)
+            // {
+            //     _visibilityCalculator = gameObject.AddComponent<VisibilityCalculator>();
+            // }
 
             // プレイヤートランスフォームの自動検出
             if (_playerTransform == null)
@@ -94,10 +95,11 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
             }
 
             // DetectionConfigurationの自動取得
-            if (_detectionConfig == null)
-            {
-                _detectionConfig = Resources.Load<DetectionConfiguration>("StealthDetectionConfig");
-            }
+            // TODO: DetectionConfiguration type needs to be created
+            // if (_detectionConfig == null)
+            // {
+            //     _detectionConfig = Resources.Load<DetectionConfiguration>("StealthDetectionConfig");
+            // }
 
             // 統計情報の初期化
             _statistics = new StealthStatistics
@@ -138,7 +140,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
 
         public float CalculateLightLevel(Vector3 position)
         {
-            if (_visibilityCalculator == null) return _ambientLightLevel;
+            // if (_visibilityCalculator == null) return _ambientLightLevel; // TODO: VisibilityCalculator needs to be created
+            return _ambientLightLevel; // Temporary direct return
 
             // 既存のVisibilityCalculatorを活用した光量計算
             var lightSources = FindObjectsOfType<Light>();

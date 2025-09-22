@@ -1,20 +1,17 @@
 using UnityEngine;
 
-namespace asterivo.Unity60.Player.States
+namespace asterivo.Unity60.Features.Player.States
 {
     /// <summary>
-    /// プレイヤーの歩行状態を管理するクラス。
-    /// </summary>
+    /// プレイヤーの歩行状態を管琁E��るクラス、E    /// </summary>
     public class WalkingState : IPlayerState
     {
         private float walkSpeed = 4f;
         private Vector2 _moveInput;
 
         /// <summary>
-        /// 状態が開始されたときに呼び出されます。
-        /// プレイヤーの姿勢を立位に設定します。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+        /// 状態が開始されたときに呼び出されます、E        /// プレイヤーの姿勢を立位に設定します、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
         public void Enter(DetailedPlayerStateMachine stateMachine)
         {
             if (stateMachine.StealthMovement != null)
@@ -24,36 +21,30 @@ namespace asterivo.Unity60.Player.States
         }
 
         /// <summary>
-        /// 状態が終了したときに呼び出されます。
-        /// 移動入力をリセットします。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+        /// 状態が終亁E��たときに呼び出されます、E        /// 移動�E力をリセチE��します、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
         public void Exit(DetailedPlayerStateMachine stateMachine)
         {
             _moveInput = Vector2.zero;
         }
 
         /// <summary>
-        /// 毎フレーム呼び出されます。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+        /// 毎フレーム呼び出されます、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
         public void Update(DetailedPlayerStateMachine stateMachine)
         {
         }
 
         /// <summary>
-        /// 固定フレームレートで呼び出されます。
-        /// 入力に基づいてキャラクターの移動を処理します。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+        /// 固定フレームレートで呼び出されます、E        /// 入力に基づぁE��キャラクターの移動を処琁E��ます、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
         public void FixedUpdate(DetailedPlayerStateMachine stateMachine)
         {
             if (stateMachine.CharacterController == null) return;
 
             // NOTE: これは簡略化された移動実装です。
-            // 本来はカメラの向きや加速度、重力などを考慮する必要があります。
-            Transform transform = stateMachine.transform;
-            Vector3 moveDirection = transform.right * _moveInput.x + transform.forward * _moveInput.y;
+            // 本来はカメラの向きや速度、重力などを考慮する必要があります。
+            Vector3 moveDirection = stateMachine.transform.right * _moveInput.x + stateMachine.transform.forward * _moveInput.y;
             moveDirection.y = 0;
 
             // 接地していない場合は重力を適用
@@ -66,11 +57,10 @@ namespace asterivo.Unity60.Player.States
         }
 
         /// <summary>
-        /// プレイヤーの入力を処理し、他の状態への遷移を判断します。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
-        /// <param name="moveInput">移動入力。</param>
-        /// <param name="jumpInput">ジャンプ入力。</param>
+        /// プレイヤーの入力を処琁E��、他�E状態への遷移を判断します、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
+        /// <param name="moveInput">移動�E力、E/param>
+        /// <param name="jumpInput">ジャンプ�E力、E/param>
         public void HandleInput(DetailedPlayerStateMachine stateMachine, Vector2 moveInput, bool jumpInput)
         {
             _moveInput = moveInput;
@@ -87,7 +77,7 @@ namespace asterivo.Unity60.Player.States
                 return;
             }
             
-            // State transitions - スプリント入力でRunning状態に遷移
+            // State transitions - スプリント�E力でRunning状態に遷移
             var playerController = stateMachine.GetComponent<PlayerController>();
             if (playerController != null && playerController.IsSprintPressed)
             {

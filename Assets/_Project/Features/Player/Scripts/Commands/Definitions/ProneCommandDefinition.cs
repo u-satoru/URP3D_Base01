@@ -1,6 +1,6 @@
 using asterivo.Unity60.Core.Commands;
 
-namespace asterivo.Unity60.Player.Commands
+namespace asterivo.Unity60.Features.Player.Commands
 {
     /// <summary>
     /// 匍匐コマンド定義 - プレイヤーの匍匐/立ち上がりを制御

@@ -6,6 +6,7 @@
         "asterivo.Unity60.Core.Events",
         "asterivo.Unity60.Core.Services",
         "asterivo.Unity60.Core.Patterns",
+        "asterivo.Unity60.Player",
         "Unity.InputSystem",
         "UniTask"
     ],

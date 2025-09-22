@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Services;
 
-namespace asterivo.Unity60.Core.Validation
+namespace asterivo.Unity60.Features.Validation
 {
     /// <summary>
     /// イベント接続の検証を行うバリデーター
@@ -135,16 +136,16 @@ namespace asterivo.Unity60.Core.Validation
         public void AddError(string message)
         {
             errors.Add(message);
-            var eventLogger = ServiceLocator.GetService<IEventLogger>();
+            var eventLogger = asterivo.Unity60.Core.ServiceLocator.GetService<IEventLogger>();
             if (eventLogger != null) {
                 eventLogger.LogError($"[Validation] {message}");
             }
         }
-        
+
         public void AddWarning(string message)
         {
             warnings.Add(message);
-            var eventLogger = ServiceLocator.GetService<IEventLogger>();
+            var eventLogger = asterivo.Unity60.Core.ServiceLocator.GetService<IEventLogger>();
             if (eventLogger != null) {
                 eventLogger.LogWarning($"[Validation] {message}");
             }

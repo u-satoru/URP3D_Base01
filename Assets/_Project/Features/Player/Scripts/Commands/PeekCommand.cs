@@ -1,8 +1,8 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Commands;
-using asterivo.Unity60.Player.States;
+using asterivo.Unity60.Features.Player.States;
 
-namespace asterivo.Unity60.Player.Commands
+namespace asterivo.Unity60.Features.Player.Commands
 {
     /// <summary>
     /// 覗き見コマンド - カバー状態での覗き見動作を実行

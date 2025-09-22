@@ -1,6 +1,6 @@
 using asterivo.Unity60.Core.Commands;
 
-namespace asterivo.Unity60.Player.Commands
+namespace asterivo.Unity60.Features.Player.Commands
 {
     /// <summary>
     /// 覗き見コマンド定義 - カバー状態での覗き見動作を制御

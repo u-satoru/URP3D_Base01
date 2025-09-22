@@ -4,6 +4,8 @@
     "references": [
         "asterivo.Unity60.Core",
         "asterivo.Unity60.Core.Services",
+        "asterivo.Unity60.Core.Events",
+        "asterivo.Unity60.Core.Debug",
         "UniTask"
     ],
     "includePlatforms": [],

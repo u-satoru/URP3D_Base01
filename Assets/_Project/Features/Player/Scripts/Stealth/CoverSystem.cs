@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Data;
 
-namespace asterivo.Unity60.Player
+namespace asterivo.Unity60.Features.Player
 {
     /// <summary>
     /// プレイヤーのカバーアクション（物陰に隠れる）を管理するシステムです。

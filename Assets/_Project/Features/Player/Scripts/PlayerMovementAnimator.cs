@@ -2,7 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 
-namespace asterivo.Unity60.Player
+namespace asterivo.Unity60.Features.Player
 {
     /// <summary>
     /// DOTweenを使用したプレイヤーの移動アニメーション管理クラス

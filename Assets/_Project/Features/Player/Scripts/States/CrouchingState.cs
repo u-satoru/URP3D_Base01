@@ -1,10 +1,9 @@
 using UnityEngine;
 
-namespace asterivo.Unity60.Player.States
+namespace asterivo.Unity60.Features.Player.States
 {
     /// <summary>
-    /// プレイヤーのしゃがみ状態を管理するクラス。
-    /// </summary>
+    /// プレイヤーのしゃがみ状態を管琁E��るクラス、E    /// </summary>
     public class CrouchingState : IPlayerState
     {
         private float crouchSpeed = 2.5f;
@@ -13,10 +12,8 @@ namespace asterivo.Unity60.Player.States
         private Vector2 _moveInput;
 
         /// <summary>
-        /// 状態が開始されたときに呼び出されます。
-        /// キャラクターの高さをしゃがみ状態に変更し、姿勢を更新します。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+        /// 状態が開始されたときに呼び出されます、E        /// キャラクターの高さをしめE��み状態に変更し、姿勢を更新します、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
         public void Enter(DetailedPlayerStateMachine stateMachine)
         {
             if (stateMachine.CharacterController != null)
@@ -36,10 +33,8 @@ namespace asterivo.Unity60.Player.States
         }
 
         /// <summary>
-        /// 状態が終了したときに呼び出されます。
-        /// キャラクターの高さを元の高さに戻します。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+        /// 状態が終亁E��たときに呼び出されます、E        /// キャラクターの高さを�Eの高さに戻します、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
         public void Exit(DetailedPlayerStateMachine stateMachine)
         {
             if (stateMachine.CharacterController != null)
@@ -53,16 +48,13 @@ namespace asterivo.Unity60.Player.States
         }
 
         /// <summary>
-        /// 毎フレーム呼び出されます。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+        /// 毎フレーム呼び出されます、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
         public void Update(DetailedPlayerStateMachine stateMachine) { }
 
         /// <summary>
-        /// 固定フレームレートで呼び出されます。
-        /// 入力に基づいてキャラクターの移動を処理します。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+        /// 固定フレームレートで呼び出されます、E        /// 入力に基づぁE��キャラクターの移動を処琁E��ます、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
         public void FixedUpdate(DetailedPlayerStateMachine stateMachine)
         {
             if (stateMachine.CharacterController == null) return;
@@ -80,21 +72,19 @@ namespace asterivo.Unity60.Player.States
         }
 
         /// <summary>
-        /// プレイヤーの入力を処理し、他の状態への遷移を判断します。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
-        /// <param name="moveInput">移動入力。</param>
-        /// <param name="jumpInput">ジャンプ入力（この状態では立ち上がりに使用）。</param>
+        /// プレイヤーの入力を処琁E��、他�E状態への遷移を判断します、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
+        /// <param name="moveInput">移動�E力、E/param>
+        /// <param name="jumpInput">ジャンプ�E力（この状態では立ち上がりに使用�E�、E/param>
         public void HandleInput(DetailedPlayerStateMachine stateMachine, Vector2 moveInput, bool jumpInput)
         {
             _moveInput = moveInput;
 
-            // ジャンプ入力でしゃがみ解除（立ち上がり）
-            if (jumpInput)
+            // ジャンプ�E力でしゃがみ解除�E�立ち上がり！E            if (jumpInput)
             {
                 if (CanStandUp(stateMachine))
                 {
-                    // 立ち上がりが可能な場合、移動入力に応じて適切な状態に遷移
+                    // 立ち上がりが可能な場合、移動�E力に応じて適刁E��状態に遷移
                     if (moveInput.magnitude > 0.1f)
                     {
                         stateMachine.TransitionToState(PlayerStateType.Walking);
@@ -107,19 +97,16 @@ namespace asterivo.Unity60.Player.States
                 }
             }
             
-            // しゃがみ状態での移動は低速移動として継続
-            // 他の姿勢への遷移（匍匐など）
-            if (Input.GetKeyDown(KeyCode.X))
+            // しゃがみ状態での移動�E低速移動として継綁E            // 他�E姿勢への遷移�E�匍匐など�E�E            if (Input.GetKeyDown(KeyCode.X))
             {
                 stateMachine.TransitionToState(PlayerStateType.Prone);
             }
         }
 
         /// <summary>
-        /// プレイヤーが立ち上がれるかどうか（頭上に障害物がないか）を確認します。
-        /// </summary>
-        /// <param name="stateMachine">プレイヤーのステートマシン。</param>
-        /// <returns>立ち上がれる場合はtrue、そうでない場合はfalse。</returns>
+        /// プレイヤーが立ち上がれるかどぁE���E�頭上に障害物がなぁE���E�を確認します、E        /// </summary>
+        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
+        /// <returns>立ち上がれる場合�Etrue、そぁE��なぁE��合�Efalse、E/returns>
         private bool CanStandUp(DetailedPlayerStateMachine stateMachine)
         {
             RaycastHit hit;

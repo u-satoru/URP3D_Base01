@@ -2,10 +2,10 @@ using UnityEngine;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Data;
-using asterivo.Unity60.Player.States;
+using asterivo.Unity60.Features.Player.States;
 using System.Collections.Generic;
 
-namespace asterivo.Unity60.Player.Commands
+namespace asterivo.Unity60.Features.Player.Commands
 {
     /// <summary>
     /// Processes commands for the player, integrating with skills and items

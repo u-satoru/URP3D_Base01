@@ -75,3 +75,61 @@
 
 ## 次のステップ
 Phase 2: Core層の確立に進む準備が整いました。
+
+---
+
+## Core層確立フェーズ (Phase 2) 🔄 **進行中**
+**目的**: 汎用的なコードをCore層に集約し、プロジェクトの安定した土台を再構築する。
+
+### Phase 2.1: Core層候補スクリプトの特定と移動
+-   [ ] **ServiceLocator関連スクリプトの移動**
+    -   **内容**: ServiceLocatorと関連インターフェースを`Assets/_Project/Core/Services`へ移動
+    -   **対象**: ServiceLocator.cs, IService.cs等
+    -   **注意**: 移動前に現状の依存関係を確認
+
+-   [ ] **イベントシステムの移動**
+    -   **内容**: GameEventシステムを`Assets/_Project/Core/Events`へ移動
+    -   **対象**: GameEvent.cs, GameEventListener.cs, EventChannel関連
+    -   **注意**: ScriptableObjectアセットの参照に注意
+
+-   [ ] **デザインパターン基盤の移動**
+    -   **内容**: Command, State等のパターンを`Assets/_Project/Core/Patterns`へ移動
+    -   **対象**: ICommand.cs, StateMachine.cs, ObjectPool関連
+    -   **注意**: 既存の実装クラスとの分離を確認
+
+### Phase 2.2: Core層の名前空間統一とリファクタリング
+-   [ ] **名前空間の変更**
+    -   **内容**: 移動したスクリプトの名前空間を`asterivo.Unity60.Core.*`に統一
+    -   **例**: `asterivo.Unity60.Core.Services`, `asterivo.Unity60.Core.Events`
+    -   **完了条件**: 全Core層スクリプトが統一された名前空間を使用
+
+-   [ ] **Core層内の相互参照修正**
+    -   **内容**: using文の更新、Core層内での参照関係の修正
+    -   **注意**: Feature層からの参照は後のフェーズで対応
+
+-   [ ] **コンパイルエラー解消**
+    -   **内容**: Core層アセンブリ単体でコンパイル可能な状態にする
+    -   **完了条件**: `asterivo.Unity60.Core`アセンブリのエラーが0になること
+
+### Phase 2.3: Core層のユニットテスト修正と実行
+-   [ ] **テストスクリプトの更新**
+    -   **内容**: Core層に関連するテストの名前空間とusing文を更新
+    -   **対象**: `Assets/_Project/Tests`内のCore層関連テスト
+
+-   [ ] **テスト実行と検証**
+    -   **内容**: Unity Test Runnerで全Core層テストを実行
+    -   **完了条件**: Core層のテストが全てパスすること
+
+-   [ ] **テストカバレッジ確認**
+    -   **内容**: Core層のテストカバレッジを測定し、維持されていることを確認
+    -   **目標**: カバレッジ80%以上を維持
+
+---
+
+## Phase 2 完了条件
+- [ ] Core層に汎用的なスクリプトが集約されている
+- [ ] Core層の名前空間が`asterivo.Unity60.Core.*`に統一されている
+- [ ] Core層アセンブリが単体でコンパイル可能
+- [ ] Core層が他の層（Feature, Template）を一切参照していない
+- [ ] Core層のユニットテストが全てパス
+- [ ] コンパイルエラーがCore層関連では0件に減少
