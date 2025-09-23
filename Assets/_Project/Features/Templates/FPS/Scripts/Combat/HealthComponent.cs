@@ -1,36 +1,70 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Components;
+using asterivo.Unity60.Features.Combat.Interfaces;
+using asterivo.Unity60.Features.Combat;
 
 namespace asterivo.Unity60.Features.Templates.FPS.Combat
 {
     /// <summary>
     /// FPS Templateの基本的なヘルス管理コンポーネント
-    /// ダメージ処理、死亡処理を担当
+    /// Combat Feature層のHealthComponentをラップし、FPS固有の機能を追加
     /// IHealthTargetを実装してCommandパターンと統合
     /// </summary>
+    [RequireComponent(typeof(asterivo.Unity60.Features.Combat.Components.HealthComponent))]
     public class HealthComponent : MonoBehaviour, IHealthTarget
     {
-        [Header("Health Configuration")]
-        [SerializeField] private int _maxHealth = 100;
-        [SerializeField] private int _currentHealth;
-
-        [Header("Events")]
+        [Header("FPS Events")]
         [SerializeField] private GameEvent _onHealthChanged;
         [SerializeField] private GameEvent _onDeath;
 
-        // IHealthTarget implementation
-        public int MaxHealth => _maxHealth;
-        public int CurrentHealth => _currentHealth;
+        // Reference to Combat Feature layer component
+        private asterivo.Unity60.Features.Combat.Components.HealthComponent _combatHealth;
+
+        // IHealthTarget implementation (wrapper properties)
+        public int MaxHealth => Mathf.RoundToInt(_combatHealth?.MaxHealth ?? 100);
+        public int CurrentHealth => Mathf.RoundToInt(_combatHealth?.CurrentHealth ?? 100);
 
         // Compatibility properties for FPS template
-        public bool IsAlive => _currentHealth > 0;
-        public bool IsDead => _currentHealth <= 0;
-        public float HealthPercentage => (float)_currentHealth / _maxHealth;
+        public bool IsAlive => _combatHealth?.IsAlive ?? true;
+        public bool IsDead => !IsAlive;
+        public float HealthPercentage => _combatHealth?.GetHealthPercentage() ?? 1f;
 
         private void Awake()
         {
-            _currentHealth = _maxHealth;
+            // Get reference to Combat Feature layer component
+            _combatHealth = GetComponent<asterivo.Unity60.Features.Combat.Components.HealthComponent>();
+            if (_combatHealth == null)
+            {
+                _combatHealth = gameObject.AddComponent<asterivo.Unity60.Features.Combat.Components.HealthComponent>();
+            }
+
+            // Configure Combat layer component
+            ConfigureCombatHealth();
+        }
+
+        private void ConfigureCombatHealth()
+        {
+            // Subscribe to Combat layer events
+            var combatHealthComponent = GetComponent<asterivo.Unity60.Features.Combat.Components.HealthComponent>();
+            if (combatHealthComponent != null)
+            {
+                // Use Unity Events from Combat layer to trigger FPS-specific events
+                var healthChanged = combatHealthComponent.GetType().GetField("onHealthChanged",
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                var death = combatHealthComponent.GetType().GetField("onDeath",
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
+                if (healthChanged != null && healthChanged.GetValue(combatHealthComponent) is UnityEngine.Events.UnityEvent<float> healthEvent)
+                {
+                    healthEvent.AddListener((health) => _onHealthChanged?.Raise());
+                }
+
+                if (death != null && death.GetValue(combatHealthComponent) is UnityEngine.Events.UnityEvent deathEvent)
+                {
+                    deathEvent.AddListener(() => OnDeath());
+                }
+            }
         }
 
         // IHealthTarget implementation
@@ -39,10 +73,7 @@ namespace asterivo.Unity60.Features.Templates.FPS.Combat
         /// </summary>
         public void Heal(int amount)
         {
-            if (!IsAlive) return;
-
-            _currentHealth = Mathf.Min(_maxHealth, _currentHealth + amount);
-            _onHealthChanged?.Raise();
+            _combatHealth?.Heal(amount);
         }
 
         /// <summary>
@@ -50,18 +81,9 @@ namespace asterivo.Unity60.Features.Templates.FPS.Combat
         /// </summary>
         public void TakeDamage(int amount)
         {
-            if (!IsAlive) return;
-
-            _currentHealth = Mathf.Max(0, _currentHealth - amount);
-
-            // ヘルス変更イベント発行
-            _onHealthChanged?.Raise();
-
-            // 死亡判定
-            if (_currentHealth <= 0)
-            {
-                Die();
-            }
+            var damageInfo = new DamageInfo(amount);
+            damageInfo.damageType = DamageType.Ranged; // FPS default damage type
+            _combatHealth?.TakeDamage(damageInfo);
         }
 
         /// <summary>
@@ -69,8 +91,20 @@ namespace asterivo.Unity60.Features.Templates.FPS.Combat
         /// </summary>
         public void TakeDamage(int amount, string elementType)
         {
-            // FPS Templateでは基本的に物理ダメージとして処理
-            TakeDamage(amount);
+            var damageInfo = new DamageInfo(amount);
+
+            // Map element type to damage type
+            damageInfo.damageType = elementType?.ToLower() switch
+            {
+                "fire" => DamageType.Fire,
+                "ice" => DamageType.Ice,
+                "electric" => DamageType.Electric,
+                "poison" => DamageType.Poison,
+                "explosive" => DamageType.Explosive,
+                _ => DamageType.Ranged
+            };
+
+            _combatHealth?.TakeDamage(damageInfo);
         }
 
         /// <summary>
@@ -78,7 +112,15 @@ namespace asterivo.Unity60.Features.Templates.FPS.Combat
         /// </summary>
         public void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitDirection)
         {
-            TakeDamage(Mathf.RoundToInt(damage));
+            var damageInfo = DamageInfo.CreateDetailed(
+                damage,
+                null, // attacker will be determined from context
+                hitPoint,
+                hitDirection.normalized,
+                DamageType.Ranged
+            );
+
+            _combatHealth?.TakeDamage(damageInfo);
         }
 
         /// <summary>
@@ -86,13 +128,13 @@ namespace asterivo.Unity60.Features.Templates.FPS.Combat
         /// </summary>
         public void Heal(float amount)
         {
-            Heal(Mathf.RoundToInt(amount));
+            _combatHealth?.Heal(amount);
         }
 
         /// <summary>
         /// 死亡処理
         /// </summary>
-        private void Die()
+        private void OnDeath()
         {
             _onDeath?.Raise();
 
@@ -131,7 +173,7 @@ namespace asterivo.Unity60.Features.Templates.FPS.Combat
         /// </summary>
         public void ResetHealth()
         {
-            _currentHealth = _maxHealth;
+            _combatHealth?.ResetHealth();
             _onHealthChanged?.Raise();
         }
     }

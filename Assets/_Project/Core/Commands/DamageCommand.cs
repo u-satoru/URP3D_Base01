@@ -1,10 +1,10 @@
 using UnityEngine;
-using asterivo.Unity60.Core.Components;
+// using asterivo.Unity60.Core.Components;
 
 namespace asterivo.Unity60.Core.Commands
 {
     /// <summary>
-    /// Command for dealing damage to health targets (ドキュメント第4章:419-432行目の実装)
+    /// Command for dealing damage to health targets (ドキュメント第4章:419-432行目の実裁E
     /// ダメージを与えるコマンドクラス
     /// </summary>
     public class DamageCommand : IResettableCommand
@@ -50,7 +50,7 @@ namespace asterivo.Unity60.Core.Commands
 
         public DamageCommand()
         {
-            // プール化対応：パラメーターなしコンストラクタ
+            // プ�Eル化対応：パラメーターなしコンストラクタ
         }
 
         public DamageCommand(IHealthTarget target, int damageAmount, string elementType = "physical")
@@ -99,7 +99,7 @@ namespace asterivo.Unity60.Core.Commands
             if (parameters.Length < 2)
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogError("DamageCommand.Initialize: 最低2つのパラメータ（target, damageAmount）が必要です。");
+                UnityEngine.Debug.LogError("DamageCommand.Initialize: 最佁Eつのパラメータ�E�Earget, damageAmount�E�が忁E��です、E);
 #endif
                 return;
             }
@@ -108,7 +108,7 @@ namespace asterivo.Unity60.Core.Commands
             if (_target == null)
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogError("DamageCommand.Initialize: 最初のパラメータはIHealthTargetである必要があります。");
+                UnityEngine.Debug.LogError("DamageCommand.Initialize: 最初�EパラメータはIHealthTargetである忁E��があります、E);
 #endif
                 return;
             }
@@ -120,7 +120,7 @@ namespace asterivo.Unity60.Core.Commands
             else
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogError("DamageCommand.Initialize: 2番目のパラメータはint（ダメージ量）である必要があります。");
+                UnityEngine.Debug.LogError("DamageCommand.Initialize: 2番目のパラメータはint�E�ダメージ量）である忁E��があります、E);
 #endif
                 return;
             }
@@ -131,7 +131,7 @@ namespace asterivo.Unity60.Core.Commands
         }
         
         /// <summary>
-        /// より型安全な初期化メソッド
+        /// より型安�Eな初期化メソチE��
         /// </summary>
         public void Initialize(IHealthTarget target, int damageAmount, string elementType = "physical")
         {

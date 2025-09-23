@@ -1,15 +1,15 @@
 using UnityEngine;
 
 using asterivo.Unity60.Core.Audio.Interfaces;
-using asterivo.Unity60.Core.Debug;
+// using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Services;
-// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
+// // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 using asterivo.Unity60.Core;
 
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// 移行完了状況の検証ツール
+    /// 移行完亁E��況�E検証チE�Eル
     /// </summary>
     public class MigrationValidator : MonoBehaviour
     {
@@ -38,10 +38,10 @@ namespace asterivo.Unity60.Core.Services
             
             bool allPassed = true;
             
-            // ServiceLocator基本機能の検証
+            // ServiceLocator基本機�Eの検証
             allPassed &= ValidateServiceLocatorBasics();
             
-            // 各サービスの検証
+            // 吁E��ービスの検証
             allPassed &= ValidateAudioService();
             allPassed &= ValidateSpatialAudioService();
             allPassed &= ValidateStealthAudioService();
@@ -59,8 +59,7 @@ namespace asterivo.Unity60.Core.Services
         {
             ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] Validating ServiceLocator basics...");
             
-            // ServiceLocatorが動作していることを確認
-            int serviceCount = ServiceLocator.GetServiceCount();
+            // ServiceLocatorが動作してぁE��ことを確誁E            int serviceCount = ServiceLocator.GetServiceCount();
             if (serviceCount == 0)
             {
                 ServiceLocator.GetService<IEventLogger>()?.LogError("[MigrationValidator] ServiceLocator has no registered services");
@@ -156,8 +155,7 @@ namespace asterivo.Unity60.Core.Services
                 return false;
             }
             
-            // Week 3の期待される設定
-            if (FeatureFlags.UseNewAudioService && 
+            // Week 3の期征E��れる設宁E            if (FeatureFlags.UseNewAudioService && 
                 FeatureFlags.UseNewSpatialService && 
                 FeatureFlags.UseNewStealthService)
             {

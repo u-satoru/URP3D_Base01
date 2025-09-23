@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.Events;
-// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
+// // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 
 namespace asterivo.Unity60.Core.Events
 {
     /// <summary>
-    /// Vector2パラメータ付きイベントリスナー
-    /// カメラルック入力用
+    /// Vector2パラメータ付きイベントリスナ�E
+    /// カメラルチE��入力用
     /// </summary>
     public class Vector2GameEventListener : MonoBehaviour, IGameEventListener<Vector2>
     {
@@ -45,21 +45,18 @@ namespace asterivo.Unity60.Core.Events
         }
         
         /// <summary>
-        /// Vector2GameEventが発生した時の処理
-        /// </summary>
+        /// Vector2GameEventが発生した時の処琁E        /// </summary>
         /// <param name="value">Vector2値</param>
         public void OnEventRaised(Vector2 value)
         {
-            // メソッドが設定されている場合のみ実行
-            if (Response != null)
+            // メソチE��が設定されてぁE��場合�Eみ実衁E            if (Response != null)
             {
                 Response.Invoke(value);
             }
         }
         
         /// <summary>
-        /// 手動でイベントを発行（テスト用）
-        /// </summary>
+        /// 手動でイベントを発行（テスト用�E�E        /// </summary>
         [ContextMenu("Raise Event (Test)")]
         public void RaiseEventTest()
         {

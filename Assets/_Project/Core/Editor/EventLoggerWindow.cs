@@ -3,29 +3,22 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using asterivo.Unity60.Core.Debug;
+// using asterivo.Unity60.Core.Debug;
 
 namespace asterivo.Unity60.Core.Editor
 {
     /// <summary>
-    /// EventLogger専用のデバッグウィンドウ
-    /// リアルタイムでイベントログを表示し、フィルタリング・分析機能を提供
-    /// 
-    /// 主な機能：
-    /// - リアルタイムイベントログ表示
-    /// - ログレベル別フィルタリング（Info/Warning/Error）
-    /// - イベント名による検索フィルター
+    /// EventLogger専用のチE��チE��ウィンドウ
+    /// リアルタイムでイベントログを表示し、フィルタリング・刁E��機�Eを提侁E    /// 
+    /// 主な機�E�E�E    /// - リアルタイムイベントログ表示
+    /// - ログレベル別フィルタリング�E�Enfo/Warning/Error�E�E    /// - イベント名による検索フィルター
     /// - イベントタイプ別フィルタリング
-    /// - ペイロードデータとスタックトレース表示
-    /// - 統計情報（総イベント数、レベル別カウント等）
-    /// - CSVエクスポート機能
-    /// - クリップボードコピー機能
+    /// - ペイロードデータとスタチE��トレース表示
+    /// - 統計情報�E�総イベント数、レベル別カウント等！E    /// - CSVエクスポ�Eト機�E
+    /// - クリチE�Eボ�Eドコピ�E機�E
     /// 
-    /// 使用シーン：
-    /// - イベントの発生状況監視
-    /// - イベントシステムのデバッグ
-    /// - パフォーマンス問題の特定
-    /// - イベントの連続発生やループの検出
+    /// 使用シーン�E�E    /// - イベント�E発生状況監要E    /// - イベントシスチE��のチE��チE��
+    /// - パフォーマンス問題�E特宁E    /// - イベント�E連続発生やループ�E検�E
     /// 
     /// アクセス方法：Unity メニュー > asterivo.Unity60/Debug/Event Logger
     /// </summary>
@@ -51,12 +44,10 @@ namespace asterivo.Unity60.Core.Editor
         
         /// <summary>
         /// イベントロガーウィンドウを表示
-        /// Unityメニューから呼び出されるエディタ拡張メニューアイテム
+        /// Unityメニューから呼び出されるエチE��タ拡張メニューアイチE��
         /// </summary>
         /// <remarks>
-        /// ウィンドウの最小サイズは600x400に設定され、
-        /// エディタの更新イベントに登録して自動リフレッシュを行います。
-        /// </remarks>
+        /// ウィンドウの最小サイズは600x400に設定され、E        /// エチE��タの更新イベントに登録して自動リフレチE��ュを行います、E        /// </remarks>
         [MenuItem("asterivo.Unity60/Debug/Event Logger")]
         public static void ShowWindow()
         {
@@ -66,8 +57,7 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// ウィンドウが有効になった時の初期化処理
-        /// エディタの更新イベントに登録し、統計情報を初期化
+        /// ウィンドウが有効になった時の初期化�E琁E        /// エチE��タの更新イベントに登録し、統計情報を�E期化
         /// </summary>
         void OnEnable()
         {
@@ -76,8 +66,7 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// ウィンドウが無効になった時のクリーンアップ処理
-        /// エディタの更新イベントから登録解除
+        /// ウィンドウが無効になった時のクリーンアチE�E処琁E        /// エチE��タの更新イベントから登録解除
         /// </summary>
         void OnDisable()
         {
@@ -116,8 +105,8 @@ namespace asterivo.Unity60.Core.Editor
         {
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
             
-            // 基本操作ボタン
-            if (GUILayout.Button("🗑️ Clear", EditorStyles.toolbarButton))
+            // 基本操作�Eタン
+            if (GUILayout.Button("🗑�E�EClear", EditorStyles.toolbarButton))
             {
                 EventLogger.ClearLogStatic();
             }
@@ -133,7 +122,7 @@ namespace asterivo.Unity60.Core.Editor
             }
             
             // 一時停止ボタン
-            isPaused = GUILayout.Toggle(isPaused, isPaused ? "⏸️ Paused" : "▶️ Live", EditorStyles.toolbarButton);
+            isPaused = GUILayout.Toggle(isPaused, isPaused ? "⏸�E�EPaused" : "▶�E�ELive", EditorStyles.toolbarButton);
             
             GUILayout.FlexibleSpace();
             
@@ -193,8 +182,7 @@ namespace asterivo.Unity60.Core.Editor
             EditorGUILayout.LabelField("Level:", GUILayout.Width(40));
             filterLevel = (EventLogger.LogLevel)EditorGUILayout.EnumPopup(filterLevel, GUILayout.Width(80));
             
-            // イベントタイプフィルター切り替え
-            showEventTypeFilter = EditorGUILayout.Toggle("Types", showEventTypeFilter, GUILayout.Width(60));
+            // イベントタイプフィルター刁E��替ぁE            showEventTypeFilter = EditorGUILayout.Toggle("Types", showEventTypeFilter, GUILayout.Width(60));
             
             EditorGUILayout.EndHorizontal();
             
@@ -217,8 +205,7 @@ namespace asterivo.Unity60.Core.Editor
                 availableTypes.Add(entry.eventName);
             }
             
-            // イベントタイプのトグル表示（最大10個まで）
-            var typesToShow = availableTypes.Take(10).ToArray();
+            // イベントタイプ�Eトグル表示�E�最大10個まで�E�E            var typesToShow = availableTypes.Take(10).ToArray();
             
             EditorGUILayout.BeginHorizontal();
             int count = 0;
@@ -295,7 +282,7 @@ namespace asterivo.Unity60.Core.Editor
         {
             var originalColor = GUI.backgroundColor;
             
-            // レベル別の色分け
+            // レベル別の色刁E��
             switch (entry.level)
             {
                 case EventLogger.LogLevel.Warning:
@@ -314,8 +301,7 @@ namespace asterivo.Unity60.Core.Editor
             // メインライン
             EditorGUILayout.BeginHorizontal();
             
-            // タイムスタンプ
-            EditorGUILayout.LabelField($"[{entry.timestamp:F2}s]", GUILayout.Width(80));
+            // タイムスタンチE            EditorGUILayout.LabelField($"[{entry.timestamp:F2}s]", GUILayout.Width(80));
             
             // レベルアイコン
             string levelIcon = GetLevelIcon(entry.level);
@@ -326,10 +312,10 @@ namespace asterivo.Unity60.Core.Editor
             eventNameStyle.fontStyle = FontStyle.Bold;
             EditorGUILayout.LabelField(entry.eventName, eventNameStyle, GUILayout.ExpandWidth(true));
             
-            // リスナー数
+            // リスナ�E数
             EditorGUILayout.LabelField($"({entry.listenerCount})", GUILayout.Width(40));
             
-            // コピーボタン
+            // コピ�Eボタン
             if (GUILayout.Button("📋", GUILayout.Width(25)))
             {
                 CopyEntryToClipboard(entry);
@@ -387,9 +373,9 @@ namespace asterivo.Unity60.Core.Editor
         {
             switch (level)
             {
-                case EventLogger.LogLevel.Info: return "ℹ️";
-                case EventLogger.LogLevel.Warning: return "⚠️";
-                case EventLogger.LogLevel.Error: return "❌";
+                case EventLogger.LogLevel.Info: return "ℹ�E�E;
+                case EventLogger.LogLevel.Warning: return "⚠�E�E;
+                case EventLogger.LogLevel.Error: return "❁E;
                 default: return "📝";
             }
         }

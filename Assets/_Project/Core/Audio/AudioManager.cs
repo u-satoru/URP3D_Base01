@@ -2,10 +2,10 @@ using UnityEngine;
 using UnityEngine.Audio;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Audio.Data;
-using asterivo.Unity60.Core.Debug;
-using asterivo.Unity60.Core.Shared;
+// // using asterivo.Unity60.Core.Debug;
+// // using asterivo.Unity60.Core.Shared;
 using asterivo.Unity60.Core.Audio.Interfaces;
-using asterivo.Unity60.Core.Helpers;
+// using asterivo.Unity60.Core.Helpers;
 using asterivo.Unity60.Core;
 // using asterivo.Unity60.Core.Services; // Removed to avoid circular dependency
 using Sirenix.OdinInspector;
@@ -13,14 +13,12 @@ using Sirenix.OdinInspector;
 namespace asterivo.Unity60.Core.Audio
 {
     /// <summary>
-    /// 最上位のオーディオ制御システム
-    /// 既存のステルスオーディオシステムと新規システムを統合管理
-    /// ServiceLocator対応版
+    /// 最上位�EオーチE��オ制御シスチE��
+    /// 既存�EスチE��スオーチE��オシスチE��と新規シスチE��を統合管琁E    /// ServiceLocator対応版
     /// </summary>
     public class AudioManager : MonoBehaviour, IAudioService, IInitializable
     {
-        // ✅ Task 3: Legacy Singleton警告システム（後方互換性のため）
-        
+        // ✁ETask 3: Legacy Singleton警告シスチE���E�後方互換性のため�E�E        
 
 
 
@@ -32,7 +30,7 @@ namespace asterivo.Unity60.Core.Audio
 
         [TabGroup("Audio Managers", "System Integration")]
         [Header("Existing Systems Integration")]
-        // SpatialAudioServiceはServiceLocator経由で取得 (Obsolete SpatialAudioManagerから移行)
+        // SpatialAudioServiceはServiceLocator経由で取征E(Obsolete SpatialAudioManagerから移衁E
         private ISpatialAudioService spatialAudioService;
         [SerializeField, Required] private DynamicAudioEnvironment dynamicEnvironment;
 
@@ -68,12 +66,9 @@ namespace asterivo.Unity60.Core.Audio
         [SerializeField, ReadOnly] private float currentTensionLevel;
         [SerializeField, ReadOnly] private bool isStealthModeActive;
 
-        // 内部状態
-        private bool isInitialized = false;
+        // 冁E��状慁E        private bool isInitialized = false;
         
-        // IInitializable実装
-        public int Priority => 5; // 早期に初期化
-        public bool IsInitialized => isInitialized;
+        // IInitializable実裁E        public int Priority => 5; // 早期に初期匁E        public bool IsInitialized => isInitialized;
 
         #region Unity Lifecycle
 
@@ -111,14 +106,12 @@ namespace asterivo.Unity60.Core.Audio
         #region Initialization
 
         /// <summary>
-        /// IInitializable実装 - オーディオマネージャーの初期化
-        /// </summary>
+        /// IInitializable実裁E- オーチE��オマネージャーの初期匁E        /// </summary>
         public void Initialize()
         {
             if (isInitialized) return;
             
-            // SpatialAudioServiceの取得（ServiceLocator優先）
-            if (spatialAudioService == null)
+            // SpatialAudioServiceの取得！EerviceLocator優先！E            if (spatialAudioService == null)
             {
                 if (FeatureFlags.UseServiceLocator)
                 {
@@ -156,7 +149,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 必要なコンポーネントの検証
+        /// 忁E��なコンポ�Eネント�E検証
         /// </summary>
         private void ValidateComponents()
         {
@@ -181,17 +174,14 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// AudioUpdateCoordinatorの初期化
-        /// </summary>
+        /// AudioUpdateCoordinatorの初期匁E        /// </summary>
         private void InitializeAudioUpdateCoordinator()
         {
-            // ServiceLocatorからAudioUpdateCoordinatorを取得を試みる
-            AudioUpdateCoordinator coordinator = null;
+            // ServiceLocatorからAudioUpdateCoordinatorを取得を試みめE            AudioUpdateCoordinator coordinator = null;
             
             if (FeatureFlags.UseServiceLocator)
             {
-                // TODO: AudioUpdateCoordinator用のインターフェースを作成後に有効化
-                // coordinator = ServiceLocator.GetService<IAudioUpdateService>() as AudioUpdateCoordinator;
+                // TODO: AudioUpdateCoordinator用のインターフェースを作�E後に有効匁E                // coordinator = ServiceLocator.GetService<IAudioUpdateService>() as AudioUpdateCoordinator;
             }
             
             // フォールバック: ServiceHelper経由で検索
@@ -202,7 +192,7 @@ namespace asterivo.Unity60.Core.Audio
             
             if (coordinator == null)
             {
-                // 専用のGameObjectを作成してAudioUpdateCoordinatorを追加
+                // 専用のGameObjectを作�EしてAudioUpdateCoordinatorを追加
                 GameObject coordinatorObject = new GameObject("AudioUpdateCoordinator");
                 coordinatorObject.transform.SetParent(transform);
                 coordinator = coordinatorObject.AddComponent<AudioUpdateCoordinator>();
@@ -223,7 +213,7 @@ namespace asterivo.Unity60.Core.Audio
         #region Game State Integration
 
         /// <summary>
-        /// ゲーム状態に応じたオーディオ制御
+        /// ゲーム状態に応じたオーチE��オ制御
         /// </summary>
         public void UpdateAudioForGameState(GameState state, float tensionLevel = 0f)
         {
@@ -239,16 +229,16 @@ namespace asterivo.Unity60.Core.Audio
                 bgmManager.UpdateForTensionLevel(tensionLevel, isStealthModeActive);
             }
 
-            // 環境音の更新
+            // 環墁E��の更新
             if (ambientManager != null)
             {
                 ambientManager.UpdateForStealthState(isStealthModeActive);
             }
 
-            // 動的環境システムとの連携
+            // 動的環墁E��スチE��との連携
             if (dynamicEnvironment != null)
             {
-                // DynamicAudioEnvironment の既存機能を活用
+                // DynamicAudioEnvironment の既存機�Eを活用
                 var (env, weather, time) = dynamicEnvironment.GetCurrentState();
                 UpdateAudioForEnvironmentalState(env, weather, time, tensionLevel);
             }
@@ -257,17 +247,17 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 環境状態に応じた音響制御
+        /// 環墁E��態に応じた音響制御
         /// </summary>
         private void UpdateAudioForEnvironmentalState(EnvironmentType env, WeatherType weather, TimeOfDay time, float tension)
         {
-            // 環境に応じたBGM調整
+            // 環墁E��応じたBGM調整
             if (bgmManager != null)
             {
                 bgmManager.UpdateForEnvironment(env, weather, time);
             }
 
-            // 環境音の調整
+            // 環墁E��の調整
             if (ambientManager != null)
             {
                 ambientManager.UpdateForEnvironment(env, weather, time);
@@ -309,20 +299,18 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// Audio Mixer の音量パラメータを設定
-        /// </summary>
+        /// Audio Mixer の音量パラメータを設宁E        /// </summary>
         private void SetMixerVolume(string paramName, float volume)
         {
             if (string.IsNullOrEmpty(paramName)) return;
 
-            // 音量を dB に変換 (0-1 の range を -80dB - 0dB に変換)
+            // 音量を dB に変換 (0-1 の range めE-80dB - 0dB に変換)
             float dbValue = volume > AudioConstants.MIN_VOLUME_FOR_DB ? Mathf.Log10(volume) * 20f : AudioConstants.MIN_DB_VALUE;
             mainMixer.SetFloat(paramName, dbValue);
         }
 
         /// <summary>
-        /// マスター音量の設定
-        /// </summary>
+        /// マスター音量�E設宁E        /// </summary>
         public void SetMasterVolume(float volume)
         {
             masterVolume = Mathf.Clamp01(volume);
@@ -330,8 +318,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// BGM音量の設定
-        /// </summary>
+        /// BGM音量�E設宁E        /// </summary>
         public void SetBGMVolume(float volume)
         {
             bgmVolume = Mathf.Clamp01(volume);
@@ -339,8 +326,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 環境音音量の設定
-        /// </summary>
+        /// 環墁E��音量�E設宁E        /// </summary>
         public void SetAmbientVolume(float volume)
         {
             ambientVolume = Mathf.Clamp01(volume);
@@ -348,8 +334,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 効果音音量の設定
-        /// </summary>
+        /// 効果音音量�E設宁E        /// </summary>
         public void SetEffectVolume(float volume)
         {
             effectVolume = Mathf.Clamp01(volume);
@@ -357,8 +342,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// ステルス音響音量の設定
-        /// </summary>
+        /// スチE��ス音響音量�E設宁E        /// </summary>
         public void SetStealthAudioVolume(float volume)
         {
             stealthAudioVolume = Mathf.Clamp01(volume);
@@ -378,8 +362,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// ステルスモードの強制設定
-        /// </summary>
+        /// スチE��スモード�E強制設宁E        /// </summary>
         public void SetStealthModeOverride(bool forceStealthMode)
         {
             if (stealthCoordinator != null)
@@ -390,8 +373,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 現在の音響状態を取得
-        /// </summary>
+        /// 現在の音響状態を取征E        /// </summary>
         public AudioSystemState GetCurrentAudioState()
         {
             return new AudioSystemState
@@ -408,7 +390,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// オーディオシステムの一時停止
+        /// オーチE��オシスチE��の一時停止
         /// </summary>
         public void PauseAllAudio()
         {
@@ -418,7 +400,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// オーディオシステムの再開
+        /// オーチE��オシスチE��の再開
         /// </summary>
         public void ResumeAllAudio()
         {
@@ -456,7 +438,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (effectManager != null)
             {
-                // 個別停止機能がないため、全て停止
+                // 個別停止機�EがなぁE��め、�Eて停止
                 effectManager.StopAllEffects();
             }
         }
@@ -470,40 +452,35 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// マスターボリュームを取得
-        /// </summary>
+        /// マスターボリュームを取征E        /// </summary>
         public float GetMasterVolume()
         {
             return masterVolume;
         }
         
         /// <summary>
-        /// BGMボリュームを取得
-        /// </summary>
+        /// BGMボリュームを取征E        /// </summary>
         public float GetBGMVolume()
         {
             return bgmVolume;
         }
         
         /// <summary>
-        /// アンビエントボリュームを取得
-        /// </summary>
+        /// アンビエント�Eリュームを取征E        /// </summary>
         public float GetAmbientVolume()
         {
             return ambientVolume;
         }
         
         /// <summary>
-        /// エフェクトボリュームを取得
-        /// </summary>
+        /// エフェクト�Eリュームを取征E        /// </summary>
         public float GetEffectVolume()
         {
             return effectVolume;
         }
         
         /// <summary>
-        /// カテゴリ別のボリュームを設定
-        /// </summary>
+        /// カチE��リ別のボリュームを設宁E        /// </summary>
         public void SetCategoryVolume(string category, float volume)
         {
             volume = Mathf.Clamp01(volume);
@@ -530,12 +507,10 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// サウンドが再生中か確認
-        /// </summary>
+        /// サウンドが再生中か確誁E        /// </summary>
         public bool IsPlaying(string soundId)
         {
-            // EffectManagerには個別の状態チェック機能がないため、仮実装
-            // TODO: 個別サウンドの再生状態トラッキング機能を追加
+            // EffectManagerには個別の状態チェチE��機�EがなぁE��め、仮実裁E            // TODO: 個別サウンド�E再生状態トラチE��ング機�Eを追加
             return false;
         }
         
@@ -583,7 +558,7 @@ namespace asterivo.Unity60.Core.Audio
 
         private void OnValidate()
         {
-            // エディタでの値変更時に音量を即座に適用
+            // エチE��タでの値変更時に音量を即座に適用
             if (Application.isPlaying && isInitialized)
             {
                 ApplyVolumeSettings();
@@ -597,7 +572,7 @@ namespace asterivo.Unity60.Core.Audio
     #region Supporting Types
 
     /// <summary>
-    /// ゲーム状態の定義
+    /// ゲーム状態�E定義
     /// </summary>
     public enum GameState
     {
@@ -613,8 +588,7 @@ namespace asterivo.Unity60.Core.Audio
     }
 
     /// <summary>
-    /// 音響システム状態の構造体
-    /// </summary>
+    /// 音響シスチE��状態�E構造佁E    /// </summary>
     [System.Serializable]
     public struct AudioSystemState
     {

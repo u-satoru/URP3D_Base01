@@ -1,15 +1,13 @@
 using UnityEngine;
-using asterivo.Unity60.Core.Debug;
+// using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Services;
-// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
+// // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// 緊急時のロールバックシステム
-    /// 移行中に問題が発生した場合の緊急対応
-    /// Step 3.10の一部として実装
-    /// </summary>
+    /// 緊急時�EロールバックシスチE��
+    /// 移行中に問題が発生した場合�E緊急対忁E    /// Step 3.10の一部として実裁E    /// </summary>
     public static class EmergencyRollback 
     {
         // 緊急ロールバック実行フラグ
@@ -18,33 +16,32 @@ namespace asterivo.Unity60.Core.Services
         private const string ROLLBACK_TIME_KEY = "EmergencyRollback_Time";
         
         /// <summary>
-        /// 起動時に緊急フラグをチェック
+        /// 起動時に緊急フラグをチェチE��
         /// </summary>
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         public static void CheckEmergencyFlag()
         {
-            // エディタ設定やコマンドライン引数でロールバックフラグを確認
-            bool emergencyFlagSet = false;
+            // エチE��タ設定やコマンドライン引数でロールバックフラグを確誁E            bool emergencyFlagSet = false;
             
             #if UNITY_EDITOR
             emergencyFlagSet = UnityEditor.EditorPrefs.GetBool("EmergencyRollback", false);
             if (emergencyFlagSet)
             {
                 ServiceLocator.GetService<IEventLogger>()?.LogWarning("[EmergencyRollback] Emergency flag detected in Editor");
-                UnityEditor.EditorPrefs.SetBool("EmergencyRollback", false); // フラグをリセット
+                UnityEditor.EditorPrefs.SetBool("EmergencyRollback", false); // フラグをリセチE��
             }
             #endif
             
-            // PlayerPrefsでも緊急フラグをチェック
+            // PlayerPrefsでも緊急フラグをチェチE��
             if (PlayerPrefs.GetInt(EMERGENCY_FLAG_KEY, 0) == 1)
             {
                 emergencyFlagSet = true;
                 ServiceLocator.GetService<IEventLogger>()?.LogWarning("[EmergencyRollback] Emergency flag detected in PlayerPrefs");
-                PlayerPrefs.SetInt(EMERGENCY_FLAG_KEY, 0); // フラグをリセット
+                PlayerPrefs.SetInt(EMERGENCY_FLAG_KEY, 0); // フラグをリセチE��
                 PlayerPrefs.Save();
             }
             
-            // コマンドライン引数でもチェック
+            // コマンドライン引数でもチェチE��
             string[] args = System.Environment.GetCommandLineArgs();
             for (int i = 0; i < args.Length; i++)
             {
@@ -63,8 +60,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 完全緊急ロールバックを実行
-        /// </summary>
+        /// 完�E緊急ロールバックを実衁E        /// </summary>
         public static void ExecuteEmergencyRollback(string reason = "Manual execution")
         {
             ServiceLocator.GetService<IEventLogger>()?.LogError($"[EMERGENCY] Executing emergency rollback: {reason}");
@@ -74,8 +70,7 @@ namespace asterivo.Unity60.Core.Services
             PlayerPrefs.SetString(ROLLBACK_REASON_KEY, reason);
             PlayerPrefs.SetString(ROLLBACK_TIME_KEY, timestamp);
             
-            // 全てのFeatureFlagを安全な状態に戻す
-            asterivo.Unity60.Core.FeatureFlags.UseServiceLocator = true;  // ServiceLocator自体は保持
+            // 全てのFeatureFlagを安�Eな状態に戻ぁE            asterivo.Unity60.Core.FeatureFlags.UseServiceLocator = true;  // ServiceLocator自体�E保持
             FeatureFlags.UseNewAudioService = false;
             FeatureFlags.UseNewSpatialService = false;  
             FeatureFlags.UseNewStealthService = false;
@@ -84,13 +79,12 @@ namespace asterivo.Unity60.Core.Services
             FeatureFlags.EnableMigrationMonitoring = false; // 監視を停止
             FeatureFlags.EnableAutoRollback = false; // 自動ロールバックを停止
             
-            // Phase 3 新機能を無効化
-            FeatureFlags.UseNewAudioService = false;
+            // Phase 3 新機�Eを無効匁E            FeatureFlags.UseNewAudioService = false;
             FeatureFlags.UseNewSpatialService = false;
             FeatureFlags.UseNewStealthService = false;
             FeatureFlags.EnablePerformanceMonitoring = false;
             
-            // 段階的移行フラグをリセット
+            // 段階的移行フラグをリセチE��
             FeatureFlags.MigrateAudioManager = false;
             FeatureFlags.MigrateSpatialAudioManager = false;
             FeatureFlags.MigrateEffectManager = false;
@@ -105,12 +99,12 @@ namespace asterivo.Unity60.Core.Services
             ServiceLocator.GetService<IEventLogger>()?.LogError($"[EMERGENCY] Rollback time: {timestamp}");
             ServiceLocator.GetService<IEventLogger>()?.LogError("EMERGENCY] Please check logs for the cause of rollback and fix issues before retrying migration.");
             
-            // SingletonDisableSchedulerもリセット
+            // SingletonDisableSchedulerもリセチE��
             ResetScheduler();
         }
         
         /// <summary>
-        /// 部分ロールバック - 特定のサービスのみロールバック
+        /// 部刁E��ールバック - 特定�Eサービスのみロールバック
         /// </summary>
         public static void RollbackSpecificService(string serviceName, string reason = "Service-specific issue")
         {
@@ -157,7 +151,7 @@ namespace asterivo.Unity60.Core.Services
                     return;
             }
             
-            // 部分ロールバック記録
+            // 部刁E��ールバック記録
             string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             string partialRollbackKey = $"PartialRollback_{serviceName}";
             PlayerPrefs.SetString(partialRollbackKey, $"{timestamp}: {reason}");
@@ -167,19 +161,16 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 復旧 - ロールバック状態から正常状態に戻す
-        /// </summary>
+        /// 復旧 - ロールバック状態から正常状態に戻ぁE        /// </summary>
         public static void RestoreFromRollback(string reason = "Manual recovery")
         {
             ServiceLocator.GetService<IEventLogger>()?.Log("[RECOVERY] Restoring from emergency rollback: {reason}");
             
-            // 段階的に復旧（安全のため）
-            FeatureFlags.UseServiceLocator = true;
+            // 段階的に復旧�E�安�Eのため�E�E            FeatureFlags.UseServiceLocator = true;
             FeatureFlags.EnableMigrationMonitoring = true;
             FeatureFlags.EnableMigrationWarnings = true;
             
-            // 新サービスを段階的に有効化
-            FeatureFlags.UseNewAudioService = true;
+            // 新サービスを段階的に有効匁E            FeatureFlags.UseNewAudioService = true;
             FeatureFlags.UseNewSpatialService = true;
             FeatureFlags.UseNewStealthService = true;
             
@@ -202,8 +193,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 緊急フラグを設定（次回起動時にロールバック実行）
-        /// </summary>
+        /// 緊急フラグを設定（次回起動時にロールバック実行！E        /// </summary>
         public static void SetEmergencyFlag(string reason = "Emergency flag set programmatically")
         {
             PlayerPrefs.SetInt(EMERGENCY_FLAG_KEY, 1);
@@ -219,7 +209,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// SingletonDisableSchedulerをリセット
+        /// SingletonDisableSchedulerをリセチE��
         /// </summary>
         private static void ResetScheduler()
         {
@@ -231,8 +221,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// ロールバック履歴を取得
-        /// </summary>
+        /// ロールバック履歴を取征E        /// </summary>
         public static RollbackHistory GetRollbackHistory()
         {
             return new RollbackHistory
@@ -245,18 +234,18 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// システム健全性チェック
+        /// シスチE��健全性チェチE��
         /// </summary>
         public static SystemHealthStatus CheckSystemHealth()
         {
             var health = new SystemHealthStatus();
             
-            // 基本的な設定の整合性チェック
+            // 基本皁E��設定�E整合性チェチE��
             health.ServiceLocatorEnabled = FeatureFlags.UseServiceLocator;
             health.SingletonsDisabled = FeatureFlags.DisableLegacySingletons;
             health.MigrationWarningsEnabled = FeatureFlags.EnableMigrationWarnings;
             
-            // 矛盾検出
+            // 矛盾検�E
             if (!FeatureFlags.UseServiceLocator && (FeatureFlags.UseNewAudioService || 
                 FeatureFlags.UseNewSpatialService || FeatureFlags.UseNewStealthService))
             {
@@ -270,8 +259,7 @@ namespace asterivo.Unity60.Core.Services
                 health.Issues.Add("Singletons are disabled but migration warnings are off");
             }
             
-            // 健全性スコア計算
-            int healthScore = 100;
+            // 健全性スコア計箁E            int healthScore = 100;
             if (health.HasInconsistentConfiguration) healthScore -= 30;
             if (!health.ServiceLocatorEnabled) healthScore -= 20;
             if (health.Issues.Count > 0) healthScore -= (health.Issues.Count * 10);
@@ -283,8 +271,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 緊急状況検出と自動対応
-        /// </summary>
+        /// 緊急状況検�Eと自動対忁E        /// </summary>
         public static void MonitorSystemHealth()
         {
             var health = CheckSystemHealth();
@@ -298,8 +285,7 @@ namespace asterivo.Unity60.Core.Services
                     ServiceLocator.GetService<IEventLogger>()?.LogWarning($"[EmergencyRollback] Health Issue: {issue}");
                 }
                 
-                // 重大な問題がある場合は自動ロールバックを検討
-                if (health.HealthScore < 30)
+                // 重大な問題がある場合�E自動ロールバックを検訁E                if (health.HealthScore < 30)
                 {
                     ServiceLocator.GetService<IEventLogger>()?.LogError("[EmergencyRollback] Critical system health detected");
                     
@@ -330,7 +316,7 @@ namespace asterivo.Unity60.Core.Services
     }
     
     /// <summary>
-    /// システム健全性ステータス
+    /// シスチE��健全性スチE�Eタス
     /// </summary>
     [System.Serializable]
     public class SystemHealthStatus

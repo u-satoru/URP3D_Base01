@@ -1,22 +1,19 @@
 using UnityEngine;
 using System.Collections.Generic;
-// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
+// // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 using System.Linq;
 
 namespace asterivo.Unity60.Core.Events
 {
     /// <summary>
-    /// パラメータなしの基本イベントチャネル
-    /// Unity 6最適化版 - 優先度付きリスナー管理対応
-    /// </summary>
+    /// パラメータなし�E基本イベントチャネル
+    /// Unity 6最適化版 - 優先度付きリスナ�E管琁E��忁E    /// </summary>
     [CreateAssetMenu(fileName = "New Game Event", menuName = "asterivo.Unity60/Events/Game Event")]
     public class GameEvent : ScriptableObject
     {
-        // リスナーのHashSetによる高速管理
-        private readonly HashSet<IGameEventListener> listeners = new HashSet<IGameEventListener>();
+        // リスナ�EのHashSetによる高速管琁E        private readonly HashSet<IGameEventListener> listeners = new HashSet<IGameEventListener>();
 
-        // 優先度ソート済みリスナーリスト（キャッシュ）
-        private List<IGameEventListener> sortedListeners;
+        // 優先度ソート済みリスナ�Eリスト（キャチE��ュ�E�E        private List<IGameEventListener> sortedListeners;
         private bool isDirty = true;
         
         #if UNITY_EDITOR
@@ -24,7 +21,7 @@ namespace asterivo.Unity60.Core.Events
         [SerializeField] private bool debugMode = false;
         [SerializeField, TextArea(3, 5)] private string eventDescription;
         
-        // エディタ用デバッグ情報
+        // エチE��タ用チE��チE��惁E��
         [Header("Runtime Info (Editor Only)")]
         [SerializeField, asterivo.Unity60.Core.Attributes.ReadOnly] private int listenerCount;
         #endif
@@ -44,19 +41,16 @@ namespace asterivo.Unity60.Core.Events
             listenerCount = listeners.Count;
             #endif
             
-            // イベントログに記録（簡略化版）
-            #if UNITY_EDITOR || DEVELOPMENT_BUILD
+            // イベントログに記録�E�簡略化版�E�E            #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"[GameEvent] {name} raised to {listeners.Count} listeners");
             #endif
             
-            // 優先度でソート（必要時のみ）
-            if (isDirty)
+            // 優先度でソート（忁E��時のみ�E�E            if (isDirty)
             {
                 RebuildSortedList();
             }
             
-            // 逆順で実行（リスナーが自身を削除しても安全）
-            for (int i = sortedListeners.Count - 1; i >= 0; i--)
+            // 送E��E��実行（リスナ�Eが�E身を削除しても安�E�E�E            for (int i = sortedListeners.Count - 1; i >= 0; i--)
             {
                 if (sortedListeners[i] != null && sortedListeners[i].enabled)
                 {
@@ -66,8 +60,7 @@ namespace asterivo.Unity60.Core.Events
         }
         
         /// <summary>
-        /// 非同期でイベントを発火（フレーム分散）
-        /// </summary>
+        /// 非同期でイベントを発火�E�フレーム刁E���E�E        /// </summary>
         public System.Collections.IEnumerator RaiseAsync()
         {
             if (isDirty)
@@ -86,7 +79,7 @@ namespace asterivo.Unity60.Core.Events
         }
 
         /// <summary>
-        /// リスナーを登録
+        /// リスナ�Eを登録
         /// </summary>
         public void RegisterListener(IGameEventListener listener)
         {
@@ -106,7 +99,7 @@ namespace asterivo.Unity60.Core.Events
         }
 
         /// <summary>
-        /// リスナーを解除
+        /// リスナ�Eを解除
         /// </summary>
         public void UnregisterListener(IGameEventListener listener)
         {
@@ -126,7 +119,7 @@ namespace asterivo.Unity60.Core.Events
         }
         
         /// <summary>
-        /// 全リスナーをクリア
+        /// 全リスナ�Eをクリア
         /// </summary>
         public void ClearAllListeners()
         {
@@ -136,13 +129,11 @@ namespace asterivo.Unity60.Core.Events
         }
         
         /// <summary>
-        /// アクティブなリスナー数を取得
-        /// </summary>
+        /// アクチE��ブなリスナ�E数を取征E        /// </summary>
         public int GetListenerCount() => listeners.Count;
         
         /// <summary>
-        /// リスナーリストを再構築
-        /// </summary>
+        /// リスナ�Eリストを再構篁E        /// </summary>
         private void RebuildSortedList()
         {
             sortedListeners = listeners
@@ -154,7 +145,7 @@ namespace asterivo.Unity60.Core.Events
         
         #if UNITY_EDITOR
         /// <summary>
-        /// エディタ用：手動でイベントを発火
+        /// エチE��タ用�E�手動でイベントを発火
         /// </summary>
         [ContextMenu("Raise Event")]
         private void RaiseManually()
@@ -163,8 +154,7 @@ namespace asterivo.Unity60.Core.Events
         }
         
         /// <summary>
-        /// 現在のリスナーをログ出力
-        /// </summary>
+        /// 現在のリスナ�Eをログ出劁E        /// </summary>
         [ContextMenu("Log All Listeners")]
         private void LogListeners()
         {
@@ -189,7 +179,7 @@ namespace asterivo.Unity60.Core.Events
     }
     
     #if UNITY_EDITOR
-    // エディタ用のReadOnly属性
+    // エチE��タ用のReadOnly属性
     namespace asterivo.Unity60.Core.Attributes
     {
         public class ReadOnlyAttribute : PropertyAttribute { }

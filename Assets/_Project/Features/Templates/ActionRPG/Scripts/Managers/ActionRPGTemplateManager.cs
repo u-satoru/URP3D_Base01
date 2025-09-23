@@ -3,10 +3,11 @@ using UnityEngine.SceneManagement;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Features.Templates.Common;
-using asterivo.Unity60.Features.ActionRPG.Data;
-using asterivo.Unity60.Features.ActionRPG.Components;
+using asterivo.Unity60.Features.Templates.ActionRPG.Data;
+using asterivo.Unity60.Features.Templates.ActionRPG.Components;
+using asterivo.Unity60.Features.ActionRPG;
 
-namespace asterivo.Unity60.Features.ActionRPG.Managers
+namespace asterivo.Unity60.Features.Templates.ActionRPG.Managers
 {
     /// <summary>
     /// ActionRPGテンプレートの管理とサンプルシーンの構築を行うマネージャー
@@ -40,12 +41,17 @@ namespace asterivo.Unity60.Features.ActionRPG.Managers
         private GameObject[] _spawnedEnemies;
         private GameObject[] _spawnedShrines;
         private ExperienceManager _experienceManager;
+        private ActionRPGManager _actionRPGManager;
 
         void Awake()
         {
-            // ServiceLocatorに自身を登録（Core層のServiceLocatorパターン活用）
-            ServiceLocator.RegisterService<ActionRPGTemplateManager>(this);
-            Debug.Log("ActionRPGTemplateManager: ServiceLocatorに登録しました");
+            // ActionRPGManagerコンポーネントを追加または取得
+            _actionRPGManager = GetComponent<ActionRPGManager>();
+            if (_actionRPGManager == null)
+            {
+                _actionRPGManager = gameObject.AddComponent<ActionRPGManager>();
+            }
+            Debug.Log("ActionRPGTemplateManager: ActionRPGManager経由でServiceLocatorパターンを活用します");
         }
 
         protected override void Start()
@@ -56,16 +62,8 @@ namespace asterivo.Unity60.Features.ActionRPG.Managers
 
         void OnDestroy()
         {
-            // ServiceLocatorから自身を解除
-            try
-            {
-                ServiceLocator.UnregisterService<ActionRPGTemplateManager>();
-                Debug.Log("ActionRPGTemplateManager: ServiceLocatorから解除しました");
-            }
-            catch (System.Exception ex)
-            {
-                Debug.LogWarning($"ServiceLocator解除時にエラー: {ex.Message}");
-            }
+            // ActionRPGManagerがクリーンアップを処理
+            Debug.Log("ActionRPGTemplateManager: 破棄処理を実行しました");
         }
 
         /// <summary>
@@ -157,6 +155,12 @@ namespace asterivo.Unity60.Features.ActionRPG.Managers
 
             _spawnedPlayer = Instantiate(_templateConfig.PlayerPrefab, spawnPosition, Quaternion.identity);
             _spawnedPlayer.name = "ARPG_Player";
+
+            // ActionRPGManagerにプレイヤーを設定
+            if (_actionRPGManager != null)
+            {
+                _actionRPGManager.SetPlayer(_spawnedPlayer);
+            }
 
             // プレイヤーにStatComponentを設定
             var statComponent = _spawnedPlayer.GetComponent<StatComponent>();
@@ -277,6 +281,9 @@ namespace asterivo.Unity60.Features.ActionRPG.Managers
                 _experienceManager = expManagerObj.AddComponent<ExperienceManager>();
                 Debug.Log("ExperienceManagerを作成しました。");
             }
+
+            // ActionRPGManagerを使用してExperienceManagerを初期化
+            // ExperienceManagerも疎結合化の対象となる可能性があります
         }
 
         /// <summary>

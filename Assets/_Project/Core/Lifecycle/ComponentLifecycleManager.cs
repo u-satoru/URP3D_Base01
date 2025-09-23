@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
+// // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 
 namespace asterivo.Unity60.Core.Lifecycle
 {
     /// <summary>
-    /// 動的に追加されるコンポーネントのライフサイクル管理
-    /// メモリリーク防止とリソース管理を行う
+    /// 動的に追加されるコンポ�Eネント�Eライフサイクル管琁E    /// メモリリーク防止とリソース管琁E��行う
     /// </summary>
     public class ComponentLifecycleManager : MonoBehaviour
     {
@@ -18,11 +17,11 @@ namespace asterivo.Unity60.Core.Lifecycle
         [SerializeField] private bool trackComponentCounts = true;
         
         /// <summary>
-        /// 動的コンポーネントを安全に追加し、ライフサイクル管理に登録
+        /// 動的コンポ�Eネントを安�Eに追加し、ライフサイクル管琁E��登録
         /// </summary>
-        /// <typeparam name="T">追加するコンポーネントの型</typeparam>
-        /// <param name="target">コンポーネントを追加する対象GameObject</param>
-        /// <returns>追加されたコンポーネント</returns>
+        /// <typeparam name="T">追加するコンポ�Eネント�E垁E/typeparam>
+        /// <param name="target">コンポ�Eネントを追加する対象GameObject</param>
+        /// <returns>追加されたコンポ�EネンチE/returns>
         public T AddManagedComponent<T>(GameObject target) where T : Component
         {
             if (target == null)
@@ -31,7 +30,7 @@ namespace asterivo.Unity60.Core.Lifecycle
                 return null;
             }
             
-            // 既存のコンポーネントをチェック
+            // 既存�Eコンポ�EネントをチェチE��
             var existingComponent = target.GetComponent<T>();
             if (existingComponent != null)
             {
@@ -40,7 +39,7 @@ namespace asterivo.Unity60.Core.Lifecycle
                 return existingComponent;
             }
             
-            // 新しいコンポーネントを追加
+            // 新しいコンポ�Eネントを追加
             var newComponent = target.AddComponent<T>();
             RegisterComponent(newComponent);
             
@@ -49,9 +48,9 @@ namespace asterivo.Unity60.Core.Lifecycle
         }
         
         /// <summary>
-        /// コンポーネントを管理下に登録
+        /// コンポ�Eネントを管琁E��に登録
         /// </summary>
-        /// <param name="component">登録するコンポーネント</param>
+        /// <param name="component">登録するコンポ�EネンチE/param>
         private void RegisterComponent(Component component)
         {
             if (component == null) return;
@@ -69,9 +68,9 @@ namespace asterivo.Unity60.Core.Lifecycle
         }
         
         /// <summary>
-        /// 管理下のコンポーネントを安全に削除
+        /// 管琁E���Eコンポ�Eネントを安�Eに削除
         /// </summary>
-        /// <param name="component">削除するコンポーネント</param>
+        /// <param name="component">削除するコンポ�EネンチE/param>
         public void RemoveManagedComponent(Component component)
         {
             if (component == null) return;
@@ -91,7 +90,7 @@ namespace asterivo.Unity60.Core.Lifecycle
                 
                 Log($"Removed managed component {component.GetType().Name}");
                 
-                if (component != null) // 削除前にnullチェック
+                if (component != null) // 削除前にnullチェチE��
                 {
                     DestroyImmediate(component);
                 }
@@ -99,9 +98,9 @@ namespace asterivo.Unity60.Core.Lifecycle
         }
         
         /// <summary>
-        /// 指定した型のコンポーネントを全て削除
+        /// 持E��した型のコンポ�Eネントを全て削除
         /// </summary>
-        /// <typeparam name="T">削除する型</typeparam>
+        /// <typeparam name="T">削除する垁E/typeparam>
         public void RemoveAllManagedComponents<T>() where T : Component
         {
             var componentsToRemove = new List<Component>();
@@ -121,14 +120,13 @@ namespace asterivo.Unity60.Core.Lifecycle
         }
         
         /// <summary>
-        /// 全ての管理下コンポーネントをクリーンアップ
+        /// 全ての管琁E��コンポ�EネントをクリーンアチE�E
         /// </summary>
         public void CleanupAllManagedComponents()
         {
             Log($"Cleaning up {managedComponents.Count} managed components");
             
-            // 逆順でクリーンアップ（依存関係を考慮）
-            for (int i = managedComponents.Count - 1; i >= 0; i--)
+            // 送E��E��クリーンアチE�E�E�依存関係を老E�E�E�E            for (int i = managedComponents.Count - 1; i >= 0; i--)
             {
                 var component = managedComponents[i];
                 if (component != null)
@@ -142,16 +140,15 @@ namespace asterivo.Unity60.Core.Lifecycle
         }
         
         /// <summary>
-        /// 現在の管理状況を取得
-        /// </summary>
-        /// <returns>管理状況の辞書</returns>
+        /// 現在の管琁E��況を取征E        /// </summary>
+        /// <returns>管琁E��況�E辞書</returns>
         public Dictionary<System.Type, int> GetManagedComponentCounts()
         {
             return new Dictionary<System.Type, int>(componentCounts);
         }
         
         /// <summary>
-        /// デバッグ情報を表示
+        /// チE��チE��惁E��を表示
         /// </summary>
         [ContextMenu("Show Debug Info")]
         public void ShowDebugInfo()

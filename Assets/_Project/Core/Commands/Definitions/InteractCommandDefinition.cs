@@ -1,30 +1,22 @@
 using UnityEngine;
-using asterivo.Unity60.Core.Commands;
+// using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// インタラクションコマンドの定義。
-    /// プレイヤーの環境オブジェクトとの相互作用をカプセル化します。
-    /// 
-    /// 主な機能：
-    /// - オブジェクトとのインタラクション（ドア、スイッチ、NPC等）
-    /// - インタラクション範囲と条件の管理
-    /// - インタラクション時のアニメーションとエフェクト
-    /// - 複数段階のインタラクション対応
-    /// </summary>
+    /// インタラクションコマンド�E定義、E    /// プレイヤーの環墁E��ブジェクトとの相互作用をカプセル化します、E    /// 
+    /// 主な機�E�E�E    /// - オブジェクトとのインタラクション�E�ドア、スイチE��、NPC等！E    /// - インタラクション篁E��と条件の管琁E    /// - インタラクション時�EアニメーションとエフェクチE    /// - 褁E��段階�Eインタラクション対忁E    /// </summary>
     [System.Serializable]
     public class InteractCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// インタラクションの種類を定義する列挙型
-        /// </summary>
+        /// インタラクションの種類を定義する列挙垁E        /// </summary>
         public enum InteractionType
         {
             Instant,        // 瞬間的なインタラクション
             Hold,           // 長押しインタラクション
-            Multi,          // 複数回インタラクション
-            Contextual,     // 文脈依存インタラクション
+            Multi,          // 褁E��回インタラクション
+            Contextual,     // 斁E��依存インタラクション
             Proximity       // 近接自動インタラクション
         }
 
@@ -35,21 +27,21 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public string targetTag = "Interactable";
 
         [Header("Hold Interaction")]
-        [Tooltip("長押しインタラクションの必要時間")]
+        [Tooltip("長押しインタラクションの忁E��時閁E)]
         public float holdDuration = 1f;
-        [Tooltip("長押し中にキャンセル可能か")]
+        [Tooltip("長押し中にキャンセル可能ぁE)]
         public bool canCancelHold = true;
 
         [Header("Multi Interaction")]
-        [Tooltip("必要なインタラクション回数")]
+        [Tooltip("忁E��なインタラクション回数")]
         public int requiredInteractions = 3;
-        [Tooltip("インタラクション間の最大間隔")]
+        [Tooltip("インタラクション間�E最大間隔")]
         public float maxInteractionInterval = 2f;
 
         [Header("Requirements")]
         public bool requiresLineOfSight = true;
         public bool requiresFacing = true;
-        [Tooltip("必要な向きの角度範囲（度）")]
+        [Tooltip("忁E��な向きの角度篁E���E�度�E�E)]
         public float facingAngle = 90f;
 
         [Header("Animation")]
@@ -60,10 +52,9 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         [Header("Effects")]
         public bool showInteractionPrompt = true;
         public string promptText = "Press E to interact";
-        public bool showProgressBar = false; // 長押し時等
-
+        public bool showProgressBar = false; // 長押し時筁E
         /// <summary>
-        /// デフォルトコンストラクタ
+        /// チE��ォルトコンストラクタ
         /// </summary>
         public InteractCommandDefinition()
         {
@@ -80,31 +71,26 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// インタラクションコマンドが実行可能かどうかを判定します
-        /// </summary>
+        /// インタラクションコマンドが実行可能かどぁE��を判定しまぁE        /// </summary>
         public bool CanExecute(object context = null)
         {
-            // 基本的な実行可能性チェック
+            // 基本皁E��実行可能性チェチE��
             if (interactionRange <= 0f) return false;
             
             if (interactionType == InteractionType.Hold && holdDuration <= 0f) return false;
             if (interactionType == InteractionType.Multi && requiredInteractions <= 0) return false;
 
-            // コンテキストがある場合の追加チェック
+            // コンチE��ストがある場合�E追加チェチE��
             if (context != null)
             {
-                // 範囲内にインタラクト可能オブジェクトがあるかチェック
-                // 視線チェック（requiresLineOfSight）
-                // 向きチェック（requiresFacing）
-                // プレイヤーの状態チェック（アニメーション中は不可等）
-            }
+                // 篁E��冁E��インタラクト可能オブジェクトがあるかチェチE��
+                // 視線チェチE���E�EequiresLineOfSight�E�E                // 向きチェチE���E�EequiresFacing�E�E                // プレイヤーの状態チェチE���E�アニメーション中は不可等！E            }
 
             return true;
         }
 
         /// <summary>
-        /// インタラクションコマンドを作成します
-        /// </summary>
+        /// インタラクションコマンドを作�EしまぁE        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
             if (!CanExecute(context))
@@ -115,8 +101,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// InteractCommandDefinitionに対応する実際のコマンド実装
-    /// </summary>
+    /// InteractCommandDefinitionに対応する実際のコマンド実裁E    /// </summary>
     public class InteractCommand : ICommand
     {
         private InteractCommandDefinition definition;
@@ -134,8 +119,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// インタラクションコマンドの実行
-        /// </summary>
+        /// インタラクションコマンド�E実衁E        /// </summary>
         public void Execute()
         {
             if (executed) return;
@@ -183,7 +167,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         {
             if (context is not MonoBehaviour mono) return null;
 
-            // 範囲内のオブジェクトを検索
+            // 篁E��冁E�Eオブジェクトを検索
             Collider[] nearbyObjects = Physics.OverlapSphere(mono.transform.position, definition.interactionRange, definition.interactableLayer);
             
             GameObject closestTarget = null;
@@ -191,20 +175,19 @@ namespace asterivo.Unity60.Core.Commands.Definitions
 
             foreach (var obj in nearbyObjects)
             {
-                // タグチェック
+                // タグチェチE��
                 if (!string.IsNullOrEmpty(definition.targetTag) && !obj.CompareTag(definition.targetTag))
                     continue;
 
-                // 視線チェック
+                // 視線チェチE��
                 if (definition.requiresLineOfSight && !HasLineOfSight(mono.transform, obj.transform))
                     continue;
 
-                // 向きチェック
+                // 向きチェチE��
                 if (definition.requiresFacing && !IsFacing(mono.transform, obj.transform))
                     continue;
 
-                // 最も近いオブジェクトを選択
-                float distance = Vector3.Distance(mono.transform.position, obj.transform.position);
+                // 最も近いオブジェクトを選抁E                float distance = Vector3.Distance(mono.transform.position, obj.transform.position);
                 if (distance < closestDistance)
                 {
                     closestDistance = distance;
@@ -216,8 +199,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 視線判定
-        /// </summary>
+        /// 視線判宁E        /// </summary>
         private bool HasLineOfSight(Transform from, Transform to)
         {
             Vector3 direction = to.position - from.position;
@@ -232,8 +214,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 向き判定
-        /// </summary>
+        /// 向き判宁E        /// </summary>
         private bool IsFacing(Transform from, Transform to)
         {
             Vector3 directionToTarget = (to.position - from.position).normalized;
@@ -242,14 +223,12 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 瞬間インタラクションの実行
-        /// </summary>
+        /// 瞬間インタラクションの実衁E        /// </summary>
         private void ExecuteInstantInteraction()
         {
             if (targetObject != null)
             {
-                // インタラクト可能コンポーネントの呼び出し
-                var interactable = targetObject.GetComponent<IInteractable>();
+                // インタラクト可能コンポ�Eネント�E呼び出ぁE                var interactable = targetObject.GetComponent<IInteractable>();
                 interactable?.OnInteract(context);
 
                 PlayInteractionAnimation();
@@ -258,22 +237,19 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 長押しインタラクションの開始
-        /// </summary>
+        /// 長押しインタラクションの開姁E        /// </summary>
         private void StartHoldInteraction()
         {
             isInteracting = true;
             interactionProgress = 0f;
 
-            // 継続的な更新処理の開始（実際の実装では Coroutine またはUpdateLoop）
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            // 継続的な更新処琁E�E開始（実際の実裁E��は Coroutine また�EUpdateLoop�E�E#if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"Started hold interaction: {definition.holdDuration}s required");
 #endif
         }
 
         /// <summary>
-        /// 複数回インタラクションの実行
-        /// </summary>
+        /// 褁E��回インタラクションの実衁E        /// </summary>
         private void ExecuteMultiInteraction()
         {
             currentInteractionCount++;
@@ -284,41 +260,35 @@ namespace asterivo.Unity60.Core.Commands.Definitions
 
             if (currentInteractionCount >= definition.requiredInteractions)
             {
-                // 必要回数に達した場合の処理
-                CompleteMultiInteraction();
+                // 忁E��回数に達した場合�E処琁E                CompleteMultiInteraction();
             }
             else
             {
-                // まだ必要回数に達していない場合のフィードバック
+                // まだ忁E��回数に達してぁE��ぁE��合�EフィードバチE��
                 ShowProgressFeedback();
             }
         }
 
         /// <summary>
-        /// 文脈依存インタラクションの実行
-        /// </summary>
+        /// 斁E��依存インタラクションの実衁E        /// </summary>
         private void ExecuteContextualInteraction()
         {
-            // 現在の状況に応じて異なる処理を実行
-            // 例：時間帯、アイテム所持状況、クエスト進行状況等
-            
+            // 現在の状況に応じて異なる�E琁E��実衁E            // 例：時間帯、アイチE��所持状況、クエスト進行状況筁E            
             var interactable = targetObject?.GetComponent<IContextualInteractable>();
             interactable?.OnContextualInteract(context, GetCurrentContext());
         }
 
         /// <summary>
-        /// 近接自動インタラクションの実行
-        /// </summary>
+        /// 近接自動インタラクションの実衁E        /// </summary>
         private void ExecuteProximityInteraction()
         {
-            // プレイヤーが範囲内にいる間、自動的に継続されるインタラクション
+            // プレイヤーが篁E��冁E��ぁE��間、�E動的に継続されるインタラクション
             var interactable = targetObject?.GetComponent<IProximityInteractable>();
             interactable?.OnProximityInteract(context);
         }
 
         /// <summary>
-        /// 複数回インタラクションの完了処理
-        /// </summary>
+        /// 褁E��回インタラクションの完亁E�E琁E        /// </summary>
         private void CompleteMultiInteraction()
         {
             var interactable = targetObject?.GetComponent<IInteractable>();
@@ -329,8 +299,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 長押しインタラクションの更新（外部から定期的に呼び出される）
-        /// </summary>
+        /// 長押しインタラクションの更新�E�外部から定期皁E��呼び出される！E        /// </summary>
         public void UpdateHoldInteraction(float deltaTime)
         {
             if (!isInteracting || definition.interactionType != InteractCommandDefinition.InteractionType.Hold)
@@ -338,14 +307,13 @@ namespace asterivo.Unity60.Core.Commands.Definitions
 
             interactionProgress += deltaTime;
 
-            // プログレスバーの更新
+            // プログレスバ�Eの更新
             if (definition.showProgressBar)
             {
                 float progress = interactionProgress / definition.holdDuration;
-                // UI更新処理
-            }
+                // UI更新処琁E            }
 
-            // 完了チェック
+            // 完亁E��ェチE��
             if (interactionProgress >= definition.holdDuration)
             {
                 CompleteHoldInteraction();
@@ -353,8 +321,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 長押しインタラクションの完了
-        /// </summary>
+        /// 長押しインタラクションの完亁E        /// </summary>
         private void CompleteHoldInteraction()
         {
             isInteracting = false;
@@ -381,13 +348,11 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// インタラクションエフェクトの表示
+        /// インタラクションエフェクト�E表示
         /// </summary>
         private void ShowInteractionEffect()
         {
-            // パーティクルエフェクト
-            // サウンドエフェクト
-            // UIフィードバック
+            // パ�EチE��クルエフェクチE            // サウンドエフェクチE            // UIフィードバチE��
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log("Showing interaction effect");
@@ -395,20 +360,19 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 進行状況フィードバックの表示
+        /// 進行状況フィードバチE��の表示
         /// </summary>
         private void ShowProgressFeedback()
         {
-            // 進行状況のUI表示
-            // サウンドフィードバック
+            // 進行状況�EUI表示
+            // サウンドフィードバチE��
         }
 
         /// <summary>
-        /// 現在のコンテキスト情報を取得
-        /// </summary>
+        /// 現在のコンチE��スト情報を取征E        /// </summary>
         private object GetCurrentContext()
         {
-            // 時間帯、所持アイテム、クエスト状況等を含むコンテキスト情報を返す
+            // 時間帯、所持アイチE��、クエスト状況等を含むコンチE��スト情報を返す
             return new { TimeOfDay = "Day", HasKey = false };
         }
 
@@ -429,14 +393,12 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Undo操作（インタラクションの取り消し）
-        /// </summary>
+        /// Undo操作（インタラクションの取り消し�E�E        /// </summary>
         public void Undo()
         {
             if (!executed) return;
 
-            // インタラクションの逆操作（可能な場合）
-            var interactable = targetObject?.GetComponent<IUndoableInteractable>();
+            // インタラクションの送E��作（可能な場合！E            var interactable = targetObject?.GetComponent<IUndoableInteractable>();
             interactable?.OnUndoInteract(context);
 
             // 進行中のインタラクションをキャンセル
@@ -450,18 +412,18 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// このコマンドがUndo可能かどうか
+        /// こ�EコマンドがUndo可能かどぁE��
         /// </summary>
         public bool CanUndo => executed && targetObject?.GetComponent<IUndoableInteractable>() != null;
 
         /// <summary>
-        /// 現在インタラクション中かどうか
+        /// 現在インタラクション中かどぁE��
         /// </summary>
         public bool IsInteracting => isInteracting;
     }
 
     /// <summary>
-    /// 基本的なインタラクト可能オブジェクトのインターフェース
+    /// 基本皁E��インタラクト可能オブジェクト�Eインターフェース
     /// </summary>
     public interface IInteractable
     {
@@ -469,7 +431,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// 文脈依存インタラクト可能オブジェクトのインターフェース
+    /// 斁E��依存インタラクト可能オブジェクト�Eインターフェース
     /// </summary>
     public interface IContextualInteractable
     {
@@ -477,7 +439,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// 近接自動インタラクト可能オブジェクトのインターフェース
+    /// 近接自動インタラクト可能オブジェクト�Eインターフェース
     /// </summary>
     public interface IProximityInteractable
     {
@@ -485,7 +447,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// Undo可能インタラクト可能オブジェクトのインターフェース
+    /// Undo可能インタラクト可能オブジェクト�Eインターフェース
     /// </summary>
     public interface IUndoableInteractable
     {

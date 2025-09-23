@@ -7,14 +7,14 @@ using UnityEditor;
 using UnityEditor.Build;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Core.Commands;
+// using asterivo.Unity60.Core.Commands;
 using Debug = UnityEngine.Debug;
 
 
 namespace asterivo.Unity60.Core.Editor.Documentation
 {
     /// <summary>
-    /// プロジェクトドキュメントを自動生成するエディタツール
+    /// プロジェクトドキュメントを自動生成するエチE��タチE�Eル
     /// </summary>
     public static class DocumentationGenerator
     {
@@ -31,7 +31,7 @@ namespace asterivo.Unity60.Core.Editor.Documentation
             GenerateSetupValidationReport();
             
             AssetDatabase.Refresh();
-            UnityEngine.Debug.Log("✅ All documentation generated successfully!");
+            UnityEngine.Debug.Log("✁EAll documentation generated successfully!");
         }
 
         [MenuItem("Project/Documentation/1. Generate Event Flow Diagram")]
@@ -42,8 +42,7 @@ namespace asterivo.Unity60.Core.Editor.Documentation
             sb.AppendLine($"*Generated on: {System.DateTime.Now:yyyy-MM-dd HH:mm:ss}*");
             sb.AppendLine();
             
-            // イベント一覧を取得
-            var eventTypes = GetEventTypes();
+            // イベント一覧を取征E            var eventTypes = GetEventTypes();
             
             sb.AppendLine("## Event Types Overview");
             sb.AppendLine();
@@ -54,14 +53,12 @@ namespace asterivo.Unity60.Core.Editor.Documentation
                 sb.AppendLine($"- **Namespace**: `{eventType.Namespace}`");
                 sb.AppendLine($"- **Assembly**: `{eventType.Assembly.GetName().Name}`");
                 
-                // 継承関係
-                if (eventType.BaseType != null && eventType.BaseType != typeof(object))
+                // 継承関俁E                if (eventType.BaseType != null && eventType.BaseType != typeof(object))
                 {
                     sb.AppendLine($"- **Inherits**: `{eventType.BaseType.Name}`");
                 }
                 
-                // ジェネリック型の場合
-                if (eventType.IsGenericType)
+                // ジェネリチE��型�E場吁E                if (eventType.IsGenericType)
                 {
                     var genericArgs = eventType.GetGenericArguments();
                     sb.AppendLine($"- **Generic Args**: `{string.Join(", ", genericArgs.Select(t => t.Name))}`");
@@ -70,8 +67,7 @@ namespace asterivo.Unity60.Core.Editor.Documentation
                 sb.AppendLine();
             }
             
-            // Mermaid図式生成
-            sb.AppendLine("## Event Flow Mermaid Diagram");
+            // Mermaid図式生戁E            sb.AppendLine("## Event Flow Mermaid Diagram");
             sb.AppendLine();
             sb.AppendLine("```mermaid");
             sb.AppendLine("graph TD");
@@ -90,7 +86,7 @@ namespace asterivo.Unity60.Core.Editor.Documentation
             sb.AppendLine("```");
             
             WriteToFile("EventFlowDiagram.md", sb.ToString());
-            UnityEngine.Debug.Log("✅ Event Flow Diagram generated");
+            UnityEngine.Debug.Log("✁EEvent Flow Diagram generated");
         }
 
         [MenuItem("Project/Documentation/2. Generate Command List Documentation")]
@@ -101,8 +97,7 @@ namespace asterivo.Unity60.Core.Editor.Documentation
             sb.AppendLine($"*Generated on: {System.DateTime.Now:yyyy-MM-dd HH:mm:ss}*");
             sb.AppendLine();
             
-            // Command Definition一覧を取得
-            var commandTypes = GetCommandDefinitionTypes();
+            // Command Definition一覧を取征E            var commandTypes = GetCommandDefinitionTypes();
             
             sb.AppendLine("## Command Categories");
             sb.AppendLine();
@@ -118,15 +113,14 @@ namespace asterivo.Unity60.Core.Editor.Documentation
                 {
                     sb.AppendLine($"#### {commandType.Name}");
                     
-                    // XMLドキュメントから説明を取得（簡易版）
-                    var summaryAttribute = commandType.GetCustomAttribute<System.ComponentModel.DescriptionAttribute>();
+                    // XMLドキュメントから説明を取得（簡易版�E�E                    var summaryAttribute = commandType.GetCustomAttribute<System.ComponentModel.DescriptionAttribute>();
                     if (summaryAttribute != null)
                     {
                         sb.AppendLine($"**Description**: {summaryAttribute.Description}");
                         sb.AppendLine();
                     }
                     
-                    // パブリックフィールドとプロパティ
+                    // パブリチE��フィールドとプロパティ
                     var fields = commandType.GetFields(BindingFlags.Public | BindingFlags.Instance);
                     var properties = commandType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
                     
@@ -150,7 +144,7 @@ namespace asterivo.Unity60.Core.Editor.Documentation
                         sb.AppendLine();
                     }
                     
-                    // メソッド情報
+                    // メソチE��惁E��
                     var methods = commandType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
                     if (methods.Length > 0)
                     {
@@ -167,7 +161,7 @@ namespace asterivo.Unity60.Core.Editor.Documentation
             }
             
             WriteToFile("CommandListDocumentation.md", sb.ToString());
-            UnityEngine.Debug.Log("✅ Command List Documentation generated");
+            UnityEngine.Debug.Log("✁ECommand List Documentation generated");
         }
 
         [MenuItem("Project/Documentation/3. Generate Component Dependency Graph")]
@@ -178,7 +172,7 @@ namespace asterivo.Unity60.Core.Editor.Documentation
             sb.AppendLine($"*Generated on: {System.DateTime.Now:yyyy-MM-dd HH:mm:ss}*");
             sb.AppendLine();
             
-            // MonoBehaviourクラスの依存関係を分析
+            // MonoBehaviourクラスの依存関係を刁E��
             var monoBehaviourTypes = GetMonoBehaviourTypes();
             
             sb.AppendLine("## Core Components");
@@ -189,7 +183,7 @@ namespace asterivo.Unity60.Core.Editor.Documentation
                 sb.AppendLine($"### {type.Name}");
                 sb.AppendLine($"- **Namespace**: `{type.Namespace}`");
                 
-                // RequireComponent属性をチェック
+                // RequireComponent属性をチェチE��
                 var requireAttributes = type.GetCustomAttributes<RequireComponent>();
                 if (requireAttributes.Any())
                 {
@@ -202,8 +196,7 @@ namespace asterivo.Unity60.Core.Editor.Documentation
                     }
                 }
                 
-                // フィールドの依存関係
-                var componentFields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+                // フィールド�E依存関俁E                var componentFields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
                     .Where(f => typeof(Component).IsAssignableFrom(f.FieldType))
                     .ToList();
                 
@@ -244,7 +237,7 @@ namespace asterivo.Unity60.Core.Editor.Documentation
             }
             
             WriteToFile("ComponentDependencyGraph.md", sb.ToString());
-            UnityEngine.Debug.Log("✅ Component Dependency Graph generated");
+            UnityEngine.Debug.Log("✁EComponent Dependency Graph generated");
         }
 
         [MenuItem("Project/Documentation/4. Generate Setup Validation Report")]
@@ -262,7 +255,7 @@ namespace asterivo.Unity60.Core.Editor.Documentation
             sb.AppendLine("## Project Structure Validation");
             sb.AppendLine();
             
-            // 必要なフォルダの検証
+            // 忁E��なフォルダの検証
             string[] requiredFolders = {
                 "Assets/_Project/Core",
                 "Assets/_Project/Features",
@@ -279,18 +272,18 @@ namespace asterivo.Unity60.Core.Editor.Documentation
                 bool exists = AssetDatabase.IsValidFolder(folder);
                 if (exists)
                 {
-                    sb.AppendLine($"✅ `{folder}`");
+                    sb.AppendLine($"✁E`{folder}`");
                     successes++;
                 }
                 else
                 {
-                    sb.AppendLine($"❌ `{folder}` - Missing");
+                    sb.AppendLine($"❁E`{folder}` - Missing");
                     issues++;
                 }
             }
             sb.AppendLine();
             
-            // 必要なプリファブの検証
+            // 忁E��なプリファブ�E検証
             sb.AppendLine("### Required Prefabs");
             string[] requiredPrefabs = { "DefaultPlayer", "GameManager", "UICanvas", "AudioManager", "DefaultGround", "DefaultCamera", "DefaultLighting", "SpawnPoint" };
             
@@ -300,12 +293,12 @@ namespace asterivo.Unity60.Core.Editor.Documentation
                 if (guids.Length > 0)
                 {
                     string path = AssetDatabase.GUIDToAssetPath(guids[0]);
-                    sb.AppendLine($"✅ `{prefabName}.prefab` - Found at `{path}`");
+                    sb.AppendLine($"✁E`{prefabName}.prefab` - Found at `{path}`");
                     successes++;
                 }
                 else
                 {
-                    sb.AppendLine($"⚠️ `{prefabName}.prefab` - Not found");
+                    sb.AppendLine($"⚠�E�E`{prefabName}.prefab` - Not found");
                     warnings++;
                 }
             }
@@ -321,21 +314,21 @@ namespace asterivo.Unity60.Core.Editor.Documentation
                 if (guids.Length > 0)
                 {
                     string path = AssetDatabase.GUIDToAssetPath(guids[0]);
-                    sb.AppendLine($"✅ `{commandName}.cs` - Found at `{path}`");
+                    sb.AppendLine($"✁E`{commandName}.cs` - Found at `{path}`");
                     successes++;
                 }
                 else
                 {
-                    sb.AppendLine($"❌ `{commandName}.cs` - Missing");
+                    sb.AppendLine($"❁E`{commandName}.cs` - Missing");
                     issues++;
                 }
             }
             sb.AppendLine();
             
-            // プロジェクト設定の検証
+            // プロジェクト設定�E検証
             sb.AppendLine("### Project Settings");
             
-            sb.AppendLine($"- **Color Space**: {PlayerSettings.colorSpace} {(PlayerSettings.colorSpace == ColorSpace.Linear ? "✅" : "⚠️ (Recommended: Linear)")}");
+            sb.AppendLine($"- **Color Space**: {PlayerSettings.colorSpace} {(PlayerSettings.colorSpace == ColorSpace.Linear ? "✁E : "⚠�E�E(Recommended: Linear)")}");
 
 // Unity 6 compatible approach with NamedBuildTarget
             var namedBuildTarget = NamedBuildTarget.FromBuildTargetGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
@@ -349,9 +342,9 @@ namespace asterivo.Unity60.Core.Editor.Documentation
             // サマリー
             sb.AppendLine("## Validation Summary");
             sb.AppendLine();
-            sb.AppendLine($"- ✅ **Successes**: {successes}");
-            sb.AppendLine($"- ⚠️ **Warnings**: {warnings}");
-            sb.AppendLine($"- ❌ **Issues**: {issues}");
+            sb.AppendLine($"- ✁E**Successes**: {successes}");
+            sb.AppendLine($"- ⚠�E�E**Warnings**: {warnings}");
+            sb.AppendLine($"- ❁E**Issues**: {issues}");
             sb.AppendLine();
             
             if (issues == 0 && warnings == 0)
@@ -364,14 +357,14 @@ namespace asterivo.Unity60.Core.Editor.Documentation
             }
             else
             {
-                sb.AppendLine("⚠️ **Project setup has issues that need attention.**");
+                sb.AppendLine("⚠�E�E**Project setup has issues that need attention.**");
             }
             
             WriteToFile("SetupValidationReport.md", sb.ToString());
-            UnityEngine.Debug.Log($"✅ Setup Validation Report generated - {successes} successes, {warnings} warnings, {issues} issues");
+            UnityEngine.Debug.Log($"✁ESetup Validation Report generated - {successes} successes, {warnings} warnings, {issues} issues");
         }
 
-        // ヘルパーメソッド
+        // ヘルパ�EメソチE��
         private static void EnsureOutputDirectoryExists()
         {
             if (!AssetDatabase.IsValidFolder("Assets/_Project"))

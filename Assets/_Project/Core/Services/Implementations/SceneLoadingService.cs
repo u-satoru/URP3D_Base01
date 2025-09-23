@@ -1,19 +1,18 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Audio; // GameState enum用
-using asterivo.Unity60.Core.Lifecycle;
+// using asterivo.Unity60.Core.Lifecycle;
 
 namespace asterivo.Unity60.Core
 {
     /// <summary>
-    /// GameManagerのシーンロード処理を委譲するサービス実装
-    /// </summary>
+    /// GameManagerのシーンロード�E琁E��委譲するサービス実裁E    /// </summary>
     public class SceneLoadingService : MonoBehaviour, ISceneLoadingService, IServiceLocatorRegistrable
     {
         [Header("Scenes")] [SerializeField] private string gameplaySceneName = "Gameplay";
         [Header("Settings")] [SerializeField] private float minLoadingTime = 1f;
         [Header("Runtime")] [SerializeField] private bool isTransitioning = false;
-        // GameManager reference removed - Core層からFeatures層への参照禁止
+        // GameManager reference removed - Core層からFeatures層への参�E禁止
         [SerializeField] private int priority = 60;
 
         public int Priority => priority;

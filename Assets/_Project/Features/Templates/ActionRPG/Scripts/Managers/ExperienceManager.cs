@@ -1,9 +1,10 @@
 using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Features.ActionRPG.Components;
+using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Features.Templates.ActionRPG.Components;
 
-namespace asterivo.Unity60.Features.ActionRPG.Managers
+namespace asterivo.Unity60.Features.Templates.ActionRPG.Managers
 {
     /// <summary>
     /// 経験値とルーン収集を管理するマネージャー
@@ -54,14 +55,13 @@ namespace asterivo.Unity60.Features.ActionRPG.Managers
         /// </summary>
         private void InitializeManager()
         {
-            // ServiceLocatorを使用してプレイヤーサービスを取得
+            // ServiceLocatorを使用してActionRPGサービスを取得
             try
             {
-                // ActionRPGTemplateManagerがプレイヤーを管理している場合はそれを利用
-                var templateManager = ServiceLocator.GetService<ActionRPGTemplateManager>();
-                if (templateManager != null)
+                // IActionRPGService経由でプレイヤーを取得
+                if (ServiceLocator.TryGet<IActionRPGService>(out var actionRPGService))
                 {
-                    var player = templateManager.GetPlayer();
+                    var player = actionRPGService.GetPlayerGameObject();
                     if (player != null)
                     {
                         _playerStatComponent = player.GetComponent<StatComponent>();
@@ -77,7 +77,7 @@ namespace asterivo.Unity60.Features.ActionRPG.Managers
                 if (_playerStatComponent != null)
                 {
                     _isInitialized = true;
-                    Debug.Log("ExperienceManager: ServiceLocator経由で初期化完了");
+                    Debug.Log("ExperienceManager: ActionRPGサービス経由で初期化完了");
                 }
                 else
                 {
@@ -85,9 +85,12 @@ namespace asterivo.Unity60.Features.ActionRPG.Managers
                     Invoke(nameof(InitializeManager), 1f);
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                // ServiceLocatorにActionRPGTemplateManagerが登録されていない場合のフォールバック
+                // エラー処理
+                Debug.LogWarning($"ExperienceManager: 初期化エラー: {ex.Message}");
+
+                // フォールバック：直接StatComponentを検索
                 _playerStatComponent = FindObjectOfType<StatComponent>();
                 if (_playerStatComponent != null)
                 {

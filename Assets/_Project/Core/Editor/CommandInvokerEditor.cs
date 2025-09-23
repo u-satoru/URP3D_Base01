@@ -1,31 +1,24 @@
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
-using asterivo.Unity60.Core.Commands;
-using asterivo.Unity60.Core.Components;
+// using asterivo.Unity60.Core.Commands;
+// using asterivo.Unity60.Core.Components;
 using asterivo.Unity60.Core.Constants;
 
-using asterivo.Unity60.Core.Components;
+// using asterivo.Unity60.Core.Components;
 
 namespace asterivo.Unity60.Core.Editor
 {
     /// <summary>
-    /// CommandInvoker用カスタムエディタ
-    /// コマンドパターンの実行履歴とUndo/Redo機能をInspectorで視覚化・制御
+    /// CommandInvoker用カスタムエチE��タ
+    /// コマンドパターンの実行履歴とUndo/Redo機�EをInspectorで視覚化・制御
     /// 
-    /// 主な機能：
-    /// - プレイモード中のUndo/Redoスタック状態表示
-    /// - 手動でのUndo/Redo実行
-    /// - コマンド履歴の視覚化
-    /// - テスト用コマンドの実行（Heal/Damage）
-    /// - 設定検証とエラー表示
+    /// 主な機�E�E�E    /// - プレイモード中のUndo/RedoスタチE��状態表示
+    /// - 手動でのUndo/Redo実衁E    /// - コマンド履歴の視覚化
+    /// - チE��ト用コマンド�E実行！Eeal/Damage�E�E    /// - 設定検証とエラー表示
     /// 
-    /// 使用シーン：
-    /// - コマンド実行システムのデバッグ
-    /// - ゲームプレイ中のコマンド履歴確認
-    /// - Undo/Redo機能のテスト
-    /// - 設定ミスの早期発見
-    /// </summary>
+    /// 使用シーン�E�E    /// - コマンド実行シスチE��のチE��チE��
+    /// - ゲームプレイ中のコマンド履歴確誁E    /// - Undo/Redo機�EのチE��チE    /// - 設定ミスの早期発要E    /// </summary>
     [CustomEditor(typeof(CommandInvoker))]
     public class CommandInvokerEditor : UnityEditor.Editor
     {
@@ -33,22 +26,18 @@ namespace asterivo.Unity60.Core.Editor
         private bool showCommandDetails = false;
         
         /// <summary>
-        /// エディターが有効になった時の初期化処理
-        /// 対象のCommandInvokerコンポーネントの参照を取得
-        /// </summary>
+        /// エチE��ターが有効になった時の初期化�E琁E        /// 対象のCommandInvokerコンポ�Eネント�E参�Eを取征E        /// </summary>
         void OnEnable()
         {
             invoker = (CommandInvoker)target;
         }
         
         /// <summary>
-        /// Inspector GUIの描画処理
-        /// デフォルトのInspectorに加えて、カスタムデバッグ機能を追加表示
-        /// プレイモード中とエディットモード中で異なるUIを提供
-        /// </summary>
+        /// Inspector GUIの描画処琁E        /// チE��ォルト�EInspectorに加えて、カスタムチE��チE��機�Eを追加表示
+        /// プレイモード中とエチE��チE��モード中で異なるUIを提侁E        /// </summary>
         /// <remarks>
-        /// プレイモード中：コマンド履歴とUndo/Redo操作のインターフェース
-        /// エディットモード中：設定検証とエラーチェック機能
+        /// プレイモード中�E�コマンド履歴とUndo/Redo操作�Eインターフェース
+        /// エチE��チE��モード中�E�設定検証とエラーチェチE��機�E
         /// </remarks>
         public override void OnInspectorGUI()
         {
@@ -69,14 +58,11 @@ namespace asterivo.Unity60.Core.Editor
         
         /// <summary>
         /// プレイモード中のインターフェース描画
-        /// Undo/Redoスタックの状態表示、操作ボタン、コマンド履歴の視覚化を含む
+        /// Undo/RedoスタチE��の状態表示、操作�Eタン、コマンド履歴の視覚化を含む
         /// </summary>
         /// <remarks>
-        /// 以下の要素で構成：
-        /// - Undo/Redoスタックのカウント表示
-        /// - Undo/Redo/履歴クリアボタン（状態に応じて有効/無効化）
-        /// - コマンド詳細表示の切り替え
-        /// - テストコマンドの実行ボタン
+        /// 以下�E要素で構�E�E�E        /// - Undo/RedoスタチE��のカウント表示
+        /// - Undo/Redo/履歴クリアボタン�E�状態に応じて有効/無効化！E        /// - コマンド詳細表示の刁E��替ぁE        /// - チE��トコマンド�E実行�Eタン
         /// </remarks>
         private void DrawPlayModeInterface()
         {
@@ -90,19 +76,19 @@ namespace asterivo.Unity60.Core.Editor
             EditorGUILayout.BeginHorizontal();
             
             GUI.enabled = invoker.CanUndo;
-            if (GUILayout.Button("⬅️ Undo"))
+            if (GUILayout.Button("⬁E��EUndo"))
             {
                 invoker.Undo();
             }
             
             GUI.enabled = invoker.CanRedo;
-            if (GUILayout.Button("➡️ Redo"))
+            if (GUILayout.Button("➡�E�ERedo"))
             {
                 invoker.Redo();
             }
             
             GUI.enabled = invoker.UndoStackCount > 0 || invoker.RedoStackCount > 0;
-            if (GUILayout.Button("🗑️ Clear History"))
+            if (GUILayout.Button("🗑�E�EClear History"))
             {
                 invoker.ClearHistory();
             }
@@ -125,15 +111,11 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// エディットモード中のインターフェース描画
-        /// コンポーネントの設定検証とエラー表示を行う
+        /// エチE��チE��モード中のインターフェース描画
+        /// コンポ�Eネント�E設定検証とエラー表示を行う
         /// </summary>
         /// <remarks>
-        /// 検証項目：
-        /// - onCommandReceived イベントの設定
-        /// - onUndoStateChanged イベントの設定
-        /// - onRedoStateChanged イベントの設定
-        /// - playerHealthComponent の設定とIHealthTarget実装チェック
+        /// 検証頁E���E�E        /// - onCommandReceived イベント�E設宁E        /// - onUndoStateChanged イベント�E設宁E        /// - onRedoStateChanged イベント�E設宁E        /// - playerHealthComponent の設定とIHealthTarget実裁E��ェチE��
         /// </remarks>
         private void DrawEditModeInterface()
         {
@@ -151,22 +133,22 @@ namespace asterivo.Unity60.Core.Editor
             // Check for missing references
             if (onCommandReceived.objectReferenceValue == null)
             {
-                EditorGUILayout.HelpBox("⚠️ No Command Event assigned", MessageType.Warning);
+                EditorGUILayout.HelpBox("⚠�E�ENo Command Event assigned", MessageType.Warning);
             }
             
             if (onUndoStateChanged.objectReferenceValue == null)
             {
-                EditorGUILayout.HelpBox("⚠️ No Undo State Event assigned", MessageType.Warning);
+                EditorGUILayout.HelpBox("⚠�E�ENo Undo State Event assigned", MessageType.Warning);
             }
             
             if (onRedoStateChanged.objectReferenceValue == null)
             {
-                EditorGUILayout.HelpBox("⚠️ No Redo State Event assigned", MessageType.Warning);
+                EditorGUILayout.HelpBox("⚠�E�ENo Redo State Event assigned", MessageType.Warning);
             }
             
             if (playerHealthComponent.objectReferenceValue == null)
             {
-                EditorGUILayout.HelpBox("⚠️ No Player Health Component assigned", MessageType.Warning);
+                EditorGUILayout.HelpBox("⚠�E�ENo Player Health Component assigned", MessageType.Warning);
             }
             else
             {
@@ -177,27 +159,22 @@ namespace asterivo.Unity60.Core.Editor
                     var healthTarget = component.GetComponent<IHealthTarget>();
                     if (healthTarget == null)
                     {
-                        EditorGUILayout.HelpBox("⚠️ Assigned component doesn't implement IHealthTarget", MessageType.Error);
+                        EditorGUILayout.HelpBox("⚠�E�EAssigned component doesn't implement IHealthTarget", MessageType.Error);
                     }
                     else
                     {
-                        EditorGUILayout.HelpBox("✅ Configuration valid", MessageType.Info);
+                        EditorGUILayout.HelpBox("✁EConfiguration valid", MessageType.Info);
                     }
                 }
             }
         }
         
         /// <summary>
-        /// コマンド履歴スタックの視覚化表示
-        /// Undo/Redoスタックの内容を階層構造で表示し、現在位置を示す
-        /// </summary>
+        /// コマンド履歴スタチE��の視覚化表示
+        /// Undo/RedoスタチE��の冁E��を階層構造で表示し、現在位置を示ぁE        /// </summary>
         /// <remarks>
-        /// 表示形式：
-        /// - Redoスタック（上から順に表示）
-        /// - 現在位置マーカー（━━━ CURRENT ━━━）
-        /// - Undoスタック（上から順に表示）
-        /// 
-        /// スタックが空の場合は "No commands in history" を表示
+        /// 表示形式！E        /// - RedoスタチE���E�上から頁E��表示�E�E        /// - 現在位置マ�Eカー�E�━━━ CURRENT ━━━E��E        /// - UndoスタチE���E�上から頁E��表示�E�E        /// 
+        /// スタチE��が空の場合�E "No commands in history" を表示
         /// </remarks>
         private void DrawCommandHistory()
         {
@@ -227,7 +204,7 @@ namespace asterivo.Unity60.Core.Editor
             }
             
             // Current position marker
-            EditorGUILayout.LabelField("━━━ CURRENT ━━━", EditorStyles.centeredGreyMiniLabel);
+            EditorGUILayout.LabelField("━━━ECURRENT ━━━E, EditorStyles.centeredGreyMiniLabel);
             
             // Undo Stack visualization (top to bottom)
             if (invoker.UndoStackCount > 0)
@@ -236,7 +213,7 @@ namespace asterivo.Unity60.Core.Editor
                 EditorGUI.indentLevel++;
                 for (int i = 0; i < invoker.UndoStackCount; i++)
                 {
-                    EditorGUILayout.LabelField($"↩️ Command #{invoker.UndoStackCount - i}", EditorStyles.miniLabel);
+                    EditorGUILayout.LabelField($"↩�E�ECommand #{invoker.UndoStackCount - i}", EditorStyles.miniLabel);
                 }
                 EditorGUI.indentLevel--;
             }
@@ -245,16 +222,13 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// テスト用コマンドの実行インターフェース描画
-        /// プレイモード中のみ利用可能で、Heal/Damageコマンドをテスト実行できる
+        /// チE��ト用コマンド�E実行インターフェース描画
+        /// プレイモード中のみ利用可能で、Heal/DamageコマンドをチE��ト実行できる
         /// </summary>
         /// <remarks>
-        /// テストコマンド：
-        /// - Heal 10/25: 指定量のヘルスを回復
-        /// - Damage 10/25: 指定量のダメージを与える
-        /// 
-        /// IHealthTargetを実装したコンポーネントが必要
-        /// </remarks>
+        /// チE��トコマンド！E        /// - Heal 10/25: 持E��量のヘルスを回復
+        /// - Damage 10/25: 持E��量のダメージを与えめE        /// 
+        /// IHealthTargetを実裁E��たコンポ�Eネントが忁E��E        /// </remarks>
         private void DrawTestCommands()
         {
             if (!Application.isPlaying)
@@ -266,7 +240,7 @@ namespace asterivo.Unity60.Core.Editor
             EditorGUILayout.BeginVertical("box");
             
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button($"❤️ Test Heal ({GameConstants.TEST_HEAL_SMALL})"))
+            if (GUILayout.Button($"❤�E�ETest Heal ({GameConstants.TEST_HEAL_SMALL})"))
             {
                 TestHealCommand(GameConstants.TEST_HEAL_SMALL);
             }
@@ -278,7 +252,7 @@ namespace asterivo.Unity60.Core.Editor
             EditorGUILayout.EndHorizontal();
             
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button($"❤️ Test Heal ({GameConstants.TEST_HEAL_LARGE})"))
+            if (GUILayout.Button($"❤�E�ETest Heal ({GameConstants.TEST_HEAL_LARGE})"))
             {
                 TestHealCommand(GameConstants.TEST_HEAL_LARGE);
             }
@@ -293,19 +267,12 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// テスト用ヒールコマンドの実行
-        /// 指定した量のヘルス回復コマンドを作成・実行し、Undo履歴に追加
+        /// チE��ト用ヒ�Eルコマンド�E実衁E        /// 持E��した量のヘルス回復コマンドを作�E・実行し、Undo履歴に追加
         /// </summary>
-        /// <param name="amount">回復するヘルス量</param>
+        /// <param name="amount">回復するヘルス釁E/param>
         /// <remarks>
-        /// IHealthTargetの検索順序：
-        /// 1. CommandInvoker自身のコンポーネント
-        /// 2. playerHealthComponentに設定されたコンポーネント
-        /// 
-        /// エラー処理：
-        /// - IHealthTargetが見つからない場合は警告ログ出力
-        /// - 例外発生時はエラーログ出力
-        /// </remarks>
+        /// IHealthTargetの検索頁E��！E        /// 1. CommandInvoker自身のコンポ�EネンチE        /// 2. playerHealthComponentに設定されたコンポ�EネンチE        /// 
+        /// エラー処琁E��E        /// - IHealthTargetが見つからなぁE��合�E警告ログ出劁E        /// - 例外発生時はエラーログ出劁E        /// </remarks>
         private void TestHealCommand(int amount)
         {
             try
@@ -339,19 +306,12 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// テスト用ダメージコマンドの実行
-        /// 指定した量のダメージコマンドを作成・実行し、Undo履歴に追加
+        /// チE��ト用ダメージコマンド�E実衁E        /// 持E��した量のダメージコマンドを作�E・実行し、Undo履歴に追加
         /// </summary>
-        /// <param name="amount">与えるダメージ量</param>
+        /// <param name="amount">与えるダメージ釁E/param>
         /// <remarks>
-        /// IHealthTargetの検索順序：
-        /// 1. CommandInvoker自身のコンポーネント
-        /// 2. playerHealthComponentに設定されたコンポーネント
-        /// 
-        /// エラー処理：
-        /// - IHealthTargetが見つからない場合は警告ログ出力
-        /// - 例外発生時はエラーログ出力
-        /// </remarks>
+        /// IHealthTargetの検索頁E��！E        /// 1. CommandInvoker自身のコンポ�EネンチE        /// 2. playerHealthComponentに設定されたコンポ�EネンチE        /// 
+        /// エラー処琁E��E        /// - IHealthTargetが見つからなぁE��合�E警告ログ出劁E        /// - 例外発生時はエラーログ出劁E        /// </remarks>
         private void TestDamageCommand(int amount)
         {
             try

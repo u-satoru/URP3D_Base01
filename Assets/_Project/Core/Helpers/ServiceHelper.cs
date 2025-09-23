@@ -1,12 +1,12 @@
 using UnityEngine;
-// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
-// using asterivo.Unity60.Core; // 直接参照を避け、FeatureFlags経由に統一
+// // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
+// using asterivo.Unity60.Core; // 直接参�Eを避け、FeatureFlags経由に統一
 
 namespace asterivo.Unity60.Core.Helpers
 {
     /// <summary>
-    /// サービス取得の統一インターフェース
-    /// DRY原則違反を解消し、サービス取得ロジックを一元化
+    /// サービス取得�E統一インターフェース
+    /// DRY原則違反を解消し、サービス取得ロジチE��を一允E��
     /// </summary>
     public static class ServiceHelper
     {
@@ -15,8 +15,7 @@ namespace asterivo.Unity60.Core.Helpers
         /// </summary>
         public static T GetServiceWithFallback<T>() where T : class
         {
-            // ServiceLocator使用（推奨）
-            if (FeatureFlags.UseServiceLocator)
+            // ServiceLocator使用�E�推奨�E�E            if (FeatureFlags.UseServiceLocator)
             {
                 var service = ServiceLocator.GetService<T>();
                 if (service != null) 
@@ -26,8 +25,7 @@ namespace asterivo.Unity60.Core.Helpers
                 }
             }
             
-            // フォールバック: Unity標準検索（開発ビルド/エディタ限定）
-            #if UNITY_EDITOR || DEVELOPMENT_BUILD
+            // フォールバック: Unity標準検索�E�開発ビルチEエチE��タ限定！E            #if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (typeof(T).IsSubclassOf(typeof(UnityEngine.Object)))
             {
                 var unityObject = UnityEngine.Object.FindFirstObjectByType(typeof(T)) as T;
@@ -39,8 +37,7 @@ namespace asterivo.Unity60.Core.Helpers
             }
             #endif
 
-            // 本番ビルドではフォールバックしない
-            LogServiceNotFound<T>();
+            // 本番ビルドではフォールバックしなぁE            LogServiceNotFound<T>();
             return null;
         }
         

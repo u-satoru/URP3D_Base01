@@ -83,7 +83,7 @@
 
 # 📚 PHASE 3: Core Refactoring & Learn & Grow価値実現 ✅ **Step 1完了 (100%)**
 
-**Phase目標**: テンプレート共通基盤をCore層にリファクタリングし、それを基に7ジャンルのテンプレートを実装。学習コスト70%削減を実現する。
+**Phase目標**: テンプレート共通基盤をCore層にリファクタリングし、それを基に6ジャンルのテンプレートを実装。学習コスト70%削減を実現する。
 
 **進捗状況**:
 - ✅ **Step 1: Core Architecture Refactoring (5/5 完了)** - TASK-010 全サブタスク実装完了 **🎉 2025年9月19日検証済み**
@@ -121,16 +121,15 @@
     - ✅ 全主要入力対応（移動・視点・ジャンプ・攻撃・インタラクト・走行・しゃがみ・メニュー・インベントリ）
     - ✅ 感度制御・デバッグ機能・状態追跡
     - ✅ 専用Input Assembly作成（循環依存解決）
-    - ⚠️ InputDebugger API修正必要（IGameEventListener実装待ち）
 
-- [ ] **TASK-010.2**: **Implement Generic Health & Damage System (Priority 2)**
+- [x] **TASK-010.2**: **Implement Generic Health & Damage System (Priority 2)**
   - **目的**: 汎用的な体力管理とダメージ処理の仕組みを`Command Pattern`と統合して実装する。
   - **主要コンポーネント**:
     - `HealthComponent.cs` (`asterivo.Unity60.Core.Combat`)
     - `DamageCommand.cs`, `HealCommand.cs` (`asterivo.Unity60.Core.Commands`)
   - **完了条件**: コマンド経由で`HealthComponent`の体力を増減させ、イベントが発行されること。
 
-- [ ] **TASK-010.3**: **Implement Generic Character Control System (Priority 3)**
+- [x] **TASK-010.3**: **Implement Generic Character Control System (Priority 3)**
   - **目的**: キャラクターの物理挙動と状態管理の基盤をCore層に実装する。
   - **依存**: `TASK-010.1` (Input System)
   - **主要コンポーネント**:
@@ -138,14 +137,14 @@
     - `StateMachine.cs`, `IState.cs` (`asterivo.Unity60.Core.Patterns.StateMachine`)
   - **完了条件**: 外部からの命令でキャラクターの物理的な移動・ジャンプが可能になること。
 
-- [ ] **TASK-010.4**: **Implement Generic Interaction System (Priority 4)**
+- [x] **TASK-010.4**: **Implement Generic Interaction System (Priority 4)**
   - **目的**: オブジェクトとのインタラクションの汎用的な仕組みを実装する。
   - **依存**: `TASK-010.1`, `TASK-010.3`
   - **主要コンポーネント**:
     - `IInteractable.cs`, `Interactor.cs` (`asterivo.Unity60.Core.Interaction`)
   - **完了条件**: `Interactor`が`IInteractable`を検知し、インタラクションを実行できること。
 
-- [ ] **TASK-010.5**: **Implement Generic Camera Control System (Priority 5)**
+- [x] **TASK-010.5**: **Implement Generic Camera Control System (Priority 5)**
   - **目的**: `Cinemachine`と連携する汎用的なカメラ状態管理の基盤を実装する。
   - **依存**: `TASK-010.3`
   - **主要コンポーネント**:
@@ -164,7 +163,7 @@
 - **パフォーマンス要件**: テンプレート切り替え3分以内、サンプルシーン起動30秒以内、基本ゲームプレイ15分以内
 - **現状**: コンパイルエラーあり（GenreTemplateConfig/ActionRPGテンプレート部分実装）
 
-#### 実装サブタスク（DESIGN.md 2層アーキテクチャ準拠）
+#### 実装サブタスク（DESIGN.md準拠）
 
 ##### Layer 1: Template Configuration Layer
 - [ ] **TASK-004.1**: GenreTemplateConfig (ScriptableObject) システム実装

@@ -1,9 +1,9 @@
 using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Features.ActionRPG.Data;
+using asterivo.Unity60.Features.Templates.ActionRPG.Data;
 
-namespace asterivo.Unity60.Features.ActionRPG.Components
+namespace asterivo.Unity60.Features.Templates.ActionRPG.Components
 {
     /// <summary>
     /// プレイヤーの基礎ステータスを管理するコンポーネント

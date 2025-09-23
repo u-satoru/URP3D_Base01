@@ -1,14 +1,14 @@
 using UnityEngine;
 using System.Collections.Generic;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Debug;
+// using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Services;
 
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// Step 3.7: FeatureFlags動的更新管理クラス
-    /// MigrationSchedulerからの指示によりFeatureFlagsを段階的に更新
+    /// Step 3.7: FeatureFlags動的更新管琁E��ラス
+    /// MigrationSchedulerからの持E��によりFeatureFlagsを段階的に更新
     /// </summary>
     public class FeatureFlagScheduler : MonoBehaviour
     {
@@ -28,8 +28,7 @@ namespace asterivo.Unity60.Core.Services
         [SerializeField] private List<FlagChangeRecord> changeHistory = new List<FlagChangeRecord>();
         
         /// <summary>
-        /// FeatureFlag変更記録の構造体
-        /// </summary>
+        /// FeatureFlag変更記録の構造佁E        /// </summary>
         [System.Serializable]
         public struct FlagChangeRecord
         {
@@ -43,8 +42,7 @@ namespace asterivo.Unity60.Core.Services
         
         private void Start()
         {
-            // 現在のFeatureFlagsの状態を初期化
-            SyncWithCurrentFeatureFlags();
+            // 現在のFeatureFlagsの状態を初期匁E            SyncWithCurrentFeatureFlags();
             LogFlagInfo("FeatureFlagScheduler initialized");
         }
         
@@ -53,12 +51,12 @@ namespace asterivo.Unity60.Core.Services
         /// <summary>
         /// フェーズ設定をFeatureFlagsに適用
         /// </summary>
-        /// <param name="config">フェーズ設定</param>
+        /// <param name="config">フェーズ設宁E/param>
         public void ApplyPhaseConfiguration(MigrationScheduler.PhaseConfiguration config)
         {
             LogFlagInfo($"Applying phase configuration: {config.phaseName}");
             
-            // 各フラグを段階的に更新
+            // 吁E��ラグを段階的に更新
             UpdateFeatureFlag(nameof(FeatureFlags.UseServiceLocator), true, $"Phase: {config.phaseName}", config.phase);
             UpdateFeatureFlag(nameof(FeatureFlags.UseNewAudioService), config.useNewAudioService, $"Phase: {config.phaseName}", config.phase);
             UpdateFeatureFlag(nameof(FeatureFlags.UseNewSpatialService), config.useNewSpatialService, $"Phase: {config.phaseName}", config.phase);
@@ -66,7 +64,7 @@ namespace asterivo.Unity60.Core.Services
             UpdateFeatureFlag(nameof(FeatureFlags.AllowSingletonFallback), !config.disableLegacySingletons, $"Phase: {config.phaseName}", config.phase);
             UpdateFeatureFlag(nameof(FeatureFlags.EnablePerformanceMonitoring), config.enablePerformanceMonitoring, $"Phase: {config.phaseName}", config.phase);
             
-            // 依存する他のフラグも更新
+            // 依存する他�Eフラグも更新
             UpdateFeatureFlag(nameof(FeatureFlags.MigrateStealthAudioCoordinator), config.useNewStealthService, $"Phase: {config.phaseName}", config.phase);
             UpdateFeatureFlag(nameof(FeatureFlags.EnableDebugLogging), true, $"Phase: {config.phaseName}", config.phase);
             UpdateFeatureFlag(nameof(FeatureFlags.EnableMigrationMonitoring), config.enablePerformanceMonitoring, $"Phase: {config.phaseName}", config.phase);
@@ -81,22 +79,20 @@ namespace asterivo.Unity60.Core.Services
         /// <summary>
         /// 個別のFeatureFlagを更新
         /// </summary>
-        /// <param name="flagName">フラグ名</param>
+        /// <param name="flagName">フラグ吁E/param>
         /// <param name="newValue">新しい値</param>
-        /// <param name="reason">変更理由</param>
+        /// <param name="reason">変更琁E��</param>
         /// <param name="phase">現在のフェーズ</param>
         private void UpdateFeatureFlag(string flagName, bool newValue, string reason, MigrationScheduler.MigrationPhase phase)
         {
             bool oldValue = GetCurrentFlagValue(flagName);
             
-            // 値が変更される場合のみ処理
-            if (oldValue != newValue)
+            // 値が変更される場合�Eみ処琁E            if (oldValue != newValue)
             {
-                // FeatureFlagsクラスの対応プロパティを更新
+                // FeatureFlagsクラスの対応�Eロパティを更新
                 SetFeatureFlagValue(flagName, newValue);
                 
-                // 変更記録の保存
-                RecordFlagChange(flagName, oldValue, newValue, reason, phase);
+                // 変更記録の保孁E                RecordFlagChange(flagName, oldValue, newValue, reason, phase);
                 
                 if (logFlagChanges)
                 {
@@ -123,9 +119,8 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// フラグ名から現在の値を取得
-        /// </summary>
-        /// <param name="flagName">フラグ名</param>
+        /// フラグ名から現在の値を取征E        /// </summary>
+        /// <param name="flagName">フラグ吁E/param>
         /// <returns>現在の値</returns>
         private bool GetCurrentFlagValue(string flagName)
         {
@@ -156,9 +151,8 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// フラグ名に対応する値を設定
-        /// </summary>
-        /// <param name="flagName">フラグ名</param>
+        /// フラグ名に対応する値を設宁E        /// </summary>
+        /// <param name="flagName">フラグ吁E/param>
         /// <param name="value">設定値</param>
         private void SetFeatureFlagValue(string flagName, bool value)
         {
@@ -215,10 +209,10 @@ namespace asterivo.Unity60.Core.Services
         /// <summary>
         /// フラグ変更を記録
         /// </summary>
-        /// <param name="flagName">フラグ名</param>
-        /// <param name="oldValue">古い値</param>
+        /// <param name="flagName">フラグ吁E/param>
+        /// <param name="oldValue">古ぁE��</param>
         /// <param name="newValue">新しい値</param>
-        /// <param name="reason">変更理由</param>
+        /// <param name="reason">変更琁E��</param>
         /// <param name="phase">現在のフェーズ</param>
         private void RecordFlagChange(string flagName, bool oldValue, bool newValue, string reason, MigrationScheduler.MigrationPhase phase)
         {
@@ -234,8 +228,7 @@ namespace asterivo.Unity60.Core.Services
             
             changeHistory.Add(record);
             
-            // 履歴サイズを制限（メモリ使用量を制御）
-            if (changeHistory.Count > 100)
+            // 履歴サイズを制限（メモリ使用量を制御�E�E            if (changeHistory.Count > 100)
             {
                 changeHistory.RemoveRange(0, changeHistory.Count - 100);
             }
@@ -252,8 +245,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 変更履歴をレポート
-        /// </summary>
+        /// 変更履歴をレポ�EチE        /// </summary>
         [ContextMenu("Report Change History")]
         public void ReportChangeHistory()
         {
@@ -279,8 +271,7 @@ namespace asterivo.Unity60.Core.Services
         #region Status and Information
         
         /// <summary>
-        /// 現在のフラグ状態をログ出力
-        /// </summary>
+        /// 現在のフラグ状態をログ出劁E        /// </summary>
         [ContextMenu("Log Current Flag States")]
         public void LogCurrentFlagStates()
         {
@@ -294,13 +285,12 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// フラグ統計情報を取得
-        /// </summary>
+        /// フラグ統計情報を取征E        /// </summary>
         /// <returns>フラグ統計情報</returns>
         public FlagStatistics GetFlagStatistics()
         {
             int enabledFlags = 0;
-            int totalFlags = 6; // 管理対象フラグ数
+            int totalFlags = 6; // 管琁E��象フラグ数
             
             if (currentUseServiceLocator) enabledFlags++;
             if (currentUseNewAudioService) enabledFlags++;
@@ -320,8 +310,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// フラグ統計情報の構造体
-        /// </summary>
+        /// フラグ統計情報の構造佁E        /// </summary>
         [System.Serializable]
         public struct FlagStatistics
         {
@@ -337,9 +326,8 @@ namespace asterivo.Unity60.Core.Services
         #region Testing and Development Support
         
         /// <summary>
-        /// テスト用の手動フラグ設定
-        /// </summary>
-        /// <param name="flagName">フラグ名</param>
+        /// チE��ト用の手動フラグ設宁E        /// </summary>
+        /// <param name="flagName">フラグ吁E/param>
         /// <param name="value">設定値</param>
         [ContextMenu("Set Flag Manually")]
         public void SetFlagManually(string flagName, bool value)
@@ -350,8 +338,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 全フラグをリセット（開発用）
-        /// </summary>
+        /// 全フラグをリセチE���E�開発用�E�E        /// </summary>
         [ContextMenu("Reset All Flags")]
         public void ResetAllFlags()
         {
@@ -373,9 +360,8 @@ namespace asterivo.Unity60.Core.Services
         #region Logging
         
         /// <summary>
-        /// フラグ関連ログの出力
-        /// </summary>
-        /// <param name="message">メッセージ</param>
+        /// フラグ関連ログの出劁E        /// </summary>
+        /// <param name="message">メチE��ージ</param>
         private void LogFlagInfo(string message)
         {
             if (enableDebugLogging)

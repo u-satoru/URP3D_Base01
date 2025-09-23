@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using asterivo.Unity60.Core.Events;
 
-namespace asterivo.Unity60.Core.UI
+namespace asterivo.Unity60.Features.UI
 {
     /// <summary>
     /// Manages UI elements related to command history (Undo/Redo buttons)

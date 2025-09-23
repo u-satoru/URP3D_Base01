@@ -1,5 +1,5 @@
 using UnityEngine;
-using asterivo.Unity60.Stealth.Detection;
+using asterivo.Unity60.Features.AI.Configuration;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Features.AI.Visual
@@ -67,7 +67,7 @@ namespace asterivo.Unity60.Features.AI.Visual
         [Required]
         [LabelText("Detection Configuration")]
         [InfoBox("基本的な検出パラメータの設定")]
-        [SerializeField] private DetectionConfiguration detectionConfiguration;
+        [SerializeField] private AIDetectionConfiguration detectionConfiguration;
         
         [BoxGroup("Core/Detection/Scoring")]
         [PropertyRange(0.1f, 5f)]
@@ -333,7 +333,7 @@ namespace asterivo.Unity60.Features.AI.Visual
         public bool ShowGizmos => showGizmos;
         
         // Detection Properties
-        public DetectionConfiguration DetectionConfiguration => detectionConfiguration;
+        public AIDetectionConfiguration DetectionConfiguration => detectionConfiguration;
         public float DetectionScoreMultiplier => detectionScoreMultiplier;
         public float MinDetectionThreshold => minDetectionThreshold;
         public float StrongDetectionThreshold => strongDetectionThreshold;

@@ -1,93 +1,81 @@
 using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Core.Components;
+// using asterivo.Unity60.Core.Components;
 
 using System.Linq;
 
 namespace asterivo.Unity60.Core.Commands
 {
     /// <summary>
-    /// コマンドパターンの中核をなすクラスです。
-    /// コマンドの実行、およびUndo/Redoのためのコマンド履歴管理を担当します。
-    /// </summary>
+    /// コマンドパターンの中核をなすクラスです、E    /// コマンド�E実行、およ�EUndo/Redoのためのコマンド履歴管琁E��拁E��します、E    /// </summary>
     public class CommandInvoker : MonoBehaviour, ICommandInvoker, IGameEventListener<object>
     {
         [Header("Command Events")]
-        [Tooltip("実行すべきコマンドを受け取るためのイベント")]
+        [Tooltip("実行すべきコマンドを受け取るためのイベンチE)]
         [SerializeField] private CommandGameEvent onCommandReceived;
         
         [Header("State Change Events")]
-        [Tooltip("Undoの可否状態が変化した際に発行されるイベント")]
+        [Tooltip("Undoの可否状態が変化した際に発行されるイベンチE)]
         [SerializeField] private BoolEventChannelSO onUndoStateChanged;
-        [Tooltip("Redoの可否状態が変化した際に発行されるイベント")]
+        [Tooltip("Redoの可否状態が変化した際に発行されるイベンチE)]
         [SerializeField] private BoolEventChannelSO onRedoStateChanged;
         
         [Header("Command History")]
         [Tooltip("保持するコマンド履歴の最大数")]
         [SerializeField] private int maxHistorySize = 100;
-        [Tooltip("Undo機能を有効にするか")]
+        [Tooltip("Undo機�Eを有効にするぁE)]
         [SerializeField] private bool enableUndo = true;
-        [Tooltip("Redo機能を有効にするか")]
+        [Tooltip("Redo機�Eを有効にするぁE)]
         [SerializeField] private bool enableRedo = true;
 
         [Header("Command Target")]
-        [Tooltip("コマンドの実行対象となるHealthコンポーネント")]
+        [Tooltip("コマンド�E実行対象となるHealthコンポ�EネンチE)]
         [SerializeField] private Component playerHealthComponent;
         private IHealthTarget playerHealth;
         
         /// <summary>
-        /// 実行されたコマンドをUndoするために保持するスタック。
-        /// </summary>
+        /// 実行されたコマンドをUndoするために保持するスタチE��、E        /// </summary>
         private Stack<ICommand> undoStack = new Stack<ICommand>();
         /// <summary>
-        /// UndoされたコマンドをRedoするために保持するスタック。
-        /// </summary>
+        /// UndoされたコマンドをRedoするために保持するスタチE��、E        /// </summary>
         private Stack<ICommand> redoStack = new Stack<ICommand>();
         
         /// <summary>
-        /// Undoが可能かどうかを示します。
-        /// </summary>
+        /// Undoが可能かどぁE��を示します、E        /// </summary>
         public bool CanUndo => enableUndo && undoStack.Count > 0;
         /// <summary>
-        /// Redoが可能かどうかを示します。
-        /// </summary>
+        /// Redoが可能かどぁE��を示します、E        /// </summary>
         public bool CanRedo => enableRedo && redoStack.Count > 0;
         /// <summary>
-        /// 現在Undoスタックに積まれているコマンドの数を取得します。
-        /// </summary>
+        /// 現在UndoスタチE��に積まれてぁE��コマンド�E数を取得します、E        /// </summary>
         public int UndoStackCount => undoStack.Count;
         /// <summary>
-        /// 現在Redoスタックに積まれているコマンドの数を取得します。
-        /// </summary>
+        /// 現在RedoスタチE��に積まれてぁE��コマンド�E数を取得します、E        /// </summary>
         public int RedoStackCount => redoStack.Count;
 
         /// <summary>
-        /// スクリプトが最初に有効になったときに呼び出されます。
-        /// Healthターゲットを初期化します。
-        /// </summary>
+        /// スクリプトが最初に有効になったときに呼び出されます、E        /// HealthターゲチE��を�E期化します、E        /// </summary>
         private void Start()
         {
             // ServiceLocatorにICommandInvokerとして登録
             ServiceLocator.RegisterService<ICommandInvoker>(this);
 
-            // コンポーネント参照からHealthターゲットを初期化
+            // コンポ�Eネント参照からHealthターゲチE��を�E期化
             if (playerHealthComponent != null)
             {
                 playerHealth = playerHealthComponent.GetComponent<IHealthTarget>();
                 if (playerHealth == null)
                 {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                    UnityEngine.Debug.LogError("CommandInvoker: playerHealthComponentがIHealthTargetを実装していません。");
+                    UnityEngine.Debug.LogError("CommandInvoker: playerHealthComponentがIHealthTargetを実裁E��てぁE��せん、E);
 #endif
                 }
             }
         }
         
         /// <summary>
-        /// オブジェクトが有効になったときに呼び出されます。
-        /// コマンド受信イベントのリスナーを登録します。
-        /// </summary>
+        /// オブジェクトが有効になったときに呼び出されます、E        /// コマンド受信イベント�Eリスナ�Eを登録します、E        /// </summary>
         private void OnEnable()
         {
             if (onCommandReceived != null)
@@ -97,9 +85,7 @@ namespace asterivo.Unity60.Core.Commands
         }
         
         /// <summary>
-        /// オブジェクトが無効になったときに呼び出されます。
-        /// コマンド受信イベントのリスナーを解除します。
-        /// </summary>
+        /// オブジェクトが無効になったときに呼び出されます、E        /// コマンド受信イベント�Eリスナ�Eを解除します、E        /// </summary>
         private void OnDisable()
         {
             if (onCommandReceived != null)
@@ -109,34 +95,31 @@ namespace asterivo.Unity60.Core.Commands
         }
         
         /// <summary>
-        /// 指定されたコマンドを実行し、Undo履歴に追加します。
-        /// </summary>
-        /// <param name="command">実行するコマンド。</param>
+        /// 持E��されたコマンドを実行し、Undo履歴に追加します、E        /// </summary>
+        /// <param name="command">実行するコマンド、E/param>
         public void ExecuteCommand(ICommand command)
         {
             if (command == null)
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogWarning("CommandInvoker: nullのコマンドを実行しようとしました。");
+                UnityEngine.Debug.LogWarning("CommandInvoker: nullのコマンドを実行しようとしました、E);
 #endif
                 return;
             }
             
             command.Execute();
             
-            // Undoが有効かつコマンドがUndoをサポートしている場合、Undoスタックに追加
+            // Undoが有効かつコマンドがUndoをサポ�EトしてぁE��場合、UndoスタチE��に追加
             if (enableUndo && command.CanUndo)
             {
                 undoStack.Push(command);
                 
-                // 履歴サイズを制限
-                while (undoStack.Count > maxHistorySize)
+                // 履歴サイズを制陁E                while (undoStack.Count > maxHistorySize)
                 {
                     var tempStack = new Stack<ICommand>();
                     var items = undoStack.ToArray();
                     
-                    // 最も古いアイテムを除外
-                    for (int i = 0; i < items.Length - 1; i++)
+                    // 最も古ぁE��イチE��を除夁E                    for (int i = 0; i < items.Length - 1; i++)
                     {
                         tempStack.Push(items[i]);
                     }
@@ -148,7 +131,7 @@ namespace asterivo.Unity60.Core.Commands
                     }
                 }
                 
-                // 新しいコマンドが実行されたらRedoスタックをクリア
+                // 新しいコマンドが実行されたらRedoスタチE��をクリア
                 if (enableRedo)
                 {
                     redoStack.Clear();
@@ -159,9 +142,8 @@ namespace asterivo.Unity60.Core.Commands
         }
         
         /// <summary>
-        /// 最後に行ったコマンドを元に戻します（Undo）。
-        /// </summary>
-        /// <returns>Undoが成功した場合はtrue。</returns>
+        /// 最後に行ったコマンドを允E��戻します！Endo�E�、E        /// </summary>
+        /// <returns>Undoが�E功した場合�Etrue、E/returns>
         public bool Undo()
         {
             if (!CanUndo) return false;
@@ -179,9 +161,8 @@ namespace asterivo.Unity60.Core.Commands
         }
         
         /// <summary>
-        /// Undoしたコマンドを再度実行します（Redo）。
-        /// </summary>
-        /// <returns>Redoが成功した場合はtrue。</returns>
+        /// Undoしたコマンドを再度実行します！Eedo�E�、E        /// </summary>
+        /// <returns>Redoが�E功した場合�Etrue、E/returns>
         public bool Redo()
         {
             if (!CanRedo) return false;
@@ -199,8 +180,7 @@ namespace asterivo.Unity60.Core.Commands
         }
         
         /// <summary>
-        /// すべてのコマンド履歴（Undo/Redo）を消去します。
-        /// </summary>
+        /// すべてのコマンド履歴�E�Endo/Redo�E�を消去します、E        /// </summary>
         public void ClearHistory()
         {
             undoStack.Clear();
@@ -209,8 +189,7 @@ namespace asterivo.Unity60.Core.Commands
         }
         
         /// <summary>
-        /// Undo/Redoスタックの状態変化をUIや他のシステムに通知します。
-        /// </summary>
+        /// Undo/RedoスタチE��の状態変化をUIめE���EシスチE��に通知します、E        /// </summary>
         private void BroadcastHistoryChanges()
         {
             onUndoStateChanged?.Raise(CanUndo);
@@ -218,9 +197,8 @@ namespace asterivo.Unity60.Core.Commands
         }
         
         /// <summary>
-        /// ゲームイベント経由でコマンドを受け取った際のリスナー処理です。
-        /// </summary>
-        /// <param name="value">受信したオブジェクト（ICommandにキャストされる）。</param>
+        /// ゲームイベント経由でコマンドを受け取った際のリスナ�E処琁E��す、E        /// </summary>
+        /// <param name="value">受信したオブジェクト！ECommandにキャストされる�E�、E/param>
         public void OnEventRaised(object value)
         {
             if (value is ICommand command)
@@ -234,16 +212,14 @@ namespace asterivo.Unity60.Core.Commands
         }
 
         /// <summary>
-        /// アイテムが使用されたイベントのリスナーです。
-        /// アイテムデータに含まれるコマンド定義からコマンドを生成し、実行します。
-        /// </summary>
-        /// <param name="itemData">使用されたアイテムのデータ。</param>
+        /// アイチE��が使用されたイベント�Eリスナ�Eです、E        /// アイチE��チE�Eタに含まれるコマンド定義からコマンドを生�Eし、実行します、E        /// </summary>
+        /// <param name="itemData">使用されたアイチE��のチE�Eタ、E/param>
         public void OnItemUsed(ItemData itemData)
         {
             if (itemData == null)
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogWarning("OnItemUsedがnullのItemDataで呼び出されました。");
+                UnityEngine.Debug.LogWarning("OnItemUsedがnullのItemDataで呼び出されました、E);
 #endif
                 return;
             }
@@ -260,33 +236,32 @@ namespace asterivo.Unity60.Core.Commands
                 }
                 else
                 {
-                    Debug.LogWarning($"[CommandInvoker] ItemDataのcommandDefinitionsに無効な型のオブジェクトが含まれています: {definition?.GetType().Name ?? "null"}");
+                    Debug.LogWarning($"[CommandInvoker] ItemDataのcommandDefinitionsに無効な型�Eオブジェクトが含まれてぁE��ぁE {definition?.GetType().Name ?? "null"}");
                 }
             }
         }
 
         /// <summary>
-        /// コマンド定義（ICommandDefinition）から具体的なコマンド（ICommand）を生成するファクトリメソッドです。
-        /// </summary>
-        /// <param name="definition">コマンドを生成するための定義。</param>
-        /// <returns>生成されたコマンド。生成に失敗した場合はnull。</returns>
+        /// コマンド定義�E�ECommandDefinition�E�から�E体的なコマンド！ECommand�E�を生�EするファクトリメソチE��です、E        /// </summary>
+        /// <param name="definition">コマンドを生�Eするための定義、E/param>
+        /// <returns>生�Eされたコマンド。生成に失敗した場合�Enull、E/returns>
         private ICommand CreateCommandFromDefinition(ICommandDefinition definition)
         {
             if (playerHealth == null)
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogError("CommandInvoker: コマンド実行対象（playerHealth）が設定されていません。");
+                UnityEngine.Debug.LogError("CommandInvoker: コマンド実行対象�E�ElayerHealth�E�が設定されてぁE��せん、E);
 #endif
                 return null;
             }
 
-            // 定義のファクトリメソッドを直接使用
+            // 定義のファクトリメソチE��を直接使用
             var command = definition.CreateCommand(playerHealth);
             
             if (command == null)
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogWarning($"定義タイプからのコマンド生成に失敗しました: {definition.GetType()}");
+                UnityEngine.Debug.LogWarning($"定義タイプから�Eコマンド生成に失敗しました: {definition.GetType()}");
 #endif
             }
             

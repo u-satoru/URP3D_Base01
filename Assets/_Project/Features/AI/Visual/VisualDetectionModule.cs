@@ -1,7 +1,7 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Data;
-using asterivo.Unity60.Stealth.Detection;
-using DetectionConfig = asterivo.Unity60.Stealth.Detection.DetectionConfiguration;
+using asterivo.Unity60.Features.AI.Configuration;
+using DetectionConfig = asterivo.Unity60.Features.AI.Configuration.AIDetectionConfiguration;
 
 namespace asterivo.Unity60.Features.AI.Visual
 {
@@ -12,7 +12,7 @@ namespace asterivo.Unity60.Features.AI.Visual
     {
         private NPCVisualSensor sensor;
         private VisibilityCalculator visibilityCalculator;
-        private DetectionConfiguration config;
+        private AIDetectionConfiguration config;
         
         // 検出スコアの重み付け設定
         private readonly float distanceWeight = 0.25f;
@@ -25,7 +25,7 @@ namespace asterivo.Unity60.Features.AI.Visual
         private readonly float maximumDistanceForInstantDetection = 2f;
         private readonly float optimalAngleThreshold = 30f; // degrees
         
-        public VisualDetectionModule(NPCVisualSensor sensor, VisibilityCalculator calculator, DetectionConfiguration config)
+        public VisualDetectionModule(NPCVisualSensor sensor, VisibilityCalculator calculator, AIDetectionConfiguration config)
         {
             this.sensor = sensor;
             this.visibilityCalculator = calculator;
@@ -128,7 +128,7 @@ namespace asterivo.Unity60.Features.AI.Visual
             if (visibilityCalculator != null)
             {
                 // VisibilityCalculatorの高度な遮蔽計算を使用
-                float visibility = visibilityCalculator.CalculateVisibility(target, eye);
+                float visibility = visibilityCalculator.CalculateVisibility(eye.position, target.position, target);
                 
                 // visibilityは総合スコアなので、遮蔽部分のみを抽出
                 // ここでは簡略化して、visibilityが高いほど遮蔽が少ないとする
@@ -149,7 +149,7 @@ namespace asterivo.Unity60.Features.AI.Visual
             {
                 // VisibilityCalculatorの光量計算を利用
                 // 実際の実装では、VisibilityCalculatorに光量のみを取得するメソッドを追加することを推奨
-                float visibility = visibilityCalculator.CalculateVisibility(target, sensor.transform);
+                float visibility = visibilityCalculator.CalculateVisibility(sensor.transform.position, target.position, target);
                 
                 // 光量係数の推定（実装では専用メソッドを使用すべき）
                 return Mathf.Clamp01(visibility + 0.3f); // 暗闇でも最低限の視認性を保持

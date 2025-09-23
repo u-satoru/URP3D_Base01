@@ -1,7 +1,7 @@
 using UnityEngine;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Debug;
-// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
+// using asterivo.Unity60.Core.Debug;
+// // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 
 namespace asterivo.Unity60.Core.Services
 {
@@ -44,7 +44,7 @@ namespace asterivo.Unity60.Core.Services
                 
                 if (phase1Complete)
                 {
-                    ProjectDebug.Log("✅ PHASE 1 COMPLETED SUCCESSFULLY!");
+                    ProjectDebug.Log("✁EPHASE 1 COMPLETED SUCCESSFULLY!");
                     ProjectDebug.Log("🎯 Ready for Phase 2: Manual Singleton code deletion");
                     
                     // Save completion status
@@ -54,14 +54,14 @@ namespace asterivo.Unity60.Core.Services
                 }
                 else
                 {
-                    ProjectDebug.LogWarning("⚠️ PHASE 1 INCOMPLETE - Settings not in expected state");
+                    ProjectDebug.LogWarning("⚠�E�EPHASE 1 INCOMPLETE - Settings not in expected state");
                 }
                 
                 ProjectDebug.Log("=== DIRECT PHASE 1 EXECUTION FINISHED ===");
             }
             catch (System.Exception ex)
             {
-                ProjectDebug.LogError($"❌ Direct Phase 1 execution failed: {ex.Message}");
+                ProjectDebug.LogError($"❁EDirect Phase 1 execution failed: {ex.Message}");
                 ProjectDebug.LogError($"Stack trace: {ex.StackTrace}");
             }
         }
@@ -72,8 +72,8 @@ namespace asterivo.Unity60.Core.Services
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         public static void CheckAndExecutePhase1()
         {
-            // Force execute for final Phase 1 confirmation (じっくり考えて)
-            ProjectDebug.Log("=== FINAL Phase 1 EXECUTION (じっくり考えて) ===");
+            // Force execute for final Phase 1 confirmation (じっくり老E��て)
+            ProjectDebug.Log("=== FINAL Phase 1 EXECUTION (じっくり老E��て) ===");
             ProjectDebug.Log("Force executing Phase 1 for final completion verification...");
             ExecutePhase1Now();
         }

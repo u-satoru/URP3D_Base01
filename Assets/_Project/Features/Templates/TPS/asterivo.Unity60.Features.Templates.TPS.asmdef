@@ -3,11 +3,7 @@
     "rootNamespace": "asterivo.Unity60.Features.Templates.TPS",
     "references": [
         "asterivo.Unity60.Core",
-        "asterivo.Unity60.Core.Events",
-        "asterivo.Unity60.Core.Services",
-        "asterivo.Unity60.Core.Audio",
-        "asterivo.Unity60.Core.Commands",
-        "asterivo.Unity60.Features",
+        "asterivo.Unity60.Features.Combat",
         "asterivo.Unity60.Features.UI",
         "Unity.InputSystem",
         "Unity.Cinemachine",

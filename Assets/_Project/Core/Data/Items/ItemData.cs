@@ -1,15 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
-// using asterivo.Unity60.Core.Commands; // Removed to avoid circular dependency
+// // using asterivo.Unity60.Core.Commands; // Removed to avoid circular dependency
 
 /// <summary>
-/// Item data using polymorphic command serialization (ドキュメント第4章:444-452行目の実装)
+/// Item data using polymorphic command serialization (ドキュメント第4章:444-452行目の実裁E
 /// 
-/// ハイブリッドアーキテクチャの実装例：
-/// - SerializeReference属性によるポリモーフィックシリアライゼーション
-/// - デザイナーがInspectorでHealCommandDefinition等をリストに追加可能
-/// - 装備システム(Equip/Unequip)はプロジェクト独自の拡張機能
+/// ハイブリチE��アーキチE��チャの実裁E��！E/// - SerializeReference属性によるポリモーフィチE��シリアライゼーション
+/// - チE��イナ�EがInspectorでHealCommandDefinition等をリストに追加可能
+/// - 裁E��シスチE��(Equip/Unequip)はプロジェクト独自の拡張機�E
 /// </summary>
 [CreateAssetMenu(fileName = "NewItemData", menuName = "Data/ItemData")]
 public class ItemData : ScriptableObject
@@ -21,7 +20,7 @@ public class ItemData : ScriptableObject
 
     [Header("Item Commands")]
     [SerializeReference]
-    [Tooltip("Commands executed when the item is used (ドキュメント第4章対応)")]
+    [Tooltip("Commands executed when the item is used (ドキュメント第4章対忁E")]
     public List<object> commandDefinitions = new List<object>();
     
     [Header("Equipment System (Project Extension)")]

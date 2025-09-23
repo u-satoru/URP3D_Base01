@@ -1,13 +1,13 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Audio.Data;
-using asterivo.Unity60.Core.Debug;
+// using asterivo.Unity60.Core.Debug;
 
 namespace asterivo.Unity60.Core.Audio.Events
 {
     /// <summary>
-    /// オーディオイベント用の汎用GameEvent
-    /// ステルスゲームに特化した音響システムの基盤
+    /// オーチE��オイベント用の汎用GameEvent
+    /// スチE��スゲームに特化した音響シスチE��の基盤
     /// </summary>
     [CreateAssetMenu(fileName = "New Audio Event", menuName = "asterivo.Unity60/Audio/Events/Audio Event")]
     public class AudioEvent : GameEvent<AudioEventData>
@@ -20,7 +20,7 @@ namespace asterivo.Unity60.Core.Audio.Events
         /// <summary>
         /// 音響イベントを発火
         /// </summary>
-        /// <param name="audioData">音響データ</param>
+        /// <param name="audioData">音響チE�Eタ</param>
         public new void Raise(AudioEventData audioData)
         {
             #if UNITY_EDITOR
@@ -35,8 +35,7 @@ namespace asterivo.Unity60.Core.Audio.Events
         }
         
         /// <summary>
-        /// 簡易版: 位置情報付きで音を再生
-        /// </summary>
+        /// 簡易版: 位置惁E��付きで音を�E甁E        /// </summary>
         public void RaiseAtPosition(string soundID, Vector3 position, float volume = 1f)
         {
             var data = new AudioEventData

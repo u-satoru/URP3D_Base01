@@ -2,30 +2,20 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Core.Data;
+// using asterivo.Unity60.Core.Data;
 
 namespace asterivo.Unity60.Core.Editor
 {
     /// <summary>
-    /// イベントアセットをクイック作成するためのメニューアイテム
-    /// プロジェクトウィンドウから右クリックで素早く作成可能
+    /// イベントアセチE��をクイチE��作�EするためのメニューアイチE��
+    /// プロジェクトウィンドウから右クリチE��で素早く作�E可能
     /// 
-    /// 主な機能：
-    /// - Assets/Create メニューへのイベント作成メニュー追加
-    /// - 基本イベント（GameEvent）から専用イベントまで幅幅いタイプをサポート
-    /// - 現在選択中のフォルダへの自動保存
-    /// - ファイル名の重複チェックと自動リネーム
-    /// - よく使用されるイベントのテンプレートとバッチ作成
-    /// - ショートカットキー対応（Ctrl+Shift+E）
-    /// 
-    /// サポートされるイベントタイプ：
-    /// - 基本タイプ: GameEvent, String/Int/Float/Bool/Vector2/Vector3イベント
-    /// - 専用タイプ: PlayerState/CameraState/GameState/Commandイベント
-    /// - テンプレート: Health/Level/Item/Damageイベント
-    /// - デバッグ用: DebugLog/PerformanceWarningイベント
-    /// 
-    /// アクセス方法：
-    /// 1. プロジェクトウィンドウで右クリック > Create > Unity6 Events > ...
+    /// 主な機�E�E�E    /// - Assets/Create メニューへのイベント作�Eメニュー追加
+    /// - 基本イベント！EameEvent�E�から専用イベントまで幁E��E��タイプをサポ�EチE    /// - 現在選択中のフォルダへの自動保孁E    /// - ファイル名�E重褁E��ェチE��と自動リネ�Eム
+    /// - よく使用されるイベント�EチE��プレートとバッチ作�E
+    /// - ショートカチE��キー対応！Etrl+Shift+E�E�E    /// 
+    /// サポ�Eトされるイベントタイプ！E    /// - 基本タイチE GameEvent, String/Int/Float/Bool/Vector2/Vector3イベンチE    /// - 専用タイチE PlayerState/CameraState/GameState/CommandイベンチE    /// - チE��プレーチE Health/Level/Item/DamageイベンチE    /// - チE��チE��用: DebugLog/PerformanceWarningイベンチE    /// 
+    /// アクセス方法！E    /// 1. プロジェクトウィンドウで右クリチE�� > Create > Unity6 Events > ...
     /// 2. Unity メニュー > Assets > Create > Unity6 Events > ...
     /// </summary>
     public static class EventQuickCreationMenu
@@ -34,21 +24,20 @@ namespace asterivo.Unity60.Core.Editor
         private const string DefaultEventPath = "Assets/_Project/Core/ScriptableObjects/Events/Core/";
         
         /// <summary>
-        /// パラメーターなしの基本GameEventアセットを作成
+        /// パラメーターなし�E基本GameEventアセチE��を作�E
         /// シンプルな通知イベントに最適
         /// </summary>
         /// <remarks>
-        /// 使用例：ゲーム開始、ポーズ、レベルクリア等のシンプルな状態変化
+        /// 使用例：ゲーム開始、�Eーズ、レベルクリア等�Eシンプルな状態変化
         /// </remarks>
-        // 基本的なGameEvent
+        // 基本皁E��GameEvent
         [MenuItem(BaseMenuPath + "Game Event")]
         public static void CreateGameEvent()
         {
             CreateEventAsset<GameEvent>("NewGameEvent");
         }
         
-        // 型付きイベント - 基本型
-        [MenuItem(BaseMenuPath + "Generic Events/String Event")]
+        // 型付きイベンチE- 基本垁E        [MenuItem(BaseMenuPath + "Generic Events/String Event")]
         public static void CreateStringEvent()
         {
             CreateEventAsset<StringGameEvent>("NewStringEvent");
@@ -72,8 +61,7 @@ namespace asterivo.Unity60.Core.Editor
             CreateEventAsset<BoolGameEvent>("NewBoolEvent");
         }
         
-        // Vector型イベント
-        [MenuItem(BaseMenuPath + "Vector Events/Vector2 Event")]
+        // Vector型イベンチE        [MenuItem(BaseMenuPath + "Vector Events/Vector2 Event")]
         public static void CreateVector2Event()
         {
             CreateEventAsset<Vector2GameEvent>("NewVector2Event");
@@ -85,15 +73,13 @@ namespace asterivo.Unity60.Core.Editor
             CreateEventAsset<Vector3GameEvent>("NewVector3Event");
         }
         
-        // GameObject型イベント
-        [MenuItem(BaseMenuPath + "Object Events/GameObject Event")]
+        // GameObject型イベンチE        [MenuItem(BaseMenuPath + "Object Events/GameObject Event")]
         public static void CreateGameObjectEvent()
         {
             CreateEventAsset<GameObjectGameEvent>("NewGameObjectEvent");
         }
         
-        // 専用イベント
-        [MenuItem(BaseMenuPath + "Specialized Events/Player State Event")]
+        // 専用イベンチE        [MenuItem(BaseMenuPath + "Specialized Events/Player State Event")]
         public static void CreatePlayerStateEvent()
         {
             CreateEventAsset<PlayerStateEvent>("PlayerStateEvent");
@@ -117,8 +103,7 @@ namespace asterivo.Unity60.Core.Editor
             CreateEventAsset<CommandGameEvent>("NewCommandEvent");
         }
         
-        // Unity Input System統合
-        [MenuItem(BaseMenuPath + "Input Events/Input Vector2 Event")]
+        // Unity Input System統吁E        [MenuItem(BaseMenuPath + "Input Events/Input Vector2 Event")]
         public static void CreateInputVector2Event()
         {
             CreateEventAsset<Vector2GameEvent>("InputVector2Event");
@@ -136,64 +121,62 @@ namespace asterivo.Unity60.Core.Editor
             CreateEventAsset<BoolGameEvent>("InputBoolEvent");
         }
         
-        // よく使用されるイベントのテンプレート
-        [MenuItem(BaseMenuPath + "Common Templates/Health Changed Event")]
+        // よく使用されるイベント�EチE��プレーチE        [MenuItem(BaseMenuPath + "Common Templates/Health Changed Event")]
         public static void CreateHealthChangedEvent()
         {
             var healthEvent = CreateEventAsset<IntGameEvent>("OnHealthChanged");
-            SetEventDescription(healthEvent, "プレイヤーまたは敵のHealth値が変更されたときに発行されるイベント");
+            SetEventDescription(healthEvent, "プレイヤーまた�E敵のHealth値が変更されたときに発行されるイベンチE);
         }
         
         [MenuItem(BaseMenuPath + "Common Templates/Level Complete Event")]
         public static void CreateLevelCompleteEvent()
         {
             var levelEvent = CreateEventAsset<GameEvent>("OnLevelComplete");
-            SetEventDescription(levelEvent, "レベルクリア時に発行されるイベント");
+            SetEventDescription(levelEvent, "レベルクリア時に発行されるイベンチE);
         }
         
         [MenuItem(BaseMenuPath + "Common Templates/Item Collected Event")]
         public static void CreateItemCollectedEvent()
         {
             var itemEvent = CreateEventAsset<StringGameEvent>("OnItemCollected");
-            SetEventDescription(itemEvent, "アイテム収集時に発行されるイベント。アイテム名がペイロードとして送られる");
+            SetEventDescription(itemEvent, "アイチE��収集時に発行されるイベント。アイチE��名がペイロードとして送られる");
         }
         
         [MenuItem(BaseMenuPath + "Common Templates/Damage Dealt Event")]
         public static void CreateDamageDealtEvent()
         {
             var damageEvent = CreateEventAsset<IntGameEvent>("OnDamageDealt");
-            SetEventDescription(damageEvent, "ダメージが与えられたときに発行されるイベント。ダメージ量がペイロード");
+            SetEventDescription(damageEvent, "ダメージが与えられたときに発行されるイベント。ダメージ量がペイローチE);
         }
         
-        // デバッグ用イベント
-        [MenuItem(BaseMenuPath + "Debug Events/Debug Log Event")]
+        // チE��チE��用イベンチE        [MenuItem(BaseMenuPath + "Debug Events/Debug Log Event")]
         public static void CreateDebugLogEvent()
         {
             var debugEvent = CreateEventAsset<StringGameEvent>("OnDebugLog");
-            SetEventDescription(debugEvent, "デバッグ用ログ出力イベント");
+            SetEventDescription(debugEvent, "チE��チE��用ログ出力イベンチE);
         }
         
         [MenuItem(BaseMenuPath + "Debug Events/Performance Warning Event")]
         public static void CreatePerformanceWarningEvent()
         {
             var perfEvent = CreateEventAsset<FloatGameEvent>("OnPerformanceWarning");
-            SetEventDescription(perfEvent, "パフォーマンス警告イベント。フレーム時間がペイロード");
+            SetEventDescription(perfEvent, "パフォーマンス警告イベント。フレーム時間が�EイローチE);
         }
         
-        // バッチ作成
+        // バッチ作�E
         [MenuItem(BaseMenuPath + "Batch Creation/Create Common Event Set")]
         public static void CreateCommonEventSet()
         {
             if (EditorUtility.DisplayDialog(
-                "バッチ作成",
-                "よく使用される基本的なイベントセットを作成しますか？\n\n" +
-                "以下のイベントが作成されます:\n" +
+                "バッチ作�E",
+                "よく使用される基本皁E��イベントセチE��を作�Eしますか�E�\n\n" +
+                "以下�Eイベントが作�EされまぁE\n" +
                 "• OnGameStart (GameEvent)\n" +
                 "• OnGamePause (BoolGameEvent)\n" +
                 "• OnScoreChanged (IntGameEvent)\n" +
                 "• OnHealthChanged (FloatGameEvent)\n" +
                 "• OnPlayerDied (GameEvent)",
-                "作成", "キャンセル"))
+                "作�E", "キャンセル"))
             {
                 CreateEventAsset<GameEvent>("OnGameStart");
                 CreateEventAsset<BoolGameEvent>("OnGamePause");
@@ -201,39 +184,37 @@ namespace asterivo.Unity60.Core.Editor
                 CreateEventAsset<FloatGameEvent>("OnHealthChanged");
                 CreateEventAsset<GameEvent>("OnPlayerDied");
                 
-                UnityEngine.Debug.Log("基本的なイベントセットを作成しました。");
+                UnityEngine.Debug.Log("基本皁E��イベントセチE��を作�Eしました、E);
                 AssetDatabase.Refresh();
             }
         }
         
-        // プライベート ヘルパーメソッド
+        // プライベ�EチEヘルパ�EメソチE��
         private static T CreateEventAsset<T>(string eventName) where T : ScriptableObject
         {
-            // 現在選択されているフォルダを取得、なければデフォルトパス使用
+            // 現在選択されてぁE��フォルダを取得、なければチE��ォルトパス使用
             string targetPath = GetSelectedFolderPath();
             
-            // フォルダが存在しない場合は作成
+            // フォルダが存在しなぁE��合�E作�E
             EnsureFolderExists(targetPath);
             
-            // 同名ファイルがある場合は番号を追加
+            // 同名ファイルがある場合�E番号を追加
             string uniqueName = GetUniqueFileName(targetPath, eventName);
             
-            // ScriptableObjectインスタンスを作成
+            // ScriptableObjectインスタンスを作�E
             T instance = ScriptableObject.CreateInstance<T>();
             
-            // ファイルパスを構築
-            string fullPath = Path.Combine(targetPath, $"{uniqueName}.asset");
+            // ファイルパスを構篁E            string fullPath = Path.Combine(targetPath, $"{uniqueName}.asset");
             
-            // アセットを作成
+            // アセチE��を作�E
             AssetDatabase.CreateAsset(instance, fullPath);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             
-            // 作成されたアセットを選択
-            Selection.activeObject = instance;
+            // 作�EされたアセチE��を選抁E            Selection.activeObject = instance;
             EditorUtility.FocusProjectWindow();
             
-            UnityEngine.Debug.Log($"イベントアセットを作成しました: {fullPath}");
+            UnityEngine.Debug.Log($"イベントアセチE��を作�Eしました: {fullPath}");
             return instance;
         }
         
@@ -304,7 +285,7 @@ namespace asterivo.Unity60.Core.Editor
             UnityEngine.Debug.Log($"{eventAsset.name}: {description}");
         }
         
-        // 選択されたオブジェクトがフォルダかどうかを確認するメニュー検証
+        // 選択されたオブジェクトがフォルダかどぁE��を確認するメニュー検証
         [MenuItem(BaseMenuPath + "Game Event", true)]
         private static bool ValidateCreateGameEvent()
         {
@@ -320,14 +301,14 @@ namespace asterivo.Unity60.Core.Editor
             return string.IsNullOrEmpty(path) || AssetDatabase.IsValidFolder(path) || File.Exists(path);
         }
         
-        // コンテキストメニュー（右クリックメニュー）のバリデーション
+        // コンチE��ストメニュー�E�右クリチE��メニュー�E��EバリチE�Eション
         [MenuItem("CONTEXT/Transform/Create Player State Event")]
         public static void CreatePlayerStateEventFromContext()
         {
             CreateEventAsset<PlayerStateEvent>("PlayerStateEvent");
         }
         
-        // ショートカットキー付きメニュー
+        // ショートカチE��キー付きメニュー
         [MenuItem(BaseMenuPath + "Quick Game Event %#e")] // Ctrl+Shift+E
         public static void CreateGameEventWithShortcut()
         {

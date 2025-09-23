@@ -2,8 +2,8 @@ using UnityEngine;
 using UnityEngine.Audio;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Audio.Data;
-using asterivo.Unity60.Core.Shared;
-using asterivo.Unity60.Core.Debug;
+// using asterivo.Unity60.Core.Shared;
+// using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using Sirenix.OdinInspector;
@@ -11,8 +11,7 @@ using Sirenix.OdinInspector;
 namespace asterivo.Unity60.Core.Audio.Services
 {
     /// <summary>
-    /// AudioManagerのService化実装
-    /// Singletonパターンを使わず、ServiceLocator経由でアクセス
+    /// AudioManagerのService化実裁E    /// Singletonパターンを使わず、ServiceLocator経由でアクセス
     /// </summary>
     public class AudioService : MonoBehaviour, IAudioService, IInitializable
     {
@@ -59,9 +58,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         [SerializeField, ReadOnly] private float currentTensionLevel;
         [SerializeField, ReadOnly] private bool isStealthModeActive;
 
-        // IInitializable実装
-        public int Priority => 10; // オーディオシステムは早めに初期化
-        public bool IsInitialized { get; private set; }
+        // IInitializable実裁E        public int Priority => 10; // オーチE��オシスチE��は早めに初期匁E        public bool IsInitialized { get; private set; }
 
         private bool isPaused = false;
         private float pausedBGMVolume = 0f;
@@ -137,8 +134,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             // 効果音として再生
             if (effectManager != null)
             {
-                // EffectManagerのPlayEffectは(string, Vector3, float)の順
-                effectManager.PlayEffect(soundId, position, volume * effectVolume * masterVolume);
+                // EffectManagerのPlayEffectは(string, Vector3, float)の頁E                effectManager.PlayEffect(soundId, position, volume * effectVolume * masterVolume);
             }
         }
 
@@ -146,7 +142,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             if (effectManager != null)
             {
-                // EffectManagerにはStopEffectがないため、StopAllEffectsを使用
+                // EffectManagerにはStopEffectがなぁE��め、StopAllEffectsを使用
                 effectManager.StopAllEffects();
             }
         }
@@ -154,8 +150,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         public void StopAllSounds()
         {
             if (bgmManager != null) bgmManager.StopBGM(0f);
-            if (ambientManager != null) ambientManager.PauseAll(); // AmbientManagerにはStopメソッドがない
-            if (effectManager != null) effectManager.StopAllEffects();
+            if (ambientManager != null) ambientManager.PauseAll(); // AmbientManagerにはStopメソチE��がなぁE            if (effectManager != null) effectManager.StopAllEffects();
         }
 
         public float GetMasterVolume()
@@ -236,11 +231,11 @@ namespace asterivo.Unity60.Core.Audio.Services
             if (string.IsNullOrEmpty(soundId))
                 return false;
                 
-            // EffectManagerでのチェック
+            // EffectManagerでのチェチE��
             if (effectManager != null && effectManager.IsPlaying(soundId))
                 return true;
                 
-            // BGMManagerでのチェック
+            // BGMManagerでのチェチE��
             if (bgmManager != null && bgmManager.IsPlaying(soundId))
                 return true;
                 
@@ -253,23 +248,20 @@ namespace asterivo.Unity60.Core.Audio.Services
             
             isPaused = true;
             
-            // BGMの一時停止（音量を保存してからゼロに）
-            if (bgmManager != null)
+            // BGMの一時停止�E�音量を保存してからゼロに�E�E            if (bgmManager != null)
             {
-                // 現在の音量を保存
-                pausedBGMVolume = bgmVolume;
+                // 現在の音量を保孁E                pausedBGMVolume = bgmVolume;
                 bgmManager.SetMasterVolume(0f);
             }
             
-            // アンビエントの一時停止
+            // アンビエント�E一時停止
             if (ambientManager != null)
             {
                 pausedAmbientVolume = ambientVolume;
                 ambientManager.SetMasterVolume(0f);
             }
             
-            // 効果音の停止（一時停止ではなく停止）
-            if (effectManager != null)
+            // 効果音の停止�E�一時停止ではなく停止�E�E            if (effectManager != null)
             {
                 effectManager.StopAllEffects();
             }
@@ -286,22 +278,20 @@ namespace asterivo.Unity60.Core.Audio.Services
             
             isPaused = false;
             
-            // BGMの再開（保存された音量で再開）
-            if (bgmManager != null)
+            // BGMの再開�E�保存された音量で再開�E�E            if (bgmManager != null)
             {
                 bgmManager.SetMasterVolume(pausedBGMVolume > 0 ? pausedBGMVolume : bgmVolume);
                 pausedBGMVolume = 0f;
             }
             
-            // アンビエントの再開
+            // アンビエント�E再開
             if (ambientManager != null)
             {
                 ambientManager.SetMasterVolume(pausedAmbientVolume > 0 ? pausedAmbientVolume : ambientVolume);
                 pausedAmbientVolume = 0f;
             }
             
-            // 効果音は停止されたため、新しい音が再生されるまで待機
-            
+            // 効果音は停止されたため、新しい音が�E生されるまで征E��E            
             if (FeatureFlags.EnableDebugLogging)
             {
                 EventLogger.LogStatic("[AudioService] Audio resumed");
@@ -326,15 +316,13 @@ namespace asterivo.Unity60.Core.Audio.Services
 
         private void InitializeSubsystems()
         {
-            // 空間音響マネージャーの初期化（Singleton依存を削除）
-            // TODO: SpatialAudioManagerがISpatialAudioServiceを実装する必要がある
+            // 空間音響マネージャーの初期化！Eingleton依存を削除�E�E            // TODO: SpatialAudioManagerがISpatialAudioServiceを実裁E��る忁E��がある
             // if (spatialAudio != null && FeatureFlags.UseServiceLocator)
             // {
             //     ServiceLocator.RegisterService<ISpatialAudioService>(spatialAudio);
             // }
 
-            // ステルスオーディオコーディネーターの初期化
-            // TODO: StealthAudioCoordinatorがIStealthAudioServiceを実装する必要がある
+            // スチE��スオーチE��オコーチE��ネ�Eターの初期匁E            // TODO: StealthAudioCoordinatorがIStealthAudioServiceを実裁E��る忁E��がある
             // if (stealthCoordinator != null && FeatureFlags.UseServiceLocator)
             // {
             //     ServiceLocator.RegisterService<IStealthAudioService>(stealthCoordinator);
@@ -363,15 +351,13 @@ namespace asterivo.Unity60.Core.Audio.Services
         #region Public API
 
         /// <summary>
-        /// BGMを再生
-        /// </summary>
+        /// BGMを�E甁E        /// </summary>
         public void PlayBGM(string bgmName, float fadeTime = 1f)
         {
             if (bgmManager != null)
             {
-                // BGMCategoryを使灆必要がある
-                // TODO: bgmNameからBGMCategoryへの変換ロジックが必要
-                // BGM名からBGMCategoryへの変換
+                // BGMCategoryを使灁E��E��がある
+                // TODO: bgmNameからBGMCategoryへの変換ロジチE��が忁E��E                // BGM名からBGMCategoryへの変換
                 var category = bgmManager.GetCategoryFromName(bgmName);
                 bgmManager.PlayBGMCategory(category, fadeTime <= 0);
                 
@@ -383,8 +369,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         }
 
         /// <summary>
-        /// アンビエントサウンドを更新（AmbientManagerにはPlayAmbientメソッドがない）
-        /// </summary>
+        /// アンビエントサウンドを更新�E�EmbientManagerにはPlayAmbientメソチE��がなぁE��E        /// </summary>
         public void UpdateAmbient(EnvironmentType environment, WeatherType weather, TimeOfDay timeOfDay)
         {
             if (ambientManager != null)
@@ -418,5 +403,4 @@ namespace asterivo.Unity60.Core.Audio.Services
         #endregion
     }
 
-    // GameState enumはAudioManager.csで定義されています
-}
+    // GameState enumはAudioManager.csで定義されてぁE��ぁE}

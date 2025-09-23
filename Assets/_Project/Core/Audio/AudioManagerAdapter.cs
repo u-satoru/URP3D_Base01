@@ -1,16 +1,15 @@
 using UnityEngine;
-using asterivo.Unity60.Core.Debug;
+// using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Helpers;
+// using asterivo.Unity60.Core.Helpers;
 // using asterivo.Unity60.Core.Services; // Removed to avoid circular dependency
 
 namespace asterivo.Unity60.Core.Audio
 {
     /// <summary>
-    /// ✅ ServiceLocator専用実装のAudioManagerアダプター
-    /// ServiceLocatorパターンを使用したオーディオサービスへのアクセスを提供
-    /// </summary>
+    /// ✁EServiceLocator専用実裁E�EAudioManagerアダプター
+    /// ServiceLocatorパターンを使用したオーチE��オサービスへのアクセスを提侁E    /// </summary>
     public class AudioManagerAdapter : MonoBehaviour
     {
         
@@ -19,11 +18,10 @@ namespace asterivo.Unity60.Core.Audio
         
         private void Awake()
         {
-            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
+            // ✁EServiceLocator専用実裁E�Eみ - Singletonパターン完�E削除
             DontDestroyOnLoad(gameObject);
             
-            // ServiceLocatorからオーディオサービスを取得
-            if (FeatureFlags.UseServiceLocator)
+            // ServiceLocatorからオーチE��オサービスを取征E            if (FeatureFlags.UseServiceLocator)
             {
                 try
                 {
@@ -45,7 +43,7 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// 既存のコードとの互換性のためのメソッド群
+        /// 既存�Eコードとの互換性のためのメソチE��群
         /// </summary>
         public void PlaySound(string soundId, Vector3 position = default, float volume = 1f)
         {
@@ -55,7 +53,7 @@ namespace asterivo.Unity60.Core.Audio
             }
             else
             {
-                // ✅ ServiceLocator専用実装 - 直接EffectManagerを使用
+                // ✁EServiceLocator専用実裁E- 直接EffectManagerを使用
                 var effectService = ServiceLocator.GetService<IEffectService>();
                 if (effectService != null)
                 {
@@ -88,12 +86,10 @@ namespace asterivo.Unity60.Core.Audio
             }
             else
             {
-                // ✅ ServiceLocator専用実装 - BGMManagerをServiceLocator経由で取得
-                var bgmManager = ServiceHelper.GetServiceWithFallback<BGMManager>();
+                // ✁EServiceLocator専用実裁E- BGMManagerをServiceLocator経由で取征E                var bgmManager = ServiceHelper.GetServiceWithFallback<BGMManager>();
                 if (bgmManager != null)
                 {
-                    // TODO: bgmNameからBGMCategoryへの変換ロジックが必要
-                    // 現在はデフォルトカテゴリを使用
+                    // TODO: bgmNameからBGMCategoryへの変換ロジチE��が忁E��E                    // 現在はチE��ォルトカチE��リを使用
                     bgmManager.PlayBGMCategory(BGMCategory.Exploration, fadeTime <= 0);
                 }
                 else
@@ -107,13 +103,12 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (audioService != null)
             {
-                // IAudioServiceには直接StopBGMがないので、StopAllSoundsを使用
+                // IAudioServiceには直接StopBGMがなぁE�Eで、StopAllSoundsを使用
                 audioService.StopAllSounds();
             }
             else
             {
-                // ✅ ServiceLocator専用実装 - BGMManagerを直接取得
-                var bgmManager = ServiceHelper.GetServiceWithFallback<BGMManager>();
+                // ✁EServiceLocator専用実裁E- BGMManagerを直接取征E                var bgmManager = ServiceHelper.GetServiceWithFallback<BGMManager>();
                 if (bgmManager != null)
                 {
                     bgmManager.StopBGM(fadeTime);
@@ -132,7 +127,7 @@ namespace asterivo.Unity60.Core.Audio
         
         private void OnDestroy()
         {
-            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
+            // ✁EServiceLocator専用実裁E�Eみ - Singletonパターン完�E削除
             if (FeatureFlags.EnableDebugLogging)
             {
                 var eventLogger = ServiceLocator.GetService<IEventLogger>(); if (eventLogger != null) eventLogger.Log("[AudioManagerAdapter] Adapter destroyed");

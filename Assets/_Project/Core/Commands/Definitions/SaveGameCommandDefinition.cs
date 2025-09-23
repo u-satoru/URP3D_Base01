@@ -5,34 +5,22 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
-using asterivo.Unity60.Core.Commands;
+// using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// ゲームセーブコマンドの定義。
-    /// ゲーム状態の保存アクションをカプセル化します。
-    /// 
-    /// 主な機能：
-    /// - 自動/手動セーブの実行
-    /// - セーブファイルの管理（スロット、名前付け等）
-    /// - セーブ対象データの選択
-    /// - セーブ完了通知とエラーハンドリング
+    /// ゲームセーブコマンド�E定義、E    /// ゲーム状態�E保存アクションをカプセル化します、E    /// 
+    /// 主な機�E�E�E    /// - 自勁E手動セーブ�E実衁E    /// - セーブファイルの管琁E��スロチE��、名前付け等！E    /// - セーブ対象チE�Eタの選抁E    /// - セーブ完亁E��知とエラーハンドリング
     /// </summary>
     [System.Serializable]
     public class SaveGameCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// セーブの種類を定義する列挙型
-        /// </summary>
+        /// セーブ�E種類を定義する列挙垁E        /// </summary>
         public enum SaveType
         {
-            Manual,         // 手動セーブ
-            Auto,           // 自動セーブ
-            QuickSave,      // クイックセーブ
-            Checkpoint,     // チェックポイントセーブ
-            NewGame         // 新規ゲーム開始時セーブ
-        }
+            Manual,         // 手動セーチE            Auto,           // 自動セーチE            QuickSave,      // クイチE��セーチE            Checkpoint,     // チェチE��ポイントセーチE            NewGame         // 新規ゲーム開始時セーチE        }
 
         [Header("Save Parameters")]
         public SaveType saveType = SaveType.Manual;
@@ -56,16 +44,14 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public bool showSaveProgress = true;
         public bool showSuccessNotification = true;
         public bool pauseGameDuringSave = false;
-        public float maxSaveTime = 5f; // タイムアウト時間
-
+        public float maxSaveTime = 5f; // タイムアウト時閁E
         [Header("Auto Save Settings")]
-        [Tooltip("自動セーブ時の間隔（秒）")]
-        public float autoSaveInterval = 300f; // 5分
-        [Tooltip("自動セーブファイルの最大保持数")]
+        [Tooltip("自動セーブ時の間隔�E�秒！E)]
+        public float autoSaveInterval = 300f; // 5刁E        [Tooltip("自動セーブファイルの最大保持数")]
         public int maxAutoSaveFiles = 5;
 
         /// <summary>
-        /// デフォルトコンストラクタ
+        /// チE��ォルトコンストラクタ
         /// </summary>
         public SaveGameCommandDefinition()
         {
@@ -82,33 +68,30 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// セーブコマンドが実行可能かどうかを判定します
-        /// </summary>
+        /// セーブコマンドが実行可能かどぁE��を判定しまぁE        /// </summary>
         public bool CanExecute(object context = null)
         {
-            // 基本的な実行可能性チェック
+            // 基本皁E��実行可能性チェチE��
             if (saveSlot < 0) return false;
             if (maxSaveTime <= 0f) return false;
 
-            // セーブ対象が何も選択されていない場合は不可
+            // セーブ対象が何も選択されてぁE��ぁE��合�E不可
             if (!savePlayerData && !saveWorldState && !saveProgress && !saveSettings && !saveStatistics)
                 return false;
 
-            // コンテキストがある場合の追加チェック
+            // コンチE��ストがある場合�E追加チェチE��
             if (context != null)
             {
-                // セーブ可能な状態かチェック（ローディング中、セーブ中等は不可）
-                // ディスク容量チェック
-                // セーブファイルの書き込み権限チェック
-                // ゲームの重要な処理中（戦闘中等）の制約チェック
+                // セーブ可能な状態かチェチE���E�ローチE��ング中、セーブ中等�E不可�E�E                // チE��スク容量チェチE��
+                // セーブファイルの書き込み権限チェチE��
+                // ゲームの重要な処琁E���E�戦闘中等）�E制紁E��ェチE��
             }
 
             return true;
         }
 
         /// <summary>
-        /// セーブコマンドを作成します
-        /// </summary>
+        /// セーブコマンドを作�EしまぁE        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
             if (!CanExecute(context))
@@ -119,8 +102,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// SaveGameCommandDefinitionに対応する実際のコマンド実装
-    /// </summary>
+    /// SaveGameCommandDefinitionに対応する実際のコマンド実裁E    /// </summary>
     public class SaveGameCommand : ICommand
     {
         private SaveGameCommandDefinition definition;
@@ -137,8 +119,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// セーブコマンドの実行
-        /// </summary>
+        /// セーブコマンド�E実衁E        /// </summary>
         public void Execute()
         {
             if (executed || saveInProgress) return;
@@ -150,13 +131,12 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             UnityEngine.Debug.Log($"Executing {definition.saveType} save: slot={definition.saveSlot}, name='{definition.saveName}'");
 #endif
 
-            // ゲームの一時停止（必要な場合）
-            if (definition.pauseGameDuringSave)
+            // ゲームの一時停止�E�忁E��な場合！E            if (definition.pauseGameDuringSave)
             {
                 PauseGame();
             }
 
-            // セーブプログレスUIの表示
+            // セーブ�EログレスUIの表示
             if (definition.showSaveProgress)
             {
                 ShowSaveProgressUI();
@@ -164,8 +144,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
 
             try
             {
-                // 実際のセーブ処理
-                ExecuteSaveOperation();
+                // 実際のセーブ�E琁E                ExecuteSaveOperation();
             }
             catch (System.Exception ex)
             {
@@ -177,24 +156,21 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 実際のセーブ処理を実行
-        /// </summary>
+        /// 実際のセーブ�E琁E��実衁E        /// </summary>
         private void ExecuteSaveOperation()
         {
             // セーブデータの収集
             var saveData = CollectSaveData();
 
-            // セーブファイル名の生成
+            // セーブファイル名�E生�E
             string fileName = GenerateSaveFileName();
 
-            // データの圧縮（設定されている場合）
-            if (definition.compressData)
+            // チE�Eタの圧縮�E�設定されてぁE��場合！E            if (definition.compressData)
             {
                 saveData = CompressSaveData(saveData);
             }
 
-            // データの暗号化（設定されている場合）
-            if (definition.encryptData)
+            // チE�Eタの暗号化（設定されてぁE��場合！E            if (definition.encryptData)
             {
                 saveData = EncryptSaveData(saveData);
             }
@@ -202,20 +178,17 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             // ファイルへの書き込み
             savedFilePath = WriteSaveFile(fileName, saveData);
 
-            // 整合性検証（設定されている場合）
-            if (definition.validateIntegrity)
+            // 整合性検証�E�設定されてぁE��場合！E            if (definition.validateIntegrity)
             {
                 ValidateSavedFile(savedFilePath);
             }
 
-            // 自動セーブファイルの管理
-            if (definition.saveType == SaveGameCommandDefinition.SaveType.Auto)
+            // 自動セーブファイルの管琁E            if (definition.saveType == SaveGameCommandDefinition.SaveType.Auto)
             {
                 ManageAutoSaveFiles();
             }
 
-            // セーブ完了処理
-            OnSaveCompleted();
+            // セーブ完亁E�E琁E            OnSaveCompleted();
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"Save completed: {savedFilePath}");
@@ -229,37 +202,32 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         {
             var saveData = new GameSaveData();
 
-            // プレイヤーデータの保存
-            if (definition.savePlayerData)
+            // プレイヤーチE�Eタの保孁E            if (definition.savePlayerData)
             {
                 saveData.PlayerData = GetPlayerData();
             }
 
-            // ワールド状態の保存
-            if (definition.saveWorldState)
+            // ワールド状態�E保孁E            if (definition.saveWorldState)
             {
                 saveData.WorldState = GetWorldState();
             }
 
-            // 進行状況の保存
-            if (definition.saveProgress)
+            // 進行状況�E保孁E            if (definition.saveProgress)
             {
                 saveData.ProgressData = GetProgressData();
             }
 
-            // 設定の保存
-            if (definition.saveSettings)
+            // 設定�E保孁E            if (definition.saveSettings)
             {
                 saveData.SettingsData = GetSettingsData();
             }
 
-            // 統計データの保存
-            if (definition.saveStatistics)
+            // 統計データの保孁E            if (definition.saveStatistics)
             {
                 saveData.StatisticsData = GetStatisticsData();
             }
 
-            // メタデータの追加
+            // メタチE�Eタの追加
             saveData.SaveInfo = new SaveMetaData
             {
                 SaveType = definition.saveType.ToString(),
@@ -274,7 +242,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// セーブファイル名の生成
+        /// セーブファイル名�E生�E
         /// </summary>
         private string GenerateSaveFileName()
         {
@@ -306,24 +274,21 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         /// </summary>
         private ISaveData CompressSaveData(ISaveData data)
         {
-            // 実際の実装では適切な圧縮アルゴリズム（LZ4、gzip等）を使用
+            // 実際の実裁E��は適刁E��圧縮アルゴリズム�E�EZ4、gzip等）を使用
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log("Compressing save data...");
 #endif
-            return data; // 仮の実装
-        }
+            return data; // 仮の実裁E        }
 
         /// <summary>
-        /// セーブデータの暗号化
-        /// </summary>
+        /// セーブデータの暗号匁E        /// </summary>
         private ISaveData EncryptSaveData(ISaveData data)
         {
-            // 実際の実装では適切な暗号化アルゴリズム（AES等）を使用
+            // 実際の実裁E��は適刁E��暗号化アルゴリズム�E�EES等）を使用
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log("Encrypting save data...");
 #endif
-            return data; // 仮の実装
-        }
+            return data; // 仮の実裁E        }
 
         /// <summary>
         /// セーブファイルの書き込み
@@ -333,19 +298,19 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             string saveDirectory = GetSaveDirectory();
             string fullPath = System.IO.Path.Combine(saveDirectory, fileName);
 
-            // ディレクトリの作成
+            // チE��レクトリの作�E
             if (!System.IO.Directory.Exists(saveDirectory))
             {
                 System.IO.Directory.CreateDirectory(saveDirectory);
             }
 
-            // 既存ファイルの上書きチェック
+            // 既存ファイルの上書きチェチE��
             if (System.IO.File.Exists(fullPath) && !definition.overwriteExisting)
             {
                 throw new System.InvalidOperationException($"Save file already exists: {fullPath}");
             }
 
-            // 実際の実装では適切なシリアライゼーション（JSON、Binary等）を使用
+            // 実際の実裁E��は適刁E��シリアライゼーション�E�ESON、Binary等）を使用
             string jsonData = JsonUtility.ToJson(data, true);
             System.IO.File.WriteAllText(fullPath, jsonData);
 
@@ -362,19 +327,17 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 throw new System.IO.FileNotFoundException($"Saved file not found: {filePath}");
             }
 
-            // ファイルサイズチェック
+            // ファイルサイズチェチE��
             var fileInfo = new System.IO.FileInfo(filePath);
             if (fileInfo.Length == 0)
             {
                 throw new System.Exception("Saved file is empty");
             }
 
-            // データの読み込みテスト
-            try
+            // チE�Eタの読み込みチE��チE            try
             {
                 string content = System.IO.File.ReadAllText(filePath);
-                // 基本的な構文チェック等
-            }
+                // 基本皁E��構文チェチE��筁E            }
             catch (System.Exception ex)
             {
                 throw new System.Exception($"Saved file validation failed: {ex.Message}");
@@ -386,18 +349,16 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 自動セーブファイルの管理
-        /// </summary>
+        /// 自動セーブファイルの管琁E        /// </summary>
         private void ManageAutoSaveFiles()
         {
             string saveDirectory = GetSaveDirectory();
             var autoSaveFiles = System.IO.Directory.GetFiles(saveDirectory, "autosave_*.sav");
 
-            // ファイルを作成日時順にソート
-            System.Array.Sort(autoSaveFiles, (x, y) => 
+            // ファイルを作�E日時頁E��ソーチE            System.Array.Sort(autoSaveFiles, (x, y) => 
                 System.IO.File.GetCreationTime(y).CompareTo(System.IO.File.GetCreationTime(x)));
 
-            // 最大保持数を超える古いファイルを削除
+            // 最大保持数を趁E��る古ぁE��ァイルを削除
             for (int i = definition.maxAutoSaveFiles; i < autoSaveFiles.Length; i++)
             {
                 try
@@ -417,8 +378,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// セーブ完了処理
-        /// </summary>
+        /// セーブ完亁E�E琁E        /// </summary>
         private void OnSaveCompleted()
         {
             saveInProgress = false;
@@ -441,13 +401,11 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 ShowSaveSuccessNotification();
             }
 
-            // セーブ完了イベントの発行
-            // EventSystem.Publish(new GameSavedEvent(definition.saveSlot, savedFilePath));
+            // セーブ完亁E��ベント�E発衁E            // EventSystem.Publish(new GameSavedEvent(definition.saveSlot, savedFilePath));
         }
 
         /// <summary>
-        /// セーブエラーの処理
-        /// </summary>
+        /// セーブエラーの処琁E        /// </summary>
         private void HandleSaveError(System.Exception exception)
         {
             saveInProgress = false;
@@ -471,44 +429,37 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             UnityEngine.Debug.LogError($"Save failed: {exception}");
 #endif
 
-            // セーブ失敗イベントの発行
-            // EventSystem.Publish(new SaveFailedEvent(exception));
+            // セーブ失敗イベント�E発衁E            // EventSystem.Publish(new SaveFailedEvent(exception));
         }
 
-        // 各種データ取得メソッド（実際の実装では対応するシステムとの連携）
-        private IPlayerData GetPlayerData() => new PlayerData();
+        // 吁E��チE�Eタ取得メソチE���E�実際の実裁E��は対応するシスチE��との連携�E�E        private IPlayerData GetPlayerData() => new PlayerData();
         private IWorldState GetWorldState() => new WorldState();
         private IProgressData GetProgressData() => new ProgressData();
         private ISettingsData GetSettingsData() => new SettingsData();
         private IStatisticsData GetStatisticsData() => new StatisticsData();
-        private float GetTotalPlayTime() => Time.realtimeSinceStartup; // 仮の実装
-
-        // UI制御メソッド（実際の実装では UISystem との連携）
-        private void ShowSaveProgressUI() { /* UI表示 */ }
+        private float GetTotalPlayTime() => Time.realtimeSinceStartup; // 仮の実裁E
+        // UI制御メソチE���E�実際の実裁E��は UISystem との連携�E�E        private void ShowSaveProgressUI() { /* UI表示 */ }
         private void HideSaveProgressUI() { /* UI非表示 */ }
         private void ShowSaveSuccessNotification() { /* 成功通知 */ }
         private void ShowSaveErrorNotification(string error) { /* エラー通知 */ }
 
-        // ゲーム制御メソッド（実際の実装では GameManager との連携）
-        private void PauseGame() { /* ゲーム一時停止 */ }
+        // ゲーム制御メソチE���E�実際の実裁E��は GameManager との連携�E�E        private void PauseGame() { /* ゲーム一時停止 */ }
         private void ResumeGame() { /* ゲーム再開 */ }
 
         /// <summary>
-        /// セーブディレクトリのパスを取得
-        /// </summary>
+        /// セーブディレクトリのパスを取征E        /// </summary>
         private string GetSaveDirectory()
         {
             return System.IO.Path.Combine(Application.persistentDataPath, "Saves");
         }
 
         /// <summary>
-        /// セーブの更新（タイムアウトチェック等、外部から定期的に呼び出される）
-        /// </summary>
+        /// セーブ�E更新�E�タイムアウトチェチE��等、外部から定期皁E��呼び出される！E        /// </summary>
         public void UpdateSave()
         {
             if (!saveInProgress) return;
 
-            // タイムアウトチェック
+            // タイムアウトチェチE��
             var elapsed = System.DateTime.Now - saveStartTime;
             if (elapsed.TotalSeconds > definition.maxSaveTime)
             {
@@ -517,12 +468,11 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Undo操作（セーブの取り消し - 通常は不可能）
-        /// </summary>
+        /// Undo操作（セーブ�E取り消し - 通常は不可能�E�E        /// </summary>
         public void Undo()
         {
-            // セーブ操作の取り消しは通常不可能
-            // ただし、セーブ中の場合はキャンセル可能
+            // セーブ操作�E取り消しは通常不可能
+            // ただし、セーブ中の場合�Eキャンセル可能
             if (saveInProgress)
             {
                 saveInProgress = false;
@@ -538,18 +488,17 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// このコマンドがUndo可能かどうか
+        /// こ�EコマンドがUndo可能かどぁE��
         /// </summary>
         public bool CanUndo => saveInProgress; // セーブ中のみキャンセル可能
 
         /// <summary>
-        /// 現在セーブ処理中かどうか
+        /// 現在セーブ�E琁E��かどぁE��
         /// </summary>
         public bool IsSaveInProgress => saveInProgress;
     }
 
-    // セーブデータ関連のインターフェースとクラス（実際の実装では適切に定義）
-    public interface ISaveData { }
+    // セーブデータ関連のインターフェースとクラス�E�実際の実裁E��は適刁E��定義�E�E    public interface ISaveData { }
     public interface IPlayerData { }
     public interface IWorldState { }
     public interface IProgressData { }
@@ -578,7 +527,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public float PlayTime;
     }
 
-    // 仮の実装クラス
+    // 仮の実裁E��ラス
     public class PlayerData : IPlayerData { }
     public class WorldState : IWorldState { }
     public class ProgressData : IProgressData { }

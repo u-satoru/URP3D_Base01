@@ -6,14 +6,12 @@ using System.Collections.Generic;
 using UnityEditor;
 #endif
 using UnityEngine;
-using asterivo.Unity60.Core.Debug;
+// using asterivo.Unity60.Core.Debug;
 
 namespace asterivo.Unity60.Core.Editor
 {
     /// <summary>
-    /// Core ← Features の単方向依存を検証する軽量バリデータ。
-    /// Core配下のasmdefがFeatures系アセンブリに参照を張っていないかをチェックする。
-    /// </summary>
+    /// Core ↁEFeatures の単方向依存を検証する軽量バリチE�Eタ、E    /// Core配下�EasmdefがFeatures系アセンブリに参�Eを張ってぁE��ぁE��をチェチE��する、E    /// </summary>
     public static class AsmdefDependencyValidator
     {
 #if UNITY_EDITOR
@@ -28,8 +26,7 @@ namespace asterivo.Unity60.Core.Editor
         [InitializeOnLoadMethod]
         private static void AutoValidateOnLoad()
         {
-            // Editor起動毎に軽く検証（重くない）
-            ValidateAndReport();
+            // Editor起動毎に軽く検証�E�重くなぁE��E            ValidateAndReport();
         }
 
         private static void ValidateAndReport()
@@ -81,8 +78,7 @@ namespace asterivo.Unity60.Core.Editor
 
         private static string ExtractJsonValue(string json, string key)
         {
-            // ざっくり抽出（厳密なJSONパースは不要）
-            var marker = $"\"{key}\"";
+            // ざっくり抽出�E�厳寁E��JSONパ�Eスは不要E��E            var marker = $"\"{key}\"";
             var idx = json.IndexOf(marker, StringComparison.Ordinal);
             if (idx < 0) return string.Empty;
             idx = json.IndexOf(':', idx) + 1;

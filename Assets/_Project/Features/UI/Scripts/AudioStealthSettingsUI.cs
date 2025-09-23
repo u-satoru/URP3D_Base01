@@ -5,7 +5,7 @@ using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Debug;
 using Sirenix.OdinInspector;
 
-namespace asterivo.Unity60.Features.UI.Scripts
+namespace asterivo.Unity60.Features.UI
 {
     /// <summary>
     /// オーディオ・ステルス設定UI コンポーネント

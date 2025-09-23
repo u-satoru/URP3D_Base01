@@ -4,13 +4,18 @@ using UnityEngine.Events;
 using asterivo.Unity60.Features.Templates.TPS.Data;
 using asterivo.Unity60.Features.Templates.TPS.Services;
 using asterivo.Unity60.Features.Templates.TPS.Player.StateMachine;
+using asterivo.Unity60.Features.Combat.Interfaces;
+using asterivo.Unity60.Features.Combat;
+using asterivo.Unity60.Features.Combat.Components;
 
 namespace asterivo.Unity60.Features.Templates.TPS.Player
 {
     /// <summary>
     /// TPS Player Health system with ServiceLocator integration
     /// Handles health management, damage, healing, and death/respawn mechanics
+    /// Wraps Combat Feature layer's HealthComponent for TPS-specific features
     /// </summary>
+    [RequireComponent(typeof(asterivo.Unity60.Features.Combat.Components.HealthComponent))]
     public class TPSPlayerHealth : MonoBehaviour
     {
         [Header("=== Configuration ===")]
@@ -43,16 +48,17 @@ namespace asterivo.Unity60.Features.Templates.TPS.Player
         private TPSServiceManager _serviceManager;
         private TPSPlayerStateMachine _stateMachine;
         private Coroutine _healthRegenCoroutine;
+        private asterivo.Unity60.Features.Combat.Components.HealthComponent _combatHealth;
         
-        // Properties
-        public float CurrentHealth => _currentHealth;
+        // Properties (delegating to Combat layer when possible)
+        public float CurrentHealth => _combatHealth?.CurrentHealth ?? _currentHealth;
         public float PreviousHealth => _previousHealth;
-        public float MaxHealth => _playerData?.MaxHealth ?? 100f;
-        public float HealthPercentage => MaxHealth > 0 ? _currentHealth / MaxHealth : 0f;
-        public bool IsAlive => _isAlive;
-        public bool IsDead => !_isAlive;
+        public float MaxHealth => _combatHealth?.MaxHealth ?? (_playerData?.MaxHealth ?? 100f);
+        public float HealthPercentage => _combatHealth?.GetHealthPercentage() ?? (MaxHealth > 0 ? _currentHealth / MaxHealth : 0f);
+        public bool IsAlive => _combatHealth?.IsAlive ?? _isAlive;
+        public bool IsDead => !IsAlive;
         public bool IsRegenerating => _isRegenerating;
-        public bool CanTakeDamage => _isAlive;
+        public bool CanTakeDamage => _combatHealth?.CanTakeDamage ?? _isAlive;
         public bool IsRecentlyDamaged => _playerData != null && (Time.time - _lastDamageTime) < _playerData.DamageReactionDuration;
         
         private void Awake()
@@ -70,15 +76,31 @@ namespace asterivo.Unity60.Features.Templates.TPS.Player
         {
             _serviceManager = GetComponent<TPSServiceManager>();
             _stateMachine = GetComponent<TPSPlayerStateMachine>();
-            
+            _combatHealth = GetComponent<asterivo.Unity60.Features.Combat.Components.HealthComponent>();
+
             if (_serviceManager == null)
             {
                 Debug.LogError("[TPSPlayerHealth] TPSServiceManager component not found!");
             }
-            
+
             if (_stateMachine == null)
             {
                 Debug.LogError("[TPSPlayerHealth] TPSPlayerStateMachine component not found!");
+            }
+
+            if (_combatHealth == null)
+            {
+                _combatHealth = gameObject.AddComponent<asterivo.Unity60.Features.Combat.Components.HealthComponent>();
+            }
+
+            ConfigureCombatHealth();
+        }
+
+        private void ConfigureCombatHealth()
+        {
+            if (_combatHealth != null && _playerData != null)
+            {
+                _combatHealth.SetMaxHealth(_playerData.MaxHealth, true);
             }
         }
         
@@ -92,8 +114,17 @@ namespace asterivo.Unity60.Features.Templates.TPS.Player
         
         private void InitializeHealth()
         {
-            _currentHealth = MaxHealth;
-            _previousHealth = MaxHealth;
+            if (_combatHealth != null)
+            {
+                _combatHealth.ResetHealth();
+                _currentHealth = _combatHealth.CurrentHealth;
+            }
+            else
+            {
+                _currentHealth = MaxHealth;
+            }
+
+            _previousHealth = _currentHealth;
             _isAlive = true;
             _isRegenerating = false;
             _lastDamageTime = 0f;
@@ -121,12 +152,22 @@ namespace asterivo.Unity60.Features.Templates.TPS.Player
                 return;
 
             // Store previous health
-            _previousHealth = _currentHealth;
+            _previousHealth = CurrentHealth;
 
             // Apply damage reduction
             float finalDamage = CalculateFinalDamage(damage);
 
-            _currentHealth = Mathf.Max(0f, _currentHealth - finalDamage);
+            // Create damage info and apply damage through Combat layer
+            var damageInfo = DamageInfo.CreateDetailed(
+                finalDamage,
+                null,
+                transform.position,
+                damageDirection,
+                DamageType.Ranged
+            );
+
+            float actualDamage = _combatHealth?.TakeDamage(finalDamage, damageInfo) ?? finalDamage;
+            _currentHealth = CurrentHealth;
             _lastDamageTime = Time.time;
             
             Debug.Log($"[TPSPlayerHealth] Took {finalDamage} damage. Health: {_currentHealth}/{MaxHealth}");
@@ -146,14 +187,14 @@ namespace asterivo.Unity60.Features.Templates.TPS.Player
             }
             
             // Transition to damage state if alive
-            if (_isAlive && _currentHealth > 0f)
+            if (IsAlive && CurrentHealth > 0f)
             {
-                TransitionToDamageState(finalDamage, damageDirection);
-                
+                TransitionToDamageState(actualDamage, damageDirection);
+
                 // Start health regeneration after delay
                 StartHealthRegenerationDelayed();
             }
-            else if (_currentHealth <= 0f)
+            else if (CurrentHealth <= 0f)
             {
                 Die();
             }
@@ -164,15 +205,15 @@ namespace asterivo.Unity60.Features.Templates.TPS.Player
         /// </summary>
         public void Heal(float healAmount)
         {
-            if (!_isAlive || healAmount <= 0f)
+            if (!IsAlive || healAmount <= 0f)
                 return;
 
             // Store previous health
-            _previousHealth = _currentHealth;
+            _previousHealth = CurrentHealth;
 
-            float oldHealth = _currentHealth;
-            _currentHealth = Mathf.Min(MaxHealth, _currentHealth + healAmount);
-            float actualHealAmount = _currentHealth - oldHealth;
+            float oldHealth = CurrentHealth;
+            float actualHealAmount = _combatHealth?.Heal(healAmount) ?? 0f;
+            _currentHealth = CurrentHealth;
             
             if (actualHealAmount > 0f)
             {
@@ -195,9 +236,10 @@ namespace asterivo.Unity60.Features.Templates.TPS.Player
         /// </summary>
         public void Kill()
         {
-            if (!_isAlive)
+            if (!IsAlive)
                 return;
-            
+
+            _combatHealth?.Kill();
             _currentHealth = 0f;
             Die();
         }
@@ -207,16 +249,17 @@ namespace asterivo.Unity60.Features.Templates.TPS.Player
         /// </summary>
         public void Respawn()
         {
-            if (_isAlive)
+            if (IsAlive)
                 return;
 
             Debug.Log("[TPSPlayerHealth] Player respawning");
 
             // Store previous health (should be 0 when dead)
-            _previousHealth = _currentHealth;
+            _previousHealth = CurrentHealth;
 
-            // Restore health
-            _currentHealth = MaxHealth;
+            // Restore health through Combat layer
+            _combatHealth?.Revive();
+            _currentHealth = CurrentHealth;
             _isAlive = true;
             
             // Stop any ongoing coroutines
@@ -249,11 +292,11 @@ namespace asterivo.Unity60.Features.Templates.TPS.Player
         
         private void Die()
         {
-            if (!_isAlive)
+            if (!IsAlive && _isAlive == false)
                 return;
-            
+
             Debug.Log("[TPSPlayerHealth] Player died");
-            
+
             _isAlive = false;
             _currentHealth = 0f;
             
@@ -327,7 +370,7 @@ namespace asterivo.Unity60.Features.Templates.TPS.Player
             OnHealthRegenStarted?.Invoke();
             
             // Regenerate health over time
-            while (_isAlive && _currentHealth < MaxHealth)
+            while (IsAlive && CurrentHealth < MaxHealth)
             {
                 // Check if we took damage recently (stop regen)
                 if (Time.time - _lastDamageTime < _playerData.HealthRegenDelay)
@@ -336,11 +379,11 @@ namespace asterivo.Unity60.Features.Templates.TPS.Player
                     OnHealthRegenStopped?.Invoke();
                     yield break;
                 }
-                
+
                 // Regenerate health
                 float regenAmount = _playerData.HealthRegenRate * Time.deltaTime;
                 Heal(regenAmount);
-                
+
                 yield return null;
             }
             
@@ -354,12 +397,18 @@ namespace asterivo.Unity60.Features.Templates.TPS.Player
         public void SetPlayerData(TPSPlayerData playerData)
         {
             _playerData = playerData;
-            
-            // Update max health if needed
-            if (_isAlive && _currentHealth > MaxHealth)
+
+            // Update Combat layer max health
+            if (_combatHealth != null && _playerData != null)
+            {
+                _combatHealth.SetMaxHealth(_playerData.MaxHealth, true);
+            }
+
+            // Update current health if needed
+            if (IsAlive && CurrentHealth > MaxHealth)
             {
                 _currentHealth = MaxHealth;
-                OnHealthChanged?.Invoke(_currentHealth);
+                OnHealthChanged?.Invoke(CurrentHealth);
             }
         }
         
@@ -368,7 +417,7 @@ namespace asterivo.Unity60.Features.Templates.TPS.Player
         /// </summary>
         public (float current, float max, float percentage) GetHealthStatus()
         {
-            return (_currentHealth, MaxHealth, HealthPercentage);
+            return (CurrentHealth, MaxHealth, HealthPercentage);
         }
         
         private void OnValidate()

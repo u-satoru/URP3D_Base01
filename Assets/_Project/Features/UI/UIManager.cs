@@ -40,7 +40,7 @@ using DG.Tweening.Core;
         Dialog,
         Overlay
     }
-namespace asterivo.Unity60.Core.UI
+namespace asterivo.Unity60.Features.UI
 {
     /// <summary>
     /// 汎用UIマネージャー。イベント駆動アーキテクチャを使用してUI状態を管理します。

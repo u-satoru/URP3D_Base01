@@ -1,31 +1,26 @@
 using UnityEngine;
-using asterivo.Unity60.Core.Commands;
+// using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// アイテムピックアップコマンドの定義。
-    /// プレイヤーのアイテム収集アクションをカプセル化します。
-    /// 
-    /// 主な機能：
-    /// - アイテムの自動/手動ピックアップ
-    /// - インベントリ容量とアイテム制約の管理
-    /// - ピックアップ範囲とフィルタリング
-    /// - アイテム情報の表示とフィードバック
+    /// アイチE��ピックアチE�Eコマンド�E定義、E    /// プレイヤーのアイチE��収集アクションをカプセル化します、E    /// 
+    /// 主な機�E�E�E    /// - アイチE��の自勁E手動ピックアチE�E
+    /// - インベントリ容量とアイチE��制紁E�E管琁E    /// - ピックアチE�E篁E��とフィルタリング
+    /// - アイチE��惁E��の表示とフィードバチE��
     /// </summary>
     [System.Serializable]
     public class PickupCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// ピックアップの種類を定義する列挙型
-        /// </summary>
+        /// ピックアチE�Eの種類を定義する列挙垁E        /// </summary>
         public enum PickupType
         {
-            Manual,         // 手動ピックアップ
-            Auto,           // 自動ピックアップ
-            Selective,      // 選択的ピックアップ
-            Area,           // 範囲ピックアップ
-            Magnetic        // 磁力ピックアップ
+            Manual,         // 手動ピックアチE�E
+            Auto,           // 自動ピチE��アチE�E
+            Selective,      // 選択的ピックアチE�E
+            Area,           // 篁E��ピックアチE�E
+            Magnetic        // 磁力ピックアチE�E
         }
 
         [Header("Pickup Parameters")]
@@ -35,22 +30,22 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public string itemTag = "Item";
 
         [Header("Item Filtering")]
-        [Tooltip("ピックアップ対象のアイテムタイプ")]
+        [Tooltip("ピックアチE�E対象のアイチE��タイチE)]
         public string[] allowedItemTypes = { "Consumable", "Weapon", "Armor", "Key" };
-        [Tooltip("除外するアイテムタイプ")]
+        [Tooltip("除外するアイチE��タイチE)]
         public string[] excludedItemTypes = { };
         public bool respectInventoryCapacity = true;
 
         [Header("Area Pickup")]
-        [Tooltip("範囲ピックアップ時の効果範囲")]
+        [Tooltip("篁E��ピックアチE�E時�E効果篁E��")]
         public float areaRadius = 3f;
-        [Tooltip("一度にピックアップする最大個数")]
+        [Tooltip("一度にピックアチE�Eする最大個数")]
         public int maxPickupCount = 10;
 
         [Header("Magnetic Pickup")]
-        [Tooltip("アイテムを引き寄せる力")]
+        [Tooltip("アイチE��を引き寁E��る力")]
         public float magneticForce = 5f;
-        [Tooltip("磁力の効果時間")]
+        [Tooltip("磁力の効果時閁E)]
         public float magneticDuration = 2f;
 
         [Header("Animation & Effects")]
@@ -64,7 +59,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public string pickupSoundName = "ItemPickup";
 
         /// <summary>
-        /// デフォルトコンストラクタ
+        /// チE��ォルトコンストラクタ
         /// </summary>
         public PickupCommandDefinition()
         {
@@ -80,30 +75,27 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// ピックアップコマンドが実行可能かどうかを判定します
-        /// </summary>
+        /// ピックアチE�Eコマンドが実行可能かどぁE��を判定しまぁE        /// </summary>
         public bool CanExecute(object context = null)
         {
-            // 基本的な実行可能性チェック
+            // 基本皁E��実行可能性チェチE��
             if (pickupRange <= 0f) return false;
             
             if (pickupType == PickupType.Area && areaRadius <= 0f) return false;
             if (pickupType == PickupType.Magnetic && (magneticForce <= 0f || magneticDuration <= 0f)) return false;
 
-            // コンテキストがある場合の追加チェック
+            // コンチE��ストがある場合�E追加チェチE��
             if (context != null)
             {
-                // インベントリの容量チェック
-                // プレイヤーの状態チェック（移動中、戦闘中等の制約）
-                // 範囲内にピックアップ可能アイテムの存在チェック
+                // インベントリの容量チェチE��
+                // プレイヤーの状態チェチE���E�移動中、戦闘中等�E制紁E��E                // 篁E��冁E��ピックアチE�E可能アイチE��の存在チェチE��
             }
 
             return true;
         }
 
         /// <summary>
-        /// ピックアップコマンドを作成します
-        /// </summary>
+        /// ピックアチE�Eコマンドを作�EしまぁE        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
             if (!CanExecute(context))
@@ -114,8 +106,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// PickupCommandDefinitionに対応する実際のコマンド実装
-    /// </summary>
+    /// PickupCommandDefinitionに対応する実際のコマンド実裁E    /// </summary>
     public class PickupCommand : ICommand
     {
         private PickupCommandDefinition definition;
@@ -131,8 +122,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// ピックアップコマンドの実行
-        /// </summary>
+        /// ピックアチE�Eコマンド�E実衁E        /// </summary>
         public void Execute()
         {
             if (executed) return;
@@ -164,8 +154,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 手動ピックアップの実行
-        /// </summary>
+        /// 手動ピックアチE�Eの実衁E        /// </summary>
         private void ExecuteManualPickup()
         {
             var targetItem = FindNearestPickupableItem();
@@ -176,8 +165,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 自動ピックアップの実行
-        /// </summary>
+        /// 自動ピチE��アチE�Eの実衁E        /// </summary>
         private void ExecuteAutoPickup()
         {
             var items = FindAllPickupableItems(definition.pickupRange);
@@ -187,21 +175,19 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 
                 PickupItem(item);
                 
-                // インベントリが満杯になった場合は停止
+                // インベントリが満杯になった場合�E停止
                 if (definition.respectInventoryCapacity && IsInventoryFull())
                     break;
             }
         }
 
         /// <summary>
-        /// 選択的ピックアップの実行
-        /// </summary>
+        /// 選択的ピックアチE�Eの実衁E        /// </summary>
         private void ExecuteSelectivePickup()
         {
             var items = FindAllPickupableItems(definition.pickupRange);
             
-            // 優先度の高いアイテムから順に取得
-            var prioritizedItems = SortItemsByPriority(items);
+            // 優先度の高いアイチE��から頁E��取征E            var prioritizedItems = SortItemsByPriority(items);
             
             foreach (var item in prioritizedItems)
             {
@@ -215,8 +201,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 範囲ピックアップの実行
-        /// </summary>
+        /// 篁E��ピックアチE�Eの実衁E        /// </summary>
         private void ExecuteAreaPickup()
         {
             var items = FindAllPickupableItems(definition.areaRadius);
@@ -240,29 +225,26 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 磁力ピックアップの実行
-        /// </summary>
+        /// 磁力ピックアチE�Eの実衁E        /// </summary>
         private void ExecuteMagneticPickup()
         {
             var items = FindAllPickupableItems(definition.areaRadius);
             isMagneticActive = true;
 
-            // アイテムを引き寄せる処理を開始
-            foreach (var item in items)
+            // アイチE��を引き寁E��る�E琁E��開姁E            foreach (var item in items)
             {
                 if (!CanPickupItem(item)) continue;
                 
                 StartItemAttraction(item);
             }
 
-            // 磁力効果の継続処理（実際の実装では Coroutine またはUpdateLoop）
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            // 磁力効果�E継続�E琁E��実際の実裁E��は Coroutine また�EUpdateLoop�E�E#if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"Magnetic pickup started: attracting {items.Count} items");
 #endif
         }
 
         /// <summary>
-        /// 最も近いピックアップ可能アイテムを検索
+        /// 最も近いピックアチE�E可能アイチE��を検索
         /// </summary>
         private GameObject FindNearestPickupableItem()
         {
@@ -289,7 +271,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// すべてのピックアップ可能アイテムを検索
+        /// すべてのピックアチE�E可能アイチE��を検索
         /// </summary>
         private System.Collections.Generic.List<GameObject> FindAllPickupableItems(float searchRange)
         {
@@ -311,22 +293,22 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// アイテムが有効なピックアップ対象かチェック
+        /// アイチE��が有効なピックアチE�E対象かチェチE��
         /// </summary>
         private bool IsValidPickupTarget(GameObject item)
         {
-            // タグチェック
+            // タグチェチE��
             if (!string.IsNullOrEmpty(definition.itemTag) && !item.CompareTag(definition.itemTag))
                 return false;
 
-            // アイテムコンポーネントの存在チェック
+            // アイチE��コンポ�Eネント�E存在チェチE��
             var itemComponent = item.GetComponent<IPickupableItem>();
             if (itemComponent == null) return false;
 
-            // アイテムタイプフィルタリング
+            // アイチE��タイプフィルタリング
             string itemType = itemComponent.GetItemType();
             
-            // 除外リストチェック
+            // 除外リストチェチE��
             if (definition.excludedItemTypes.Length > 0)
             {
                 foreach (var excludedType in definition.excludedItemTypes)
@@ -335,7 +317,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 }
             }
 
-            // 許可リストチェック
+            // 許可リストチェチE��
             if (definition.allowedItemTypes.Length > 0)
             {
                 bool isAllowed = false;
@@ -354,7 +336,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// アイテムをピックアップ可能かチェック
+        /// アイチE��をピチE��アチE�E可能かチェチE��
         /// </summary>
         private bool CanPickupItem(GameObject item)
         {
@@ -366,42 +348,36 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// インベントリが満杯かチェック
+        /// インベントリが満杯かチェチE��
         /// </summary>
         private bool IsInventoryFull()
         {
-            // 実際の実装では InventorySystem との連携
+            // 実際の実裁E��は InventorySystem との連携
             return false; // 仮の値
         }
 
         /// <summary>
-        /// アイテムを優先度順にソート
-        /// </summary>
+        /// アイチE��を優先度頁E��ソーチE        /// </summary>
         private System.Collections.Generic.List<GameObject> SortItemsByPriority(System.Collections.Generic.List<GameObject> items)
         {
-            // 実際の実装では、アイテムの価値、レアリティ、必要性等で優先度を決定
-            return items; // 仮の実装
-        }
+            // 実際の実裁E��は、アイチE��の価値、レアリチE��、忁E��性等で優先度を決宁E            return items; // 仮の実裁E        }
 
         /// <summary>
-        /// 実際のアイテムピックアップ処理
-        /// </summary>
+        /// 実際のアイチE��ピックアチE�E処琁E        /// </summary>
         private void PickupItem(GameObject item)
         {
             var itemComponent = item.GetComponent<IPickupableItem>();
             if (itemComponent == null) return;
 
-            // アイテム情報の取得
-            var itemData = itemComponent.GetItemData();
+            // アイチE��惁E��の取征E            var itemData = itemComponent.GetItemData();
 
             // インベントリに追加
-            // 実際の実装では InventorySystem との連携
+            // 実際の実裁E��は InventorySystem との連携
             
-            // アイテムをワールドから削除
-            pickedUpItems.Add(item); // Undo用に保存
-            item.SetActive(false);
+            // アイチE��をワールドから削除
+            pickedUpItems.Add(item); // Undo用に保孁E            item.SetActive(false);
 
-            // エフェクトとフィードバック
+            // エフェクトとフィードバチE��
             PlayPickupEffects(item, itemData);
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -410,16 +386,13 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// アイテムの磁力による引き寄せ開始
-        /// </summary>
+        /// アイチE��の磁力による引き寁E��開姁E        /// </summary>
         private void StartItemAttraction(GameObject item)
         {
-            // 実際の実装では、物理的な力またはTweenアニメーションでアイテムを引き寄せる
-            // 引き寄せ完了時にPickupItem()を呼び出す
-        }
+            // 実際の実裁E��は、物琁E��な力また�ETweenアニメーションでアイチE��を引き寁E��めE            // 引き寁E��完亁E��にPickupItem()を呼び出ぁE        }
 
         /// <summary>
-        /// ピックアップエフェクトの再生
+        /// ピックアチE�Eエフェクト�E再生
         /// </summary>
         private void PlayPickupEffects(GameObject item, IItemData itemData)
         {
@@ -435,51 +408,43 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 }
             }
 
-            // パーティクルエフェクト
-            if (definition.showPickupEffect)
+            // パ�EチE��クルエフェクチE            if (definition.showPickupEffect)
             {
-                // エフェクト生成
-            }
+                // エフェクト生戁E            }
 
-            // サウンドエフェクト
-            if (definition.playPickupSound)
+            // サウンドエフェクチE            if (definition.playPickupSound)
             {
                 // AudioSystem との連携
             }
 
-            // アイテム情報表示
+            // アイチE��惁E��表示
             if (definition.showItemInfo)
             {
-                // UI表示（アイテム名、説明等）
-            }
+                // UI表示�E�アイチE��名、説明等！E            }
         }
 
         /// <summary>
-        /// 磁力ピックアップの更新（外部から定期的に呼び出される）
-        /// </summary>
+        /// 磁力ピックアチE�Eの更新�E�外部から定期皁E��呼び出される！E        /// </summary>
         public void UpdateMagneticPickup(float deltaTime)
         {
             if (!isMagneticActive) return;
 
-            // 引き寄せ処理の更新
-            // 持続時間の管理
-        }
+            // 引き寁E��処琁E�E更新
+            // 持続時間�E管琁E        }
 
         /// <summary>
-        /// Undo操作（ピックアップの取り消し）
-        /// </summary>
+        /// Undo操作（ピチE��アチE�Eの取り消し�E�E        /// </summary>
         public void Undo()
         {
             if (!executed) return;
 
-            // ピックアップしたアイテムを元の位置に戻す
-            foreach (var item in pickedUpItems)
+            // ピックアチE�EしたアイチE��を�Eの位置に戻ぁE            foreach (var item in pickedUpItems)
             {
                 if (item != null)
                 {
                     item.SetActive(true);
                     // インベントリから削除
-                    // 実際の実装では InventorySystem との連携
+                    // 実際の実裁E��は InventorySystem との連携
                 }
             }
 
@@ -493,18 +458,18 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// このコマンドがUndo可能かどうか
+        /// こ�EコマンドがUndo可能かどぁE��
         /// </summary>
         public bool CanUndo => executed && pickedUpItems.Count > 0;
 
         /// <summary>
-        /// 磁力効果が現在アクティブかどうか
+        /// 磁力効果が現在アクチE��ブかどぁE��
         /// </summary>
         public bool IsMagneticActive => isMagneticActive;
     }
 
     /// <summary>
-    /// ピックアップ可能アイテムのインターフェース
+    /// ピックアチE�E可能アイチE��のインターフェース
     /// </summary>
     public interface IPickupableItem
     {
@@ -515,7 +480,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// アイテムデータのインターフェース
+    /// アイチE��チE�Eタのインターフェース
     /// </summary>
     public interface IItemData
     {

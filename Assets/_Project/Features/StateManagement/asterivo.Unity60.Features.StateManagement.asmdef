@@ -3,10 +3,6 @@
     "rootNamespace": "asterivo.Unity60.Features.StateManagement",
     "references": [
         "asterivo.Unity60.Core",
-        "asterivo.Unity60.Core.Events",
-        "asterivo.Unity60.Core.Services",
-        "asterivo.Unity60.Core.Patterns",
-        "asterivo.Unity60.Player",
         "Unity.InputSystem",
         "UniTask"
     ],

@@ -2,15 +2,14 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using asterivo.Unity60.Core;
-// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
+// // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 using System;
 
 namespace asterivo.Unity60.Core
 {
     /// <summary>
-    /// Singleton→ServiceLocator移行状況の監視システム
-    /// Phase 3移行計画 Step 3.2の実装
-    /// </summary>
+    /// Singleton→ServiceLocator移行状況�E監視シスチE��
+    /// Phase 3移行計画 Step 3.2の実裁E    /// </summary>
     public class MigrationMonitor : MonoBehaviour 
     {
         [TabGroup("Migration Status", "Current Status")]
@@ -41,7 +40,7 @@ namespace asterivo.Unity60.Core
         [SerializeField, ReadOnly] private string migrationStartTime;
         [SerializeField, ReadOnly] private string lastMigrationEvent;
         
-        // 内部統計データ
+        // 冁E��統計データ
         private Dictionary<Type, int> singletonUsageCount = new Dictionary<Type, int>();
         private Dictionary<Type, int> serviceLocatorUsageCount = new Dictionary<Type, int>();
         private Dictionary<string, DateTime> lastUsageTime = new Dictionary<string, DateTime>();
@@ -76,15 +75,14 @@ namespace asterivo.Unity60.Core
         
         private void MonitorMigrationProgress() 
         {
-            // 各サービスの移行状況をチェック
+            // 吁E��ービスの移行状況をチェチE��
             audioServiceMigrated = CheckAudioServiceMigration();
             spatialServiceMigrated = CheckSpatialServiceMigration();
             effectServiceMigrated = CheckEffectServiceMigration();
             updateServiceMigrated = CheckUpdateServiceMigration();
             stealthServiceMigrated = CheckStealthServiceMigration();
             
-            // 全体の移行状況
-            int migratedCount = 0;
+            // 全体�E移行状況E            int migratedCount = 0;
             if (audioServiceMigrated) migratedCount++;
             if (spatialServiceMigrated) migratedCount++;
             if (effectServiceMigrated) migratedCount++;
@@ -135,7 +133,7 @@ namespace asterivo.Unity60.Core
         
         private void UpdateMigrationStatus()
         {
-            // アクティブなSingleton使用箇所のリストを更新
+            // アクチE��ブなSingleton使用箁E��のリストを更新
             activeSingletonUsages.Clear();
             
             if (!audioServiceMigrated) activeSingletonUsages.Add("AudioManager.Instance");
@@ -144,8 +142,7 @@ namespace asterivo.Unity60.Core
             if (!updateServiceMigrated) activeSingletonUsages.Add("AudioUpdateCoordinator.Instance");
             if (!stealthServiceMigrated) activeSingletonUsages.Add("StealthAudioCoordinator.Instance");
             
-            // パフォーマンス比率の計算
-            if (singletonCallCount > 0)
+            // パフォーマンス比率の計箁E            if (singletonCallCount > 0)
             {
                 performanceRatio = serviceLocatorCallCount / singletonCallCount;
             }
@@ -157,15 +154,14 @@ namespace asterivo.Unity60.Core
         
         private void UpdatePerformanceMetrics()
         {
-            // フレーム時間の監視
-            recentFrameTimes.Enqueue(Time.unscaledDeltaTime);
+            // フレーム時間の監要E            recentFrameTimes.Enqueue(Time.unscaledDeltaTime);
             
             if (recentFrameTimes.Count > FRAME_HISTORY_SIZE)
             {
                 recentFrameTimes.Dequeue();
             }
             
-            // パフォーマンス異常の検出
+            // パフォーマンス異常の検�E
             if (recentFrameTimes.Count >= FRAME_HISTORY_SIZE)
             {
                 float averageFrameTime = GetAverageFrameTime();
@@ -210,7 +206,7 @@ namespace asterivo.Unity60.Core
             string key = $"{singletonType.Name}@{location}";
             lastUsageTime[key] = DateTime.Now;
             
-            // 警告の記録
+            // 警告�E記録
             if (FeatureFlags.EnableDebugLogging)
             {
                 string message = $"[MIGRATION] Singleton usage: {singletonType.Name} at {location}";
@@ -287,16 +283,14 @@ namespace asterivo.Unity60.Core
         #region Public API
         
         /// <summary>
-        /// 現在の移行進捗を取得
-        /// </summary>
+        /// 現在の移行進捗を取征E        /// </summary>
         public float GetMigrationProgress()
         {
             return migrationProgress;
         }
         
         /// <summary>
-        /// 特定サービスの移行状況を取得
-        /// </summary>
+        /// 特定サービスの移行状況を取征E        /// </summary>
         public bool IsServiceMigrated(string serviceName)
         {
             return serviceName.ToLower() switch
@@ -311,35 +305,33 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// Singleton使用統計を取得
-        /// </summary>
+        /// Singleton使用統計を取征E        /// </summary>
         public Dictionary<Type, int> GetSingletonUsageStats()
         {
             return new Dictionary<Type, int>(singletonUsageCount);
         }
         
         /// <summary>
-        /// ServiceLocator使用統計を取得
-        /// </summary>
+        /// ServiceLocator使用統計を取征E        /// </summary>
         public Dictionary<Type, int> GetServiceLocatorUsageStats()
         {
             return new Dictionary<Type, int>(serviceLocatorUsageCount);
         }
         
         /// <summary>
-        /// 移行の安全性を評価
+        /// 移行�E安�E性を評価
         /// </summary>
         public bool IsMigrationSafe()
         {
-            // 基本的な安全性チェック
+            // 基本皁E��安�E性チェチE��
             if (!FeatureFlags.UseServiceLocator) return false;
             if (!FeatureFlags.EnableMigrationMonitoring) return false;
             
-            // パフォーマンス安全性チェック
+            // パフォーマンス安�E性チェチE��
             float avgFrameTime = GetAverageFrameTime();
-            if (avgFrameTime > 0.040f) return false; // 25FPS以下は危険
+            if (avgFrameTime > 0.040f) return false; // 25FPS以下�E危険
             
-            // Singleton使用頻度チェック
+            // Singleton使用頻度チェチE��
             float recentSingletonUsage = GetRecentSingletonUsageRate();
             if (recentSingletonUsage > 0.5f) return false; // 50%以上Singleton使用は危険
             
@@ -398,11 +390,11 @@ Monitoring Duration: {(DateTime.Now - monitoringStartTime).TotalHours:F1} hours
 
 MIGRATION PROGRESS:
 - Overall Progress: {migrationProgress:F1}%
-- Audio Service: {(audioServiceMigrated ? "✅" : "❌")}
-- Spatial Service: {(spatialServiceMigrated ? "✅" : "❌")}
-- Effect Service: {(effectServiceMigrated ? "✅" : "❌")}
-- Update Service: {(updateServiceMigrated ? "✅" : "❌")}
-- Stealth Service: {(stealthServiceMigrated ? "✅" : "❌")}
+- Audio Service: {(audioServiceMigrated ? "✁E : "❁E)}
+- Spatial Service: {(spatialServiceMigrated ? "✁E : "❁E)}
+- Effect Service: {(effectServiceMigrated ? "✁E : "❁E)}
+- Update Service: {(updateServiceMigrated ? "✁E : "❁E)}
+- Stealth Service: {(stealthServiceMigrated ? "✁E : "❁E)}
 
 USAGE STATISTICS:
 - Singleton Calls: {singletonCallCount}
@@ -411,7 +403,7 @@ USAGE STATISTICS:
 - Total Warnings: {totalWarningCount}
 
 SAFETY STATUS:
-- Migration Safe: {(IsMigrationSafe() ? "✅ YES" : "❌ NO")}
+- Migration Safe: {(IsMigrationSafe() ? "✁EYES" : "❁ENO")}
 - Average Frame Time: {GetAverageFrameTime() * 1000:F2}ms
 - Recent Singleton Usage: {GetRecentSingletonUsageRate() * 100:F1}%
 
@@ -449,7 +441,7 @@ RECENT EVENTS:
         
         private void OnValidate()
         {
-            // エディタでの値変更時の検証
+            // エチE��タでの値変更時�E検証
             if (Application.isPlaying && FeatureFlags.EnableMigrationMonitoring)
             {
                 MonitorMigrationProgress();

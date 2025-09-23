@@ -2,28 +2,27 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Debug;
+// using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Services;
-// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
+// // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
     /// Legacy Singleton使用状況を監視し、移行進捗を追跡する
-    /// Step 3.9: Legacy Singleton警告システムの一部
+    /// Step 3.9: Legacy Singleton警告シスチE��の一部
     /// </summary>
     public class MigrationMonitor : MonoBehaviour
     {
         [Header("Monitoring Settings")]
         [SerializeField] private bool enableRealTimeLogging = true;
         [SerializeField] private bool enableUsageTracking = true;
-        [SerializeField] private float reportingInterval = 30f; // 30秒ごとにレポート
-
+        [SerializeField] private float reportingInterval = 30f; // 30秒ごとにレポ�EチE
         [Header("Usage Statistics")]
         [SerializeField] private int totalSingletonAccesses = 0;
         [SerializeField] private int uniqueSingletonClasses = 0;
         
-        // 使用状況の記録
+        // 使用状況�E記録
         private Dictionary<Type, SingletonUsageInfo> usageStats = new Dictionary<Type, SingletonUsageInfo>();
         private List<SingletonUsageEvent> recentEvents = new List<SingletonUsageEvent>();
         private List<ServiceLocatorUsageEvent> recentServiceLocatorEvents = new List<ServiceLocatorUsageEvent>();
@@ -51,8 +50,8 @@ namespace asterivo.Unity60.Core.Services
         /// <summary>
         /// Singleton使用を記録する
         /// </summary>
-        /// <param name="singletonType">使用されたSingletonの型</param>
-        /// <param name="accessMethod">アクセス方法 (例: "AudioManager.Instance")</param>
+        /// <param name="singletonType">使用されたSingletonの垁E/param>
+        /// <param name="accessMethod">アクセス方況E(侁E "AudioManager.Instance")</param>
         public void LogSingletonUsage(Type singletonType, string accessMethod)
         {
             if (!enableUsageTracking) return;
@@ -76,7 +75,7 @@ namespace asterivo.Unity60.Core.Services
             info.AccessCount++;
             info.LastAccessTime = DateTime.Now;
             
-            // 最近のイベントを記録
+            // 最近�Eイベントを記録
             var usageEvent = new SingletonUsageEvent
             {
                 Timestamp = DateTime.Now,
@@ -91,8 +90,7 @@ namespace asterivo.Unity60.Core.Services
                 recentEvents.RemoveAt(0);
             }
             
-            // リアルタイムログ出力
-            if (enableRealTimeLogging)
+            // リアルタイムログ出劁E            if (enableRealTimeLogging)
             {
                 if (FeatureFlags.EnableMigrationWarnings)
                 {
@@ -108,16 +106,14 @@ namespace asterivo.Unity60.Core.Services
         /// <summary>
         /// ServiceLocator使用を記録する
         /// </summary>
-        /// <param name="serviceType">使用されたサービスの型</param>
-        /// <param name="accessMethod">アクセス方法 (例: "ServiceLocator.GetService<IAudioService>()")</param>
+        /// <param name="serviceType">使用されたサービスの垁E/param>
+        /// <param name="accessMethod">アクセス方況E(侁E "ServiceLocator.GetService<IAudioService>()")</param>
         public void LogServiceLocatorUsage(Type serviceType, string accessMethod)
         {
             if (!enableUsageTracking) return;
             
-            // ServiceLocator使用の記録（ポジティブな指標として扱う）
-            
-            // リアルタイムログ出力
-            if (enableRealTimeLogging)
+            // ServiceLocator使用の記録�E��EジチE��ブな持E��として扱ぁE��E            
+            // リアルタイムログ出劁E            if (enableRealTimeLogging)
             {
                 ServiceLocator.GetService<IEventLogger>()?.Log($"[MigrationMonitor] ServiceLocator usage: {serviceType.Name} via {accessMethod}");
             }
@@ -130,8 +126,7 @@ namespace asterivo.Unity60.Core.Services
                 AccessMethod = accessMethod
             };
             
-            // 最近のイベントに追加（ServiceLocatorイベント用のリストがあればそこに、なければ既存のリストに追加）
-            if (recentServiceLocatorEvents == null)
+            // 最近�Eイベントに追加�E�EerviceLocatorイベント用のリストがあればそこに、なければ既存�Eリストに追加�E�E            if (recentServiceLocatorEvents == null)
             {
                 recentServiceLocatorEvents = new List<ServiceLocatorUsageEvent>();
             }
@@ -145,7 +140,7 @@ namespace asterivo.Unity60.Core.Services
 
         
         /// <summary>
-        /// 現在の使用状況レポートを生成
+        /// 現在の使用状況レポ�Eトを生�E
         /// </summary>
         [ContextMenu("Generate Usage Report")]
         public void GenerateUsageReport()
@@ -173,7 +168,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 最近の使用イベントを表示
+        /// 最近�E使用イベントを表示
         /// </summary>
         [ContextMenu("Show Recent Events")]
         public void ShowRecentEvents()
@@ -195,8 +190,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 使用統計をPlayerPrefsに保存
-        /// </summary>
+        /// 使用統計をPlayerPrefsに保孁E        /// </summary>
         public void SaveUsageStatistics()
         {
             try
@@ -205,8 +199,7 @@ namespace asterivo.Unity60.Core.Services
                 PlayerPrefs.SetInt("MigrationMonitor_UniqueClasses", uniqueSingletonClasses);
                 PlayerPrefs.SetString("MigrationMonitor_LastReportTime", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                 
-                // 各Singletonの使用回数を保存
-                foreach (var kvp in usageStats)
+                // 各Singletonの使用回数を保孁E                foreach (var kvp in usageStats)
                 {
                     string key = $"MigrationMonitor_Usage_{kvp.Key.Name}";
                     PlayerPrefs.SetInt(key, kvp.Value.AccessCount);
@@ -242,7 +235,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 統計をリセット
+        /// 統計をリセチE��
         /// </summary>
         [ContextMenu("Reset Statistics")]
         public void ResetStatistics()
@@ -261,7 +254,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 移行の推奨事項を生成
+        /// 移行�E推奨事頁E��生�E
         /// </summary>
         [ContextMenu("Generate Migration Recommendations")]
         public void GenerateMigrationRecommendations()
@@ -270,7 +263,7 @@ namespace asterivo.Unity60.Core.Services
             
             if (usageStats.Count == 0)
             {
-                ServiceLocator.GetService<IEventLogger>()?.Log("  ✅ No singleton usage detected - migration appears complete!");
+                ServiceLocator.GetService<IEventLogger>()?.Log("  ✁ENo singleton usage detected - migration appears complete!");
                 return;
             }
             
@@ -284,46 +277,39 @@ namespace asterivo.Unity60.Core.Services
         
                 
         /// <summary>
-        /// 移行進捗を0.0-1.0の範囲で取得
-        /// ServiceLocator使用率と Legacy Singleton無効化状態から算出
+        /// 移行進捗を0.0-1.0の篁E��で取征E        /// ServiceLocator使用玁E�� Legacy Singleton無効化状態から算�E
         /// </summary>
-        /// <returns>移行進捗 (0.0 = 未開始, 1.0 = 完了)</returns>
+        /// <returns>移行進捁E(0.0 = 未開姁E 1.0 = 完亁E</returns>
         /// <summary>
-        /// 移行進捗を0.0-1.0の範囲で取得
-        /// ServiceLocator使用率と Legacy Singleton無効化状態から算出
+        /// 移行進捗を0.0-1.0の篁E��で取征E        /// ServiceLocator使用玁E�� Legacy Singleton無効化状態から算�E
         /// </summary>
-        /// <returns>移行進捗 (0.0 = 未開始, 1.0 = 完了)</returns>
+        /// <returns>移行進捁E(0.0 = 未開姁E 1.0 = 完亁E</returns>
         /// <summary>
-        /// 移行進捗を0.0-1.0の範囲で取得
-        /// ServiceLocator使用率と Legacy Singleton無効化状態から算出
+        /// 移行進捗を0.0-1.0の篁E��で取征E        /// ServiceLocator使用玁E�� Legacy Singleton無効化状態から算�E
         /// </summary>
-        /// <returns>移行進捗 (0.0 = 未開始, 1.0 = 完了)</returns>
+        /// <returns>移行進捁E(0.0 = 未開姁E 1.0 = 完亁E</returns>
         public float GetMigrationProgress()
         {
-            // Phase 1: Legacy Singleton無効化チェック
+            // Phase 1: Legacy Singleton無効化チェチE��
             float phase1Progress = FeatureFlags.DisableLegacySingletons ? 0.6f : 0.0f;
             
-            // Phase 2: ServiceLocator使用チェック
+            // Phase 2: ServiceLocator使用チェチE��
             float phase2Progress = FeatureFlags.UseServiceLocator ? 0.3f : 0.0f;
             
-            // Phase 3: Legacy使用状況チェック（使用量が少ないほど進捗が高い）
-            float phase3Progress = 0.0f;
+            // Phase 3: Legacy使用状況チェチE���E�使用量が少なぁE��ど進捗が高い�E�E            float phase3Progress = 0.0f;
             if (totalSingletonAccesses == 0)
             {
-                // Legacy使用なし = 完了
-                phase3Progress = 0.1f;
+                // Legacy使用なぁE= 完亁E                phase3Progress = 0.1f;
             }
             else if (totalSingletonAccesses < 10)
             {
-                // 低使用量
-                phase3Progress = 0.05f;
+                // 低使用釁E                phase3Progress = 0.05f;
             }
-            // 高使用量の場合はphase3Progress = 0.0f
+            // 高使用量�E場合�Ephase3Progress = 0.0f
             
             float totalProgress = phase1Progress + phase2Progress + phase3Progress;
             
-            // デバッグログ出力
-            if (enableRealTimeLogging)
+            // チE��チE��ログ出劁E            if (enableRealTimeLogging)
             {
                 ServiceLocator.GetService<IEventLogger>()?.Log($"[MigrationMonitor] Migration Progress: {totalProgress:P1} " +
                                $"(Phase1: {phase1Progress:P1}, Phase2: {phase2Progress:P1}, Phase3: {phase3Progress:P1})");
@@ -333,27 +319,25 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 移行の安全性を判定する
-        /// 重要なサービスの登録状態とLegacy Singleton使用状況を総合的に評価
+        /// 移行�E安�E性を判定すめE        /// 重要なサービスの登録状態とLegacy Singleton使用状況を総合皁E��評価
         /// </summary>
-        /// <returns>true=安全, false=危険, null=判定不能</returns>
+        /// <returns>true=安�E, false=危険, null=判定不�E</returns>
         public bool? IsMigrationSafe()
         {
             try
             {
-                // 1. ServiceLocatorの基本動作確認
-                if (!FeatureFlags.UseServiceLocator)
+                // 1. ServiceLocatorの基本動作確誁E                if (!FeatureFlags.UseServiceLocator)
                 {
                     if (enableRealTimeLogging)
                         ServiceLocator.GetService<IEventLogger>()?.LogWarning("[MigrationMonitor] ServiceLocator is disabled - migration safety uncertain");
-                    return null; // ServiceLocatorが無効の場合は判定不能
+                    return null; // ServiceLocatorが無効の場合�E判定不�E
                 }
                 
-                // 2. 重要なサービスの登録状態チェック
+                // 2. 重要なサービスの登録状態チェチE��
                 int criticalServicesCount = 0;
                 int registeredServicesCount = 0;
                 
-                // 重要サービスのチェック
+                // 重要サービスのチェチE��
                 var audioService = ServiceLocator.GetService<asterivo.Unity60.Core.Audio.Interfaces.IAudioService>();
                 if (audioService != null) registeredServicesCount++;
                 criticalServicesCount++;
@@ -374,28 +358,26 @@ namespace asterivo.Unity60.Core.Services
                 if (eventLogger != null) registeredServicesCount++;
                 criticalServicesCount++;
                 
-                // サービス登録率を算出
+                // サービス登録玁E��算�E
                 float serviceRegistrationRatio = criticalServicesCount > 0 ? 
                     (float)registeredServicesCount / criticalServicesCount : 0f;
                 
-                // 3. Legacy Singleton使用量チェック
-                bool legacySingletonUsageAcceptable = totalSingletonAccesses < 50; // 50回未満なら安全範囲
+                // 3. Legacy Singleton使用量チェチE��
+                bool legacySingletonUsageAcceptable = totalSingletonAccesses < 50; // 50回未満なら安�E篁E��
                 
-                // 4. 総合判定
-                bool isServicesSafe = serviceRegistrationRatio >= 0.8f; // 80%以上のサービスが登録済み
+                // 4. 総合判宁E                bool isServicesSafe = serviceRegistrationRatio >= 0.8f; // 80%以上�Eサービスが登録済み
                 bool isLegacyUsageSafe = legacySingletonUsageAcceptable;
                 bool isFeatureFlagsSafe = FeatureFlags.UseServiceLocator; // ServiceLocatorが有効
                 
                 bool overallSafety = isServicesSafe && isLegacyUsageSafe && isFeatureFlagsSafe;
                 
-                // デバッグ情報出力
-                if (enableRealTimeLogging)
+                // チE��チE��惁E��出劁E                if (enableRealTimeLogging)
                 {
                     ServiceLocator.GetService<IEventLogger>()?.Log($"[MigrationMonitor] Safety Assessment:");
-                    ServiceLocator.GetService<IEventLogger>()?.Log($"  Services: {registeredServicesCount}/{criticalServicesCount} ({serviceRegistrationRatio:P1}) - {(isServicesSafe ? "安全" : "危険")}");
-                    ServiceLocator.GetService<IEventLogger>()?.Log($"  Legacy Usage: {totalSingletonAccesses} accesses - {(isLegacyUsageSafe ? "安全" : "危険")}");
-                    ServiceLocator.GetService<IEventLogger>()?.Log($"  FeatureFlags: ServiceLocator={FeatureFlags.UseServiceLocator} - {(isFeatureFlagsSafe ? "安全" : "危険")}");
-                    ServiceLocator.GetService<IEventLogger>()?.Log($"  Overall Safety: {(overallSafety ? "✅ SAFE" : "⚠️ UNSAFE")}");
+                    ServiceLocator.GetService<IEventLogger>()?.Log($"  Services: {registeredServicesCount}/{criticalServicesCount} ({serviceRegistrationRatio:P1}) - {(isServicesSafe ? "安�E" : "危険")}");
+                    ServiceLocator.GetService<IEventLogger>()?.Log($"  Legacy Usage: {totalSingletonAccesses} accesses - {(isLegacyUsageSafe ? "安�E" : "危険")}");
+                    ServiceLocator.GetService<IEventLogger>()?.Log($"  FeatureFlags: ServiceLocator={FeatureFlags.UseServiceLocator} - {(isFeatureFlagsSafe ? "安�E" : "危険")}");
+                    ServiceLocator.GetService<IEventLogger>()?.Log($"  Overall Safety: {(overallSafety ? "✁ESAFE" : "⚠�E�EUNSAFE")}");
                 }
                 
                 return overallSafety;
@@ -404,30 +386,28 @@ namespace asterivo.Unity60.Core.Services
             {
                 if (enableRealTimeLogging)
                     ServiceLocator.GetService<IEventLogger>()?.LogError($"[MigrationMonitor] Safety assessment failed: {ex.Message}");
-                return null; // 例外発生時は判定不能
+                return null; // 例外発生時は判定不�E
             }
         }
 
         
         /// <summary>
-        /// Singleton使用統計を取得
-        /// </summary>
-        /// <returns>Singleton使用統計のディクショナリ</returns>
+        /// Singleton使用統計を取征E        /// </summary>
+        /// <returns>Singleton使用統計�EチE��クショナリ</returns>
         public Dictionary<Type, SingletonUsageInfo> GetSingletonUsageStats()
         {
             return new Dictionary<Type, SingletonUsageInfo>(usageStats);
         }
         
         /// <summary>
-        /// ServiceLocator使用統計を取得
-        /// </summary>
-        /// <returns>ServiceLocator使用イベントのリスト</returns>
+        /// ServiceLocator使用統計を取征E        /// </summary>
+        /// <returns>ServiceLocator使用イベント�EリスチE/returns>
         public List<ServiceLocatorUsageEvent> GetServiceLocatorUsageStats()
         {
             return new List<ServiceLocatorUsageEvent>(recentServiceLocatorEvents ?? new List<ServiceLocatorUsageEvent>());
         }
 /// <summary>
-        /// 簡易版の安全性チェック (コンテキストメニュー用)
+        /// 簡易版の安�E性チェチE�� (コンチE��ストメニュー用)
         /// </summary>
         [ContextMenu("Check Migration Safety")]
         public void CheckMigrationSafety()
@@ -436,31 +416,30 @@ namespace asterivo.Unity60.Core.Services
             
             if (safetyResult == null)
             {
-                ServiceLocator.GetService<IEventLogger>()?.LogWarning("[MigrationMonitor] ⚠️ Migration safety assessment inconclusive");
+                ServiceLocator.GetService<IEventLogger>()?.LogWarning("[MigrationMonitor] ⚠�E�EMigration safety assessment inconclusive");
             }
             else if (safetyResult.Value)
             {
-                ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationMonitor] ✅ Migration is SAFE to proceed");
+                ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationMonitor] ✁EMigration is SAFE to proceed");
             }
             else
             {
-                ServiceLocator.GetService<IEventLogger>()?.LogError("[MigrationMonitor] ⚠️ Migration is UNSAFE - review issues before proceeding");
+                ServiceLocator.GetService<IEventLogger>()?.LogError("[MigrationMonitor] ⚠�E�EMigration is UNSAFE - review issues before proceeding");
             }
         }
 
 
 /// <summary>
-        /// 特定のSingletonに対する移行推奨事項を取得
-        /// </summary>
+        /// 特定�ESingletonに対する移行推奨事頁E��取征E        /// </summary>
         private string GetMigrationRecommendation(SingletonUsageInfo info)
         {
             if (info.AccessCount > 50)
             {
-                return "❗ High usage detected - Priority migration recommended";
+                return "❁EHigh usage detected - Priority migration recommended";
             }
             else if (info.AccessCount > 10)
             {
-                return "⚠️  Medium usage - Schedule migration soon";
+                return "⚠�E�E Medium usage - Schedule migration soon";
             }
             else
             {
@@ -470,7 +449,7 @@ namespace asterivo.Unity60.Core.Services
     }
     
     /// <summary>
-    /// Singleton使用情報を格納するクラス
+    /// Singleton使用惁E��を格納するクラス
     /// </summary>
     [System.Serializable]
     public class SingletonUsageInfo

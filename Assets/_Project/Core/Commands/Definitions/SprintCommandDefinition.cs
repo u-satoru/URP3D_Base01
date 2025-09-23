@@ -1,31 +1,22 @@
 using UnityEngine;
-using asterivo.Unity60.Core.Commands;
+// using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// スプリント（ダッシュ）コマンドの定義。
-    /// プレイヤーまたはAIの高速移動アクションをカプセル化します。
-    /// 
-    /// 主な機能：
-    /// - スプリント速度と継続時間の管理
-    /// - スタミナ消費システムとの連携
-    /// - スプリント中の制約（方向転換制限等）
-    /// - アニメーションとエフェクトの制御
+    /// スプリント（ダチE��ュ�E�コマンド�E定義、E    /// プレイヤーまた�EAIの高速移動アクションをカプセル化します、E    /// 
+    /// 主な機�E�E�E    /// - スプリント速度と継続時間�E管琁E    /// - スタミナ消費シスチE��との連携
+    /// - スプリント中の制紁E��方向転換制限等！E    /// - アニメーションとエフェクト�E制御
     /// </summary>
     [System.Serializable]
     public class SprintCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// スプリントの種類を定義する列挙型
-        /// </summary>
+        /// スプリント�E種類を定義する列挙垁E        /// </summary>
         public enum SprintType
         {
-            Burst,      // 短距離爆発的加速
-            Sustained,  // 持続的高速移動
-            Dodge,      // 回避ダッシュ
-            Charge      // 突進攻撃
-        }
+            Burst,      // 短距離爁E��皁E��送E            Sustained,  // 持続的高速移勁E            Dodge,      // 回避ダチE��ュ
+            Charge      // 突E��攻撁E        }
 
         [Header("Sprint Parameters")]
         public SprintType sprintType = SprintType.Burst;
@@ -49,7 +40,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public bool showTrailEffect = true;
 
         /// <summary>
-        /// デフォルトコンストラクタ
+        /// チE��ォルトコンストラクタ
         /// </summary>
         public SprintCommandDefinition()
         {
@@ -66,31 +57,27 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// スプリントコマンドが実行可能かどうかを判定します
-        /// </summary>
+        /// スプリントコマンドが実行可能かどぁE��を判定しまぁE        /// </summary>
         public bool CanExecute(object context = null)
         {
-            // 基本的な実行可能性チェック
+            // 基本皁E��実行可能性チェチE��
             if (speedMultiplier <= 1f || maxDuration <= 0f) return false;
             
-            // 方向ベクトルのチェック
+            // 方向�EクトルのチェチE��
             if (direction == Vector3.zero) return false;
 
-            // コンテキストがある場合の追加チェック
+            // コンチE��ストがある場合�E追加チェチE��
             if (context != null)
             {
-                // スタミナチェック
-                // クールダウンチェック
-                // 状態異常チェック（疲労、負傷等）
-                // 地形制約チェック（水中、急斜面等でのスプリント制限）
-            }
+                // スタミナチェチE��
+                // クールダウンチェチE��
+                // 状態異常チェチE���E�疲労、負傷等！E                // 地形制紁E��ェチE���E�水中、急斜面等でのスプリント制限！E            }
 
             return true;
         }
 
         /// <summary>
-        /// スプリントコマンドを作成します
-        /// </summary>
+        /// スプリントコマンドを作�EしまぁE        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
             if (!CanExecute(context))
@@ -101,8 +88,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// SprintCommandDefinitionに対応する実際のコマンド実装
-    /// </summary>
+    /// SprintCommandDefinitionに対応する実際のコマンド実裁E    /// </summary>
     public class SprintCommand : ICommand
     {
         private SprintCommandDefinition definition;
@@ -119,8 +105,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// スプリントコマンドの実行
-        /// </summary>
+        /// スプリントコマンド�E実衁E        /// </summary>
         public void Execute()
         {
             if (executed) return;
@@ -129,55 +114,46 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             UnityEngine.Debug.Log($"Executing {definition.sprintType} sprint: {definition.speedMultiplier}x speed, {definition.maxDuration}s max duration");
 #endif
 
-            // スプリント状態の開始
-            isActive = true;
+            // スプリント状態�E開姁E            isActive = true;
             currentDuration = 0f;
 
-            // 実際のスプリント処理をここに実装
-            if (context is MonoBehaviour mono)
+            // 実際のスプリント�E琁E��ここに実裁E            if (context is MonoBehaviour mono)
             {
                 // 移動速度の保存と変更
                 // アニメーション制御
-                // パーティクルエフェクト開始
-                // サウンドエフェクト
-
-                // スタミナ消費の開始（実際の実装では StaminaSystem との連携）
-                // 継続的な更新処理の開始（Coroutine またはUpdateLoop）
-            }
+                // パ�EチE��クルエフェクト開姁E                // サウンドエフェクチE
+                // スタミナ消費の開始（実際の実裁E��は StaminaSystem との連携�E�E                // 継続的な更新処琁E�E開始！Eoroutine また�EUpdateLoop�E�E            }
 
             executed = true;
         }
 
         /// <summary>
-        /// スプリント状態の更新（外部から定期的に呼び出される）
-        /// </summary>
+        /// スプリント状態�E更新�E�外部から定期皁E��呼び出される！E        /// </summary>
         public void UpdateSprint(float deltaTime)
         {
             if (!isActive) return;
 
             currentDuration += deltaTime;
 
-            // スタミナ消費処理
-            float staminaConsumed = definition.staminaConsumptionRate * deltaTime;
+            // スタミナ消費処琁E            float staminaConsumed = definition.staminaConsumptionRate * deltaTime;
             
-            // 最大継続時間チェック
+            // 最大継続時間チェチE��
             if (currentDuration >= definition.maxDuration)
             {
                 EndSprint();
                 return;
             }
 
-            // スタミナ枯渇チェック
+            // スタミナ枯渁E��ェチE��
             if (definition.canInterruptOnStaminaDepleted)
             {
-                // 実際の実装では StaminaSystem からの値を参照
+                // 実際の実裁E��は StaminaSystem からの値を参照
                 // if (currentStamina <= 0f) EndSprint();
             }
         }
 
         /// <summary>
-        /// スプリント状態の終了
-        /// </summary>
+        /// スプリント状態�E終亁E        /// </summary>
         public void EndSprint()
         {
             if (!isActive) return;
@@ -188,23 +164,19 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             UnityEngine.Debug.Log($"Sprint ended after {currentDuration:F1} seconds");
 #endif
 
-            // 速度の復元（maintainVelocityOnEndに応じて）
-            // アニメーション制御
-            // エフェクトの停止
-            // クールダウンの開始
-        }
+            // 速度の復允E��EaintainVelocityOnEndに応じて�E�E            // アニメーション制御
+            // エフェクト�E停止
+            // クールダウンの開姁E        }
 
         /// <summary>
-        /// Undo操作（スプリントの強制停止）
-        /// </summary>
+        /// Undo操作（スプリント�E強制停止�E�E        /// </summary>
         public void Undo()
         {
             if (!executed) return;
 
             EndSprint();
 
-            // 消費したスタミナの復元（部分的）
-            // 状態の完全リセット
+            // 消費したスタミナの復允E��部刁E���E�E            // 状態�E完�EリセチE��
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log("Sprint command undone");
@@ -214,12 +186,12 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// このコマンドがUndo可能かどうか
+        /// こ�EコマンドがUndo可能かどぁE��
         /// </summary>
         public bool CanUndo => executed;
 
         /// <summary>
-        /// スプリントが現在アクティブかどうか
+        /// スプリントが現在アクチE��ブかどぁE��
         /// </summary>
         public bool IsActive => isActive;
     }

@@ -1,40 +1,48 @@
 using System;
 using System.Collections.Generic;
-// using asterivo.Unity60.Core.Player; // Removed to avoid circular dependency
-// using asterivo.Unity60.Core.Patterns.StateHandlers; // Moved to Features
+using asterivo.Unity60.Core.Services;
+using UnityEngine;
 
 namespace asterivo.Unity60.Core.Patterns
 {
     /// <summary>
     /// 状態ハンドラーのレジストリ（Factory + Registry パターン）
+    /// ServiceLocatorに登録して使用するサービス実装
     /// </summary>
-    public class StateHandlerRegistry
+    public class StateHandlerRegistry : IStateService
     {
-        private readonly Dictionary<int, IStateHandler> handlers; // Changed from PlayerState to int
-        
+        private readonly Dictionary<int, IStateHandler> handlers;
+        private bool isInitialized = false;
+
         public StateHandlerRegistry()
         {
             handlers = new Dictionary<int, IStateHandler>();
-            RegisterDefaultHandlers();
         }
-        
+
         /// <summary>
-        /// デフォルトの状態ハンドラーを登録
+        /// サービスの初期化
         /// </summary>
-        private void RegisterDefaultHandlers()
+        public void Initialize()
         {
-            // Temporarily commented out - handlers moved to Features assembly
-            // RegisterHandler(new IdleStateHandler());
-            // RegisterHandler(new WalkingStateHandler());
-            // RegisterHandler(new RunningStateHandler());
-            // RegisterHandler(new SprintingStateHandler());
-            // RegisterHandler(new JumpingStateHandler());
-            // RegisterHandler(new FallingStateHandler());
-            // RegisterHandler(new LandingStateHandler());
-            // RegisterHandler(new CombatStateHandler());
-            // RegisterHandler(new CombatAttackingStateHandler());
-            // RegisterHandler(new InteractingStateHandler());
-            // RegisterHandler(new DeadStateHandler());
+            if (!isInitialized)
+            {
+                Debug.Log("[StateHandlerRegistry] Initializing StateService");
+                isInitialized = true;
+                // Feature層から必要に応じてHandlerを登録する
+            }
+        }
+
+        /// <summary>
+        /// サービスのシャットダウン
+        /// </summary>
+        public void Shutdown()
+        {
+            if (isInitialized)
+            {
+                Debug.Log("[StateHandlerRegistry] Shutting down StateService");
+                ClearHandlers();
+                isInitialized = false;
+            }
         }
         
         /// <summary>
@@ -77,6 +85,14 @@ namespace asterivo.Unity60.Core.Patterns
         public IEnumerable<int> GetRegisteredStates() // Changed from PlayerState to int
         {
             return handlers.Keys;
+        }
+
+        /// <summary>
+        /// 全てのハンドラーをクリア
+        /// </summary>
+        public void ClearHandlers()
+        {
+            handlers.Clear();
         }
     }
 }

@@ -5,7 +5,7 @@ using asterivo.Unity60.Core.Events;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 
-namespace asterivo.Unity60.Player
+namespace asterivo.Unity60.Features.Player
 {
     /// <summary>
     /// プレイヤーまたはエンティティの体力管理を行うコンポーネント

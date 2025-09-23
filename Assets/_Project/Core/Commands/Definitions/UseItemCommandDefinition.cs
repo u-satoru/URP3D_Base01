@@ -1,32 +1,22 @@
 using UnityEngine;
-using asterivo.Unity60.Core.Commands;
+// using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// アイテム使用コマンドの定義。
-    /// プレイヤーのインベントリアイテム使用アクションをカプセル化します。
-    /// 
-    /// 主な機能：
-    /// - 各種アイテムタイプ（消耗品、武器、防具等）の使用
-    /// - アイテム使用条件と制約の管理
-    /// - 使用効果の適用と持続時間管理
-    /// - アニメーションとエフェクトの制御
+    /// アイチE��使用コマンド�E定義、E    /// プレイヤーのインベントリアイチE��使用アクションをカプセル化します、E    /// 
+    /// 主な機�E�E�E    /// - 吁E��アイチE��タイプ（消耗品、武器、E��具等）�E使用
+    /// - アイチE��使用条件と制紁E�E管琁E    /// - 使用効果�E適用と持続時間管琁E    /// - アニメーションとエフェクト�E制御
     /// </summary>
     [System.Serializable]
     public class UseItemCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// アイテム使用の種類を定義する列挙型
-        /// </summary>
+        /// アイチE��使用の種類を定義する列挙垁E        /// </summary>
         public enum UseType
         {
-            Instant,        // 瞬間使用（消耗品等）
-            Equip,          // 装備（武器、防具等）
-            Activate,       // 起動（道具、スキルアイテム等）
-            Consume,        // 消費使用
-            Toggle          // オン/オフ切り替え
-        }
+            Instant,        // 瞬間使用�E�消耗品等！E            Equip,          // 裁E���E�武器、E��具等！E            Activate,       // 起動（道具、スキルアイチE��等！E            Consume,        // 消費使用
+            Toggle          // オン/オフ�Eり替ぁE        }
 
         [Header("Item Usage Parameters")]
         public UseType useType = UseType.Instant;
@@ -51,11 +41,11 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public bool playUseAnimation = true;
         public string useAnimationTrigger = "UseItem";
         public float animationDuration = 1f;
-        public float usageDelay = 0f; // 効果適用までの遅延
+        public float usageDelay = 0f; // 効果適用までの遁E��
 
         [Header("Cooldown")]
         public float cooldownDuration = 0f;
-        public bool globalCooldown = false; // 全アイテムの使用を制限するか
+        public bool globalCooldown = false; // 全アイチE��の使用を制限するか
 
         [Header("Effects")]
         public bool showUseEffect = true;
@@ -63,7 +53,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public string useEffectName = "";
 
         /// <summary>
-        /// デフォルトコンストラクタ
+        /// チE��ォルトコンストラクタ
         /// </summary>
         public UseItemCommandDefinition()
         {
@@ -80,32 +70,28 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// アイテム使用コマンドが実行可能かどうかを判定します
-        /// </summary>
+        /// アイチE��使用コマンドが実行可能かどぁE��を判定しまぁE        /// </summary>
         public bool CanExecute(object context = null)
         {
-            // 基本的な実行可能性チェック
+            // 基本皁E��実行可能性チェチE��
             if (string.IsNullOrEmpty(targetItemId) && itemSlotIndex < 0) return false;
             
             if (requiresTargeting && maxTargetDistance <= 0f) return false;
             if (animationDuration < 0f || usageDelay < 0f) return false;
 
-            // コンテキストがある場合の追加チェック
+            // コンチE��ストがある場合�E追加チェチE��
             if (context != null)
             {
-                // インベントリ内のアイテム存在チェック
-                // アイテム使用可能状態チェック
-                // クールダウンチェック
-                // 使用条件チェック（戦闘中、移動中等）
-                // プレイヤーの状態チェック（スタン、沈黙等）
-            }
+                // インベントリ冁E�EアイチE��存在チェチE��
+                // アイチE��使用可能状態チェチE��
+                // クールダウンチェチE��
+                // 使用条件チェチE���E�戦闘中、移動中等！E                // プレイヤーの状態チェチE���E�スタン、沈黙等！E            }
 
             return true;
         }
 
         /// <summary>
-        /// アイテム使用コマンドを作成します
-        /// </summary>
+        /// アイチE��使用コマンドを作�EしまぁE        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
             if (!CanExecute(context))
@@ -116,8 +102,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// UseItemCommandDefinitionに対応する実際のコマンド実装
-    /// </summary>
+    /// UseItemCommandDefinitionに対応する実際のコマンド実裁E    /// </summary>
     public class UseItemCommand : ICommand
     {
         private UseItemCommandDefinition definition;
@@ -135,14 +120,12 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// アイテム使用コマンドの実行
-        /// </summary>
+        /// アイチE��使用コマンド�E実衁E        /// </summary>
         public void Execute()
         {
             if (executed) return;
 
-            // 使用対象アイテムの取得
-            targetItem = GetTargetItem();
+            // 使用対象アイチE��の取征E            targetItem = GetTargetItem();
             if (targetItem == null)
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -151,8 +134,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 return;
             }
 
-            // ターゲティングが必要な場合の処理
-            if (definition.requiresTargeting)
+            // ターゲチE��ングが忁E��な場合�E処琁E            if (definition.requiresTargeting)
             {
                 targetObject = FindTarget();
                 if (targetObject == null && definition.requiresTargeting)
@@ -174,12 +156,9 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 PlayUseAnimation();
             }
 
-            // 遅延がある場合は遅延実行、そうでなければ即座に実行
-            if (definition.usageDelay > 0f)
+            // 遁E��がある場合�E遁E��実行、そぁE��なければ即座に実衁E            if (definition.usageDelay > 0f)
             {
-                // 実際の実装では Coroutine または Timer で遅延実行
-                // 現在は即座に実行
-                ApplyItemEffect();
+                // 実際の実裁E��は Coroutine また�E Timer で遁E��実衁E                // 現在は即座に実衁E                ApplyItemEffect();
             }
             else
             {
@@ -190,36 +169,34 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 使用対象のアイテムを取得
-        /// </summary>
+        /// 使用対象のアイチE��を取征E        /// </summary>
         private IUsableItem GetTargetItem()
         {
-            // 実際の実装では InventorySystem との連携
+            // 実際の実裁E��は InventorySystem との連携
             
-            // アイテムIDでの検索
+            // アイチE��IDでの検索
             if (!string.IsNullOrEmpty(definition.targetItemId))
             {
                 // return inventorySystem.GetItemById(definition.targetItemId);
             }
             
-            // スロットインデックスでの検索
+            // スロチE��インチE��クスでの検索
             if (definition.itemSlotIndex >= 0)
             {
                 // return inventorySystem.GetItemAtSlot(definition.itemSlotIndex);
             }
 
-            // 仮の実装
-            return new MockUsableItem(definition.targetItemId);
+            // 仮の実裁E            return new MockUsableItem(definition.targetItemId);
         }
 
         /// <summary>
-        /// ターゲットオブジェクトの検索
+        /// ターゲチE��オブジェクト�E検索
         /// </summary>
         private GameObject FindTarget()
         {
             if (context is not MonoBehaviour mono) return null;
 
-            // カメラまたはプレイヤーの前方向にRaycast
+            // カメラまた�Eプレイヤーの前方向にRaycast
             Ray ray = new Ray(mono.transform.position, mono.transform.forward);
             RaycastHit hit;
 
@@ -246,7 +223,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// アイテム効果の適用
+        /// アイチE��効果�E適用
         /// </summary>
         private void ApplyItemEffect()
         {
@@ -271,27 +248,25 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                     break;
             }
 
-            // アイテムの消費処理
-            if (definition.consumeOnUse)
+            // アイチE��の消費処琁E            if (definition.consumeOnUse)
             {
                 ConsumeItem();
             }
 
-            // エフェクトの表示
+            // エフェクト�E表示
             if (definition.showUseEffect)
             {
                 ShowUseEffect();
             }
 
-            // クールダウンの開始
-            if (definition.cooldownDuration > 0f)
+            // クールダウンの開姁E            if (definition.cooldownDuration > 0f)
             {
                 StartCooldown();
             }
         }
 
         /// <summary>
-        /// 瞬間効果の適用
+        /// 瞬間効果�E適用
         /// </summary>
         private void ApplyInstantEffect()
         {
@@ -304,13 +279,13 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 装備効果の適用
+        /// 裁E��効果�E適用
         /// </summary>
         private void ApplyEquipEffect()
         {
             if (context is MonoBehaviour mono)
             {
-                // 実際の実装では EquipmentSystem との連携
+                // 実際の実裁E��は EquipmentSystem との連携
                 // equipmentSystem.EquipItem(targetItem);
                 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -320,7 +295,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 起動効果の適用
+        /// 起動効果�E適用
         /// </summary>
         private void ApplyActivateEffect()
         {
@@ -335,7 +310,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 消費効果の適用
+        /// 消費効果�E適用
         /// </summary>
         private void ApplyConsumeEffect()
         {
@@ -348,12 +323,11 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// トグル効果の適用
+        /// トグル効果�E適用
         /// </summary>
         private void ApplyToggleEffect()
         {
-            // アイテムの現在の状態を取得して切り替え
-            bool currentState = targetItem.GetToggleState();
+            // アイチE��の現在の状態を取得して刁E��替ぁE            bool currentState = targetItem.GetToggleState();
             targetItem.SetToggleState(!currentState);
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -362,11 +336,10 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// アイテムの消費処理
-        /// </summary>
+        /// アイチE��の消費処琁E        /// </summary>
         private void ConsumeItem()
         {
-            // 実際の実装では InventorySystem との連携
+            // 実際の実裁E��は InventorySystem との連携
             // inventorySystem.ConsumeItem(targetItem);
             
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -375,31 +348,27 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 使用エフェクトの表示
+        /// 使用エフェクト�E表示
         /// </summary>
         private void ShowUseEffect()
         {
             if (context is not MonoBehaviour mono) return;
 
-            // パーティクルエフェクト
-            if (!string.IsNullOrEmpty(definition.useEffectName))
+            // パ�EチE��クルエフェクチE            if (!string.IsNullOrEmpty(definition.useEffectName))
             {
                 // effectSystem.PlayEffect(definition.useEffectName, mono.transform.position);
             }
 
-            // サウンドエフェクト
-            // audioSystem.PlaySound(targetItem.GetUseSound());
+            // サウンドエフェクチE            // audioSystem.PlaySound(targetItem.GetUseSound());
 
-            // UI エフェクト
-            // uiSystem.ShowItemUseNotification(targetItem);
+            // UI エフェクチE            // uiSystem.ShowItemUseNotification(targetItem);
         }
 
         /// <summary>
-        /// クールダウンの開始
-        /// </summary>
+        /// クールダウンの開姁E        /// </summary>
         private void StartCooldown()
         {
-            // 実際の実装では CooldownSystem との連携
+            // 実際の実裁E��は CooldownSystem との連携
             // cooldownSystem.StartCooldown(targetItem.GetItemId(), definition.cooldownDuration);
             
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -408,8 +377,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 継続効果の更新（外部から定期的に呼び出される）
-        /// </summary>
+        /// 継続効果�E更新�E�外部から定期皁E��呼び出される！E        /// </summary>
         public void UpdateItemEffect(float deltaTime)
         {
             if (!isEffectActive || definition.effectDuration <= 0f) return;
@@ -422,14 +390,12 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             }
             else
             {
-                // 継続効果の更新処理
-                targetItem?.UpdateEffect(context, deltaTime);
+                // 継続効果�E更新処琁E                targetItem?.UpdateEffect(context, deltaTime);
             }
         }
 
         /// <summary>
-        /// アイテム効果の終了
-        /// </summary>
+        /// アイチE��効果�E終亁E        /// </summary>
         private void EndItemEffect()
         {
             isEffectActive = false;
@@ -441,29 +407,27 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Undo操作（アイテム使用の取り消し）
-        /// </summary>
+        /// Undo操作（アイチE��使用の取り消し�E�E        /// </summary>
         public void Undo()
         {
             if (!executed) return;
 
-            // アイテム効果の取り消し
+            // アイチE��効果�E取り消し
             if (isEffectActive)
             {
                 EndItemEffect();
             }
 
-            // 使用したアイテムの復元（消費していた場合）
-            if (definition.consumeOnUse && targetItem != null)
+            // 使用したアイチE��の復允E��消費してぁE��場合！E            if (definition.consumeOnUse && targetItem != null)
             {
-                // 実際の実装では InventorySystem との連携
+                // 実際の実裁E��は InventorySystem との連携
                 // inventorySystem.RestoreItem(targetItem);
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
                 UnityEngine.Debug.Log($"Restored consumed item: {targetItem.GetItemName()}");
 #endif
             }
 
-            // 装備アイテムの取り外し
+            // 裁E��アイチE��の取り外し
             if (definition.useType == UseItemCommandDefinition.UseType.Equip)
             {
                 // equipmentSystem.UnequipItem(targetItem);
@@ -473,18 +437,18 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// このコマンドがUndo可能かどうか
+        /// こ�EコマンドがUndo可能かどぁE��
         /// </summary>
         public bool CanUndo => executed && (definition.consumeOnUse || definition.useType == UseItemCommandDefinition.UseType.Equip);
 
         /// <summary>
-        /// アイテム効果が現在アクティブかどうか
+        /// アイチE��効果が現在アクチE��ブかどぁE��
         /// </summary>
         public bool IsEffectActive => isEffectActive;
     }
 
     /// <summary>
-    /// 使用可能アイテムのインターフェース
+    /// 使用可能アイチE��のインターフェース
     /// </summary>
     public interface IUsableItem
     {
@@ -500,8 +464,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// テスト用のモックアイテム実装
-    /// </summary>
+    /// チE��ト用のモチE��アイチE��実裁E    /// </summary>
     internal class MockUsableItem : IUsableItem
     {
         private string itemId;

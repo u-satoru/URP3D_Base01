@@ -1,0 +1,23 @@
+{
+    "name": "asterivo.Unity60.Features.Player",
+    "rootNamespace": "asterivo.Unity60.Features.Player",
+    "references": [
+        "asterivo.Unity60.Core",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.inputsystem",
+            "expression": "1.7.0",
+            "define": "NEW_INPUT_SYSTEM"
+        }
+    ],
+    "noEngineReferences": false
+}

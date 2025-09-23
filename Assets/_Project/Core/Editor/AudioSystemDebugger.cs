@@ -4,45 +4,36 @@ using System.Collections.Generic;
 using System.Linq;
 using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core.Audio.Data;
-using asterivo.Unity60.Core.Shared;
-using asterivo.Unity60.Core.Debug;
+// using asterivo.Unity60.Core.Shared;
+// using asterivo.Unity60.Core.Debug;
 using System.Reflection;
 using AudioCategory = asterivo.Unity60.Core.Audio.AudioCategory;
 
 namespace asterivo.Unity60.Core.Editor
 {
     /// <summary>
-    /// オーディオシステム専用デバッガー・モニタリングツール
-    /// 統合オーディオシステムの状態監視、デバッグ、テスト機能を提供
-    /// 
-    /// 主な機能：
-    /// - リアルタイムオーディオシステム状態監視
-    /// - ボリュームレベルの動的制御とテスト
-    /// - ステルスモードのデバッグとテスト環境制御
+    /// オーチE��オシスチE��専用チE��チE��ー・モニタリングチE�Eル
+    /// 統合オーチE��オシスチE��の状態監視、デバッグ、テスト機�Eを提侁E    /// 
+    /// 主な機�E�E�E    /// - リアルタイムオーチE��オシスチE��状態監要E    /// - ボリュームレベルの動的制御とチE��チE    /// - スチE��スモード�EチE��チE��とチE��ト環墁E��御
     /// - パフォーマンス監視とグラフ表示
-    /// - オーディオイベントのリアルタイム追跡
+    /// - オーチE��オイベント�Eリアルタイム追跡
     /// 
-    /// 使用シーン：
-    /// - オーディオシステムの動作確認
-    /// - ゲーム中のオーディオバランス調整
-    /// - ステルス機能のテストとデバッグ
-    /// - パフォーマンス問題の特定
-    /// 
+    /// 使用シーン�E�E    /// - オーチE��オシスチE��の動作確誁E    /// - ゲーム中のオーチE��オバランス調整
+    /// - スチE��ス機�EのチE��トとチE��チE��
+    /// - パフォーマンス問題�E特宁E    /// 
     /// アクセス方法：Unity メニュー > asterivo.Unity60/Audio/Audio System Debugger
-    /// 注意：プレイモード中のみ利用可能
+    /// 注意：�Eレイモード中のみ利用可能
     /// </summary>
     public class AudioSystemDebugger : EditorWindow
     {
         #region Window Management
         
         /// <summary>
-        /// オーディオシステムデバッガーウィンドウを表示する
-        /// Unity メニューから呼び出されるエディタ拡張メニューアイテム
+        /// オーチE��オシスチE��チE��チE��ーウィンドウを表示する
+        /// Unity メニューから呼び出されるエチE��タ拡張メニューアイチE��
         /// </summary>
         /// <remarks>
-        /// ウィンドウの最小サイズは800x600に設定され、
-        /// リアルタイムでオーディオシステムの状態を監視できます。
-        /// </remarks>
+        /// ウィンドウの最小サイズは800x600に設定され、E        /// リアルタイムでオーチE��オシスチE��の状態を監視できます、E        /// </remarks>
         [MenuItem("asterivo.Unity60/Audio/Audio System Debugger")]
         public static void ShowWindow()
         {
@@ -94,9 +85,7 @@ namespace asterivo.Unity60.Core.Editor
         #region Unity Editor Callbacks
         
         /// <summary>
-        /// ウィンドウが有効になった時の初期化処理
-        /// エディタの更新イベントに登録し、オーディオシステムの参照を取得する
-        /// </summary>
+        /// ウィンドウが有効になった時の初期化�E琁E        /// エチE��タの更新イベントに登録し、オーチE��オシスチE��の参�Eを取得すめE        /// </summary>
         private void OnEnable()
         {
             EditorApplication.update += OnEditorUpdate;
@@ -105,8 +94,7 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// ウィンドウが無効になった時のクリーンアップ処理
-        /// エディタの更新イベントから登録解除を行う
+        /// ウィンドウが無効になった時のクリーンアチE�E処琁E        /// エチE��タの更新イベントから登録解除を行う
         /// </summary>
         private void OnDisable()
         {
@@ -114,12 +102,11 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// エディタの更新ループでオーディオシステムデータを定期的に更新
-        /// 自動リフレッシュが有効な場合、指定された間隔でデータを更新してウィンドウを再描画する
+        /// エチE��タの更新ループでオーチE��オシスチE��チE�Eタを定期皁E��更新
+        /// 自動リフレチE��ュが有効な場合、指定された間隔でチE�Eタを更新してウィンドウを�E描画する
         /// </summary>
         /// <remarks>
-        /// プレイモード中のみ実行され、refreshInterval（デフォルト0.5秒）ごとに更新される
-        /// </remarks>
+        /// プレイモード中のみ実行され、refreshInterval�E�デフォルチE.5秒）ごとに更新されめE        /// </remarks>
         private void OnEditorUpdate()
         {
             if (!Application.isPlaying) return;
@@ -133,16 +120,12 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// ウィンドウのGUI描画処理
-        /// プレイモード中のみ利用可能で、タブベースのインターフェースを提供
-        /// </summary>
+        /// ウィンドウのGUI描画処琁E        /// プレイモード中のみ利用可能で、タブ�Eースのインターフェースを提侁E        /// </summary>
         /// <remarks>
-        /// 以下の5つのタブで構成されています：
-        /// 0: System Monitor - システム状態表示と基本操作
-        /// 1: Volume Control - 各カテゴリのボリューム制御
-        /// 2: Stealth Debug - ステルスシステムのデバッグ
+        /// 以下�E5つのタブで構�EされてぁE��す！E        /// 0: System Monitor - シスチE��状態表示と基本操佁E        /// 1: Volume Control - 吁E��チE��リのボリューム制御
+        /// 2: Stealth Debug - スチE��スシスチE��のチE��チE��
         /// 3: Performance - パフォーマンス監視とグラフ表示
-        /// 4: Audio Events - オーディオイベントの履歴表示
+        /// 4: Audio Events - オーチE��オイベント�E履歴表示
         /// </remarks>
         private void OnGUI()
         {
@@ -174,8 +157,8 @@ namespace asterivo.Unity60.Core.Editor
         #region GUI Drawing Methods
         
         /// <summary>
-        /// ウィンドウヘッダー部分のGUI描画
-        /// タイトル表示、自動リフレッシュ切り替え、手動リフレッシュボタンを含む
+        /// ウィンドウヘッダー部刁E�EGUI描画
+        /// タイトル表示、�E動リフレチE��ュ刁E��替え、手動リフレチE��ュボタンを含む
         /// </summary>
         private void DrawHeader()
         {
@@ -197,7 +180,7 @@ namespace asterivo.Unity60.Core.Editor
         
         /// <summary>
         /// タブバーのGUI描画
-        /// 5つのタブ（System Monitor, Volume Control, Stealth Debug, Performance, Audio Events）を表示
+        /// 5つのタブ！Eystem Monitor, Volume Control, Stealth Debug, Performance, Audio Events�E�を表示
         /// </summary>
         private void DrawTabBar()
         {
@@ -504,11 +487,10 @@ namespace asterivo.Unity60.Core.Editor
         #region Utility Methods
         
         /// <summary>
-        /// シーン内のオーディオシステム関連コンポーネントの参照を取得
-        /// AudioManager、StealthAudioCoordinator、SpatialAudioManager、DynamicAudioEnvironmentを検索
+        /// シーン冁E�EオーチE��オシスチE��関連コンポ�Eネント�E参�Eを取征E        /// AudioManager、StealthAudioCoordinator、SpatialAudioManager、DynamicAudioEnvironmentを検索
         /// </summary>
         /// <remarks>
-        /// これらのコンポーネントが見つからない場合、該当する機能は利用できません
+        /// これら�Eコンポ�Eネントが見つからなぁE��合、該当する機�Eは利用できません
         /// </remarks>
         private void FindAudioSystemReferences()
         {
@@ -519,9 +501,7 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// モニタリング用データの初期化
-        /// 各オーディオカテゴリのデフォルトボリューム値を設定
-        /// </summary>
+        /// モニタリング用チE�Eタの初期匁E        /// 吁E��ーチE��オカチE��リのチE��ォルト�Eリューム値を設宁E        /// </summary>
         private void InitializeMonitoring()
         {
             categoryVolumes[AudioCategory.BGM] = AudioConstants.DEFAULT_BGM_VOLUME;
@@ -532,13 +512,11 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// オーディオシステムの現在の状態データを更新
-        /// AudioManagerとStealthAudioCoordinatorから最新の状態を取得し、
-        /// パフォーマンス履歴データも更新する
+        /// オーチE��オシスチE��の現在の状態データを更新
+        /// AudioManagerとStealthAudioCoordinatorから最新の状態を取得し、E        /// パフォーマンス履歴チE�Eタも更新する
         /// </summary>
         /// <remarks>
-        /// ボリューム履歴とテンション履歴は最大100ポイントまで保持される
-        /// </remarks>
+        /// ボリューム履歴とチE��ション履歴は最大100ポイントまで保持されめE        /// </remarks>
         private void RefreshAudioSystemData()
         {
             if (audioManager != null)
@@ -577,10 +555,10 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// オーディオイベントログにエントリを追加
+        /// オーチE��オイベントログにエントリを追加
         /// タイムスタンプ付きでイベントを記録し、最大100件まで履歴を保持
         /// </summary>
-        /// <param name="eventText">記録するイベントの説明文</param>
+        /// <param name="eventText">記録するイベント�E説明文</param>
         private void AddEvent(string eventText)
         {
             string timestampedEvent = $"[{System.DateTime.Now:HH:mm:ss}] {eventText}";
@@ -594,15 +572,14 @@ namespace asterivo.Unity60.Core.Editor
         
         /// <summary>
         /// パフォーマンス監視用のグラフを描画
-        /// データの履歴を線グラフとして表示し、現在値もラベル表示する
+        /// チE�Eタの履歴を線グラフとして表示し、現在値もラベル表示する
         /// </summary>
         /// <param name="rect">グラフを描画する矩形領域</param>
-        /// <param name="data">グラフに表示するデータのリスト</param>
-        /// <param name="color">グラフの線の色</param>
-        /// <param name="label">グラフのラベル名</param>
+        /// <param name="data">グラフに表示するチE�EタのリスチE/param>
+        /// <param name="color">グラフ�E線�E色</param>
+        /// <param name="label">グラフ�Eラベル吁E/param>
         /// <remarks>
-        /// データが2点未満の場合は描画されない。最小値と最大値に基づいて自動スケーリングされる
-        /// </remarks>
+        /// チE�EタぁE点未満の場合�E描画されなぁE��最小値と最大値に基づぁE��自動スケーリングされめE        /// </remarks>
         private void DrawGraph(Rect rect, List<float> data, Color color, string label)
         {
             if (data.Count < 2) return;

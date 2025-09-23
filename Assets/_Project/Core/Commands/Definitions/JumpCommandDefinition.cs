@@ -1,32 +1,20 @@
 using UnityEngine;
-using asterivo.Unity60.Core.Commands;
+// using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// ジャンプコマンドの定義。
-    /// プレイヤーまたはAIのジャンプアクションをカプセル化します。
-    /// 
-    /// 主な機能：
-    /// - ジャンプ力と方向の指定
-    /// - ジャンプタイプ（通常、二段、壁、長距離等）の管理
-    /// - 着地判定と着地後の処理
-    /// - スタミナ消費とクールダウンの考慮
+    /// ジャンプコマンド�E定義、E    /// プレイヤーまた�EAIのジャンプアクションをカプセル化します、E    /// 
+    /// 主な機�E�E�E    /// - ジャンプ力と方向�E持E��E    /// - ジャンプタイプ（通常、二段、壁、E��距離等）�E管琁E    /// - 着地判定と着地後�E処琁E    /// - スタミナ消費とクールダウンの老E�E
     /// </summary>
     [System.Serializable]
     public class JumpCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// ジャンプの種類を定義する列挙型
-        /// </summary>
+        /// ジャンプ�E種類を定義する列挙垁E        /// </summary>
         public enum JumpType
         {
-            Normal,     // 通常ジャンプ
-            Double,     // 二段ジャンプ
-            Wall,       // 壁ジャンプ
-            Long,       // 長距離ジャンプ
-            High        // 高ジャンプ
-        }
+            Normal,     // 通常ジャンチE            Double,     // 二段ジャンチE            Wall,       // 壁ジャンチE            Long,       // 長距離ジャンチE            High        // 高ジャンチE        }
 
         [Header("Jump Parameters")]
         public JumpType jumpType = JumpType.Normal;
@@ -49,7 +37,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public float landAnimationDuration = 0.2f;
 
         /// <summary>
-        /// デフォルトコンストラクタ
+        /// チE��ォルトコンストラクタ
         /// </summary>
         public JumpCommandDefinition()
         {
@@ -66,31 +54,27 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// ジャンプコマンドが実行可能かどうかを判定します
-        /// </summary>
+        /// ジャンプコマンドが実行可能かどぁE��を判定しまぁE        /// </summary>
         public bool CanExecute(object context = null)
         {
-            // 基本的な実行可能性チェック
+            // 基本皁E��実行可能性チェチE��
             if (jumpForce <= 0f) return false;
             
-            // 方向ベクトルのチェック
+            // 方向�EクトルのチェチE��
             if (direction == Vector3.zero) return false;
 
-            // コンテキストがある場合の追加チェック
+            // コンチE��ストがある場合�E追加チェチE��
             if (context != null)
             {
-                // 地面判定チェック（requiresGroundedが有効の場合）
-                // スタミナチェック
-                // クールダウンチェック
-                // 状態異常チェック（麻痺、スタン等）
-            }
+                // 地面判定チェチE���E�EequiresGroundedが有効の場合！E                // スタミナチェチE��
+                // クールダウンチェチE��
+                // 状態異常チェチE���E�麻痺、スタン等！E            }
 
             return true;
         }
 
         /// <summary>
-        /// ジャンプコマンドを作成します
-        /// </summary>
+        /// ジャンプコマンドを作�EしまぁE        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
             if (!CanExecute(context))
@@ -101,8 +85,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// JumpCommandDefinitionに対応する実際のコマンド実装
-    /// </summary>
+    /// JumpCommandDefinitionに対応する実際のコマンド実裁E    /// </summary>
     public class JumpCommand : ICommand
     {
         private JumpCommandDefinition definition;
@@ -118,30 +101,26 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// ジャンプコマンドの実行
-        /// </summary>
+        /// ジャンプコマンド�E実衁E        /// </summary>
         public void Execute()
         {
             if (executed) return;
 
-            // 実行前の状態を保存（Undo用）
-            if (context is MonoBehaviour mono && mono.GetComponent<Rigidbody>() != null)
+            // 実行前の状態を保存！Endo用�E�E            if (context is MonoBehaviour mono && mono.GetComponent<Rigidbody>() != null)
             {
                 var rb = mono.GetComponent<Rigidbody>();
                 originalVelocity = rb.linearVelocity;
-                // 地面判定の保存（実際の実装では GroundCheck コンポーネント等を参照）
-            }
+                // 地面判定�E保存（実際の実裁E��は GroundCheck コンポ�Eネント等を参�E�E�E            }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"Executing {definition.jumpType} jump: {definition.jumpForce} force, {definition.direction} direction");
 #endif
 
-            // 実際のジャンプ処理をここに実装
-            if (context is MonoBehaviour monoBehaviour && monoBehaviour.GetComponent<Rigidbody>() != null)
+            // 実際のジャンプ�E琁E��ここに実裁E            if (context is MonoBehaviour monoBehaviour && monoBehaviour.GetComponent<Rigidbody>() != null)
             {
                 var rb = monoBehaviour.GetComponent<Rigidbody>();
                 
-                // 垂直速度のリセット
+                // 垂直速度のリセチE��
                 if (definition.resetVerticalVelocity)
                 {
                     rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
@@ -150,7 +129,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 // ジャンプ力の適用
                 Vector3 jumpVelocity = definition.direction.normalized * definition.jumpForce;
                 
-                // 水平ブーストの追加
+                // 水平ブ�Eスト�E追加
                 if (definition.horizontalBoost > 0f)
                 {
                     Vector3 horizontalDirection = new Vector3(definition.direction.x, 0f, definition.direction.z).normalized;
@@ -160,16 +139,13 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 rb.AddForce(jumpVelocity, ForceMode.VelocityChange);
 
                 // アニメーション制御
-                // パーティクルエフェクト
-                // サウンドエフェクト
-            }
+                // パ�EチE��クルエフェクチE                // サウンドエフェクチE            }
 
             executed = true;
         }
 
         /// <summary>
-        /// Undo操作（ジャンプの取り消し）
-        /// </summary>
+        /// Undo操作（ジャンプ�E取り消し�E�E        /// </summary>
         public void Undo()
         {
             if (!executed || context == null) return;
@@ -188,7 +164,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// このコマンドがUndo可能かどうか
+        /// こ�EコマンドがUndo可能かどぁE��
         /// </summary>
         public bool CanUndo => executed && context != null;
     }

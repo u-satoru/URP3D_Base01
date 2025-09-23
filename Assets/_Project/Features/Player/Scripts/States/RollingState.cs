@@ -1,7 +1,6 @@
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using System.Collections;
-using asterivo.Unity60.Player;
 
 namespace asterivo.Unity60.Features.Player.States
 {

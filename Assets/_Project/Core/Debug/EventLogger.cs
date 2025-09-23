@@ -2,31 +2,24 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using System;
-using asterivo.Unity60.Core.Helpers;
+// using asterivo.Unity60.Core.Helpers;
 using asterivo.Unity60.Core;
 
 namespace asterivo.Unity60.Core.Debug
 {
     /// <summary>
-    /// 中央イベントロギングシステム（ServiceLocator移行版）
-    /// ServiceLocatorパターンでイベントログ管理へのアクセスを提供する
-    /// 
+    /// 中央イベントロギングシスチE���E�EerviceLocator移行版�E�E    /// ServiceLocatorパターンでイベントログ管琁E��のアクセスを提供すめE    /// 
     /// 設計思想:
-    /// - 中央集権的なログ管理による一貫性確保
-    /// - 複数出力形式対応（Console, File, DebugWindow, RemoteDebugger）
-    /// - Unity MonoBehaviourのライフサイクルに統合された安全なサービス管理
-    /// - ServiceLocatorパターンによる依存性注入対応
-    /// - 後方互換性を維持しながら段階的移行を支援
+    /// - 中央雁E��皁E��ログ管琁E��よる一貫性確俁E    /// - 褁E��出力形式対応！Eonsole, File, DebugWindow, RemoteDebugger�E�E    /// - Unity MonoBehaviourのライフサイクルに統合された安�Eなサービス管琁E    /// - ServiceLocatorパターンによる依存性注入対忁E    /// - 後方互換性を維持しながら段階的移行を支援
     /// 
-    /// 推奨使用例:
+    /// 推奨使用侁E
     /// var logger = ServiceLocator.GetService&lt;IEventLogger&gt;();
     /// logger.Log("Application started");
     /// logger.LogEvent("PlayerDamaged", 3, "damage:25");
     /// </summary>
     public class EventLogger : MonoBehaviour, IEventLogger, IInitializable
     {
-        // ✅ ServiceLocator移行: Legacy Singleton警告システム（後方互換性のため）
-        
+        // ✁EServiceLocator移衁E Legacy Singleton警告シスチE���E�後方互換性のため�E�E        
         private List<EventLogEntry> eventLog = new List<EventLogEntry>();
         private EventLoggerSettings settings;
         
@@ -41,20 +34,17 @@ namespace asterivo.Unity60.Core.Debug
         #region IInitializable Implementation
         
         /// <summary>
-        /// 初期化優先度（数値が小さいほど早く初期化される）
-        /// EventLoggerは他のサービスより早く初期化される必要がある
+        /// 初期化優先度�E�数値が小さぁE��ど早く�E期化される！E        /// EventLoggerは他�Eサービスより早く�E期化される忁E��がある
         /// </summary>
         public int Priority => 5;
         
         /// <summary>
-        /// サービスが初期化済みかどうかを示すフラグ
+        /// サービスが�E期化済みかどぁE��を示すフラグ
         /// </summary>
         public bool IsInitialized => _isInitialized;
         
         /// <summary>
-        /// サービスの初期化処理
-        /// ServiceLocatorによって呼び出される
-        /// </summary>
+        /// サービスの初期化�E琁E        /// ServiceLocatorによって呼び出されめE        /// </summary>
         public void Initialize()
         {
             if (_isInitialized) return;
@@ -73,13 +63,11 @@ namespace asterivo.Unity60.Core.Debug
         #region Properties (IEventLogger Implementation)
         
         /// <summary>
-        /// ログが有効かどうか（IEventLoggerインターフェース実装）
-        /// </summary>
+        /// ログが有効かどぁE���E�EEventLoggerインターフェース実裁E��E        /// </summary>
         public bool IsEnabled => enableLogging;
         
         /// <summary>
-        /// 現在のイベントログエントリのリスト（IEventLoggerインターフェース実装）
-        /// </summary>
+        /// 現在のイベントログエントリのリスト！EEventLoggerインターフェース実裁E��E        /// </summary>
         public List<EventLogEntry> EventLog => eventLog;
         
         #endregion
@@ -110,7 +98,7 @@ namespace asterivo.Unity60.Core.Debug
                 LogServiceStatus();
             }
             
-            // Editor環境ではDontDestroyOnLoadは使用不可のため条件チェック
+            // Editor環墁E��はDontDestroyOnLoadは使用不可のため条件チェチE��
             if (Application.isPlaying)
             {
                 DontDestroyOnLoad(gameObject);
@@ -160,8 +148,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// サービスの内部初期化処理
-        /// EventLoggerの設定読み込みと基本状態設定を行う
+        /// サービスの冁E��初期化�E琁E        /// EventLoggerの設定読み込みと基本状態設定を行う
         /// </summary>
         private void InitializeService()
         {
@@ -184,8 +171,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// ServiceLocator経由でEventLoggerインスタンスを取得
-        /// </summary>
+        /// ServiceLocator経由でEventLoggerインスタンスを取征E        /// </summary>
         private static IEventLogger GetServiceInstance()
         {
             return ServiceLocator.GetService<IEventLogger>();
@@ -197,7 +183,7 @@ namespace asterivo.Unity60.Core.Debug
             
             eventLog.Add(entry);
             
-            // 最大エントリ数を超えた場合、古いエントリを削除
+            // 最大エントリ数を趁E��た場合、古ぁE��ントリを削除
             if (eventLog.Count > maxLogEntries)
             {
                 eventLog.RemoveRange(0, eventLog.Count - maxLogEntries);
@@ -205,8 +191,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// サービスの現在の状態をログ出力
-        /// </summary>
+        /// サービスの現在の状態をログ出劁E        /// </summary>
         public void LogServiceStatus()
         {
             if (!IsEnabled) return;
@@ -220,8 +205,7 @@ namespace asterivo.Unity60.Core.Debug
         #region IEventLogger Implementation
         
         /// <summary>
-        /// 簡潔なログメソッド - Unity標準Debug.Logの代替（IEventLoggerインターフェース実装）
-        /// </summary>
+        /// 簡潔なログメソチE�� - Unity標準Debug.Logの代替�E�EEventLoggerインターフェース実裁E��E        /// </summary>
         public void Log(string message)
         {
             if (!IsEnabled) return;
@@ -235,16 +219,14 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 簡潔な警告ログメソッド - Unity標準Debug.LogWarningの代替（IEventLoggerインターフェース実装）
-        /// </summary>
+        /// 簡潔な警告ログメソチE�� - Unity標準Debug.LogWarningの代替�E�EEventLoggerインターフェース実裁E��E        /// </summary>
         public void LogWarning(string message)
         {
             LogWarning("General", 0, message);
         }
         
         /// <summary>
-        /// 警告レベルのイベントログを記録（IEventLoggerインターフェース実装）
-        /// </summary>
+        /// 警告レベルのイベントログを記録�E�EEventLoggerインターフェース実裁E��E        /// </summary>
         public void LogWarning(string eventName, int listenerCount, string message)
         {
             if (!IsEnabled) return;
@@ -258,8 +240,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 簡潔なエラーログメソッド - Unity標準Debug.LogErrorの代替（IEventLoggerインターフェース実装）
-        /// </summary>
+        /// 簡潔なエラーログメソチE�� - Unity標準Debug.LogErrorの代替�E�EEventLoggerインターフェース実裁E��E        /// </summary>
         public void LogError(string message)
         {
             if (!IsEnabled) return;
@@ -273,8 +254,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// エラーレベルのイベントログを記録（IEventLoggerインターフェース実装）
-        /// </summary>
+        /// エラーレベルのイベントログを記録�E�EEventLoggerインターフェース実裁E��E        /// </summary>
         public void LogError(string eventName, int listenerCount, string message)
         {
             if (!IsEnabled) return;
@@ -288,8 +268,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// イベントログを記録（リスナー数とペイロード付き）（IEventLoggerインターフェース実装）
-        /// </summary>
+        /// イベントログを記録�E�リスナ�E数とペイロード付き�E�！EEventLoggerインターフェース実裁E��E        /// </summary>
         public void LogEvent(string eventName, int listenerCount, string payload = "")
         {
             if (!IsEnabled) return;
@@ -298,8 +277,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 型安全なペイロード付きイベントログを記録（IEventLoggerインターフェース実装）
-        /// </summary>
+        /// 型安�Eなペイロード付きイベントログを記録�E�EEventLoggerインターフェース実裁E��E        /// </summary>
         public void LogEventWithPayload<T>(string eventName, int listenerCount, T payload)
         {
             if (!IsEnabled) return;
@@ -309,16 +287,14 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// ログをクリア（IEventLoggerインターフェース実装）
-        /// </summary>
+        /// ログをクリア�E�EEventLoggerインターフェース実裁E��E        /// </summary>
         public void ClearLog()
         {
             eventLog.Clear();
         }
         
         /// <summary>
-        /// フィルタリングされたログエントリを取得（IEventLoggerインターフェース実装）
-        /// </summary>
+        /// フィルタリングされたログエントリを取得！EEventLoggerインターフェース実裁E��E        /// </summary>
         public List<EventLogEntry> GetFilteredLog(string nameFilter = "", LogLevel minLevel = LogLevel.Info)
         {
             var filtered = new List<EventLogEntry>();
@@ -335,8 +311,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// ログの統計情報を取得（IEventLoggerインターフェース実装）
-        /// </summary>
+        /// ログの統計情報を取得！EEventLoggerインターフェース実裁E��E        /// </summary>
         public LogStatistics GetStatistics()
         {
             var stats = new LogStatistics();
@@ -368,8 +343,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// ログをCSVファイルにエクスポート（IEventLoggerインターフェース実装）
-        /// </summary>
+        /// ログをCSVファイルにエクスポ�Eト！EEventLoggerインターフェース実裁E��E        /// </summary>
         public void ExportToCSV(string filePath)
         {
             try
@@ -398,8 +372,7 @@ namespace asterivo.Unity60.Core.Debug
         #region Static Methods (Backward Compatibility)
         
         /// <summary>
-        /// 静的アクセス用のログメソッド（レガシー互換性用）
-        /// ServiceLocator.GetService&lt;IEventLogger&gt;().Log()を使用してください
+        /// 静的アクセス用のログメソチE���E�レガシー互換性用�E�E        /// ServiceLocator.GetService&lt;IEventLogger&gt;().Log()を使用してください
         /// </summary>
         public static void LogStatic(string message)
         {
@@ -407,8 +380,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 静的アクセス用の警告ログメソッド（レガシー互換性用）
-        /// </summary>
+        /// 静的アクセス用の警告ログメソチE���E�レガシー互換性用�E�E        /// </summary>
         [System.Obsolete("Use ServiceLocator.GetService<IEventLogger>().LogWarning() instead")]
         public static void LogWarningStatic(string message)
         {
@@ -416,8 +388,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 静的アクセス用のエラーログメソッド（レガシー互換性用）
-        /// </summary>
+        /// 静的アクセス用のエラーログメソチE���E�レガシー互換性用�E�E        /// </summary>
         [System.Obsolete("Use ServiceLocator.GetService<IEventLogger>().LogError() instead")]
         public static void LogErrorStatic(string message)
         {
@@ -425,8 +396,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 静的アクセス用のイベントログメソッド（レガシー互換性用）
-        /// ServiceLocator.GetService&lt;IEventLogger&gt;().LogEvent()を使用してください
+        /// 静的アクセス用のイベントログメソチE���E�レガシー互換性用�E�E        /// ServiceLocator.GetService&lt;IEventLogger&gt;().LogEvent()を使用してください
         /// </summary>
         public static void LogEventStatic(string eventName, int listenerCount, string payload = "")
         {
@@ -434,8 +404,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 静的アクセス用の型安全ペイロード付きイベントログメソッド（レガシー互換性用）
-        /// ServiceLocator.GetService&lt;IEventLogger&gt;().LogEventWithPayload()を使用してください
+        /// 静的アクセス用の型安�Eペイロード付きイベントログメソチE���E�レガシー互換性用�E�E        /// ServiceLocator.GetService&lt;IEventLogger&gt;().LogEventWithPayload()を使用してください
         /// </summary>
         public static void LogEventWithPayloadStatic<T>(string eventName, int listenerCount, T payload)
         {
@@ -443,8 +412,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 静的アクセス用のログクリアメソッド（レガシー互換性用）
-        /// ServiceLocator.GetService&lt;IEventLogger&gt;().ClearLog()を使用してください
+        /// 静的アクセス用のログクリアメソチE���E�レガシー互換性用�E�E        /// ServiceLocator.GetService&lt;IEventLogger&gt;().ClearLog()を使用してください
         /// </summary>
         public static void ClearLogStatic()
         {
@@ -452,8 +420,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 静的アクセス用のフィルタリングログ取得メソッド（レガシー互換性用）
-        /// ServiceLocator.GetService&lt;IEventLogger&gt;().GetFilteredLog()を使用してください
+        /// 静的アクセス用のフィルタリングログ取得メソチE���E�レガシー互換性用�E�E        /// ServiceLocator.GetService&lt;IEventLogger&gt;().GetFilteredLog()を使用してください
         /// </summary>
         public static List<EventLogEntry> GetFilteredLogStatic(string nameFilter = "", LogLevel minLevel = LogLevel.Info)
         {
@@ -461,8 +428,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 静的アクセス用の統計情報取得メソッド（レガシー互換性用）
-        /// ServiceLocator.GetService&lt;IEventLogger&gt;().GetStatistics()を使用してください
+        /// 静的アクセス用の統計情報取得メソチE���E�レガシー互換性用�E�E        /// ServiceLocator.GetService&lt;IEventLogger&gt;().GetStatistics()を使用してください
         /// </summary>
         public static LogStatistics GetStatisticsStatic()
         {
@@ -470,8 +436,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 静的アクセス用のCSVエクスポートメソッド（レガシー互換性用）
-        /// ServiceLocator.GetService&lt;IEventLogger&gt;().ExportToCSV()を使用してください
+        /// 静的アクセス用のCSVエクスポ�EトメソチE���E�レガシー互換性用�E�E        /// ServiceLocator.GetService&lt;IEventLogger&gt;().ExportToCSV()を使用してください
         /// </summary>
         public static void ExportToCSVStatic(string filePath)
         {
@@ -483,7 +448,7 @@ namespace asterivo.Unity60.Core.Debug
         #region Data Structures
         
         /// <summary>
-        /// イベントログエントリのデータ構造
+        /// イベントログエントリのチE�Eタ構造
         /// </summary>
         [System.Serializable]
         public class EventLogEntry
@@ -505,8 +470,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// ログレベル列挙体
-        /// </summary>
+        /// ログレベル列挙佁E        /// </summary>
         public enum LogLevel
         {
             Info = 0,

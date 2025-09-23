@@ -1,34 +1,25 @@
 using UnityEngine;
-using asterivo.Unity60.Core.Commands;
-using asterivo.Unity60.Core.Components;
+// using asterivo.Unity60.Core.Commands;
+// using asterivo.Unity60.Core.Components;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// ダメージコマンドの定義。
-    /// プレイヤーまたはAIにダメージを与えるアクションをカプセル化します。
-    /// 
-    /// 主な機能：
-    /// - ダメージ量と種類の指定
-    /// - ダメージソースの管理
-    /// - 状態異常の付与
-    /// - ダメージ軽減効果への対応
-    /// </summary>
+    /// ダメージコマンド�E定義、E    /// プレイヤーまた�EAIにダメージを与えるアクションをカプセル化します、E    /// 
+    /// 主な機�E�E�E    /// - ダメージ量と種類�E持E��E    /// - ダメージソースの管琁E    /// - 状態異常の付丁E    /// - ダメージ軽減効果への対忁E    /// </summary>
     [System.Serializable]
     public class DamageCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// ダメージの種類を定義する列挙型
-        /// </summary>
+        /// ダメージの種類を定義する列挙垁E        /// </summary>
         public enum DamageType
         {
-            Physical,   // 物理ダメージ
+            Physical,   // 物琁E��メージ
             Fire,       // 火炎ダメージ
             Ice,        // 氷結ダメージ
-            Lightning,  // 電撃ダメージ
+            Lightning,  // 電撁E��メージ
             Poison,     // 毒ダメージ
-            Pure        // 純粋ダメージ（軽減不可）
-        }
+            Pure        // 純粋ダメージ�E�軽減不可�E�E        }
 
         [Header("Damage Parameters")]
         public DamageType damageType = DamageType.Physical;
@@ -50,7 +41,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public Color damageColor = Color.red;
 
         /// <summary>
-        /// デフォルトコンストラクタ
+        /// チE��ォルトコンストラクタ
         /// </summary>
         public DamageCommandDefinition()
         {
@@ -66,25 +57,22 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// ダメージコマンドが実行可能かどうかを判定します
-        /// </summary>
+        /// ダメージコマンドが実行可能かどぁE��を判定しまぁE        /// </summary>
         public bool CanExecute(object context = null)
         {
-            // 基本的な実行可能性チェック
+            // 基本皁E��実行可能性チェチE��
             if (damageAmount <= 0f) return false;
 
-            // コンテキストがある場合の追加チェック
+            // コンチE��ストがある場合�E追加チェチE��
             if (context != null)
             {
-                // ターゲットの生存状態チェック等
-            }
+                // ターゲチE��の生存状態チェチE��筁E            }
 
             return true;
         }
 
         /// <summary>
-        /// ダメージコマンドのインスタンスを作成します
-        /// </summary>
+        /// ダメージコマンド�Eインスタンスを作�EしまぁE        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
             if (!CanExecute(context))
@@ -99,14 +87,12 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 実際のダメージ量を計算します（防御力等を考慮）
-        /// </summary>
+        /// 実際のダメージ量を計算します（防御力等を老E�E�E�E        /// </summary>
         public float CalculateActualDamage(float targetDefense = 0f)
         {
             float actualDamage = damageAmount;
             
-            // 防御力による軽減
-            if (armorPenetration < 1f)
+            // 防御力による軽渁E            if (armorPenetration < 1f)
             {
                 float effectiveDefense = targetDefense * (1f - armorPenetration);
                 actualDamage = Mathf.Max(1f, actualDamage - effectiveDefense);

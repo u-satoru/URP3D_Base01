@@ -5,16 +5,16 @@ using System.Collections.Generic;
 using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Core.Debug;
+// using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Shared;
+// using asterivo.Unity60.Core.Shared;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio.Controllers
 {
     /// <summary>
-    /// 時間帯に依存する環境音制御システム
-    /// AmbientManagerから分離された時間音響専用コントローラー
+    /// 時間帯に依存する環墁E��制御シスチE��
+    /// AmbientManagerから刁E��された時間音響専用コントローラー
     /// </summary>
     public class TimeAmbientController : MonoBehaviour
     {
@@ -27,11 +27,10 @@ namespace asterivo.Unity60.Core.Audio.Controllers
 
         [Header("Automatic Time Updates")]
         [SerializeField] private bool enableAutomaticTimeUpdates = true;
-        [SerializeField, ShowIf("enableAutomaticTimeUpdates")] private float timeUpdateInterval = 60f; // 1分間隔でチェック
+        [SerializeField, ShowIf("enableAutomaticTimeUpdates")] private float timeUpdateInterval = 60f; // 1刁E��隔でチェチE��
 
         [Header("Transition Settings")]
-        [SerializeField, Range(0.1f, 30f)] private float timeTransitionDuration = 15f; // 時間遷移は長めに設定
-        [SerializeField] private AnimationCurve transitionCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+        [SerializeField, Range(0.1f, 30f)] private float timeTransitionDuration = 15f; // 時間遷移は長めに設宁E        [SerializeField] private AnimationCurve transitionCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
         [Header("Events")]
         [SerializeField] private AudioEvent timeSoundTriggeredEvent;
@@ -42,13 +41,12 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         [SerializeField, ReadOnly] private float masterVolume = AudioConstants.DEFAULT_AMBIENT_VOLUME;
         [SerializeField, ReadOnly] private float nextUpdateTime;
 
-        // 内部状態
-        private AudioSource[] timeSources;
+        // 冁E��状慁E        private AudioSource[] timeSources;
         private Dictionary<TimeOfDay, TimeAmbientCollection> timeSoundLookup;
         private List<TimeAmbientLayer> activeTimeLayers = new List<TimeAmbientLayer>();
         private Coroutine timeTransition;
 
-        // システム参照
+        // シスチE��参�E
         private Transform listenerTransform;
 
         #region Unity Lifecycle
@@ -66,8 +64,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             
             if (enableAutomaticTimeUpdates)
             {
-                // ✅ ServiceLocator専用実装 - IAudioUpdateServiceを取得
-                if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator)
+                // ✁EServiceLocator専用実裁E- IAudioUpdateServiceを取征E                if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator)
                 {
                     try
                     {
@@ -76,8 +73,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                         {
                             coordinator.OnAudioSystemSync += OnAudioSystemSync;
                             EventLogger.LogStatic("<color=cyan>[TimeAmbientController]</color> Registered with AudioUpdateCoordinator via ServiceLocator");
-                            return; // 登録成功のため終了
-                        }
+                            return; // 登録成功のため終亁E                        }
                     }
                     catch (System.Exception ex)
                     {
@@ -94,7 +90,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                 }
                 else
                 {
-                    // フォールバック：従来のInvokeRepeating
+                    // フォールバック�E�従来のInvokeRepeating
                     InvokeRepeating(nameof(CheckTimeOfDay), 0f, timeUpdateInterval);
                 }
             }
@@ -105,8 +101,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         #region Initialization
 
         /// <summary>
-        /// 時間コントローラーの初期化
-        /// </summary>
+        /// 時間コントローラーの初期匁E        /// </summary>
         private void InitializeTimeController()
         {
             timeSoundLookup = new Dictionary<TimeOfDay, TimeAmbientCollection>();
@@ -116,8 +111,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// AudioSourceの設定
-        /// </summary>
+        /// AudioSourceの設宁E        /// </summary>
         private void SetupAudioSources()
         {
             timeSources = new AudioSource[timeSourceCount];
@@ -133,8 +127,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// AudioSourceの基本設定
-        /// </summary>
+        /// AudioSourceの基本設宁E        /// </summary>
         private void ConfigureAudioSource(AudioSource source)
         {
             source.outputAudioMixerGroup = timeMixerGroup;
@@ -145,8 +138,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// 検索辞書の構築
-        /// </summary>
+        /// 検索辞書の構篁E        /// </summary>
         private void BuildLookupDictionaries()
         {
             timeSoundLookup.Clear();
@@ -163,7 +155,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// リスナーの検索
+        /// リスナ�Eの検索
         /// </summary>
         private void FindListenerTransform()
         {
@@ -195,8 +187,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// マスターボリュームの設定
-        /// </summary>
+        /// マスターボリュームの設宁E        /// </summary>
         public void SetMasterVolume(float volume)
         {
             masterVolume = Mathf.Clamp01(volume);
@@ -221,7 +212,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// 全体の停止
+        /// 全体�E停止
         /// </summary>
         public void StopAllTimeSounds()
         {
@@ -272,13 +263,11 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// 現在の時間帯を取得
-        /// </summary>
+        /// 現在の時間帯を取征E        /// </summary>
         public TimeOfDay GetCurrentTimeOfDay() => currentTimeOfDay;
 
         /// <summary>
-        /// 遷移中かどうかを取得
-        /// </summary>
+        /// 遷移中かどぁE��を取征E        /// </summary>
         public bool IsTransitioning() => isTransitioning;
 
         #endregion
@@ -286,7 +275,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         #region Private Methods
 
         /// <summary>
-        /// システム時刻に基づく時間帯チェック
+        /// シスチE��時刻に基づく時間帯チェチE��
         /// </summary>
         private void CheckTimeOfDay()
         {
@@ -303,8 +292,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// システム時刻から時間帯を判定
-        /// </summary>
+        /// シスチE��時刻から時間帯を判宁E        /// </summary>
         private TimeOfDay DetermineTimeOfDayFromSystemTime(System.DateTime time)
         {
             int hour = time.Hour;
@@ -329,16 +317,14 @@ namespace asterivo.Unity60.Core.Audio.Controllers
 
             EventLogger.LogStatic($"<color=cyan>[TimeAmbientController]</color> Starting transition to {newTime}");
 
-            // 新しい時間音響を取得
-            if (!timeSoundLookup.TryGetValue(newTime, out var timeCollection))
+            // 新しい時間音響を取征E            if (!timeSoundLookup.TryGetValue(newTime, out var timeCollection))
             {
                 EventLogger.LogWarningStatic($"[TimeAmbientController] No sound collection found for time: {newTime}");
                 isTransitioning = false;
                 yield break;
             }
 
-            // 利用可能なオーディオソースを探す
-            AudioSource availableSource = GetAvailableTimeSource();
+            // 利用可能なオーチE��オソースを探ぁE            AudioSource availableSource = GetAvailableTimeSource();
             if (availableSource == null)
             {
                 EventLogger.LogWarningStatic("[TimeAmbientController] No available audio sources for time transition");
@@ -346,15 +332,14 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                 yield break;
             }
 
-            // 新しい時間レイヤーを作成
+            // 新しい時間レイヤーを作�E
             var newLayer = CreateTimeLayer(timeCollection, availableSource);
             if (newLayer != null)
             {
                 yield return StartCoroutine(CrossfadeToNewTimeLayer(availableSource, newLayer, timeTransitionDuration));
             }
 
-            // 古いレイヤーをフェードアウト
-            var layersToRemove = new List<TimeAmbientLayer>(activeTimeLayers);
+            // 古ぁE��イヤーをフェードアウチE            var layersToRemove = new List<TimeAmbientLayer>(activeTimeLayers);
             foreach (var layer in layersToRemove)
             {
                 if (layer != newLayer)
@@ -381,8 +366,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// 利用可能な時間用AudioSourceを取得
-        /// </summary>
+        /// 利用可能な時間用AudioSourceを取征E        /// </summary>
         private AudioSource GetAvailableTimeSource()
         {
             foreach (var source in timeSources)
@@ -392,11 +376,11 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                     return source;
                 }
             }
-            return timeSources[0]; // 全て使用中の場合は最初のものを使用
+            return timeSources[0]; // 全て使用中の場合�E最初�Eも�Eを使用
         }
 
         /// <summary>
-        /// 時間レイヤーの作成
+        /// 時間レイヤーの作�E
         /// </summary>
         private TimeAmbientLayer CreateTimeLayer(TimeAmbientCollection collection, AudioSource audioSource)
         {
@@ -422,8 +406,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// 新しい時間レイヤーへのクロスフェード
-        /// </summary>
+        /// 新しい時間レイヤーへのクロスフェーチE        /// </summary>
         private IEnumerator CrossfadeToNewTimeLayer(AudioSource source, TimeAmbientLayer layer, float duration)
         {
             float elapsed = 0f;
@@ -443,8 +426,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// 時間レイヤーのフェードアウト
-        /// </summary>
+        /// 時間レイヤーのフェードアウチE        /// </summary>
         private IEnumerator FadeOutTimeLayer(TimeAmbientLayer layer, float duration)
         {
             if (layer?.audioSource == null) yield break;
@@ -470,7 +452,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// 全音量の更新
+        /// 全音量�E更新
         /// </summary>
         private void UpdateAllVolumes()
         {
@@ -493,7 +475,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         #region Helper Classes
 
         /// <summary>
-        /// 時間環境音レイヤー
+        /// 時間環墁E��レイヤー
         /// </summary>
         [System.Serializable]
         private class TimeAmbientLayer
@@ -509,14 +491,13 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         /// </summary>
         private void OnAudioSystemSync(AudioSystemSyncData syncData)
         {
-            // 時間変更が検出された場合のみ処理
-            if (syncData.timeChanged && syncData.currentTimeOfDay != currentTimeOfDay)
+            // 時間変更が検�Eされた場合�Eみ処琁E            if (syncData.timeChanged && syncData.currentTimeOfDay != currentTimeOfDay)
             {
                 EventLogger.LogStatic($"<color=cyan>[TimeAmbientController]</color> Time change detected via coordinator: {currentTimeOfDay} -> {syncData.currentTimeOfDay}");
                 ChangeTimeOfDay(syncData.currentTimeOfDay);
             }
             
-            // ステルス状態に応じた音量調整
+            // スチE��ス状態に応じた音量調整
             if (syncData.stealthStateChanged)
             {
                 float volumeMultiplier = syncData.isStealthActive ? 0.6f : 1f;
