@@ -255,7 +255,7 @@ UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface:EmitException
 UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface:CompileScripts (UnityEditor.Scripting.ScriptCompilation.EditorScriptCompilationOptions,UnityEditor.BuildTarget,int,string[])
 
 warn: Unity.AspNetCore.NamedPipeSupport.NamedPipeServer[0]
-      Exception occured while accepting client connection: System.IO.IOException: パイプを閉じています。
+      Exception occured while accepting client connection: System.IO.IOException: 繝代う繝励ｒ髢峨§縺ｦ縺�縺ｾ縺吶�
          at System.IO.Pipes.NamedPipeServerStream.WaitForConnectionCoreAsync(CancellationToken cancellationToken)
          at System.IO.Pipes.NamedPipeServerStream.WaitForConnectionAsync(CancellationToken cancellationToken)
          at Unity.AspNetCore.NamedPipeSupport.NamedPipeServer.AcceptLoop(Boolean useNamedPipeMessageSemantic)

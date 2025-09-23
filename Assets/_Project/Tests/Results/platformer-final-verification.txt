@@ -1361,12 +1361,12 @@ Assets\_Project\Features\Templates\Platformer\Scripts\Testing\PlatformerGameplay
 STDOUT:
 [ApiUpdater] Total time: 1413ms, Parse response file: 94ms, Collect updater configs: 122ms, Update: 1191ms, Save: 6ms Files: 2 modified / 3 visited / 35 total (Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Platformer.dll).
 STDERR:
-[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Testing/PlatformerGameplayVerification.cs(107,26): error CS7036: 'message' の必要なパラメーター 'VerificationResults.AddError(string, string)' に対応する特定の引数がありません
-[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Controllers/PlayerController.cs(187,68): error CS1503: 引数 1: は 'メソッド グループ' から 'UnityAction' へ変換することはできません
-[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Controllers/PlayerController.cs(188,67): error CS1503: 引数 1: は 'メソッド グループ' から 'UnityAction' へ変換することはできません
-[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Testing/PlatformerGameplayVerification.cs(595,69): error CS1501: 引数 1 を指定するメソッド 'GetTotalAllocatedMemory' のオーバーロードはありません
-[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Controllers/PlayerController.cs(655,67): error CS1503: 引数 1: は 'メソッド グループ' から 'UnityAction' へ変換することはできません
-[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Controllers/PlayerController.cs(656,66): error CS1503: 引数 1: は 'メソッド グループ' から 'UnityAction' へ変換することはできません
+[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Testing/PlatformerGameplayVerification.cs(107,26): error CS7036: 'message' 縺ｮ蠢・ｦ√↑繝代Λ繝｡繝ｼ繧ｿ繝ｼ 'VerificationResults.AddError(string, string)' 縺ｫ蟇ｾ蠢懊☆繧狗音螳壹・蠑墓焚縺後≠繧翫∪縺帙ｓ
+[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Controllers/PlayerController.cs(187,68): error CS1503: 蠑墓焚 1: 縺ｯ '繝｡繧ｽ繝・ラ 繧ｰ繝ｫ繝ｼ繝・ 縺九ｉ 'UnityAction' 縺ｸ螟画鋤縺吶ｋ縺薙→縺ｯ縺ｧ縺阪∪縺帙ｓ
+[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Controllers/PlayerController.cs(188,67): error CS1503: 蠑墓焚 1: 縺ｯ '繝｡繧ｽ繝・ラ 繧ｰ繝ｫ繝ｼ繝・ 縺九ｉ 'UnityAction' 縺ｸ螟画鋤縺吶ｋ縺薙→縺ｯ縺ｧ縺阪∪縺帙ｓ
+[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Testing/PlatformerGameplayVerification.cs(595,69): error CS1501: 蠑墓焚 1 繧呈欠螳壹☆繧九Γ繧ｽ繝・ラ 'GetTotalAllocatedMemory' 縺ｮ繧ｪ繝ｼ繝舌・繝ｭ繝ｼ繝峨・縺ゅｊ縺ｾ縺帙ｓ
+[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Controllers/PlayerController.cs(655,67): error CS1503: 蠑墓焚 1: 縺ｯ '繝｡繧ｽ繝・ラ 繧ｰ繝ｫ繝ｼ繝・ 縺九ｉ 'UnityAction' 縺ｸ螟画鋤縺吶ｋ縺薙→縺ｯ縺ｧ縺阪∪縺帙ｓ
+[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Controllers/PlayerController.cs(656,66): error CS1503: 蠑墓焚 1: 縺ｯ '繝｡繧ｽ繝・ラ 繧ｰ繝ｫ繝ｼ繝・ 縺九ｉ 'UnityAction' 縺ｸ螟画鋤縺吶ｋ縺薙→縺ｯ縺ｧ縺阪∪縺帙ｓ
 [API Updater] Updated Files:
 Skipping ScriptUpdater consent dialog. Consent declined based on command line parameters.
 Finished running ScriptUpdaters

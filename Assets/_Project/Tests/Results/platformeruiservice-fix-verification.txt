@@ -1365,14 +1365,14 @@ Assets\_Project\Features\Templates\Platformer\Scripts\Platforms\PlatformManager.
 STDOUT:
 [ApiUpdater] Total time: 1469ms, Parse response file: 103ms, Collect updater configs: 125ms, Update: 1236ms, Save: 5ms Files: 2 modified / 5 visited / 35 total (Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Features.Templates.Platformer.dll).
 STDERR:
-[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Controllers/PlayerController.cs(187,21): error CS0200: プロパティまたはインデクサー 'ICollectionService.OnItemCollected' は読み取り専用であるため、割り当てることはできません
-[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Controllers/PlayerController.cs(188,21): error CS0200: プロパティまたはインデクサー 'ICollectionService.OnScoreChanged' は読み取り専用であるため、割り当てることはできません
-[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Testing/PlatformerGameplayVerification.cs(107,26): error CS7036: 'message' の必要なパラメーター 'VerificationResults.AddError(string, string)' に対応する特定の引数がありません
-[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Services/CheckpointService.cs(160,55): error CS0266: 型 'System.Collections.Generic.IEnumerable<int>' を 'System.Collections.Generic.List<int>' に暗黙的に変換できません。明示的な変換が存在します (cast が不足していないかどうかを確認してください)
-[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Services/LevelGenerationService.cs(351,48): error CS1503: 引数 1: は 'asterivo.Unity60.Features.Templates.Platformer.Services.CollectibleItemData[]' から 'int' へ変換することはできません
-[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Testing/PlatformerGameplayVerification.cs(595,69): error CS1501: 引数 1 を指定するメソッド 'GetTotalAllocatedMemory' のオーバーロードはありません
-[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Controllers/PlayerController.cs(655,17): error CS0200: プロパティまたはインデクサー 'ICollectionService.OnItemCollected' は読み取り専用であるため、割り当てることはできません
-[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Controllers/PlayerController.cs(656,17): error CS0200: プロパティまたはインデクサー 'ICollectionService.OnScoreChanged' は読み取り専用であるため、割り当てることはできません
+[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Controllers/PlayerController.cs(187,21): error CS0200: 繝励Ο繝代ユ繧｣縺ｾ縺溘・繧､繝ｳ繝・け繧ｵ繝ｼ 'ICollectionService.OnItemCollected' 縺ｯ隱ｭ縺ｿ蜿悶ｊ蟆ら畑縺ｧ縺ゅｋ縺溘ａ縲∝牡繧雁ｽ薙※繧九％縺ｨ縺ｯ縺ｧ縺阪∪縺帙ｓ
+[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Controllers/PlayerController.cs(188,21): error CS0200: 繝励Ο繝代ユ繧｣縺ｾ縺溘・繧､繝ｳ繝・け繧ｵ繝ｼ 'ICollectionService.OnScoreChanged' 縺ｯ隱ｭ縺ｿ蜿悶ｊ蟆ら畑縺ｧ縺ゅｋ縺溘ａ縲∝牡繧雁ｽ薙※繧九％縺ｨ縺ｯ縺ｧ縺阪∪縺帙ｓ
+[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Testing/PlatformerGameplayVerification.cs(107,26): error CS7036: 'message' 縺ｮ蠢・ｦ√↑繝代Λ繝｡繝ｼ繧ｿ繝ｼ 'VerificationResults.AddError(string, string)' 縺ｫ蟇ｾ蠢懊☆繧狗音螳壹・蠑墓焚縺後≠繧翫∪縺帙ｓ
+[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Services/CheckpointService.cs(160,55): error CS0266: 蝙・'System.Collections.Generic.IEnumerable<int>' 繧・'System.Collections.Generic.List<int>' 縺ｫ證鈴ｻ咏噪縺ｫ螟画鋤縺ｧ縺阪∪縺帙ｓ縲よ・遉ｺ逧・↑螟画鋤縺悟ｭ伜惠縺励∪縺・(cast 縺御ｸ崎ｶｳ縺励※縺・↑縺・°縺ｩ縺・°繧堤｢ｺ隱阪＠縺ｦ縺上□縺輔＞)
+[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Services/LevelGenerationService.cs(351,48): error CS1503: 蠑墓焚 1: 縺ｯ 'asterivo.Unity60.Features.Templates.Platformer.Services.CollectibleItemData[]' 縺九ｉ 'int' 縺ｸ螟画鋤縺吶ｋ縺薙→縺ｯ縺ｧ縺阪∪縺帙ｓ
+[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Testing/PlatformerGameplayVerification.cs(595,69): error CS1501: 蠑墓焚 1 繧呈欠螳壹☆繧九Γ繧ｽ繝・ラ 'GetTotalAllocatedMemory' 縺ｮ繧ｪ繝ｼ繝舌・繝ｭ繝ｼ繝峨・縺ゅｊ縺ｾ縺帙ｓ
+[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Controllers/PlayerController.cs(655,17): error CS0200: 繝励Ο繝代ユ繧｣縺ｾ縺溘・繧､繝ｳ繝・け繧ｵ繝ｼ 'ICollectionService.OnItemCollected' 縺ｯ隱ｭ縺ｿ蜿悶ｊ蟆ら畑縺ｧ縺ゅｋ縺溘ａ縲∝牡繧雁ｽ薙※繧九％縺ｨ縺ｯ縺ｧ縺阪∪縺帙ｓ
+[Script Updater] Assets/_Project/Features/Templates/Platformer/Scripts/Controllers/PlayerController.cs(656,17): error CS0200: 繝励Ο繝代ユ繧｣縺ｾ縺溘・繧､繝ｳ繝・け繧ｵ繝ｼ 'ICollectionService.OnScoreChanged' 縺ｯ隱ｭ縺ｿ蜿悶ｊ蟆ら畑縺ｧ縺ゅｋ縺溘ａ縲∝牡繧雁ｽ薙※繧九％縺ｨ縺ｯ縺ｧ縺阪∪縺帙ｓ
 [API Updater] Updated Files:
 Skipping ScriptUpdater consent dialog. Consent declined based on command line parameters.
 Finished running ScriptUpdaters

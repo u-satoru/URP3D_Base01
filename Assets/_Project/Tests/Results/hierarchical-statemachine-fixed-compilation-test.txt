@@ -29,16 +29,16 @@ D:\UnityProjects\URP3D_Base01
 D:\UnityProjects\URP3D_Base01\Assets\_Project\Tests\Results\hierarchical-statemachine-fixed-compilation-test.txt
 Successfully changed project path to: D:\UnityProjects\URP3D_Base01
 D:/UnityProjects/URP3D_Base01
-別のUnityが起動中で、このプロジェクトを開いているようです。
+蛻･縺ｮUnity縺瑚ｵｷ蜍穂ｸｭ縺ｧ縲√％縺ｮ繝励Ο繧ｸ繧ｧ繧ｯ繝医ｒ髢九＞縺ｦ縺・ｋ繧医≧縺ｧ縺吶・
 
-複数のUnityを起動して同じプロジェクトを開くことはできません。
+隍・焚縺ｮUnity繧定ｵｷ蜍輔＠縺ｦ蜷後§繝励Ο繧ｸ繧ｧ繧ｯ繝医ｒ髢九￥縺薙→縺ｯ縺ｧ縺阪∪縺帙ｓ縲・
 
-プロジェクト: D:/UnityProjects/URP3D_Base01
-Fatal Error! 別のUnityが起動中で、このプロジェクトを開いているようです。
+繝励Ο繧ｸ繧ｧ繧ｯ繝・ D:/UnityProjects/URP3D_Base01
+Fatal Error! 蛻･縺ｮUnity縺瑚ｵｷ蜍穂ｸｭ縺ｧ縲√％縺ｮ繝励Ο繧ｸ繧ｧ繧ｯ繝医ｒ髢九＞縺ｦ縺・ｋ繧医≧縺ｧ縺吶・
 
-複数のUnityを起動して同じプロジェクトを開くことはできません。
+隍・焚縺ｮUnity繧定ｵｷ蜍輔＠縺ｦ蜷後§繝励Ο繧ｸ繧ｧ繧ｯ繝医ｒ髢九￥縺薙→縺ｯ縺ｧ縺阪∪縺帙ｓ縲・
 
-プロジェクト: D:/UnityProjects/URP3D_Base01
+繝励Ο繧ｸ繧ｧ繧ｯ繝・ D:/UnityProjects/URP3D_Base01
 Crash!!!
 SymInit: Symbol-SearchPath: 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Mono;.;D:\UnityProjects\URP3D_Base01;D:\UnityProjects\URP3D_Base01\Library\BurstCache\JIT;C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor;C:\WINDOWS;C:\WINDOWS\system32;', symOptions: 534, UserName: 'homul'
 OS-Version: 10.0.0

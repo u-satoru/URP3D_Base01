@@ -3,7 +3,7 @@ using UnityEngine;
 namespace asterivo.Unity60.Features.Player.States
 {
     /// <summary>
-    /// プレイヤーの伏せ�E�匍匐）状態を管琁E��るクラス、E    /// </summary>
+    /// 繝励Ξ繧､繝､繝ｼ縺ｮ莨上○・ｽE・ｽ蛹榊倹・臥憾諷九ｒ邂｡逅・・ｽ・ｽ繧九け繝ｩ繧ｹ縲・    /// </summary>
     public class ProneState : IPlayerState
     {
         private float proneSpeed = 1f;
@@ -12,8 +12,8 @@ namespace asterivo.Unity60.Features.Player.States
         private Vector2 _moveInput;
 
         /// <summary>
-        /// 状態が開始されたときに呼び出されます、E        /// キャラクターの高さを伏せ状態に変更し、姿勢を更新します、E        /// </summary>
-        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
+        /// 迥ｶ諷九′髢句ｧ九＆繧後◆縺ｨ縺阪↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・        /// 繧ｭ繝｣繝ｩ繧ｯ繧ｿ繝ｼ縺ｮ鬮倥＆繧剃ｼ上○迥ｶ諷九↓螟画峩縺励∝ｧｿ蜍｢繧呈峩譁ｰ縺励∪縺吶・        /// </summary>
+        /// <param name="stateMachine">繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・・ｽE繝茨ｿｽE繧ｷ繝ｳ縲・/param>
         public void Enter(DetailedPlayerStateMachine stateMachine)
         {
             if (stateMachine.CharacterController != null)
@@ -33,8 +33,8 @@ namespace asterivo.Unity60.Features.Player.States
         }
 
         /// <summary>
-        /// 状態が終亁E��たときに呼び出されます、E        /// キャラクターの高さを�Eの高さに戻します、E        /// </summary>
-        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
+        /// 迥ｶ諷九′邨ゆｺ・・ｽ・ｽ縺溘→縺阪↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・        /// 繧ｭ繝｣繝ｩ繧ｯ繧ｿ繝ｼ縺ｮ鬮倥＆繧抵ｿｽE縺ｮ鬮倥＆縺ｫ謌ｻ縺励∪縺吶・        /// </summary>
+        /// <param name="stateMachine">繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・・ｽE繝茨ｿｽE繧ｷ繝ｳ縲・/param>
         public void Exit(DetailedPlayerStateMachine stateMachine)
         {
             if (stateMachine.CharacterController != null)
@@ -48,13 +48,13 @@ namespace asterivo.Unity60.Features.Player.States
         }
 
         /// <summary>
-        /// 毎フレーム呼び出されます、E        /// </summary>
-        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
+        /// 豈弱ヵ繝ｬ繝ｼ繝蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・        /// </summary>
+        /// <param name="stateMachine">繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・・ｽE繝茨ｿｽE繧ｷ繝ｳ縲・/param>
         public void Update(DetailedPlayerStateMachine stateMachine) { }
 
         /// <summary>
-        /// 固定フレームレートで呼び出されます、E        /// 入力に基づぁE��キャラクターの移動を処琁E��ます、E        /// </summary>
-        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
+        /// 蝗ｺ螳壹ヵ繝ｬ繝ｼ繝繝ｬ繝ｼ繝医〒蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・        /// 蜈･蜉帙↓蝓ｺ縺･縺・・ｽ・ｽ繧ｭ繝｣繝ｩ繧ｯ繧ｿ繝ｼ縺ｮ遘ｻ蜍輔ｒ蜃ｦ逅・・ｽ・ｽ縺ｾ縺吶・        /// </summary>
+        /// <param name="stateMachine">繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・・ｽE繝茨ｿｽE繧ｷ繝ｳ縲・/param>
         public void FixedUpdate(DetailedPlayerStateMachine stateMachine)
         {
             if (stateMachine.CharacterController == null) return;
@@ -72,19 +72,19 @@ namespace asterivo.Unity60.Features.Player.States
         }
 
         /// <summary>
-        /// プレイヤーの入力を処琁E��、他�E状態への遷移を判断します、E        /// </summary>
-        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
-        /// <param name="moveInput">移動�E力、E/param>
-        /// <param name="jumpInput">ジャンプ�E力（この状態では立ち上がりに使用�E�、E/param>
+        /// 繝励Ξ繧､繝､繝ｼ縺ｮ蜈･蜉帙ｒ蜃ｦ逅・・ｽ・ｽ縲∽ｻ厄ｿｽE迥ｶ諷九∈縺ｮ驕ｷ遘ｻ繧貞愛譁ｭ縺励∪縺吶・        /// </summary>
+        /// <param name="stateMachine">繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・・ｽE繝茨ｿｽE繧ｷ繝ｳ縲・/param>
+        /// <param name="moveInput">遘ｻ蜍包ｿｽE蜉帙・/param>
+        /// <param name="jumpInput">繧ｸ繝｣繝ｳ繝暦ｿｽE蜉幢ｼ医％縺ｮ迥ｶ諷九〒縺ｯ遶九■荳翫′繧翫↓菴ｿ逕ｨ・ｽE・ｽ縲・/param>
         public void HandleInput(DetailedPlayerStateMachine stateMachine, Vector2 moveInput, bool jumpInput)
         {
             _moveInput = moveInput;
             
-            // ジャンプ�E力で匍匐解除�E�立ち上がり！E            if (jumpInput)
+            // 繧ｸ繝｣繝ｳ繝暦ｿｽE蜉帙〒蛹榊倹隗｣髯､・ｽE・ｽ遶九■荳翫′繧奇ｼ・            if (jumpInput)
             {
                 if (CanStandUp(stateMachine))
                 {
-                    // 直接立ち上がりが可能な場合
+                    // 逶ｴ謗･遶九■荳翫′繧翫′蜿ｯ閭ｽ縺ｪ蝣ｴ蜷・
                     if (moveInput.magnitude > 0.1f)
                     {
                         stateMachine.TransitionToState(PlayerStateType.Walking);
@@ -96,13 +96,13 @@ namespace asterivo.Unity60.Features.Player.States
                 }
                 else
                 {
-                    // 障害物がある場合�Eしゃがみ状態へ
+                    // 髫懷ｮｳ迚ｩ縺後≠繧句ｴ蜷茨ｿｽE縺励ｃ縺後∩迥ｶ諷九∈
                     stateMachine.TransitionToState(PlayerStateType.Crouching);
                 }
                 return;
             }
             
-            // 匍匐状態からしゃがみへの遷移（段階的な立ち上がり）
+            // 蛹榊倹迥ｶ諷九°繧峨＠繧・′縺ｿ縺ｸ縺ｮ驕ｷ遘ｻ・域ｮｵ髫守噪縺ｪ遶九■荳翫′繧奇ｼ・
             if (Input.GetKeyDown(KeyCode.C))
             {
                 stateMachine.TransitionToState(PlayerStateType.Crouching);
@@ -110,9 +110,9 @@ namespace asterivo.Unity60.Features.Player.States
         }
 
         /// <summary>
-        /// プレイヤーが立ち上がれるかどぁE���E�頭上に障害物がなぁE���E�を確認します、E        /// </summary>
-        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
-        /// <returns>立ち上がれる場合�Etrue、そぁE��なぁE��合�Efalse、E/returns>
+        /// 繝励Ξ繧､繝､繝ｼ縺檎ｫ九■荳翫′繧後ｋ縺九←縺・・ｽ・ｽ・ｽE・ｽ鬆ｭ荳翫↓髫懷ｮｳ迚ｩ縺後↑縺・・ｽ・ｽ・ｽE・ｽ繧堤｢ｺ隱阪＠縺ｾ縺吶・        /// </summary>
+        /// <param name="stateMachine">繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・・ｽE繝茨ｿｽE繧ｷ繝ｳ縲・/param>
+        /// <returns>遶九■荳翫′繧後ｋ蝣ｴ蜷茨ｿｽEtrue縲√◎縺・・ｽ・ｽ縺ｪ縺・・ｽ・ｽ蜷茨ｿｽEfalse縲・/returns>
         private bool CanStandUp(DetailedPlayerStateMachine stateMachine)
         {
             RaycastHit hit;
@@ -123,9 +123,9 @@ namespace asterivo.Unity60.Features.Player.States
         }
 
         /// <summary>
-        /// プレイヤーがしめE��み状態になれるかどぁE��を確認します、E        /// </summary>
-        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
-        /// <returns>しゃがめる場合�Etrue、そぁE��なぁE��合�Efalse、E/returns>
+        /// 繝励Ξ繧､繝､繝ｼ縺後＠繧・・ｽ・ｽ縺ｿ迥ｶ諷九↓縺ｪ繧後ｋ縺九←縺・・ｽ・ｽ繧堤｢ｺ隱阪＠縺ｾ縺吶・        /// </summary>
+        /// <param name="stateMachine">繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・・ｽE繝茨ｿｽE繧ｷ繝ｳ縲・/param>
+        /// <returns>縺励ｃ縺後ａ繧句ｴ蜷茨ｿｽEtrue縲√◎縺・・ｽ・ｽ縺ｪ縺・・ｽ・ｽ蜷茨ｿｽEfalse縲・/returns>
         private bool CanCrouch(DetailedPlayerStateMachine stateMachine)
         {
             RaycastHit hit;

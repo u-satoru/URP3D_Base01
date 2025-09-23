@@ -479,7 +479,7 @@ Domain Reload Profiling: 19643ms
 		AwakeInstancesAfterBackupRestoration (73ms)
 'Assets/_Project/Tests/Results/actionrpg-compilation-test-v3.txt' Amount of processed bytes '40844' does not match file size '37239'
 Start importing Assets/_Project/Tests/Results/onresetrequest-fix-verification.txt using Guid(202cb4908da33964f87ce35f3de066dd) (TextScriptImporter) -> (artifact id: '1914d0a750db274514eacbd0f189fa2b') in 0.0353792 seconds
-Start importing Assets/_Project/Docs/サバイバルホラーゲーム詳細設計書.md using Guid(c08af7da287b7a94681ef30d941954d0) (TextScriptImporter) -> (artifact id: 'e3a2e005fa00026a80b3c6e979fcd39a') in 0.0054932 seconds
+Start importing Assets/_Project/Docs/繧ｵ繝舌う繝舌Ν繝帙Λ繝ｼ繧ｲ繝ｼ繝隧ｳ邏ｰ險ｭ險域嶌.md using Guid(c08af7da287b7a94681ef30d941954d0) (TextScriptImporter) -> (artifact id: 'e3a2e005fa00026a80b3c6e979fcd39a') in 0.0054932 seconds
 Start importing Assets/_Project/Docs/ActionRPG_Advanced_Design_Doc.md using Guid(126ed9846094d6844a7f3eea71d8c74e) (TextScriptImporter) -> (artifact id: 'f3752e239b2c492cd1eabc77afb75f4b') in 0.0051687 seconds
 Start importing Assets/_Project/Tests/Results/cinemachine-integration-errors-check.txt using Guid(22a3916e6b2d7ed4ab60286b1fd49c4c) (TextScriptImporter) -> (artifact id: '46dfd0b267b4cf9cada966f1a931ab46') in 0.0106038 seconds
 Start importing Assets/_Project/Tests/Results/actionrpg-compilation-test-v3.txt using Guid(e263fc3ddfe77bb4fa8a1bf4cae1e4d5) (TextScriptImporter) -> (artifact id: '00000000000000000000000000000000') in 0.0042006 seconds
@@ -517,7 +517,7 @@ An infinite import loop has been detected. The following Assets were imported mu
 Assets/_Project/Tests/Results/actionrpg-compilation-test-v2.txt(modified date 2025-09-19T09:53:44.4939531Z)
 Assets/_Project/Tests/Results/actionrpg-compilation-fix-verification.txt(modified date 2025-09-19T09:52:31.7889882Z)
 Assets/_Project/Tests/Results/duplicate-assembly-fix-verification.txt(modified date 2025-09-19T04:57:54.2043186Z)
-Assets/_Project/Docs/アクションRPG要件定義書作成ガイド.md(modified date 2025-09-19T06:55:16.481756Z)
+Assets/_Project/Docs/繧｢繧ｯ繧ｷ繝ｧ繝ｳRPG隕∽ｻｶ螳夂ｾｩ譖ｸ菴懈・繧ｬ繧､繝・md(modified date 2025-09-19T06:55:16.481756Z)
 Assets/_Project/Tests/Results/actionrpg-data-structures-clean-test.txt(modified date 2025-09-19T09:33:53.5792953Z)
 Assets/_Project/Tests/Results/cinemachine-integration-fixes-verification.txt(modified date 2025-09-19T07:48:36.2058898Z)
 Assets/_Project/Tests/Results/core-architecture-verification.txt(modified date 2025-09-19T09:50:06.5032995Z)
@@ -532,7 +532,7 @@ Assets/_Project/Docs/ActionRPG_Design_Doc.md(modified date 2025-09-19T09:15:35.8
 Assets/_Project/Tests/Results/inputdebugger-fix-verification.txt(modified date 2025-09-19T07:34:14.9705395Z)
 Assets/_Project/Tests/Results/actionrpg-enum-fixes-verification.txt(modified date 2025-09-19T04:43:09.2736283Z)
 Assets/_Project/Tests/Results/cinemachine-integration-final-verification.txt(modified date 2025-09-19T07:54:45.9758106Z)
-Assets/_Project/Docs/サバイバルホラーゲーム要件定義書作成.md(modified date 2025-09-19T05:59:31.2211684Z)
+Assets/_Project/Docs/繧ｵ繝舌う繝舌Ν繝帙Λ繝ｼ繧ｲ繝ｼ繝隕∽ｻｶ螳夂ｾｩ譖ｸ菴懈・.md(modified date 2025-09-19T05:59:31.2211684Z)
 Assets/_Project/Core/Prefabs/Templates/UICanvas.prefab(modified date 2025-09-14T00:38:16.7866449Z)
 Assets/_Project/Tests/Results/actionrpg-compilation-test-v3.txt(modified date 2025-09-19T09:56:07.5582205Z)
 Assets/_Project/Core/Prefabs/Templates/DefaultPlayer.prefab(modified date 2025-09-14T00:38:16.7796115Z)

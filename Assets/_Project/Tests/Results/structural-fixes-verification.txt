@@ -2332,7 +2332,7 @@ Assets\_Project\Features\AI\Visual\Editor\NPCVisualSensorEditor.cs(483,28): erro
 STDOUT:
 [ApiUpdater] Total time: 1621ms, Parse response file: 85ms, Collect updater configs: 299ms, Update: 1233ms, Save: 4ms Files: 1 modified / 2 visited / 29 total (Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Player.dll).
 STDERR:
-[Script Updater] Assets/_Project/Features/Player/Scripts/States/CoverState.cs(29,81): error CS0117: 'MovementStance' に 'Cover' の定義がありません
+[Script Updater] Assets/_Project/Features/Player/Scripts/States/CoverState.cs(29,81): error CS0117: 'MovementStance' 縺ｫ 'Cover' 縺ｮ螳夂ｾｩ縺後≠繧翫∪縺帙ｓ
 [API Updater] Updated Files:
 Skipping ScriptUpdater consent dialog. Consent declined based on command line parameters.
 Finished running ScriptUpdaters
