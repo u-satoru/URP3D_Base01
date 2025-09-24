@@ -1,4 +1,4 @@
-namespace asterivo.Unity60.Core.Commands
+﻿namespace asterivo.Unity60.Core.Commands
 {
     /// <summary>
     /// Base interface for all commands in the system

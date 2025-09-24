@@ -1,4 +1,4 @@
-# リファクタリングTODOリスト
+﻿# リファクタリングTODOリスト
 
 **作成日**: 2025年9月10日  
 **基準文書**: Architecture_Validation_Report.md, AntiPattern_Deep_Analysis_Report.md  

@@ -1,4 +1,4 @@
-# 作業ログ - TASK-005: Visual-Auditory Detection統合システム完成
+﻿# 作業ログ - TASK-005: Visual-Auditory Detection統合システム完成
 
 ## 📝 基本情報
 

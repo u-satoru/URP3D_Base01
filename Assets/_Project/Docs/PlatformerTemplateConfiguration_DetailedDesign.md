@@ -1,4 +1,4 @@
-# Platformer Template Configuration 詳細設計書
+﻿# Platformer Template Configuration 詳細設計書
 
 ## プロジェクト情報
 

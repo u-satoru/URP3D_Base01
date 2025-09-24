@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 // using Cinemachine; // TODO: Cinemachine参照問題を解決後に復活
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Features.Templates.FPS.Data;

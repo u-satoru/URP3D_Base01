@@ -1,4 +1,4 @@
-# FPS Template Configuration 詳細設計書
+﻿# FPS Template Configuration 詳細設計書
 
 ## アーキテクチャとデザインパターン準拠設計
 

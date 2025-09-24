@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Events;
 // using asterivo.Unity60.Core.Lifecycle;
@@ -6,7 +6,7 @@ using asterivo.Unity60.Core.Events;
 namespace asterivo.Unity60.Core
 {
     /// <summary>
-    /// スコア/ライフ�E独立サービス実裁E��イベント発火含む�E�E    /// </summary>
+    /// 繧ｹ繧ｳ繧｢/繝ｩ繧､繝輔・迢ｬ遶九し繝ｼ繝薙せ螳溯｣・ｼ医う繝吶Φ繝育匱轣ｫ蜷ｫ繧・・    /// </summary>
     public class ScoreService : MonoBehaviour, IScoreService, IServiceLocatorRegistrable
     {
         [Header("References")]

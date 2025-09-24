@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +13,8 @@ using Sirenix.OdinInspector;
 namespace asterivo.Unity60.Core.Audio.Controllers
 {
     /// <summary>
-    /// スチE��スゲーム用マスキング効果制御シスチE��
-    /// AmbientManagerから刁E��された�Eスキング効果専用コントローラー
+    /// スチE��スゲーム用マスキング効果制御シスチE��
+    /// AmbientManagerから刁E��された�Eスキング効果専用コントローラー
     /// </summary>
     public class MaskingEffectController : MonoBehaviour
     {
@@ -43,12 +43,13 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         [SerializeField, ReadOnly] private float currentMaskingStrength = 0f;
         [SerializeField, ReadOnly] private Vector3 lastMaskingPosition;
 
-        // シスチE��参�E
+        // シスチE��参�E
         private Transform playerTransform;
         private AudioListener audioListener;
         private StealthAudioCoordinator stealthCoordinator;
 
-        // マスキング管琁E        private List<MaskingAudioSource> trackingAudioSources = new List<MaskingAudioSource>();
+        // マスキング管理
+        private List<MaskingAudioSource> trackingAudioSources = new List<MaskingAudioSource>();
         private Dictionary<AudioSource, float> maskingStrengthCache = new Dictionary<AudioSource, float>();
         private Coroutine maskingUpdateCoroutine;
 
@@ -89,7 +90,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// シスチE��参�Eの検索
+        /// シスチE��参�Eの検索
         /// </summary>
         private void FindSystemReferences()
         {
@@ -114,7 +115,8 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         #region Public Interface
 
         /// <summary>
-        /// グローバルマスキング強度の設宁E        /// </summary>
+        /// グローバルマスキング強度の設定
+        /// </summary>
         public void SetGlobalMaskingStrength(float strength)
         {
             globalMaskingStrength = Mathf.Clamp01(strength);
@@ -122,7 +124,8 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// マスキング半征E�E設宁E        /// </summary>
+        /// マスキング半径の設定
+        /// </summary>
         public void SetMaskingRadius(float radius)
         {
             maskingRadius = Mathf.Max(0f, radius);
@@ -181,7 +184,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                 float maskedVolume = originalVolume * (1f - maskingStrength);
                 audioSource.volume = maskedVolume;
 
-                // キャチE��ュを更新
+                // キャチE��ュを更新
                 maskingStrengthCache[audioSource] = maskingStrength;
                 return true;
             }
@@ -198,13 +201,13 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// 全マスキング効果�E停止
+        /// 全マスキング効果�E停止
         /// </summary>
         public void StopAllMaskingEffects()
         {
             StopMaskingDetection();
             
-            // 全AudioSourceのマスキング効果をリセチE��
+            // 全AudioSourceのマスキング効果をリセチE��
             foreach (var kvp in maskingStrengthCache.ToList())
             {
                 if (kvp.Key != null)
@@ -229,17 +232,18 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         #region Private Methods
 
         /// <summary>
-        /// マスキング検�Eの開姁E        /// </summary>
+        /// マスキング検�Eの開姁E        /// </summary>
         private void StartMaskingDetection()
         {
-            // ✁EServiceLocator専用実裁E- IAudioUpdateServiceを取征E            if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator)
+            // ※ServiceLocator専用実装 - IAudioUpdateServiceを取得
+            if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator)
             {
                 try
                 {
                     var audioUpdateService = asterivo.Unity60.Core.ServiceLocator.GetService<asterivo.Unity60.Core.Audio.Interfaces.IAudioUpdateService>();
                     if (audioUpdateService is AudioUpdateCoordinator coordinator && coordinator.enabled)
                     {
-                        // 協調更新シスチE��に登録�E�イベント駁E���E�E                        coordinator.OnAudioSystemSync += OnAudioSystemSync;
+                        // 協調更新シスチE��に登録�E�イベント駁E���E�E                        coordinator.OnAudioSystemSync += OnAudioSystemSync;
                         EventLogger.LogStatic("<color=cyan>[MaskingEffectController]</color> Registered with AudioUpdateCoordinator via ServiceLocator");
                         return;
                     }
@@ -259,7 +263,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                 return;
             }
             
-            // フォールバック�E�従来の検�EシスチE��
+            // フォールバック�E�従来の検�EシスチE��
             if (maskingUpdateCoroutine == null)
             {
                 maskingUpdateCoroutine = StartCoroutine(MaskingDetectionCoroutine());
@@ -267,11 +271,11 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// マスキング検�Eの停止
+        /// マスキング検�Eの停止
         /// </summary>
         private void StopMaskingDetection()
         {
-            // ✁EServiceLocator専用実裁E- IAudioUpdateServiceからの登録解除
+            // ※ServiceLocator専用実装 - IAudioUpdateServiceからの登録解除
             if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator)
             {
                 try
@@ -304,7 +308,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// マスキング検�Eのメインコルーチン
+        /// マスキング検�Eのメインコルーチン
         /// </summary>
         private IEnumerator MaskingDetectionCoroutine()
         {
@@ -324,7 +328,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         {
             if (playerTransform == null) return;
 
-            // 篁E��冁E�EAudioSourceを検索
+            // 付近のAudioSourceを検索
             var nearbyAudioSources = FindObjectsByType<AudioSource>(FindObjectsSortMode.None)
                 .Where(audioSource => audioSource.isPlaying && IsValidMaskingSource(audioSource))
                 .Select(audioSource => new { 
@@ -347,23 +351,24 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// AudioSourceが�Eスキング対象として有効かチェチE��
+        /// AudioSourceが�Eスキング対象として有効かチェチE��
         /// </summary>
         private bool IsValidMaskingSource(AudioSource audioSource)
         {
-            // タグチェチE��
+            // タグチェチE��
             bool hasValidTag = maskingAudioTags.Length == 0 || maskingAudioTags.Contains(audioSource.tag);
             
-            // レイヤーチェチE��
+            // レイヤーチェチE��
             bool hasValidLayer = ((1 << audioSource.gameObject.layer) & stealthSoundLayerMask) != 0;
             
-            // 音量チェチE���E�非常に小さぁE��は除外！E            bool hasAudibleVolume = audioSource.volume > AudioConstants.MIN_AUDIBLE_VOLUME;
+            // 音量チェチE���E�非常に小さぁE��は除外！E            bool hasAudibleVolume = audioSource.volume > AudioConstants.MIN_AUDIBLE_VOLUME;
             
             return hasValidTag && hasValidLayer && hasAudibleVolume;
         }
 
         /// <summary>
-        /// マスキング効果�E処琁E        /// </summary>
+        /// マスキング効果の処理
+        /// </summary>
         private void ProcessMaskingEffects()
         {
             bool wasActive = isMaskingActive;
@@ -373,12 +378,12 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             {
                 isMaskingActive = true;
                 
-                // 最も強ぁE�Eスキング効果を取征E                currentMaskingStrength = trackingAudioSources.Max(source => source.maskingStrength);
+                // 最も強ぁE�Eスキング効果を取征E                currentMaskingStrength = trackingAudioSources.Max(source => source.maskingStrength);
                 lastMaskingPosition = trackingAudioSources
                     .OrderByDescending(source => source.maskingStrength)
                     .First().audioSource.transform.position;
 
-                // スチE��ス系シスチE��に通知
+                // ステルス系システムに通知
                 if (stealthCoordinator != null)
                 {
                     stealthCoordinator.NotifyMaskingEffect(lastMaskingPosition, currentMaskingStrength, maskingRadius);
@@ -389,7 +394,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                 isMaskingActive = false;
             }
 
-            // 状態変更時�Eイベント発火
+            // 状態変更時�Eイベント発火
             if (isMaskingActive != wasActive)
             {
                 if (isMaskingActive && maskingActivatedEvent != null)
@@ -402,7 +407,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                 }
             }
 
-            // マスキング音響検�EイベンチE            if (isMaskingActive && maskingSoundDetectedEvent != null)
+            // マスキング音響検�EイベンチE            if (isMaskingActive && maskingSoundDetectedEvent != null)
             {
                 var strongestSource = trackingAudioSources.OrderByDescending(s => s.maskingStrength).First();
                 var eventData = new AudioEventData
@@ -417,7 +422,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// 手動マスキング効果�Eコルーチン
+        /// 手動マスキング効果�Eコルーチン
         /// </summary>
         private IEnumerator ManualMaskingCoroutine(Vector3 position, float duration, float strength)
         {
@@ -453,18 +458,20 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// AudioSourceの允E�E音量を取征E        /// </summary>
+        /// AudioSourceの允E�E音量を取征E        /// </summary>
         private float GetOriginalVolume(AudioSource audioSource)
         {
-            // 允E�E音量�E保存してぁE��ぁE��め、現在の音量を基準とする
-            // 実際のプロジェクトでは、AudioSourceの允E��ータを保持する仕絁E��が忁E��E            return Mathf.Max(audioSource.volume, 0.1f);
+            // 允E�E音量�E保存してぁE��ぁE��め、現在の音量を基準とする
+            // 実際のプロジェクトでは、AudioSourceの允E��ータを保持する仕絁E��が忁E��E            return Mathf.Max(audioSource.volume, 0.1f);
         }
 
         /// <summary>
-        /// AudioSourceの音量を允E��戻ぁE        /// </summary>
+        /// AudioSourceの音量を允E��戻ぁE        /// </summary>
         private void RestoreOriginalVolume(AudioSource audioSource)
         {
-            // 実裁E�E允E�E音量データ保持方法に依孁E            // ここでは簡単な復允E�E琁E            if (maskingStrengthCache.ContainsKey(audioSource))
+            // 実際の元の音量データ保持方法に依存
+            // ここでは簡単な復元処理
+            if (maskingStrengthCache.ContainsKey(audioSource))
             {
                 maskingStrengthCache.Remove(audioSource);
             }
@@ -475,7 +482,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         #region Helper Classes
 
         /// <summary>
-        /// マスキング対象AudioSource惁E��
+        /// マスキング対象AudioSource情報
         /// </summary>
         [System.Serializable]
         private class MaskingAudioSource
@@ -490,11 +497,12 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         /// </summary>
         private void OnAudioSystemSync(AudioSystemSyncData syncData)
         {
-            // 効玁E��なマスキング処琁E��既に最適化されたチE�Eタを使用�E�E            if (syncData.nearbyAudioSources.Count > 0)
+            // 効率的なマスキング処理に既に最適化されたデータを使用
+            if (syncData.nearbyAudioSources.Count > 0)
             {
                 currentMaskingStrength = syncData.currentMaskingStrength;
                 
-                // バッチ�E琁E��マスキング効果を適用
+                // バッチ処理でマスキング効果を適用
                 foreach (var audioSource in syncData.nearbyAudioSources)
                 {
                     if (audioSource != null && audioSource.isPlaying)
@@ -508,7 +516,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                 activeMaskingSources = syncData.nearbyAudioSources.Count;
                 lastMaskingPosition = syncData.playerPosition;
 
-                // スチE��ス系シスチE��に通知
+                // ステルス系システムに通知
                 if (stealthCoordinator != null)
                 {
                     stealthCoordinator.NotifyMaskingEffect(lastMaskingPosition, currentMaskingStrength, maskingRadius);
@@ -549,11 +557,11 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         {
             if (playerTransform == null) return;
 
-            // マスキング篁E��の可視化
+            // マスキング範囲の可視化
             Gizmos.color = isMaskingActive ? Color.yellow : Color.gray;
             Gizmos.DrawWireSphere(playerTransform.position, maskingRadius);
 
-            // アクチE��ブなマスキングソースの可視化
+            // アクチE��ブなマスキングソースの可視化
             if (isMaskingActive)
             {
                 Gizmos.color = Color.red;

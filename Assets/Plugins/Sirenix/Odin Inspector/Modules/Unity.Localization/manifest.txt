@@ -1,4 +1,4 @@
-ManifestVersion: 1
+﻿ManifestVersion: 1
 ModuleID: Unity.Localization
 ModuleVersion: 2.0.0.5
 ModuleFiles:

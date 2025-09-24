@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using UnityEngine;
 namespace asterivo.Unity60.Core.Editor
 {
     /// <summary>
-    /// Core ↁEFeatures の単方向依存を検証する軽量バリチE�Eタ、E    /// Core配下�EasmdefがFeatures系アセンブリに参�Eを張ってぁE��ぁE��をチェチE��する、E    /// </summary>
+    /// Core 竊・Features 縺ｮ蜊俶婿蜷台ｾ晏ｭ倥ｒ讀懆ｨｼ縺吶ｋ霆ｽ驥上ヰ繝ｪ繝・・繧ｿ縲・    /// Core驟堺ｸ九・asmdef縺熊eatures邉ｻ繧｢繧ｻ繝ｳ繝悶Μ縺ｫ蜿ら・繧貞ｼｵ縺｣縺ｦ縺・↑縺・°繧偵メ繧ｧ繝・け縺吶ｋ縲・    /// </summary>
     public static class AsmdefDependencyValidator
     {
 #if UNITY_EDITOR
@@ -26,7 +26,7 @@ namespace asterivo.Unity60.Core.Editor
         [InitializeOnLoadMethod]
         private static void AutoValidateOnLoad()
         {
-            // Editor起動毎に軽く検証�E�重くなぁE��E            ValidateAndReport();
+            // Editor襍ｷ蜍墓ｯ弱↓霆ｽ縺乗､懆ｨｼ・磯㍾縺上↑縺・ｼ・            ValidateAndReport();
         }
 
         private static void ValidateAndReport()
@@ -78,7 +78,7 @@ namespace asterivo.Unity60.Core.Editor
 
         private static string ExtractJsonValue(string json, string key)
         {
-            // ざっくり抽出�E�厳寁E��JSONパ�Eスは不要E��E            var marker = $"\"{key}\"";
+            // 縺悶▲縺上ｊ謚ｽ蜃ｺ・亥宍蟇・↑JSON繝代・繧ｹ縺ｯ荳崎ｦ・ｼ・            var marker = $"\"{key}\"";
             var idx = json.IndexOf(marker, StringComparison.Ordinal);
             if (idx < 0) return string.Empty;
             idx = json.IndexOf(':', idx) + 1;

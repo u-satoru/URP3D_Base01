@@ -1,4 +1,4 @@
-Test file for line ending normalization
+﻿Test file for line ending normalization
 This file will test the Git configuration
 Line 3: CRLF -> LF conversion
 Line 4: Text handling verification

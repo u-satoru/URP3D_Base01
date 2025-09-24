@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 // using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Services;
 // // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
@@ -6,42 +6,42 @@ using asterivo.Unity60.Core.Services;
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// 緊急時�EロールバックシスチE��
-    /// 移行中に問題が発生した場合�E緊急対忁E    /// Step 3.10の一部として実裁E    /// </summary>
+    /// 邱頑･譎ゅ・繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ繧ｷ繧ｹ繝・Β
+    /// 遘ｻ陦御ｸｭ縺ｫ蝠城｡後′逋ｺ逕溘＠縺溷ｴ蜷医・邱頑･蟇ｾ蠢・    /// Step 3.10縺ｮ荳驛ｨ縺ｨ縺励※螳溯｣・    /// </summary>
     public static class EmergencyRollback 
     {
-        // 緊急ロールバック実行フラグ
+        // 邱頑･繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ螳溯｡後ヵ繝ｩ繧ｰ
         private const string EMERGENCY_FLAG_KEY = "EmergencyRollback_Active";
         private const string ROLLBACK_REASON_KEY = "EmergencyRollback_Reason";
         private const string ROLLBACK_TIME_KEY = "EmergencyRollback_Time";
         
         /// <summary>
-        /// 起動時に緊急フラグをチェチE��
+        /// 襍ｷ蜍墓凾縺ｫ邱頑･繝輔Λ繧ｰ繧偵メ繧ｧ繝・け
         /// </summary>
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         public static void CheckEmergencyFlag()
         {
-            // エチE��タ設定やコマンドライン引数でロールバックフラグを確誁E            bool emergencyFlagSet = false;
+            // 繧ｨ繝・ぅ繧ｿ險ｭ螳壹ｄ繧ｳ繝槭Φ繝峨Λ繧､繝ｳ蠑墓焚縺ｧ繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ繝輔Λ繧ｰ繧堤｢ｺ隱・            bool emergencyFlagSet = false;
             
             #if UNITY_EDITOR
             emergencyFlagSet = UnityEditor.EditorPrefs.GetBool("EmergencyRollback", false);
             if (emergencyFlagSet)
             {
                 ServiceLocator.GetService<IEventLogger>()?.LogWarning("[EmergencyRollback] Emergency flag detected in Editor");
-                UnityEditor.EditorPrefs.SetBool("EmergencyRollback", false); // フラグをリセチE��
+                UnityEditor.EditorPrefs.SetBool("EmergencyRollback", false); // 繝輔Λ繧ｰ繧偵Μ繧ｻ繝・ヨ
             }
             #endif
             
-            // PlayerPrefsでも緊急フラグをチェチE��
+            // PlayerPrefs縺ｧ繧らｷ頑･繝輔Λ繧ｰ繧偵メ繧ｧ繝・け
             if (PlayerPrefs.GetInt(EMERGENCY_FLAG_KEY, 0) == 1)
             {
                 emergencyFlagSet = true;
                 ServiceLocator.GetService<IEventLogger>()?.LogWarning("[EmergencyRollback] Emergency flag detected in PlayerPrefs");
-                PlayerPrefs.SetInt(EMERGENCY_FLAG_KEY, 0); // フラグをリセチE��
+                PlayerPrefs.SetInt(EMERGENCY_FLAG_KEY, 0); // 繝輔Λ繧ｰ繧偵Μ繧ｻ繝・ヨ
                 PlayerPrefs.Save();
             }
             
-            // コマンドライン引数でもチェチE��
+            // 繧ｳ繝槭Φ繝峨Λ繧､繝ｳ蠑墓焚縺ｧ繧ゅメ繧ｧ繝・け
             string[] args = System.Environment.GetCommandLineArgs();
             for (int i = 0; i < args.Length; i++)
             {
@@ -60,31 +60,31 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 完�E緊急ロールバックを実衁E        /// </summary>
+        /// 螳悟・邱頑･繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ繧貞ｮ溯｡・        /// </summary>
         public static void ExecuteEmergencyRollback(string reason = "Manual execution")
         {
             ServiceLocator.GetService<IEventLogger>()?.LogError($"[EMERGENCY] Executing emergency rollback: {reason}");
             
-            // 緊急ロールバック実行記録
+            // 邱頑･繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ螳溯｡瑚ｨ倬鹸
             string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             PlayerPrefs.SetString(ROLLBACK_REASON_KEY, reason);
             PlayerPrefs.SetString(ROLLBACK_TIME_KEY, timestamp);
             
-            // 全てのFeatureFlagを安�Eな状態に戻ぁE            asterivo.Unity60.Core.FeatureFlags.UseServiceLocator = true;  // ServiceLocator自体�E保持
+            // 蜈ｨ縺ｦ縺ｮFeatureFlag繧貞ｮ牙・縺ｪ迥ｶ諷九↓謌ｻ縺・            asterivo.Unity60.Core.FeatureFlags.UseServiceLocator = true;  // ServiceLocator閾ｪ菴薙・菫晄戟
             FeatureFlags.UseNewAudioService = false;
             FeatureFlags.UseNewSpatialService = false;  
             FeatureFlags.UseNewStealthService = false;
-            FeatureFlags.DisableLegacySingletons = false; // Singletonアクセスを許可
-            FeatureFlags.EnableMigrationWarnings = false; // 警告を停止
-            FeatureFlags.EnableMigrationMonitoring = false; // 監視を停止
-            FeatureFlags.EnableAutoRollback = false; // 自動ロールバックを停止
+            FeatureFlags.DisableLegacySingletons = false; // Singleton繧｢繧ｯ繧ｻ繧ｹ繧定ｨｱ蜿ｯ
+            FeatureFlags.EnableMigrationWarnings = false; // 隴ｦ蜻翫ｒ蛛懈ｭ｢
+            FeatureFlags.EnableMigrationMonitoring = false; // 逶｣隕悶ｒ蛛懈ｭ｢
+            FeatureFlags.EnableAutoRollback = false; // 閾ｪ蜍輔Ο繝ｼ繝ｫ繝舌ャ繧ｯ繧貞●豁｢
             
-            // Phase 3 新機�Eを無効匁E            FeatureFlags.UseNewAudioService = false;
+            // Phase 3 譁ｰ讖溯・繧堤┌蜉ｹ蛹・            FeatureFlags.UseNewAudioService = false;
             FeatureFlags.UseNewSpatialService = false;
             FeatureFlags.UseNewStealthService = false;
             FeatureFlags.EnablePerformanceMonitoring = false;
             
-            // 段階的移行フラグをリセチE��
+            // 谿ｵ髫守噪遘ｻ陦後ヵ繝ｩ繧ｰ繧偵Μ繧ｻ繝・ヨ
             FeatureFlags.MigrateAudioManager = false;
             FeatureFlags.MigrateSpatialAudioManager = false;
             FeatureFlags.MigrateEffectManager = false;
@@ -99,12 +99,12 @@ namespace asterivo.Unity60.Core.Services
             ServiceLocator.GetService<IEventLogger>()?.LogError($"[EMERGENCY] Rollback time: {timestamp}");
             ServiceLocator.GetService<IEventLogger>()?.LogError("EMERGENCY] Please check logs for the cause of rollback and fix issues before retrying migration.");
             
-            // SingletonDisableSchedulerもリセチE��
+            // SingletonDisableScheduler繧ゅΜ繧ｻ繝・ヨ
             ResetScheduler();
         }
         
         /// <summary>
-        /// 部刁E��ールバック - 特定�Eサービスのみロールバック
+        /// 驛ｨ蛻・Ο繝ｼ繝ｫ繝舌ャ繧ｯ - 迚ｹ螳壹・繧ｵ繝ｼ繝薙せ縺ｮ縺ｿ繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ
         /// </summary>
         public static void RollbackSpecificService(string serviceName, string reason = "Service-specific issue")
         {
@@ -151,7 +151,7 @@ namespace asterivo.Unity60.Core.Services
                     return;
             }
             
-            // 部刁E��ールバック記録
+            // 驛ｨ蛻・Ο繝ｼ繝ｫ繝舌ャ繧ｯ險倬鹸
             string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             string partialRollbackKey = $"PartialRollback_{serviceName}";
             PlayerPrefs.SetString(partialRollbackKey, $"{timestamp}: {reason}");
@@ -161,27 +161,27 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 復旧 - ロールバック状態から正常状態に戻ぁE        /// </summary>
+        /// 蠕ｩ譌ｧ - 繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ迥ｶ諷九°繧画ｭ｣蟶ｸ迥ｶ諷九↓謌ｻ縺・        /// </summary>
         public static void RestoreFromRollback(string reason = "Manual recovery")
         {
             ServiceLocator.GetService<IEventLogger>()?.Log("[RECOVERY] Restoring from emergency rollback: {reason}");
             
-            // 段階的に復旧�E�安�Eのため�E�E            FeatureFlags.UseServiceLocator = true;
+            // 谿ｵ髫守噪縺ｫ蠕ｩ譌ｧ・亥ｮ牙・縺ｮ縺溘ａ・・            FeatureFlags.UseServiceLocator = true;
             FeatureFlags.EnableMigrationMonitoring = true;
             FeatureFlags.EnableMigrationWarnings = true;
             
-            // 新サービスを段階的に有効匁E            FeatureFlags.UseNewAudioService = true;
+            // 譁ｰ繧ｵ繝ｼ繝薙せ繧呈ｮｵ髫守噪縺ｫ譛牙柑蛹・            FeatureFlags.UseNewAudioService = true;
             FeatureFlags.UseNewSpatialService = true;
             FeatureFlags.UseNewStealthService = true;
             
-            // 移行フラグを復活
+            // 遘ｻ陦後ヵ繝ｩ繧ｰ繧貞ｾｩ豢ｻ
             FeatureFlags.MigrateAudioManager = true;
             FeatureFlags.MigrateSpatialAudioManager = true;
             FeatureFlags.MigrateEffectManager = true;
             FeatureFlags.MigrateStealthAudioCoordinator = true;
             FeatureFlags.MigrateAudioUpdateCoordinator = true;
             
-            // 復旧記録
+            // 蠕ｩ譌ｧ險倬鹸
             string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             PlayerPrefs.SetString("Recovery_Time", timestamp);
             PlayerPrefs.SetString("Recovery_Reason", reason);
@@ -193,7 +193,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 緊急フラグを設定（次回起動時にロールバック実行！E        /// </summary>
+        /// 邱頑･繝輔Λ繧ｰ繧定ｨｭ螳夲ｼ域ｬ｡蝗櫁ｵｷ蜍墓凾縺ｫ繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ螳溯｡鯉ｼ・        /// </summary>
         public static void SetEmergencyFlag(string reason = "Emergency flag set programmatically")
         {
             PlayerPrefs.SetInt(EMERGENCY_FLAG_KEY, 1);
@@ -209,7 +209,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// SingletonDisableSchedulerをリセチE��
+        /// SingletonDisableScheduler繧偵Μ繧ｻ繝・ヨ
         /// </summary>
         private static void ResetScheduler()
         {
@@ -221,7 +221,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// ロールバック履歴を取征E        /// </summary>
+        /// 繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ螻･豁ｴ繧貞叙蠕・        /// </summary>
         public static RollbackHistory GetRollbackHistory()
         {
             return new RollbackHistory
@@ -234,18 +234,18 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// シスチE��健全性チェチE��
+        /// 繧ｷ繧ｹ繝・Β蛛･蜈ｨ諤ｧ繝√ぉ繝・け
         /// </summary>
         public static SystemHealthStatus CheckSystemHealth()
         {
             var health = new SystemHealthStatus();
             
-            // 基本皁E��設定�E整合性チェチE��
+            // 蝓ｺ譛ｬ逧・↑險ｭ螳壹・謨ｴ蜷域ｧ繝√ぉ繝・け
             health.ServiceLocatorEnabled = FeatureFlags.UseServiceLocator;
             health.SingletonsDisabled = FeatureFlags.DisableLegacySingletons;
             health.MigrationWarningsEnabled = FeatureFlags.EnableMigrationWarnings;
             
-            // 矛盾検�E
+            // 遏帷崟讀懷・
             if (!FeatureFlags.UseServiceLocator && (FeatureFlags.UseNewAudioService || 
                 FeatureFlags.UseNewSpatialService || FeatureFlags.UseNewStealthService))
             {
@@ -259,7 +259,7 @@ namespace asterivo.Unity60.Core.Services
                 health.Issues.Add("Singletons are disabled but migration warnings are off");
             }
             
-            // 健全性スコア計箁E            int healthScore = 100;
+            // 蛛･蜈ｨ諤ｧ繧ｹ繧ｳ繧｢險育ｮ・            int healthScore = 100;
             if (health.HasInconsistentConfiguration) healthScore -= 30;
             if (!health.ServiceLocatorEnabled) healthScore -= 20;
             if (health.Issues.Count > 0) healthScore -= (health.Issues.Count * 10);
@@ -271,7 +271,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 緊急状況検�Eと自動対忁E        /// </summary>
+        /// 邱頑･迥ｶ豕∵､懷・縺ｨ閾ｪ蜍募ｯｾ蠢・        /// </summary>
         public static void MonitorSystemHealth()
         {
             var health = CheckSystemHealth();
@@ -285,7 +285,7 @@ namespace asterivo.Unity60.Core.Services
                     ServiceLocator.GetService<IEventLogger>()?.LogWarning($"[EmergencyRollback] Health Issue: {issue}");
                 }
                 
-                // 重大な問題がある場合�E自動ロールバックを検訁E                if (health.HealthScore < 30)
+                // 驥榊､ｧ縺ｪ蝠城｡後′縺ゅｋ蝣ｴ蜷医・閾ｪ蜍輔Ο繝ｼ繝ｫ繝舌ャ繧ｯ繧呈､懆ｨ・                if (health.HealthScore < 30)
                 {
                     ServiceLocator.GetService<IEventLogger>()?.LogError("[EmergencyRollback] Critical system health detected");
                     
@@ -304,7 +304,7 @@ namespace asterivo.Unity60.Core.Services
     }
     
     /// <summary>
-    /// ロールバック履歴
+    /// 繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ螻･豁ｴ
     /// </summary>
     [System.Serializable]
     public class RollbackHistory
@@ -316,7 +316,7 @@ namespace asterivo.Unity60.Core.Services
     }
     
     /// <summary>
-    /// シスチE��健全性スチE�Eタス
+    /// 繧ｷ繧ｹ繝・Β蛛･蜈ｨ諤ｧ繧ｹ繝・・繧ｿ繧ｹ
     /// </summary>
     [System.Serializable]
     public class SystemHealthStatus

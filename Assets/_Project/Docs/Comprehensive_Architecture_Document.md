@@ -1,4 +1,4 @@
-# Unity URP 3D Base Template - 包括的アーキテクチャドキュメント
+﻿# Unity URP 3D Base Template - 包括的アーキテクチャドキュメント
 
 **作成日**: 2025年9月11日  
 **バージョン**: Phase 1 - 名前空間統一完了版  

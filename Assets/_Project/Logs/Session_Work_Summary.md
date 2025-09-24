@@ -1,4 +1,4 @@
-# Claude Code 作業セッション完了報告書
+﻿# Claude Code 作業セッション完了報告書
 
 **作業日時**: 2025年9月5日  
 **プロジェクト**: Unity6 URP3D_Base01  

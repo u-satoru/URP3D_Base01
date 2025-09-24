@@ -1,4 +1,4 @@
-{
+﻿{
     "name": "asterivo.Unity60.Core.Editor",
     "rootNamespace": "asterivo.Unity60.Core.Editor",
     "references": [
@@ -20,7 +20,7 @@
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": false,
+    "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

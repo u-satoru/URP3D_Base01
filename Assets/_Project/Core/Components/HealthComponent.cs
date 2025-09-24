@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 // using asterivo.Unity60.Core.Components;
 #if UNITY_EDITOR

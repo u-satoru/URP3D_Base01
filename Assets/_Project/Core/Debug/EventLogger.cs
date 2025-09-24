@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using System;
@@ -8,18 +8,18 @@ using asterivo.Unity60.Core;
 namespace asterivo.Unity60.Core.Debug
 {
     /// <summary>
-    /// 中央イベントロギングシスチE���E�EerviceLocator移行版�E�E    /// ServiceLocatorパターンでイベントログ管琁E��のアクセスを提供すめE    /// 
-    /// 設計思想:
-    /// - 中央雁E��皁E��ログ管琁E��よる一貫性確俁E    /// - 褁E��出力形式対応！Eonsole, File, DebugWindow, RemoteDebugger�E�E    /// - Unity MonoBehaviourのライフサイクルに統合された安�Eなサービス管琁E    /// - ServiceLocatorパターンによる依存性注入対忁E    /// - 後方互換性を維持しながら段階的移行を支援
+    /// 荳ｭ螟ｮ繧､繝吶Φ繝医Ο繧ｮ繝ｳ繧ｰ繧ｷ繧ｹ繝・Β・・erviceLocator遘ｻ陦檎沿・・    /// ServiceLocator繝代ち繝ｼ繝ｳ縺ｧ繧､繝吶Φ繝医Ο繧ｰ邂｡逅・∈縺ｮ繧｢繧ｯ繧ｻ繧ｹ繧呈署萓帙☆繧・    /// 
+    /// 險ｭ險域晄Φ:
+    /// - 荳ｭ螟ｮ髮・ｨｩ逧・↑繝ｭ繧ｰ邂｡逅・↓繧医ｋ荳雋ｫ諤ｧ遒ｺ菫・    /// - 隍・焚蜃ｺ蜉帛ｽ｢蠑丞ｯｾ蠢懶ｼ・onsole, File, DebugWindow, RemoteDebugger・・    /// - Unity MonoBehaviour縺ｮ繝ｩ繧､繝輔し繧､繧ｯ繝ｫ縺ｫ邨ｱ蜷医＆繧後◆螳牙・縺ｪ繧ｵ繝ｼ繝薙せ邂｡逅・    /// - ServiceLocator繝代ち繝ｼ繝ｳ縺ｫ繧医ｋ萓晏ｭ俶ｧ豕ｨ蜈･蟇ｾ蠢・    /// - 蠕梧婿莠呈鋤諤ｧ繧堤ｶｭ謖√＠縺ｪ縺後ｉ谿ｵ髫守噪遘ｻ陦後ｒ謾ｯ謠ｴ
     /// 
-    /// 推奨使用侁E
+    /// 謗ｨ螂ｨ菴ｿ逕ｨ萓・
     /// var logger = ServiceLocator.GetService&lt;IEventLogger&gt;();
     /// logger.Log("Application started");
     /// logger.LogEvent("PlayerDamaged", 3, "damage:25");
     /// </summary>
     public class EventLogger : MonoBehaviour, IEventLogger, IInitializable
     {
-        // ✁EServiceLocator移衁E Legacy Singleton警告シスチE���E�後方互換性のため�E�E        
+        // 笨・ServiceLocator遘ｻ陦・ Legacy Singleton隴ｦ蜻翫す繧ｹ繝・Β・亥ｾ梧婿莠呈鋤諤ｧ縺ｮ縺溘ａ・・        
         private List<EventLogEntry> eventLog = new List<EventLogEntry>();
         private EventLoggerSettings settings;
         
@@ -28,23 +28,23 @@ namespace asterivo.Unity60.Core.Debug
         [SerializeField] private int maxLogEntries = 1000;
         [SerializeField] private bool autoRegisterOnAwake = true;
         
-        /// <summary>初期化状態フラグ</summary>
+        /// <summary>蛻晄悄蛹也憾諷九ヵ繝ｩ繧ｰ</summary>
         private bool _isInitialized = false;
         
         #region IInitializable Implementation
         
         /// <summary>
-        /// 初期化優先度�E�数値が小さぁE��ど早く�E期化される！E        /// EventLoggerは他�Eサービスより早く�E期化される忁E��がある
+        /// 蛻晄悄蛹門━蜈亥ｺｦ・域焚蛟､縺悟ｰ上＆縺・⊇縺ｩ譌ｩ縺丞・譛溷喧縺輔ｌ繧具ｼ・        /// EventLogger縺ｯ莉悶・繧ｵ繝ｼ繝薙せ繧医ｊ譌ｩ縺丞・譛溷喧縺輔ｌ繧句ｿ・ｦ√′縺ゅｋ
         /// </summary>
         public int Priority => 5;
         
         /// <summary>
-        /// サービスが�E期化済みかどぁE��を示すフラグ
+        /// 繧ｵ繝ｼ繝薙せ縺悟・譛溷喧貂医∩縺九←縺・°繧堤､ｺ縺吶ヵ繝ｩ繧ｰ
         /// </summary>
         public bool IsInitialized => _isInitialized;
         
         /// <summary>
-        /// サービスの初期化�E琁E        /// ServiceLocatorによって呼び出されめE        /// </summary>
+        /// 繧ｵ繝ｼ繝薙せ縺ｮ蛻晄悄蛹門・逅・        /// ServiceLocator縺ｫ繧医▲縺ｦ蜻ｼ縺ｳ蜃ｺ縺輔ｌ繧・        /// </summary>
         public void Initialize()
         {
             if (_isInitialized) return;
@@ -63,11 +63,11 @@ namespace asterivo.Unity60.Core.Debug
         #region Properties (IEventLogger Implementation)
         
         /// <summary>
-        /// ログが有効かどぁE���E�EEventLoggerインターフェース実裁E��E        /// </summary>
+        /// 繝ｭ繧ｰ縺梧怏蜉ｹ縺九←縺・°・・EventLogger繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ螳溯｣・ｼ・        /// </summary>
         public bool IsEnabled => enableLogging;
         
         /// <summary>
-        /// 現在のイベントログエントリのリスト！EEventLoggerインターフェース実裁E��E        /// </summary>
+        /// 迴ｾ蝨ｨ縺ｮ繧､繝吶Φ繝医Ο繧ｰ繧ｨ繝ｳ繝医Μ縺ｮ繝ｪ繧ｹ繝茨ｼ・EventLogger繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ螳溯｣・ｼ・        /// </summary>
         public List<EventLogEntry> EventLog => eventLog;
         
         #endregion
@@ -75,13 +75,13 @@ namespace asterivo.Unity60.Core.Debug
         #region Static Properties (Backward Compatibility)
         
         /// <summary>
-        /// 後方互換性のための静的プロパティ
+        /// 蠕梧婿莠呈鋤諤ｧ縺ｮ縺溘ａ縺ｮ髱咏噪繝励Ο繝代ユ繧｣
         /// </summary>
         [System.Obsolete("Use ServiceLocator.GetService<IEventLogger>().IsEnabled instead")]
         public static bool IsEnabledStatic => GetServiceInstance()?.IsEnabled ?? false;
         
         /// <summary>
-        /// 後方互換性のための静的プロパティ
+        /// 蠕梧婿莠呈鋤諤ｧ縺ｮ縺溘ａ縺ｮ髱咏噪繝励Ο繝代ユ繧｣
         /// </summary>
         public static List<EventLogEntry> EventLogStatic => GetServiceInstance()?.EventLog ?? new List<EventLogEntry>();
         
@@ -91,14 +91,14 @@ namespace asterivo.Unity60.Core.Debug
         
         void Awake()
         {
-            // ServiceLocatorへの登録
+            // ServiceLocator縺ｸ縺ｮ逋ｻ骭ｲ
             if (autoRegisterOnAwake)
             {
                 RegisterToServiceLocator();
                 LogServiceStatus();
             }
             
-            // Editor環墁E��はDontDestroyOnLoadは使用不可のため条件チェチE��
+            // Editor迺ｰ蠅・〒縺ｯDontDestroyOnLoad縺ｯ菴ｿ逕ｨ荳榊庄縺ｮ縺溘ａ譚｡莉ｶ繝√ぉ繝・け
             if (Application.isPlaying)
             {
                 DontDestroyOnLoad(gameObject);
@@ -107,7 +107,7 @@ namespace asterivo.Unity60.Core.Debug
         
         void OnDestroy()
         {
-            // ServiceLocatorからの登録解除
+            // ServiceLocator縺九ｉ縺ｮ逋ｻ骭ｲ隗｣髯､
             try
             {
                 ServiceLocator.UnregisterService<IEventLogger>();
@@ -128,7 +128,7 @@ namespace asterivo.Unity60.Core.Debug
         #region Private Methods
         
         /// <summary>
-        /// ServiceLocatorにEventLoggerサービスを登録
+        /// ServiceLocator縺ｫEventLogger繧ｵ繝ｼ繝薙せ繧堤匳骭ｲ
         /// </summary>
         private void RegisterToServiceLocator()
         {
@@ -148,7 +148,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// サービスの冁E��初期化�E琁E        /// EventLoggerの設定読み込みと基本状態設定を行う
+        /// 繧ｵ繝ｼ繝薙せ縺ｮ蜀・Κ蛻晄悄蛹門・逅・        /// EventLogger縺ｮ險ｭ螳夊ｪｭ縺ｿ霎ｼ縺ｿ縺ｨ蝓ｺ譛ｬ迥ｶ諷玖ｨｭ螳壹ｒ陦後≧
         /// </summary>
         private void InitializeService()
         {
@@ -171,7 +171,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// ServiceLocator経由でEventLoggerインスタンスを取征E        /// </summary>
+        /// ServiceLocator邨檎罰縺ｧEventLogger繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ繧貞叙蠕・        /// </summary>
         private static IEventLogger GetServiceInstance()
         {
             return ServiceLocator.GetService<IEventLogger>();
@@ -183,7 +183,7 @@ namespace asterivo.Unity60.Core.Debug
             
             eventLog.Add(entry);
             
-            // 最大エントリ数を趁E��た場合、古ぁE��ントリを削除
+            // 譛螟ｧ繧ｨ繝ｳ繝医Μ謨ｰ繧定ｶ・∴縺溷ｴ蜷医∝商縺・お繝ｳ繝医Μ繧貞炎髯､
             if (eventLog.Count > maxLogEntries)
             {
                 eventLog.RemoveRange(0, eventLog.Count - maxLogEntries);
@@ -191,7 +191,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// サービスの現在の状態をログ出劁E        /// </summary>
+        /// 繧ｵ繝ｼ繝薙せ縺ｮ迴ｾ蝨ｨ縺ｮ迥ｶ諷九ｒ繝ｭ繧ｰ蜃ｺ蜉・        /// </summary>
         public void LogServiceStatus()
         {
             if (!IsEnabled) return;
@@ -205,7 +205,7 @@ namespace asterivo.Unity60.Core.Debug
         #region IEventLogger Implementation
         
         /// <summary>
-        /// 簡潔なログメソチE�� - Unity標準Debug.Logの代替�E�EEventLoggerインターフェース実裁E��E        /// </summary>
+        /// 邁｡貎斐↑繝ｭ繧ｰ繝｡繧ｽ繝・ラ - Unity讓呎ｺ縫ebug.Log縺ｮ莉｣譖ｿ・・EventLogger繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ螳溯｣・ｼ・        /// </summary>
         public void Log(string message)
         {
             if (!IsEnabled) return;
@@ -219,14 +219,14 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 簡潔な警告ログメソチE�� - Unity標準Debug.LogWarningの代替�E�EEventLoggerインターフェース実裁E��E        /// </summary>
+        /// 邁｡貎斐↑隴ｦ蜻翫Ο繧ｰ繝｡繧ｽ繝・ラ - Unity讓呎ｺ縫ebug.LogWarning縺ｮ莉｣譖ｿ・・EventLogger繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ螳溯｣・ｼ・        /// </summary>
         public void LogWarning(string message)
         {
             LogWarning("General", 0, message);
         }
         
         /// <summary>
-        /// 警告レベルのイベントログを記録�E�EEventLoggerインターフェース実裁E��E        /// </summary>
+        /// 隴ｦ蜻翫Ξ繝吶Ν縺ｮ繧､繝吶Φ繝医Ο繧ｰ繧定ｨ倬鹸・・EventLogger繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ螳溯｣・ｼ・        /// </summary>
         public void LogWarning(string eventName, int listenerCount, string message)
         {
             if (!IsEnabled) return;
@@ -240,7 +240,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 簡潔なエラーログメソチE�� - Unity標準Debug.LogErrorの代替�E�EEventLoggerインターフェース実裁E��E        /// </summary>
+        /// 邁｡貎斐↑繧ｨ繝ｩ繝ｼ繝ｭ繧ｰ繝｡繧ｽ繝・ラ - Unity讓呎ｺ縫ebug.LogError縺ｮ莉｣譖ｿ・・EventLogger繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ螳溯｣・ｼ・        /// </summary>
         public void LogError(string message)
         {
             if (!IsEnabled) return;
@@ -254,7 +254,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// エラーレベルのイベントログを記録�E�EEventLoggerインターフェース実裁E��E        /// </summary>
+        /// 繧ｨ繝ｩ繝ｼ繝ｬ繝吶Ν縺ｮ繧､繝吶Φ繝医Ο繧ｰ繧定ｨ倬鹸・・EventLogger繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ螳溯｣・ｼ・        /// </summary>
         public void LogError(string eventName, int listenerCount, string message)
         {
             if (!IsEnabled) return;
@@ -268,7 +268,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// イベントログを記録�E�リスナ�E数とペイロード付き�E�！EEventLoggerインターフェース実裁E��E        /// </summary>
+        /// 繧､繝吶Φ繝医Ο繧ｰ繧定ｨ倬鹸・医Μ繧ｹ繝翫・謨ｰ縺ｨ繝壹う繝ｭ繝ｼ繝我ｻ倥″・会ｼ・EventLogger繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ螳溯｣・ｼ・        /// </summary>
         public void LogEvent(string eventName, int listenerCount, string payload = "")
         {
             if (!IsEnabled) return;
@@ -277,7 +277,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 型安�Eなペイロード付きイベントログを記録�E�EEventLoggerインターフェース実裁E��E        /// </summary>
+        /// 蝙句ｮ牙・縺ｪ繝壹う繝ｭ繝ｼ繝我ｻ倥″繧､繝吶Φ繝医Ο繧ｰ繧定ｨ倬鹸・・EventLogger繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ螳溯｣・ｼ・        /// </summary>
         public void LogEventWithPayload<T>(string eventName, int listenerCount, T payload)
         {
             if (!IsEnabled) return;
@@ -287,14 +287,14 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// ログをクリア�E�EEventLoggerインターフェース実裁E��E        /// </summary>
+        /// 繝ｭ繧ｰ繧偵け繝ｪ繧｢・・EventLogger繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ螳溯｣・ｼ・        /// </summary>
         public void ClearLog()
         {
             eventLog.Clear();
         }
         
         /// <summary>
-        /// フィルタリングされたログエントリを取得！EEventLoggerインターフェース実裁E��E        /// </summary>
+        /// 繝輔ぅ繝ｫ繧ｿ繝ｪ繝ｳ繧ｰ縺輔ｌ縺溘Ο繧ｰ繧ｨ繝ｳ繝医Μ繧貞叙蠕暦ｼ・EventLogger繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ螳溯｣・ｼ・        /// </summary>
         public List<EventLogEntry> GetFilteredLog(string nameFilter = "", LogLevel minLevel = LogLevel.Info)
         {
             var filtered = new List<EventLogEntry>();
@@ -311,7 +311,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// ログの統計情報を取得！EEventLoggerインターフェース実裁E��E        /// </summary>
+        /// 繝ｭ繧ｰ縺ｮ邨ｱ險域ュ蝣ｱ繧貞叙蠕暦ｼ・EventLogger繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ螳溯｣・ｼ・        /// </summary>
         public LogStatistics GetStatistics()
         {
             var stats = new LogStatistics();
@@ -343,7 +343,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// ログをCSVファイルにエクスポ�Eト！EEventLoggerインターフェース実裁E��E        /// </summary>
+        /// 繝ｭ繧ｰ繧辰SV繝輔ぃ繧､繝ｫ縺ｫ繧ｨ繧ｯ繧ｹ繝昴・繝茨ｼ・EventLogger繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ螳溯｣・ｼ・        /// </summary>
         public void ExportToCSV(string filePath)
         {
             try
@@ -372,7 +372,7 @@ namespace asterivo.Unity60.Core.Debug
         #region Static Methods (Backward Compatibility)
         
         /// <summary>
-        /// 静的アクセス用のログメソチE���E�レガシー互換性用�E�E        /// ServiceLocator.GetService&lt;IEventLogger&gt;().Log()を使用してください
+        /// 髱咏噪繧｢繧ｯ繧ｻ繧ｹ逕ｨ縺ｮ繝ｭ繧ｰ繝｡繧ｽ繝・ラ・医Ξ繧ｬ繧ｷ繝ｼ莠呈鋤諤ｧ逕ｨ・・        /// ServiceLocator.GetService&lt;IEventLogger&gt;().Log()繧剃ｽｿ逕ｨ縺励※縺上□縺輔＞
         /// </summary>
         public static void LogStatic(string message)
         {
@@ -380,7 +380,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 静的アクセス用の警告ログメソチE���E�レガシー互換性用�E�E        /// </summary>
+        /// 髱咏噪繧｢繧ｯ繧ｻ繧ｹ逕ｨ縺ｮ隴ｦ蜻翫Ο繧ｰ繝｡繧ｽ繝・ラ・医Ξ繧ｬ繧ｷ繝ｼ莠呈鋤諤ｧ逕ｨ・・        /// </summary>
         [System.Obsolete("Use ServiceLocator.GetService<IEventLogger>().LogWarning() instead")]
         public static void LogWarningStatic(string message)
         {
@@ -388,7 +388,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 静的アクセス用のエラーログメソチE���E�レガシー互換性用�E�E        /// </summary>
+        /// 髱咏噪繧｢繧ｯ繧ｻ繧ｹ逕ｨ縺ｮ繧ｨ繝ｩ繝ｼ繝ｭ繧ｰ繝｡繧ｽ繝・ラ・医Ξ繧ｬ繧ｷ繝ｼ莠呈鋤諤ｧ逕ｨ・・        /// </summary>
         [System.Obsolete("Use ServiceLocator.GetService<IEventLogger>().LogError() instead")]
         public static void LogErrorStatic(string message)
         {
@@ -396,7 +396,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 静的アクセス用のイベントログメソチE���E�レガシー互換性用�E�E        /// ServiceLocator.GetService&lt;IEventLogger&gt;().LogEvent()を使用してください
+        /// 髱咏噪繧｢繧ｯ繧ｻ繧ｹ逕ｨ縺ｮ繧､繝吶Φ繝医Ο繧ｰ繝｡繧ｽ繝・ラ・医Ξ繧ｬ繧ｷ繝ｼ莠呈鋤諤ｧ逕ｨ・・        /// ServiceLocator.GetService&lt;IEventLogger&gt;().LogEvent()繧剃ｽｿ逕ｨ縺励※縺上□縺輔＞
         /// </summary>
         public static void LogEventStatic(string eventName, int listenerCount, string payload = "")
         {
@@ -404,7 +404,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 静的アクセス用の型安�Eペイロード付きイベントログメソチE���E�レガシー互換性用�E�E        /// ServiceLocator.GetService&lt;IEventLogger&gt;().LogEventWithPayload()を使用してください
+        /// 髱咏噪繧｢繧ｯ繧ｻ繧ｹ逕ｨ縺ｮ蝙句ｮ牙・繝壹う繝ｭ繝ｼ繝我ｻ倥″繧､繝吶Φ繝医Ο繧ｰ繝｡繧ｽ繝・ラ・医Ξ繧ｬ繧ｷ繝ｼ莠呈鋤諤ｧ逕ｨ・・        /// ServiceLocator.GetService&lt;IEventLogger&gt;().LogEventWithPayload()繧剃ｽｿ逕ｨ縺励※縺上□縺輔＞
         /// </summary>
         public static void LogEventWithPayloadStatic<T>(string eventName, int listenerCount, T payload)
         {
@@ -412,7 +412,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 静的アクセス用のログクリアメソチE���E�レガシー互換性用�E�E        /// ServiceLocator.GetService&lt;IEventLogger&gt;().ClearLog()を使用してください
+        /// 髱咏噪繧｢繧ｯ繧ｻ繧ｹ逕ｨ縺ｮ繝ｭ繧ｰ繧ｯ繝ｪ繧｢繝｡繧ｽ繝・ラ・医Ξ繧ｬ繧ｷ繝ｼ莠呈鋤諤ｧ逕ｨ・・        /// ServiceLocator.GetService&lt;IEventLogger&gt;().ClearLog()繧剃ｽｿ逕ｨ縺励※縺上□縺輔＞
         /// </summary>
         public static void ClearLogStatic()
         {
@@ -420,7 +420,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 静的アクセス用のフィルタリングログ取得メソチE���E�レガシー互換性用�E�E        /// ServiceLocator.GetService&lt;IEventLogger&gt;().GetFilteredLog()を使用してください
+        /// 髱咏噪繧｢繧ｯ繧ｻ繧ｹ逕ｨ縺ｮ繝輔ぅ繝ｫ繧ｿ繝ｪ繝ｳ繧ｰ繝ｭ繧ｰ蜿門ｾ励Γ繧ｽ繝・ラ・医Ξ繧ｬ繧ｷ繝ｼ莠呈鋤諤ｧ逕ｨ・・        /// ServiceLocator.GetService&lt;IEventLogger&gt;().GetFilteredLog()繧剃ｽｿ逕ｨ縺励※縺上□縺輔＞
         /// </summary>
         public static List<EventLogEntry> GetFilteredLogStatic(string nameFilter = "", LogLevel minLevel = LogLevel.Info)
         {
@@ -428,7 +428,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 静的アクセス用の統計情報取得メソチE���E�レガシー互換性用�E�E        /// ServiceLocator.GetService&lt;IEventLogger&gt;().GetStatistics()を使用してください
+        /// 髱咏噪繧｢繧ｯ繧ｻ繧ｹ逕ｨ縺ｮ邨ｱ險域ュ蝣ｱ蜿門ｾ励Γ繧ｽ繝・ラ・医Ξ繧ｬ繧ｷ繝ｼ莠呈鋤諤ｧ逕ｨ・・        /// ServiceLocator.GetService&lt;IEventLogger&gt;().GetStatistics()繧剃ｽｿ逕ｨ縺励※縺上□縺輔＞
         /// </summary>
         public static LogStatistics GetStatisticsStatic()
         {
@@ -436,7 +436,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// 静的アクセス用のCSVエクスポ�EトメソチE���E�レガシー互換性用�E�E        /// ServiceLocator.GetService&lt;IEventLogger&gt;().ExportToCSV()を使用してください
+        /// 髱咏噪繧｢繧ｯ繧ｻ繧ｹ逕ｨ縺ｮCSV繧ｨ繧ｯ繧ｹ繝昴・繝医Γ繧ｽ繝・ラ・医Ξ繧ｬ繧ｷ繝ｼ莠呈鋤諤ｧ逕ｨ・・        /// ServiceLocator.GetService&lt;IEventLogger&gt;().ExportToCSV()繧剃ｽｿ逕ｨ縺励※縺上□縺輔＞
         /// </summary>
         public static void ExportToCSVStatic(string filePath)
         {
@@ -448,7 +448,7 @@ namespace asterivo.Unity60.Core.Debug
         #region Data Structures
         
         /// <summary>
-        /// イベントログエントリのチE�Eタ構造
+        /// 繧､繝吶Φ繝医Ο繧ｰ繧ｨ繝ｳ繝医Μ縺ｮ繝・・繧ｿ讒矩
         /// </summary>
         [System.Serializable]
         public class EventLogEntry
@@ -470,7 +470,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// ログレベル列挙佁E        /// </summary>
+        /// 繝ｭ繧ｰ繝ｬ繝吶Ν蛻玲嫌菴・        /// </summary>
         public enum LogLevel
         {
             Info = 0,
@@ -479,7 +479,7 @@ namespace asterivo.Unity60.Core.Debug
         }
         
         /// <summary>
-        /// ログ統計情報の構造
+        /// 繝ｭ繧ｰ邨ｱ險域ュ蝣ｱ縺ｮ讒矩
         /// </summary>
         [System.Serializable]
         public class LogStatistics

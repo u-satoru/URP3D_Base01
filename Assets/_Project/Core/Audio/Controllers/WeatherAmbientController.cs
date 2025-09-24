@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Audio;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,8 +12,8 @@ using Sirenix.OdinInspector;
 namespace asterivo.Unity60.Core.Audio.Controllers
 {
     /// <summary>
-    /// 天気に依存する環墁E��制御シスチE��
-    /// AmbientManagerから刁E��された天気音響専用コントローラー
+    /// 天気に依存する環境音制御システム
+    /// AmbientManagerから刁E��された天気音響専用コントローラー
     /// </summary>
     public class WeatherAmbientController : MonoBehaviour
     {
@@ -36,12 +36,12 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         [SerializeField, ReadOnly] private bool isTransitioning = false;
         [SerializeField, ReadOnly] private float masterVolume = AudioConstants.DEFAULT_AMBIENT_VOLUME;
 
-        // 冁E��状慁E        private AudioSource[] weatherSources;
+        // 冁E��状慁E        private AudioSource[] weatherSources;
         private Dictionary<WeatherType, WeatherAmbientCollection> weatherSoundLookup;
         private List<WeatherAmbientLayer> activeWeatherLayers = new List<WeatherAmbientLayer>();
         private Coroutine weatherTransition;
 
-        // シスチE��参�E
+        // システム参照
         private Transform listenerTransform;
 
         #region Unity Lifecycle
@@ -73,7 +73,8 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// AudioSourceの設宁E        /// </summary>
+        /// AudioSourceの設定
+        /// </summary>
         private void SetupAudioSources()
         {
             weatherSources = new AudioSource[weatherSourceCount];
@@ -89,7 +90,8 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// AudioSourceの基本設宁E        /// </summary>
+        /// AudioSourceの基本設定
+        /// </summary>
         private void ConfigureAudioSource(AudioSource source)
         {
             source.outputAudioMixerGroup = weatherMixerGroup;
@@ -117,7 +119,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// リスナ�Eの検索
+        /// リスナ�Eの検索
         /// </summary>
         private void FindListenerTransform()
         {
@@ -133,7 +135,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         #region Public Interface
 
         /// <summary>
-        /// 天気�E変更
+        /// 天気�E変更
         /// </summary>
         public void ChangeWeather(WeatherType newWeather)
         {
@@ -149,7 +151,8 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// マスターボリュームの設宁E        /// </summary>
+        /// マスターボリュームの設定
+        /// </summary>
         public void SetMasterVolume(float volume)
         {
             masterVolume = Mathf.Clamp01(volume);
@@ -157,7 +160,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// 全体�E停止
+        /// 全体�E停止
         /// </summary>
         public void StopAllWeatherSounds()
         {
@@ -212,7 +215,8 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         public WeatherType GetCurrentWeather() => currentWeather;
 
         /// <summary>
-        /// 遷移中かどぁE��を取征E        /// </summary>
+        /// 遷移中かどうかを取得
+        /// </summary>
         public bool IsTransitioning() => isTransitioning;
 
         #endregion
@@ -220,7 +224,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         #region Private Methods
 
         /// <summary>
-        /// 天気�E移のコルーチン
+        /// 天気�E移のコルーチン
         /// </summary>
         private IEnumerator WeatherTransitionCoroutine(WeatherType newWeather)
         {
@@ -236,7 +240,8 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                 yield break;
             }
 
-            // 利用可能なオーチE��オソースを探ぁE            AudioSource availableSource = GetAvailableWeatherSource();
+            // 利用可能なオーディオソースを探す
+            AudioSource availableSource = GetAvailableWeatherSource();
             if (availableSource == null)
             {
                 EventLogger.LogWarningStatic("[WeatherAmbientController] No available audio sources for weather transition");
@@ -244,14 +249,15 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                 yield break;
             }
 
-            // 新しい天気レイヤーを作�E
+            // 新しい天気レイヤーを作�E
             var newLayer = CreateWeatherLayer(weatherCollection, availableSource);
             if (newLayer != null)
             {
                 yield return StartCoroutine(CrossfadeToNewWeatherLayer(availableSource, newLayer, weatherTransitionTime));
             }
 
-            // 古ぁE��イヤーをフェードアウチE            var layersToRemove = new List<WeatherAmbientLayer>(activeWeatherLayers);
+            // 古いレイヤーをフェードアウト
+            var layersToRemove = new List<WeatherAmbientLayer>(activeWeatherLayers);
             foreach (var layer in layersToRemove)
             {
                 if (layer != newLayer)
@@ -288,11 +294,11 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                     return source;
                 }
             }
-            return weatherSources[0]; // 全て使用中の場合�E最初�Eも�Eを使用
+            return weatherSources[0]; // 全て使用中の場合�E最初�Eも�Eを使用
         }
 
         /// <summary>
-        /// 天気レイヤーの作�E
+        /// 天気レイヤーの作�E
         /// </summary>
         private WeatherAmbientLayer CreateWeatherLayer(WeatherAmbientCollection collection, AudioSource audioSource)
         {
@@ -318,7 +324,8 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// 新しい天気レイヤーへのクロスフェーチE        /// </summary>
+        /// 新しい天気レイヤーへのクロスフェード
+        /// </summary>
         private IEnumerator CrossfadeToNewWeatherLayer(AudioSource source, WeatherAmbientLayer layer, float duration)
         {
             float elapsed = 0f;
@@ -338,7 +345,8 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// 天気レイヤーのフェードアウチE        /// </summary>
+        /// 天気レイヤーのフェードアウト
+        /// </summary>
         private IEnumerator FadeOutWeatherLayer(WeatherAmbientLayer layer, float duration)
         {
             if (layer?.audioSource == null) yield break;
@@ -364,7 +372,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// 全音量�E更新
+        /// 全音量�E更新
         /// </summary>
         private void UpdateAllVolumes()
         {
@@ -387,7 +395,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         #region Helper Classes
 
         /// <summary>
-        /// 天気環墁E��レイヤー
+        /// 天気環境音レイヤー
         /// </summary>
         [System.Serializable]
         private class WeatherAmbientLayer
@@ -399,17 +407,18 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         }
 
         /// <summary>
-        /// 天気別環墁E��コレクション�E�EeatherAmbientController専用�E�E        /// </summary>
+        /// 天気別環境音コレクション（WeatherAmbientController専用）
+        /// </summary>
         [System.Serializable]
         private class WeatherAmbientCollection
         {
-            [Header("基本設宁E)]
+            [Header("基本設定")]
             public string collectionName = "Weather Ambient";
             public WeatherType weatherType = WeatherType.Clear;
             public float baseVolume = 0.7f;
             public bool enableRandomization = true;
             
-            [Header("オーチE��オクリチE�E")]
+            [Header("オーディオクリップ")]
             public AudioClip[] ambientClips = new AudioClip[0];
             
             [Header("音響パラメータ")]
@@ -419,7 +428,8 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             [Range(0f, 10f)] public float fadeOutTime = 2f;
             
             /// <summary>
-            /// ランダムなオーチE��オクリチE�Eを取征E            /// </summary>
+            /// ランダムなオーディオクリップを取得
+            /// </summary>
             public AudioClip GetRandomClip()
             {
                 if (ambientClips == null || ambientClips.Length == 0)

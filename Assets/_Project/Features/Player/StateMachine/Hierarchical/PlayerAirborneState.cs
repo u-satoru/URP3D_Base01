@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using asterivo.Unity60.Core.StateMachine;
 
 namespace asterivo.Unity60.Features.Player.StateMachine.Hierarchical

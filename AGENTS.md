@@ -1,4 +1,4 @@
-# Repository Guidelines
+﻿# Repository Guidelines
 
 ## Project Structure & Module Organization
 - Source lives under `Assets/_Project`: `Core` holds shared services (ServiceLocator, GameEvent, Command pipeline), `Features` layers gameplay systems, and `Features/Templates` store canonical sample implementations to reference not fork.

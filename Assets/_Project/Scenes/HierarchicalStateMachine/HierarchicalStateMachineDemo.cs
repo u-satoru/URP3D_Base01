@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using asterivo.Unity60.Features.Player.StateMachine;
 using asterivo.Unity60.Features.AI.StateMachine;
 using asterivo.Unity60.Features.Camera.StateMachine;

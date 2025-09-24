@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using UnityEditor;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
@@ -7,16 +7,16 @@ using asterivo.Unity60.Core.Events;
 namespace asterivo.Unity60.Core.Editor
 {
     /// <summary>
-    /// イベントアセチE��をクイチE��作�EするためのメニューアイチE��
-    /// プロジェクトウィンドウから右クリチE��で素早く作�E可能
+    /// 繧､繝吶Φ繝医い繧ｻ繝・ヨ繧偵け繧､繝・け菴懈・縺吶ｋ縺溘ａ縺ｮ繝｡繝九Η繝ｼ繧｢繧､繝・Β
+    /// 繝励Ο繧ｸ繧ｧ繧ｯ繝医え繧｣繝ｳ繝峨え縺九ｉ蜿ｳ繧ｯ繝ｪ繝・け縺ｧ邏譌ｩ縺丈ｽ懈・蜿ｯ閭ｽ
     /// 
-    /// 主な機�E�E�E    /// - Assets/Create メニューへのイベント作�Eメニュー追加
-    /// - 基本イベント！EameEvent�E�から専用イベントまで幁E��E��タイプをサポ�EチE    /// - 現在選択中のフォルダへの自動保孁E    /// - ファイル名�E重褁E��ェチE��と自動リネ�Eム
-    /// - よく使用されるイベント�EチE��プレートとバッチ作�E
-    /// - ショートカチE��キー対応！Etrl+Shift+E�E�E    /// 
-    /// サポ�Eトされるイベントタイプ！E    /// - 基本タイチE GameEvent, String/Int/Float/Bool/Vector2/Vector3イベンチE    /// - 専用タイチE PlayerState/CameraState/GameState/CommandイベンチE    /// - チE��プレーチE Health/Level/Item/DamageイベンチE    /// - チE��チE��用: DebugLog/PerformanceWarningイベンチE    /// 
-    /// アクセス方法！E    /// 1. プロジェクトウィンドウで右クリチE�� > Create > Unity6 Events > ...
-    /// 2. Unity メニュー > Assets > Create > Unity6 Events > ...
+    /// 荳ｻ縺ｪ讖溯・・・    /// - Assets/Create 繝｡繝九Η繝ｼ縺ｸ縺ｮ繧､繝吶Φ繝井ｽ懈・繝｡繝九Η繝ｼ霑ｽ蜉
+    /// - 蝓ｺ譛ｬ繧､繝吶Φ繝茨ｼ・ameEvent・峨°繧牙ｰら畑繧､繝吶Φ繝医∪縺ｧ蟷・ｹ・＞繧ｿ繧､繝励ｒ繧ｵ繝昴・繝・    /// - 迴ｾ蝨ｨ驕ｸ謚樔ｸｭ縺ｮ繝輔か繝ｫ繝縺ｸ縺ｮ閾ｪ蜍穂ｿ晏ｭ・    /// - 繝輔ぃ繧､繝ｫ蜷阪・驥崎､・メ繧ｧ繝・け縺ｨ閾ｪ蜍輔Μ繝阪・繝
+    /// - 繧医￥菴ｿ逕ｨ縺輔ｌ繧九う繝吶Φ繝医・繝・Φ繝励Ξ繝ｼ繝医→繝舌ャ繝∽ｽ懈・
+    /// - 繧ｷ繝ｧ繝ｼ繝医き繝・ヨ繧ｭ繝ｼ蟇ｾ蠢懶ｼ・trl+Shift+E・・    /// 
+    /// 繧ｵ繝昴・繝医＆繧後ｋ繧､繝吶Φ繝医ち繧､繝暦ｼ・    /// - 蝓ｺ譛ｬ繧ｿ繧､繝・ GameEvent, String/Int/Float/Bool/Vector2/Vector3繧､繝吶Φ繝・    /// - 蟆ら畑繧ｿ繧､繝・ PlayerState/CameraState/GameState/Command繧､繝吶Φ繝・    /// - 繝・Φ繝励Ξ繝ｼ繝・ Health/Level/Item/Damage繧､繝吶Φ繝・    /// - 繝・ヰ繝・げ逕ｨ: DebugLog/PerformanceWarning繧､繝吶Φ繝・    /// 
+    /// 繧｢繧ｯ繧ｻ繧ｹ譁ｹ豕包ｼ・    /// 1. 繝励Ο繧ｸ繧ｧ繧ｯ繝医え繧｣繝ｳ繝峨え縺ｧ蜿ｳ繧ｯ繝ｪ繝・け > Create > Unity6 Events > ...
+    /// 2. Unity 繝｡繝九Η繝ｼ > Assets > Create > Unity6 Events > ...
     /// </summary>
     public static class EventQuickCreationMenu
     {
@@ -24,20 +24,20 @@ namespace asterivo.Unity60.Core.Editor
         private const string DefaultEventPath = "Assets/_Project/Core/ScriptableObjects/Events/Core/";
         
         /// <summary>
-        /// パラメーターなし�E基本GameEventアセチE��を作�E
-        /// シンプルな通知イベントに最適
+        /// 繝代Λ繝｡繝ｼ繧ｿ繝ｼ縺ｪ縺励・蝓ｺ譛ｬGameEvent繧｢繧ｻ繝・ヨ繧剃ｽ懈・
+        /// 繧ｷ繝ｳ繝励Ν縺ｪ騾夂衍繧､繝吶Φ繝医↓譛驕ｩ
         /// </summary>
         /// <remarks>
-        /// 使用例：ゲーム開始、�Eーズ、レベルクリア等�Eシンプルな状態変化
+        /// 菴ｿ逕ｨ萓具ｼ壹ご繝ｼ繝髢句ｧ九√・繝ｼ繧ｺ縲√Ξ繝吶Ν繧ｯ繝ｪ繧｢遲峨・繧ｷ繝ｳ繝励Ν縺ｪ迥ｶ諷句､牙喧
         /// </remarks>
-        // 基本皁E��GameEvent
+        // 蝓ｺ譛ｬ逧・↑GameEvent
         [MenuItem(BaseMenuPath + "Game Event")]
         public static void CreateGameEvent()
         {
             CreateEventAsset<GameEvent>("NewGameEvent");
         }
         
-        // 型付きイベンチE- 基本垁E        [MenuItem(BaseMenuPath + "Generic Events/String Event")]
+        // 蝙倶ｻ倥″繧､繝吶Φ繝・- 蝓ｺ譛ｬ蝙・        [MenuItem(BaseMenuPath + "Generic Events/String Event")]
         public static void CreateStringEvent()
         {
             CreateEventAsset<StringGameEvent>("NewStringEvent");
@@ -61,7 +61,7 @@ namespace asterivo.Unity60.Core.Editor
             CreateEventAsset<BoolGameEvent>("NewBoolEvent");
         }
         
-        // Vector型イベンチE        [MenuItem(BaseMenuPath + "Vector Events/Vector2 Event")]
+        // Vector蝙九う繝吶Φ繝・        [MenuItem(BaseMenuPath + "Vector Events/Vector2 Event")]
         public static void CreateVector2Event()
         {
             CreateEventAsset<Vector2GameEvent>("NewVector2Event");
@@ -73,13 +73,13 @@ namespace asterivo.Unity60.Core.Editor
             CreateEventAsset<Vector3GameEvent>("NewVector3Event");
         }
         
-        // GameObject型イベンチE        [MenuItem(BaseMenuPath + "Object Events/GameObject Event")]
+        // GameObject蝙九う繝吶Φ繝・        [MenuItem(BaseMenuPath + "Object Events/GameObject Event")]
         public static void CreateGameObjectEvent()
         {
             CreateEventAsset<GameObjectGameEvent>("NewGameObjectEvent");
         }
         
-        // 専用イベンチE        [MenuItem(BaseMenuPath + "Specialized Events/Player State Event")]
+        // 蟆ら畑繧､繝吶Φ繝・        [MenuItem(BaseMenuPath + "Specialized Events/Player State Event")]
         public static void CreatePlayerStateEvent()
         {
             CreateEventAsset<PlayerStateEvent>("PlayerStateEvent");
@@ -103,7 +103,7 @@ namespace asterivo.Unity60.Core.Editor
             CreateEventAsset<CommandGameEvent>("NewCommandEvent");
         }
         
-        // Unity Input System統吁E        [MenuItem(BaseMenuPath + "Input Events/Input Vector2 Event")]
+        // Unity Input System邨ｱ蜷・        [MenuItem(BaseMenuPath + "Input Events/Input Vector2 Event")]
         public static void CreateInputVector2Event()
         {
             CreateEventAsset<Vector2GameEvent>("InputVector2Event");
@@ -121,62 +121,62 @@ namespace asterivo.Unity60.Core.Editor
             CreateEventAsset<BoolGameEvent>("InputBoolEvent");
         }
         
-        // よく使用されるイベント�EチE��プレーチE        [MenuItem(BaseMenuPath + "Common Templates/Health Changed Event")]
+        // 繧医￥菴ｿ逕ｨ縺輔ｌ繧九う繝吶Φ繝医・繝・Φ繝励Ξ繝ｼ繝・        [MenuItem(BaseMenuPath + "Common Templates/Health Changed Event")]
         public static void CreateHealthChangedEvent()
         {
             var healthEvent = CreateEventAsset<IntGameEvent>("OnHealthChanged");
-            SetEventDescription(healthEvent, "プレイヤーまた�E敵のHealth値が変更されたときに発行されるイベンチE);
+            SetEventDescription(healthEvent, "繝励Ξ繧､繝､繝ｼ縺ｾ縺溘・謨ｵ縺ｮHealth蛟､縺悟､画峩縺輔ｌ縺溘→縺阪↓逋ｺ陦後＆繧後ｋ繧､繝吶Φ繝・);
         }
         
         [MenuItem(BaseMenuPath + "Common Templates/Level Complete Event")]
         public static void CreateLevelCompleteEvent()
         {
             var levelEvent = CreateEventAsset<GameEvent>("OnLevelComplete");
-            SetEventDescription(levelEvent, "レベルクリア時に発行されるイベンチE);
+            SetEventDescription(levelEvent, "繝ｬ繝吶Ν繧ｯ繝ｪ繧｢譎ゅ↓逋ｺ陦後＆繧後ｋ繧､繝吶Φ繝・);
         }
         
         [MenuItem(BaseMenuPath + "Common Templates/Item Collected Event")]
         public static void CreateItemCollectedEvent()
         {
             var itemEvent = CreateEventAsset<StringGameEvent>("OnItemCollected");
-            SetEventDescription(itemEvent, "アイチE��収集時に発行されるイベント。アイチE��名がペイロードとして送られる");
+            SetEventDescription(itemEvent, "繧｢繧､繝・Β蜿朱寔譎ゅ↓逋ｺ陦後＆繧後ｋ繧､繝吶Φ繝医ゅい繧､繝・Β蜷阪′繝壹う繝ｭ繝ｼ繝峨→縺励※騾√ｉ繧後ｋ");
         }
         
         [MenuItem(BaseMenuPath + "Common Templates/Damage Dealt Event")]
         public static void CreateDamageDealtEvent()
         {
             var damageEvent = CreateEventAsset<IntGameEvent>("OnDamageDealt");
-            SetEventDescription(damageEvent, "ダメージが与えられたときに発行されるイベント。ダメージ量がペイローチE);
+            SetEventDescription(damageEvent, "繝繝｡繝ｼ繧ｸ縺御ｸ弱∴繧峨ｌ縺溘→縺阪↓逋ｺ陦後＆繧後ｋ繧､繝吶Φ繝医ゅム繝｡繝ｼ繧ｸ驥上′繝壹う繝ｭ繝ｼ繝・);
         }
         
-        // チE��チE��用イベンチE        [MenuItem(BaseMenuPath + "Debug Events/Debug Log Event")]
+        // 繝・ヰ繝・げ逕ｨ繧､繝吶Φ繝・        [MenuItem(BaseMenuPath + "Debug Events/Debug Log Event")]
         public static void CreateDebugLogEvent()
         {
             var debugEvent = CreateEventAsset<StringGameEvent>("OnDebugLog");
-            SetEventDescription(debugEvent, "チE��チE��用ログ出力イベンチE);
+            SetEventDescription(debugEvent, "繝・ヰ繝・げ逕ｨ繝ｭ繧ｰ蜃ｺ蜉帙う繝吶Φ繝・);
         }
         
         [MenuItem(BaseMenuPath + "Debug Events/Performance Warning Event")]
         public static void CreatePerformanceWarningEvent()
         {
             var perfEvent = CreateEventAsset<FloatGameEvent>("OnPerformanceWarning");
-            SetEventDescription(perfEvent, "パフォーマンス警告イベント。フレーム時間が�EイローチE);
+            SetEventDescription(perfEvent, "繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ隴ｦ蜻翫う繝吶Φ繝医ゅヵ繝ｬ繝ｼ繝譎る俣縺後・繧､繝ｭ繝ｼ繝・);
         }
         
-        // バッチ作�E
+        // 繝舌ャ繝∽ｽ懈・
         [MenuItem(BaseMenuPath + "Batch Creation/Create Common Event Set")]
         public static void CreateCommonEventSet()
         {
             if (EditorUtility.DisplayDialog(
-                "バッチ作�E",
-                "よく使用される基本皁E��イベントセチE��を作�Eしますか�E�\n\n" +
-                "以下�Eイベントが作�EされまぁE\n" +
-                "• OnGameStart (GameEvent)\n" +
-                "• OnGamePause (BoolGameEvent)\n" +
-                "• OnScoreChanged (IntGameEvent)\n" +
-                "• OnHealthChanged (FloatGameEvent)\n" +
-                "• OnPlayerDied (GameEvent)",
-                "作�E", "キャンセル"))
+                "繝舌ャ繝∽ｽ懈・",
+                "繧医￥菴ｿ逕ｨ縺輔ｌ繧句渕譛ｬ逧・↑繧､繝吶Φ繝医そ繝・ヨ繧剃ｽ懈・縺励∪縺吶°・歃n\n" +
+                "莉･荳九・繧､繝吶Φ繝医′菴懈・縺輔ｌ縺ｾ縺・\n" +
+                "窶｢ OnGameStart (GameEvent)\n" +
+                "窶｢ OnGamePause (BoolGameEvent)\n" +
+                "窶｢ OnScoreChanged (IntGameEvent)\n" +
+                "窶｢ OnHealthChanged (FloatGameEvent)\n" +
+                "窶｢ OnPlayerDied (GameEvent)",
+                "菴懈・", "繧ｭ繝｣繝ｳ繧ｻ繝ｫ"))
             {
                 CreateEventAsset<GameEvent>("OnGameStart");
                 CreateEventAsset<BoolGameEvent>("OnGamePause");
@@ -184,37 +184,37 @@ namespace asterivo.Unity60.Core.Editor
                 CreateEventAsset<FloatGameEvent>("OnHealthChanged");
                 CreateEventAsset<GameEvent>("OnPlayerDied");
                 
-                UnityEngine.Debug.Log("基本皁E��イベントセチE��を作�Eしました、E);
+                UnityEngine.Debug.Log("蝓ｺ譛ｬ逧・↑繧､繝吶Φ繝医そ繝・ヨ繧剃ｽ懈・縺励∪縺励◆縲・);
                 AssetDatabase.Refresh();
             }
         }
         
-        // プライベ�EチEヘルパ�EメソチE��
+        // 繝励Λ繧､繝吶・繝・繝倥Ν繝代・繝｡繧ｽ繝・ラ
         private static T CreateEventAsset<T>(string eventName) where T : ScriptableObject
         {
-            // 現在選択されてぁE��フォルダを取得、なければチE��ォルトパス使用
+            // 迴ｾ蝨ｨ驕ｸ謚槭＆繧後※縺・ｋ繝輔か繝ｫ繝繧貞叙蠕励√↑縺代ｌ縺ｰ繝・ヵ繧ｩ繝ｫ繝医ヱ繧ｹ菴ｿ逕ｨ
             string targetPath = GetSelectedFolderPath();
             
-            // フォルダが存在しなぁE��合�E作�E
+            // 繝輔か繝ｫ繝縺悟ｭ伜惠縺励↑縺・ｴ蜷医・菴懈・
             EnsureFolderExists(targetPath);
             
-            // 同名ファイルがある場合�E番号を追加
+            // 蜷悟錐繝輔ぃ繧､繝ｫ縺後≠繧句ｴ蜷医・逡ｪ蜿ｷ繧定ｿｽ蜉
             string uniqueName = GetUniqueFileName(targetPath, eventName);
             
-            // ScriptableObjectインスタンスを作�E
+            // ScriptableObject繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ繧剃ｽ懈・
             T instance = ScriptableObject.CreateInstance<T>();
             
-            // ファイルパスを構篁E            string fullPath = Path.Combine(targetPath, $"{uniqueName}.asset");
+            // 繝輔ぃ繧､繝ｫ繝代せ繧呈ｧ狗ｯ・            string fullPath = Path.Combine(targetPath, $"{uniqueName}.asset");
             
-            // アセチE��を作�E
+            // 繧｢繧ｻ繝・ヨ繧剃ｽ懈・
             AssetDatabase.CreateAsset(instance, fullPath);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             
-            // 作�EされたアセチE��を選抁E            Selection.activeObject = instance;
+            // 菴懈・縺輔ｌ縺溘い繧ｻ繝・ヨ繧帝∈謚・            Selection.activeObject = instance;
             EditorUtility.FocusProjectWindow();
             
-            UnityEngine.Debug.Log($"イベントアセチE��を作�Eしました: {fullPath}");
+            UnityEngine.Debug.Log($"繧､繝吶Φ繝医い繧ｻ繝・ヨ繧剃ｽ懈・縺励∪縺励◆: {fullPath}");
             return instance;
         }
         
@@ -281,11 +281,11 @@ namespace asterivo.Unity60.Core.Editor
         
         private static void SetEventDescription(ScriptableObject eventAsset, string description)
         {
-            // 現在はログに記録
+            // 迴ｾ蝨ｨ縺ｯ繝ｭ繧ｰ縺ｫ險倬鹸
             UnityEngine.Debug.Log($"{eventAsset.name}: {description}");
         }
         
-        // 選択されたオブジェクトがフォルダかどぁE��を確認するメニュー検証
+        // 驕ｸ謚槭＆繧後◆繧ｪ繝悶ず繧ｧ繧ｯ繝医′繝輔か繝ｫ繝縺九←縺・°繧堤｢ｺ隱阪☆繧九Γ繝九Η繝ｼ讀懆ｨｼ
         [MenuItem(BaseMenuPath + "Game Event", true)]
         private static bool ValidateCreateGameEvent()
         {
@@ -301,14 +301,14 @@ namespace asterivo.Unity60.Core.Editor
             return string.IsNullOrEmpty(path) || AssetDatabase.IsValidFolder(path) || File.Exists(path);
         }
         
-        // コンチE��ストメニュー�E�右クリチE��メニュー�E��EバリチE�Eション
+        // 繧ｳ繝ｳ繝・く繧ｹ繝医Γ繝九Η繝ｼ・亥承繧ｯ繝ｪ繝・け繝｡繝九Η繝ｼ・峨・繝舌Μ繝・・繧ｷ繝ｧ繝ｳ
         [MenuItem("CONTEXT/Transform/Create Player State Event")]
         public static void CreatePlayerStateEventFromContext()
         {
             CreateEventAsset<PlayerStateEvent>("PlayerStateEvent");
         }
         
-        // ショートカチE��キー付きメニュー
+        // 繧ｷ繝ｧ繝ｼ繝医き繝・ヨ繧ｭ繝ｼ莉倥″繝｡繝九Η繝ｼ
         [MenuItem(BaseMenuPath + "Quick Game Event %#e")] // Ctrl+Shift+E
         public static void CreateGameEventWithShortcut()
         {

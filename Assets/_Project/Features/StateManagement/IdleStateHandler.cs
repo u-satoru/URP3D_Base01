@@ -1,4 +1,4 @@
-using asterivo.Unity60.Features.Player;
+﻿using asterivo.Unity60.Features.Player;
 using asterivo.Unity60.Core.Patterns;
 
 namespace asterivo.Unity60.Features.StateManagement

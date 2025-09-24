@@ -1,4 +1,4 @@
-# Platformer Template Configuration コンパイルエラー詳細分析レポート
+﻿# Platformer Template Configuration コンパイルエラー詳細分析レポート
 
 ## 📋 実行概要
 

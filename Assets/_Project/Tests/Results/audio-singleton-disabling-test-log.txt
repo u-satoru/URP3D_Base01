@@ -1,4 +1,4 @@
-[Licensing::Module] Trying to connect to existing licensing client channel...
+Ôªø[Licensing::Module] Trying to connect to existing licensing client channel...
 [Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-12T02:26:11.7774287Z"
 [Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 9184, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
 [Licensing::Module] Error: LicensingClient has failed validation; ignoring
@@ -271,7 +271,7 @@ UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface:EmitException
 UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface:CompileScripts (UnityEditor.Scripting.ScriptCompilation.EditorScriptCompilationOptions,UnityEditor.BuildTarget,int,string[])
 
 warn: Unity.AspNetCore.NamedPipeSupport.NamedPipeServer[0]
-      Exception occured while accepting client connection: System.IO.IOException: ÉpÉCÉvÇï¬Ç∂ÇƒÇ¢Ç‹Ç∑ÅB
+      Exception occured while accepting client connection: System.IO.IOException: „Éë„Ç§„Éó„ÇíÈñâ„Åò„Å¶„ÅÑ„Åæ„Åô„ÄÇ
          at System.IO.Pipes.NamedPipeServerStream.WaitForConnectionCoreAsync(CancellationToken cancellationToken)
          at System.IO.Pipes.NamedPipeServerStream.WaitForConnectionAsync(CancellationToken cancellationToken)
          at Unity.AspNetCore.NamedPipeSupport.NamedPipeServer.AcceptLoop(Boolean useNamedPipeMessageSemantic)

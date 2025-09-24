@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace asterivo.Unity60.Core.Bootstrap
 {

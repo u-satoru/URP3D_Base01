@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,8 +10,8 @@ using asterivo.Unity60.Core.Services;
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// Step 3.12: 高度な緊急時ロールバック監視シスチE��
-    /// シスチE��状態�E継続的監視、予測皁E��題検�E、�E動対応機�E
+    /// Step 3.12: 鬮伜ｺｦ縺ｪ邱頑･譎ゅΟ繝ｼ繝ｫ繝舌ャ繧ｯ逶｣隕悶す繧ｹ繝・Β
+    /// 繧ｷ繧ｹ繝・Β迥ｶ諷九・邯咏ｶ夂噪逶｣隕悶∽ｺ域ｸｬ逧・撫鬘梧､懷・縲∬・蜍募ｯｾ蠢懈ｩ溯・
     /// </summary>
     public class AdvancedRollbackMonitor : MonoBehaviour
     {
@@ -19,21 +19,21 @@ namespace asterivo.Unity60.Core.Services
         [SerializeField] private bool enableContinuousMonitoring = true;
         [SerializeField] private bool enablePredictiveAnalysis = true;
         [SerializeField] private bool enableAutoRecovery = true;
-        [SerializeField] private float monitoringInterval = 5f; // 5秒ごと
-        [SerializeField] private float healthCheckInterval = 10f; // 10秒ごと
+        [SerializeField] private float monitoringInterval = 5f; // 5遘偵＃縺ｨ
+        [SerializeField] private float healthCheckInterval = 10f; // 10遘偵＃縺ｨ
         
         [Header("Thresholds")]
         [SerializeField] private int criticalHealthThreshold = 30;
         [SerializeField] private int warningHealthThreshold = 60;
         [SerializeField] private int maxConsecutiveFailures = 3;
-        [SerializeField] private float performanceThreshold = 0.5f; // 50%性能低下で警呁E        
+        [SerializeField] private float performanceThreshold = 0.5f; // 50%諤ｧ閭ｽ菴惹ｸ九〒隴ｦ蜻・        
         [Header("Current Status")]
         [SerializeField] private SystemHealthLevel currentHealthLevel = SystemHealthLevel.Unknown;
         [SerializeField] private int consecutiveFailures = 0;
         [SerializeField] private float lastHealthScore = 100f;
         [SerializeField] private string lastIssueDetected = "";
         
-        // 監視データ
+        // 逶｣隕悶ョ繝ｼ繧ｿ
         private List<HealthSnapshot> healthHistory = new List<HealthSnapshot>();
         private Dictionary<string, ServiceHealthMetrics> serviceMetrics = new Dictionary<string, ServiceHealthMetrics>();
         private Queue<SystemIssue> recentIssues = new Queue<SystemIssue>();
@@ -60,7 +60,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 監視シスチE��の初期匁E        /// </summary>
+        /// 逶｣隕悶す繧ｹ繝・Β縺ｮ蛻晄悄蛹・        /// </summary>
         private void InitializeMonitoring()
         {
             LoadMonitoringData();
@@ -71,7 +71,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// サービスメトリクスの登録
+        /// 繧ｵ繝ｼ繝薙せ繝｡繝医Μ繧ｯ繧ｹ縺ｮ逋ｻ骭ｲ
         /// </summary>
         private void RegisterServiceMetrics()
         {
@@ -98,29 +98,29 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// シスチE��チェチE��の実衁E        /// </summary>
+        /// 繧ｷ繧ｹ繝・Β繝√ぉ繝・け縺ｮ螳溯｡・        /// </summary>
         private void PerformSystemCheck()
         {
             if (!enableContinuousMonitoring) return;
             
             try
             {
-                // 基本皁E��シスチE��健全性チェチE��
+                // 蝓ｺ譛ｬ逧・↑繧ｷ繧ｹ繝・Β蛛･蜈ｨ諤ｧ繝√ぉ繝・け
                 var healthStatus = EmergencyRollback.CheckSystemHealth();
                 UpdateHealthHistory(healthStatus);
                 
-                // サービス別詳細チェチE��
+                // 繧ｵ繝ｼ繝薙せ蛻･隧ｳ邏ｰ繝√ぉ繝・け
                 CheckIndividualServices();
                 
-                // パフォーマンスメトリクスチェチE��
+                // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ繝｡繝医Μ繧ｯ繧ｹ繝√ぉ繝・け
                 CheckPerformanceMetrics();
                 
-                // 予測刁E��の実衁E                if (enablePredictiveAnalysis)
+                // 莠域ｸｬ蛻・梵縺ｮ螳溯｡・                if (enablePredictiveAnalysis)
                 {
                     PerformPredictiveAnalysis();
                 }
                 
-                // 問題検�Eと対忁E                DetectAndHandleIssues(healthStatus);
+                // 蝠城｡梧､懷・縺ｨ蟇ｾ蠢・                DetectAndHandleIssues(healthStatus);
                 
             }
             catch (Exception ex)
@@ -130,7 +130,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 健全性履歴の更新
+        /// 蛛･蜈ｨ諤ｧ螻･豁ｴ縺ｮ譖ｴ譁ｰ
         /// </summary>
         private void UpdateHealthHistory(SystemHealthStatus healthStatus)
         {
@@ -149,12 +149,12 @@ namespace asterivo.Unity60.Core.Services
                 healthHistory.RemoveAt(0);
             }
             
-            // 現在の健全性レベルを更新
+            // 迴ｾ蝨ｨ縺ｮ蛛･蜈ｨ諤ｧ繝ｬ繝吶Ν繧呈峩譁ｰ
             UpdateCurrentHealthLevel(healthStatus.HealthScore);
         }
         
         /// <summary>
-        /// 現在の健全性レベルを更新
+        /// 迴ｾ蝨ｨ縺ｮ蛛･蜈ｨ諤ｧ繝ｬ繝吶Ν繧呈峩譁ｰ
         /// </summary>
         private void UpdateCurrentHealthLevel(int healthScore)
         {
@@ -180,7 +180,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 健全性レベル変更時�E処琁E        /// </summary>
+        /// 蛛･蜈ｨ諤ｧ繝ｬ繝吶Ν螟画峩譎ゅ・蜃ｦ逅・        /// </summary>
         private void OnHealthLevelChanged(SystemHealthLevel previous, SystemHealthLevel current, int score)
         {
             ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Health level changed: {previous} -> {current} (Score: {score})");
@@ -204,7 +204,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 個別サービスのチェチE��
+        /// 蛟句挨繧ｵ繝ｼ繝薙せ縺ｮ繝√ぉ繝・け
         /// </summary>
         private void CheckIndividualServices()
         {
@@ -242,7 +242,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// サービス健全性の個別チェチE��
+        /// 繧ｵ繝ｼ繝薙せ蛛･蜈ｨ諤ｧ縺ｮ蛟句挨繝√ぉ繝・け
         /// </summary>
         private bool CheckServiceHealth(string serviceName)
         {
@@ -264,25 +264,25 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// サービス応答時間�E測宁E        /// </summary>
+        /// 繧ｵ繝ｼ繝薙せ蠢懃ｭ疲凾髢薙・貂ｬ螳・        /// </summary>
         private float MeasureServiceResponseTime(string serviceName)
         {
             var stopwatch = System.Diagnostics.Stopwatch.StartNew();
             
             try
             {
-                // 簡単な応答時間測定（実際のサービス呼び出し！E                CheckServiceHealth(serviceName);
+                // 邁｡蜊倥↑蠢懃ｭ疲凾髢捺ｸｬ螳夲ｼ亥ｮ滄圀縺ｮ繧ｵ繝ｼ繝薙せ蜻ｼ縺ｳ蜃ｺ縺暦ｼ・                CheckServiceHealth(serviceName);
                 stopwatch.Stop();
                 return (float)stopwatch.ElapsedMilliseconds;
             }
             catch
             {
                 stopwatch.Stop();
-                return -1f; // エラーの場吁E            }
+                return -1f; // 繧ｨ繝ｩ繝ｼ縺ｮ蝣ｴ蜷・            }
         }
         
         /// <summary>
-        /// パフォーマンスメトリクスのチェチE��
+        /// 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ繝｡繝医Μ繧ｯ繧ｹ縺ｮ繝√ぉ繝・け
         /// </summary>
         private void CheckPerformanceMetrics()
         {
@@ -307,18 +307,18 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 予測刁E��の実衁E        /// </summary>
+        /// 莠域ｸｬ蛻・梵縺ｮ螳溯｡・        /// </summary>
         private void PerformPredictiveAnalysis()
         {
-            if (healthHistory.Count < 5) return; // 最佁E回�EチE�Eタが忁E��E            
+            if (healthHistory.Count < 5) return; // 譛菴・蝗槭・繝・・繧ｿ縺悟ｿ・ｦ・            
             try
             {
-                // 健全性スコアの傾向�E极E                AnalyzeHealthTrend();
+                // 蛛･蜈ｨ諤ｧ繧ｹ繧ｳ繧｢縺ｮ蛯ｾ蜷大・譫・                AnalyzeHealthTrend();
                 
-                // エラー発生パターンの刁E��
+                // 繧ｨ繝ｩ繝ｼ逋ｺ逕溘ヱ繧ｿ繝ｼ繝ｳ縺ｮ蛻・梵
                 AnalyzeErrorPatterns();
                 
-                // サービス品質の劣化予測
+                // 繧ｵ繝ｼ繝薙せ蜩∬ｳｪ縺ｮ蜉｣蛹紋ｺ域ｸｬ
                 PredictServiceDegradation();
                 
             }
@@ -329,7 +329,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 健全性傾向�E刁E��
+        /// 蛛･蜈ｨ諤ｧ蛯ｾ蜷代・蛻・梵
         /// </summary>
         private void AnalyzeHealthTrend()
         {
@@ -350,22 +350,22 @@ namespace asterivo.Unity60.Core.Services
             
             float trendChange = avgRecent - avgOlder;
             
-            if (trendChange < -15f) // 15点以上�E悪匁E            {
+            if (trendChange < -15f) // 15轤ｹ莉･荳翫・謔ｪ蛹・            {
                 RecordIssue($"Negative health trend detected: {trendChange:F1} point decline", 
                            IssueType.HealthTrend, IssueSeverity.Warning);
             }
         }
         
         /// <summary>
-        /// エラーパターンの刁E��
+        /// 繧ｨ繝ｩ繝ｼ繝代ち繝ｼ繝ｳ縺ｮ蛻・梵
         /// </summary>
         private void AnalyzeErrorPatterns()
         {
             var recentIssuesList = recentIssues.ToArray();
             if (recentIssuesList.Length < 3) return;
             
-            // 同種のエラーが短期間に褁E��発生してぁE��場吁E            var issueGroups = new Dictionary<string, int>();
-            var cutoffTime = DateTime.Now.AddMinutes(-10); // 過去10刁E��
+            // 蜷檎ｨｮ縺ｮ繧ｨ繝ｩ繝ｼ縺檎洒譛滄俣縺ｫ隍・焚逋ｺ逕溘＠縺ｦ縺・ｋ蝣ｴ蜷・            var issueGroups = new Dictionary<string, int>();
+            var cutoffTime = DateTime.Now.AddMinutes(-10); // 驕主悉10蛻・俣
             
             foreach (var issue in recentIssuesList)
             {
@@ -379,7 +379,7 @@ namespace asterivo.Unity60.Core.Services
             
             foreach (var kvp in issueGroups)
             {
-                if (kvp.Value >= 3) // 同じ問題が3回以丁E                {
+                if (kvp.Value >= 3) // 蜷後§蝠城｡後′3蝗樔ｻ･荳・                {
                     RecordIssue($"Recurring issue pattern detected: '{kvp.Key}' occurred {kvp.Value} times", 
                                IssueType.RecurringError, IssueSeverity.Error);
                 }
@@ -387,7 +387,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// サービス品質劣化�E予測
+        /// 繧ｵ繝ｼ繝薙せ蜩∬ｳｪ蜉｣蛹悶・莠域ｸｬ
         /// </summary>
         private void PredictServiceDegradation()
         {
@@ -405,10 +405,10 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 問題�E検�Eと対忁E        /// </summary>
+        /// 蝠城｡後・讀懷・縺ｨ蟇ｾ蠢・        /// </summary>
         private void DetectAndHandleIssues(SystemHealthStatus healthStatus)
         {
-            // 連続失敗カウンターの更新
+            // 騾｣邯壼､ｱ謨励き繧ｦ繝ｳ繧ｿ繝ｼ縺ｮ譖ｴ譁ｰ
             if (!healthStatus.IsHealthy)
             {
                 consecutiveFailures++;
@@ -418,13 +418,13 @@ namespace asterivo.Unity60.Core.Services
                 consecutiveFailures = 0;
             }
             
-            // 緊急事�Eの検�E
+            // 邱頑･莠区・縺ｮ讀懷・
             if (consecutiveFailures >= maxConsecutiveFailures)
             {
                 HandleEmergencyCondition($"System failed {consecutiveFailures} consecutive health checks");
             }
             
-            // 設定矛盾の検�E
+            // 險ｭ螳夂泝逶ｾ縺ｮ讀懷・
             if (healthStatus.HasInconsistentConfiguration)
             {
                 HandleConfigurationInconsistency(healthStatus.Issues);
@@ -432,7 +432,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 緊急事�Eの対忁E        /// </summary>
+        /// 邱頑･莠区・縺ｮ蟇ｾ蠢・        /// </summary>
         private void HandleEmergencyCondition(string reason)
         {
             ServiceLocator.GetService<IEventLogger>()?.LogError($"[AdvancedRollbackMonitor] EMERGENCY CONDITION: {reason}");
@@ -441,7 +441,7 @@ namespace asterivo.Unity60.Core.Services
             {
                 ServiceLocator.GetService<IEventLogger>()?.LogError("[AdvancedRollbackMonitor] Attempting automatic recovery...");
                 
-                // 段階的な回復を試衁E                if (TryGradualRecovery())
+                // 谿ｵ髫守噪縺ｪ蝗槫ｾｩ繧定ｩｦ陦・                if (TryGradualRecovery())
                 {
                     ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Gradual recovery succeeded");
                     consecutiveFailures = 0;
@@ -460,28 +460,28 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 段階的回復の試衁E        /// </summary>
+        /// 谿ｵ髫守噪蝗槫ｾｩ縺ｮ隧ｦ陦・        /// </summary>
         private bool TryGradualRecovery()
         {
             try
             {
                 ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Attempting gradual recovery...");
                 
-                // Step 1: 最新のサービス設定を無効匁E                if (FeatureFlags.UseNewStealthService)
+                // Step 1: 譛譁ｰ縺ｮ繧ｵ繝ｼ繝薙せ險ｭ螳壹ｒ辟｡蜉ｹ蛹・                if (FeatureFlags.UseNewStealthService)
                 {
                     FeatureFlags.UseNewStealthService = false;
                     ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Disabled StealthService");
                     if (CheckSystemHealthImprovement()) return true;
                 }
                 
-                // Step 2: Spatial Audio設定を無効匁E                if (FeatureFlags.UseNewSpatialService)
+                // Step 2: Spatial Audio險ｭ螳壹ｒ辟｡蜉ｹ蛹・                if (FeatureFlags.UseNewSpatialService)
                 {
                     FeatureFlags.UseNewSpatialService = false;
                     ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Disabled SpatialService");
                     if (CheckSystemHealthImprovement()) return true;
                 }
                 
-                // Step 3: 監視機�Eを一時停止
+                // Step 3: 逶｣隕匁ｩ溯・繧剃ｸ譎ょ●豁｢
                 if (FeatureFlags.EnableMigrationMonitoring)
                 {
                     FeatureFlags.EnableMigrationMonitoring = false;
@@ -499,16 +499,16 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// シスチE��健全性の改喁E��確誁E        /// </summary>
+        /// 繧ｷ繧ｹ繝・Β蛛･蜈ｨ諤ｧ縺ｮ謾ｹ蝟・ｒ遒ｺ隱・        /// </summary>
         private bool CheckSystemHealthImprovement()
         {
-            System.Threading.Thread.Sleep(1000); // 1秒征E��E            
+            System.Threading.Thread.Sleep(1000); // 1遘貞ｾ・ｩ・            
             var healthStatus = EmergencyRollback.CheckSystemHealth();
             return healthStatus.HealthScore > criticalHealthThreshold;
         }
         
         /// <summary>
-        /// 設定矛盾の対忁E        /// </summary>
+        /// 險ｭ螳夂泝逶ｾ縺ｮ蟇ｾ蠢・        /// </summary>
         private void HandleConfigurationInconsistency(List<string> issues)
         {
             foreach (var issue in issues)
@@ -521,7 +521,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 重大健全性レベルの処琁E        /// </summary>
+        /// 驥榊､ｧ蛛･蜈ｨ諤ｧ繝ｬ繝吶Ν縺ｮ蜃ｦ逅・        /// </summary>
         private void HandleCriticalHealthLevel(int score)
         {
             ServiceLocator.GetService<IEventLogger>()?.LogError($"[AdvancedRollbackMonitor] CRITICAL HEALTH LEVEL: Score {score}");
@@ -533,32 +533,32 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 警告健全性レベルの処琁E        /// </summary>
+        /// 隴ｦ蜻雁▼蜈ｨ諤ｧ繝ｬ繝吶Ν縺ｮ蜃ｦ逅・        /// </summary>
         private void HandleWarningHealthLevel(int score)
         {
             ServiceLocator.GetService<IEventLogger>()?.LogWarning($"[AdvancedRollbackMonitor] WARNING HEALTH LEVEL: Score {score}");
             
-            // 予防皁E��置の実衁E            PerformPreventiveMeasures();
+            // 莠磯亟逧・蒔鄂ｮ縺ｮ螳溯｡・            PerformPreventiveMeasures();
         }
         
         /// <summary>
-        /// 健全性回復の処琁E        /// </summary>
+        /// 蛛･蜈ｨ諤ｧ蝗槫ｾｩ縺ｮ蜃ｦ逅・        /// </summary>
         private void HandleHealthRecovery(SystemHealthLevel previous, SystemHealthLevel current)
         {
             ServiceLocator.GetService<IEventLogger>()?.Log($"[AdvancedRollbackMonitor] System health recovered from {previous} to {current}");
             
-            // 回復後�E安定性確誁E            InvokeRepeating(nameof(ConfirmHealthStability), 30f, 10f);
+            // 蝗槫ｾｩ蠕後・螳牙ｮ壽ｧ遒ｺ隱・            InvokeRepeating(nameof(ConfirmHealthStability), 30f, 10f);
         }
         
         /// <summary>
-        /// 予防皁E��置の実衁E        /// </summary>
+        /// 莠磯亟逧・蒔鄂ｮ縺ｮ螳溯｡・        /// </summary>
         private void PerformPreventiveMeasures()
         {
             ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Performing preventive measures...");
             
-            // ガベ�Eジコレクションの実衁E            System.GC.Collect();
+            // 繧ｬ繝吶・繧ｸ繧ｳ繝ｬ繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ螳溯｡・            System.GC.Collect();
             
-            // サービス統計�EリセチE��
+            // 繧ｵ繝ｼ繝薙せ邨ｱ險医・繝ｪ繧ｻ繝・ヨ
             foreach (var key in serviceMetrics.Keys.ToArray())
             {
                 var metrics = serviceMetrics[key];
@@ -571,7 +571,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 健全性安定性の確誁E        /// </summary>
+        /// 蛛･蜈ｨ諤ｧ螳牙ｮ壽ｧ縺ｮ遒ｺ隱・        /// </summary>
         private void ConfirmHealthStability()
         {
             if (currentHealthLevel == SystemHealthLevel.Good || currentHealthLevel == SystemHealthLevel.Excellent)
@@ -582,21 +582,21 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 健全性刁E��の実衁E        /// </summary>
+        /// 蛛･蜈ｨ諤ｧ蛻・梵縺ｮ螳溯｡・        /// </summary>
         private void PerformHealthAnalysis()
         {
             if (healthHistory.Count < 5) return;
             
-            // 過去の傾向�E极E            AnalyzeLongTermTrends();
+            // 驕主悉縺ｮ蛯ｾ蜷大・譫・            AnalyzeLongTermTrends();
             
-            // サービス品質レポ�Eト�E生�E
-            if (healthHistory.Count % 12 == 0) // 1刁E��と�E�E秒ÁE2回！E            {
+            // 繧ｵ繝ｼ繝薙せ蜩∬ｳｪ繝ｬ繝昴・繝医・逕滓・
+            if (healthHistory.Count % 12 == 0) // 1蛻・＃縺ｨ・・遘津・2蝗橸ｼ・            {
                 GenerateServiceQualityReport();
             }
         }
         
         /// <summary>
-        /// 長期傾向�E刁E��
+        /// 髟ｷ譛溷だ蜷代・蛻・梵
         /// </summary>
         private void AnalyzeLongTermTrends()
         {
@@ -618,7 +618,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// サービス品質レポ�Eト�E生�E
+        /// 繧ｵ繝ｼ繝薙せ蜩∬ｳｪ繝ｬ繝昴・繝医・逕滓・
         /// </summary>
         private void GenerateServiceQualityReport()
         {
@@ -627,7 +627,7 @@ namespace asterivo.Unity60.Core.Services
             foreach (var kvp in serviceMetrics)
             {
                 var metrics = kvp.Value;
-                string status = metrics.IsHealthy ? "✁E : "❁E;
+                string status = metrics.IsHealthy ? "笨・ : "笶・;
                 ServiceLocator.GetService<IEventLogger>()?.Log($"  {status} {metrics.ServiceName}: " +
                                $"Success Rate: {metrics.SuccessRate:F1}%, " +
                                $"Avg Response: {metrics.ResponseTime:F1}ms, " +
@@ -636,7 +636,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 問題�E記録
+        /// 蝠城｡後・險倬鹸
         /// </summary>
         private void RecordIssue(string description, IssueType type, IssueSeverity severity)
         {
@@ -654,7 +654,7 @@ namespace asterivo.Unity60.Core.Services
                 recentIssues.Dequeue();
             }
             
-            // ログ出劁E            switch (severity)
+            // 繝ｭ繧ｰ蜃ｺ蜉・            switch (severity)
             {
                 case IssueSeverity.Info:
                     ServiceLocator.GetService<IEventLogger>()?.Log($"[AdvancedRollbackMonitor] {description}");
@@ -669,7 +669,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 監視データの保孁E        /// </summary>
+        /// 逶｣隕悶ョ繝ｼ繧ｿ縺ｮ菫晏ｭ・        /// </summary>
         private void SaveMonitoringData()
         {
             try
@@ -686,7 +686,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 監視データの読み込み
+        /// 逶｣隕悶ョ繝ｼ繧ｿ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ
         /// </summary>
         private void LoadMonitoringData()
         {
@@ -703,7 +703,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 初回健全性チェチE��
+        /// 蛻晏屓蛛･蜈ｨ諤ｧ繝√ぉ繝・け
         /// </summary>
         private void PerformInitialHealthCheck()
         {
@@ -714,7 +714,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 監視状況レポ�Eト�E生�E
+        /// 逶｣隕也憾豕√Ξ繝昴・繝医・逕滓・
         /// </summary>
         [ContextMenu("Generate Monitoring Report")]
         public void GenerateMonitoringReport()
@@ -735,7 +735,7 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 監視シスチE��のリセチE��
+        /// 逶｣隕悶す繧ｹ繝・Β縺ｮ繝ｪ繧ｻ繝・ヨ
         /// </summary>
         [ContextMenu("Reset Monitoring System")]
         public void ResetMonitoringSystem()
@@ -756,7 +756,7 @@ namespace asterivo.Unity60.Core.Services
     }
     
     /// <summary>
-    /// シスチE��健全性レベル
+    /// 繧ｷ繧ｹ繝・Β蛛･蜈ｨ諤ｧ繝ｬ繝吶Ν
     /// </summary>
     public enum SystemHealthLevel
     {
@@ -768,7 +768,7 @@ namespace asterivo.Unity60.Core.Services
     }
     
     /// <summary>
-    /// 健全性スナップショチE��
+    /// 蛛･蜈ｨ諤ｧ繧ｹ繝翫ャ繝励す繝ｧ繝・ヨ
     /// </summary>
     [System.Serializable]
     public class HealthSnapshot
@@ -781,7 +781,7 @@ namespace asterivo.Unity60.Core.Services
     }
     
     /// <summary>
-    /// サービス健全性メトリクス
+    /// 繧ｵ繝ｼ繝薙せ蛛･蜈ｨ諤ｧ繝｡繝医Μ繧ｯ繧ｹ
     /// </summary>
     [System.Serializable]
     public class ServiceHealthMetrics
@@ -795,7 +795,7 @@ namespace asterivo.Unity60.Core.Services
     }
     
     /// <summary>
-    /// シスチE��問顁E    /// </summary>
+    /// 繧ｷ繧ｹ繝・Β蝠城｡・    /// </summary>
     [System.Serializable]
     public class SystemIssue
     {
@@ -806,7 +806,7 @@ namespace asterivo.Unity60.Core.Services
     }
     
     /// <summary>
-    /// 問題タイチE    /// </summary>
+    /// 蝠城｡後ち繧､繝・    /// </summary>
     public enum IssueType
     {
         Configuration,
@@ -818,7 +818,7 @@ namespace asterivo.Unity60.Core.Services
     }
     
     /// <summary>
-    /// 問題重要度
+    /// 蝠城｡碁㍾隕∝ｺｦ
     /// </summary>
     public enum IssueSeverity
     {

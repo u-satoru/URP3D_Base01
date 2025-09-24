@@ -1,4 +1,4 @@
-# REQUIREMENTS.md - Unity 6 3Dゲーム基盤プロジェクト 形式化された要件定義
+﻿# REQUIREMENTS.md - Unity 6 3Dゲーム基盤プロジェクト 形式化された要件定義
 
 ## アーキテクチャとデザインパターン
 

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using asterivo.Unity60.Core.Data;
 using asterivo.Unity60.Features.AI.Configuration;
 using DetectionConfig = asterivo.Unity60.Features.AI.Configuration.AIDetectionConfiguration;

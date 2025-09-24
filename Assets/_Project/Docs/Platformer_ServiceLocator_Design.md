@@ -1,4 +1,4 @@
-# Platformer Template Configuration - ServiceLocator積極活用設計書
+﻿# Platformer Template Configuration - ServiceLocator積極活用設計書
 
 ## アーキテクチャとデザインパターン準拠
 - **ServiceLocator + Event駆駆動のハイブリッドアーキテクチャ（最重要）**: グローバルサービスへのアクセスとイベントベースの通信を組み合わせたハイブリッドアプローチ

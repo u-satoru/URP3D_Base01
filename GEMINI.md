@@ -1,4 +1,4 @@
-# GEMINI.md
+﻿# GEMINI.md
 
  **Deep Think**  
 

@@ -1,4 +1,4 @@
-# Template層シーン動作確認手順書
+﻿# Template層シーン動作確認手順書
 **作成日**: 2025年9月24日
 **目的**: Phase 4.1で移動したアセットの動作確認とMissing Reference解消
 

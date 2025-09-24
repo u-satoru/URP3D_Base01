@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Patterns;
 using asterivo.Unity60.Features.Player;

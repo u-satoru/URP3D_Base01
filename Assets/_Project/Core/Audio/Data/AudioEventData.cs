@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using asterivo.Unity60.Core.Audio;
 
 namespace asterivo.Unity60.Core.Audio.Data

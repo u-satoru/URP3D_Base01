@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +9,16 @@ using asterivo.Unity60.Core.Events;
 namespace asterivo.Unity60.Core.Editor
 {
     /// <summary>
-    /// プロジェクトアーキチE��チャ検証チE�Eル
-    /// Unity 6プロジェクト�EイベントシスチE��、コマンドシスチE��、アセンブリ構造の整合性をチェチE��
+    /// 繝励Ο繧ｸ繧ｧ繧ｯ繝医い繝ｼ繧ｭ繝・け繝√Ε讀懆ｨｼ繝・・繝ｫ
+    /// Unity 6繝励Ο繧ｸ繧ｧ繧ｯ繝医・繧､繝吶Φ繝医す繧ｹ繝・Β縲√さ繝槭Φ繝峨す繧ｹ繝・Β縲√い繧ｻ繝ｳ繝悶Μ讒矩縺ｮ謨ｴ蜷域ｧ繧偵メ繧ｧ繝・け
     /// 
-    /// 主な機�E�E�E    /// - イベント接続�E検証�E�孤立リスナ�E、未使用イベント�E発見！E    /// - コマンドシスチE��の構�E検証�E�Envoker, Poolサービスの確認！E    /// - アセンブリ定義ファイルの存在チェチE��
-    /// - SerializeReferenceの使用状況監要E    /// - プロジェクトフォルダ構造の検証
-    /// - 自動修正機�E�E�フォルダ作�E等！E    /// - 詳細レポ�Eト�E生�Eとエクスポ�EチE    /// 
-    /// 使用シーン�E�E    /// - プロジェクト�E品質管琁E    /// - 新メンバ�Eのオンボ�EチE��ング時�E絁E��チェチE��
-    /// - CI/CDパイプラインでの自動品質ゲーチE    /// - リファクタリング後�E整合性検証
+    /// 荳ｻ縺ｪ讖溯・・・    /// - 繧､繝吶Φ繝域磁邯壹・讀懆ｨｼ・亥ｭ､遶九Μ繧ｹ繝翫・縲∵悴菴ｿ逕ｨ繧､繝吶Φ繝医・逋ｺ隕具ｼ・    /// - 繧ｳ繝槭Φ繝峨す繧ｹ繝・Β縺ｮ讒区・讀懆ｨｼ・・nvoker, Pool繧ｵ繝ｼ繝薙せ縺ｮ遒ｺ隱搾ｼ・    /// - 繧｢繧ｻ繝ｳ繝悶Μ螳夂ｾｩ繝輔ぃ繧､繝ｫ縺ｮ蟄伜惠繝√ぉ繝・け
+    /// - SerializeReference縺ｮ菴ｿ逕ｨ迥ｶ豕∫屮隕・    /// - 繝励Ο繧ｸ繧ｧ繧ｯ繝医ヵ繧ｩ繝ｫ繝讒矩縺ｮ讀懆ｨｼ
+    /// - 閾ｪ蜍穂ｿｮ豁｣讖溯・・医ヵ繧ｩ繝ｫ繝菴懈・遲会ｼ・    /// - 隧ｳ邏ｰ繝ｬ繝昴・繝医・逕滓・縺ｨ繧ｨ繧ｯ繧ｹ繝昴・繝・    /// 
+    /// 菴ｿ逕ｨ繧ｷ繝ｼ繝ｳ・・    /// - 繝励Ο繧ｸ繧ｧ繧ｯ繝医・蜩∬ｳｪ邂｡逅・    /// - 譁ｰ繝｡繝ｳ繝舌・縺ｮ繧ｪ繝ｳ繝懊・繝・ぅ繝ｳ繧ｰ譎ゅ・邨・ｹ斐メ繧ｧ繝・け
+    /// - CI/CD繝代う繝励Λ繧､繝ｳ縺ｧ縺ｮ閾ｪ蜍募刀雉ｪ繧ｲ繝ｼ繝・    /// - 繝ｪ繝輔ぃ繧ｯ繧ｿ繝ｪ繝ｳ繧ｰ蠕後・謨ｴ蜷域ｧ讀懆ｨｼ
     /// 
-    /// アクセス方法：Unity メニュー > asterivo.Unity60/Tools/Project Validation
+    /// 繧｢繧ｯ繧ｻ繧ｹ譁ｹ豕包ｼ啅nity 繝｡繝九Η繝ｼ > asterivo.Unity60/Tools/Project Validation
     /// </summary>
     public class ProjectValidationWindow : EditorWindow
     {
@@ -28,11 +28,11 @@ namespace asterivo.Unity60.Core.Editor
         private bool hasRunValidation = false;
         
         /// <summary>
-        /// プロジェクト検証ウィンドウを表示
-        /// Unityメニューから呼び出されるエチE��タ拡張メニューアイチE��
+        /// 繝励Ο繧ｸ繧ｧ繧ｯ繝域､懆ｨｼ繧ｦ繧｣繝ｳ繝峨え繧定｡ｨ遉ｺ
+        /// Unity繝｡繝九Η繝ｼ縺九ｉ蜻ｼ縺ｳ蜃ｺ縺輔ｌ繧九お繝・ぅ繧ｿ諡｡蠑ｵ繝｡繝九Η繝ｼ繧｢繧､繝・Β
         /// </summary>
         /// <remarks>
-        /// ウィンドウの最小サイズは500x400に設定され、E        /// 匁E��皁E��プロジェクト検証とレポ�Eト機�Eを提供します、E        /// </remarks>
+        /// 繧ｦ繧｣繝ｳ繝峨え縺ｮ譛蟆上し繧､繧ｺ縺ｯ500x400縺ｫ險ｭ螳壹＆繧後・        /// 蛹・峡逧・↑繝励Ο繧ｸ繧ｧ繧ｯ繝域､懆ｨｼ縺ｨ繝ｬ繝昴・繝域ｩ溯・繧呈署萓帙＠縺ｾ縺吶・        /// </remarks>
         [MenuItem("asterivo.Unity60/Tools/Project Validation")]
         public static void ShowWindow()
         {
@@ -42,10 +42,10 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// ウィンドウのGUI描画処琁E        /// タイトル、ツールバ�E、検証結果表示を頁E��描画
+        /// 繧ｦ繧｣繝ｳ繝峨え縺ｮGUI謠冗判蜃ｦ逅・        /// 繧ｿ繧､繝医Ν縲√ヤ繝ｼ繝ｫ繝舌・縲∵､懆ｨｼ邨先棡陦ｨ遉ｺ繧帝・ｬ｡謠冗判
         /// </summary>
         /// <remarks>
-        /// GUIの構�E頁E��！E        /// 1. ヘッダー�E��EロジェクトアーキチE��チャ検証タイトル�E�E        /// 2. チE�Eルバ�E�E�検証実行、�E動修正、レポ�Eト生成�Eタン�E�E        /// 3. 検証結果�E�スクロール可能なチE��ストエリア�E�E        /// </remarks>
+        /// GUI縺ｮ讒区・鬆・ｺ擾ｼ・        /// 1. 繝倥ャ繝繝ｼ・医・繝ｭ繧ｸ繧ｧ繧ｯ繝医い繝ｼ繧ｭ繝・け繝√Ε讀懆ｨｼ繧ｿ繧､繝医Ν・・        /// 2. 繝・・繝ｫ繝舌・・域､懆ｨｼ螳溯｡後∬・蜍穂ｿｮ豁｣縲√Ξ繝昴・繝育函謌舌・繧ｿ繝ｳ・・        /// 3. 讀懆ｨｼ邨先棡・医せ繧ｯ繝ｭ繝ｼ繝ｫ蜿ｯ閭ｽ縺ｪ繝・く繧ｹ繝医お繝ｪ繧｢・・        /// </remarks>
         void OnGUI()
         {
             EditorGUILayout.LabelField("Unity 6 Project Architecture Validation", EditorStyles.boldLabel);
@@ -59,17 +59,17 @@ namespace asterivo.Unity60.Core.Editor
         {
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
             
-            if (GUILayout.Button("🔍 Run Full Validation", EditorStyles.toolbarButton))
+            if (GUILayout.Button("剥 Run Full Validation", EditorStyles.toolbarButton))
             {
                 RunValidation();
             }
             
-            if (GUILayout.Button("🔧 Auto-Fix Issues", EditorStyles.toolbarButton))
+            if (GUILayout.Button("肌 Auto-Fix Issues", EditorStyles.toolbarButton))
             {
                 AutoFixIssues();
             }
             
-            if (GUILayout.Button("📊 Generate Report", EditorStyles.toolbarButton))
+            if (GUILayout.Button("投 Generate Report", EditorStyles.toolbarButton))
             {
                 GenerateReport();
             }
@@ -100,11 +100,11 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// 匁E��皁E��プロジェクト検証の実衁E        /// イベント、コマンド、アセンブリ、フォルダ構造等を頁E��チェチE��
+        /// 蛹・峡逧・↑繝励Ο繧ｸ繧ｧ繧ｯ繝域､懆ｨｼ縺ｮ螳溯｡・        /// 繧､繝吶Φ繝医√さ繝槭Φ繝峨√い繧ｻ繝ｳ繝悶Μ縲√ヵ繧ｩ繝ｫ繝讒矩遲峨ｒ鬆・ｬ｡繝√ぉ繝・け
         /// </summary>
         /// <remarks>
-        /// 検証頁E���E�E        /// 1. イベント接続検証�E�EalidateEventConnections�E�E        /// 2. コマンド定義検証�E�EalidateCommandDefinitions�E�E        /// 3. アセンブリ構造検証�E�EalidateAssemblyStructure�E�E        /// 4. SerializeReference使用状況チェチE���E�EalidateSerializeReferenceUsage�E�E        /// 5. ScriptableObjectアセチE��検証�E�EalidateScriptableObjectAssets�E�E        /// 6. プロジェクト構造検証�E�EalidateProjectStructure�E�E        /// 
-        /// 吁E��証結果はvalidationReportに記録され、GUIで表示されます、E        /// </remarks>
+        /// 讀懆ｨｼ鬆・岼・・        /// 1. 繧､繝吶Φ繝域磁邯壽､懆ｨｼ・・alidateEventConnections・・        /// 2. 繧ｳ繝槭Φ繝牙ｮ夂ｾｩ讀懆ｨｼ・・alidateCommandDefinitions・・        /// 3. 繧｢繧ｻ繝ｳ繝悶Μ讒矩讀懆ｨｼ・・alidateAssemblyStructure・・        /// 4. SerializeReference菴ｿ逕ｨ迥ｶ豕√メ繧ｧ繝・け・・alidateSerializeReferenceUsage・・        /// 5. ScriptableObject繧｢繧ｻ繝・ヨ讀懆ｨｼ・・alidateScriptableObjectAssets・・        /// 6. 繝励Ο繧ｸ繧ｧ繧ｯ繝域ｧ矩讀懆ｨｼ・・alidateProjectStructure・・        /// 
+        /// 蜷・､懆ｨｼ邨先棡縺ｯvalidationReport縺ｫ險倬鹸縺輔ｌ縲；UI縺ｧ陦ｨ遉ｺ縺輔ｌ縺ｾ縺吶・        /// </remarks>
         private void RunValidation()
         {
             validationReport = "";
@@ -130,7 +130,7 @@ namespace asterivo.Unity60.Core.Editor
         
         private void ValidateEventConnections()
         {
-            AddToReport("🔍 VALIDATING EVENT CONNECTIONS");
+            AddToReport("剥 VALIDATING EVENT CONNECTIONS");
             
             var listeners = FindObjectsByType<GameEventListener>(FindObjectsSortMode.None);
             var orphanedListeners = listeners.Where(l => l.Event == null).ToArray();
@@ -138,7 +138,7 @@ namespace asterivo.Unity60.Core.Editor
             
             if (orphanedListeners.Length > 0)
             {
-                AddToReport($"❁EFound {orphanedListeners.Length}/{totalListeners} GameEventListeners without assigned Events:");
+                AddToReport($"笶・Found {orphanedListeners.Length}/{totalListeners} GameEventListeners without assigned Events:");
                 foreach (var listener in orphanedListeners)
                 {
                     AddToReport($"  - {listener.gameObject.name} [{listener.gameObject.scene.name}]");
@@ -150,7 +150,7 @@ namespace asterivo.Unity60.Core.Editor
             }
             else
             {
-                AddToReport($"✁EAll {totalListeners} GameEventListeners have valid Event references");
+                AddToReport($"笨・All {totalListeners} GameEventListeners have valid Event references");
             }
             
             // Check for duplicate priorities
@@ -168,7 +168,7 @@ namespace asterivo.Unity60.Core.Editor
                     duplicatePriorityEvents++;
                     if (duplicatePriorityEvents == 1)
                     {
-                        AddToReport("⚠�E�EEvents with duplicate listener priorities:");
+                        AddToReport("笞・・Events with duplicate listener priorities:");
                     }
                     AddToReport($"  - {group.Key.name}: {string.Join(", ", duplicates.Select(g => $"Priority {g.Key} ({g.Count()}x)"))}");
                 }
@@ -176,7 +176,7 @@ namespace asterivo.Unity60.Core.Editor
             
             if (duplicatePriorityEvents == 0)
             {
-                AddToReport("✁ENo duplicate listener priorities found");
+                AddToReport("笨・No duplicate listener priorities found");
             }
             
             AddToReport("");
@@ -184,7 +184,7 @@ namespace asterivo.Unity60.Core.Editor
         
         private void ValidateCommandDefinitions()
         {
-            AddToReport("🔍 VALIDATING COMMAND DEFINITIONS");
+            AddToReport("剥 VALIDATING COMMAND DEFINITIONS");
             
             // Find all ICommandDefinition implementations
             var commandDefinitionTypes = GetAllTypesImplementing<ICommandDefinition>();
@@ -192,18 +192,18 @@ namespace asterivo.Unity60.Core.Editor
             
             foreach (var type in commandDefinitionTypes)
             {
-                AddToReport($"  ✁E{type.Name}");
+                AddToReport($"  笨・{type.Name}");
             }
             
             // Find CommandInvokers
             var invokers = FindObjectsByType<CommandInvoker>(FindObjectsSortMode.None);
             if (invokers.Length == 0)
             {
-                AddToReport("❁ENo CommandInvoker found in scene");
+                AddToReport("笶・No CommandInvoker found in scene");
             }
             else
             {
-                AddToReport($"✁EFound {invokers.Length} CommandInvoker(s)");
+                AddToReport($"笨・Found {invokers.Length} CommandInvoker(s)");
                 foreach (var invoker in invokers)
                 {
                     AddToReport($"  - {invoker.gameObject.name} [{invoker.gameObject.scene.name}]");
@@ -214,11 +214,11 @@ namespace asterivo.Unity60.Core.Editor
             var poolServices = FindObjectsByType<CommandPoolService>(FindObjectsSortMode.None);
             if (poolServices.Length == 0)
             {
-                AddToReport("⚠�E�ENo CommandPoolService found in scene - command pooling may not be active");
+                AddToReport("笞・・No CommandPoolService found in scene - command pooling may not be active");
             }
             else
             {
-                AddToReport($"✁EFound {poolServices.Length} CommandPoolService(s)");
+                AddToReport($"笨・Found {poolServices.Length} CommandPoolService(s)");
                 foreach (var service in poolServices)
                 {
                     AddToReport($"  - {service.gameObject.name} [{service.gameObject.scene.name}]");
@@ -230,17 +230,17 @@ namespace asterivo.Unity60.Core.Editor
         
         private void ValidateAssemblyStructure()
         {
-            AddToReport("🔍 VALIDATING ASSEMBLY STRUCTURE");
+            AddToReport("剥 VALIDATING ASSEMBLY STRUCTURE");
             
             var assemblyDefFiles = Directory.GetFiles("Assets", "*.asmdef", SearchOption.AllDirectories);
             
             if (assemblyDefFiles.Length == 0)
             {
-                AddToReport("⚠�E�ENo assembly definition files found");
+                AddToReport("笞・・No assembly definition files found");
             }
             else
             {
-                AddToReport($"✁EFound {assemblyDefFiles.Length} assembly definition files:");
+                AddToReport($"笨・Found {assemblyDefFiles.Length} assembly definition files:");
                 foreach (var file in assemblyDefFiles)
                 {
                     var fileName = Path.GetFileNameWithoutExtension(file);
@@ -256,7 +256,7 @@ namespace asterivo.Unity60.Core.Editor
         
         private void ValidateSerializeReferenceUsage()
         {
-            AddToReport("🔍 VALIDATING SERIALIZEREFERENCE USAGE");
+            AddToReport("剥 VALIDATING SERIALIZEREFERENCE USAGE");
             
             // This is a simplified check - in a real implementation you'd parse C# files
             var scriptFiles = Directory.GetFiles("Assets/_Project", "*.cs", SearchOption.AllDirectories)
@@ -271,7 +271,7 @@ namespace asterivo.Unity60.Core.Editor
                 if (content.Contains("[SerializeReference]"))
                 {
                     serializeReferenceCount++;
-                    AddToReport($"  ✁ESerializeReference found in: {Path.GetFileName(file)}");
+                    AddToReport($"  笨・SerializeReference found in: {Path.GetFileName(file)}");
                 }
                 
                 if (content.Contains("class ItemData"))
@@ -282,11 +282,11 @@ namespace asterivo.Unity60.Core.Editor
             
             if (serializeReferenceCount == 0)
             {
-                AddToReport("⚠�E�ENo SerializeReference attributes found - hybrid architecture may not be implemented");
+                AddToReport("笞・・No SerializeReference attributes found - hybrid architecture may not be implemented");
             }
             else
             {
-                AddToReport($"✁EFound {serializeReferenceCount} files using SerializeReference");
+                AddToReport($"笨・Found {serializeReferenceCount} files using SerializeReference");
             }
             
             AddToReport("");
@@ -294,7 +294,7 @@ namespace asterivo.Unity60.Core.Editor
         
         private void ValidateScriptableObjectAssets()
         {
-            AddToReport("🔍 VALIDATING SCRIPTABLEOBJECT ASSETS");
+            AddToReport("剥 VALIDATING SCRIPTABLEOBJECT ASSETS");
             
             var gameEvents = Resources.FindObjectsOfTypeAll<GameEvent>();
             var commandEvents = Resources.FindObjectsOfTypeAll<CommandGameEvent>();
@@ -312,11 +312,11 @@ namespace asterivo.Unity60.Core.Editor
             var unusedEvents = gameEvents.Length - usedEvents;
             if (unusedEvents > 0)
             {
-                AddToReport($"⚠�E�E{unusedEvents} GameEvent assets appear to be unused");
+                AddToReport($"笞・・{unusedEvents} GameEvent assets appear to be unused");
             }
             else
             {
-                AddToReport("✁EAll GameEvent assets appear to be in use");
+                AddToReport("笨・All GameEvent assets appear to be in use");
             }
             
             AddToReport("");
@@ -324,7 +324,7 @@ namespace asterivo.Unity60.Core.Editor
         
         private void ValidateProjectStructure()
         {
-            AddToReport("🔍 VALIDATING PROJECT STRUCTURE");
+            AddToReport("剥 VALIDATING PROJECT STRUCTURE");
             
             var expectedFolders = new[]
             {
@@ -342,22 +342,22 @@ namespace asterivo.Unity60.Core.Editor
             {
                 if (Directory.Exists(folder))
                 {
-                    AddToReport($"  ✁E{folder}");
+                    AddToReport($"  笨・{folder}");
                 }
                 else
                 {
-                    AddToReport($"  ❁EMissing: {folder}");
+                    AddToReport($"  笶・Missing: {folder}");
                     missingFolders++;
                 }
             }
             
             if (missingFolders == 0)
             {
-                AddToReport("✁EProject structure follows recommended layout");
+                AddToReport("笨・Project structure follows recommended layout");
             }
             else
             {
-                AddToReport($"⚠�E�E{missingFolders} recommended folders are missing");
+                AddToReport($"笞・・{missingFolders} recommended folders are missing");
             }
             
             AddToReport("");
@@ -380,7 +380,7 @@ namespace asterivo.Unity60.Core.Editor
         
         private void AutoFixIssues()
         {
-            AddToReport("🔧 ATTEMPTING AUTO-FIXES");
+            AddToReport("肌 ATTEMPTING AUTO-FIXES");
             
             // Auto-fix: Create missing folders
             var expectedFolders = new[]
@@ -397,18 +397,18 @@ namespace asterivo.Unity60.Core.Editor
                 {
                     Directory.CreateDirectory(folder);
                     foldersCreated++;
-                    AddToReport($"  ✁ECreated folder: {folder}");
+                    AddToReport($"  笨・Created folder: {folder}");
                 }
             }
             
             if (foldersCreated > 0)
             {
                 AssetDatabase.Refresh();
-                AddToReport($"✁EAuto-created {foldersCreated} missing folders");
+                AddToReport($"笨・Auto-created {foldersCreated} missing folders");
             }
             else
             {
-                AddToReport("✁ENo folder auto-fixes needed");
+                AddToReport("笨・No folder auto-fixes needed");
             }
             
             AddToReport("");
@@ -420,7 +420,7 @@ namespace asterivo.Unity60.Core.Editor
             if (!string.IsNullOrEmpty(path))
             {
                 File.WriteAllText(path, validationReport);
-                AddToReport($"📊 Report saved to: {path}");
+                AddToReport($"投 Report saved to: {path}");
                 
                 // Also log to console
                 UnityEngine.Debug.Log("=== PROJECT VALIDATION REPORT ===");

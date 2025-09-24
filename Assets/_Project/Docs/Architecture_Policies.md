@@ -1,4 +1,4 @@
-# Architecture Policies (2025-09-11)
+﻿# Architecture Policies (2025-09-11)
 
 本ドキュメントは、Coreの運用ポリシーと実装変更点を短くまとめたものです。
 

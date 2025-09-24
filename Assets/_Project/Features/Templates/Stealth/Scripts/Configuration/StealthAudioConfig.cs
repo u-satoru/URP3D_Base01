@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Audio;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Configuration

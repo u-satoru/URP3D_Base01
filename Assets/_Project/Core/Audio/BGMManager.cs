@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Audio;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using Sirenix.OdinInspector;
 namespace asterivo.Unity60.Core.Audio
 {
     /// <summary>
-    /// スチE��スゲーム特化�EBGMマネージャー
+    /// スチE��スゲーム特化�EBGMマネージャー
     /// 緊張度とゲーム状況に応じた動的BGM制御
     /// </summary>
     public class BGMManager : MonoBehaviour
@@ -22,7 +22,7 @@ namespace asterivo.Unity60.Core.Audio
         [SerializeField, Required] private BGMTrack[] menuBGM;
         [SerializeField, Required] private BGMTrack[] ambientBGM;        // 平常晁E        [SerializeField, Required] private BGMTrack[] tensionBGM;        // 警戒時
         [SerializeField, Required] private BGMTrack[] combatBGM;         // 戦闘時
-        [SerializeField] private BGMTrack[] stealthSuccessBGM;           // スチE��ス成功晁E        [SerializeField] private BGMTrack[] explorationBGM;              // 探索晁E
+        [SerializeField] private BGMTrack[] stealthSuccessBGM;           // スチE��ス成功晁E        [SerializeField] private BGMTrack[] explorationBGM;              // 探索晁E
         [TabGroup("BGM Manager", "Dynamic Control")]
         [Header("Dynamic Control Settings")]
         [SerializeField, Range(0.5f, 5f)] private float crossfadeDuration = 2f;
@@ -51,16 +51,16 @@ namespace asterivo.Unity60.Core.Audio
         [SerializeField, ReadOnly] private bool isTransitioning = false;
         [SerializeField, ReadOnly] private float masterVolume = 1f;
 
-        // 環墁E��応シスチE��
+        // 環墁E��応シスチE��
         private EnvironmentType currentEnvironment = EnvironmentType.Outdoor;
         private WeatherType currentWeather = WeatherType.Clear;
         private TimeOfDay currentTimeOfDay = TimeOfDay.Day;
 
-        // シスチE��連携
+        // シスチE��連携
         private StealthAudioCoordinator stealthCoordinator;
         private DynamicAudioEnvironment dynamicEnvironment;
 
-        // 冁E��状慁E        private Dictionary<BGMCategory, BGMTrack[]> bgmCategories;
+        // 冁E��状慁E        private Dictionary<BGMCategory, BGMTrack[]> bgmCategories;
         private Queue<BGMPlaybackRequest> pendingRequests = new Queue<BGMPlaybackRequest>();
         private Coroutine activeTransition;
 
@@ -89,10 +89,12 @@ namespace asterivo.Unity60.Core.Audio
         #region Initialization
 
         /// <summary>
-        /// BGMマネージャーの初期匁E        /// </summary>
+        /// BGMマネージャーの初期化
+        /// </summary>
         private void InitializeBGMManager()
         {
-            // BGMカチE��リ辞書の構篁E            bgmCategories = new Dictionary<BGMCategory, BGMTrack[]>
+            // BGMカテゴリ辞書の構築
+            bgmCategories = new Dictionary<BGMCategory, BGMTrack[]>
             {
                 { BGMCategory.Menu, menuBGM },
                 { BGMCategory.Ambient, ambientBGM },
@@ -104,7 +106,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// オーチE��オソースのセチE��アチE�E
+        /// オーチE��オソースのセチE��アチE�E
         /// </summary>
         private void SetupAudioSources()
         {
@@ -128,7 +130,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// オーチE��オソースの共通設宁E        /// </summary>
+        /// オーチE��オソースの共通設宁E        /// </summary>
         private void ConfigureAudioSource(AudioSource source)
         {
             source.playOnAwake = false;
@@ -139,7 +141,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// シスチE��参�Eの検索
+        /// シスチE��参�Eの検索
         /// </summary>
         private void FindSystemReferences()
         {
@@ -151,7 +153,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// チE��ォルチEGMの開姁E        /// </summary>
+        /// チE��ォルチEGMの開姁E        /// </summary>
         private void StartDefaultBGM()
         {
             // ゲーム開始時のBGM選抁E            var startingTrack = SelectBGMByCategory(BGMCategory.Ambient);
@@ -186,7 +188,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 環墁E��応じたBGM更新
+        /// 環墁E��応じたBGM更新
         /// </summary>
         public void UpdateForEnvironment(EnvironmentType environment, WeatherType weather, TimeOfDay timeOfDay)
         {
@@ -194,7 +196,7 @@ namespace asterivo.Unity60.Core.Audio
             currentWeather = weather;
             currentTimeOfDay = timeOfDay;
 
-            // 環墁E��化に応じたBGM調整
+            // 環墁E��化に応じたBGM調整
             if (currentTrack != null)
             {
                 ApplyEnvironmentalModifications();
@@ -202,7 +204,8 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 特定カチE��リのBGMを�E甁E        /// </summary>
+        /// 特定カテゴリのBGMを再生
+        /// </summary>
         public void PlayBGMCategory(BGMCategory category, bool forceImmediate = false)
         {
             var targetTrack = SelectBGMByCategory(category);
@@ -242,7 +245,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// マスター音量�E設宁E        /// </summary>
+        /// マスター音量�E設宁E        /// </summary>
         public void SetMasterVolume(float volume)
         {
             masterVolume = Mathf.Clamp01(volume);
@@ -272,7 +275,8 @@ namespace asterivo.Unity60.Core.Audio
         #region BGM Selection and Playback
 
         /// <summary>
-        /// 緊張度からBGMカチE��リを決宁E        /// </summary>
+        /// 緊張度からBGMカテゴリを決定
+        /// </summary>
         private BGMCategory DetermineBGMCategoryByTension(float tension)
         {
             if (tension < 0.2f)
@@ -286,7 +290,8 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// カチE��リに応じたBGM選抁E        /// </summary>
+        /// カテゴリに応じたBGM選択
+        /// </summary>
         private BGMTrack SelectBGMByCategory(BGMCategory category)
         {
             if (!bgmCategories.TryGetValue(category, out BGMTrack[] tracks) || tracks.Length == 0)
@@ -295,7 +300,7 @@ namespace asterivo.Unity60.Core.Audio
                 return null;
             }
 
-            // 環墁E�E天候�E時間帯に適したトラチE��を優先選抁E            var suitableTracks = FilterTracksByContext(tracks);
+            // 環墁E�E天候�E時間帯に適したトラチE��を優先選抁E            var suitableTracks = FilterTracksByContext(tracks);
             
             if (suitableTracks.Count == 0)
                 suitableTracks.AddRange(tracks);
@@ -304,7 +309,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 現在のコンチE��ストに適したトラチE��をフィルタリング
+        /// 現在のコンチE��ストに適したトラチE��をフィルタリング
         /// </summary>
         private List<BGMTrack> FilterTracksByContext(BGMTrack[] tracks)
         {
@@ -337,11 +342,11 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (track?.clip == null) return;
 
-            // 既存�E生を停止
+            // 既存�E生を停止
             primaryBGMSource.Stop();
             crossfadeBGMSource.Stop();
 
-            // 新しいトラチE��を設定�E再生
+            // 新しいトラチE��を設定�E再生
             primaryBGMSource.clip = track.clip;
             primaryBGMSource.volume = CalculateTargetVolume(track);
             primaryBGMSource.Play();
@@ -357,7 +362,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// スムーズなBGM刁E��替ぁE        /// </summary>
+        /// スムーズなBGM刁E��替ぁE        /// </summary>
         private void CrossfadeToBGM(BGMTrack newTrack)
         {
             if (newTrack == null || newTrack == currentTrack) return;
@@ -381,7 +386,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             isTransitioning = true;
 
-            // クロスフェード用ソースに新しいトラチE��を設宁E            crossfadeBGMSource.clip = newTrack.clip;
+            // クロスフェード用ソースに新しいトラチE��を設宁E            crossfadeBGMSource.clip = newTrack.clip;
             crossfadeBGMSource.volume = 0f;
             crossfadeBGMSource.Play();
 
@@ -403,11 +408,11 @@ namespace asterivo.Unity60.Core.Audio
                 yield return null;
             }
 
-            // ソースを�Eれ替ぁE            var tempSource = primaryBGMSource;
+            // ソースを�Eれ替ぁE            var tempSource = primaryBGMSource;
             primaryBGMSource = crossfadeBGMSource;
             crossfadeBGMSource = tempSource;
 
-            // 古ぁE��ースを停止
+            // 古ぁE��ースを停止
             crossfadeBGMSource.Stop();
             crossfadeBGMSource.volume = 0f;
 
@@ -451,30 +456,31 @@ namespace asterivo.Unity60.Core.Audio
         #region Volume and Environmental Control
 
         /// <summary>
-        /// ターゲチE��音量�E計箁E        /// </summary>
+        /// ターゲチE��音量�E計箁E        /// </summary>
         private float CalculateTargetVolume(BGMTrack track)
         {
             float baseVolume = track.volume * masterVolume;
 
-            // スチE��スモード時の音量調整
+            // スチE��スモード時の音量調整
             if (isStealthModeActive && track.allowInStealthMode)
             {
                 baseVolume *= (1f - stealthVolumeReduction);
             }
 
-            // 環墁E��よる音量調整
+            // 環墁E��よる音量調整
             baseVolume *= GetEnvironmentalVolumeModifier();
 
             return Mathf.Clamp01(baseVolume);
         }
 
         /// <summary>
-        /// 環墁E��よる音量調整値を取征E        /// </summary>
+        /// 環境による音量調整値を取得
+        /// </summary>
         private float GetEnvironmentalVolumeModifier()
         {
             float modifier = 1f;
 
-            // 環墁E��よる調整
+            // 環墁E��よる調整
             modifier *= currentEnvironment switch
             {
                 EnvironmentType.Indoor => 0.8f,
@@ -497,7 +503,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// ソース音量�E更新
+        /// ソース音量�E更新
         /// </summary>
         private void UpdateSourceVolumes()
         {
@@ -508,7 +514,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// スチE��ス状態に応じた音量更新
+        /// スチE��ス状態に応じた音量更新
         /// </summary>
         private void UpdateVolumeForStealthState()
         {
@@ -529,27 +535,27 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 環墁E��化に応じた調整を適用
+        /// 環墁E��化に応じた調整を適用
         /// </summary>
         private void ApplyEnvironmentalModifications()
         {
             if (primaryBGMSource.isPlaying)
             {
-                // リアルタイムでの環墁E��整
+                // リアルタイムでの環墁E��整
                 UpdateSourceVolumes();
                 
-                // 忁E��に応じて音響フィルターの調整
+                // 忁E��に応じて音響フィルターの調整
                 ApplyEnvironmentalFilters();
             }
         }
 
         /// <summary>
-        /// 環墁E��響フィルターの適用
+        /// 環墁E��響フィルターの適用
         /// </summary>
         private void ApplyEnvironmentalFilters()
         {
             // AudioLowPassFilter めEAudioReverbFilter の調整
-            // 実裁E�E具体的な要件に応じて
+            // 実裁E�E具体的な要件に応じて
         }
 
         #endregion
@@ -571,40 +577,42 @@ namespace asterivo.Unity60.Core.Audio
         #region Public Status API
         
         /// <summary>
-        /// 現在のBGMが�E生中か確誁E        /// </summary>
+        /// 現在のBGMが�E生中か確誁E        /// </summary>
         public bool IsPlaying()
         {
             return primaryBGMSource != null && primaryBGMSource.isPlaying;
         }
         
         /// <summary>
-        /// 持E��したBGM名が現在再生中か確誁E        /// </summary>
+        /// 持E��したBGM名が現在再生中か確誁E        /// </summary>
         public bool IsPlaying(string bgmName)
         {
             if (!IsPlaying() || currentTrack == null)
                 return false;
                 
-            // BGM名でのマッチング�E�簡略実裁E��E            return currentTrack.clip != null && 
+            // BGM名でのマッチング�E�簡略実裁E��E            return currentTrack.clip != null && 
                    (currentTrack.clip.name.Contains(bgmName) || 
                     currentTrack.trackName.Contains(bgmName));
         }
         
         /// <summary>
-        /// 持E��したBGMカチE��リが現在再生中か確誁E        /// </summary>
+        /// 指定したBGMカテゴリが現在再生中か確認
+        /// </summary>
         public bool IsPlayingCategory(BGMCategory category)
         {
             return IsPlaying() && currentCategory == category;
         }
         
         /// <summary>
-        /// 現在のBGMトラチE��惁E��を取征E        /// </summary>
+        /// 現在のBGMトラチE��惁E��を取征E        /// </summary>
         public BGMTrack GetCurrentTrack()
         {
             return currentTrack;
         }
         
         /// <summary>
-        /// 現在のBGMカチE��リを取征E        /// </summary>
+        /// 現在のBGMカテゴリを取得
+        /// </summary>
         public BGMCategory GetCurrentCategory()
         {
             return currentCategory;
@@ -618,7 +626,7 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// BGM名からBGMカチE��リへの変換
+        /// BGM名からBGMカチE��リへの変換
         /// </summary>
         public BGMCategory GetCategoryFromName(string bgmName)
         {
@@ -680,7 +688,7 @@ namespace asterivo.Unity60.Core.Audio
     #region Supporting Types
 
     /// <summary>
-    /// BGMカチE��リの定義
+    /// BGMカテゴリの定義
     /// </summary>
     public enum BGMCategory
     {
@@ -693,7 +701,7 @@ namespace asterivo.Unity60.Core.Audio
     }
 
     /// <summary>
-    /// BGMトラチE��惁E��
+    /// BGMトラチE��惁E��
     /// </summary>
     [System.Serializable]
     public class BGMTrack
@@ -710,8 +718,8 @@ namespace asterivo.Unity60.Core.Audio
         [Range(0f, 5f)] public float fadeOutDuration = 2f;
 
         [Header("Stealth Game Integration")]
-        [Range(0f, 1f)] public float tensionLevel = 0f;           // こ�E曲が適用される緊張度
-        public bool allowInStealthMode = true;                    // スチE��ス中に再生可能ぁE
+        [Range(0f, 1f)] public float tensionLevel = 0f;           // こ�E曲が適用される緊張度
+        public bool allowInStealthMode = true;                    // スチE��ス中に再生可能ぁE
         [Header("Environmental Context")]
         public EnvironmentType[] suitableEnvironments;            // 適用環墁E        public WeatherType[] suitableWeather;                     // 適用天倁E        public TimeOfDay[] suitableTimeOfDay;                     // 適用時間帯
 

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Cinemachine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Data;

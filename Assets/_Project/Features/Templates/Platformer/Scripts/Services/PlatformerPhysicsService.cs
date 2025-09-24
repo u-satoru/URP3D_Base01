@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using asterivo.Unity60.Features.Templates.Platformer.Settings;
 

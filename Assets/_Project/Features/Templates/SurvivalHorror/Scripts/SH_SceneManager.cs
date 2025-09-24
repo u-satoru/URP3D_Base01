@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Features.Templates.Common;

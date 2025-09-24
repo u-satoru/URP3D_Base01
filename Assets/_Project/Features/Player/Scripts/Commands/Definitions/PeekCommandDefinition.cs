@@ -1,4 +1,4 @@
-using asterivo.Unity60.Core.Commands;
+﻿using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Features.Player.Commands
 {

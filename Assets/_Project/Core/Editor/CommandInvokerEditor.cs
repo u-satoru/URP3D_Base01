@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using System.Linq;
 // using asterivo.Unity60.Core.Commands;
@@ -10,15 +10,15 @@ using asterivo.Unity60.Core.Constants;
 namespace asterivo.Unity60.Core.Editor
 {
     /// <summary>
-    /// CommandInvoker用カスタムエチE��タ
-    /// コマンドパターンの実行履歴とUndo/Redo機�EをInspectorで視覚化・制御
+    /// CommandInvoker逕ｨ繧ｫ繧ｹ繧ｿ繝繧ｨ繝・ぅ繧ｿ
+    /// 繧ｳ繝槭Φ繝峨ヱ繧ｿ繝ｼ繝ｳ縺ｮ螳溯｡悟ｱ･豁ｴ縺ｨUndo/Redo讖溯・繧棚nspector縺ｧ隕冶ｦ壼喧繝ｻ蛻ｶ蠕｡
     /// 
-    /// 主な機�E�E�E    /// - プレイモード中のUndo/RedoスタチE��状態表示
-    /// - 手動でのUndo/Redo実衁E    /// - コマンド履歴の視覚化
-    /// - チE��ト用コマンド�E実行！Eeal/Damage�E�E    /// - 設定検証とエラー表示
+    /// 荳ｻ縺ｪ讖溯・・・    /// - 繝励Ξ繧､繝｢繝ｼ繝我ｸｭ縺ｮUndo/Redo繧ｹ繧ｿ繝・け迥ｶ諷玖｡ｨ遉ｺ
+    /// - 謇句虚縺ｧ縺ｮUndo/Redo螳溯｡・    /// - 繧ｳ繝槭Φ繝牙ｱ･豁ｴ縺ｮ隕冶ｦ壼喧
+    /// - 繝・せ繝育畑繧ｳ繝槭Φ繝峨・螳溯｡鯉ｼ・eal/Damage・・    /// - 險ｭ螳壽､懆ｨｼ縺ｨ繧ｨ繝ｩ繝ｼ陦ｨ遉ｺ
     /// 
-    /// 使用シーン�E�E    /// - コマンド実行シスチE��のチE��チE��
-    /// - ゲームプレイ中のコマンド履歴確誁E    /// - Undo/Redo機�EのチE��チE    /// - 設定ミスの早期発要E    /// </summary>
+    /// 菴ｿ逕ｨ繧ｷ繝ｼ繝ｳ・・    /// - 繧ｳ繝槭Φ繝牙ｮ溯｡後す繧ｹ繝・Β縺ｮ繝・ヰ繝・げ
+    /// - 繧ｲ繝ｼ繝繝励Ξ繧､荳ｭ縺ｮ繧ｳ繝槭Φ繝牙ｱ･豁ｴ遒ｺ隱・    /// - Undo/Redo讖溯・縺ｮ繝・せ繝・    /// - 險ｭ螳壹Α繧ｹ縺ｮ譌ｩ譛溽匱隕・    /// </summary>
     [CustomEditor(typeof(CommandInvoker))]
     public class CommandInvokerEditor : UnityEditor.Editor
     {
@@ -26,18 +26,18 @@ namespace asterivo.Unity60.Core.Editor
         private bool showCommandDetails = false;
         
         /// <summary>
-        /// エチE��ターが有効になった時の初期化�E琁E        /// 対象のCommandInvokerコンポ�Eネント�E参�Eを取征E        /// </summary>
+        /// 繧ｨ繝・ぅ繧ｿ繝ｼ縺梧怏蜉ｹ縺ｫ縺ｪ縺｣縺滓凾縺ｮ蛻晄悄蛹門・逅・        /// 蟇ｾ雎｡縺ｮCommandInvoker繧ｳ繝ｳ繝昴・繝阪Φ繝医・蜿ら・繧貞叙蠕・        /// </summary>
         void OnEnable()
         {
             invoker = (CommandInvoker)target;
         }
         
         /// <summary>
-        /// Inspector GUIの描画処琁E        /// チE��ォルト�EInspectorに加えて、カスタムチE��チE��機�Eを追加表示
-        /// プレイモード中とエチE��チE��モード中で異なるUIを提侁E        /// </summary>
+        /// Inspector GUI縺ｮ謠冗判蜃ｦ逅・        /// 繝・ヵ繧ｩ繝ｫ繝医・Inspector縺ｫ蜉縺医※縲√き繧ｹ繧ｿ繝繝・ヰ繝・げ讖溯・繧定ｿｽ蜉陦ｨ遉ｺ
+        /// 繝励Ξ繧､繝｢繝ｼ繝我ｸｭ縺ｨ繧ｨ繝・ぅ繝・ヨ繝｢繝ｼ繝我ｸｭ縺ｧ逡ｰ縺ｪ繧偽I繧呈署萓・        /// </summary>
         /// <remarks>
-        /// プレイモード中�E�コマンド履歴とUndo/Redo操作�Eインターフェース
-        /// エチE��チE��モード中�E�設定検証とエラーチェチE��機�E
+        /// 繝励Ξ繧､繝｢繝ｼ繝我ｸｭ・壹さ繝槭Φ繝牙ｱ･豁ｴ縺ｨUndo/Redo謫堺ｽ懊・繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ
+        /// 繧ｨ繝・ぅ繝・ヨ繝｢繝ｼ繝我ｸｭ・夊ｨｭ螳壽､懆ｨｼ縺ｨ繧ｨ繝ｩ繝ｼ繝√ぉ繝・け讖溯・
         /// </remarks>
         public override void OnInspectorGUI()
         {
@@ -57,12 +57,12 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// プレイモード中のインターフェース描画
-        /// Undo/RedoスタチE��の状態表示、操作�Eタン、コマンド履歴の視覚化を含む
+        /// 繝励Ξ繧､繝｢繝ｼ繝我ｸｭ縺ｮ繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ謠冗判
+        /// Undo/Redo繧ｹ繧ｿ繝・け縺ｮ迥ｶ諷玖｡ｨ遉ｺ縲∵桃菴懊・繧ｿ繝ｳ縲√さ繝槭Φ繝牙ｱ･豁ｴ縺ｮ隕冶ｦ壼喧繧貞性繧
         /// </summary>
         /// <remarks>
-        /// 以下�E要素で構�E�E�E        /// - Undo/RedoスタチE��のカウント表示
-        /// - Undo/Redo/履歴クリアボタン�E�状態に応じて有効/無効化！E        /// - コマンド詳細表示の刁E��替ぁE        /// - チE��トコマンド�E実行�Eタン
+        /// 莉･荳九・隕∫ｴ縺ｧ讒区・・・        /// - Undo/Redo繧ｹ繧ｿ繝・け縺ｮ繧ｫ繧ｦ繝ｳ繝郁｡ｨ遉ｺ
+        /// - Undo/Redo/螻･豁ｴ繧ｯ繝ｪ繧｢繝懊ち繝ｳ・育憾諷九↓蠢懊§縺ｦ譛牙柑/辟｡蜉ｹ蛹厄ｼ・        /// - 繧ｳ繝槭Φ繝芽ｩｳ邏ｰ陦ｨ遉ｺ縺ｮ蛻・ｊ譖ｿ縺・        /// - 繝・せ繝医さ繝槭Φ繝峨・螳溯｡後・繧ｿ繝ｳ
         /// </remarks>
         private void DrawPlayModeInterface()
         {
@@ -76,19 +76,19 @@ namespace asterivo.Unity60.Core.Editor
             EditorGUILayout.BeginHorizontal();
             
             GUI.enabled = invoker.CanUndo;
-            if (GUILayout.Button("⬁E��EUndo"))
+            if (GUILayout.Button("筮・ｸ・Undo"))
             {
                 invoker.Undo();
             }
             
             GUI.enabled = invoker.CanRedo;
-            if (GUILayout.Button("➡�E�ERedo"))
+            if (GUILayout.Button("筐｡・・Redo"))
             {
                 invoker.Redo();
             }
             
             GUI.enabled = invoker.UndoStackCount > 0 || invoker.RedoStackCount > 0;
-            if (GUILayout.Button("🗑�E�EClear History"))
+            if (GUILayout.Button("卵・・Clear History"))
             {
                 invoker.ClearHistory();
             }
@@ -111,11 +111,11 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// エチE��チE��モード中のインターフェース描画
-        /// コンポ�Eネント�E設定検証とエラー表示を行う
+        /// 繧ｨ繝・ぅ繝・ヨ繝｢繝ｼ繝我ｸｭ縺ｮ繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ謠冗判
+        /// 繧ｳ繝ｳ繝昴・繝阪Φ繝医・險ｭ螳壽､懆ｨｼ縺ｨ繧ｨ繝ｩ繝ｼ陦ｨ遉ｺ繧定｡後≧
         /// </summary>
         /// <remarks>
-        /// 検証頁E���E�E        /// - onCommandReceived イベント�E設宁E        /// - onUndoStateChanged イベント�E設宁E        /// - onRedoStateChanged イベント�E設宁E        /// - playerHealthComponent の設定とIHealthTarget実裁E��ェチE��
+        /// 讀懆ｨｼ鬆・岼・・        /// - onCommandReceived 繧､繝吶Φ繝医・險ｭ螳・        /// - onUndoStateChanged 繧､繝吶Φ繝医・險ｭ螳・        /// - onRedoStateChanged 繧､繝吶Φ繝医・險ｭ螳・        /// - playerHealthComponent 縺ｮ險ｭ螳壹→IHealthTarget螳溯｣・メ繧ｧ繝・け
         /// </remarks>
         private void DrawEditModeInterface()
         {
@@ -133,22 +133,22 @@ namespace asterivo.Unity60.Core.Editor
             // Check for missing references
             if (onCommandReceived.objectReferenceValue == null)
             {
-                EditorGUILayout.HelpBox("⚠�E�ENo Command Event assigned", MessageType.Warning);
+                EditorGUILayout.HelpBox("笞・・No Command Event assigned", MessageType.Warning);
             }
             
             if (onUndoStateChanged.objectReferenceValue == null)
             {
-                EditorGUILayout.HelpBox("⚠�E�ENo Undo State Event assigned", MessageType.Warning);
+                EditorGUILayout.HelpBox("笞・・No Undo State Event assigned", MessageType.Warning);
             }
             
             if (onRedoStateChanged.objectReferenceValue == null)
             {
-                EditorGUILayout.HelpBox("⚠�E�ENo Redo State Event assigned", MessageType.Warning);
+                EditorGUILayout.HelpBox("笞・・No Redo State Event assigned", MessageType.Warning);
             }
             
             if (playerHealthComponent.objectReferenceValue == null)
             {
-                EditorGUILayout.HelpBox("⚠�E�ENo Player Health Component assigned", MessageType.Warning);
+                EditorGUILayout.HelpBox("笞・・No Player Health Component assigned", MessageType.Warning);
             }
             else
             {
@@ -159,22 +159,22 @@ namespace asterivo.Unity60.Core.Editor
                     var healthTarget = component.GetComponent<IHealthTarget>();
                     if (healthTarget == null)
                     {
-                        EditorGUILayout.HelpBox("⚠�E�EAssigned component doesn't implement IHealthTarget", MessageType.Error);
+                        EditorGUILayout.HelpBox("笞・・Assigned component doesn't implement IHealthTarget", MessageType.Error);
                     }
                     else
                     {
-                        EditorGUILayout.HelpBox("✁EConfiguration valid", MessageType.Info);
+                        EditorGUILayout.HelpBox("笨・Configuration valid", MessageType.Info);
                     }
                 }
             }
         }
         
         /// <summary>
-        /// コマンド履歴スタチE��の視覚化表示
-        /// Undo/RedoスタチE��の冁E��を階層構造で表示し、現在位置を示ぁE        /// </summary>
+        /// 繧ｳ繝槭Φ繝牙ｱ･豁ｴ繧ｹ繧ｿ繝・け縺ｮ隕冶ｦ壼喧陦ｨ遉ｺ
+        /// Undo/Redo繧ｹ繧ｿ繝・け縺ｮ蜀・ｮｹ繧帝嚴螻､讒矩縺ｧ陦ｨ遉ｺ縺励∫樟蝨ｨ菴咲ｽｮ繧堤､ｺ縺・        /// </summary>
         /// <remarks>
-        /// 表示形式！E        /// - RedoスタチE���E�上から頁E��表示�E�E        /// - 現在位置マ�Eカー�E�━━━ CURRENT ━━━E��E        /// - UndoスタチE���E�上から頁E��表示�E�E        /// 
-        /// スタチE��が空の場合�E "No commands in history" を表示
+        /// 陦ｨ遉ｺ蠖｢蠑擾ｼ・        /// - Redo繧ｹ繧ｿ繝・け・井ｸ翫°繧蛾・↓陦ｨ遉ｺ・・        /// - 迴ｾ蝨ｨ菴咲ｽｮ繝槭・繧ｫ繝ｼ・遺煤笏≫煤 CURRENT 笏≫煤笏・ｼ・        /// - Undo繧ｹ繧ｿ繝・け・井ｸ翫°繧蛾・↓陦ｨ遉ｺ・・        /// 
+        /// 繧ｹ繧ｿ繝・け縺檎ｩｺ縺ｮ蝣ｴ蜷医・ "No commands in history" 繧定｡ｨ遉ｺ
         /// </remarks>
         private void DrawCommandHistory()
         {
@@ -198,13 +198,13 @@ namespace asterivo.Unity60.Core.Editor
                 EditorGUI.indentLevel++;
                 for (int i = 0; i < invoker.RedoStackCount; i++)
                 {
-                    EditorGUILayout.LabelField($"🔄 Command #{invoker.RedoStackCount - i}", EditorStyles.miniLabel);
+                    EditorGUILayout.LabelField($"売 Command #{invoker.RedoStackCount - i}", EditorStyles.miniLabel);
                 }
                 EditorGUI.indentLevel--;
             }
             
             // Current position marker
-            EditorGUILayout.LabelField("━━━ECURRENT ━━━E, EditorStyles.centeredGreyMiniLabel);
+            EditorGUILayout.LabelField("笏≫煤笏・CURRENT 笏≫煤笏・, EditorStyles.centeredGreyMiniLabel);
             
             // Undo Stack visualization (top to bottom)
             if (invoker.UndoStackCount > 0)
@@ -213,7 +213,7 @@ namespace asterivo.Unity60.Core.Editor
                 EditorGUI.indentLevel++;
                 for (int i = 0; i < invoker.UndoStackCount; i++)
                 {
-                    EditorGUILayout.LabelField($"↩�E�ECommand #{invoker.UndoStackCount - i}", EditorStyles.miniLabel);
+                    EditorGUILayout.LabelField($"竊ｩ・・Command #{invoker.UndoStackCount - i}", EditorStyles.miniLabel);
                 }
                 EditorGUI.indentLevel--;
             }
@@ -222,13 +222,13 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// チE��ト用コマンド�E実行インターフェース描画
-        /// プレイモード中のみ利用可能で、Heal/DamageコマンドをチE��ト実行できる
+        /// 繝・せ繝育畑繧ｳ繝槭Φ繝峨・螳溯｡後う繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ謠冗判
+        /// 繝励Ξ繧､繝｢繝ｼ繝我ｸｭ縺ｮ縺ｿ蛻ｩ逕ｨ蜿ｯ閭ｽ縺ｧ縲？eal/Damage繧ｳ繝槭Φ繝峨ｒ繝・せ繝亥ｮ溯｡後〒縺阪ｋ
         /// </summary>
         /// <remarks>
-        /// チE��トコマンド！E        /// - Heal 10/25: 持E��量のヘルスを回復
-        /// - Damage 10/25: 持E��量のダメージを与えめE        /// 
-        /// IHealthTargetを実裁E��たコンポ�Eネントが忁E��E        /// </remarks>
+        /// 繝・せ繝医さ繝槭Φ繝会ｼ・        /// - Heal 10/25: 謖・ｮ夐㍼縺ｮ繝倥Ν繧ｹ繧貞屓蠕ｩ
+        /// - Damage 10/25: 謖・ｮ夐㍼縺ｮ繝繝｡繝ｼ繧ｸ繧剃ｸ弱∴繧・        /// 
+        /// IHealthTarget繧貞ｮ溯｣・＠縺溘さ繝ｳ繝昴・繝阪Φ繝医′蠢・ｦ・        /// </remarks>
         private void DrawTestCommands()
         {
             if (!Application.isPlaying)
@@ -240,24 +240,24 @@ namespace asterivo.Unity60.Core.Editor
             EditorGUILayout.BeginVertical("box");
             
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button($"❤�E�ETest Heal ({GameConstants.TEST_HEAL_SMALL})"))
+            if (GUILayout.Button($"笶､・・Test Heal ({GameConstants.TEST_HEAL_SMALL})"))
             {
                 TestHealCommand(GameConstants.TEST_HEAL_SMALL);
             }
             
-            if (GUILayout.Button($"💔 Test Damage ({GameConstants.TEST_DAMAGE_SMALL})"))
+            if (GUILayout.Button($"樗 Test Damage ({GameConstants.TEST_DAMAGE_SMALL})"))
             {
                 TestDamageCommand(GameConstants.TEST_DAMAGE_SMALL);
             }
             EditorGUILayout.EndHorizontal();
             
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button($"❤�E�ETest Heal ({GameConstants.TEST_HEAL_LARGE})"))
+            if (GUILayout.Button($"笶､・・Test Heal ({GameConstants.TEST_HEAL_LARGE})"))
             {
                 TestHealCommand(GameConstants.TEST_HEAL_LARGE);
             }
             
-            if (GUILayout.Button($"💔 Test Damage ({GameConstants.TEST_DAMAGE_LARGE})"))
+            if (GUILayout.Button($"樗 Test Damage ({GameConstants.TEST_DAMAGE_LARGE})"))
             {
                 TestDamageCommand(GameConstants.TEST_DAMAGE_LARGE);
             }
@@ -267,12 +267,12 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// チE��ト用ヒ�Eルコマンド�E実衁E        /// 持E��した量のヘルス回復コマンドを作�E・実行し、Undo履歴に追加
+        /// 繝・せ繝育畑繝偵・繝ｫ繧ｳ繝槭Φ繝峨・螳溯｡・        /// 謖・ｮ壹＠縺滄㍼縺ｮ繝倥Ν繧ｹ蝗槫ｾｩ繧ｳ繝槭Φ繝峨ｒ菴懈・繝ｻ螳溯｡後＠縲ゞndo螻･豁ｴ縺ｫ霑ｽ蜉
         /// </summary>
-        /// <param name="amount">回復するヘルス釁E/param>
+        /// <param name="amount">蝗槫ｾｩ縺吶ｋ繝倥Ν繧ｹ驥・/param>
         /// <remarks>
-        /// IHealthTargetの検索頁E��！E        /// 1. CommandInvoker自身のコンポ�EネンチE        /// 2. playerHealthComponentに設定されたコンポ�EネンチE        /// 
-        /// エラー処琁E��E        /// - IHealthTargetが見つからなぁE��合�E警告ログ出劁E        /// - 例外発生時はエラーログ出劁E        /// </remarks>
+        /// IHealthTarget縺ｮ讀懃ｴ｢鬆・ｺ擾ｼ・        /// 1. CommandInvoker閾ｪ霄ｫ縺ｮ繧ｳ繝ｳ繝昴・繝阪Φ繝・        /// 2. playerHealthComponent縺ｫ險ｭ螳壹＆繧後◆繧ｳ繝ｳ繝昴・繝阪Φ繝・        /// 
+        /// 繧ｨ繝ｩ繝ｼ蜃ｦ逅・ｼ・        /// - IHealthTarget縺瑚ｦ九▽縺九ｉ縺ｪ縺・ｴ蜷医・隴ｦ蜻翫Ο繧ｰ蜃ｺ蜉・        /// - 萓句､也匱逕滓凾縺ｯ繧ｨ繝ｩ繝ｼ繝ｭ繧ｰ蜃ｺ蜉・        /// </remarks>
         private void TestHealCommand(int amount)
         {
             try
@@ -306,12 +306,12 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// チE��ト用ダメージコマンド�E実衁E        /// 持E��した量のダメージコマンドを作�E・実行し、Undo履歴に追加
+        /// 繝・せ繝育畑繝繝｡繝ｼ繧ｸ繧ｳ繝槭Φ繝峨・螳溯｡・        /// 謖・ｮ壹＠縺滄㍼縺ｮ繝繝｡繝ｼ繧ｸ繧ｳ繝槭Φ繝峨ｒ菴懈・繝ｻ螳溯｡後＠縲ゞndo螻･豁ｴ縺ｫ霑ｽ蜉
         /// </summary>
-        /// <param name="amount">与えるダメージ釁E/param>
+        /// <param name="amount">荳弱∴繧九ム繝｡繝ｼ繧ｸ驥・/param>
         /// <remarks>
-        /// IHealthTargetの検索頁E��！E        /// 1. CommandInvoker自身のコンポ�EネンチE        /// 2. playerHealthComponentに設定されたコンポ�EネンチE        /// 
-        /// エラー処琁E��E        /// - IHealthTargetが見つからなぁE��合�E警告ログ出劁E        /// - 例外発生時はエラーログ出劁E        /// </remarks>
+        /// IHealthTarget縺ｮ讀懃ｴ｢鬆・ｺ擾ｼ・        /// 1. CommandInvoker閾ｪ霄ｫ縺ｮ繧ｳ繝ｳ繝昴・繝阪Φ繝・        /// 2. playerHealthComponent縺ｫ險ｭ螳壹＆繧後◆繧ｳ繝ｳ繝昴・繝阪Φ繝・        /// 
+        /// 繧ｨ繝ｩ繝ｼ蜃ｦ逅・ｼ・        /// - IHealthTarget縺瑚ｦ九▽縺九ｉ縺ｪ縺・ｴ蜷医・隴ｦ蜻翫Ο繧ｰ蜃ｺ蜉・        /// - 萓句､也匱逕滓凾縺ｯ繧ｨ繝ｩ繝ｼ繝ｭ繧ｰ蜃ｺ蜉・        /// </remarks>
         private void TestDamageCommand(int amount)
         {
             try

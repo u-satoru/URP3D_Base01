@@ -1,4 +1,4 @@
-# Unity MCP BatchCompile Extension Documentation
+﻿# Unity MCP BatchCompile Extension Documentation
 
 ## Unity MCP Server 側の拡張方法
 

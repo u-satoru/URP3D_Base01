@@ -1,4 +1,4 @@
-
+﻿
 
 # **Unity 6における相乗的アーキテクチャ：Scriptable Object駆動イベントとCommandパターンの統合**
 

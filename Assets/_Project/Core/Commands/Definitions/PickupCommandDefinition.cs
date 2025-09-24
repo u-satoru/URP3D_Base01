@@ -1,26 +1,26 @@
-using UnityEngine;
+﻿using UnityEngine;
 // using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// アイチE��ピックアチE�Eコマンド�E定義、E    /// プレイヤーのアイチE��収集アクションをカプセル化します、E    /// 
-    /// 主な機�E�E�E    /// - アイチE��の自勁E手動ピックアチE�E
-    /// - インベントリ容量とアイチE��制紁E�E管琁E    /// - ピックアチE�E篁E��とフィルタリング
-    /// - アイチE��惁E��の表示とフィードバチE��
+    /// 繧｢繧､繝・Β繝斐ャ繧ｯ繧｢繝・・繧ｳ繝槭Φ繝峨・螳夂ｾｩ縲・    /// 繝励Ξ繧､繝､繝ｼ縺ｮ繧｢繧､繝・Β蜿朱寔繧｢繧ｯ繧ｷ繝ｧ繝ｳ繧偵き繝励そ繝ｫ蛹悶＠縺ｾ縺吶・    /// 
+    /// 荳ｻ縺ｪ讖溯・・・    /// - 繧｢繧､繝・Β縺ｮ閾ｪ蜍・謇句虚繝斐ャ繧ｯ繧｢繝・・
+    /// - 繧､繝ｳ繝吶Φ繝医Μ螳ｹ驥上→繧｢繧､繝・Β蛻ｶ邏・・邂｡逅・    /// - 繝斐ャ繧ｯ繧｢繝・・遽・峇縺ｨ繝輔ぅ繝ｫ繧ｿ繝ｪ繝ｳ繧ｰ
+    /// - 繧｢繧､繝・Β諠・ｱ縺ｮ陦ｨ遉ｺ縺ｨ繝輔ぅ繝ｼ繝峨ヰ繝・け
     /// </summary>
     [System.Serializable]
     public class PickupCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// ピックアチE�Eの種類を定義する列挙垁E        /// </summary>
+        /// 繝斐ャ繧ｯ繧｢繝・・縺ｮ遞ｮ鬘槭ｒ螳夂ｾｩ縺吶ｋ蛻玲嫌蝙・        /// </summary>
         public enum PickupType
         {
-            Manual,         // 手動ピックアチE�E
-            Auto,           // 自動ピチE��アチE�E
-            Selective,      // 選択的ピックアチE�E
-            Area,           // 篁E��ピックアチE�E
-            Magnetic        // 磁力ピックアチE�E
+            Manual,         // 謇句虚繝斐ャ繧ｯ繧｢繝・・
+            Auto,           // 閾ｪ蜍輔ヴ繝・け繧｢繝・・
+            Selective,      // 驕ｸ謚樒噪繝斐ャ繧ｯ繧｢繝・・
+            Area,           // 遽・峇繝斐ャ繧ｯ繧｢繝・・
+            Magnetic        // 逎∝鴨繝斐ャ繧ｯ繧｢繝・・
         }
 
         [Header("Pickup Parameters")]
@@ -30,22 +30,22 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public string itemTag = "Item";
 
         [Header("Item Filtering")]
-        [Tooltip("ピックアチE�E対象のアイチE��タイチE)]
+        [Tooltip("繝斐ャ繧ｯ繧｢繝・・蟇ｾ雎｡縺ｮ繧｢繧､繝・Β繧ｿ繧､繝・)]
         public string[] allowedItemTypes = { "Consumable", "Weapon", "Armor", "Key" };
-        [Tooltip("除外するアイチE��タイチE)]
+        [Tooltip("髯､螟悶☆繧九い繧､繝・Β繧ｿ繧､繝・)]
         public string[] excludedItemTypes = { };
         public bool respectInventoryCapacity = true;
 
         [Header("Area Pickup")]
-        [Tooltip("篁E��ピックアチE�E時�E効果篁E��")]
+        [Tooltip("遽・峇繝斐ャ繧ｯ繧｢繝・・譎ゅ・蜉ｹ譫懃ｯ・峇")]
         public float areaRadius = 3f;
-        [Tooltip("一度にピックアチE�Eする最大個数")]
+        [Tooltip("荳蠎ｦ縺ｫ繝斐ャ繧ｯ繧｢繝・・縺吶ｋ譛螟ｧ蛟区焚")]
         public int maxPickupCount = 10;
 
         [Header("Magnetic Pickup")]
-        [Tooltip("アイチE��を引き寁E��る力")]
+        [Tooltip("繧｢繧､繝・Β繧貞ｼ輔″蟇・○繧句鴨")]
         public float magneticForce = 5f;
-        [Tooltip("磁力の効果時閁E)]
+        [Tooltip("逎∝鴨縺ｮ蜉ｹ譫懈凾髢・)]
         public float magneticDuration = 2f;
 
         [Header("Animation & Effects")]
@@ -59,14 +59,14 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public string pickupSoundName = "ItemPickup";
 
         /// <summary>
-        /// チE��ォルトコンストラクタ
+        /// 繝・ヵ繧ｩ繝ｫ繝医さ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
         /// </summary>
         public PickupCommandDefinition()
         {
         }
 
         /// <summary>
-        /// パラメータ付きコンストラクタ
+        /// 繝代Λ繝｡繝ｼ繧ｿ莉倥″繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
         /// </summary>
         public PickupCommandDefinition(PickupType type, float range, bool autoPickup = false)
         {
@@ -75,27 +75,27 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// ピックアチE�Eコマンドが実行可能かどぁE��を判定しまぁE        /// </summary>
+        /// 繝斐ャ繧ｯ繧｢繝・・繧ｳ繝槭Φ繝峨′螳溯｡悟庄閭ｽ縺九←縺・°繧貞愛螳壹＠縺ｾ縺・        /// </summary>
         public bool CanExecute(object context = null)
         {
-            // 基本皁E��実行可能性チェチE��
+            // 蝓ｺ譛ｬ逧・↑螳溯｡悟庄閭ｽ諤ｧ繝√ぉ繝・け
             if (pickupRange <= 0f) return false;
             
             if (pickupType == PickupType.Area && areaRadius <= 0f) return false;
             if (pickupType == PickupType.Magnetic && (magneticForce <= 0f || magneticDuration <= 0f)) return false;
 
-            // コンチE��ストがある場合�E追加チェチE��
+            // 繧ｳ繝ｳ繝・く繧ｹ繝医′縺ゅｋ蝣ｴ蜷医・霑ｽ蜉繝√ぉ繝・け
             if (context != null)
             {
-                // インベントリの容量チェチE��
-                // プレイヤーの状態チェチE���E�移動中、戦闘中等�E制紁E��E                // 篁E��冁E��ピックアチE�E可能アイチE��の存在チェチE��
+                // 繧､繝ｳ繝吶Φ繝医Μ縺ｮ螳ｹ驥上メ繧ｧ繝・け
+                // 繝励Ξ繧､繝､繝ｼ縺ｮ迥ｶ諷九メ繧ｧ繝・け・育ｧｻ蜍穂ｸｭ縲∵姶髣倅ｸｭ遲峨・蛻ｶ邏・ｼ・                // 遽・峇蜀・↓繝斐ャ繧ｯ繧｢繝・・蜿ｯ閭ｽ繧｢繧､繝・Β縺ｮ蟄伜惠繝√ぉ繝・け
             }
 
             return true;
         }
 
         /// <summary>
-        /// ピックアチE�Eコマンドを作�EしまぁE        /// </summary>
+        /// 繝斐ャ繧ｯ繧｢繝・・繧ｳ繝槭Φ繝峨ｒ菴懈・縺励∪縺・        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
             if (!CanExecute(context))
@@ -106,7 +106,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// PickupCommandDefinitionに対応する実際のコマンド実裁E    /// </summary>
+    /// PickupCommandDefinition縺ｫ蟇ｾ蠢懊☆繧句ｮ滄圀縺ｮ繧ｳ繝槭Φ繝牙ｮ溯｣・    /// </summary>
     public class PickupCommand : ICommand
     {
         private PickupCommandDefinition definition;
@@ -122,7 +122,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// ピックアチE�Eコマンド�E実衁E        /// </summary>
+        /// 繝斐ャ繧ｯ繧｢繝・・繧ｳ繝槭Φ繝峨・螳溯｡・        /// </summary>
         public void Execute()
         {
             if (executed) return;
@@ -154,7 +154,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 手動ピックアチE�Eの実衁E        /// </summary>
+        /// 謇句虚繝斐ャ繧ｯ繧｢繝・・縺ｮ螳溯｡・        /// </summary>
         private void ExecuteManualPickup()
         {
             var targetItem = FindNearestPickupableItem();
@@ -165,7 +165,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 自動ピチE��アチE�Eの実衁E        /// </summary>
+        /// 閾ｪ蜍輔ヴ繝・け繧｢繝・・縺ｮ螳溯｡・        /// </summary>
         private void ExecuteAutoPickup()
         {
             var items = FindAllPickupableItems(definition.pickupRange);
@@ -175,19 +175,19 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 
                 PickupItem(item);
                 
-                // インベントリが満杯になった場合�E停止
+                // 繧､繝ｳ繝吶Φ繝医Μ縺梧ｺ譚ｯ縺ｫ縺ｪ縺｣縺溷ｴ蜷医・蛛懈ｭ｢
                 if (definition.respectInventoryCapacity && IsInventoryFull())
                     break;
             }
         }
 
         /// <summary>
-        /// 選択的ピックアチE�Eの実衁E        /// </summary>
+        /// 驕ｸ謚樒噪繝斐ャ繧ｯ繧｢繝・・縺ｮ螳溯｡・        /// </summary>
         private void ExecuteSelectivePickup()
         {
             var items = FindAllPickupableItems(definition.pickupRange);
             
-            // 優先度の高いアイチE��から頁E��取征E            var prioritizedItems = SortItemsByPriority(items);
+            // 蜆ｪ蜈亥ｺｦ縺ｮ鬮倥＞繧｢繧､繝・Β縺九ｉ鬆・↓蜿門ｾ・            var prioritizedItems = SortItemsByPriority(items);
             
             foreach (var item in prioritizedItems)
             {
@@ -201,7 +201,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 篁E��ピックアチE�Eの実衁E        /// </summary>
+        /// 遽・峇繝斐ャ繧ｯ繧｢繝・・縺ｮ螳溯｡・        /// </summary>
         private void ExecuteAreaPickup()
         {
             var items = FindAllPickupableItems(definition.areaRadius);
@@ -225,26 +225,26 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 磁力ピックアチE�Eの実衁E        /// </summary>
+        /// 逎∝鴨繝斐ャ繧ｯ繧｢繝・・縺ｮ螳溯｡・        /// </summary>
         private void ExecuteMagneticPickup()
         {
             var items = FindAllPickupableItems(definition.areaRadius);
             isMagneticActive = true;
 
-            // アイチE��を引き寁E��る�E琁E��開姁E            foreach (var item in items)
+            // 繧｢繧､繝・Β繧貞ｼ輔″蟇・○繧句・逅・ｒ髢句ｧ・            foreach (var item in items)
             {
                 if (!CanPickupItem(item)) continue;
                 
                 StartItemAttraction(item);
             }
 
-            // 磁力効果�E継続�E琁E��実際の実裁E��は Coroutine また�EUpdateLoop�E�E#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            // 逎∝鴨蜉ｹ譫懊・邯咏ｶ壼・逅・ｼ亥ｮ滄圀縺ｮ螳溯｣・〒縺ｯ Coroutine 縺ｾ縺溘・UpdateLoop・・#if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"Magnetic pickup started: attracting {items.Count} items");
 #endif
         }
 
         /// <summary>
-        /// 最も近いピックアチE�E可能アイチE��を検索
+        /// 譛繧りｿ代＞繝斐ャ繧ｯ繧｢繝・・蜿ｯ閭ｽ繧｢繧､繝・Β繧呈､懃ｴ｢
         /// </summary>
         private GameObject FindNearestPickupableItem()
         {
@@ -271,7 +271,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// すべてのピックアチE�E可能アイチE��を検索
+        /// 縺吶∋縺ｦ縺ｮ繝斐ャ繧ｯ繧｢繝・・蜿ｯ閭ｽ繧｢繧､繝・Β繧呈､懃ｴ｢
         /// </summary>
         private System.Collections.Generic.List<GameObject> FindAllPickupableItems(float searchRange)
         {
@@ -293,22 +293,22 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// アイチE��が有効なピックアチE�E対象かチェチE��
+        /// 繧｢繧､繝・Β縺梧怏蜉ｹ縺ｪ繝斐ャ繧ｯ繧｢繝・・蟇ｾ雎｡縺九メ繧ｧ繝・け
         /// </summary>
         private bool IsValidPickupTarget(GameObject item)
         {
-            // タグチェチE��
+            // 繧ｿ繧ｰ繝√ぉ繝・け
             if (!string.IsNullOrEmpty(definition.itemTag) && !item.CompareTag(definition.itemTag))
                 return false;
 
-            // アイチE��コンポ�Eネント�E存在チェチE��
+            // 繧｢繧､繝・Β繧ｳ繝ｳ繝昴・繝阪Φ繝医・蟄伜惠繝√ぉ繝・け
             var itemComponent = item.GetComponent<IPickupableItem>();
             if (itemComponent == null) return false;
 
-            // アイチE��タイプフィルタリング
+            // 繧｢繧､繝・Β繧ｿ繧､繝励ヵ繧｣繝ｫ繧ｿ繝ｪ繝ｳ繧ｰ
             string itemType = itemComponent.GetItemType();
             
-            // 除外リストチェチE��
+            // 髯､螟悶Μ繧ｹ繝医メ繧ｧ繝・け
             if (definition.excludedItemTypes.Length > 0)
             {
                 foreach (var excludedType in definition.excludedItemTypes)
@@ -317,7 +317,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 }
             }
 
-            // 許可リストチェチE��
+            // 險ｱ蜿ｯ繝ｪ繧ｹ繝医メ繧ｧ繝・け
             if (definition.allowedItemTypes.Length > 0)
             {
                 bool isAllowed = false;
@@ -336,7 +336,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// アイチE��をピチE��アチE�E可能かチェチE��
+        /// 繧｢繧､繝・Β繧偵ヴ繝・け繧｢繝・・蜿ｯ閭ｽ縺九メ繧ｧ繝・け
         /// </summary>
         private bool CanPickupItem(GameObject item)
         {
@@ -348,36 +348,36 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// インベントリが満杯かチェチE��
+        /// 繧､繝ｳ繝吶Φ繝医Μ縺梧ｺ譚ｯ縺九メ繧ｧ繝・け
         /// </summary>
         private bool IsInventoryFull()
         {
-            // 実際の実裁E��は InventorySystem との連携
-            return false; // 仮の値
+            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ InventorySystem 縺ｨ縺ｮ騾｣謳ｺ
+            return false; // 莉ｮ縺ｮ蛟､
         }
 
         /// <summary>
-        /// アイチE��を優先度頁E��ソーチE        /// </summary>
+        /// 繧｢繧､繝・Β繧貞━蜈亥ｺｦ鬆・↓繧ｽ繝ｼ繝・        /// </summary>
         private System.Collections.Generic.List<GameObject> SortItemsByPriority(System.Collections.Generic.List<GameObject> items)
         {
-            // 実際の実裁E��は、アイチE��の価値、レアリチE��、忁E��性等で優先度を決宁E            return items; // 仮の実裁E        }
+            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ縲√い繧､繝・Β縺ｮ萓｡蛟､縲√Ξ繧｢繝ｪ繝・ぅ縲∝ｿ・ｦ∵ｧ遲峨〒蜆ｪ蜈亥ｺｦ繧呈ｱｺ螳・            return items; // 莉ｮ縺ｮ螳溯｣・        }
 
         /// <summary>
-        /// 実際のアイチE��ピックアチE�E処琁E        /// </summary>
+        /// 螳滄圀縺ｮ繧｢繧､繝・Β繝斐ャ繧ｯ繧｢繝・・蜃ｦ逅・        /// </summary>
         private void PickupItem(GameObject item)
         {
             var itemComponent = item.GetComponent<IPickupableItem>();
             if (itemComponent == null) return;
 
-            // アイチE��惁E��の取征E            var itemData = itemComponent.GetItemData();
+            // 繧｢繧､繝・Β諠・ｱ縺ｮ蜿門ｾ・            var itemData = itemComponent.GetItemData();
 
-            // インベントリに追加
-            // 実際の実裁E��は InventorySystem との連携
+            // 繧､繝ｳ繝吶Φ繝医Μ縺ｫ霑ｽ蜉
+            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ InventorySystem 縺ｨ縺ｮ騾｣謳ｺ
             
-            // アイチE��をワールドから削除
-            pickedUpItems.Add(item); // Undo用に保孁E            item.SetActive(false);
+            // 繧｢繧､繝・Β繧偵Ρ繝ｼ繝ｫ繝峨°繧牙炎髯､
+            pickedUpItems.Add(item); // Undo逕ｨ縺ｫ菫晏ｭ・            item.SetActive(false);
 
-            // エフェクトとフィードバチE��
+            // 繧ｨ繝輔ぉ繧ｯ繝医→繝輔ぅ繝ｼ繝峨ヰ繝・け
             PlayPickupEffects(item, itemData);
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -386,19 +386,19 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// アイチE��の磁力による引き寁E��開姁E        /// </summary>
+        /// 繧｢繧､繝・Β縺ｮ逎∝鴨縺ｫ繧医ｋ蠑輔″蟇・○髢句ｧ・        /// </summary>
         private void StartItemAttraction(GameObject item)
         {
-            // 実際の実裁E��は、物琁E��な力また�ETweenアニメーションでアイチE��を引き寁E��めE            // 引き寁E��完亁E��にPickupItem()を呼び出ぁE        }
+            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ縲∫黄逅・噪縺ｪ蜉帙∪縺溘・Tween繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｧ繧｢繧､繝・Β繧貞ｼ輔″蟇・○繧・            // 蠑輔″蟇・○螳御ｺ・凾縺ｫPickupItem()繧貞他縺ｳ蜃ｺ縺・        }
 
         /// <summary>
-        /// ピックアチE�Eエフェクト�E再生
+        /// 繝斐ャ繧ｯ繧｢繝・・繧ｨ繝輔ぉ繧ｯ繝医・蜀咲函
         /// </summary>
         private void PlayPickupEffects(GameObject item, IItemData itemData)
         {
             if (context is not MonoBehaviour mono) return;
 
-            // アニメーション
+            // 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ
             if (definition.playPickupAnimation)
             {
                 var animator = mono.GetComponent<Animator>();
@@ -408,43 +408,43 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 }
             }
 
-            // パ�EチE��クルエフェクチE            if (definition.showPickupEffect)
+            // 繝代・繝・ぅ繧ｯ繝ｫ繧ｨ繝輔ぉ繧ｯ繝・            if (definition.showPickupEffect)
             {
-                // エフェクト生戁E            }
+                // 繧ｨ繝輔ぉ繧ｯ繝育函謌・            }
 
-            // サウンドエフェクチE            if (definition.playPickupSound)
+            // 繧ｵ繧ｦ繝ｳ繝峨お繝輔ぉ繧ｯ繝・            if (definition.playPickupSound)
             {
-                // AudioSystem との連携
+                // AudioSystem 縺ｨ縺ｮ騾｣謳ｺ
             }
 
-            // アイチE��惁E��表示
+            // 繧｢繧､繝・Β諠・ｱ陦ｨ遉ｺ
             if (definition.showItemInfo)
             {
-                // UI表示�E�アイチE��名、説明等！E            }
+                // UI陦ｨ遉ｺ・医い繧､繝・Β蜷阪∬ｪｬ譏守ｭ会ｼ・            }
         }
 
         /// <summary>
-        /// 磁力ピックアチE�Eの更新�E�外部から定期皁E��呼び出される！E        /// </summary>
+        /// 逎∝鴨繝斐ャ繧ｯ繧｢繝・・縺ｮ譖ｴ譁ｰ・亥､夜Κ縺九ｉ螳壽悄逧・↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ繧具ｼ・        /// </summary>
         public void UpdateMagneticPickup(float deltaTime)
         {
             if (!isMagneticActive) return;
 
-            // 引き寁E��処琁E�E更新
-            // 持続時間�E管琁E        }
+            // 蠑輔″蟇・○蜃ｦ逅・・譖ｴ譁ｰ
+            // 謖∫ｶ壽凾髢薙・邂｡逅・        }
 
         /// <summary>
-        /// Undo操作（ピチE��アチE�Eの取り消し�E�E        /// </summary>
+        /// Undo謫堺ｽ懶ｼ医ヴ繝・け繧｢繝・・縺ｮ蜿悶ｊ豸医＠・・        /// </summary>
         public void Undo()
         {
             if (!executed) return;
 
-            // ピックアチE�EしたアイチE��を�Eの位置に戻ぁE            foreach (var item in pickedUpItems)
+            // 繝斐ャ繧ｯ繧｢繝・・縺励◆繧｢繧､繝・Β繧貞・縺ｮ菴咲ｽｮ縺ｫ謌ｻ縺・            foreach (var item in pickedUpItems)
             {
                 if (item != null)
                 {
                     item.SetActive(true);
-                    // インベントリから削除
-                    // 実際の実裁E��は InventorySystem との連携
+                    // 繧､繝ｳ繝吶Φ繝医Μ縺九ｉ蜑企勁
+                    // 螳滄圀縺ｮ螳溯｣・〒縺ｯ InventorySystem 縺ｨ縺ｮ騾｣謳ｺ
                 }
             }
 
@@ -458,18 +458,18 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// こ�EコマンドがUndo可能かどぁE��
+        /// 縺薙・繧ｳ繝槭Φ繝峨′Undo蜿ｯ閭ｽ縺九←縺・°
         /// </summary>
         public bool CanUndo => executed && pickedUpItems.Count > 0;
 
         /// <summary>
-        /// 磁力効果が現在アクチE��ブかどぁE��
+        /// 逎∝鴨蜉ｹ譫懊′迴ｾ蝨ｨ繧｢繧ｯ繝・ぅ繝悶°縺ｩ縺・°
         /// </summary>
         public bool IsMagneticActive => isMagneticActive;
     }
 
     /// <summary>
-    /// ピックアチE�E可能アイチE��のインターフェース
+    /// 繝斐ャ繧ｯ繧｢繝・・蜿ｯ閭ｽ繧｢繧､繝・Β縺ｮ繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ
     /// </summary>
     public interface IPickupableItem
     {
@@ -480,7 +480,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// アイチE��チE�Eタのインターフェース
+    /// 繧｢繧､繝・Β繝・・繧ｿ縺ｮ繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ
     /// </summary>
     public interface IItemData
     {

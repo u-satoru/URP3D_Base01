@@ -1,4 +1,4 @@
-using asterivo.Unity60.Core;
+﻿using asterivo.Unity60.Core;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,13 +15,13 @@ using Sirenix.OdinInspector;
 namespace asterivo.Unity60.Core.Audio.Services
 {
     /// <summary>
-    /// オーチE��オシスチE��全体�E統一更新サービス
-    /// Service Locatorパターンを使用した疎結合実裁E    /// </summary>
+    /// 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β蜈ｨ菴薙・邨ｱ荳譖ｴ譁ｰ繧ｵ繝ｼ繝薙せ
+    /// Service Locator繝代ち繝ｼ繝ｳ繧剃ｽｿ逕ｨ縺励◆逍守ｵ仙粋螳溯｣・    /// </summary>
     public class AudioUpdateService : MonoBehaviour, IAudioUpdateService, IInitializable
     {
         #region Properties
         
-        public int Priority => 15; // AudioServiceより後、SpatialAudioServiceより剁E        
+        public int Priority => 15; // AudioService繧医ｊ蠕後ヾpatialAudioService繧医ｊ蜑・        
         public bool IsInitialized { get; private set; }
         
         public float UpdateInterval 
@@ -62,17 +62,17 @@ namespace asterivo.Unity60.Core.Audio.Services
         
         #region Private Fields
         
-        // シスチE��参�E
+        // 繧ｷ繧ｹ繝・Β蜿ら・
         private WeatherAmbientController weatherController;
         private TimeAmbientController timeController;
         private MaskingEffectController maskingController;
         private StealthAudioCoordinator stealthCoordinator;
         private Transform playerTransform;
         
-        // 更新管琁E        private readonly List<IAudioUpdatable> updatables = new();
+        // 譖ｴ譁ｰ邂｡逅・        private readonly List<IAudioUpdatable> updatables = new();
         private readonly HashSet<IAudioUpdatable> updatableSet = new();
         
-        // 最適化用キャチE��ュ
+        // 譛驕ｩ蛹也畑繧ｭ繝｣繝・す繝･
         private Dictionary<Vector3Int, List<AudioSource>> spatialAudioCache;
         private HashSet<AudioSource> trackedAudioSources;
         private Coroutine coordinatedUpdateCoroutine;
@@ -91,7 +91,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         
         private void Start()
         {
-            // Feature Flag確誁E            useNewUpdateSystem = FeatureFlags.UseNewAudioUpdateSystem;
+            // Feature Flag遒ｺ隱・            useNewUpdateSystem = FeatureFlags.UseNewAudioUpdateSystem;
             
             if (!useNewUpdateSystem)
             {
@@ -113,7 +113,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             StopCoordinatedUpdates();
             
-            // Service Locatorから登録解除
+            // Service Locator縺九ｉ逋ｻ骭ｲ隗｣髯､
             if (ServiceLocator.HasService<IAudioUpdateService>())
             {
                 ServiceLocator.UnregisterService<IAudioUpdateService>();
@@ -126,7 +126,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         
         public void Initialize()
         {
-            // Service Locatorへの登録
+            // Service Locator縺ｸ縺ｮ逋ｻ骭ｲ
             ServiceLocator.RegisterService<IAudioUpdateService>(this);
             EventLogger.LogStatic("<color=green>[AudioUpdateService]</color> Service registered to ServiceLocator");
             IsInitialized = true;
@@ -151,7 +151,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             maskingController = FindFirstObjectByType<MaskingEffectController>();
             stealthCoordinator = FindFirstObjectByType<StealthAudioCoordinator>();
             
-            // プレイヤーTransformの検索
+            // 繝励Ξ繧､繝､繝ｼTransform縺ｮ讀懃ｴ｢
             var audioListener = FindFirstObjectByType<AudioListener>();
             if (audioListener != null)
             {
@@ -179,7 +179,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             updatables.Add(updatable);
             updatableSet.Add(updatable);
             
-            // 優先度でソーチE            updatables.Sort((a, b) => a.UpdatePriority.CompareTo(b.UpdatePriority));
+            // 蜆ｪ蜈亥ｺｦ縺ｧ繧ｽ繝ｼ繝・            updatables.Sort((a, b) => a.UpdatePriority.CompareTo(b.UpdatePriority));
             registeredUpdatables = updatables.Count;
             
             EventLogger.LogStatic($"<color=green>[AudioUpdateService]</color> Registered updatable: {updatable.GetType().Name}");
@@ -221,7 +221,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             var result = new List<AudioSource>();
             Vector3Int centerGrid = WorldToGridKey(center);
             
-            // グリチE��篁E��の計箁E            int gridRadius = Mathf.CeilToInt(radius / spatialGridSize);
+            // 繧ｰ繝ｪ繝・ラ遽・峇縺ｮ險育ｮ・            int gridRadius = Mathf.CeilToInt(radius / spatialGridSize);
             
             for (int x = -gridRadius; x <= gridRadius; x++)
             {
@@ -277,23 +277,23 @@ namespace asterivo.Unity60.Core.Audio.Services
             {
                 float updateStartTime = Time.realtimeSinceStartup;
                 
-                // 空間キャチE��ュの定期皁E��再構篁E                if (Time.frameCount % (int)(60 * updateInterval * 5) == 0) // 紁E秒間隁E                {
+                // 遨ｺ髢薙く繝｣繝・す繝･縺ｮ螳壽悄逧・↑蜀肴ｧ狗ｯ・                if (Time.frameCount % (int)(60 * updateInterval * 5) == 0) // 邏・遘帝俣髫・                {
                     RebuildSpatialCache();
                 }
                 
-                // 同期チE�Eタの作�E
+                // 蜷梧悄繝・・繧ｿ縺ｮ菴懈・
                 var syncData = CreateAudioSystemSyncData();
                 
-                // 登録された更新可能コンポ�Eネント�E更新
+                // 逋ｻ骭ｲ縺輔ｌ縺滓峩譁ｰ蜿ｯ閭ｽ繧ｳ繝ｳ繝昴・繝阪Φ繝医・譖ｴ譁ｰ
                 UpdateRegisteredUpdatables(updateInterval);
                 
-                // 全シスチE��の協調更新
+                // 蜈ｨ繧ｷ繧ｹ繝・Β縺ｮ蜊碑ｪｿ譖ｴ譁ｰ
                 UpdateAllAudioSystems(syncData);
                 
-                // 同期イベント�E発火
+                // 蜷梧悄繧､繝吶Φ繝医・逋ｺ轣ｫ
                 OnAudioSystemSync?.Invoke(syncData);
                 
-                // パフォーマンス計測
+                // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ險域ｸｬ
                 currentUpdateTime = (Time.realtimeSinceStartup - updateStartTime) * 1000f; // ms
                 
                 yield return new WaitForSeconds(updateInterval);
@@ -314,7 +314,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                     updatable.UpdateAudio(deltaTime);
                     updatedCount++;
                     
-                    // フレームごとの更新数制陁E                    if (updatedCount >= maxUpdatablesPerFrame)
+                    // 繝輔Ξ繝ｼ繝縺斐→縺ｮ譖ｴ譁ｰ謨ｰ蛻ｶ髯・                    if (updatedCount >= maxUpdatablesPerFrame)
                         break;
                 }
                 catch (System.Exception e)
@@ -326,25 +326,25 @@ namespace asterivo.Unity60.Core.Audio.Services
         
         private void UpdateAllAudioSystems(AudioSystemSyncData syncData)
         {
-            // Weather Controller の最適化更新
+            // Weather Controller 縺ｮ譛驕ｩ蛹匁峩譁ｰ
             if (weatherController != null && syncData.weatherChanged)
             {
                 UpdateWeatherControllerOptimized(syncData);
             }
             
-            // Time Controller の最適化更新
+            // Time Controller 縺ｮ譛驕ｩ蛹匁峩譁ｰ
             if (timeController != null && (syncData.timeChanged || syncData.stealthStateChanged))
             {
                 UpdateTimeControllerOptimized(syncData);
             }
             
-            // Masking Controller の最適化更新
+            // Masking Controller 縺ｮ譛驕ｩ蛹匁峩譁ｰ
             if (maskingController != null && syncData.nearbyAudioSources.Count > 0)
             {
                 UpdateMaskingControllerOptimized(syncData);
             }
             
-            // Stealth Coordinator への同期通知
+            // Stealth Coordinator 縺ｸ縺ｮ蜷梧悄騾夂衍
             if (stealthCoordinator != null && syncData.stealthStateChanged)
             {
                 NotifyStealthCoordinator(syncData);
@@ -353,7 +353,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         
         private void UpdateWeatherControllerOptimized(AudioSystemSyncData syncData)
         {
-            // 天気変更処琁E��既存�EWeatherControllerメソチE��を活用�E�E        }
+            // 螟ｩ豌怜､画峩蜃ｦ逅・ｼ域里蟄倥・WeatherController繝｡繧ｽ繝・ラ繧呈ｴｻ逕ｨ・・        }
         
         private void UpdateTimeControllerOptimized(AudioSystemSyncData syncData)
         {
@@ -371,7 +371,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         
         private void UpdateMaskingControllerOptimized(AudioSystemSyncData syncData)
         {
-            // バッチ�E琁E��マスキング効果を適用
+            // 繝舌ャ繝∝・逅・〒繝槭せ繧ｭ繝ｳ繧ｰ蜉ｹ譫懊ｒ驕ｩ逕ｨ
             foreach (var audioSource in syncData.nearbyAudioSources)
             {
                 if (audioSource != null && audioSource.isPlaying)
@@ -383,8 +383,8 @@ namespace asterivo.Unity60.Core.Audio.Services
         
         private void NotifyStealthCoordinator(AudioSystemSyncData syncData)
         {
-            // StealthCoordinatorに状態変更を通知
-            // 既存�EイベントシスチE��を活用
+            // StealthCoordinator縺ｫ迥ｶ諷句､画峩繧帝夂衍
+            // 譌｢蟄倥・繧､繝吶Φ繝医す繧ｹ繝・Β繧呈ｴｻ逕ｨ
         }
         
         #endregion
@@ -398,7 +398,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             
             if (playerTransform == null) return;
             
-            // 効玁E��なAudioSource検索
+            // 蜉ｹ邇・噪縺ｪAudioSource讀懃ｴ｢
             var allAudioSources = FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
             totalManagedAudioSources = allAudioSources.Length;
             activeAudioSources = 0;
@@ -407,14 +407,14 @@ namespace asterivo.Unity60.Core.Audio.Services
             {
                 if (audioSource == null) continue;
                 
-                // レイヤーマスクチェチE��
+                // 繝ｬ繧､繝､繝ｼ繝槭せ繧ｯ繝√ぉ繝・け
                 if ((audioSourceLayerMask.value & (1 << audioSource.gameObject.layer)) == 0) continue;
                 
-                // 距離チェチE��
+                // 霍晞屬繝√ぉ繝・け
                 float distance = Vector3.Distance(audioSource.transform.position, playerTransform.position);
                 if (distance > maxAudioDetectionRange) continue;
                 
-                // 空間グリチE��への登録
+                // 遨ｺ髢薙げ繝ｪ繝・ラ縺ｸ縺ｮ逋ｻ骭ｲ
                 Vector3Int gridKey = WorldToGridKey(audioSource.transform.position);
                 if (!spatialAudioCache.ContainsKey(gridKey))
                 {
@@ -450,21 +450,21 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             var syncData = new AudioSystemSyncData();
             
-            // 基本惁E��
+            // 蝓ｺ譛ｬ諠・ｱ
             syncData.currentTime = Time.time;
             syncData.playerPosition = playerTransform?.position ?? Vector3.zero;
             
-            // スチE��ス状慁E            bool previousStealthState = syncData.isStealthActive;
+            // 繧ｹ繝・Ν繧ｹ迥ｶ諷・            bool previousStealthState = syncData.isStealthActive;
             syncData.isStealthActive = stealthCoordinator != null && stealthCoordinator.ShouldReduceNonStealthAudio();
             syncData.stealthStateChanged = previousStealthState != syncData.isStealthActive;
             
-            // 時間惁E��
+            // 譎る俣諠・ｱ
             var currentSystemTime = System.DateTime.Now;
             var newTimeOfDay = DetermineTimeOfDayFromSystemTime(currentSystemTime);
             syncData.timeChanged = syncData.currentTimeOfDay != newTimeOfDay;
             syncData.currentTimeOfDay = newTimeOfDay;
             
-            // 天気情報�E�EynamicAudioEnvironmentから取得！E            var dynamicEnvironment = FindFirstObjectByType<DynamicAudioEnvironment>();
+            // 螟ｩ豌玲ュ蝣ｱ・・ynamicAudioEnvironment縺九ｉ蜿門ｾ暦ｼ・            var dynamicEnvironment = FindFirstObjectByType<DynamicAudioEnvironment>();
             if (dynamicEnvironment != null)
             {
                 var (env, weather, time) = dynamicEnvironment.GetCurrentState();
@@ -473,7 +473,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                 syncData.currentEnvironmentType = env;
             }
             
-            // 音量設定！EerviceLocatorから取得！E            var audioService = ServiceLocator.GetService<IAudioService>();
+            // 髻ｳ驥剰ｨｭ螳夲ｼ・erviceLocator縺九ｉ蜿門ｾ暦ｼ・            var audioService = ServiceLocator.GetService<IAudioService>();
             if (audioService != null)
             {
                 syncData.masterVolume = audioService.GetMasterVolume();
@@ -482,11 +482,11 @@ namespace asterivo.Unity60.Core.Audio.Services
                 syncData.effectVolume = audioService.GetEffectVolume();
             }
             
-            // 近傍AudioSource�E�空間キャチE��ュを活用�E�E            if (playerTransform != null)
+            // 霑大ｍAudioSource・育ｩｺ髢薙く繝｣繝・す繝･繧呈ｴｻ逕ｨ・・            if (playerTransform != null)
             {
                 syncData.nearbyAudioSources = GetNearbyAudioSources(playerTransform.position, maxAudioDetectionRange);
                 
-                // マスキング強度の計箁E                syncData.currentMaskingStrength = CalculateCurrentMaskingStrength(syncData.nearbyAudioSources);
+                // 繝槭せ繧ｭ繝ｳ繧ｰ蠑ｷ蠎ｦ縺ｮ險育ｮ・                syncData.currentMaskingStrength = CalculateCurrentMaskingStrength(syncData.nearbyAudioSources);
             }
             
             return syncData;
@@ -514,7 +514,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             {
                 if (audioSource != null && audioSource.isPlaying)
                 {
-                    // 音量と距離に基づく�Eスキング強度の計箁E                    float distance = Vector3.Distance(audioSource.transform.position, playerTransform.position);
+                    // 髻ｳ驥上→霍晞屬縺ｫ蝓ｺ縺･縺上・繧ｹ繧ｭ繝ｳ繧ｰ蠑ｷ蠎ｦ縺ｮ險育ｮ・                    float distance = Vector3.Distance(audioSource.transform.position, playerTransform.position);
                     float volumeContribution = audioSource.volume;
                     float distanceAttenuation = 1f - (distance / maxAudioDetectionRange);
                     
@@ -534,7 +534,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             updateInterval = Mathf.Clamp(interval, 0.05f, 1f);
             
-            // 現在の更新を�E閁E            if (coordinatedUpdateCoroutine != null)
+            // 迴ｾ蝨ｨ縺ｮ譖ｴ譁ｰ繧貞・髢・            if (coordinatedUpdateCoroutine != null)
             {
                 StopCoordinatedUpdates();
                 StartCoordinatedUpdates();
@@ -587,17 +587,17 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             if (playerTransform == null) return;
             
-            // 検�E篁E��の可視化
+            // 讀懷・遽・峇縺ｮ蜿ｯ隕門喧
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(playerTransform.position, maxAudioDetectionRange);
             
-            // 空間グリチE��の可視化
+            // 遨ｺ髢薙げ繝ｪ繝・ラ縺ｮ蜿ｯ隕門喧
             Gizmos.color = Color.cyan;
             Vector3Int playerGrid = WorldToGridKey(playerTransform.position);
             Vector3 gridCenter = new Vector3(playerGrid.x * spatialGridSize, playerGrid.y * spatialGridSize, playerGrid.z * spatialGridSize);
             Gizmos.DrawWireCube(gridCenter, Vector3.one * spatialGridSize);
             
-            // 追跡中のAudioSourceの可視化
+            // 霑ｽ霍｡荳ｭ縺ｮAudioSource縺ｮ蜿ｯ隕門喧
             if (trackedAudioSources != null)
             {
                 Gizmos.color = Color.green;

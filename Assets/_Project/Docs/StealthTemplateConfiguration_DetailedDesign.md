@@ -1,4 +1,4 @@
-# Stealth Template Configuration - 詳細設計書
+﻿# Stealth Template Configuration - 詳細設計書
 
 ## 文書管理情報
 

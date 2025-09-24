@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using asterivo.Unity60.Core;
 // using asterivo.Unity60.Core.Debug;
 
@@ -47,14 +47,14 @@ namespace asterivo.Unity60.Core.Services
                 ProjectDebug.Log("[ManualPhase1Trigger] Post-execution FeatureFlags status:");
                 LogCurrentFeatureFlagsStatus();
                 
-                ProjectDebug.Log("[ManualPhase1Trigger] ✁EPHASE 1 MANUAL EXECUTION COMPLETED SUCCESSFULLY");
-                ProjectDebug.Log("[ManualPhase1Trigger] 📋 NEXT STEP: Execute Phase 2 per SINGLETON_COMPLETE_REMOVAL_GUIDE.md");
+                ProjectDebug.Log("[ManualPhase1Trigger] 笨・PHASE 1 MANUAL EXECUTION COMPLETED SUCCESSFULLY");
+                ProjectDebug.Log("[ManualPhase1Trigger] 搭 NEXT STEP: Execute Phase 2 per SINGLETON_COMPLETE_REMOVAL_GUIDE.md");
                 
                 ValidatePhase1Completion();
             }
             catch (System.Exception ex)
             {
-                ProjectDebug.LogError($"[ManualPhase1Trigger] ❁EPhase 1 manual execution failed: {ex.Message}");
+                ProjectDebug.LogError($"[ManualPhase1Trigger] 笶・Phase 1 manual execution failed: {ex.Message}");
                 ProjectDebug.LogError($"[ManualPhase1Trigger] Stack trace: {ex.StackTrace}");
             }
         }
@@ -100,13 +100,13 @@ namespace asterivo.Unity60.Core.Services
                                 
             if (phase1Complete)
             {
-                ProjectDebug.Log("[ManualPhase1Trigger] ✁EPHASE 1 VALIDATION: COMPLETE");
-                ProjectDebug.Log("[ManualPhase1Trigger] 🎯 System is ready for Phase 2: Manual Singleton code deletion");
+                ProjectDebug.Log("[ManualPhase1Trigger] 笨・PHASE 1 VALIDATION: COMPLETE");
+                ProjectDebug.Log("[ManualPhase1Trigger] 識 System is ready for Phase 2: Manual Singleton code deletion");
                 phase1Completed = true;
             }
             else
             {
-                ProjectDebug.Log("[ManualPhase1Trigger] ⚠�E�EPHASE 1 VALIDATION: INCOMPLETE");
+                ProjectDebug.Log("[ManualPhase1Trigger] 笞・・PHASE 1 VALIDATION: INCOMPLETE");
                 ProjectDebug.Log("[ManualPhase1Trigger] Required settings for Phase 1 completion:");
                 ProjectDebug.Log($"  DisableLegacySingletons must be TRUE (current: {FeatureFlags.DisableLegacySingletons})");
                 ProjectDebug.Log($"  EnableMigrationWarnings must be FALSE (current: {FeatureFlags.EnableMigrationWarnings})");

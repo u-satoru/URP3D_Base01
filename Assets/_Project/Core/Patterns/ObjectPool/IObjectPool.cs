@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace asterivo.Unity60.Core.Patterns.ObjectPool
 {

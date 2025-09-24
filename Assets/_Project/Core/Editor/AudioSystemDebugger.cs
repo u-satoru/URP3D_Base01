@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,28 +12,28 @@ using AudioCategory = asterivo.Unity60.Core.Audio.AudioCategory;
 namespace asterivo.Unity60.Core.Editor
 {
     /// <summary>
-    /// オーチE��オシスチE��専用チE��チE��ー・モニタリングチE�Eル
-    /// 統合オーチE��オシスチE��の状態監視、デバッグ、テスト機�Eを提侁E    /// 
-    /// 主な機�E�E�E    /// - リアルタイムオーチE��オシスチE��状態監要E    /// - ボリュームレベルの動的制御とチE��チE    /// - スチE��スモード�EチE��チE��とチE��ト環墁E��御
-    /// - パフォーマンス監視とグラフ表示
-    /// - オーチE��オイベント�Eリアルタイム追跡
+    /// 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β蟆ら畑繝・ヰ繝・ぎ繝ｼ繝ｻ繝｢繝九ち繝ｪ繝ｳ繧ｰ繝・・繝ｫ
+    /// 邨ｱ蜷医が繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β縺ｮ迥ｶ諷狗屮隕悶√ョ繝舌ャ繧ｰ縲√ユ繧ｹ繝域ｩ溯・繧呈署萓・    /// 
+    /// 荳ｻ縺ｪ讖溯・・・    /// - 繝ｪ繧｢繝ｫ繧ｿ繧､繝繧ｪ繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β迥ｶ諷狗屮隕・    /// - 繝懊Μ繝･繝ｼ繝繝ｬ繝吶Ν縺ｮ蜍慕噪蛻ｶ蠕｡縺ｨ繝・せ繝・    /// - 繧ｹ繝・Ν繧ｹ繝｢繝ｼ繝峨・繝・ヰ繝・げ縺ｨ繝・せ繝育腸蠅・宛蠕｡
+    /// - 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ逶｣隕悶→繧ｰ繝ｩ繝戊｡ｨ遉ｺ
+    /// - 繧ｪ繝ｼ繝・ぅ繧ｪ繧､繝吶Φ繝医・繝ｪ繧｢繝ｫ繧ｿ繧､繝霑ｽ霍｡
     /// 
-    /// 使用シーン�E�E    /// - オーチE��オシスチE��の動作確誁E    /// - ゲーム中のオーチE��オバランス調整
-    /// - スチE��ス機�EのチE��トとチE��チE��
-    /// - パフォーマンス問題�E特宁E    /// 
-    /// アクセス方法：Unity メニュー > asterivo.Unity60/Audio/Audio System Debugger
-    /// 注意：�Eレイモード中のみ利用可能
+    /// 菴ｿ逕ｨ繧ｷ繝ｼ繝ｳ・・    /// - 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β縺ｮ蜍穂ｽ懃｢ｺ隱・    /// - 繧ｲ繝ｼ繝荳ｭ縺ｮ繧ｪ繝ｼ繝・ぅ繧ｪ繝舌Λ繝ｳ繧ｹ隱ｿ謨ｴ
+    /// - 繧ｹ繝・Ν繧ｹ讖溯・縺ｮ繝・せ繝医→繝・ヰ繝・げ
+    /// - 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ蝠城｡後・迚ｹ螳・    /// 
+    /// 繧｢繧ｯ繧ｻ繧ｹ譁ｹ豕包ｼ啅nity 繝｡繝九Η繝ｼ > asterivo.Unity60/Audio/Audio System Debugger
+    /// 豕ｨ諢擾ｼ壹・繝ｬ繧､繝｢繝ｼ繝我ｸｭ縺ｮ縺ｿ蛻ｩ逕ｨ蜿ｯ閭ｽ
     /// </summary>
     public class AudioSystemDebugger : EditorWindow
     {
         #region Window Management
         
         /// <summary>
-        /// オーチE��オシスチE��チE��チE��ーウィンドウを表示する
-        /// Unity メニューから呼び出されるエチE��タ拡張メニューアイチE��
+        /// 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β繝・ヰ繝・ぎ繝ｼ繧ｦ繧｣繝ｳ繝峨え繧定｡ｨ遉ｺ縺吶ｋ
+        /// Unity 繝｡繝九Η繝ｼ縺九ｉ蜻ｼ縺ｳ蜃ｺ縺輔ｌ繧九お繝・ぅ繧ｿ諡｡蠑ｵ繝｡繝九Η繝ｼ繧｢繧､繝・Β
         /// </summary>
         /// <remarks>
-        /// ウィンドウの最小サイズは800x600に設定され、E        /// リアルタイムでオーチE��オシスチE��の状態を監視できます、E        /// </remarks>
+        /// 繧ｦ繧｣繝ｳ繝峨え縺ｮ譛蟆上し繧､繧ｺ縺ｯ800x600縺ｫ險ｭ螳壹＆繧後・        /// 繝ｪ繧｢繝ｫ繧ｿ繧､繝縺ｧ繧ｪ繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β縺ｮ迥ｶ諷九ｒ逶｣隕悶〒縺阪∪縺吶・        /// </remarks>
         [MenuItem("asterivo.Unity60/Audio/Audio System Debugger")]
         public static void ShowWindow()
         {
@@ -85,7 +85,7 @@ namespace asterivo.Unity60.Core.Editor
         #region Unity Editor Callbacks
         
         /// <summary>
-        /// ウィンドウが有効になった時の初期化�E琁E        /// エチE��タの更新イベントに登録し、オーチE��オシスチE��の参�Eを取得すめE        /// </summary>
+        /// 繧ｦ繧｣繝ｳ繝峨え縺梧怏蜉ｹ縺ｫ縺ｪ縺｣縺滓凾縺ｮ蛻晄悄蛹門・逅・        /// 繧ｨ繝・ぅ繧ｿ縺ｮ譖ｴ譁ｰ繧､繝吶Φ繝医↓逋ｻ骭ｲ縺励√が繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β縺ｮ蜿ら・繧貞叙蠕励☆繧・        /// </summary>
         private void OnEnable()
         {
             EditorApplication.update += OnEditorUpdate;
@@ -94,7 +94,7 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// ウィンドウが無効になった時のクリーンアチE�E処琁E        /// エチE��タの更新イベントから登録解除を行う
+        /// 繧ｦ繧｣繝ｳ繝峨え縺檎┌蜉ｹ縺ｫ縺ｪ縺｣縺滓凾縺ｮ繧ｯ繝ｪ繝ｼ繝ｳ繧｢繝・・蜃ｦ逅・        /// 繧ｨ繝・ぅ繧ｿ縺ｮ譖ｴ譁ｰ繧､繝吶Φ繝医°繧臥匳骭ｲ隗｣髯､繧定｡後≧
         /// </summary>
         private void OnDisable()
         {
@@ -102,11 +102,11 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// エチE��タの更新ループでオーチE��オシスチE��チE�Eタを定期皁E��更新
-        /// 自動リフレチE��ュが有効な場合、指定された間隔でチE�Eタを更新してウィンドウを�E描画する
+        /// 繧ｨ繝・ぅ繧ｿ縺ｮ譖ｴ譁ｰ繝ｫ繝ｼ繝励〒繧ｪ繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β繝・・繧ｿ繧貞ｮ壽悄逧・↓譖ｴ譁ｰ
+        /// 閾ｪ蜍輔Μ繝輔Ξ繝・す繝･縺梧怏蜉ｹ縺ｪ蝣ｴ蜷医∵欠螳壹＆繧後◆髢馴囈縺ｧ繝・・繧ｿ繧呈峩譁ｰ縺励※繧ｦ繧｣繝ｳ繝峨え繧貞・謠冗判縺吶ｋ
         /// </summary>
         /// <remarks>
-        /// プレイモード中のみ実行され、refreshInterval�E�デフォルチE.5秒）ごとに更新されめE        /// </remarks>
+        /// 繝励Ξ繧､繝｢繝ｼ繝我ｸｭ縺ｮ縺ｿ螳溯｡後＆繧後〉efreshInterval・医ョ繝輔か繝ｫ繝・.5遘抵ｼ峨＃縺ｨ縺ｫ譖ｴ譁ｰ縺輔ｌ繧・        /// </remarks>
         private void OnEditorUpdate()
         {
             if (!Application.isPlaying) return;
@@ -120,12 +120,12 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// ウィンドウのGUI描画処琁E        /// プレイモード中のみ利用可能で、タブ�Eースのインターフェースを提侁E        /// </summary>
+        /// 繧ｦ繧｣繝ｳ繝峨え縺ｮGUI謠冗判蜃ｦ逅・        /// 繝励Ξ繧､繝｢繝ｼ繝我ｸｭ縺ｮ縺ｿ蛻ｩ逕ｨ蜿ｯ閭ｽ縺ｧ縲√ち繝悶・繝ｼ繧ｹ縺ｮ繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ繧呈署萓・        /// </summary>
         /// <remarks>
-        /// 以下�E5つのタブで構�EされてぁE��す！E        /// 0: System Monitor - シスチE��状態表示と基本操佁E        /// 1: Volume Control - 吁E��チE��リのボリューム制御
-        /// 2: Stealth Debug - スチE��スシスチE��のチE��チE��
-        /// 3: Performance - パフォーマンス監視とグラフ表示
-        /// 4: Audio Events - オーチE��オイベント�E履歴表示
+        /// 莉･荳九・5縺､縺ｮ繧ｿ繝悶〒讒区・縺輔ｌ縺ｦ縺・∪縺呻ｼ・        /// 0: System Monitor - 繧ｷ繧ｹ繝・Β迥ｶ諷玖｡ｨ遉ｺ縺ｨ蝓ｺ譛ｬ謫堺ｽ・        /// 1: Volume Control - 蜷・き繝・ざ繝ｪ縺ｮ繝懊Μ繝･繝ｼ繝蛻ｶ蠕｡
+        /// 2: Stealth Debug - 繧ｹ繝・Ν繧ｹ繧ｷ繧ｹ繝・Β縺ｮ繝・ヰ繝・げ
+        /// 3: Performance - 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ逶｣隕悶→繧ｰ繝ｩ繝戊｡ｨ遉ｺ
+        /// 4: Audio Events - 繧ｪ繝ｼ繝・ぅ繧ｪ繧､繝吶Φ繝医・螻･豁ｴ陦ｨ遉ｺ
         /// </remarks>
         private void OnGUI()
         {
@@ -157,8 +157,8 @@ namespace asterivo.Unity60.Core.Editor
         #region GUI Drawing Methods
         
         /// <summary>
-        /// ウィンドウヘッダー部刁E�EGUI描画
-        /// タイトル表示、�E動リフレチE��ュ刁E��替え、手動リフレチE��ュボタンを含む
+        /// 繧ｦ繧｣繝ｳ繝峨え繝倥ャ繝繝ｼ驛ｨ蛻・・GUI謠冗判
+        /// 繧ｿ繧､繝医Ν陦ｨ遉ｺ縲∬・蜍輔Μ繝輔Ξ繝・す繝･蛻・ｊ譖ｿ縺医∵焔蜍輔Μ繝輔Ξ繝・す繝･繝懊ち繝ｳ繧貞性繧
         /// </summary>
         private void DrawHeader()
         {
@@ -179,8 +179,8 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// タブバーのGUI描画
-        /// 5つのタブ！Eystem Monitor, Volume Control, Stealth Debug, Performance, Audio Events�E�を表示
+        /// 繧ｿ繝悶ヰ繝ｼ縺ｮGUI謠冗判
+        /// 5縺､縺ｮ繧ｿ繝厄ｼ・ystem Monitor, Volume Control, Stealth Debug, Performance, Audio Events・峨ｒ陦ｨ遉ｺ
         /// </summary>
         private void DrawTabBar()
         {
@@ -475,7 +475,7 @@ namespace asterivo.Unity60.Core.Editor
             {
                 foreach (var eventText in recentEvents.TakeLast(20))
                 {
-                    EditorGUILayout.LabelField($"• {eventText}", EditorStyles.wordWrappedLabel);
+                    EditorGUILayout.LabelField($"窶｢ {eventText}", EditorStyles.wordWrappedLabel);
                 }
             }
             
@@ -487,10 +487,10 @@ namespace asterivo.Unity60.Core.Editor
         #region Utility Methods
         
         /// <summary>
-        /// シーン冁E�EオーチE��オシスチE��関連コンポ�Eネント�E参�Eを取征E        /// AudioManager、StealthAudioCoordinator、SpatialAudioManager、DynamicAudioEnvironmentを検索
+        /// 繧ｷ繝ｼ繝ｳ蜀・・繧ｪ繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β髢｢騾｣繧ｳ繝ｳ繝昴・繝阪Φ繝医・蜿ら・繧貞叙蠕・        /// AudioManager縲ヾtealthAudioCoordinator縲ヾpatialAudioManager縲．ynamicAudioEnvironment繧呈､懃ｴ｢
         /// </summary>
         /// <remarks>
-        /// これら�Eコンポ�Eネントが見つからなぁE��合、該当する機�Eは利用できません
+        /// 縺薙ｌ繧峨・繧ｳ繝ｳ繝昴・繝阪Φ繝医′隕九▽縺九ｉ縺ｪ縺・ｴ蜷医∬ｩｲ蠖薙☆繧区ｩ溯・縺ｯ蛻ｩ逕ｨ縺ｧ縺阪∪縺帙ｓ
         /// </remarks>
         private void FindAudioSystemReferences()
         {
@@ -501,7 +501,7 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// モニタリング用チE�Eタの初期匁E        /// 吁E��ーチE��オカチE��リのチE��ォルト�Eリューム値を設宁E        /// </summary>
+        /// 繝｢繝九ち繝ｪ繝ｳ繧ｰ逕ｨ繝・・繧ｿ縺ｮ蛻晄悄蛹・        /// 蜷・が繝ｼ繝・ぅ繧ｪ繧ｫ繝・ざ繝ｪ縺ｮ繝・ヵ繧ｩ繝ｫ繝医・繝ｪ繝･繝ｼ繝蛟､繧定ｨｭ螳・        /// </summary>
         private void InitializeMonitoring()
         {
             categoryVolumes[AudioCategory.BGM] = AudioConstants.DEFAULT_BGM_VOLUME;
@@ -512,11 +512,11 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// オーチE��オシスチE��の現在の状態データを更新
-        /// AudioManagerとStealthAudioCoordinatorから最新の状態を取得し、E        /// パフォーマンス履歴チE�Eタも更新する
+        /// 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β縺ｮ迴ｾ蝨ｨ縺ｮ迥ｶ諷九ョ繝ｼ繧ｿ繧呈峩譁ｰ
+        /// AudioManager縺ｨStealthAudioCoordinator縺九ｉ譛譁ｰ縺ｮ迥ｶ諷九ｒ蜿門ｾ励＠縲・        /// 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ螻･豁ｴ繝・・繧ｿ繧よ峩譁ｰ縺吶ｋ
         /// </summary>
         /// <remarks>
-        /// ボリューム履歴とチE��ション履歴は最大100ポイントまで保持されめE        /// </remarks>
+        /// 繝懊Μ繝･繝ｼ繝螻･豁ｴ縺ｨ繝・Φ繧ｷ繝ｧ繝ｳ螻･豁ｴ縺ｯ譛螟ｧ100繝昴う繝ｳ繝医∪縺ｧ菫晄戟縺輔ｌ繧・        /// </remarks>
         private void RefreshAudioSystemData()
         {
             if (audioManager != null)
@@ -555,10 +555,10 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// オーチE��オイベントログにエントリを追加
-        /// タイムスタンプ付きでイベントを記録し、最大100件まで履歴を保持
+        /// 繧ｪ繝ｼ繝・ぅ繧ｪ繧､繝吶Φ繝医Ο繧ｰ縺ｫ繧ｨ繝ｳ繝医Μ繧定ｿｽ蜉
+        /// 繧ｿ繧､繝繧ｹ繧ｿ繝ｳ繝嶺ｻ倥″縺ｧ繧､繝吶Φ繝医ｒ險倬鹸縺励∵怙螟ｧ100莉ｶ縺ｾ縺ｧ螻･豁ｴ繧剃ｿ晄戟
         /// </summary>
-        /// <param name="eventText">記録するイベント�E説明文</param>
+        /// <param name="eventText">險倬鹸縺吶ｋ繧､繝吶Φ繝医・隱ｬ譏取枚</param>
         private void AddEvent(string eventText)
         {
             string timestampedEvent = $"[{System.DateTime.Now:HH:mm:ss}] {eventText}";
@@ -571,15 +571,15 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// パフォーマンス監視用のグラフを描画
-        /// チE�Eタの履歴を線グラフとして表示し、現在値もラベル表示する
+        /// 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ逶｣隕也畑縺ｮ繧ｰ繝ｩ繝輔ｒ謠冗判
+        /// 繝・・繧ｿ縺ｮ螻･豁ｴ繧堤ｷ壹げ繝ｩ繝輔→縺励※陦ｨ遉ｺ縺励∫樟蝨ｨ蛟､繧ゅΛ繝吶Ν陦ｨ遉ｺ縺吶ｋ
         /// </summary>
-        /// <param name="rect">グラフを描画する矩形領域</param>
-        /// <param name="data">グラフに表示するチE�EタのリスチE/param>
-        /// <param name="color">グラフ�E線�E色</param>
-        /// <param name="label">グラフ�Eラベル吁E/param>
+        /// <param name="rect">繧ｰ繝ｩ繝輔ｒ謠冗判縺吶ｋ遏ｩ蠖｢鬆伜沺</param>
+        /// <param name="data">繧ｰ繝ｩ繝輔↓陦ｨ遉ｺ縺吶ｋ繝・・繧ｿ縺ｮ繝ｪ繧ｹ繝・/param>
+        /// <param name="color">繧ｰ繝ｩ繝輔・邱壹・濶ｲ</param>
+        /// <param name="label">繧ｰ繝ｩ繝輔・繝ｩ繝吶Ν蜷・/param>
         /// <remarks>
-        /// チE�EタぁE点未満の場合�E描画されなぁE��最小値と最大値に基づぁE��自動スケーリングされめE        /// </remarks>
+        /// 繝・・繧ｿ縺・轤ｹ譛ｪ貅縺ｮ蝣ｴ蜷医・謠冗判縺輔ｌ縺ｪ縺・よ怙蟆丞､縺ｨ譛螟ｧ蛟､縺ｫ蝓ｺ縺･縺・※閾ｪ蜍輔せ繧ｱ繝ｼ繝ｪ繝ｳ繧ｰ縺輔ｌ繧・        /// </remarks>
         private void DrawGraph(Rect rect, List<float> data, Color color, string label)
         {
             if (data.Count < 2) return;

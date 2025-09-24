@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Pool;
 using asterivo.Unity60.Features.Templates.FPS.Data;
 

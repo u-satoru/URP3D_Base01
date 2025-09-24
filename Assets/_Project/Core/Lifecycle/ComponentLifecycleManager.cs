@@ -1,11 +1,11 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 // // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 
 namespace asterivo.Unity60.Core.Lifecycle
 {
     /// <summary>
-    /// 動的に追加されるコンポ�Eネント�Eライフサイクル管琁E    /// メモリリーク防止とリソース管琁E��行う
+    /// 蜍慕噪縺ｫ霑ｽ蜉縺輔ｌ繧九さ繝ｳ繝昴・繝阪Φ繝医・繝ｩ繧､繝輔し繧､繧ｯ繝ｫ邂｡逅・    /// 繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ髦ｲ豁｢縺ｨ繝ｪ繧ｽ繝ｼ繧ｹ邂｡逅・ｒ陦後≧
     /// </summary>
     public class ComponentLifecycleManager : MonoBehaviour
     {
@@ -17,11 +17,11 @@ namespace asterivo.Unity60.Core.Lifecycle
         [SerializeField] private bool trackComponentCounts = true;
         
         /// <summary>
-        /// 動的コンポ�Eネントを安�Eに追加し、ライフサイクル管琁E��登録
+        /// 蜍慕噪繧ｳ繝ｳ繝昴・繝阪Φ繝医ｒ螳牙・縺ｫ霑ｽ蜉縺励√Λ繧､繝輔し繧､繧ｯ繝ｫ邂｡逅・↓逋ｻ骭ｲ
         /// </summary>
-        /// <typeparam name="T">追加するコンポ�Eネント�E垁E/typeparam>
-        /// <param name="target">コンポ�Eネントを追加する対象GameObject</param>
-        /// <returns>追加されたコンポ�EネンチE/returns>
+        /// <typeparam name="T">霑ｽ蜉縺吶ｋ繧ｳ繝ｳ繝昴・繝阪Φ繝医・蝙・/typeparam>
+        /// <param name="target">繧ｳ繝ｳ繝昴・繝阪Φ繝医ｒ霑ｽ蜉縺吶ｋ蟇ｾ雎｡GameObject</param>
+        /// <returns>霑ｽ蜉縺輔ｌ縺溘さ繝ｳ繝昴・繝阪Φ繝・/returns>
         public T AddManagedComponent<T>(GameObject target) where T : Component
         {
             if (target == null)
@@ -30,7 +30,7 @@ namespace asterivo.Unity60.Core.Lifecycle
                 return null;
             }
             
-            // 既存�Eコンポ�EネントをチェチE��
+            // 譌｢蟄倥・繧ｳ繝ｳ繝昴・繝阪Φ繝医ｒ繝√ぉ繝・け
             var existingComponent = target.GetComponent<T>();
             if (existingComponent != null)
             {
@@ -39,7 +39,7 @@ namespace asterivo.Unity60.Core.Lifecycle
                 return existingComponent;
             }
             
-            // 新しいコンポ�Eネントを追加
+            // 譁ｰ縺励＞繧ｳ繝ｳ繝昴・繝阪Φ繝医ｒ霑ｽ蜉
             var newComponent = target.AddComponent<T>();
             RegisterComponent(newComponent);
             
@@ -48,9 +48,9 @@ namespace asterivo.Unity60.Core.Lifecycle
         }
         
         /// <summary>
-        /// コンポ�Eネントを管琁E��に登録
+        /// 繧ｳ繝ｳ繝昴・繝阪Φ繝医ｒ邂｡逅・ｸ九↓逋ｻ骭ｲ
         /// </summary>
-        /// <param name="component">登録するコンポ�EネンチE/param>
+        /// <param name="component">逋ｻ骭ｲ縺吶ｋ繧ｳ繝ｳ繝昴・繝阪Φ繝・/param>
         private void RegisterComponent(Component component)
         {
             if (component == null) return;
@@ -68,9 +68,9 @@ namespace asterivo.Unity60.Core.Lifecycle
         }
         
         /// <summary>
-        /// 管琁E���Eコンポ�Eネントを安�Eに削除
+        /// 邂｡逅・ｸ九・繧ｳ繝ｳ繝昴・繝阪Φ繝医ｒ螳牙・縺ｫ蜑企勁
         /// </summary>
-        /// <param name="component">削除するコンポ�EネンチE/param>
+        /// <param name="component">蜑企勁縺吶ｋ繧ｳ繝ｳ繝昴・繝阪Φ繝・/param>
         public void RemoveManagedComponent(Component component)
         {
             if (component == null) return;
@@ -90,7 +90,7 @@ namespace asterivo.Unity60.Core.Lifecycle
                 
                 Log($"Removed managed component {component.GetType().Name}");
                 
-                if (component != null) // 削除前にnullチェチE��
+                if (component != null) // 蜑企勁蜑阪↓null繝√ぉ繝・け
                 {
                     DestroyImmediate(component);
                 }
@@ -98,9 +98,9 @@ namespace asterivo.Unity60.Core.Lifecycle
         }
         
         /// <summary>
-        /// 持E��した型のコンポ�Eネントを全て削除
+        /// 謖・ｮ壹＠縺溷梛縺ｮ繧ｳ繝ｳ繝昴・繝阪Φ繝医ｒ蜈ｨ縺ｦ蜑企勁
         /// </summary>
-        /// <typeparam name="T">削除する垁E/typeparam>
+        /// <typeparam name="T">蜑企勁縺吶ｋ蝙・/typeparam>
         public void RemoveAllManagedComponents<T>() where T : Component
         {
             var componentsToRemove = new List<Component>();
@@ -120,13 +120,13 @@ namespace asterivo.Unity60.Core.Lifecycle
         }
         
         /// <summary>
-        /// 全ての管琁E��コンポ�EネントをクリーンアチE�E
+        /// 蜈ｨ縺ｦ縺ｮ邂｡逅・ｸ九さ繝ｳ繝昴・繝阪Φ繝医ｒ繧ｯ繝ｪ繝ｼ繝ｳ繧｢繝・・
         /// </summary>
         public void CleanupAllManagedComponents()
         {
             Log($"Cleaning up {managedComponents.Count} managed components");
             
-            // 送E��E��クリーンアチE�E�E�依存関係を老E�E�E�E            for (int i = managedComponents.Count - 1; i >= 0; i--)
+            // 騾・・〒繧ｯ繝ｪ繝ｼ繝ｳ繧｢繝・・・井ｾ晏ｭ倬未菫ゅｒ閠・・・・            for (int i = managedComponents.Count - 1; i >= 0; i--)
             {
                 var component = managedComponents[i];
                 if (component != null)
@@ -140,15 +140,15 @@ namespace asterivo.Unity60.Core.Lifecycle
         }
         
         /// <summary>
-        /// 現在の管琁E��況を取征E        /// </summary>
-        /// <returns>管琁E��況�E辞書</returns>
+        /// 迴ｾ蝨ｨ縺ｮ邂｡逅・憾豕√ｒ蜿門ｾ・        /// </summary>
+        /// <returns>邂｡逅・憾豕√・霎樊嶌</returns>
         public Dictionary<System.Type, int> GetManagedComponentCounts()
         {
             return new Dictionary<System.Type, int>(componentCounts);
         }
         
         /// <summary>
-        /// チE��チE��惁E��を表示
+        /// 繝・ヰ繝・げ諠・ｱ繧定｡ｨ遉ｺ
         /// </summary>
         [ContextMenu("Show Debug Info")]
         public void ShowDebugInfo()

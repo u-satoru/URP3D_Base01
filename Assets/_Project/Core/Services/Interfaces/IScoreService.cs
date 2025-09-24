@@ -1,4 +1,4 @@
-namespace asterivo.Unity60.Core.Services
+﻿namespace asterivo.Unity60.Core.Services
 {
     public interface IScoreService
     {

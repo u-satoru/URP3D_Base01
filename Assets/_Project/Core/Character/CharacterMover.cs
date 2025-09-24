@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using asterivo.Unity60.Core.Events;
 
 namespace asterivo.Unity60.Core.Character

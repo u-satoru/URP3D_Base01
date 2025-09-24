@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Audio;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Audio.Data;
@@ -8,8 +8,8 @@ using asterivo.Unity60.Core.Audio.Events;
 namespace asterivo.Unity60.Core.Audio
 {
     /// <summary>
-    /// 動的音響環墁E��スチE��
-    /// 時間帯、天候、場所による音響環墁E�E動的変化を管琁E    /// </summary>
+    /// 動的音響環境システム
+    /// 時間帯、天候、場所による音響環境の動的変化を管理    /// </summary>
     public class DynamicAudioEnvironment : MonoBehaviour
     {
         [Header("Environment State")]
@@ -41,14 +41,14 @@ namespace asterivo.Unity60.Core.Audio
         [SerializeField] private SoundDataSO[] nightAmbientSounds;
         [SerializeField] private SoundDataSO[] rainAmbientSounds;
         
-        // 現在適用中の環墁E��宁E        private EnvironmentPreset activePreset;
+        // 現在適用中の環境宁E        private EnvironmentPreset activePreset;
         private float currentMaskingLevel;
         private float weatherChangeTimer;
         
-        // 音響環墁E�E変化アニメーション
+        // 音響環境の変化アニメーション
         private Coroutine environmentTransition;
         
-        // リスナ�E位置追跡
+        // リスナー位置追跡
         private Transform audioListener;
         
         // イベント通知
@@ -86,20 +86,20 @@ namespace asterivo.Unity60.Core.Audio
         #region Environment Management
         
         /// <summary>
-        /// 環墁E��スチE��の初期匁E        /// </summary>
+        /// 環境システムの初期化        /// </summary>
         private void InitializeEnvironment()
         {
             activePreset = GetPresetForEnvironment(currentEnvironment);
         }
         
         /// <summary>
-        /// 環墁E��定を適用
+        /// 環境定を適用
         /// </summary>
         private void ApplyEnvironmentSettings()
         {
             if (environmentMixer == null) return;
             
-            // Audio Mixerのパラメータを設宁E            environmentMixer.SetFloat(ambientVolumeParam, activePreset.ambientVolume);
+            // Audio Mixerのパラメータを設定            environmentMixer.SetFloat(ambientVolumeParam, activePreset.ambientVolume);
             environmentMixer.SetFloat(reverbParam, activePreset.reverbLevel);
             environmentMixer.SetFloat(lowPassParam, activePreset.lowPassFrequency);
             
@@ -126,13 +126,13 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// 位置に基づく環墁E��新
+        /// 位置に基づく環境新
         /// </summary>
         private void UpdateEnvironmentBasedOnPosition()
         {
             if (audioListener == null) return;
             
-            // 環墁E��定（例：室冁E屋外�E検�E�E�E            EnvironmentType detectedEnvironment = DetectEnvironmentAtPosition(audioListener.position);
+            // 環境定（例：室内/屋外）を検出            EnvironmentType detectedEnvironment = DetectEnvironmentAtPosition(audioListener.position);
             
             if (detectedEnvironment != currentEnvironment)
             {
@@ -141,14 +141,14 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// 持E��位置での環墁E��別を検�E
+        /// 指定位置での環境別を検出
         /// </summary>
         private EnvironmentType DetectEnvironmentAtPosition(Vector3 position)
         {
-            // 天井があるかチェチE��
+            // 天井があるかチェック
             if (Physics.Raycast(position, Vector3.up, 20f))
             {
-                // さらに詳細な環墁E��宁E                Collider[] nearbyColliders = Physics.OverlapSphere(position, 5f);
+                // さらに詳細な環境宁E                Collider[] nearbyColliders = Physics.OverlapSphere(position, 5f);
                 
                 foreach (var collider in nearbyColliders)
                 {
@@ -171,7 +171,7 @@ namespace asterivo.Unity60.Core.Audio
         #region Weather System
         
         /// <summary>
-        /// 動的天候シスチE��の更新
+        /// 動的天候シシステムの更新
         /// </summary>
         private void UpdateDynamicWeather()
         {
@@ -203,7 +203,8 @@ namespace asterivo.Unity60.Core.Audio
         #region Ambient Sound Management
         
         /// <summary>
-        /// アンビエントサウンド�E開姁E        /// </summary>
+        /// アンビエントサウンドの開始
+        /// </summary>
         private void StartAmbientSounds()
         {
             if (ambientAudioSource == null) return;
@@ -226,7 +227,7 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// 現在の状態に対応するアンビエントサウンドを取征E        /// </summary>
+        /// 現在の状態に対応するアンビエントサウンドを取得        /// </summary>
         private SoundDataSO[] GetAmbientSoundsForCurrentState()
         {
             // 天候優允E            if (currentWeather == WeatherType.Rain && rainAmbientSounds.Length > 0)
@@ -234,7 +235,8 @@ namespace asterivo.Unity60.Core.Audio
                 return rainAmbientSounds;
             }
             
-            // 時間帯による選抁E            return currentTimeOfDay switch
+            // 時間帯による選択
+            return currentTimeOfDay switch
             {
                 TimeOfDay.Night => nightAmbientSounds,
                 _ => dayAmbientSounds
@@ -246,7 +248,7 @@ namespace asterivo.Unity60.Core.Audio
         #region Public Interface
         
         /// <summary>
-        /// 環墁E��変更
+        /// 環境変更
         /// </summary>
         public void ChangeEnvironment(EnvironmentType newEnvironment)
         {
@@ -256,7 +258,7 @@ namespace asterivo.Unity60.Core.Audio
             currentEnvironment = newEnvironment;
             activePreset = GetPresetForEnvironment(newEnvironment);
             
-            // スムーズな環墁E�E移
+            // スムーズな環境遷移
             if (environmentTransition != null)
             {
                 StopCoroutine(environmentTransition);
@@ -318,11 +320,11 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// 現在のマスキングレベルを取征E        /// </summary>
+        /// 現在のマスキングレベルを取得        /// </summary>
         public float GetCurrentMaskingLevel() => currentMaskingLevel;
         
         /// <summary>
-        /// 現在の環墁E��報を取征E        /// </summary>
+        /// 現在の環境報を取得        /// </summary>
         public (EnvironmentType env, WeatherType weather, TimeOfDay time) GetCurrentState()
         {
             return (currentEnvironment, currentWeather, currentTimeOfDay);
@@ -345,7 +347,7 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// 環墁E�EリセチE��を取征E        /// </summary>
+        /// 環境プリセットを取得        /// </summary>
         private EnvironmentPreset GetPresetForEnvironment(EnvironmentType environment)
         {
             foreach (var preset in environmentPresets)
@@ -359,7 +361,7 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// チE��ォルト�EリセチE��を作�E
+        /// デフォルトプリセチE��を作成
         /// </summary>
         private EnvironmentPreset CreateDefaultPreset()
         {
@@ -378,11 +380,12 @@ namespace asterivo.Unity60.Core.Audio
         /// </summary>
         private void NotifyMaskingChange()
         {
-            // SpatialAudioManagerなど他�EシスチE��に通知
-            // 実裁E�E具体的な連携方法に依孁E        }
+            // SpatialAudioManagerなど他のシシステムに通知
+            // 実装は具体的な連携方法に依存
+        }
         
         /// <summary>
-        /// 環墁E�E移のコルーチン
+        /// 環境遷移のコルーチン
         /// </summary>
         private System.Collections.IEnumerator TransitionEnvironment()
         {
@@ -394,7 +397,7 @@ namespace asterivo.Unity60.Core.Audio
                 elapsed += Time.deltaTime;
                 float t = elapsed / duration;
                 
-                // 環墁E��定を段階的に適用
+                // 環境定を段階的に適用
                 ApplyEnvironmentSettings();
                 
                 yield return null;
@@ -409,7 +412,7 @@ namespace asterivo.Unity60.Core.Audio
     #region Supporting Classes and Enums
     
     /// <summary>
-    /// 環墁E�E種顁E    /// </summary>
+    /// 環境の種類    /// </summary>
     public enum EnvironmentType
     {
         Indoor,      // 室冁E        Outdoor,     // 屋夁E        Urban,       // 都市部
@@ -418,7 +421,8 @@ namespace asterivo.Unity60.Core.Audio
     }
     
     /// <summary>
-    /// 天候�E種顁E    /// </summary>
+    /// 天候の種類
+    /// </summary>
     public enum WeatherType
     {
         Clear,       // 晴天
@@ -437,7 +441,7 @@ namespace asterivo.Unity60.Core.Audio
     }
     
     /// <summary>
-    /// 環墁E�EリセチE��
+    /// 環境プリセット
     /// </summary>
     [System.Serializable]
     public struct EnvironmentPreset

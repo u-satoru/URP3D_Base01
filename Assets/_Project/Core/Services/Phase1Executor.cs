@@ -1,11 +1,11 @@
-using UnityEngine;
+﻿using UnityEngine;
 // using asterivo.Unity60.Core.Debug;
 // // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// Phase 1: 準備フェーズ 実行用コンポ�EネンチE    /// SINGLETON_COMPLETE_REMOVAL_GUIDE.md Phase 1 implementation
+    /// Phase 1: 貅門ｙ繝輔ぉ繝ｼ繧ｺ 螳溯｡檎畑繧ｳ繝ｳ繝昴・繝阪Φ繝・    /// SINGLETON_COMPLETE_REMOVAL_GUIDE.md Phase 1 implementation
     /// </summary>
     public class Phase1Executor : MonoBehaviour
     {
@@ -22,29 +22,29 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// Phase 1.1 & 1.2: 匁E��皁E��チE��アチE�E作�Eと最終設定を実衁E        /// Context Menu経由で手動実衁E        /// </summary>
+        /// Phase 1.1 & 1.2: 蛹・峡逧・ヰ繝・け繧｢繝・・菴懈・縺ｨ譛邨りｨｭ螳壹ｒ螳溯｡・        /// Context Menu邨檎罰縺ｧ謇句虚螳溯｡・        /// </summary>
         [ContextMenu("Execute Phase 1: Comprehensive Backup & Final Settings")]
         public void ExecutePhase1Preparation()
         {
-            ProjectDebug.Log("[Phase1Executor] Starting Phase 1: 準備フェーズ execution...");
+            ProjectDebug.Log("[Phase1Executor] Starting Phase 1: 貅門ｙ繝輔ぉ繝ｼ繧ｺ execution...");
             
             try
             {
-                // Phase 1.1 & 1.2: FeatureFlagsメソチE��を直接呼び出ぁE                FeatureFlags.ExecutePhase1ComprehensiveBackupAndFinalSettings();
+                // Phase 1.1 & 1.2: FeatureFlags繝｡繧ｽ繝・ラ繧堤峩謗･蜻ｼ縺ｳ蜃ｺ縺・                FeatureFlags.ExecutePhase1ComprehensiveBackupAndFinalSettings();
                 
-                ProjectDebug.Log("[Phase1Executor] ✁EPhase 1 完亁E System ready for Phase 2 (Physical Code Removal)");
-                ProjectDebug.Log("[Phase1Executor] 📋 Next Step: Manually execute Phase 2 code deletion per SINGLETON_COMPLETE_REMOVAL_GUIDE.md");
+                ProjectDebug.Log("[Phase1Executor] 笨・Phase 1 螳御ｺ・ System ready for Phase 2 (Physical Code Removal)");
+                ProjectDebug.Log("[Phase1Executor] 搭 Next Step: Manually execute Phase 2 code deletion per SINGLETON_COMPLETE_REMOVAL_GUIDE.md");
             }
             catch (System.Exception ex)
             {
-                ProjectDebug.LogError($"[Phase1Executor] ❁EPhase 1 execution failed: {ex.Message}");
+                ProjectDebug.LogError($"[Phase1Executor] 笶・Phase 1 execution failed: {ex.Message}");
                 
-                // 緊急ロールバック提桁E                ProjectDebug.LogWarning("[Phase1Executor] Consider emergency rollback via Context Menu");
+                // 邱頑･繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ謠先｡・                ProjectDebug.LogWarning("[Phase1Executor] Consider emergency rollback via Context Menu");
             }
         }
         
         /// <summary>
-        /// 緊急ロールバック実衁E        /// </summary>
+        /// 邱頑･繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ螳溯｡・        /// </summary>
         [ContextMenu("Emergency Rollback Phase 1")]
         public void ExecuteEmergencyRollback()
         {
@@ -52,28 +52,28 @@ namespace asterivo.Unity60.Core.Services
             
             FeatureFlags.ExecutePhase1EmergencyRollback();
             
-            ProjectDebug.Log("[Phase1Executor] ✁EEmergency rollback completed");
+            ProjectDebug.Log("[Phase1Executor] 笨・Emergency rollback completed");
         }
         
         /// <summary>
-        /// 現在のFeatureFlags状態を確誁E        /// </summary>
+        /// 迴ｾ蝨ｨ縺ｮFeatureFlags迥ｶ諷九ｒ遒ｺ隱・        /// </summary>
         [ContextMenu("Check Current FeatureFlags Status")]
         public void CheckCurrentStatus()
         {
             ProjectDebug.Log("[Phase1Executor] Current FeatureFlags Status:");
             FeatureFlags.LogCurrentFlags();
             
-            // Phase 1完亁E��宁E            bool phase1Ready = FeatureFlags.DisableLegacySingletons && 
+            // Phase 1螳御ｺ・愛螳・            bool phase1Ready = FeatureFlags.DisableLegacySingletons && 
                              !FeatureFlags.EnableMigrationWarnings && 
                              !FeatureFlags.EnableMigrationMonitoring;
                              
             if (phase1Ready)
             {
-                ProjectDebug.Log("[Phase1Executor] ✁EPhase 1 COMPLETED - Ready for Phase 2");
+                ProjectDebug.Log("[Phase1Executor] 笨・Phase 1 COMPLETED - Ready for Phase 2");
             }
             else
             {
-                ProjectDebug.Log("[Phase1Executor] ⚠�E�EPhase 1 NOT COMPLETED - Execute Phase 1 preparation first");
+                ProjectDebug.Log("[Phase1Executor] 笞・・Phase 1 NOT COMPLETED - Execute Phase 1 preparation first");
             }
         }
     }

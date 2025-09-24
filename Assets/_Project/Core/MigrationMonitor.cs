@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using asterivo.Unity60.Core;
@@ -8,8 +8,8 @@ using System;
 namespace asterivo.Unity60.Core
 {
     /// <summary>
-    /// Singleton→ServiceLocator移行状況�E監視シスチE��
-    /// Phase 3移行計画 Step 3.2の実裁E    /// </summary>
+    /// Singleton竊担erviceLocator遘ｻ陦檎憾豕√・逶｣隕悶す繧ｹ繝・Β
+    /// Phase 3遘ｻ陦瑚ｨ育判 Step 3.2縺ｮ螳溯｣・    /// </summary>
     public class MigrationMonitor : MonoBehaviour 
     {
         [TabGroup("Migration Status", "Current Status")]
@@ -26,7 +26,7 @@ namespace asterivo.Unity60.Core
         [SerializeField, ReadOnly] private float singletonCallCount;
         [SerializeField, ReadOnly] private float serviceLocatorCallCount;
         [SerializeField, ReadOnly] private float migrationProgress;
-        [SerializeField, ReadOnly] private float performanceRatio; // ServiceLocator/Singleton比率
+        [SerializeField, ReadOnly] private float performanceRatio; // ServiceLocator/Singleton豈皮紫
         
         [TabGroup("Migration Status", "Warnings")]
         [Header("Migration Warnings")]
@@ -40,15 +40,15 @@ namespace asterivo.Unity60.Core
         [SerializeField, ReadOnly] private string migrationStartTime;
         [SerializeField, ReadOnly] private string lastMigrationEvent;
         
-        // 冁E��統計データ
+        // 蜀・Κ邨ｱ險医ョ繝ｼ繧ｿ
         private Dictionary<Type, int> singletonUsageCount = new Dictionary<Type, int>();
         private Dictionary<Type, int> serviceLocatorUsageCount = new Dictionary<Type, int>();
         private Dictionary<string, DateTime> lastUsageTime = new Dictionary<string, DateTime>();
         private DateTime monitoringStartTime;
         
-        // パフォーマンス測定用
+        // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ貂ｬ螳夂畑
         private Queue<float> recentFrameTimes = new Queue<float>();
-        private const int FRAME_HISTORY_SIZE = 60; // 60フレーム履歴
+        private const int FRAME_HISTORY_SIZE = 60; // 60繝輔Ξ繝ｼ繝螻･豁ｴ
         
         private void Awake()
         {
@@ -75,14 +75,14 @@ namespace asterivo.Unity60.Core
         
         private void MonitorMigrationProgress() 
         {
-            // 吁E��ービスの移行状況をチェチE��
+            // 蜷・し繝ｼ繝薙せ縺ｮ遘ｻ陦檎憾豕√ｒ繝√ぉ繝・け
             audioServiceMigrated = CheckAudioServiceMigration();
             spatialServiceMigrated = CheckSpatialServiceMigration();
             effectServiceMigrated = CheckEffectServiceMigration();
             updateServiceMigrated = CheckUpdateServiceMigration();
             stealthServiceMigrated = CheckStealthServiceMigration();
             
-            // 全体�E移行状況E            int migratedCount = 0;
+            // 蜈ｨ菴薙・遘ｻ陦檎憾豕・            int migratedCount = 0;
             if (audioServiceMigrated) migratedCount++;
             if (spatialServiceMigrated) migratedCount++;
             if (effectServiceMigrated) migratedCount++;
@@ -93,7 +93,7 @@ namespace asterivo.Unity60.Core
             migrationProgress = (float)migratedCount / 5.0f * 100f;
             allServicesMigrated = migratedCount == 5;
             
-            // 進捗変化をログに記録
+            // 騾ｲ謐怜､牙喧繧偵Ο繧ｰ縺ｫ險倬鹸
             if (Math.Abs(migrationProgress - previousProgress) > 0.1f)
             {
                 LogMigrationEvent($"Progress updated: {migrationProgress:F1}%");
@@ -133,7 +133,7 @@ namespace asterivo.Unity60.Core
         
         private void UpdateMigrationStatus()
         {
-            // アクチE��ブなSingleton使用箁E��のリストを更新
+            // 繧｢繧ｯ繝・ぅ繝悶↑Singleton菴ｿ逕ｨ邂・園縺ｮ繝ｪ繧ｹ繝医ｒ譖ｴ譁ｰ
             activeSingletonUsages.Clear();
             
             if (!audioServiceMigrated) activeSingletonUsages.Add("AudioManager.Instance");
@@ -142,7 +142,7 @@ namespace asterivo.Unity60.Core
             if (!updateServiceMigrated) activeSingletonUsages.Add("AudioUpdateCoordinator.Instance");
             if (!stealthServiceMigrated) activeSingletonUsages.Add("StealthAudioCoordinator.Instance");
             
-            // パフォーマンス比率の計箁E            if (singletonCallCount > 0)
+            // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ豈皮紫縺ｮ險育ｮ・            if (singletonCallCount > 0)
             {
                 performanceRatio = serviceLocatorCallCount / singletonCallCount;
             }
@@ -154,18 +154,18 @@ namespace asterivo.Unity60.Core
         
         private void UpdatePerformanceMetrics()
         {
-            // フレーム時間の監要E            recentFrameTimes.Enqueue(Time.unscaledDeltaTime);
+            // 繝輔Ξ繝ｼ繝譎る俣縺ｮ逶｣隕・            recentFrameTimes.Enqueue(Time.unscaledDeltaTime);
             
             if (recentFrameTimes.Count > FRAME_HISTORY_SIZE)
             {
                 recentFrameTimes.Dequeue();
             }
             
-            // パフォーマンス異常の検�E
+            // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ逡ｰ蟶ｸ縺ｮ讀懷・
             if (recentFrameTimes.Count >= FRAME_HISTORY_SIZE)
             {
                 float averageFrameTime = GetAverageFrameTime();
-                if (averageFrameTime > 0.033f) // 30FPS閾値
+                if (averageFrameTime > 0.033f) // 30FPS髢ｾ蛟､
                 {
                     if (FeatureFlags.EnablePerformanceMeasurement)
                     {
@@ -188,13 +188,13 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// Singleton使用をログに記録
+        /// Singleton菴ｿ逕ｨ繧偵Ο繧ｰ縺ｫ險倬鹸
         /// </summary>
         public void LogSingletonUsage(Type singletonType, string location)
         {
             if (singletonType == null) return;
             
-            // 使用回数の記録
+            // 菴ｿ逕ｨ蝗樊焚縺ｮ險倬鹸
             if (!singletonUsageCount.ContainsKey(singletonType))
             {
                 singletonUsageCount[singletonType] = 0;
@@ -202,11 +202,11 @@ namespace asterivo.Unity60.Core
             singletonUsageCount[singletonType]++;
             singletonCallCount++;
             
-            // 最終使用時刻の記録
+            // 譛邨ゆｽｿ逕ｨ譎ょ綾縺ｮ險倬鹸
             string key = $"{singletonType.Name}@{location}";
             lastUsageTime[key] = DateTime.Now;
             
-            // 警告�E記録
+            // 隴ｦ蜻翫・險倬鹸
             if (FeatureFlags.EnableDebugLogging)
             {
                 string message = $"[MIGRATION] Singleton usage: {singletonType.Name} at {location}";
@@ -220,13 +220,13 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// ServiceLocator使用をログに記録
+        /// ServiceLocator菴ｿ逕ｨ繧偵Ο繧ｰ縺ｫ險倬鹸
         /// </summary>
         public void LogServiceLocatorUsage(Type serviceType, string location = "Unknown")
         {
             if (serviceType == null) return;
             
-            // 使用回数の記録
+            // 菴ｿ逕ｨ蝗樊焚縺ｮ險倬鹸
             if (!serviceLocatorUsageCount.ContainsKey(serviceType))
             {
                 serviceLocatorUsageCount[serviceType] = 0;
@@ -234,7 +234,7 @@ namespace asterivo.Unity60.Core
             serviceLocatorUsageCount[serviceType]++;
             serviceLocatorCallCount++;
             
-            // 最終使用時刻の記録
+            // 譛邨ゆｽｿ逕ｨ譎ょ綾縺ｮ險倬鹸
             string key = $"{serviceType.Name}@{location}";
             lastUsageTime[key] = DateTime.Now;
             
@@ -245,7 +245,7 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// 移行イベントをログに記録
+        /// 遘ｻ陦後う繝吶Φ繝医ｒ繝ｭ繧ｰ縺ｫ險倬鹸
         /// </summary>
         private void LogMigrationEvent(string eventDescription)
         {
@@ -255,7 +255,7 @@ namespace asterivo.Unity60.Core
             migrationEvents.Add(logEntry);
             lastMigrationEvent = logEntry;
             
-            // 最新20件まで保持
+            // 譛譁ｰ20莉ｶ縺ｾ縺ｧ菫晄戟
             if (migrationEvents.Count > 20)
             {
                 migrationEvents.RemoveAt(0);
@@ -268,7 +268,7 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// パフォーマンス警告をログに記録
+        /// 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ隴ｦ蜻翫ｒ繝ｭ繧ｰ縺ｫ險倬鹸
         /// </summary>
         private void LogPerformanceWarning(string warning)
         {
@@ -283,14 +283,14 @@ namespace asterivo.Unity60.Core
         #region Public API
         
         /// <summary>
-        /// 現在の移行進捗を取征E        /// </summary>
+        /// 迴ｾ蝨ｨ縺ｮ遘ｻ陦碁ｲ謐励ｒ蜿門ｾ・        /// </summary>
         public float GetMigrationProgress()
         {
             return migrationProgress;
         }
         
         /// <summary>
-        /// 特定サービスの移行状況を取征E        /// </summary>
+        /// 迚ｹ螳壹し繝ｼ繝薙せ縺ｮ遘ｻ陦檎憾豕√ｒ蜿門ｾ・        /// </summary>
         public bool IsServiceMigrated(string serviceName)
         {
             return serviceName.ToLower() switch
@@ -305,35 +305,35 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// Singleton使用統計を取征E        /// </summary>
+        /// Singleton菴ｿ逕ｨ邨ｱ險医ｒ蜿門ｾ・        /// </summary>
         public Dictionary<Type, int> GetSingletonUsageStats()
         {
             return new Dictionary<Type, int>(singletonUsageCount);
         }
         
         /// <summary>
-        /// ServiceLocator使用統計を取征E        /// </summary>
+        /// ServiceLocator菴ｿ逕ｨ邨ｱ險医ｒ蜿門ｾ・        /// </summary>
         public Dictionary<Type, int> GetServiceLocatorUsageStats()
         {
             return new Dictionary<Type, int>(serviceLocatorUsageCount);
         }
         
         /// <summary>
-        /// 移行�E安�E性を評価
+        /// 遘ｻ陦後・螳牙・諤ｧ繧定ｩ穂ｾ｡
         /// </summary>
         public bool IsMigrationSafe()
         {
-            // 基本皁E��安�E性チェチE��
+            // 蝓ｺ譛ｬ逧・↑螳牙・諤ｧ繝√ぉ繝・け
             if (!FeatureFlags.UseServiceLocator) return false;
             if (!FeatureFlags.EnableMigrationMonitoring) return false;
             
-            // パフォーマンス安�E性チェチE��
+            // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ螳牙・諤ｧ繝√ぉ繝・け
             float avgFrameTime = GetAverageFrameTime();
-            if (avgFrameTime > 0.040f) return false; // 25FPS以下�E危険
+            if (avgFrameTime > 0.040f) return false; // 25FPS莉･荳九・蜊ｱ髯ｺ
             
-            // Singleton使用頻度チェチE��
+            // Singleton菴ｿ逕ｨ鬆ｻ蠎ｦ繝√ぉ繝・け
             float recentSingletonUsage = GetRecentSingletonUsageRate();
-            if (recentSingletonUsage > 0.5f) return false; // 50%以上Singleton使用は危険
+            if (recentSingletonUsage > 0.5f) return false; // 50%莉･荳慨ingleton菴ｿ逕ｨ縺ｯ蜊ｱ髯ｺ
             
             return true;
         }
@@ -390,11 +390,11 @@ Monitoring Duration: {(DateTime.Now - monitoringStartTime).TotalHours:F1} hours
 
 MIGRATION PROGRESS:
 - Overall Progress: {migrationProgress:F1}%
-- Audio Service: {(audioServiceMigrated ? "✁E : "❁E)}
-- Spatial Service: {(spatialServiceMigrated ? "✁E : "❁E)}
-- Effect Service: {(effectServiceMigrated ? "✁E : "❁E)}
-- Update Service: {(updateServiceMigrated ? "✁E : "❁E)}
-- Stealth Service: {(stealthServiceMigrated ? "✁E : "❁E)}
+- Audio Service: {(audioServiceMigrated ? "笨・ : "笶・)}
+- Spatial Service: {(spatialServiceMigrated ? "笨・ : "笶・)}
+- Effect Service: {(effectServiceMigrated ? "笨・ : "笶・)}
+- Update Service: {(updateServiceMigrated ? "笨・ : "笶・)}
+- Stealth Service: {(stealthServiceMigrated ? "笨・ : "笶・)}
 
 USAGE STATISTICS:
 - Singleton Calls: {singletonCallCount}
@@ -403,7 +403,7 @@ USAGE STATISTICS:
 - Total Warnings: {totalWarningCount}
 
 SAFETY STATUS:
-- Migration Safe: {(IsMigrationSafe() ? "✁EYES" : "❁ENO")}
+- Migration Safe: {(IsMigrationSafe() ? "笨・YES" : "笶・NO")}
 - Average Frame Time: {GetAverageFrameTime() * 1000:F2}ms
 - Recent Singleton Usage: {GetRecentSingletonUsageRate() * 100:F1}%
 
@@ -441,7 +441,7 @@ RECENT EVENTS:
         
         private void OnValidate()
         {
-            // エチE��タでの値変更時�E検証
+            // 繧ｨ繝・ぅ繧ｿ縺ｧ縺ｮ蛟､螟画峩譎ゅ・讀懆ｨｼ
             if (Application.isPlaying && FeatureFlags.EnableMigrationMonitoring)
             {
                 MonitorMigrationProgress();

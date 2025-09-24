@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System.IO;
@@ -8,19 +8,19 @@ using System.Linq;
 namespace asterivo.Unity60.Core.Editor
 {
     /// <summary>
-    /// EventLogger専用のチE��チE��ウィンドウ
-    /// リアルタイムでイベントログを表示し、フィルタリング・刁E��機�Eを提侁E    /// 
-    /// 主な機�E�E�E    /// - リアルタイムイベントログ表示
-    /// - ログレベル別フィルタリング�E�Enfo/Warning/Error�E�E    /// - イベント名による検索フィルター
-    /// - イベントタイプ別フィルタリング
-    /// - ペイロードデータとスタチE��トレース表示
-    /// - 統計情報�E�総イベント数、レベル別カウント等！E    /// - CSVエクスポ�Eト機�E
-    /// - クリチE�Eボ�Eドコピ�E機�E
+    /// EventLogger蟆ら畑縺ｮ繝・ヰ繝・げ繧ｦ繧｣繝ｳ繝峨え
+    /// 繝ｪ繧｢繝ｫ繧ｿ繧､繝縺ｧ繧､繝吶Φ繝医Ο繧ｰ繧定｡ｨ遉ｺ縺励√ヵ繧｣繝ｫ繧ｿ繝ｪ繝ｳ繧ｰ繝ｻ蛻・梵讖溯・繧呈署萓・    /// 
+    /// 荳ｻ縺ｪ讖溯・・・    /// - 繝ｪ繧｢繝ｫ繧ｿ繧､繝繧､繝吶Φ繝医Ο繧ｰ陦ｨ遉ｺ
+    /// - 繝ｭ繧ｰ繝ｬ繝吶Ν蛻･繝輔ぅ繝ｫ繧ｿ繝ｪ繝ｳ繧ｰ・・nfo/Warning/Error・・    /// - 繧､繝吶Φ繝亥錐縺ｫ繧医ｋ讀懃ｴ｢繝輔ぅ繝ｫ繧ｿ繝ｼ
+    /// - 繧､繝吶Φ繝医ち繧､繝怜挨繝輔ぅ繝ｫ繧ｿ繝ｪ繝ｳ繧ｰ
+    /// - 繝壹う繝ｭ繝ｼ繝峨ョ繝ｼ繧ｿ縺ｨ繧ｹ繧ｿ繝・け繝医Ξ繝ｼ繧ｹ陦ｨ遉ｺ
+    /// - 邨ｱ險域ュ蝣ｱ・育ｷ上う繝吶Φ繝域焚縲√Ξ繝吶Ν蛻･繧ｫ繧ｦ繝ｳ繝育ｭ会ｼ・    /// - CSV繧ｨ繧ｯ繧ｹ繝昴・繝域ｩ溯・
+    /// - 繧ｯ繝ｪ繝・・繝懊・繝峨さ繝斐・讖溯・
     /// 
-    /// 使用シーン�E�E    /// - イベント�E発生状況監要E    /// - イベントシスチE��のチE��チE��
-    /// - パフォーマンス問題�E特宁E    /// - イベント�E連続発生やループ�E検�E
+    /// 菴ｿ逕ｨ繧ｷ繝ｼ繝ｳ・・    /// - 繧､繝吶Φ繝医・逋ｺ逕溽憾豕∫屮隕・    /// - 繧､繝吶Φ繝医す繧ｹ繝・Β縺ｮ繝・ヰ繝・げ
+    /// - 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ蝠城｡後・迚ｹ螳・    /// - 繧､繝吶Φ繝医・騾｣邯夂匱逕溘ｄ繝ｫ繝ｼ繝励・讀懷・
     /// 
-    /// アクセス方法：Unity メニュー > asterivo.Unity60/Debug/Event Logger
+    /// 繧｢繧ｯ繧ｻ繧ｹ譁ｹ豕包ｼ啅nity 繝｡繝九Η繝ｼ > asterivo.Unity60/Debug/Event Logger
     /// </summary>
     public class EventLoggerWindow : EditorWindow
     {
@@ -33,21 +33,21 @@ namespace asterivo.Unity60.Core.Editor
         private bool showStatistics = true;
         private bool isPaused = false;
         
-        // 統計情報
+        // 邨ｱ險域ュ蝣ｱ
         private EventLogger.LogStatistics lastStatistics;
         private float nextStatsUpdate = 0f;
         private const float STATS_UPDATE_INTERVAL = 1f;
         
-        // フィルタリング用
+        // 繝輔ぅ繝ｫ繧ｿ繝ｪ繝ｳ繧ｰ逕ｨ
         private HashSet<string> selectedEventTypes = new HashSet<string>();
         private bool showEventTypeFilter = false;
         
         /// <summary>
-        /// イベントロガーウィンドウを表示
-        /// Unityメニューから呼び出されるエチE��タ拡張メニューアイチE��
+        /// 繧､繝吶Φ繝医Ο繧ｬ繝ｼ繧ｦ繧｣繝ｳ繝峨え繧定｡ｨ遉ｺ
+        /// Unity繝｡繝九Η繝ｼ縺九ｉ蜻ｼ縺ｳ蜃ｺ縺輔ｌ繧九お繝・ぅ繧ｿ諡｡蠑ｵ繝｡繝九Η繝ｼ繧｢繧､繝・Β
         /// </summary>
         /// <remarks>
-        /// ウィンドウの最小サイズは600x400に設定され、E        /// エチE��タの更新イベントに登録して自動リフレチE��ュを行います、E        /// </remarks>
+        /// 繧ｦ繧｣繝ｳ繝峨え縺ｮ譛蟆上し繧､繧ｺ縺ｯ600x400縺ｫ險ｭ螳壹＆繧後・        /// 繧ｨ繝・ぅ繧ｿ縺ｮ譖ｴ譁ｰ繧､繝吶Φ繝医↓逋ｻ骭ｲ縺励※閾ｪ蜍輔Μ繝輔Ξ繝・す繝･繧定｡後＞縺ｾ縺吶・        /// </remarks>
         [MenuItem("asterivo.Unity60/Debug/Event Logger")]
         public static void ShowWindow()
         {
@@ -57,7 +57,7 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// ウィンドウが有効になった時の初期化�E琁E        /// エチE��タの更新イベントに登録し、統計情報を�E期化
+        /// 繧ｦ繧｣繝ｳ繝峨え縺梧怏蜉ｹ縺ｫ縺ｪ縺｣縺滓凾縺ｮ蛻晄悄蛹門・逅・        /// 繧ｨ繝・ぅ繧ｿ縺ｮ譖ｴ譁ｰ繧､繝吶Φ繝医↓逋ｻ骭ｲ縺励∫ｵｱ險域ュ蝣ｱ繧貞・譛溷喧
         /// </summary>
         void OnEnable()
         {
@@ -66,7 +66,7 @@ namespace asterivo.Unity60.Core.Editor
         }
         
         /// <summary>
-        /// ウィンドウが無効になった時のクリーンアチE�E処琁E        /// エチE��タの更新イベントから登録解除
+        /// 繧ｦ繧｣繝ｳ繝峨え縺檎┌蜉ｹ縺ｫ縺ｪ縺｣縺滓凾縺ｮ繧ｯ繝ｪ繝ｼ繝ｳ繧｢繝・・蜃ｦ逅・        /// 繧ｨ繝・ぅ繧ｿ縺ｮ譖ｴ譁ｰ繧､繝吶Φ繝医°繧臥匳骭ｲ隗｣髯､
         /// </summary>
         void OnDisable()
         {
@@ -80,7 +80,7 @@ namespace asterivo.Unity60.Core.Editor
                 Repaint();
             }
             
-            // 統計情報の定期更新
+            // 邨ｱ險域ュ蝣ｱ縺ｮ螳壽悄譖ｴ譁ｰ
             if (Time.realtimeSinceStartup >= nextStatsUpdate)
             {
                 lastStatistics = EventLogger.GetStatisticsStatic();
@@ -105,28 +105,28 @@ namespace asterivo.Unity60.Core.Editor
         {
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
             
-            // 基本操作�Eタン
-            if (GUILayout.Button("🗑�E�EClear", EditorStyles.toolbarButton))
+            // 蝓ｺ譛ｬ謫堺ｽ懊・繧ｿ繝ｳ
+            if (GUILayout.Button("卵・・Clear", EditorStyles.toolbarButton))
             {
                 EventLogger.ClearLogStatic();
             }
             
-            if (GUILayout.Button("📊 Export CSV", EditorStyles.toolbarButton))
+            if (GUILayout.Button("投 Export CSV", EditorStyles.toolbarButton))
             {
                 ExportToCSV();
             }
             
-            if (GUILayout.Button("📋 Copy All", EditorStyles.toolbarButton))
+            if (GUILayout.Button("搭 Copy All", EditorStyles.toolbarButton))
             {
                 CopyAllToClipboard();
             }
             
-            // 一時停止ボタン
-            isPaused = GUILayout.Toggle(isPaused, isPaused ? "⏸�E�EPaused" : "▶�E�ELive", EditorStyles.toolbarButton);
+            // 荳譎ょ●豁｢繝懊ち繝ｳ
+            isPaused = GUILayout.Toggle(isPaused, isPaused ? "竢ｸ・・Paused" : "笆ｶ・・Live", EditorStyles.toolbarButton);
             
             GUILayout.FlexibleSpace();
             
-            // 表示オプション
+            // 陦ｨ遉ｺ繧ｪ繝励す繝ｧ繝ｳ
             autoScroll = GUILayout.Toggle(autoScroll, "Auto Scroll", EditorStyles.toolbarButton);
             showPayload = GUILayout.Toggle(showPayload, "Payload", EditorStyles.toolbarButton);
             showStackTrace = GUILayout.Toggle(showStackTrace, "Stack", EditorStyles.toolbarButton);
@@ -138,7 +138,7 @@ namespace asterivo.Unity60.Core.Editor
         private void DrawStatistics()
         {
             EditorGUILayout.BeginVertical("box");
-            EditorGUILayout.LabelField("📊 Event Statistics", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("投 Event Statistics", EditorStyles.boldLabel);
             
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField($"Total: {lastStatistics.totalEvents}", GUILayout.Width(80));
@@ -174,19 +174,19 @@ namespace asterivo.Unity60.Core.Editor
         {
             EditorGUILayout.BeginHorizontal();
             
-            // 検索フィルター
-            EditorGUILayout.LabelField("🔍", GUILayout.Width(20));
+            // 讀懃ｴ｢繝輔ぅ繝ｫ繧ｿ繝ｼ
+            EditorGUILayout.LabelField("剥", GUILayout.Width(20));
             searchFilter = EditorGUILayout.TextField(searchFilter, EditorStyles.toolbarSearchField);
             
-            // レベルフィルター
+            // 繝ｬ繝吶Ν繝輔ぅ繝ｫ繧ｿ繝ｼ
             EditorGUILayout.LabelField("Level:", GUILayout.Width(40));
             filterLevel = (EventLogger.LogLevel)EditorGUILayout.EnumPopup(filterLevel, GUILayout.Width(80));
             
-            // イベントタイプフィルター刁E��替ぁE            showEventTypeFilter = EditorGUILayout.Toggle("Types", showEventTypeFilter, GUILayout.Width(60));
+            // 繧､繝吶Φ繝医ち繧､繝励ヵ繧｣繝ｫ繧ｿ繝ｼ蛻・ｊ譖ｿ縺・            showEventTypeFilter = EditorGUILayout.Toggle("Types", showEventTypeFilter, GUILayout.Width(60));
             
             EditorGUILayout.EndHorizontal();
             
-            // イベントタイプフィルター表示
+            // 繧､繝吶Φ繝医ち繧､繝励ヵ繧｣繝ｫ繧ｿ繝ｼ陦ｨ遉ｺ
             if (showEventTypeFilter)
             {
                 DrawEventTypeFilter();
@@ -198,14 +198,14 @@ namespace asterivo.Unity60.Core.Editor
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.LabelField("Event Type Filters:", EditorStyles.miniLabel);
             
-            // 利用可能なイベントタイプを収集
+            // 蛻ｩ逕ｨ蜿ｯ閭ｽ縺ｪ繧､繝吶Φ繝医ち繧､繝励ｒ蜿朱寔
             var availableTypes = new HashSet<string>();
             foreach (var entry in EventLogger.EventLogStatic)
             {
                 availableTypes.Add(entry.eventName);
             }
             
-            // イベントタイプ�Eトグル表示�E�最大10個まで�E�E            var typesToShow = availableTypes.Take(10).ToArray();
+            // 繧､繝吶Φ繝医ち繧､繝励・繝医げ繝ｫ陦ｨ遉ｺ・域怙螟ｧ10蛟九∪縺ｧ・・            var typesToShow = availableTypes.Take(10).ToArray();
             
             EditorGUILayout.BeginHorizontal();
             int count = 0;
@@ -271,7 +271,7 @@ namespace asterivo.Unity60.Core.Editor
             
             EditorGUILayout.EndScrollView();
             
-            // 自動スクロール
+            // 閾ｪ蜍輔せ繧ｯ繝ｭ繝ｼ繝ｫ
             if (autoScroll && Event.current.type == EventType.Repaint && !isPaused)
             {
                 scrollPosition.y = float.MaxValue;
@@ -282,7 +282,7 @@ namespace asterivo.Unity60.Core.Editor
         {
             var originalColor = GUI.backgroundColor;
             
-            // レベル別の色刁E��
+            // 繝ｬ繝吶Ν蛻･縺ｮ濶ｲ蛻・￠
             switch (entry.level)
             {
                 case EventLogger.LogLevel.Warning:
@@ -298,32 +298,32 @@ namespace asterivo.Unity60.Core.Editor
             
             EditorGUILayout.BeginVertical("box");
             
-            // メインライン
+            // 繝｡繧､繝ｳ繝ｩ繧､繝ｳ
             EditorGUILayout.BeginHorizontal();
             
-            // タイムスタンチE            EditorGUILayout.LabelField($"[{entry.timestamp:F2}s]", GUILayout.Width(80));
+            // 繧ｿ繧､繝繧ｹ繧ｿ繝ｳ繝・            EditorGUILayout.LabelField($"[{entry.timestamp:F2}s]", GUILayout.Width(80));
             
-            // レベルアイコン
+            // 繝ｬ繝吶Ν繧｢繧､繧ｳ繝ｳ
             string levelIcon = GetLevelIcon(entry.level);
             EditorGUILayout.LabelField(levelIcon, GUILayout.Width(20));
             
-            // イベント名
+            // 繧､繝吶Φ繝亥錐
             var eventNameStyle = new GUIStyle(EditorStyles.label);
             eventNameStyle.fontStyle = FontStyle.Bold;
             EditorGUILayout.LabelField(entry.eventName, eventNameStyle, GUILayout.ExpandWidth(true));
             
-            // リスナ�E数
+            // 繝ｪ繧ｹ繝翫・謨ｰ
             EditorGUILayout.LabelField($"({entry.listenerCount})", GUILayout.Width(40));
             
-            // コピ�Eボタン
-            if (GUILayout.Button("📋", GUILayout.Width(25)))
+            // 繧ｳ繝斐・繝懊ち繝ｳ
+            if (GUILayout.Button("搭", GUILayout.Width(25)))
             {
                 CopyEntryToClipboard(entry);
             }
             
             EditorGUILayout.EndHorizontal();
             
-            // ペイロード表示
+            // 繝壹う繝ｭ繝ｼ繝芽｡ｨ遉ｺ
             if (showPayload && !string.IsNullOrEmpty(entry.payload))
             {
                 EditorGUI.indentLevel++;
@@ -346,10 +346,10 @@ namespace asterivo.Unity60.Core.Editor
             
             foreach (var entry in log)
             {
-                // レベルフィルター
+                // 繝ｬ繝吶Ν繝輔ぅ繝ｫ繧ｿ繝ｼ
                 if (entry.level < filterLevel) continue;
                 
-                // 検索フィルター
+                // 讀懃ｴ｢繝輔ぅ繝ｫ繧ｿ繝ｼ
                 if (!string.IsNullOrEmpty(searchFilter))
                 {
                     bool matchesSearch = entry.eventName.ToLower().Contains(searchFilter.ToLower()) ||
@@ -357,7 +357,7 @@ namespace asterivo.Unity60.Core.Editor
                     if (!matchesSearch) continue;
                 }
                 
-                // イベントタイプフィルター
+                // 繧､繝吶Φ繝医ち繧､繝励ヵ繧｣繝ｫ繧ｿ繝ｼ
                 if (selectedEventTypes.Count > 0 && !selectedEventTypes.Contains(entry.eventName))
                 {
                     continue;
@@ -373,10 +373,10 @@ namespace asterivo.Unity60.Core.Editor
         {
             switch (level)
             {
-                case EventLogger.LogLevel.Info: return "ℹ�E�E;
-                case EventLogger.LogLevel.Warning: return "⚠�E�E;
-                case EventLogger.LogLevel.Error: return "❁E;
-                default: return "📝";
+                case EventLogger.LogLevel.Info: return "邃ｹ・・;
+                case EventLogger.LogLevel.Warning: return "笞・・;
+                case EventLogger.LogLevel.Error: return "笶・;
+                default: return "統";
             }
         }
         

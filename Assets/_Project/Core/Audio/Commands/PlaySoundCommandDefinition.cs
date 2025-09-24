@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 // using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Audio.Data;
 // using asterivo.Unity60.Core.Debug;
@@ -8,16 +8,16 @@ namespace asterivo.Unity60.Core.Audio.Commands
 {
     /// <summary>
     /// PlaySoundCommandの定義ScriptableObject
-    /// エチE��タからコマンドを設定�E管琁E��るため�E基盤
+    /// エチE��タからコマンドを設定�E管琁E��るため�E基盤
     /// </summary>
     [CreateAssetMenu(fileName = "New Play Sound Command", menuName = "asterivo.Unity60/Audio/Commands/Play Sound Command")]
     public class PlaySoundCommandDefinition : ScriptableObject, ICommandDefinition
     {
-        [Header("音響コマンド設宁E)]
+        [Header("音響コマンド設定")]
         [SerializeField] private SoundDataSO soundData;
         [SerializeField] private AudioEventData defaultAudioData;
         
-        [Header("実行設宁E)]
+        [Header("実行設定")]
         [SerializeField] private bool usePooling = true;
         [SerializeField] private int poolSize = 10;
         
@@ -40,7 +40,7 @@ namespace asterivo.Unity60.Core.Audio.Commands
         }
         
         /// <summary>
-        /// コマンドインスタンスを作�E
+        /// コマンドインスタンスを作�E
         /// 新しいCommandPoolServiceを使用
         /// </summary>
         public ICommand CreateCommand()
@@ -56,7 +56,7 @@ namespace asterivo.Unity60.Core.Audio.Commands
                 }
                 else
                 {
-                    // フォールバック�E�直接作�E
+                    // フォールバック�E�直接作�E
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
                     ProjectDebug.LogWarning("CommandPoolService not available, creating PlaySoundCommand directly");
 #endif
@@ -72,7 +72,7 @@ namespace asterivo.Unity60.Core.Audio.Commands
         }
         
         /// <summary>
-        /// チE��ォルト設定でコマンドを作�E
+        /// チE��ォルト設定でコマンドを作�E
         /// </summary>
         public PlaySoundCommand CreatePlaySoundCommand(AudioSource audioSource, Transform listener = null)
         {
@@ -82,7 +82,7 @@ namespace asterivo.Unity60.Core.Audio.Commands
         }
         
         /// <summary>
-        /// カスタム設定でコマンドを作�E
+        /// カスタム設定でコマンドを作�E
         /// </summary>
         public PlaySoundCommand CreatePlaySoundCommand(AudioEventData customData, AudioSource audioSource, Transform listener = null)
         {
@@ -94,7 +94,8 @@ namespace asterivo.Unity60.Core.Audio.Commands
         #if UNITY_EDITOR
         private void OnValidate()
         {
-            // チE��ォルト値の設宁E            if (string.IsNullOrEmpty(defaultAudioData.soundID) && soundData != null)
+            // デフォルト値の設定
+            if (string.IsNullOrEmpty(defaultAudioData.soundID) && soundData != null)
             {
                 defaultAudioData.soundID = soundData.SoundID;
                 defaultAudioData.volume = soundData.BaseVolume;

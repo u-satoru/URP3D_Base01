@@ -1,4 +1,4 @@
-namespace asterivo.Unity60.Core.Audio.Interfaces
+﻿namespace asterivo.Unity60.Core.Audio.Interfaces
 {
     /// <summary>
     /// ゲーム状態提供者の最小インターフェース（Core層用）

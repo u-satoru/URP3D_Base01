@@ -1,4 +1,4 @@
-# タスクリスト - アーキテクチャ準拠性向上
+﻿# タスクリスト - アーキテクチャ準拠性向上
 
 **作成日**: 2025-09-12  
 **基準レポート**: Architecture_Compliance_Verification_Report.md  

@@ -1,23 +1,23 @@
-using UnityEngine;
+﻿using UnityEngine;
 // using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// インタラクションコマンド�E定義、E    /// プレイヤーの環墁E��ブジェクトとの相互作用をカプセル化します、E    /// 
-    /// 主な機�E�E�E    /// - オブジェクトとのインタラクション�E�ドア、スイチE��、NPC等！E    /// - インタラクション篁E��と条件の管琁E    /// - インタラクション時�EアニメーションとエフェクチE    /// - 褁E��段階�Eインタラクション対忁E    /// </summary>
+    /// 繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ繧ｳ繝槭Φ繝峨・螳夂ｾｩ縲・    /// 繝励Ξ繧､繝､繝ｼ縺ｮ迺ｰ蠅・が繝悶ず繧ｧ繧ｯ繝医→縺ｮ逶ｸ莠剃ｽ懃畑繧偵き繝励そ繝ｫ蛹悶＠縺ｾ縺吶・    /// 
+    /// 荳ｻ縺ｪ讖溯・・・    /// - 繧ｪ繝悶ず繧ｧ繧ｯ繝医→縺ｮ繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ・医ラ繧｢縲√せ繧､繝・メ縲¨PC遲会ｼ・    /// - 繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ遽・峇縺ｨ譚｡莉ｶ縺ｮ邂｡逅・    /// - 繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ譎ゅ・繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｨ繧ｨ繝輔ぉ繧ｯ繝・    /// - 隍・焚谿ｵ髫弱・繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ蟇ｾ蠢・    /// </summary>
     [System.Serializable]
     public class InteractCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// インタラクションの種類を定義する列挙垁E        /// </summary>
+        /// 繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ遞ｮ鬘槭ｒ螳夂ｾｩ縺吶ｋ蛻玲嫌蝙・        /// </summary>
         public enum InteractionType
         {
-            Instant,        // 瞬間的なインタラクション
-            Hold,           // 長押しインタラクション
-            Multi,          // 褁E��回インタラクション
-            Contextual,     // 斁E��依存インタラクション
-            Proximity       // 近接自動インタラクション
+            Instant,        // 迸ｬ髢鍋噪縺ｪ繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ
+            Hold,           // 髟ｷ謚ｼ縺励う繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ
+            Multi,          // 隍・焚蝗槭う繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ
+            Contextual,     // 譁・ц萓晏ｭ倥う繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ
+            Proximity       // 霑第磁閾ｪ蜍輔う繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ
         }
 
         [Header("Interaction Parameters")]
@@ -27,21 +27,21 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public string targetTag = "Interactable";
 
         [Header("Hold Interaction")]
-        [Tooltip("長押しインタラクションの忁E��時閁E)]
+        [Tooltip("髟ｷ謚ｼ縺励う繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ蠢・ｦ∵凾髢・)]
         public float holdDuration = 1f;
-        [Tooltip("長押し中にキャンセル可能ぁE)]
+        [Tooltip("髟ｷ謚ｼ縺嶺ｸｭ縺ｫ繧ｭ繝｣繝ｳ繧ｻ繝ｫ蜿ｯ閭ｽ縺・)]
         public bool canCancelHold = true;
 
         [Header("Multi Interaction")]
-        [Tooltip("忁E��なインタラクション回数")]
+        [Tooltip("蠢・ｦ√↑繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ蝗樊焚")]
         public int requiredInteractions = 3;
-        [Tooltip("インタラクション間�E最大間隔")]
+        [Tooltip("繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ髢薙・譛螟ｧ髢馴囈")]
         public float maxInteractionInterval = 2f;
 
         [Header("Requirements")]
         public bool requiresLineOfSight = true;
         public bool requiresFacing = true;
-        [Tooltip("忁E��な向きの角度篁E���E�度�E�E)]
+        [Tooltip("蠢・ｦ√↑蜷代″縺ｮ隗貞ｺｦ遽・峇・亥ｺｦ・・)]
         public float facingAngle = 90f;
 
         [Header("Animation")]
@@ -52,16 +52,16 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         [Header("Effects")]
         public bool showInteractionPrompt = true;
         public string promptText = "Press E to interact";
-        public bool showProgressBar = false; // 長押し時筁E
+        public bool showProgressBar = false; // 髟ｷ謚ｼ縺玲凾遲・
         /// <summary>
-        /// チE��ォルトコンストラクタ
+        /// 繝・ヵ繧ｩ繝ｫ繝医さ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
         /// </summary>
         public InteractCommandDefinition()
         {
         }
 
         /// <summary>
-        /// パラメータ付きコンストラクタ
+        /// 繝代Λ繝｡繝ｼ繧ｿ莉倥″繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
         /// </summary>
         public InteractCommandDefinition(InteractionType type, float range, string tag = "Interactable")
         {
@@ -71,26 +71,26 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// インタラクションコマンドが実行可能かどぁE��を判定しまぁE        /// </summary>
+        /// 繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ繧ｳ繝槭Φ繝峨′螳溯｡悟庄閭ｽ縺九←縺・°繧貞愛螳壹＠縺ｾ縺・        /// </summary>
         public bool CanExecute(object context = null)
         {
-            // 基本皁E��実行可能性チェチE��
+            // 蝓ｺ譛ｬ逧・↑螳溯｡悟庄閭ｽ諤ｧ繝√ぉ繝・け
             if (interactionRange <= 0f) return false;
             
             if (interactionType == InteractionType.Hold && holdDuration <= 0f) return false;
             if (interactionType == InteractionType.Multi && requiredInteractions <= 0) return false;
 
-            // コンチE��ストがある場合�E追加チェチE��
+            // 繧ｳ繝ｳ繝・く繧ｹ繝医′縺ゅｋ蝣ｴ蜷医・霑ｽ蜉繝√ぉ繝・け
             if (context != null)
             {
-                // 篁E��冁E��インタラクト可能オブジェクトがあるかチェチE��
-                // 視線チェチE���E�EequiresLineOfSight�E�E                // 向きチェチE���E�EequiresFacing�E�E                // プレイヤーの状態チェチE���E�アニメーション中は不可等！E            }
+                // 遽・峇蜀・↓繧､繝ｳ繧ｿ繝ｩ繧ｯ繝亥庄閭ｽ繧ｪ繝悶ず繧ｧ繧ｯ繝医′縺ゅｋ縺九メ繧ｧ繝・け
+                // 隕也ｷ壹メ繧ｧ繝・け・・equiresLineOfSight・・                // 蜷代″繝√ぉ繝・け・・equiresFacing・・                // 繝励Ξ繧､繝､繝ｼ縺ｮ迥ｶ諷九メ繧ｧ繝・け・医い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ荳ｭ縺ｯ荳榊庄遲会ｼ・            }
 
             return true;
         }
 
         /// <summary>
-        /// インタラクションコマンドを作�EしまぁE        /// </summary>
+        /// 繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ繧ｳ繝槭Φ繝峨ｒ菴懈・縺励∪縺・        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
             if (!CanExecute(context))
@@ -101,7 +101,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// InteractCommandDefinitionに対応する実際のコマンド実裁E    /// </summary>
+    /// InteractCommandDefinition縺ｫ蟇ｾ蠢懊☆繧句ｮ滄圀縺ｮ繧ｳ繝槭Φ繝牙ｮ溯｣・    /// </summary>
     public class InteractCommand : ICommand
     {
         private InteractCommandDefinition definition;
@@ -119,12 +119,12 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// インタラクションコマンド�E実衁E        /// </summary>
+        /// 繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ繧ｳ繝槭Φ繝峨・螳溯｡・        /// </summary>
         public void Execute()
         {
             if (executed) return;
 
-            // インタラクション対象を検索
+            // 繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ蟇ｾ雎｡繧呈､懃ｴ｢
             targetObject = FindInteractableTarget();
             if (targetObject == null)
             {
@@ -161,13 +161,13 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// インタラクト可能な対象を検索
+        /// 繧､繝ｳ繧ｿ繝ｩ繧ｯ繝亥庄閭ｽ縺ｪ蟇ｾ雎｡繧呈､懃ｴ｢
         /// </summary>
         private GameObject FindInteractableTarget()
         {
             if (context is not MonoBehaviour mono) return null;
 
-            // 篁E��冁E�Eオブジェクトを検索
+            // 遽・峇蜀・・繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ讀懃ｴ｢
             Collider[] nearbyObjects = Physics.OverlapSphere(mono.transform.position, definition.interactionRange, definition.interactableLayer);
             
             GameObject closestTarget = null;
@@ -175,19 +175,19 @@ namespace asterivo.Unity60.Core.Commands.Definitions
 
             foreach (var obj in nearbyObjects)
             {
-                // タグチェチE��
+                // 繧ｿ繧ｰ繝√ぉ繝・け
                 if (!string.IsNullOrEmpty(definition.targetTag) && !obj.CompareTag(definition.targetTag))
                     continue;
 
-                // 視線チェチE��
+                // 隕也ｷ壹メ繧ｧ繝・け
                 if (definition.requiresLineOfSight && !HasLineOfSight(mono.transform, obj.transform))
                     continue;
 
-                // 向きチェチE��
+                // 蜷代″繝√ぉ繝・け
                 if (definition.requiresFacing && !IsFacing(mono.transform, obj.transform))
                     continue;
 
-                // 最も近いオブジェクトを選抁E                float distance = Vector3.Distance(mono.transform.position, obj.transform.position);
+                // 譛繧りｿ代＞繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ驕ｸ謚・                float distance = Vector3.Distance(mono.transform.position, obj.transform.position);
                 if (distance < closestDistance)
                 {
                     closestDistance = distance;
@@ -199,7 +199,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 視線判宁E        /// </summary>
+        /// 隕也ｷ壼愛螳・        /// </summary>
         private bool HasLineOfSight(Transform from, Transform to)
         {
             Vector3 direction = to.position - from.position;
@@ -214,7 +214,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 向き判宁E        /// </summary>
+        /// 蜷代″蛻､螳・        /// </summary>
         private bool IsFacing(Transform from, Transform to)
         {
             Vector3 directionToTarget = (to.position - from.position).normalized;
@@ -223,12 +223,12 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 瞬間インタラクションの実衁E        /// </summary>
+        /// 迸ｬ髢薙う繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ螳溯｡・        /// </summary>
         private void ExecuteInstantInteraction()
         {
             if (targetObject != null)
             {
-                // インタラクト可能コンポ�Eネント�E呼び出ぁE                var interactable = targetObject.GetComponent<IInteractable>();
+                // 繧､繝ｳ繧ｿ繝ｩ繧ｯ繝亥庄閭ｽ繧ｳ繝ｳ繝昴・繝阪Φ繝医・蜻ｼ縺ｳ蜃ｺ縺・                var interactable = targetObject.GetComponent<IInteractable>();
                 interactable?.OnInteract(context);
 
                 PlayInteractionAnimation();
@@ -237,19 +237,19 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 長押しインタラクションの開姁E        /// </summary>
+        /// 髟ｷ謚ｼ縺励う繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ髢句ｧ・        /// </summary>
         private void StartHoldInteraction()
         {
             isInteracting = true;
             interactionProgress = 0f;
 
-            // 継続的な更新処琁E�E開始（実際の実裁E��は Coroutine また�EUpdateLoop�E�E#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            // 邯咏ｶ夂噪縺ｪ譖ｴ譁ｰ蜃ｦ逅・・髢句ｧ具ｼ亥ｮ滄圀縺ｮ螳溯｣・〒縺ｯ Coroutine 縺ｾ縺溘・UpdateLoop・・#if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"Started hold interaction: {definition.holdDuration}s required");
 #endif
         }
 
         /// <summary>
-        /// 褁E��回インタラクションの実衁E        /// </summary>
+        /// 隍・焚蝗槭う繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ螳溯｡・        /// </summary>
         private void ExecuteMultiInteraction()
         {
             currentInteractionCount++;
@@ -260,35 +260,35 @@ namespace asterivo.Unity60.Core.Commands.Definitions
 
             if (currentInteractionCount >= definition.requiredInteractions)
             {
-                // 忁E��回数に達した場合�E処琁E                CompleteMultiInteraction();
+                // 蠢・ｦ∝屓謨ｰ縺ｫ驕斐＠縺溷ｴ蜷医・蜃ｦ逅・                CompleteMultiInteraction();
             }
             else
             {
-                // まだ忁E��回数に達してぁE��ぁE��合�EフィードバチE��
+                // 縺ｾ縺蠢・ｦ∝屓謨ｰ縺ｫ驕斐＠縺ｦ縺・↑縺・ｴ蜷医・繝輔ぅ繝ｼ繝峨ヰ繝・け
                 ShowProgressFeedback();
             }
         }
 
         /// <summary>
-        /// 斁E��依存インタラクションの実衁E        /// </summary>
+        /// 譁・ц萓晏ｭ倥う繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ螳溯｡・        /// </summary>
         private void ExecuteContextualInteraction()
         {
-            // 現在の状況に応じて異なる�E琁E��実衁E            // 例：時間帯、アイチE��所持状況、クエスト進行状況筁E            
+            // 迴ｾ蝨ｨ縺ｮ迥ｶ豕√↓蠢懊§縺ｦ逡ｰ縺ｪ繧句・逅・ｒ螳溯｡・            // 萓具ｼ壽凾髢灘ｸｯ縲√い繧､繝・Β謇謖∫憾豕√√け繧ｨ繧ｹ繝磯ｲ陦檎憾豕∫ｭ・            
             var interactable = targetObject?.GetComponent<IContextualInteractable>();
             interactable?.OnContextualInteract(context, GetCurrentContext());
         }
 
         /// <summary>
-        /// 近接自動インタラクションの実衁E        /// </summary>
+        /// 霑第磁閾ｪ蜍輔う繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ螳溯｡・        /// </summary>
         private void ExecuteProximityInteraction()
         {
-            // プレイヤーが篁E��冁E��ぁE��間、�E動的に継続されるインタラクション
+            // 繝励Ξ繧､繝､繝ｼ縺檎ｯ・峇蜀・↓縺・ｋ髢薙∬・蜍慕噪縺ｫ邯咏ｶ壹＆繧後ｋ繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ
             var interactable = targetObject?.GetComponent<IProximityInteractable>();
             interactable?.OnProximityInteract(context);
         }
 
         /// <summary>
-        /// 褁E��回インタラクションの完亁E�E琁E        /// </summary>
+        /// 隍・焚蝗槭う繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ螳御ｺ・・逅・        /// </summary>
         private void CompleteMultiInteraction()
         {
             var interactable = targetObject?.GetComponent<IInteractable>();
@@ -299,7 +299,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 長押しインタラクションの更新�E�外部から定期皁E��呼び出される！E        /// </summary>
+        /// 髟ｷ謚ｼ縺励う繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ譖ｴ譁ｰ・亥､夜Κ縺九ｉ螳壽悄逧・↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ繧具ｼ・        /// </summary>
         public void UpdateHoldInteraction(float deltaTime)
         {
             if (!isInteracting || definition.interactionType != InteractCommandDefinition.InteractionType.Hold)
@@ -307,13 +307,13 @@ namespace asterivo.Unity60.Core.Commands.Definitions
 
             interactionProgress += deltaTime;
 
-            // プログレスバ�Eの更新
+            // 繝励Ο繧ｰ繝ｬ繧ｹ繝舌・縺ｮ譖ｴ譁ｰ
             if (definition.showProgressBar)
             {
                 float progress = interactionProgress / definition.holdDuration;
-                // UI更新処琁E            }
+                // UI譖ｴ譁ｰ蜃ｦ逅・            }
 
-            // 完亁E��ェチE��
+            // 螳御ｺ・メ繧ｧ繝・け
             if (interactionProgress >= definition.holdDuration)
             {
                 CompleteHoldInteraction();
@@ -321,7 +321,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 長押しインタラクションの完亁E        /// </summary>
+        /// 髟ｷ謚ｼ縺励う繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ螳御ｺ・        /// </summary>
         private void CompleteHoldInteraction()
         {
             isInteracting = false;
@@ -334,7 +334,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// インタラクションアニメーションの再生
+        /// 繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ蜀咲函
         /// </summary>
         private void PlayInteractionAnimation()
         {
@@ -348,11 +348,11 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// インタラクションエフェクト�E表示
+        /// 繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ繧ｨ繝輔ぉ繧ｯ繝医・陦ｨ遉ｺ
         /// </summary>
         private void ShowInteractionEffect()
         {
-            // パ�EチE��クルエフェクチE            // サウンドエフェクチE            // UIフィードバチE��
+            // 繝代・繝・ぅ繧ｯ繝ｫ繧ｨ繝輔ぉ繧ｯ繝・            // 繧ｵ繧ｦ繝ｳ繝峨お繝輔ぉ繧ｯ繝・            // UI繝輔ぅ繝ｼ繝峨ヰ繝・け
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log("Showing interaction effect");
@@ -360,24 +360,24 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 進行状況フィードバチE��の表示
+        /// 騾ｲ陦檎憾豕√ヵ繧｣繝ｼ繝峨ヰ繝・け縺ｮ陦ｨ遉ｺ
         /// </summary>
         private void ShowProgressFeedback()
         {
-            // 進行状況�EUI表示
-            // サウンドフィードバチE��
+            // 騾ｲ陦檎憾豕√・UI陦ｨ遉ｺ
+            // 繧ｵ繧ｦ繝ｳ繝峨ヵ繧｣繝ｼ繝峨ヰ繝・け
         }
 
         /// <summary>
-        /// 現在のコンチE��スト情報を取征E        /// </summary>
+        /// 迴ｾ蝨ｨ縺ｮ繧ｳ繝ｳ繝・く繧ｹ繝域ュ蝣ｱ繧貞叙蠕・        /// </summary>
         private object GetCurrentContext()
         {
-            // 時間帯、所持アイチE��、クエスト状況等を含むコンチE��スト情報を返す
+            // 譎る俣蟶ｯ縲∵園謖√い繧､繝・Β縲√け繧ｨ繧ｹ繝育憾豕∫ｭ峨ｒ蜷ｫ繧繧ｳ繝ｳ繝・く繧ｹ繝域ュ蝣ｱ繧定ｿ斐☆
             return new { TimeOfDay = "Day", HasKey = false };
         }
 
         /// <summary>
-        /// インタラクションのキャンセル
+        /// 繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ繧ｭ繝｣繝ｳ繧ｻ繝ｫ
         /// </summary>
         public void CancelInteraction()
         {
@@ -393,15 +393,15 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Undo操作（インタラクションの取り消し�E�E        /// </summary>
+        /// Undo謫堺ｽ懶ｼ医う繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ蜿悶ｊ豸医＠・・        /// </summary>
         public void Undo()
         {
             if (!executed) return;
 
-            // インタラクションの送E��作（可能な場合！E            var interactable = targetObject?.GetComponent<IUndoableInteractable>();
+            // 繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ騾・桃菴懶ｼ亥庄閭ｽ縺ｪ蝣ｴ蜷茨ｼ・            var interactable = targetObject?.GetComponent<IUndoableInteractable>();
             interactable?.OnUndoInteract(context);
 
-            // 進行中のインタラクションをキャンセル
+            // 騾ｲ陦御ｸｭ縺ｮ繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ繧偵く繝｣繝ｳ繧ｻ繝ｫ
             CancelInteraction();
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -412,18 +412,18 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// こ�EコマンドがUndo可能かどぁE��
+        /// 縺薙・繧ｳ繝槭Φ繝峨′Undo蜿ｯ閭ｽ縺九←縺・°
         /// </summary>
         public bool CanUndo => executed && targetObject?.GetComponent<IUndoableInteractable>() != null;
 
         /// <summary>
-        /// 現在インタラクション中かどぁE��
+        /// 迴ｾ蝨ｨ繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ荳ｭ縺九←縺・°
         /// </summary>
         public bool IsInteracting => isInteracting;
     }
 
     /// <summary>
-    /// 基本皁E��インタラクト可能オブジェクト�Eインターフェース
+    /// 蝓ｺ譛ｬ逧・↑繧､繝ｳ繧ｿ繝ｩ繧ｯ繝亥庄閭ｽ繧ｪ繝悶ず繧ｧ繧ｯ繝医・繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ
     /// </summary>
     public interface IInteractable
     {
@@ -431,7 +431,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// 斁E��依存インタラクト可能オブジェクト�Eインターフェース
+    /// 譁・ц萓晏ｭ倥う繝ｳ繧ｿ繝ｩ繧ｯ繝亥庄閭ｽ繧ｪ繝悶ず繧ｧ繧ｯ繝医・繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ
     /// </summary>
     public interface IContextualInteractable
     {
@@ -439,7 +439,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// 近接自動インタラクト可能オブジェクト�Eインターフェース
+    /// 霑第磁閾ｪ蜍輔う繝ｳ繧ｿ繝ｩ繧ｯ繝亥庄閭ｽ繧ｪ繝悶ず繧ｧ繧ｯ繝医・繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ
     /// </summary>
     public interface IProximityInteractable
     {
@@ -447,7 +447,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// Undo可能インタラクト可能オブジェクト�Eインターフェース
+    /// Undo蜿ｯ閭ｽ繧､繝ｳ繧ｿ繝ｩ繧ｯ繝亥庄閭ｽ繧ｪ繝悶ず繧ｧ繧ｯ繝医・繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ
     /// </summary>
     public interface IUndoableInteractable
     {

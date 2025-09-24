@@ -1,4 +1,4 @@
-namespace asterivo.Unity60.Features.Templates.Common
+﻿namespace asterivo.Unity60.Features.Templates.Common
 {
     /// <summary>
     /// ゲームジャンルの種類を定義するenum

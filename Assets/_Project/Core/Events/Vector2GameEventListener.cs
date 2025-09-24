@@ -1,12 +1,12 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 // // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 
 namespace asterivo.Unity60.Core.Events
 {
     /// <summary>
-    /// Vector2パラメータ付きイベントリスナ�E
-    /// カメラルチE��入力用
+    /// Vector2繝代Λ繝｡繝ｼ繧ｿ莉倥″繧､繝吶Φ繝医Μ繧ｹ繝翫・
+    /// 繧ｫ繝｡繝ｩ繝ｫ繝・け蜈･蜉帷畑
     /// </summary>
     public class Vector2GameEventListener : MonoBehaviour, IGameEventListener<Vector2>
     {
@@ -45,18 +45,18 @@ namespace asterivo.Unity60.Core.Events
         }
         
         /// <summary>
-        /// Vector2GameEventが発生した時の処琁E        /// </summary>
-        /// <param name="value">Vector2値</param>
+        /// Vector2GameEvent縺檎匱逕溘＠縺滓凾縺ｮ蜃ｦ逅・        /// </summary>
+        /// <param name="value">Vector2蛟､</param>
         public void OnEventRaised(Vector2 value)
         {
-            // メソチE��が設定されてぁE��場合�Eみ実衁E            if (Response != null)
+            // 繝｡繧ｽ繝・ラ縺瑚ｨｭ螳壹＆繧後※縺・ｋ蝣ｴ蜷医・縺ｿ螳溯｡・            if (Response != null)
             {
                 Response.Invoke(value);
             }
         }
         
         /// <summary>
-        /// 手動でイベントを発行（テスト用�E�E        /// </summary>
+        /// 謇句虚縺ｧ繧､繝吶Φ繝医ｒ逋ｺ陦鯉ｼ医ユ繧ｹ繝育畑・・        /// </summary>
         [ContextMenu("Raise Event (Test)")]
         public void RaiseEventTest()
         {
@@ -78,7 +78,7 @@ namespace asterivo.Unity60.Core.Events
     }
     
     /// <summary>
-    /// Vector2パラメータ用UnityEvent
+    /// Vector2繝代Λ繝｡繝ｼ繧ｿ逕ｨUnityEvent
     /// </summary>
     [System.Serializable]
     public class Vector2UnityEvent : UnityEvent<Vector2> { }

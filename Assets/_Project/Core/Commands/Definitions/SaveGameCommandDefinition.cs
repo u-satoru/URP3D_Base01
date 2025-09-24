@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,17 +10,17 @@ using System.Security.Cryptography;
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// ゲームセーブコマンド�E定義、E    /// ゲーム状態�E保存アクションをカプセル化します、E    /// 
-    /// 主な機�E�E�E    /// - 自勁E手動セーブ�E実衁E    /// - セーブファイルの管琁E��スロチE��、名前付け等！E    /// - セーブ対象チE�Eタの選抁E    /// - セーブ完亁E��知とエラーハンドリング
+    /// 繧ｲ繝ｼ繝繧ｻ繝ｼ繝悶さ繝槭Φ繝峨・螳夂ｾｩ縲・    /// 繧ｲ繝ｼ繝迥ｶ諷九・菫晏ｭ倥い繧ｯ繧ｷ繝ｧ繝ｳ繧偵き繝励そ繝ｫ蛹悶＠縺ｾ縺吶・    /// 
+    /// 荳ｻ縺ｪ讖溯・・・    /// - 閾ｪ蜍・謇句虚繧ｻ繝ｼ繝悶・螳溯｡・    /// - 繧ｻ繝ｼ繝悶ヵ繧｡繧､繝ｫ縺ｮ邂｡逅・ｼ医せ繝ｭ繝・ヨ縲∝錐蜑堺ｻ倥￠遲会ｼ・    /// - 繧ｻ繝ｼ繝門ｯｾ雎｡繝・・繧ｿ縺ｮ驕ｸ謚・    /// - 繧ｻ繝ｼ繝門ｮ御ｺ・夂衍縺ｨ繧ｨ繝ｩ繝ｼ繝上Φ繝峨Μ繝ｳ繧ｰ
     /// </summary>
     [System.Serializable]
     public class SaveGameCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// セーブ�E種類を定義する列挙垁E        /// </summary>
+        /// 繧ｻ繝ｼ繝悶・遞ｮ鬘槭ｒ螳夂ｾｩ縺吶ｋ蛻玲嫌蝙・        /// </summary>
         public enum SaveType
         {
-            Manual,         // 手動セーチE            Auto,           // 自動セーチE            QuickSave,      // クイチE��セーチE            Checkpoint,     // チェチE��ポイントセーチE            NewGame         // 新規ゲーム開始時セーチE        }
+            Manual,         // 謇句虚繧ｻ繝ｼ繝・            Auto,           // 閾ｪ蜍輔そ繝ｼ繝・            QuickSave,      // 繧ｯ繧､繝・け繧ｻ繝ｼ繝・            Checkpoint,     // 繝√ぉ繝・け繝昴う繝ｳ繝医そ繝ｼ繝・            NewGame         // 譁ｰ隕上ご繝ｼ繝髢句ｧ区凾繧ｻ繝ｼ繝・        }
 
         [Header("Save Parameters")]
         public SaveType saveType = SaveType.Manual;
@@ -44,21 +44,21 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public bool showSaveProgress = true;
         public bool showSuccessNotification = true;
         public bool pauseGameDuringSave = false;
-        public float maxSaveTime = 5f; // タイムアウト時閁E
+        public float maxSaveTime = 5f; // 繧ｿ繧､繝繧｢繧ｦ繝域凾髢・
         [Header("Auto Save Settings")]
-        [Tooltip("自動セーブ時の間隔�E�秒！E)]
-        public float autoSaveInterval = 300f; // 5刁E        [Tooltip("自動セーブファイルの最大保持数")]
+        [Tooltip("閾ｪ蜍輔そ繝ｼ繝匁凾縺ｮ髢馴囈・育ｧ抵ｼ・)]
+        public float autoSaveInterval = 300f; // 5蛻・        [Tooltip("閾ｪ蜍輔そ繝ｼ繝悶ヵ繧｡繧､繝ｫ縺ｮ譛螟ｧ菫晄戟謨ｰ")]
         public int maxAutoSaveFiles = 5;
 
         /// <summary>
-        /// チE��ォルトコンストラクタ
+        /// 繝・ヵ繧ｩ繝ｫ繝医さ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
         /// </summary>
         public SaveGameCommandDefinition()
         {
         }
 
         /// <summary>
-        /// パラメータ付きコンストラクタ
+        /// 繝代Λ繝｡繝ｼ繧ｿ莉倥″繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
         /// </summary>
         public SaveGameCommandDefinition(SaveType type, int slot, string name = "")
         {
@@ -68,30 +68,30 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// セーブコマンドが実行可能かどぁE��を判定しまぁE        /// </summary>
+        /// 繧ｻ繝ｼ繝悶さ繝槭Φ繝峨′螳溯｡悟庄閭ｽ縺九←縺・°繧貞愛螳壹＠縺ｾ縺・        /// </summary>
         public bool CanExecute(object context = null)
         {
-            // 基本皁E��実行可能性チェチE��
+            // 蝓ｺ譛ｬ逧・↑螳溯｡悟庄閭ｽ諤ｧ繝√ぉ繝・け
             if (saveSlot < 0) return false;
             if (maxSaveTime <= 0f) return false;
 
-            // セーブ対象が何も選択されてぁE��ぁE��合�E不可
+            // 繧ｻ繝ｼ繝門ｯｾ雎｡縺御ｽ輔ｂ驕ｸ謚槭＆繧後※縺・↑縺・ｴ蜷医・荳榊庄
             if (!savePlayerData && !saveWorldState && !saveProgress && !saveSettings && !saveStatistics)
                 return false;
 
-            // コンチE��ストがある場合�E追加チェチE��
+            // 繧ｳ繝ｳ繝・く繧ｹ繝医′縺ゅｋ蝣ｴ蜷医・霑ｽ蜉繝√ぉ繝・け
             if (context != null)
             {
-                // セーブ可能な状態かチェチE���E�ローチE��ング中、セーブ中等�E不可�E�E                // チE��スク容量チェチE��
-                // セーブファイルの書き込み権限チェチE��
-                // ゲームの重要な処琁E���E�戦闘中等）�E制紁E��ェチE��
+                // 繧ｻ繝ｼ繝門庄閭ｽ縺ｪ迥ｶ諷九°繝√ぉ繝・け・医Ο繝ｼ繝・ぅ繝ｳ繧ｰ荳ｭ縲√そ繝ｼ繝紋ｸｭ遲峨・荳榊庄・・                // 繝・ぅ繧ｹ繧ｯ螳ｹ驥上メ繧ｧ繝・け
+                // 繧ｻ繝ｼ繝悶ヵ繧｡繧､繝ｫ縺ｮ譖ｸ縺崎ｾｼ縺ｿ讓ｩ髯舌メ繧ｧ繝・け
+                // 繧ｲ繝ｼ繝縺ｮ驥崎ｦ√↑蜃ｦ逅・ｸｭ・域姶髣倅ｸｭ遲会ｼ峨・蛻ｶ邏・メ繧ｧ繝・け
             }
 
             return true;
         }
 
         /// <summary>
-        /// セーブコマンドを作�EしまぁE        /// </summary>
+        /// 繧ｻ繝ｼ繝悶さ繝槭Φ繝峨ｒ菴懈・縺励∪縺・        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
             if (!CanExecute(context))
@@ -102,7 +102,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// SaveGameCommandDefinitionに対応する実際のコマンド実裁E    /// </summary>
+    /// SaveGameCommandDefinition縺ｫ蟇ｾ蠢懊☆繧句ｮ滄圀縺ｮ繧ｳ繝槭Φ繝牙ｮ溯｣・    /// </summary>
     public class SaveGameCommand : ICommand
     {
         private SaveGameCommandDefinition definition;
@@ -119,7 +119,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// セーブコマンド�E実衁E        /// </summary>
+        /// 繧ｻ繝ｼ繝悶さ繝槭Φ繝峨・螳溯｡・        /// </summary>
         public void Execute()
         {
             if (executed || saveInProgress) return;
@@ -131,12 +131,12 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             UnityEngine.Debug.Log($"Executing {definition.saveType} save: slot={definition.saveSlot}, name='{definition.saveName}'");
 #endif
 
-            // ゲームの一時停止�E�忁E��な場合！E            if (definition.pauseGameDuringSave)
+            // 繧ｲ繝ｼ繝縺ｮ荳譎ょ●豁｢・亥ｿ・ｦ√↑蝣ｴ蜷茨ｼ・            if (definition.pauseGameDuringSave)
             {
                 PauseGame();
             }
 
-            // セーブ�EログレスUIの表示
+            // 繧ｻ繝ｼ繝悶・繝ｭ繧ｰ繝ｬ繧ｹUI縺ｮ陦ｨ遉ｺ
             if (definition.showSaveProgress)
             {
                 ShowSaveProgressUI();
@@ -144,7 +144,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
 
             try
             {
-                // 実際のセーブ�E琁E                ExecuteSaveOperation();
+                // 螳滄圀縺ｮ繧ｻ繝ｼ繝門・逅・                ExecuteSaveOperation();
             }
             catch (System.Exception ex)
             {
@@ -156,39 +156,39 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 実際のセーブ�E琁E��実衁E        /// </summary>
+        /// 螳滄圀縺ｮ繧ｻ繝ｼ繝門・逅・ｒ螳溯｡・        /// </summary>
         private void ExecuteSaveOperation()
         {
-            // セーブデータの収集
+            // 繧ｻ繝ｼ繝悶ョ繝ｼ繧ｿ縺ｮ蜿朱寔
             var saveData = CollectSaveData();
 
-            // セーブファイル名�E生�E
+            // 繧ｻ繝ｼ繝悶ヵ繧｡繧､繝ｫ蜷阪・逕滓・
             string fileName = GenerateSaveFileName();
 
-            // チE�Eタの圧縮�E�設定されてぁE��場合！E            if (definition.compressData)
+            // 繝・・繧ｿ縺ｮ蝨ｧ邵ｮ・郁ｨｭ螳壹＆繧後※縺・ｋ蝣ｴ蜷茨ｼ・            if (definition.compressData)
             {
                 saveData = CompressSaveData(saveData);
             }
 
-            // チE�Eタの暗号化（設定されてぁE��場合！E            if (definition.encryptData)
+            // 繝・・繧ｿ縺ｮ證怜捷蛹厄ｼ郁ｨｭ螳壹＆繧後※縺・ｋ蝣ｴ蜷茨ｼ・            if (definition.encryptData)
             {
                 saveData = EncryptSaveData(saveData);
             }
 
-            // ファイルへの書き込み
+            // 繝輔ぃ繧､繝ｫ縺ｸ縺ｮ譖ｸ縺崎ｾｼ縺ｿ
             savedFilePath = WriteSaveFile(fileName, saveData);
 
-            // 整合性検証�E�設定されてぁE��場合！E            if (definition.validateIntegrity)
+            // 謨ｴ蜷域ｧ讀懆ｨｼ・郁ｨｭ螳壹＆繧後※縺・ｋ蝣ｴ蜷茨ｼ・            if (definition.validateIntegrity)
             {
                 ValidateSavedFile(savedFilePath);
             }
 
-            // 自動セーブファイルの管琁E            if (definition.saveType == SaveGameCommandDefinition.SaveType.Auto)
+            // 閾ｪ蜍輔そ繝ｼ繝悶ヵ繧｡繧､繝ｫ縺ｮ邂｡逅・            if (definition.saveType == SaveGameCommandDefinition.SaveType.Auto)
             {
                 ManageAutoSaveFiles();
             }
 
-            // セーブ完亁E�E琁E            OnSaveCompleted();
+            // 繧ｻ繝ｼ繝門ｮ御ｺ・・逅・            OnSaveCompleted();
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"Save completed: {savedFilePath}");
@@ -196,38 +196,38 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// セーブデータの収集
+        /// 繧ｻ繝ｼ繝悶ョ繝ｼ繧ｿ縺ｮ蜿朱寔
         /// </summary>
         private ISaveData CollectSaveData()
         {
             var saveData = new GameSaveData();
 
-            // プレイヤーチE�Eタの保孁E            if (definition.savePlayerData)
+            // 繝励Ξ繧､繝､繝ｼ繝・・繧ｿ縺ｮ菫晏ｭ・            if (definition.savePlayerData)
             {
                 saveData.PlayerData = GetPlayerData();
             }
 
-            // ワールド状態�E保孁E            if (definition.saveWorldState)
+            // 繝ｯ繝ｼ繝ｫ繝臥憾諷九・菫晏ｭ・            if (definition.saveWorldState)
             {
                 saveData.WorldState = GetWorldState();
             }
 
-            // 進行状況�E保孁E            if (definition.saveProgress)
+            // 騾ｲ陦檎憾豕√・菫晏ｭ・            if (definition.saveProgress)
             {
                 saveData.ProgressData = GetProgressData();
             }
 
-            // 設定�E保孁E            if (definition.saveSettings)
+            // 險ｭ螳壹・菫晏ｭ・            if (definition.saveSettings)
             {
                 saveData.SettingsData = GetSettingsData();
             }
 
-            // 統計データの保孁E            if (definition.saveStatistics)
+            // 邨ｱ險医ョ繝ｼ繧ｿ縺ｮ菫晏ｭ・            if (definition.saveStatistics)
             {
                 saveData.StatisticsData = GetStatisticsData();
             }
 
-            // メタチE�Eタの追加
+            // 繝｡繧ｿ繝・・繧ｿ縺ｮ霑ｽ蜉
             saveData.SaveInfo = new SaveMetaData
             {
                 SaveType = definition.saveType.ToString(),
@@ -242,7 +242,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// セーブファイル名�E生�E
+        /// 繧ｻ繝ｼ繝悶ヵ繧｡繧､繝ｫ蜷阪・逕滓・
         /// </summary>
         private string GenerateSaveFileName()
         {
@@ -270,47 +270,47 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// セーブデータの圧縮
+        /// 繧ｻ繝ｼ繝悶ョ繝ｼ繧ｿ縺ｮ蝨ｧ邵ｮ
         /// </summary>
         private ISaveData CompressSaveData(ISaveData data)
         {
-            // 実際の実裁E��は適刁E��圧縮アルゴリズム�E�EZ4、gzip等）を使用
+            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ驕ｩ蛻・↑蝨ｧ邵ｮ繧｢繝ｫ繧ｴ繝ｪ繧ｺ繝・・Z4縲“zip遲会ｼ峨ｒ菴ｿ逕ｨ
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log("Compressing save data...");
 #endif
-            return data; // 仮の実裁E        }
+            return data; // 莉ｮ縺ｮ螳溯｣・        }
 
         /// <summary>
-        /// セーブデータの暗号匁E        /// </summary>
+        /// 繧ｻ繝ｼ繝悶ョ繝ｼ繧ｿ縺ｮ證怜捷蛹・        /// </summary>
         private ISaveData EncryptSaveData(ISaveData data)
         {
-            // 実際の実裁E��は適刁E��暗号化アルゴリズム�E�EES等）を使用
+            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ驕ｩ蛻・↑證怜捷蛹悶い繝ｫ繧ｴ繝ｪ繧ｺ繝・・ES遲会ｼ峨ｒ菴ｿ逕ｨ
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log("Encrypting save data...");
 #endif
-            return data; // 仮の実裁E        }
+            return data; // 莉ｮ縺ｮ螳溯｣・        }
 
         /// <summary>
-        /// セーブファイルの書き込み
+        /// 繧ｻ繝ｼ繝悶ヵ繧｡繧､繝ｫ縺ｮ譖ｸ縺崎ｾｼ縺ｿ
         /// </summary>
         private string WriteSaveFile(string fileName, ISaveData data)
         {
             string saveDirectory = GetSaveDirectory();
             string fullPath = System.IO.Path.Combine(saveDirectory, fileName);
 
-            // チE��レクトリの作�E
+            // 繝・ぅ繝ｬ繧ｯ繝医Μ縺ｮ菴懈・
             if (!System.IO.Directory.Exists(saveDirectory))
             {
                 System.IO.Directory.CreateDirectory(saveDirectory);
             }
 
-            // 既存ファイルの上書きチェチE��
+            // 譌｢蟄倥ヵ繧｡繧､繝ｫ縺ｮ荳頑嶌縺阪メ繧ｧ繝・け
             if (System.IO.File.Exists(fullPath) && !definition.overwriteExisting)
             {
                 throw new System.InvalidOperationException($"Save file already exists: {fullPath}");
             }
 
-            // 実際の実裁E��は適刁E��シリアライゼーション�E�ESON、Binary等）を使用
+            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ驕ｩ蛻・↑繧ｷ繝ｪ繧｢繝ｩ繧､繧ｼ繝ｼ繧ｷ繝ｧ繝ｳ・・SON縲。inary遲会ｼ峨ｒ菴ｿ逕ｨ
             string jsonData = JsonUtility.ToJson(data, true);
             System.IO.File.WriteAllText(fullPath, jsonData);
 
@@ -318,7 +318,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 保存されたファイルの整合性検証
+        /// 菫晏ｭ倥＆繧後◆繝輔ぃ繧､繝ｫ縺ｮ謨ｴ蜷域ｧ讀懆ｨｼ
         /// </summary>
         private void ValidateSavedFile(string filePath)
         {
@@ -327,17 +327,17 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 throw new System.IO.FileNotFoundException($"Saved file not found: {filePath}");
             }
 
-            // ファイルサイズチェチE��
+            // 繝輔ぃ繧､繝ｫ繧ｵ繧､繧ｺ繝√ぉ繝・け
             var fileInfo = new System.IO.FileInfo(filePath);
             if (fileInfo.Length == 0)
             {
                 throw new System.Exception("Saved file is empty");
             }
 
-            // チE�Eタの読み込みチE��チE            try
+            // 繝・・繧ｿ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ繝・せ繝・            try
             {
                 string content = System.IO.File.ReadAllText(filePath);
-                // 基本皁E��構文チェチE��筁E            }
+                // 蝓ｺ譛ｬ逧・↑讒区枚繝√ぉ繝・け遲・            }
             catch (System.Exception ex)
             {
                 throw new System.Exception($"Saved file validation failed: {ex.Message}");
@@ -349,16 +349,16 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 自動セーブファイルの管琁E        /// </summary>
+        /// 閾ｪ蜍輔そ繝ｼ繝悶ヵ繧｡繧､繝ｫ縺ｮ邂｡逅・        /// </summary>
         private void ManageAutoSaveFiles()
         {
             string saveDirectory = GetSaveDirectory();
             var autoSaveFiles = System.IO.Directory.GetFiles(saveDirectory, "autosave_*.sav");
 
-            // ファイルを作�E日時頁E��ソーチE            System.Array.Sort(autoSaveFiles, (x, y) => 
+            // 繝輔ぃ繧､繝ｫ繧剃ｽ懈・譌･譎る・↓繧ｽ繝ｼ繝・            System.Array.Sort(autoSaveFiles, (x, y) => 
                 System.IO.File.GetCreationTime(y).CompareTo(System.IO.File.GetCreationTime(x)));
 
-            // 最大保持数を趁E��る古ぁE��ァイルを削除
+            // 譛螟ｧ菫晄戟謨ｰ繧定ｶ・∴繧句商縺・ヵ繧｡繧､繝ｫ繧貞炎髯､
             for (int i = definition.maxAutoSaveFiles; i < autoSaveFiles.Length; i++)
             {
                 try
@@ -378,88 +378,88 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// セーブ完亁E�E琁E        /// </summary>
+        /// 繧ｻ繝ｼ繝門ｮ御ｺ・・逅・        /// </summary>
         private void OnSaveCompleted()
         {
             saveInProgress = false;
 
-            // ゲームの再開
+            // 繧ｲ繝ｼ繝縺ｮ蜀埼幕
             if (definition.pauseGameDuringSave)
             {
                 ResumeGame();
             }
 
-            // プログレスUIの非表示
+            // 繝励Ο繧ｰ繝ｬ繧ｹUI縺ｮ髱櫁｡ｨ遉ｺ
             if (definition.showSaveProgress)
             {
                 HideSaveProgressUI();
             }
 
-            // 成功通知の表示
+            // 謌仙粥騾夂衍縺ｮ陦ｨ遉ｺ
             if (definition.showSuccessNotification)
             {
                 ShowSaveSuccessNotification();
             }
 
-            // セーブ完亁E��ベント�E発衁E            // EventSystem.Publish(new GameSavedEvent(definition.saveSlot, savedFilePath));
+            // 繧ｻ繝ｼ繝門ｮ御ｺ・う繝吶Φ繝医・逋ｺ陦・            // EventSystem.Publish(new GameSavedEvent(definition.saveSlot, savedFilePath));
         }
 
         /// <summary>
-        /// セーブエラーの処琁E        /// </summary>
+        /// 繧ｻ繝ｼ繝悶お繝ｩ繝ｼ縺ｮ蜃ｦ逅・        /// </summary>
         private void HandleSaveError(System.Exception exception)
         {
             saveInProgress = false;
 
-            // ゲームの再開
+            // 繧ｲ繝ｼ繝縺ｮ蜀埼幕
             if (definition.pauseGameDuringSave)
             {
                 ResumeGame();
             }
 
-            // プログレスUIの非表示
+            // 繝励Ο繧ｰ繝ｬ繧ｹUI縺ｮ髱櫁｡ｨ遉ｺ
             if (definition.showSaveProgress)
             {
                 HideSaveProgressUI();
             }
 
-            // エラー通知の表示
+            // 繧ｨ繝ｩ繝ｼ騾夂衍縺ｮ陦ｨ遉ｺ
             ShowSaveErrorNotification(exception.Message);
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.LogError($"Save failed: {exception}");
 #endif
 
-            // セーブ失敗イベント�E発衁E            // EventSystem.Publish(new SaveFailedEvent(exception));
+            // 繧ｻ繝ｼ繝門､ｱ謨励う繝吶Φ繝医・逋ｺ陦・            // EventSystem.Publish(new SaveFailedEvent(exception));
         }
 
-        // 吁E��チE�Eタ取得メソチE���E�実際の実裁E��は対応するシスチE��との連携�E�E        private IPlayerData GetPlayerData() => new PlayerData();
+        // 蜷・ｨｮ繝・・繧ｿ蜿門ｾ励Γ繧ｽ繝・ラ・亥ｮ滄圀縺ｮ螳溯｣・〒縺ｯ蟇ｾ蠢懊☆繧九す繧ｹ繝・Β縺ｨ縺ｮ騾｣謳ｺ・・        private IPlayerData GetPlayerData() => new PlayerData();
         private IWorldState GetWorldState() => new WorldState();
         private IProgressData GetProgressData() => new ProgressData();
         private ISettingsData GetSettingsData() => new SettingsData();
         private IStatisticsData GetStatisticsData() => new StatisticsData();
-        private float GetTotalPlayTime() => Time.realtimeSinceStartup; // 仮の実裁E
-        // UI制御メソチE���E�実際の実裁E��は UISystem との連携�E�E        private void ShowSaveProgressUI() { /* UI表示 */ }
-        private void HideSaveProgressUI() { /* UI非表示 */ }
-        private void ShowSaveSuccessNotification() { /* 成功通知 */ }
-        private void ShowSaveErrorNotification(string error) { /* エラー通知 */ }
+        private float GetTotalPlayTime() => Time.realtimeSinceStartup; // 莉ｮ縺ｮ螳溯｣・
+        // UI蛻ｶ蠕｡繝｡繧ｽ繝・ラ・亥ｮ滄圀縺ｮ螳溯｣・〒縺ｯ UISystem 縺ｨ縺ｮ騾｣謳ｺ・・        private void ShowSaveProgressUI() { /* UI陦ｨ遉ｺ */ }
+        private void HideSaveProgressUI() { /* UI髱櫁｡ｨ遉ｺ */ }
+        private void ShowSaveSuccessNotification() { /* 謌仙粥騾夂衍 */ }
+        private void ShowSaveErrorNotification(string error) { /* 繧ｨ繝ｩ繝ｼ騾夂衍 */ }
 
-        // ゲーム制御メソチE���E�実際の実裁E��は GameManager との連携�E�E        private void PauseGame() { /* ゲーム一時停止 */ }
-        private void ResumeGame() { /* ゲーム再開 */ }
+        // 繧ｲ繝ｼ繝蛻ｶ蠕｡繝｡繧ｽ繝・ラ・亥ｮ滄圀縺ｮ螳溯｣・〒縺ｯ GameManager 縺ｨ縺ｮ騾｣謳ｺ・・        private void PauseGame() { /* 繧ｲ繝ｼ繝荳譎ょ●豁｢ */ }
+        private void ResumeGame() { /* 繧ｲ繝ｼ繝蜀埼幕 */ }
 
         /// <summary>
-        /// セーブディレクトリのパスを取征E        /// </summary>
+        /// 繧ｻ繝ｼ繝悶ョ繧｣繝ｬ繧ｯ繝医Μ縺ｮ繝代せ繧貞叙蠕・        /// </summary>
         private string GetSaveDirectory()
         {
             return System.IO.Path.Combine(Application.persistentDataPath, "Saves");
         }
 
         /// <summary>
-        /// セーブ�E更新�E�タイムアウトチェチE��等、外部から定期皁E��呼び出される！E        /// </summary>
+        /// 繧ｻ繝ｼ繝悶・譖ｴ譁ｰ・医ち繧､繝繧｢繧ｦ繝医メ繧ｧ繝・け遲峨∝､夜Κ縺九ｉ螳壽悄逧・↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ繧具ｼ・        /// </summary>
         public void UpdateSave()
         {
             if (!saveInProgress) return;
 
-            // タイムアウトチェチE��
+            // 繧ｿ繧､繝繧｢繧ｦ繝医メ繧ｧ繝・け
             var elapsed = System.DateTime.Now - saveStartTime;
             if (elapsed.TotalSeconds > definition.maxSaveTime)
             {
@@ -468,11 +468,11 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Undo操作（セーブ�E取り消し - 通常は不可能�E�E        /// </summary>
+        /// Undo謫堺ｽ懶ｼ医そ繝ｼ繝悶・蜿悶ｊ豸医＠ - 騾壼ｸｸ縺ｯ荳榊庄閭ｽ・・        /// </summary>
         public void Undo()
         {
-            // セーブ操作�E取り消しは通常不可能
-            // ただし、セーブ中の場合�Eキャンセル可能
+            // 繧ｻ繝ｼ繝匁桃菴懊・蜿悶ｊ豸医＠縺ｯ騾壼ｸｸ荳榊庄閭ｽ
+            // 縺溘□縺励√そ繝ｼ繝紋ｸｭ縺ｮ蝣ｴ蜷医・繧ｭ繝｣繝ｳ繧ｻ繝ｫ蜿ｯ閭ｽ
             if (saveInProgress)
             {
                 saveInProgress = false;
@@ -488,17 +488,17 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// こ�EコマンドがUndo可能かどぁE��
+        /// 縺薙・繧ｳ繝槭Φ繝峨′Undo蜿ｯ閭ｽ縺九←縺・°
         /// </summary>
-        public bool CanUndo => saveInProgress; // セーブ中のみキャンセル可能
+        public bool CanUndo => saveInProgress; // 繧ｻ繝ｼ繝紋ｸｭ縺ｮ縺ｿ繧ｭ繝｣繝ｳ繧ｻ繝ｫ蜿ｯ閭ｽ
 
         /// <summary>
-        /// 現在セーブ�E琁E��かどぁE��
+        /// 迴ｾ蝨ｨ繧ｻ繝ｼ繝門・逅・ｸｭ縺九←縺・°
         /// </summary>
         public bool IsSaveInProgress => saveInProgress;
     }
 
-    // セーブデータ関連のインターフェースとクラス�E�実際の実裁E��は適刁E��定義�E�E    public interface ISaveData { }
+    // 繧ｻ繝ｼ繝悶ョ繝ｼ繧ｿ髢｢騾｣縺ｮ繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ縺ｨ繧ｯ繝ｩ繧ｹ・亥ｮ滄圀縺ｮ螳溯｣・〒縺ｯ驕ｩ蛻・↓螳夂ｾｩ・・    public interface ISaveData { }
     public interface IPlayerData { }
     public interface IWorldState { }
     public interface IProgressData { }
@@ -527,7 +527,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public float PlayTime;
     }
 
-    // 仮の実裁E��ラス
+    // 莉ｮ縺ｮ螳溯｣・け繝ｩ繧ｹ
     public class PlayerData : IPlayerData { }
     public class WorldState : IWorldState { }
     public class ProgressData : IProgressData { }

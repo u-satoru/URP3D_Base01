@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
 // // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
@@ -6,14 +6,14 @@ using System.Collections.Generic;
 namespace asterivo.Unity60.Core
 {
     /// <summary>
-    /// Phase 3 強化版 Feature Flag シスチE��
-    /// 段階的移行、パフォーマンス監視、ロールバック機�Eを統吁E    /// </summary>
+    /// Phase 3 蠑ｷ蛹也沿 Feature Flag 繧ｷ繧ｹ繝・Β
+    /// 谿ｵ髫守噪遘ｻ陦後√ヱ繝輔か繝ｼ繝槭Φ繧ｹ逶｣隕悶√Ο繝ｼ繝ｫ繝舌ャ繧ｯ讖溯・繧堤ｵｱ蜷・    /// </summary>
     public static class FeatureFlags
     {
-        // ========== 既存�E基本フラグ ==========
+        // ========== 譌｢蟄倥・蝓ｺ譛ｬ繝輔Λ繧ｰ ==========
         
         /// <summary>
-        /// 新しいオーチE��オシスチE��を使用するぁE        /// </summary>
+        /// 譁ｰ縺励＞繧ｪ繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β繧剃ｽｿ逕ｨ縺吶ｋ縺・        /// </summary>
         public static bool UseNewAudioSystem 
         {
             get => PlayerPrefs.GetInt("FeatureFlag_UseNewAudioSystem", 0) == 1;
@@ -21,7 +21,7 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// Service Locatorパターンを使用するぁE        /// </summary>
+        /// Service Locator繝代ち繝ｼ繝ｳ繧剃ｽｿ逕ｨ縺吶ｋ縺・        /// </summary>
         public static bool UseServiceLocator
         {
             get => PlayerPrefs.GetInt("FeatureFlag_UseServiceLocator", 1) == 1;
@@ -29,7 +29,7 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// イベント駁E��音響シスチE��を使用するぁE        /// </summary>
+        /// 繧､繝吶Φ繝磯ｧ・虚髻ｳ髻ｿ繧ｷ繧ｹ繝・Β繧剃ｽｿ逕ｨ縺吶ｋ縺・        /// </summary>
         public static bool UseEventDrivenAudio
         {
             get => PlayerPrefs.GetInt("FeatureFlag_UseEventDrivenAudio", 0) == 1;
@@ -37,7 +37,7 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// 新しいAudioUpdateCoordinatorサービスを使用するぁE        /// </summary>
+        /// 譁ｰ縺励＞AudioUpdateCoordinator繧ｵ繝ｼ繝薙せ繧剃ｽｿ逕ｨ縺吶ｋ縺・        /// </summary>
         public static bool UseNewAudioUpdateSystem
         {
             get => PlayerPrefs.GetInt("FeatureFlag_UseNewAudioUpdateSystem", 0) == 1;
@@ -45,7 +45,7 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// チE��チE��ログを有効にするぁE        /// </summary>
+        /// 繝・ヰ繝・げ繝ｭ繧ｰ繧呈怏蜉ｹ縺ｫ縺吶ｋ縺・        /// </summary>
         public static bool EnableDebugLogging
         {
             get => PlayerPrefs.GetInt("FeatureFlag_EnableDebugLogging", 1) == 1;
@@ -53,7 +53,7 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// リファクタリング後�EアーキチE��チャを使用するか（段階的移行用�E�E        /// </summary>
+        /// 繝ｪ繝輔ぃ繧ｯ繧ｿ繝ｪ繝ｳ繧ｰ蠕後・繧｢繝ｼ繧ｭ繝・け繝√Ε繧剃ｽｿ逕ｨ縺吶ｋ縺具ｼ域ｮｵ髫守噪遘ｻ陦檎畑・・        /// </summary>
         public static bool UseRefactoredArchitecture
         {
             get => PlayerPrefs.GetInt("FeatureFlag_UseRefactoredArchitecture", 0) == 1;
@@ -62,40 +62,40 @@ namespace asterivo.Unity60.Core
         
                 
         /// <summary>
-        /// 新しいAudioServiceを使用するか！Etep 3.7用�E�E        /// </summary>
+        /// 譁ｰ縺励＞AudioService繧剃ｽｿ逕ｨ縺吶ｋ縺具ｼ・tep 3.7逕ｨ・・        /// </summary>
         public static bool UseNewAudioService
         {
-            get => PlayerPrefs.GetInt("FeatureFlag_UseNewAudioService", 1) == 1; // ✁ETask1: チE��ォルト値めEに変更
+            get => PlayerPrefs.GetInt("FeatureFlag_UseNewAudioService", 1) == 1; // 笨・Task1: 繝・ヵ繧ｩ繝ｫ繝亥､繧・縺ｫ螟画峩
             set => SetFlag("FeatureFlag_UseNewAudioService", value);
         }
         
         /// <summary>
-        /// 新しいSpatialAudioServiceを使用するか！Etep 3.7用�E�E        /// </summary>
+        /// 譁ｰ縺励＞SpatialAudioService繧剃ｽｿ逕ｨ縺吶ｋ縺具ｼ・tep 3.7逕ｨ・・        /// </summary>
         public static bool UseNewSpatialService
         {
-            get => PlayerPrefs.GetInt("FeatureFlag_UseNewSpatialService", 1) == 1; // ✁ETask1: チE��ォルト値めEに変更
+            get => PlayerPrefs.GetInt("FeatureFlag_UseNewSpatialService", 1) == 1; // 笨・Task1: 繝・ヵ繧ｩ繝ｫ繝亥､繧・縺ｫ螟画峩
             set => SetFlag("FeatureFlag_UseNewSpatialService", value);
         }
         
         /// <summary>
-        /// 新しいStealthAudioServiceを使用するか！Etep 3.7用�E�E        /// </summary>
+        /// 譁ｰ縺励＞StealthAudioService繧剃ｽｿ逕ｨ縺吶ｋ縺具ｼ・tep 3.7逕ｨ・・        /// </summary>
         public static bool UseNewStealthService
         {
-            get => PlayerPrefs.GetInt("FeatureFlag_UseNewStealthService", 1) == 1; // ✁ETask1: チE��ォルト値めEに変更
+            get => PlayerPrefs.GetInt("FeatureFlag_UseNewStealthService", 1) == 1; // 笨・Task1: 繝・ヵ繧ｩ繝ｫ繝亥､繧・縺ｫ螟画峩
             set => SetFlag("FeatureFlag_UseNewStealthService", value);
         }
         
         /// <summary>
-        /// パフォーマンス監視を有効にするか！Etep 3.7用�E�E        /// </summary>
+        /// 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ逶｣隕悶ｒ譛牙柑縺ｫ縺吶ｋ縺具ｼ・tep 3.7逕ｨ・・        /// </summary>
         public static bool EnablePerformanceMonitoring
         {
             get => PlayerPrefs.GetInt("FeatureFlag_EnablePerformanceMonitoring", 1) == 1;
             set => SetFlag("FeatureFlag_EnablePerformanceMonitoring", value);
         }
-// ========== Step 3.9 Legacy Singleton警告シスチE�� ==========
+// ========== Step 3.9 Legacy Singleton隴ｦ蜻翫す繧ｹ繝・Β ==========
         
         /// <summary>
-        /// Legacy Singleton使用時に警告を表示するぁE        /// </summary>
+        /// Legacy Singleton菴ｿ逕ｨ譎ゅ↓隴ｦ蜻翫ｒ陦ｨ遉ｺ縺吶ｋ縺・        /// </summary>
         public static bool EnableMigrationWarnings
         {
             get => PlayerPrefs.GetInt("FeatureFlag_EnableMigrationWarnings", 1) == 1;
@@ -103,17 +103,17 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// Legacy Singletonへのアクセスを完�Eに禁止するぁE        /// </summary>
+        /// Legacy Singleton縺ｸ縺ｮ繧｢繧ｯ繧ｻ繧ｹ繧貞ｮ悟・縺ｫ遖∵ｭ｢縺吶ｋ縺・        /// </summary>
         public static bool DisableLegacySingletons
         {
             get => PlayerPrefs.GetInt("FeatureFlag_DisableLegacySingletons", 0) == 1;
             set => SetFlag("FeatureFlag_DisableLegacySingletons", value);
         }
         
-// ========== Phase 3 新規移行管琁E��ラグ ==========
+// ========== Phase 3 譁ｰ隕冗ｧｻ陦檎ｮ｡逅・ヵ繝ｩ繧ｰ ==========
         
         /// <summary>
-        /// 移行�Eロセス監視を有効にするぁE        /// </summary>
+        /// 遘ｻ陦後・繝ｭ繧ｻ繧ｹ逶｣隕悶ｒ譛牙柑縺ｫ縺吶ｋ縺・        /// </summary>
         public static bool EnableMigrationMonitoring
         {
             get => PlayerPrefs.GetInt("FeatureFlag_EnableMigrationMonitoring", 1) == 1;
@@ -121,7 +121,7 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// パフォーマンス測定を有効にするぁE        /// </summary>
+        /// 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ貂ｬ螳壹ｒ譛牙柑縺ｫ縺吶ｋ縺・        /// </summary>
         public static bool EnablePerformanceMeasurement
         {
             get => PlayerPrefs.GetInt("FeatureFlag_EnablePerformanceMeasurement", 1) == 1;
@@ -129,7 +129,7 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// 自動ロールバック機�Eを有効にするぁE        /// </summary>
+        /// 閾ｪ蜍輔Ο繝ｼ繝ｫ繝舌ャ繧ｯ讖溯・繧呈怏蜉ｹ縺ｫ縺吶ｋ縺・        /// </summary>
         public static bool EnableAutoRollback
         {
             get => PlayerPrefs.GetInt("FeatureFlag_EnableAutoRollback", 1) == 1;
@@ -137,7 +137,7 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// Singletonの使用を許可するか（緊急時ロールバック用�E�E        /// </summary>
+        /// Singleton縺ｮ菴ｿ逕ｨ繧定ｨｱ蜿ｯ縺吶ｋ縺具ｼ育ｷ頑･譎ゅΟ繝ｼ繝ｫ繝舌ャ繧ｯ逕ｨ・・        /// </summary>
         public static bool AllowSingletonFallback
         {
             get => PlayerPrefs.GetInt("FeatureFlag_AllowSingletonFallback", 0) == 1;
@@ -145,17 +145,17 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// チE��トモードを有効にするぁE        /// </summary>
+        /// 繝・せ繝医Δ繝ｼ繝峨ｒ譛牙柑縺ｫ縺吶ｋ縺・        /// </summary>
         public static bool EnableTestMode
         {
             get => PlayerPrefs.GetInt("FeatureFlag_EnableTestMode", 0) == 1;
             set => SetFlag("FeatureFlag_EnableTestMode", value);
         }
         
-        // ========== 段階的移行制御フラグ ==========
+        // ========== 谿ｵ髫守噪遘ｻ陦悟宛蠕｡繝輔Λ繧ｰ ==========
         
         /// <summary>
-        /// AudioManager の ServiceLocator移行を有効にするぁE        /// </summary>
+        /// AudioManager 縺ｮ ServiceLocator遘ｻ陦後ｒ譛牙柑縺ｫ縺吶ｋ縺・        /// </summary>
         public static bool MigrateAudioManager
         {
             get => PlayerPrefs.GetInt("FeatureFlag_MigrateAudioManager", 0) == 1;
@@ -163,7 +163,7 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// SpatialAudioManager の ServiceLocator移行を有効にするぁE        /// </summary>
+        /// SpatialAudioManager 縺ｮ ServiceLocator遘ｻ陦後ｒ譛牙柑縺ｫ縺吶ｋ縺・        /// </summary>
         public static bool MigrateSpatialAudioManager
         {
             get => PlayerPrefs.GetInt("FeatureFlag_MigrateSpatialAudioManager", 0) == 1;
@@ -171,7 +171,7 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// EffectManager の ServiceLocator移行を有効にするぁE        /// </summary>
+        /// EffectManager 縺ｮ ServiceLocator遘ｻ陦後ｒ譛牙柑縺ｫ縺吶ｋ縺・        /// </summary>
         public static bool MigrateEffectManager
         {
             get => PlayerPrefs.GetInt("FeatureFlag_MigrateEffectManager", 0) == 1;
@@ -179,7 +179,7 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// StealthAudioCoordinator の ServiceLocator移行を有効にするぁE        /// </summary>
+        /// StealthAudioCoordinator 縺ｮ ServiceLocator遘ｻ陦後ｒ譛牙柑縺ｫ縺吶ｋ縺・        /// </summary>
         public static bool MigrateStealthAudioCoordinator
         {
             get => PlayerPrefs.GetInt("FeatureFlag_MigrateStealthAudioCoordinator", 0) == 1;
@@ -187,17 +187,17 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// AudioUpdateCoordinator の ServiceLocator移行を有効にするぁE        /// </summary>
+        /// AudioUpdateCoordinator 縺ｮ ServiceLocator遘ｻ陦後ｒ譛牙柑縺ｫ縺吶ｋ縺・        /// </summary>
         public static bool MigrateAudioUpdateCoordinator
         {
             get => PlayerPrefs.GetInt("FeatureFlag_MigrateAudioUpdateCoordinator", 0) == 1;
             set => SetFlag("FeatureFlag_MigrateAudioUpdateCoordinator", value);
         }
         
-        // ========== Phase 3 ユーチE��リチE��メソチE�� ==========
+        // ========== Phase 3 繝ｦ繝ｼ繝・ぅ繝ｪ繝・ぅ繝｡繧ｽ繝・ラ ==========
         
         /// <summary>
-        /// フラグの変更を統一皁E��管琁E��変更ログ付き�E�E        /// </summary>
+        /// 繝輔Λ繧ｰ縺ｮ螟画峩繧堤ｵｱ荳逧・↓邂｡逅・ｼ亥､画峩繝ｭ繧ｰ莉倥″・・        /// </summary>
         private static void SetFlag(string key, bool value)
         {
             bool oldValue = PlayerPrefs.GetInt(key, 0) == 1;
@@ -209,7 +209,7 @@ namespace asterivo.Unity60.Core
                     Debug.Log($"[FeatureFlags] {key}: {oldValue} -> {value}");
                 }
                 
-                // 変更履歴を記録�E�移行監視用�E�E                if (EnableMigrationMonitoring)
+                // 螟画峩螻･豁ｴ繧定ｨ倬鹸・育ｧｻ陦檎屮隕也畑・・                if (EnableMigrationMonitoring)
                 {
                     LogFlagChange(key, oldValue, value);
                 }
@@ -217,17 +217,17 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// フラグ変更履歴をログに記録
+        /// 繝輔Λ繧ｰ螟画峩螻･豁ｴ繧偵Ο繧ｰ縺ｫ險倬鹸
         /// </summary>
         private static void LogFlagChange(string flagName, bool oldValue, bool newValue)
         {
             string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             string logEntry = $"[{timestamp}] {flagName}: {oldValue} -> {newValue}";
             
-            // PlayerPrefsに履歴を追加�E�最新10件まで保持�E�E            List<string> history = GetFlagChangeHistory();
+            // PlayerPrefs縺ｫ螻･豁ｴ繧定ｿｽ蜉・域怙譁ｰ10莉ｶ縺ｾ縺ｧ菫晄戟・・            List<string> history = GetFlagChangeHistory();
             history.Add(logEntry);
             
-            // 最新10件に制陁E            if (history.Count > 10)
+            // 譛譁ｰ10莉ｶ縺ｫ蛻ｶ髯・            if (history.Count > 10)
             {
                 history.RemoveAt(0);
             }
@@ -236,7 +236,7 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// フラグ変更履歴を取征E        /// </summary>
+        /// 繝輔Λ繧ｰ螟画峩螻･豁ｴ繧貞叙蠕・        /// </summary>
         public static List<string> GetFlagChangeHistory()
         {
             string historyStr = PlayerPrefs.GetString("FeatureFlag_ChangeHistory", "");
@@ -244,12 +244,12 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// 段階的移行�EプリセチE��設宁E        /// </summary>
+        /// 谿ｵ髫守噪遘ｻ陦後・繝励Μ繧ｻ繝・ヨ險ｭ螳・        /// </summary>
         public static void SetMigrationPhase(int phase)
         {
             switch (phase)
             {
-                case 0: // リセチE���E�完�EなSingletonモード！E                    UseServiceLocator = false;
+                case 0: // 繝ｪ繧ｻ繝・ヨ・亥ｮ悟・縺ｪSingleton繝｢繝ｼ繝会ｼ・                    UseServiceLocator = false;
                     UseNewAudioSystem = false;
                     UseEventDrivenAudio = false;
                     UseNewAudioUpdateSystem = false;
@@ -257,7 +257,7 @@ namespace asterivo.Unity60.Core
                     ResetAllMigrationFlags();
                     break;
                     
-                case 1: // Phase 1: ServiceLocator基盤準備
+                case 1: // Phase 1: ServiceLocator蝓ｺ逶､貅門ｙ
                     UseServiceLocator = true;
                     UseNewAudioSystem = false;
                     UseEventDrivenAudio = false;
@@ -265,18 +265,18 @@ namespace asterivo.Unity60.Core
                     EnablePerformanceMeasurement = true;
                     break;
                     
-                case 2: // Phase 2: AudioManager移行開姁E                    UseServiceLocator = true;
+                case 2: // Phase 2: AudioManager遘ｻ陦碁幕蟋・                    UseServiceLocator = true;
                     MigrateAudioManager = true;
                     UseNewAudioSystem = true;
                     EnableMigrationMonitoring = true;
                     EnablePerformanceMeasurement = true;
                     break;
                     
-                case 3: // Phase 3: 全体移行完亁E                    UseServiceLocator = true;
+                case 3: // Phase 3: 蜈ｨ菴鍋ｧｻ陦悟ｮ御ｺ・                    UseServiceLocator = true;
                     UseNewAudioSystem = true;
                     UseEventDrivenAudio = true;
                     UseNewAudioUpdateSystem = true;
-                    // ✁ETask1: Phase 3新フラグを追加
+                    // 笨・Task1: Phase 3譁ｰ繝輔Λ繧ｰ繧定ｿｽ蜉
                     UseNewAudioService = true;
                     UseNewSpatialService = true;
                     UseNewStealthService = true;
@@ -295,7 +295,7 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// すべての移行フラグを有効匁E        /// </summary>
+        /// 縺吶∋縺ｦ縺ｮ遘ｻ陦後ヵ繝ｩ繧ｰ繧呈怏蜉ｹ蛹・        /// </summary>
         private static void EnableAllMigrationFlags()
         {
             MigrateAudioManager = true;
@@ -306,7 +306,7 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// すべての移行フラグを無効匁E        /// </summary>
+        /// 縺吶∋縺ｦ縺ｮ遘ｻ陦後ヵ繝ｩ繧ｰ繧堤┌蜉ｹ蛹・        /// </summary>
         private static void ResetAllMigrationFlags()
         {
             MigrateAudioManager = false;
@@ -317,14 +317,14 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// 緊急ロールバック�E��EてをSingleton設定に戻す！E        /// </summary>
+        /// 邱頑･繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ・亥・縺ｦ繧担ingleton險ｭ螳壹↓謌ｻ縺呻ｼ・        /// </summary>
         public static void EmergencyRollback()
         {
             Debug.LogWarning("[FeatureFlags] EMERGENCY ROLLBACK - Reverting to Singleton mode");
             
-            SetMigrationPhase(0); // 完�EリセチE��
+            SetMigrationPhase(0); // 螳悟・繝ｪ繧ｻ繝・ヨ
             
-            // 緊急ロールバックの履歴を記録
+            // 邱頑･繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ縺ｮ螻･豁ｴ繧定ｨ倬鹸
             string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             PlayerPrefs.SetString("FeatureFlag_LastEmergencyRollback", timestamp);
             
@@ -333,32 +333,32 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// 最後�E緊急ロールバック時刻を取征E        /// </summary>
+        /// 譛蠕後・邱頑･繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ譎ょ綾繧貞叙蠕・        /// </summary>
         public static string GetLastEmergencyRollbackTime()
         {
-            return PlayerPrefs.GetString("FeatureFlag_LastEmergencyRollback", "なぁE);
+            return PlayerPrefs.GetString("FeatureFlag_LastEmergencyRollback", "縺ｪ縺・);
         }
         
         /// <summary>
-        /// 移行�E安�E性チェチE��
+        /// 遘ｻ陦後・螳牙・諤ｧ繝√ぉ繝・け
         /// </summary>
         public static bool IsMigrationSafe()
         {
-            // ServiceLocatorが基本皁E��動作してぁE��ことを確誁E            if (!UseServiceLocator) return false;
+            // ServiceLocator縺悟渕譛ｬ逧・↓蜍穂ｽ懊＠縺ｦ縺・ｋ縺薙→繧堤｢ｺ隱・            if (!UseServiceLocator) return false;
             
-            // パフォーマンス測定が有効であることを確誁E            if (!EnablePerformanceMeasurement) return false;
+            // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ貂ｬ螳壹′譛牙柑縺ｧ縺ゅｋ縺薙→繧堤｢ｺ隱・            if (!EnablePerformanceMeasurement) return false;
             
-            // 監視シスチE��が有効であることを確誁E            if (!EnableMigrationMonitoring) return false;
+            // 逶｣隕悶す繧ｹ繝・Β縺梧怏蜉ｹ縺ｧ縺ゅｋ縺薙→繧堤｢ｺ隱・            if (!EnableMigrationMonitoring) return false;
             
             return true;
         }
         
         /// <summary>
-        /// 現在の移行進捗を取得！E-100%�E�E        /// </summary>
+        /// 迴ｾ蝨ｨ縺ｮ遘ｻ陦碁ｲ謐励ｒ蜿門ｾ暦ｼ・-100%・・        /// </summary>
         public static int GetMigrationProgress()
         {
             int completed = 0;
-            int total = 5; // 移行対象のSingleton数
+            int total = 5; // 遘ｻ陦悟ｯｾ雎｡縺ｮSingleton謨ｰ
             
             if (MigrateAudioManager) completed++;
             if (MigrateSpatialAudioManager) completed++;
@@ -370,25 +370,25 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// すべてのFeature FlagをリセチE��
+        /// 縺吶∋縺ｦ縺ｮFeature Flag繧偵Μ繧ｻ繝・ヨ
         /// </summary>
         public static void ResetAll()
         {
-            // 基本フラグのリセチE��
+            // 蝓ｺ譛ｬ繝輔Λ繧ｰ縺ｮ繝ｪ繧ｻ繝・ヨ
             UseNewAudioSystem = false;
             UseServiceLocator = true;
             UseEventDrivenAudio = false;
             UseNewAudioUpdateSystem = false;
             EnableDebugLogging = true;
             
-            // Phase 3 新規フラグのリセチE��
+            // Phase 3 譁ｰ隕上ヵ繝ｩ繧ｰ縺ｮ繝ｪ繧ｻ繝・ヨ
             EnableMigrationMonitoring = true;
             EnablePerformanceMeasurement = true;
             EnableAutoRollback = true;
             AllowSingletonFallback = false;
             EnableTestMode = false;
             
-            // 移行フラグのリセチE��
+            // 遘ｻ陦後ヵ繝ｩ繧ｰ縺ｮ繝ｪ繧ｻ繝・ヨ
             ResetAllMigrationFlags();
             
             PlayerPrefs.Save();
@@ -397,45 +397,45 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// 現在のFeature Flag設定をログ出劁E        /// </summary>
+        /// 迴ｾ蝨ｨ縺ｮFeature Flag險ｭ螳壹ｒ繝ｭ繧ｰ蜃ｺ蜉・        /// </summary>
         public static void LogCurrentFlags()
         {
             Debug.Log($"[FeatureFlags] === Current Settings ===");
-            Debug.Log($"  基本フラグ:");
+            Debug.Log($"  蝓ｺ譛ｬ繝輔Λ繧ｰ:");
             Debug.Log($"    - UseNewAudioSystem: {UseNewAudioSystem}");
             Debug.Log($"    - UseServiceLocator: {UseServiceLocator}");
             Debug.Log($"    - UseEventDrivenAudio: {UseEventDrivenAudio}");
             Debug.Log($"    - UseNewAudioUpdateSystem: {UseNewAudioUpdateSystem}");
             Debug.Log($"    - EnableDebugLogging: {EnableDebugLogging}");
             
-            Debug.Log($"  移行管琁E��ラグ:");
+            Debug.Log($"  遘ｻ陦檎ｮ｡逅・ヵ繝ｩ繧ｰ:");
             Debug.Log($"    - EnableMigrationMonitoring: {EnableMigrationMonitoring}");
             Debug.Log($"    - EnablePerformanceMeasurement: {EnablePerformanceMeasurement}");
             Debug.Log($"    - EnableAutoRollback: {EnableAutoRollback}");
             Debug.Log($"    - AllowSingletonFallback: {AllowSingletonFallback}");
             Debug.Log($"    - EnableTestMode: {EnableTestMode}");
             
-            Debug.Log($"  段階的移行フラグ:");
+            Debug.Log($"  谿ｵ髫守噪遘ｻ陦後ヵ繝ｩ繧ｰ:");
             Debug.Log($"    - MigrateAudioManager: {MigrateAudioManager}");
             Debug.Log($"    - MigrateSpatialAudioManager: {MigrateSpatialAudioManager}");
             Debug.Log($"    - MigrateEffectManager: {MigrateEffectManager}");
             Debug.Log($"    - MigrateStealthAudioCoordinator: {MigrateStealthAudioCoordinator}");
             Debug.Log($"    - MigrateAudioUpdateCoordinator: {MigrateAudioUpdateCoordinator}");
             
-            Debug.Log($"  移行進捁E {GetMigrationProgress()}%");
-            Debug.Log($"  最後�E緊急ロールバック: {GetLastEmergencyRollbackTime()}");
-            Debug.Log($"  移行安�E性: {(IsMigrationSafe() ? "OK" : "NG")}");
+            Debug.Log($"  遘ｻ陦碁ｲ謐・ {GetMigrationProgress()}%");
+            Debug.Log($"  譛蠕後・邱頑･繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ: {GetLastEmergencyRollbackTime()}");
+            Debug.Log($"  遘ｻ陦悟ｮ牙・諤ｧ: {(IsMigrationSafe() ? "OK" : "NG")}");
         }
         
         /// <summary>
-        /// フラグ変更履歴をログ出劁E        /// </summary>
+        /// 繝輔Λ繧ｰ螟画峩螻･豁ｴ繧偵Ο繧ｰ蜃ｺ蜉・        /// </summary>
     
         /// <summary>
-        /// 全てのフラグをデフォルト値にリセチE��
+        /// 蜈ｨ縺ｦ縺ｮ繝輔Λ繧ｰ繧偵ョ繝輔か繝ｫ繝亥､縺ｫ繝ｪ繧ｻ繝・ヨ
         /// </summary>
         public static void ResetToDefaults()
         {
-            SetMigrationPhase(0); // 完�EなSingletonモードにリセチE��
+            SetMigrationPhase(0); // 螳悟・縺ｪSingleton繝｢繝ｼ繝峨↓繝ｪ繧ｻ繝・ヨ
             EnableMigrationMonitoring = false;
             EnablePerformanceMeasurement = false;
             EnableAutoRollback = false;
@@ -447,45 +447,45 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// Task 1専用: Phase 3フラグの確実な有効匁E        /// </summary>
+        /// Task 1蟆ら畑: Phase 3繝輔Λ繧ｰ縺ｮ遒ｺ螳溘↑譛牙柑蛹・        /// </summary>
         public static void EnablePhase3Flags()
         {
-            // 既存�EPlayerPrefsキーを削除して新しいチE��ォルト値を適用
+            // 譌｢蟄倥・PlayerPrefs繧ｭ繝ｼ繧貞炎髯､縺励※譁ｰ縺励＞繝・ヵ繧ｩ繝ｫ繝亥､繧帝←逕ｨ
             PlayerPrefs.DeleteKey("FeatureFlag_UseNewAudioService");
             PlayerPrefs.DeleteKey("FeatureFlag_UseNewSpatialService");
             PlayerPrefs.DeleteKey("FeatureFlag_UseNewStealthService");
             
-            // 明示皁E��設定（確実にするため�E�E            UseNewAudioService = true;
+            // 譏守､ｺ逧・↓險ｭ螳夲ｼ育｢ｺ螳溘↓縺吶ｋ縺溘ａ・・            UseNewAudioService = true;
             UseNewSpatialService = true;
             UseNewStealthService = true;
             
             PlayerPrefs.Save();
             
             Debug.Log("[FeatureFlags] Phase 3 flags enabled successfully");
-            LogCurrentFlags(); // 設定確誁E        }
+            LogCurrentFlags(); // 險ｭ螳夂｢ｺ隱・        }
         
         /// <summary>
-        /// 設定�E整合性を検証
+        /// 險ｭ螳壹・謨ｴ蜷域ｧ繧呈､懆ｨｼ
         /// </summary>
         public static void ValidateConfiguration()
         {
-            // UseServiceLocatorがfalseなのに移行フラグがtrueの場合�E警呁E            if (!UseServiceLocator && (MigrateAudioManager || MigrateSpatialAudioManager || 
+            // UseServiceLocator縺掲alse縺ｪ縺ｮ縺ｫ遘ｻ陦後ヵ繝ｩ繧ｰ縺荊rue縺ｮ蝣ｴ蜷医・隴ｦ蜻・            if (!UseServiceLocator && (MigrateAudioManager || MigrateSpatialAudioManager || 
                 MigrateEffectManager || MigrateAudioUpdateCoordinator || MigrateStealthAudioCoordinator))
             {
                 Debug.LogWarning("[FeatureFlags] Inconsistent configuration: Migration flags are enabled but UseServiceLocator is false");
             }
             
-            // 移行監視が無効なのにパフォーマンス測定が有効の場合�E警呁E            if (!EnableMigrationMonitoring && EnablePerformanceMeasurement)
+            // 遘ｻ陦檎屮隕悶′辟｡蜉ｹ縺ｪ縺ｮ縺ｫ繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ貂ｬ螳壹′譛牙柑縺ｮ蝣ｴ蜷医・隴ｦ蜻・            if (!EnableMigrationMonitoring && EnablePerformanceMeasurement)
             {
                 Debug.LogWarning("[FeatureFlags] EnablePerformanceMeasurement requires EnableMigrationMonitoring");
             }
             
-            // DisableLegacySingletons と AllowSingletonFallback の競吁E            if (DisableLegacySingletons && AllowSingletonFallback)
+            // DisableLegacySingletons 縺ｨ AllowSingletonFallback 縺ｮ遶ｶ蜷・            if (DisableLegacySingletons && AllowSingletonFallback)
             {
                 Debug.LogWarning("[FeatureFlags] Inconsistent configuration: DisableLegacySingletons=true conflicts with AllowSingletonFallback=true");
             }
             
-            // Day4前提: DisableLegacySingletonsが有効ならPhase3新サービスは全て有効が安�E
+            // Day4蜑肴署: DisableLegacySingletons縺梧怏蜉ｹ縺ｪ繧臼hase3譁ｰ繧ｵ繝ｼ繝薙せ縺ｯ蜈ｨ縺ｦ譛牙柑縺悟ｮ牙・
             if (DisableLegacySingletons && (!UseNewAudioService || !UseNewSpatialService || !UseNewStealthService))
             {
                 Debug.LogWarning("[FeatureFlags] DisableLegacySingletons requires Phase 3 services enabled (UseNewAudio/Spatial/Stealth)");
@@ -493,36 +493,36 @@ namespace asterivo.Unity60.Core
         }
 
         /// <summary>
-        /// 整合性を強制�E�EutoFix=trueで安�E側に自動補正�E�E        /// </summary>
+        /// 謨ｴ蜷域ｧ繧貞ｼｷ蛻ｶ・・utoFix=true縺ｧ螳牙・蛛ｴ縺ｫ閾ｪ蜍戊｣懈ｭ｣・・        /// </summary>
         public static void EnforceConsistency(bool autoFix = false)
         {
             bool changed = false;
             
             if (!UseServiceLocator)
             {
-                // 移行フラグは無効が安�E
+                // 遘ｻ陦後ヵ繝ｩ繧ｰ縺ｯ辟｡蜉ｹ縺悟ｮ牙・
                 if (MigrateAudioManager && autoFix) { MigrateAudioManager = false; changed = true; }
                 if (MigrateSpatialAudioManager && autoFix) { MigrateSpatialAudioManager = false; changed = true; }
                 if (MigrateEffectManager && autoFix) { MigrateEffectManager = false; changed = true; }
                 if (MigrateStealthAudioCoordinator && autoFix) { MigrateStealthAudioCoordinator = false; changed = true; }
                 if (MigrateAudioUpdateCoordinator && autoFix) { MigrateAudioUpdateCoordinator = false; changed = true; }
                 
-                // Legacy無効化�E危険なので解除
+                // Legacy辟｡蜉ｹ蛹悶・蜊ｱ髯ｺ縺ｪ縺ｮ縺ｧ隗｣髯､
                 if (DisableLegacySingletons && autoFix) { DisableLegacySingletons = false; changed = true; }
             }
 
-            // 監視なしで計測は無効匁E            if (!EnableMigrationMonitoring && EnablePerformanceMeasurement && autoFix)
+            // 逶｣隕悶↑縺励〒險域ｸｬ縺ｯ辟｡蜉ｹ蛹・            if (!EnableMigrationMonitoring && EnablePerformanceMeasurement && autoFix)
             {
                 EnablePerformanceMeasurement = false; changed = true;
             }
 
-            // 競合解涁E Legacy無効化とSingletonフォールバック同時は不可
+            // 遶ｶ蜷郁ｧ｣豸・ Legacy辟｡蜉ｹ蛹悶→Singleton繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ蜷梧凾縺ｯ荳榊庄
             if (DisableLegacySingletons && AllowSingletonFallback && autoFix)
             {
                 AllowSingletonFallback = false; changed = true;
             }
 
-            // Day4安�E性: Legacyを無効にするならPhase3新サービスを有効匁E            if (DisableLegacySingletons && autoFix)
+            // Day4螳牙・諤ｧ: Legacy繧堤┌蜉ｹ縺ｫ縺吶ｋ縺ｪ繧臼hase3譁ｰ繧ｵ繝ｼ繝薙せ繧呈怏蜉ｹ蛹・            if (DisableLegacySingletons && autoFix)
             {
                 if (!UseNewAudioService) { UseNewAudioService = true; changed = true; }
                 if (!UseNewSpatialService) { UseNewSpatialService = true; changed = true; }
@@ -536,10 +536,10 @@ namespace asterivo.Unity60.Core
             }
         }
         
-        // ========== Task 4: DisableLegacySingletons段階的有効匁E==========
+        // ========== Task 4: DisableLegacySingletons谿ｵ髫守噪譛牙柑蛹・==========
         
         /// <summary>
-        /// Task 4: Day 1 - チE��ト環墁E��警告シスチE��有効匁E        /// EnableMigrationWarningsとMigrationMonitoringを確実に有効匁E        /// </summary>
+        /// Task 4: Day 1 - 繝・せ繝育腸蠅・〒隴ｦ蜻翫す繧ｹ繝・Β譛牙柑蛹・        /// EnableMigrationWarnings縺ｨMigrationMonitoring繧堤｢ｺ螳溘↓譛牙柑蛹・        /// </summary>
         public static void EnableDay1TestWarnings()
         {
             PlayerPrefs.DeleteKey("FeatureFlag_EnableMigrationWarnings");
@@ -555,11 +555,11 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// Task 4: Day 1実衁E- チE��ト環墁E��警告シスチE��を実際に実衁E        /// </summary>
+        /// Task 4: Day 1螳溯｡・- 繝・せ繝育腸蠅・〒隴ｦ蜻翫す繧ｹ繝・Β繧貞ｮ滄圀縺ｫ螳溯｡・        /// </summary>
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         public static void ExecuteDay1TestWarnings()
         {
-            // Day 1の実行�E一度だけ行う
+            // Day 1縺ｮ螳溯｡後・荳蠎ｦ縺縺題｡後≧
             if (PlayerPrefs.GetInt("Task4_Day1_Executed", 0) == 1)
                 return;
                 
@@ -567,11 +567,11 @@ namespace asterivo.Unity60.Core
             PlayerPrefs.SetInt("Task4_Day1_Executed", 1);
             PlayerPrefs.Save();
             
-            Debug.Log("[Task 4 - Day 1] 警告シスチE��がテスト環墁E��有効化されました、Eegacy Singletonの使用が監視されてぁE��す、E);
+            Debug.Log("[Task 4 - Day 1] 隴ｦ蜻翫す繧ｹ繝・Β縺後ユ繧ｹ繝育腸蠅・〒譛牙柑蛹悶＆繧後∪縺励◆縲・egacy Singleton縺ｮ菴ｿ逕ｨ縺檎屮隕悶＆繧後※縺・∪縺吶・);
         }
         
         /// <summary>
-        /// Task 4: Day 4 - 本番環墁E��Singleton段階的無効匁E        /// DisableLegacySingletons を有効化（最終段階！E        /// </summary>
+        /// Task 4: Day 4 - 譛ｬ逡ｪ迺ｰ蠅・〒Singleton谿ｵ髫守噪辟｡蜉ｹ蛹・        /// DisableLegacySingletons 繧呈怏蜉ｹ蛹厄ｼ域怙邨よｮｵ髫趣ｼ・        /// </summary>
         public static void EnableDay4SingletonDisabling()
         {
             PlayerPrefs.DeleteKey("FeatureFlag_DisableLegacySingletons");
@@ -582,22 +582,22 @@ namespace asterivo.Unity60.Core
             Debug.Log("[FeatureFlags] Day 4: Legacy Singletons disabled successfully");
             LogCurrentFlags();
             
-            // MigrationValidator実行を推奨
+            // MigrationValidator螳溯｡後ｒ謗ｨ螂ｨ
             Debug.Log("[FeatureFlags] RECOMMENDATION: Run MigrationValidator to verify migration completion");
         }
         
         /// <summary>
-        /// Task 4: Day 4実衁E- 本番環墁E��Singleton段階的無効化を実際に実衁E        /// </summary>
+        /// Task 4: Day 4螳溯｡・- 譛ｬ逡ｪ迺ｰ蠅・〒Singleton谿ｵ髫守噪辟｡蜉ｹ蛹悶ｒ螳滄圀縺ｫ螳溯｡・        /// </summary>
         public static void ExecuteDay4SingletonDisabling()
         {
-            // Day 4の実行�E一度だけ行う
+            // Day 4縺ｮ螳溯｡後・荳蠎ｦ縺縺題｡後≧
             if (PlayerPrefs.GetInt("Task4_Day4_Executed", 0) == 1)
             {
                 Debug.Log("[Task 4 - Day 4] Already executed. Legacy Singletons are disabled.");
                 return;
             }
             
-            // 安�E性チェチE��
+            // 螳牙・諤ｧ繝√ぉ繝・け
             if (!IsTask4Safe())
             {
                 Debug.LogError("[Task 4 - Day 4] Safety check failed. Cannot disable Legacy Singletons.");
@@ -608,31 +608,31 @@ namespace asterivo.Unity60.Core
             PlayerPrefs.SetInt("Task4_Day4_Executed", 1);
             PlayerPrefs.Save();
             
-            Debug.Log("[Task 4 - Day 4] Legacy Singletonが本番環墁E��無効化されました。ServiceLocator完�E移行完亁E��E);
+            Debug.Log("[Task 4 - Day 4] Legacy Singleton縺梧悽逡ｪ迺ｰ蠅・〒辟｡蜉ｹ蛹悶＆繧後∪縺励◆縲４erviceLocator螳悟・遘ｻ陦悟ｮ御ｺ・・);
             
-            // 完亁E��況をレポ�EチE            Debug.Log($"[Task 4 Complete] Migration Progress: {GetMigrationProgress()}%, Safety Status: {(IsMigrationSafe() ? "SAFE" : "UNSAFE")}");
+            // 螳御ｺ・憾豕√ｒ繝ｬ繝昴・繝・            Debug.Log($"[Task 4 Complete] Migration Progress: {GetMigrationProgress()}%, Safety Status: {(IsMigrationSafe() ? "SAFE" : "UNSAFE")}");
         }
         
         /// <summary>
-        /// Task 4の安�Eな実行チェチE��
+        /// Task 4縺ｮ螳牙・縺ｪ螳溯｡後メ繧ｧ繝・け
         /// </summary>
         public static bool IsTask4Safe()
         {
-            // ServiceLocator基盤が整ってぁE��かチェチE��
+            // ServiceLocator蝓ｺ逶､縺梧紛縺｣縺ｦ縺・ｋ縺九メ繧ｧ繝・け
             if (!UseServiceLocator)
             {
                 Debug.LogError("[FeatureFlags] Task 4 requires UseServiceLocator = true");
                 return false;
             }
             
-            // Phase 3の新サービスが有効かチェチE��  
+            // Phase 3縺ｮ譁ｰ繧ｵ繝ｼ繝薙せ縺梧怏蜉ｹ縺九メ繧ｧ繝・け  
             if (!UseNewAudioService || !UseNewSpatialService || !UseNewStealthService)
             {
                 Debug.LogError("[FeatureFlags] Task 4 requires all Phase 3 services enabled");
                 return false;
             }
             
-            // 移行監視シスチE��が有効かチェチE��
+            // 遘ｻ陦檎屮隕悶す繧ｹ繝・Β縺梧怏蜉ｹ縺九メ繧ｧ繝・け
             if (!EnableMigrationMonitoring)
             {
                 Debug.LogError("[FeatureFlags] Task 4 requires EnableMigrationMonitoring = true");
@@ -643,14 +643,14 @@ namespace asterivo.Unity60.Core
         }
 
         /// <summary>
-        /// 起動時の構�E検証フック�E�忁E��一度実行！E        /// </summary>
+        /// 襍ｷ蜍墓凾縺ｮ讒区・讀懆ｨｼ繝輔ャ繧ｯ・亥ｿ・★荳蠎ｦ螳溯｡鯉ｼ・        /// </summary>
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
         private static void RuntimeValidateOnStartup()
         {
             try
             {
                 ValidateConfiguration();
-                // 自動修正は行わず警告�Eみ。忁E��に応じて起動スクリプトからEnforceConsistency(true)を呼び出ぁE                EnforceConsistency(false);
+                // 閾ｪ蜍穂ｿｮ豁｣縺ｯ陦後ｏ縺夊ｭｦ蜻翫・縺ｿ縲ょｿ・ｦ√↓蠢懊§縺ｦ襍ｷ蜍輔せ繧ｯ繝ｪ繝励ヨ縺九ｉEnforceConsistency(true)繧貞他縺ｳ蜃ｺ縺・                EnforceConsistency(false);
             }
             catch (System.Exception e)
             {
@@ -659,31 +659,31 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// Phase 1.2: SINGLETON_COMPLETE_REMOVAL_GUIDE.md準拠 - 匁E��皁E��チE��アチE�E作�Eと最終設宁E        /// 完�ESingleton削除準備のためのFeatureFlags最終設定を適用
+        /// Phase 1.2: SINGLETON_COMPLETE_REMOVAL_GUIDE.md貅匁侠 - 蛹・峡逧・ヰ繝・け繧｢繝・・菴懈・縺ｨ譛邨りｨｭ螳・        /// 螳悟・Singleton蜑企勁貅門ｙ縺ｮ縺溘ａ縺ｮFeatureFlags譛邨りｨｭ螳壹ｒ驕ｩ逕ｨ
         /// </summary>
         public static void ExecutePhase1ComprehensiveBackupAndFinalSettings()
         {
-            Debug.Log("[FeatureFlags] === Phase 1.2: 匁E��皁E��チE��アチE�E作�Eと最終設定実衁E===");
+            Debug.Log("[FeatureFlags] === Phase 1.2: 蛹・峡逧・ヰ繝・け繧｢繝・・菴懈・縺ｨ譛邨りｨｭ螳壼ｮ溯｡・===");
             
-            // Step 1: 現在設定�EバックアチE�E作�E
+            // Step 1: 迴ｾ蝨ｨ險ｭ螳壹・繝舌ャ繧ｯ繧｢繝・・菴懈・
             string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmm");
             string backupKey = $"Phase1_Backup_{timestamp}";
             
             Debug.Log($"[FeatureFlags] Step 1: Creating comprehensive backup: {backupKey}");
             
-            // 現在の設定をログ出力（バチE��アチE�E目皁E��E            LogCurrentFlags();
+            // 迴ｾ蝨ｨ縺ｮ險ｭ螳壹ｒ繝ｭ繧ｰ蜃ｺ蜉幢ｼ医ヰ繝・け繧｢繝・・逶ｮ逧・ｼ・            LogCurrentFlags();
             
-            // バックアチE�EをPlayerPrefsに保孁E            string featureFlagsBackup = SerializeCurrentFeatureFlags();
+            // 繝舌ャ繧ｯ繧｢繝・・繧単layerPrefs縺ｫ菫晏ｭ・            string featureFlagsBackup = SerializeCurrentFeatureFlags();
             PlayerPrefs.SetString($"{backupKey}_FeatureFlags", featureFlagsBackup);
             PlayerPrefs.SetString($"{backupKey}_Timestamp", System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             PlayerPrefs.SetString("LastPhase1Backup", backupKey);
             
-            Debug.Log($"[FeatureFlags] ✁EComprehensive backup created: {backupKey}");
+            Debug.Log($"[FeatureFlags] 笨・Comprehensive backup created: {backupKey}");
             
-            // Step 2: SINGLETON_COMPLETE_REMOVAL_GUIDE.mdに従った最終設定適用
+            // Step 2: SINGLETON_COMPLETE_REMOVAL_GUIDE.md縺ｫ蠕薙▲縺滓怙邨りｨｭ螳夐←逕ｨ
             Debug.Log("[FeatureFlags] Step 2: Applying final FeatureFlags configuration for complete removal...");
             
-            // 段階的更新�E�安�E性確保！E            Debug.Log("[FeatureFlags] Step 2.1: Disabling Legacy Singletons...");
+            // 谿ｵ髫守噪譖ｴ譁ｰ・亥ｮ牙・諤ｧ遒ｺ菫晢ｼ・            Debug.Log("[FeatureFlags] Step 2.1: Disabling Legacy Singletons...");
             DisableLegacySingletons = true;
             
             Debug.Log("[FeatureFlags] Step 2.2: Disabling Migration Warnings...");
@@ -694,16 +694,16 @@ namespace asterivo.Unity60.Core
             
             PlayerPrefs.Save();
             
-            // 更新後状態確誁E            Debug.Log("[FeatureFlags] ✁EPhase 1.2 最終設定完亁E");
+            // 譖ｴ譁ｰ蠕檎憾諷狗｢ｺ隱・            Debug.Log("[FeatureFlags] 笨・Phase 1.2 譛邨りｨｭ螳壼ｮ御ｺ・");
             Debug.Log($"  - DisableLegacySingletons: {DisableLegacySingletons}");
             Debug.Log($"  - EnableMigrationWarnings: {EnableMigrationWarnings}");
             Debug.Log($"  - EnableMigrationMonitoring: {EnableMigrationMonitoring}");
             
-            Debug.Log("[FeatureFlags] === Phase 1.2 完亁E System ready for Phase 2: Physical Code Removal ===");
+            Debug.Log("[FeatureFlags] === Phase 1.2 螳御ｺ・ System ready for Phase 2: Physical Code Removal ===");
         }
         
         /// <summary>
-        /// Phase 1.2用: 現在のFeatureFlagsをシリアライズ
+        /// Phase 1.2逕ｨ: 迴ｾ蝨ｨ縺ｮFeatureFlags繧偵す繝ｪ繧｢繝ｩ繧､繧ｺ
         /// </summary>
         private static string SerializeCurrentFeatureFlags()
         {
@@ -717,18 +717,18 @@ namespace asterivo.Unity60.Core
         }
         
         /// <summary>
-        /// Phase 1緊急ロールバック: FeatureFlagsを安�Eな状態に戻ぁE        /// </summary>
+        /// Phase 1邱頑･繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ: FeatureFlags繧貞ｮ牙・縺ｪ迥ｶ諷九↓謌ｻ縺・        /// </summary>
         public static void ExecutePhase1EmergencyRollback()
         {
             Debug.LogWarning("[FeatureFlags] === EXECUTING PHASE 1 EMERGENCY ROLLBACK ===");
             
-            // FeatureFlagsを安�Eな状態に戻ぁE            DisableLegacySingletons = false;
+            // FeatureFlags繧貞ｮ牙・縺ｪ迥ｶ諷九↓謌ｻ縺・            DisableLegacySingletons = false;
             EnableMigrationWarnings = true;
             EnableMigrationMonitoring = true;
             
             PlayerPrefs.Save();
             
-            // 最新バックアチE�Eから復旧惁E��を表示
+            // 譛譁ｰ繝舌ャ繧ｯ繧｢繝・・縺九ｉ蠕ｩ譌ｧ諠・ｱ繧定｡ｨ遉ｺ
             string lastBackup = PlayerPrefs.GetString("LastPhase1Backup", "");
             if (!string.IsNullOrEmpty(lastBackup))
             {
@@ -737,7 +737,7 @@ namespace asterivo.Unity60.Core
                 Debug.Log($"[FeatureFlags] Backup data: {backupData}");
             }
             
-            Debug.Log("[FeatureFlags] ✁EPhase 1 Emergency rollback completed");
+            Debug.Log("[FeatureFlags] 笨・Phase 1 Emergency rollback completed");
             LogCurrentFlags();
         }
         
@@ -748,7 +748,7 @@ namespace asterivo.Unity60.Core
             
             if (history.Count == 0)
             {
-                Debug.Log($"  履歴なぁE);
+                Debug.Log($"  螻･豁ｴ縺ｪ縺・);
                 return;
             }
             

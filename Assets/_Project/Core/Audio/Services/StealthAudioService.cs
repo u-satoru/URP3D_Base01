@@ -1,4 +1,4 @@
-using asterivo.Unity60.Core;
+﻿using asterivo.Unity60.Core;
 // using asterivo.Unity60.Core.Data;
 using UnityEngine;
 using System.Collections.Generic;
@@ -11,8 +11,8 @@ using asterivo.Unity60.Core.Audio.Interfaces;
 namespace asterivo.Unity60.Core.Audio.Services
 {
     /// <summary>
-    /// スチE��スオーチE��オサービス (ServiceLocator専用)
-    /// 従来のStealthAudioCoordinatorから完�E移行した新実裁E    /// Phase 3 Step 3.5 - ServiceLocator完�E移行版
+    /// 繧ｹ繝・Ν繧ｹ繧ｪ繝ｼ繝・ぅ繧ｪ繧ｵ繝ｼ繝薙せ (ServiceLocator蟆ら畑)
+    /// 蠕捺擂縺ｮStealthAudioCoordinator縺九ｉ螳悟・遘ｻ陦後＠縺滓眠螳溯｣・    /// Phase 3 Step 3.5 - ServiceLocator螳悟・遘ｻ陦檎沿
     /// </summary>
     public class StealthAudioService : MonoBehaviour, IStealthAudioService, IInitializable
     {
@@ -44,14 +44,14 @@ namespace asterivo.Unity60.Core.Audio.Services
         [SerializeField, ReadOnly] private int nearbyAlertAICount;
         [SerializeField, ReadOnly] private bool isServiceRegistered;
 
-        // IInitializable実裁E        public int Priority => 25;
+        // IInitializable螳溯｣・        public int Priority => 25;
         public bool IsInitialized { get; private set; }
 
-        // 冁E��状態管琁E        private IAudioService audioService;
+        // 蜀・Κ迥ｶ諷狗ｮ｡逅・        private IAudioService audioService;
         private List<Transform> nearbyAI = new List<Transform>();
         private Dictionary<AudioCategory, float> categoryVolumeMultipliers = new Dictionary<AudioCategory, float>();
         
-        // スチE��ス検�E状慁E        private bool previousStealthModeState = false;
+        // 繧ｹ繝・Ν繧ｹ讀懷・迥ｶ諷・        private bool previousStealthModeState = false;
         private float globalMaskingStrength = 0f;
 
         #region Unity Lifecycle
@@ -85,7 +85,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         #region ServiceLocator Integration
 
         /// <summary>
-        /// ServiceLocatorへの登録
+        /// ServiceLocator縺ｸ縺ｮ逋ｻ骭ｲ
         /// </summary>
         private void RegisterToServiceLocator()
         {
@@ -110,7 +110,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         }
 
         /// <summary>
-        /// ServiceLocatorからの登録解除
+        /// ServiceLocator縺九ｉ縺ｮ逋ｻ骭ｲ隗｣髯､
         /// </summary>
         private void UnregisterFromServiceLocator()
         {
@@ -144,11 +144,11 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             if (IsInitialized) return;
             
-            // プレイヤー参�Eの取征E            FindPlayerReference();
+            // 繝励Ξ繧､繝､繝ｼ蜿ら・縺ｮ蜿門ｾ・            FindPlayerReference();
             
-            // AudioServiceの取征E            GetAudioServiceReference();
+            // AudioService縺ｮ蜿門ｾ・            GetAudioServiceReference();
             
-            // カチE��リ別音量倍率の初期匁E            InitializeCategoryMultipliers();
+            // 繧ｫ繝・ざ繝ｪ蛻･髻ｳ驥丞咲紫縺ｮ蛻晄悄蛹・            InitializeCategoryMultipliers();
             
             IsInitialized = true;
             
@@ -159,12 +159,12 @@ namespace asterivo.Unity60.Core.Audio.Services
         }
 
         /// <summary>
-        /// プレイヤー参�Eの検索 (SerializeField経由 - アーキチE��チャ準拠)
+        /// 繝励Ξ繧､繝､繝ｼ蜿ら・縺ｮ讀懃ｴ｢ (SerializeField邨檎罰 - 繧｢繝ｼ繧ｭ繝・け繝√Ε貅匁侠)
         /// </summary>
         private void FindPlayerReference()
         {
-            // Note: Core層からFeatures層への直接参�EはアーキチE��チャ違反のため
-            // SerializeField による Inspector設定を推奨
+            // Note: Core螻､縺九ｉFeatures螻､縺ｸ縺ｮ逶ｴ謗･蜿ら・縺ｯ繧｢繝ｼ繧ｭ繝・け繝√Ε驕募渚縺ｮ縺溘ａ
+            // SerializeField 縺ｫ繧医ｋ Inspector險ｭ螳壹ｒ謗ｨ螂ｨ
             if (playerTransform == null)
             {
                 ServiceLocator.GetService<IEventLogger>().LogWarning("[StealthAudioService] Player Transform not assigned! Please set in Inspector.");
@@ -179,7 +179,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         }
 
         /// <summary>
-        /// AudioService参�Eの取征E        /// </summary>
+        /// AudioService蜿ら・縺ｮ蜿門ｾ・        /// </summary>
         private void GetAudioServiceReference()
         {
             if (FeatureFlags.UseServiceLocator)
@@ -201,7 +201,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         }
 
         /// <summary>
-        /// カチE��リ別音量倍率の初期匁E        /// </summary>
+        /// 繧ｫ繝・ざ繝ｪ蛻･髻ｳ驥丞咲紫縺ｮ蛻晄悄蛹・        /// </summary>
         private void InitializeCategoryMultipliers()
         {
             categoryVolumeMultipliers[AudioCategory.BGM] = 1f;
@@ -219,14 +219,14 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             if (!IsInitialized) return;
             
-            // 足音生�EロジチE�� (従来のStealthAudioCoordinatorから移椁E
+            // 雜ｳ髻ｳ逕滓・繝ｭ繧ｸ繝・け (蠕捺擂縺ｮStealthAudioCoordinator縺九ｉ遘ｻ讀・
             if (FeatureFlags.EnableDebugLogging)
             {
                 EventLogger.LogStatic($"[StealthAudioService] Creating footstep at {position}, intensity: {intensity}, surface: {surfaceType}");
             }
 
-            // TODO: 実際の足音生�E実裁E            // - 表面タイプに応じた音声選抁E            // - インチE��シチE��に基づく音量調整
-            // - NPCの聴覚センサーへの通知
+            // TODO: 螳滄圀縺ｮ雜ｳ髻ｳ逕滓・螳溯｣・            // - 陦ｨ髱｢繧ｿ繧､繝励↓蠢懊§縺滄浹螢ｰ驕ｸ謚・            // - 繧､繝ｳ繝・Φ繧ｷ繝・ぅ縺ｫ蝓ｺ縺･縺城浹驥剰ｪｿ謨ｴ
+            // - NPC縺ｮ閨ｴ隕壹そ繝ｳ繧ｵ繝ｼ縺ｸ縺ｮ騾夂衍
         }
 
         public void SetEnvironmentNoiseLevel(float level)
@@ -273,7 +273,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                 _ => "Normal"
             };
             
-            // TODO: IBGMServiceが忁E��E            // audioService.PlayBGM(bgmName); 
+            // TODO: IBGMService縺悟ｿ・ｦ・            // audioService.PlayBGM(bgmName); 
             
             if (FeatureFlags.EnableDebugLogging)
             {
@@ -302,13 +302,13 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             if (!IsInitialized) return;
             
-            // AI聴覚センサーへの通知ロジチE��
+            // AI閨ｴ隕壹そ繝ｳ繧ｵ繝ｼ縺ｸ縺ｮ騾夂衍繝ｭ繧ｸ繝・け
             if (FeatureFlags.EnableDebugLogging)
             {
                 EventLogger.LogStatic($"[StealthAudioService] Notifying auditory sensors: origin={origin}, radius={radius}, intensity={intensity}");
             }
 
-            // TODO: AI シスチE��との連携実裁E        }
+            // TODO: AI 繧ｷ繧ｹ繝・Β縺ｨ縺ｮ騾｣謳ｺ螳溯｣・        }
 
         public void AdjustStealthAudio(float stealthLevel)
         {
@@ -361,18 +361,18 @@ namespace asterivo.Unity60.Core.Audio.Services
         #region Public Interface
 
         /// <summary>
-        /// 非スチE��ス音響を抑制すべきかを判宁E        /// </summary>
+        /// 髱槭せ繝・Ν繧ｹ髻ｳ髻ｿ繧呈椛蛻ｶ縺吶∋縺阪°繧貞愛螳・        /// </summary>
         public bool ShouldReduceNonStealthAudio()
         {
             if (!IsInitialized) return false;
 
-            // プレイヤーが隠れモード�E晁E            if (IsPlayerInHidingMode())
+            // 繝励Ξ繧､繝､繝ｼ縺碁國繧後Δ繝ｼ繝峨・譎・            if (IsPlayerInHidingMode())
                 return true;
 
-            // 近くのAIが警戒状態�E晁E            if (nearbyAlertAICount > 0)
+            // 霑代￥縺ｮAI縺瑚ｭｦ謌堤憾諷九・譎・            if (nearbyAlertAICount > 0)
                 return true;
 
-            // 重要なスチE��スアクション中
+            // 驥崎ｦ√↑繧ｹ繝・Ν繧ｹ繧｢繧ｯ繧ｷ繝ｧ繝ｳ荳ｭ
             if (IsPerformingCriticalStealthAction())
                 return true;
 
@@ -380,20 +380,20 @@ namespace asterivo.Unity60.Core.Audio.Services
         }
 
         /// <summary>
-        /// マスキング効果�E計箁E        /// </summary>
+        /// 繝槭せ繧ｭ繝ｳ繧ｰ蜉ｹ譫懊・險育ｮ・        /// </summary>
         public float CalculateMaskingEffect(Vector3 soundPosition, AudioEventData audioData)
         {
             if (!IsInitialized) return 0f;
 
             float totalMasking = globalMaskingStrength;
 
-            // 環墁E��因によるマスキング効果を追加
-            // TODO: より詳細なマスキング計算ロジチE��を実裁E
+            // 迺ｰ蠅・ｦ∝屏縺ｫ繧医ｋ繝槭せ繧ｭ繝ｳ繧ｰ蜉ｹ譫懊ｒ霑ｽ蜉
+            // TODO: 繧医ｊ隧ｳ邏ｰ縺ｪ繝槭せ繧ｭ繝ｳ繧ｰ險育ｮ励Ο繧ｸ繝・け繧貞ｮ溯｣・
             return Mathf.Clamp01(totalMasking);
         }
 
         /// <summary>
-        /// NPCの聴覚シスチE��への影響度を計箁E        /// </summary>
+        /// NPC縺ｮ閨ｴ隕壹す繧ｹ繝・Β縺ｸ縺ｮ蠖ｱ髻ｿ蠎ｦ繧定ｨ育ｮ・        /// </summary>
         public float GetNPCAudibilityMultiplier(AudioEventData audioData)
         {
             if (!IsInitialized || !audioData.affectsStealthGameplay)
@@ -402,7 +402,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             float maskingEffect = CalculateMaskingEffect(audioData.worldPosition, audioData);
             float audibilityMultiplier = 1f - maskingEffect;
 
-            // スチE��スモード時の追加減衰
+            // 繧ｹ繝・Ν繧ｹ繝｢繝ｼ繝画凾縺ｮ霑ｽ蜉貂幄｡ｰ
             if (isStealthModeActive && audioData.canBeDuckedByTension)
             {
                 audibilityMultiplier *= 0.7f;
@@ -412,7 +412,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         }
 
         /// <summary>
-        /// カチE��リ音量倍率を取征E        /// </summary>
+        /// 繧ｫ繝・ざ繝ｪ髻ｳ驥丞咲紫繧貞叙蠕・        /// </summary>
         public float GetCategoryVolumeMultiplier(AudioCategory category)
         {
             return categoryVolumeMultipliers.TryGetValue(category, out float multiplier) ? multiplier : 1f;
@@ -423,7 +423,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         #region Private Methods
 
         /// <summary>
-        /// 近くのAI検�Eの更新
+        /// 霑代￥縺ｮAI讀懷・縺ｮ譖ｴ譁ｰ
         /// </summary>
         private void UpdateNearbyAIDetection()
         {
@@ -432,7 +432,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             nearbyAI.Clear();
             nearbyAlertAICount = 0;
 
-            // 周囲のAIエージェントを検索
+            // 蜻ｨ蝗ｲ縺ｮAI繧ｨ繝ｼ繧ｸ繧ｧ繝ｳ繝医ｒ讀懃ｴ｢
             Collider[] nearbyColliders = Physics.OverlapSphere(
                 playerTransform.position, 
                 playerHidingRadius * 2f, 
@@ -445,7 +445,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                 {
                     nearbyAI.Add(collider.transform);
 
-                    // AIの警戒レベルを確誁E                    var aiController = collider.GetComponent<IGameStateProvider>();
+                    // AI縺ｮ隴ｦ謌偵Ξ繝吶Ν繧堤｢ｺ隱・                    var aiController = collider.GetComponent<IGameStateProvider>();
                     if (aiController != null && aiController.GetAlertLevel() > aiAlertThreshold)
                     {
                         nearbyAlertAICount++;
@@ -455,7 +455,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         }
 
         /// <summary>
-        /// スチE��スモード状態�E更新
+        /// 繧ｹ繝・Ν繧ｹ繝｢繝ｼ繝臥憾諷九・譖ｴ譁ｰ
         /// </summary>
         private void UpdateStealthModeState()
         {
@@ -466,10 +466,10 @@ namespace asterivo.Unity60.Core.Audio.Services
                 isStealthModeActive = newStealthMode;
                 previousStealthModeState = newStealthMode;
 
-                // 音量倍率の更新
+                // 髻ｳ驥丞咲紫縺ｮ譖ｴ譁ｰ
                 UpdateCategoryVolumeMultipliers();
 
-                // イベント発衁E                if (newStealthMode)
+                // 繧､繝吶Φ繝育匱陦・                if (newStealthMode)
                 {
                     stealthModeActivatedEvent?.Raise();
                 }
@@ -486,13 +486,13 @@ namespace asterivo.Unity60.Core.Audio.Services
         }
 
         /// <summary>
-        /// マスキング効果�E更新
+        /// 繝槭せ繧ｭ繝ｳ繧ｰ蜉ｹ譫懊・譖ｴ譁ｰ
         /// </summary>
         private void UpdateMaskingEffects()
         {
             if (playerTransform == null) return;
 
-            // プレイヤー位置でのマスキング効果を計箁E            var dummyAudioData = AudioEventData.CreateDefault("MaskingCalculation");
+            // 繝励Ξ繧､繝､繝ｼ菴咲ｽｮ縺ｧ縺ｮ繝槭せ繧ｭ繝ｳ繧ｰ蜉ｹ譫懊ｒ險育ｮ・            var dummyAudioData = AudioEventData.CreateDefault("MaskingCalculation");
             dummyAudioData.worldPosition = playerTransform.position;
 
             float newMaskingLevel = CalculateMaskingEffect(playerTransform.position, dummyAudioData);
@@ -505,18 +505,18 @@ namespace asterivo.Unity60.Core.Audio.Services
         }
 
         /// <summary>
-        /// プレイヤーが隠れモードかを判宁E        /// </summary>
+        /// 繝励Ξ繧､繝､繝ｼ縺碁國繧後Δ繝ｼ繝峨°繧貞愛螳・        /// </summary>
         private bool IsPlayerInHidingMode()
         {
             if (playerTransform == null) return false;
 
-            // プレイヤーコントローラーからの状態取得を試みめE            var playerController = playerTransform.GetComponent<IGameStateProvider>();
+            // 繝励Ξ繧､繝､繝ｼ繧ｳ繝ｳ繝医Ο繝ｼ繝ｩ繝ｼ縺九ｉ縺ｮ迥ｶ諷句叙蠕励ｒ隧ｦ縺ｿ繧・            var playerController = playerTransform.GetComponent<IGameStateProvider>();
             if (playerController != null)
             {
                 return playerController.IsInHidingMode();
             }
 
-            // フォールバック: 近くの隠れ場所オブジェクトをチェチE��
+            // 繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ: 霑代￥縺ｮ髫繧悟ｴ謇繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ繝√ぉ繝・け
             Collider[] hideSpots = Physics.OverlapSphere(
                 playerTransform.position, 
                 playerHidingRadius, 
@@ -527,16 +527,16 @@ namespace asterivo.Unity60.Core.Audio.Services
         }
 
         /// <summary>
-        /// 重要なスチE��スアクション中かを判宁E        /// </summary>
+        /// 驥崎ｦ√↑繧ｹ繝・Ν繧ｹ繧｢繧ｯ繧ｷ繝ｧ繝ｳ荳ｭ縺九ｒ蛻､螳・        /// </summary>
         private bool IsPerformingCriticalStealthAction()
         {
             if (playerTransform == null) return false;
 
-            // TODO: 重要なスチE��スアクションの判定ロジチE��を実裁E            return false;
+            // TODO: 驥崎ｦ√↑繧ｹ繝・Ν繧ｹ繧｢繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ蛻､螳壹Ο繧ｸ繝・け繧貞ｮ溯｣・            return false;
         }
 
         /// <summary>
-        /// カチE��リ別音量倍率の更新
+        /// 繧ｫ繝・ざ繝ｪ蛻･髻ｳ驥丞咲紫縺ｮ譖ｴ譁ｰ
         /// </summary>
         private void UpdateCategoryVolumeMultipliers()
         {
@@ -545,10 +545,10 @@ namespace asterivo.Unity60.Core.Audio.Services
                 categoryVolumeMultipliers[AudioCategory.BGM] = 1f - bgmReductionAmount;
                 categoryVolumeMultipliers[AudioCategory.Ambient] = 1f - ambientReductionAmount;
                 categoryVolumeMultipliers[AudioCategory.Effect] = 1f - effectReductionAmount;
-                categoryVolumeMultipliers[AudioCategory.Stealth] = 1f; // スチE��ス音は維持E                categoryVolumeMultipliers[AudioCategory.UI] = 1f; // UI音は維持E            }
+                categoryVolumeMultipliers[AudioCategory.Stealth] = 1f; // 繧ｹ繝・Ν繧ｹ髻ｳ縺ｯ邯ｭ謖・                categoryVolumeMultipliers[AudioCategory.UI] = 1f; // UI髻ｳ縺ｯ邯ｭ謖・            }
             else
             {
-                // 通常状態に復帰
+                // 騾壼ｸｸ迥ｶ諷九↓蠕ｩ蟶ｰ
                 categoryVolumeMultipliers[AudioCategory.BGM] = 1f;
                 categoryVolumeMultipliers[AudioCategory.Ambient] = 1f;
                 categoryVolumeMultipliers[AudioCategory.Effect] = 1f;
@@ -581,11 +581,11 @@ namespace asterivo.Unity60.Core.Audio.Services
             var service = ServiceLocator.GetService<IStealthAudioService>();
             if (service != null)
             {
-                EventLogger.LogStatic($"[StealthAudioService] ✁EService successfully retrieved from ServiceLocator");
+                EventLogger.LogStatic($"[StealthAudioService] 笨・Service successfully retrieved from ServiceLocator");
             }
             else
             {
-                ServiceLocator.GetService<IEventLogger>().LogError($"[StealthAudioService] ❁EService not found in ServiceLocator");
+                ServiceLocator.GetService<IEventLogger>().LogError($"[StealthAudioService] 笶・Service not found in ServiceLocator");
             }
         }
 
@@ -600,15 +600,15 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             if (playerTransform == null) return;
 
-            // プレイヤー隠れ篁E��の表示
+            // 繝励Ξ繧､繝､繝ｼ髫繧檎ｯ・峇縺ｮ陦ｨ遉ｺ
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(playerTransform.position, playerHidingRadius);
 
-            // AI検�E篁E��の表示
+            // AI讀懷・遽・峇縺ｮ陦ｨ遉ｺ
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(playerTransform.position, playerHidingRadius * 2f);
 
-            // 近くのAIの表示
+            // 霑代￥縺ｮAI縺ｮ陦ｨ遉ｺ
             Gizmos.color = Color.red;
             foreach (var ai in nearbyAI)
             {

@@ -1,4 +1,4 @@
-# Unity Test Framework実行検証レポート
+﻿# Unity Test Framework実行検証レポート
 作成日: 2025-09-22
 Unity Version: 6000.0.42f1
 

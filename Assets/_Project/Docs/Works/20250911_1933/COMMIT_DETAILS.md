@@ -1,4 +1,4 @@
-# コミット詳細 - Phase 1 完了
+﻿# コミット詳細 - Phase 1 完了
 
 **コミットID**: `779bdfd`  
 **ブランチ**: `refactor/phase1-architecture-cleanup`  

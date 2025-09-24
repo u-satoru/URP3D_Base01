@@ -1,4 +1,4 @@
-namespace asterivo.Unity60.Core.Types
+﻿namespace asterivo.Unity60.Core.Types
 {
     /// <summary>
     /// ゲーム状態の定義

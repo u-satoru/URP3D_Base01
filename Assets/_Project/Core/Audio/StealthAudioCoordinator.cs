@@ -1,4 +1,4 @@
-using asterivo.Unity60.Core;
+﻿using asterivo.Unity60.Core;
 using UnityEngine;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Audio.Data;
@@ -13,8 +13,8 @@ using Sirenix.OdinInspector;
 namespace asterivo.Unity60.Core.Audio
 {
     /// <summary>
-    /// スチE��スゲームプレイと一般オーチE��オの協調制御
-    /// NPCの聴覚センサーシスチE��との連携を管琁E    /// ServiceLocator対応版
+    /// スチE��スゲームプレイと一般オーチE��オの協調制御
+    /// NPCの聴覚センサーシスチE��との連携を管琁E    /// ServiceLocator対応版
     /// </summary>
     public class StealthAudioCoordinator : MonoBehaviour, IStealthAudioService
     {
@@ -54,33 +54,33 @@ namespace asterivo.Unity60.Core.Audio
         [SerializeField, ReadOnly] private float currentMaskingLevel;
         [SerializeField, ReadOnly] private int nearbyAlertAICount;
 
-        // 冁E��状態管琁E        private Transform playerTransform;
+        // 冁E��状態管琁E        private Transform playerTransform;
         private List<Transform> nearbyAI = new List<Transform>();
         private Dictionary<AudioCategory, float> categoryVolumeMultipliers = new Dictionary<AudioCategory, float>();
         private bool previousStealthModeState = false;
         private float globalMaskingStrength = 0f;
 
-        // シスチE��連携�E�EerviceLocator経由�E�E        private IAudioService audioService;
+        // シスチE��連携�E�EerviceLocator経由�E�E        private IAudioService audioService;
         private AudioManager audioManager;
         private DynamicAudioEnvironment dynamicEnvironment;
-        
-        // ✁ESingleton パターンを完�E削除 - ServiceLocator専用実裁E        
+
+        // ✁ESingleton パターンを完�E削除 - ServiceLocator専用実裁E
         // 初期化状態管琁E        public bool IsInitialized { get; private set; }
 
         #region Unity Lifecycle
 
         private void Awake()
         {
-            // ✁EServiceLocator専用実裁E�Eみ - Singletonパターン完�E削除
+            // ✁EServiceLocator専用実裁E�Eみ - Singletonパターン完�E削除
             DontDestroyOnLoad(gameObject);
-            
+
             // ServiceLocatorに登録
             if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator)
             {
                 try
                 {
                     ServiceLocator.RegisterService<IStealthAudioService>(this);
-                    
+
                     if (asterivo.Unity60.Core.FeatureFlags.EnableDebugLogging)
                     {
                         var eventLogger = ServiceLocator.GetService<IEventLogger>();
@@ -104,7 +104,7 @@ namespace asterivo.Unity60.Core.Audio
                     eventLogger.LogWarning("[StealthAudioCoordinator] ServiceLocator is disabled - service not registered");
                 }
             }
-            
+
             InitializeCoordinator();
         }
 
@@ -119,17 +119,17 @@ namespace asterivo.Unity60.Core.Audio
             UpdateStealthModeState();
             UpdateMaskingEffects();
         }
-        
+
         private void OnDestroy()
         {
-            // ✁EServiceLocator専用実裁E�Eみ - Singletonパターン完�E削除
+            // ✁EServiceLocator専用実裁E�Eみ - Singletonパターン完�E削除
             // ServiceLocatorから登録解除
             if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator)
             {
                 try
                 {
                     ServiceLocator.UnregisterService<IStealthAudioService>();
-                    
+
                     if (asterivo.Unity60.Core.FeatureFlags.EnableDebugLogging)
                     {
                         var eventLogger = ServiceLocator.GetService<IEventLogger>();
@@ -153,7 +153,7 @@ namespace asterivo.Unity60.Core.Audio
         #region Initialization
 
         /// <summary>
-        /// コーチE��ネ�Eターの初期匁E        /// </summary>
+        /// コーチE��ネ�Eターの初期匁E        /// </summary>
         private void InitializeCoordinator()
         {
             // プレイヤートランスフォームの検索
@@ -172,7 +172,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// シスチE��参�Eの検索
+        /// シスチE��参�Eの検索
         /// Phase 3 移行パターン: ServiceLocator優先、Singleton フォールバック
         /// </summary>
         private void FindSystemReferences()
@@ -182,7 +182,7 @@ namespace asterivo.Unity60.Core.Audio
                 try
                 {
                     audioService = ServiceLocator.GetService<IAudioService>();
-                    
+
                     if (audioService != null)
                     {
                         if (asterivo.Unity60.Core.FeatureFlags.EnableDebugLogging)
@@ -212,7 +212,7 @@ namespace asterivo.Unity60.Core.Audio
                     }
                 }
             }
-            
+
             // ✁EServiceLocator専用実裁E- 直接AudioManagerを検索
             if (audioManager == null)
             {
@@ -248,7 +248,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// カチE��リ別音量倍率の初期匁E        /// </summary>
+        /// カチE��リ別音量倍率の初期匁E        /// </summary>
         private void InitializeCategoryMultipliers()
         {
             categoryVolumeMultipliers[AudioCategory.BGM] = 1f;
@@ -257,94 +257,94 @@ namespace asterivo.Unity60.Core.Audio
             categoryVolumeMultipliers[AudioCategory.Stealth] = 1f;
             categoryVolumeMultipliers[AudioCategory.UI] = 1f;
         }
-        
+
         /// <summary>
-        /// IInitializable実裁E- スチE��スオーチE��オコーチE��ネ�Eターの初期匁E        /// </summary>
+        /// IInitializable実裁E- スチE��スオーチE��オコーチE��ネ�Eターの初期匁E        /// </summary>
         public void Initialize()
         {
             if (IsInitialized) return;
-            
+
             FindSystemReferences();
             InitializeCategoryMultipliers();
-            
+
             IsInitialized = true;
-            
-            // チE��チE��ログ (一時的に簡素匁E
-            { 
-                var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+
+            // チE��チE��ログ (一時的に簡素匁E
+            {
+                var eventLogger = ServiceLocator.GetService<IEventLogger>();
                 if (eventLogger != null) eventLogger.Log("[StealthAudioCoordinator] Initialization complete");
             }
         }
 
         #endregion
-        
+
         #region IStealthAudioService Implementation
-        
+
         /// <summary>
         /// 足音を生戁E        /// </summary>
         public void CreateFootstep(Vector3 position, float intensity, string surfaceType)
         {
             if (!IsInitialized)
             {
-                { 
-                    var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+                {
+                    var eventLogger = ServiceLocator.GetService<IEventLogger>();
                     if (eventLogger != null) eventLogger.LogWarning("[StealthAudioCoordinator] System not initialized");
                 }
                 return;
             }
-            
-            // TODO: 表面タイプに応じた足音の生�E
-            // チE��チE��ログ出劁E            { 
-                var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+
+            // TODO: 表面タイプに応じた足音の生�E
+            // チE��チE��ログ出劁E            {
+                var eventLogger = ServiceLocator.GetService<IEventLogger>();
                 if (eventLogger != null) eventLogger.Log($"[StealthAudioCoordinator] Creating footstep at {position}, intensity: {intensity}, surface: {surfaceType}");
             }
         }
-        
+
         /// <summary>
-        /// 環墁E��イズレベルを設定（�Eスキング効果用�E�E        /// </summary>
+        /// 環墁E��イズレベルを設定（�Eスキング効果用�E�E        /// </summary>
         public void SetEnvironmentNoiseLevel(float level)
         {
             if (!IsInitialized) return;
-            
+
             globalMaskingStrength = Mathf.Clamp01(level);
-            
-            // チE��チE��ログ出劁E            { 
-                var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+
+            // チE��チE��ログ出劁E            {
+                var eventLogger = ServiceLocator.GetService<IEventLogger>();
                 if (eventLogger != null) eventLogger.Log($"[StealthAudioCoordinator] Environment noise level set to: {level}");
             }
         }
-        
+
         /// <summary>
         /// NPCに聞こえる音を生戁E        /// </summary>
         public void EmitDetectableSound(Vector3 position, float radius, float intensity, string soundType)
         {
             if (!IsInitialized) return;
-            
+
             // TODO: NPCの聴覚センサーへの通知
             NotifyAuditorySensors(position, radius, intensity);
-            
-            // チE��チE��ログ出劁E            { 
-                var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+
+            // チE��チE��ログ出劁E            {
+                var eventLogger = ServiceLocator.GetService<IEventLogger>();
                 if (eventLogger != null) eventLogger.Log($"[StealthAudioCoordinator] Detectable sound emitted: {soundType} at {position}");
             }
         }
-        
+
         /// <summary>
-        /// 注意を引く音を�E甁E        /// </summary>
+        /// 注意を引く音を�E甁E        /// </summary>
         public void PlayDistraction(Vector3 position, float radius)
         {
             if (!IsInitialized) return;
-            
+
             EmitDetectableSound(position, radius, 0.8f, "Distraction");
         }
-        
+
         /// <summary>
         /// 警戒レベルに応じたBGMを設宁E        /// </summary>
         public void SetAlertLevelMusic(AlertLevel level)
         {
             if (!IsInitialized || audioService == null) return;
-            
-            // TODO: 警戒レベルに応じたBGM刁E��替ぁE            string bgmName = level switch
+
+            // TODO: 警戒レベルに応じたBGM刁E��替ぁE            string bgmName = level switch
             {
                 AlertLevel.Relaxed => "Normal",
                 AlertLevel.Suspicious => "Suspicious",
@@ -352,64 +352,64 @@ namespace asterivo.Unity60.Core.Audio
                 AlertLevel.Alert => "Combat",
                 _ => "Normal"
             };
-            
-            // audioService.PlayBGM(bgmName); // TODO: IBGMServiceが忁E��E            
-            // チE��チE��ログ出劁E            { 
-                var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+
+            // audioService.PlayBGM(bgmName); // TODO: IBGMServiceが忁E��E
+            // チE��チE��ログ出劁E            {
+                var eventLogger = ServiceLocator.GetService<IEventLogger>();
                 if (eventLogger != null) eventLogger.Log($"[StealthAudioCoordinator] Alert level music set: {level} -> {bgmName}");
             }
         }
-        
+
         /// <summary>
-        /// オーチE��オマスキング効果を適用
+        /// オーチE��オマスキング効果を適用
         /// </summary>
         public void ApplyAudioMasking(float maskingLevel)
         {
             if (!IsInitialized) return;
-            
+
             currentMaskingLevel = Mathf.Clamp01(maskingLevel);
-            
-            // 既存�EマスキングシスチE��を使用
+
+            // 既存�EマスキングシスチE��を使用
             UpdateMaskingEffects();
-            
+
             if (maskingLevelChangedEvent != null)
             {
                 maskingLevelChangedEvent.Raise();
             }
         }
-        
+
         /// <summary>
         /// NPCの聴覚センサーにサウンドイベントを通知
         /// </summary>
         public void NotifyAuditorySensors(Vector3 origin, float radius, float intensity)
         {
             if (!IsInitialized) return;
-            
-            // TODO: AIシスチE��との連携実裁E            // チE��チE��ログ出劁E            { 
-                var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+
+            // TODO: AIシスチE��との連携実裁E            // チE��チE��ログ出劁E            {
+                var eventLogger = ServiceLocator.GetService<IEventLogger>();
                 if (eventLogger != null) eventLogger.Log($"[StealthAudioCoordinator] Notifying auditory sensors: origin={origin}, radius={radius}, intensity={intensity}");
             }
         }
-        
+
         /// <summary>
-        /// プレイヤーの隠寁E��に応じた音響調整
+        /// プレイヤーの隠寁E��に応じた音響調整
         /// </summary>
         public void AdjustStealthAudio(float stealthLevel)
         {
             if (!IsInitialized) return;
-            
-            // スチE��スレベルに応じて音量を調整
+
+            // スチE��スレベルに応じて音量を調整
             float volumeReduction = 1f - (stealthLevel * 0.3f); // 最大30%減音
-            
+
             if (audioService != null)
             {
                 audioService.SetCategoryVolume("bgm", bgmReductionAmount * volumeReduction);
                 audioService.SetCategoryVolume("ambient", ambientReductionAmount * volumeReduction);
                 audioService.SetCategoryVolume("effect", effectReductionAmount * volumeReduction);
             }
-            
-            // チE��チE��ログ出劁E            { 
-                var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+
+            // チE��チE��ログ出劁E            {
+                var eventLogger = ServiceLocator.GetService<IEventLogger>();
                 if (eventLogger != null) eventLogger.Log($"[StealthAudioCoordinator] Stealth audio adjusted: level={stealthLevel}, reduction={volumeReduction}");
             }
         }
@@ -419,7 +419,7 @@ namespace asterivo.Unity60.Core.Audio
         #region Stealth Mode Detection
 
         /// <summary>
-        /// 近くのAI検�Eの更新
+        /// 近くのAI検�Eの更新
         /// </summary>
         private void UpdateNearbyAIDetection()
         {
@@ -430,8 +430,8 @@ namespace asterivo.Unity60.Core.Audio
 
             // 周囲のAIエージェントを検索
             Collider[] nearbyColliders = Physics.OverlapSphere(
-                playerTransform.position, 
-                playerHidingRadius * 2f, 
+                playerTransform.position,
+                playerHidingRadius * 2f,
                 aiLayerMask
             );
 
@@ -451,7 +451,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// スチE��スモード状態�E更新
+        /// スチE��スモード状態�E更新
         /// </summary>
         private void UpdateStealthModeState()
         {
@@ -474,8 +474,8 @@ namespace asterivo.Unity60.Core.Audio
                     stealthModeDeactivatedEvent?.Raise();
                 }
 
-                { 
-                    var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+                {
+                    var eventLogger = ServiceLocator.GetService<IEventLogger>();
                     if (eventLogger != null) eventLogger.Log($"<color=orange>[StealthAudioCoordinator]</color> Stealth mode {(newStealthMode ? "activated" : "deactivated")}");
                 }
             }
@@ -486,19 +486,19 @@ namespace asterivo.Unity60.Core.Audio
         #region Public Interface
 
         /// <summary>
-        /// 非スチE��ス音響を抑制すべきかを判宁E        /// </summary>
+        /// 非スチE��ス音響を抑制すべきかを判宁E        /// </summary>
         public bool ShouldReduceNonStealthAudio()
         {
             if (isOverrideActive)
                 return isStealthModeActive;
 
-            // プレイヤーが隠れモード�E晁E            if (IsPlayerInHidingMode())
+            // プレイヤーが隠れモード�E晁E            if (IsPlayerInHidingMode())
                 return true;
 
-            // 近くのAIが警戒状態�E晁E            if (nearbyAlertAICount > 0)
+            // 近くのAIが警戒状態�E晁E            if (nearbyAlertAICount > 0)
                 return true;
 
-            // 重要なスチE��スアクション中
+            // 重要なスチE��スアクション中
             if (IsPerformingCriticalStealthAction())
                 return true;
 
@@ -506,7 +506,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// マスキング効果�E計箁E        /// </summary>
+        /// マスキング効果�E計箁E        /// </summary>
         public float CalculateMaskingEffect(Vector3 soundPosition, AudioEventData audioData)
         {
             float totalMasking = baseMaskingStrength;
@@ -517,10 +517,10 @@ namespace asterivo.Unity60.Core.Audio
                 totalMasking += GetBGMMaskingStrength() * 0.3f;
             }
 
-            // 環墁E��によるマスキング
+            // 環墁E��によるマスキング
             totalMasking += GetEnvironmentalMaskingAt(soundPosition) * 0.5f;
 
-            // 天候�E時間帯によるマスキング
+            // 天候�E時間帯によるマスキング
             if (dynamicEnvironment != null)
             {
                 var (env, weather, time) = dynamicEnvironment.GetCurrentState();
@@ -528,22 +528,22 @@ namespace asterivo.Unity60.Core.Audio
                 totalMasking += GetTimeMaskingEffect(time) * 0.2f;
             }
 
-            // 音響カチE��リによる調整
+            // 音響カチE��リによる調整
             totalMasking *= GetCategoryMaskingMultiplier(audioData.category);
 
             return Mathf.Clamp01(totalMasking);
         }
 
         /// <summary>
-        /// NPCの聴覚シスチE��への影響度を計箁E        /// </summary>
+        /// NPCの聴覚シスチE��への影響度を計箁E        /// </summary>
         public float GetNPCAudibilityMultiplier(AudioEventData audioData)
         {
             if (!audioData.affectsStealthGameplay)
-                return 0f; // スチE��スに影響しなぁE��は NPCが感知しなぁE
+                return 0f; // スチE��スに影響しなぁE��は NPCが感知しなぁE
             float maskingEffect = CalculateMaskingEffect(audioData.worldPosition, audioData);
             float audibilityMultiplier = 1f - maskingEffect;
 
-            // スチE��スモード時の追加減衰
+            // スチE��スモード時の追加減衰
             if (isStealthModeActive && audioData.canBeDuckedByTension)
             {
                 audibilityMultiplier *= 0.7f;
@@ -553,14 +553,14 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 音響カチE��リの音量倍率を取征E        /// </summary>
+        /// 音響カチE��リの音量倍率を取征E        /// </summary>
         public float GetCategoryVolumeMultiplier(AudioCategory category)
         {
             return categoryVolumeMultipliers.TryGetValue(category, out float multiplier) ? multiplier : 1f;
         }
 
         /// <summary>
-        /// スチE��スモード�E強制設宁E        /// </summary>
+        /// スチE��スモード�E強制設宁E        /// </summary>
         public void SetOverrideStealthMode(bool forceStealthMode)
         {
             isOverrideActive = true;
@@ -569,7 +569,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// オーバ�Eライド�E解除
+        /// オーバ�Eライド�E解除
         /// </summary>
         public void ClearStealthModeOverride()
         {
@@ -592,10 +592,10 @@ namespace asterivo.Unity60.Core.Audio
                 return playerController.IsInHidingMode();
             }
 
-            // フォールバック�E�近くの隠れ場所オブジェクトをチェチE��
+            // フォールバック�E�近くの隠れ場所オブジェクトをチェチE��
             Collider[] hideSpots = Physics.OverlapSphere(
-                playerTransform.position, 
-                playerHidingRadius, 
+                playerTransform.position,
+                playerHidingRadius,
                 LayerMask.GetMask("HideSpot")
             );
 
@@ -603,14 +603,14 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 重要なスチE��スアクション中かを判宁E        /// </summary>
+        /// 重要なスチE��スアクション中かを判宁E        /// </summary>
         private bool IsPerformingCriticalStealthAction()
         {
             if (playerTransform == null) return false;
 
-            // 周囲の重要アクションオブジェクトをチェチE��
+            // 周囲の重要アクションオブジェクトをチェチE��
             Collider[] actionObjects = Physics.OverlapSphere(
-                playerTransform.position, 
+                playerTransform.position,
                 criticalActionRadius
             );
 
@@ -620,7 +620,7 @@ namespace asterivo.Unity60.Core.Audio
                 {
                     if (obj.CompareTag(tag))
                     {
-                        // オブジェクトがアクチE��ブ状態かを確誁E                        var interactable = obj.GetComponent<IGameStateProvider>();
+                        // オブジェクトがアクチE��ブ状態かを確誁E                        var interactable = obj.GetComponent<IGameStateProvider>();
                         if (interactable != null && interactable.IsBeingUsed())
                         {
                             return true;
@@ -633,7 +633,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// カチE��リ別音量倍率の更新
+        /// カチE��リ別音量倍率の更新
         /// </summary>
         private void UpdateCategoryVolumeMultipliers()
         {
@@ -642,7 +642,7 @@ namespace asterivo.Unity60.Core.Audio
                 categoryVolumeMultipliers[AudioCategory.BGM] = 1f - bgmReductionAmount;
                 categoryVolumeMultipliers[AudioCategory.Ambient] = 1f - ambientReductionAmount;
                 categoryVolumeMultipliers[AudioCategory.Effect] = 1f - effectReductionAmount;
-                categoryVolumeMultipliers[AudioCategory.Stealth] = 1f; // スチE��ス音は維持E                categoryVolumeMultipliers[AudioCategory.UI] = 1f; // UI音は維持E            }
+                categoryVolumeMultipliers[AudioCategory.Stealth] = 1f; // スチE��ス音は維持E                categoryVolumeMultipliers[AudioCategory.UI] = 1f; // UI音は維持E            }
             else
             {
                 // 通常状態に復帰
@@ -655,30 +655,30 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// マスキング効果�E通知を受ける
+        /// マスキング効果�E通知を受ける
         /// </summary>
         public void NotifyMaskingEffect(Vector3 position, float strength, float radius)
         {
             if (playerTransform == null) return;
-            
+
             float distance = Vector3.Distance(playerTransform.position, position);
             if (distance > radius) return;
-            
+
             // プレイヤー周辺のマスキング効果として記録
-            // こ�E惁E��は音響シスチE��のマスキング計算に使用されめE            float normalizedDistance = distance / radius;
+            // こ�E惁E��は音響シスチE��のマスキング計算に使用されめE            float normalizedDistance = distance / radius;
             float effectiveStrength = strength * (1f - normalizedDistance);
-            
+
             // グローバルマスキング強度を一時的に増加
             globalMaskingStrength = Mathf.Max(globalMaskingStrength, effectiveStrength * 0.5f);
-            
-            { 
-                var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+
+            {
+                var eventLogger = ServiceLocator.GetService<IEventLogger>();
                 if (eventLogger != null) eventLogger.Log($"<color=purple>[StealthAudioCoordinator]</color> Masking effect applied: strength={effectiveStrength:F2}, distance={distance:F1}m");
             }
         }
 
         /// <summary>
-        /// マスキング効果�E更新
+        /// マスキング効果�E更新
         /// </summary>
         private void UpdateMaskingEffects()
         {
@@ -697,12 +697,12 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// BGMが�E生中かを確誁E        /// </summary>
+        /// BGMが�E生中かを確誁E        /// </summary>
         private bool IsBGMPlaying()
         {
             // AudioManagerから BGM の再生状態を取征E            if (audioManager != null)
             {
-                // 実裁E�E AudioManager の API に依孁E                return true; // プレースホルダー
+                // 実裁E�E AudioManager の API に依孁E                return true; // プレースホルダー
             }
             return false;
         }
@@ -711,14 +711,14 @@ namespace asterivo.Unity60.Core.Audio
         /// BGMのマスキング強度を取征E        /// </summary>
         private float GetBGMMaskingStrength()
         {
-            return 0.3f; // 基本皁E��BGMマスキング強度
+            return 0.3f; // 基本皁E��BGMマスキング強度
         }
 
         /// <summary>
-        /// 環墁E��よるマスキング効果を取征E        /// </summary>
+        /// 環墁E��よるマスキング効果を取征E        /// </summary>
         private float GetEnvironmentalMaskingAt(Vector3 position)
         {
-            // DynamicAudioEnvironment から環墁E��報を取征E            if (dynamicEnvironment != null)
+            // DynamicAudioEnvironment から環墁E��報を取征E            if (dynamicEnvironment != null)
             {
                 return dynamicEnvironment.GetCurrentMaskingLevel();
             }
@@ -742,16 +742,16 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// カチE��リによるマスキング倍率
+        /// カチE��リによるマスキング倍率
         /// </summary>
         private float GetCategoryMaskingMultiplier(AudioCategory category)
         {
             return category switch
             {
-                AudioCategory.Stealth => 1f,   // スチE��ス音は完�Eなマスキング対象
-                AudioCategory.Effect => 0.8f,  // 効果音は部刁E��にマスク
-                AudioCategory.Ambient => 0.3f, // 環墁E��は軽く�Eスク
-                AudioCategory.BGM => 0.1f,     // BGMは殁E��マスクされなぁE                AudioCategory.UI => 0f,        // UI音はマスクされなぁE                _ => 1f
+                AudioCategory.Stealth => 1f,   // スチE��ス音は完�Eなマスキング対象
+                AudioCategory.Effect => 0.8f,  // 効果音は部刁E��にマスク
+                AudioCategory.Ambient => 0.3f, // 環墁E��は軽く�Eスク
+                AudioCategory.BGM => 0.1f,     // BGMは殁E��マスクされなぁE                AudioCategory.UI => 0f,        // UI音はマスクされなぁE                _ => 1f
             };
         }
 
@@ -775,10 +775,10 @@ namespace asterivo.Unity60.Core.Audio
             {
                 var testData = AudioEventData.CreateStealthDefault("DebugTest");
                 testData.worldPosition = playerTransform.position;
-                
+
                 float masking = CalculateMaskingEffect(playerTransform.position, testData);
-                { 
-                    var eventLogger = ServiceLocator.GetService<IEventLogger>(); 
+                {
+                    var eventLogger = ServiceLocator.GetService<IEventLogger>();
                     if (eventLogger != null) eventLogger.Log($"Current masking level at player position: {masking:F2}");
                 }
             }
@@ -788,11 +788,11 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (playerTransform == null) return;
 
-            // プレイヤー隠れ篁E��の表示
+            // プレイヤー隠れ篁E��の表示
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(playerTransform.position, playerHidingRadius);
 
-            // 重要アクション篁E��の表示
+            // 重要アクション篁E��の表示
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(playerTransform.position, criticalActionRadius);
 
@@ -814,10 +814,10 @@ namespace asterivo.Unity60.Core.Audio
         /// <summary>
         /// 目標達成時のサウンドを再生
         /// </summary>
-        /// <param name="withBonus">ボ�Eナス付きかどぁE��</param>
+        /// <param name="withBonus">ボ�Eナス付きかどぁE��</param>
         public void PlayObjectiveCompleteSound(bool withBonus)
         {
-            if (!IsInitialized || audioService == null) 
+            if (!IsInitialized || audioService == null)
             {
                 var eventLogger = ServiceLocator.GetService<IEventLogger>();
                 if (eventLogger != null && FeatureFlags.EnableDebugLogging)
@@ -832,13 +832,13 @@ namespace asterivo.Unity60.Core.Audio
                 // Determine which sound effect to play based on bonus status
                 string soundEffect = withBonus ? "objective_complete_bonus" : "objective_complete";
                 float volume = withBonus ? 1.0f : 0.8f;
-                
+
                 // Play the objective complete sound effect
                 // Using the effect category for objective completion sounds
-                audioService.PlaySound(soundEffect, 
-                    playerTransform != null ? playerTransform.position : Vector3.zero, 
+                audioService.PlaySound(soundEffect,
+                    playerTransform != null ? playerTransform.position : Vector3.zero,
                     volume);;
-                
+
                 // If in stealth mode, apply appropriate volume adjustments
                 if (isStealthModeActive)
                 {
@@ -846,7 +846,7 @@ namespace asterivo.Unity60.Core.Audio
                     float stealthVolume = volume * (1f - effectReductionAmount);
                     audioService.SetCategoryVolume("effect", stealthVolume);
                 }
-                
+
                 // Log the action if debug logging is enabled
                 if (FeatureFlags.EnableDebugLogging)
                 {
@@ -856,7 +856,7 @@ namespace asterivo.Unity60.Core.Audio
                         eventLogger.Log($"[StealthAudioCoordinator] Objective complete sound played: withBonus={withBonus}, volume={volume:F2}");
                     }
                 }
-                
+
                 // Raise event for objective completion if events are configured
                 if (withBonus && stealthModeActivatedEvent != null)
                 {
@@ -890,13 +890,13 @@ namespace asterivo.Unity60.Core.Audio
                 return;
             }
 
-            // 隠蔽レベルに応じたスチE��ス音響調整
+            // 隠蔽レベルに応じたスチE��ス音響調整
             AdjustStealthAudio(concealmentLevel);
 
-            // マスキング効果�E適用
+            // マスキング効果�E適用
             ApplyAudioMasking(concealmentLevel * 0.8f);
 
-            // スチE��スモード�E強制有効匁E            SetOverrideStealthMode(true);
+            // スチE��スモード�E強制有効匁E            SetOverrideStealthMode(true);
 
             if (FeatureFlags.EnableDebugLogging)
             {
@@ -923,13 +923,13 @@ namespace asterivo.Unity60.Core.Audio
                 return;
             }
 
-            // スチE��ス音響調整を解除
+            // スチE��ス音響調整を解除
             AdjustStealthAudio(0f);
 
             // マスキング効果を解除
             ApplyAudioMasking(0f);
 
-            // スチE��スモードオーバ�Eライドを解除
+            // スチE��スモードオーバ�Eライドを解除
             ClearStealthModeOverride();
 
             if (FeatureFlags.EnableDebugLogging)

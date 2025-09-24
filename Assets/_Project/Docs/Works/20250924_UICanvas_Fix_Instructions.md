@@ -1,4 +1,4 @@
-# UICanvas.prefab エラー解決手順
+﻿# UICanvas.prefab エラー解決手順
 
 ## 問題の概要
 `UICanvas.prefab`が存在しないスクリプト参照を含んでおり、保存時にエラーが発生しています。

@@ -1,20 +1,20 @@
-using UnityEngine;
+﻿using UnityEngine;
 // using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// ジャンプコマンド�E定義、E    /// プレイヤーまた�EAIのジャンプアクションをカプセル化します、E    /// 
-    /// 主な機�E�E�E    /// - ジャンプ力と方向�E持E��E    /// - ジャンプタイプ（通常、二段、壁、E��距離等）�E管琁E    /// - 着地判定と着地後�E処琁E    /// - スタミナ消費とクールダウンの老E�E
+    /// 繧ｸ繝｣繝ｳ繝励さ繝槭Φ繝峨・螳夂ｾｩ縲・    /// 繝励Ξ繧､繝､繝ｼ縺ｾ縺溘・AI縺ｮ繧ｸ繝｣繝ｳ繝励い繧ｯ繧ｷ繝ｧ繝ｳ繧偵き繝励そ繝ｫ蛹悶＠縺ｾ縺吶・    /// 
+    /// 荳ｻ縺ｪ讖溯・・・    /// - 繧ｸ繝｣繝ｳ繝怜鴨縺ｨ譁ｹ蜷代・謖・ｮ・    /// - 繧ｸ繝｣繝ｳ繝励ち繧､繝暦ｼ磯壼ｸｸ縲∽ｺ梧ｮｵ縲∝｣√・聞霍晞屬遲会ｼ峨・邂｡逅・    /// - 逹蝨ｰ蛻､螳壹→逹蝨ｰ蠕後・蜃ｦ逅・    /// - 繧ｹ繧ｿ繝溘リ豸郁ｲｻ縺ｨ繧ｯ繝ｼ繝ｫ繝繧ｦ繝ｳ縺ｮ閠・・
     /// </summary>
     [System.Serializable]
     public class JumpCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// ジャンプ�E種類を定義する列挙垁E        /// </summary>
+        /// 繧ｸ繝｣繝ｳ繝励・遞ｮ鬘槭ｒ螳夂ｾｩ縺吶ｋ蛻玲嫌蝙・        /// </summary>
         public enum JumpType
         {
-            Normal,     // 通常ジャンチE            Double,     // 二段ジャンチE            Wall,       // 壁ジャンチE            Long,       // 長距離ジャンチE            High        // 高ジャンチE        }
+            Normal,     // 騾壼ｸｸ繧ｸ繝｣繝ｳ繝・            Double,     // 莠梧ｮｵ繧ｸ繝｣繝ｳ繝・            Wall,       // 螢√ず繝｣繝ｳ繝・            Long,       // 髟ｷ霍晞屬繧ｸ繝｣繝ｳ繝・            High        // 鬮倥ず繝｣繝ｳ繝・        }
 
         [Header("Jump Parameters")]
         public JumpType jumpType = JumpType.Normal;
@@ -37,14 +37,14 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public float landAnimationDuration = 0.2f;
 
         /// <summary>
-        /// チE��ォルトコンストラクタ
+        /// 繝・ヵ繧ｩ繝ｫ繝医さ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
         /// </summary>
         public JumpCommandDefinition()
         {
         }
 
         /// <summary>
-        /// パラメータ付きコンストラクタ
+        /// 繝代Λ繝｡繝ｼ繧ｿ莉倥″繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
         /// </summary>
         public JumpCommandDefinition(JumpType type, float force, Vector3 jumpDirection = default)
         {
@@ -54,27 +54,27 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// ジャンプコマンドが実行可能かどぁE��を判定しまぁE        /// </summary>
+        /// 繧ｸ繝｣繝ｳ繝励さ繝槭Φ繝峨′螳溯｡悟庄閭ｽ縺九←縺・°繧貞愛螳壹＠縺ｾ縺・        /// </summary>
         public bool CanExecute(object context = null)
         {
-            // 基本皁E��実行可能性チェチE��
+            // 蝓ｺ譛ｬ逧・↑螳溯｡悟庄閭ｽ諤ｧ繝√ぉ繝・け
             if (jumpForce <= 0f) return false;
             
-            // 方向�EクトルのチェチE��
+            // 譁ｹ蜷代・繧ｯ繝医Ν縺ｮ繝√ぉ繝・け
             if (direction == Vector3.zero) return false;
 
-            // コンチE��ストがある場合�E追加チェチE��
+            // 繧ｳ繝ｳ繝・く繧ｹ繝医′縺ゅｋ蝣ｴ蜷医・霑ｽ蜉繝√ぉ繝・け
             if (context != null)
             {
-                // 地面判定チェチE���E�EequiresGroundedが有効の場合！E                // スタミナチェチE��
-                // クールダウンチェチE��
-                // 状態異常チェチE���E�麻痺、スタン等！E            }
+                // 蝨ｰ髱｢蛻､螳壹メ繧ｧ繝・け・・equiresGrounded縺梧怏蜉ｹ縺ｮ蝣ｴ蜷茨ｼ・                // 繧ｹ繧ｿ繝溘リ繝√ぉ繝・け
+                // 繧ｯ繝ｼ繝ｫ繝繧ｦ繝ｳ繝√ぉ繝・け
+                // 迥ｶ諷狗焚蟶ｸ繝√ぉ繝・け・磯ｺｻ逞ｺ縲√せ繧ｿ繝ｳ遲会ｼ・            }
 
             return true;
         }
 
         /// <summary>
-        /// ジャンプコマンドを作�EしまぁE        /// </summary>
+        /// 繧ｸ繝｣繝ｳ繝励さ繝槭Φ繝峨ｒ菴懈・縺励∪縺・        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
             if (!CanExecute(context))
@@ -85,7 +85,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// JumpCommandDefinitionに対応する実際のコマンド実裁E    /// </summary>
+    /// JumpCommandDefinition縺ｫ蟇ｾ蠢懊☆繧句ｮ滄圀縺ｮ繧ｳ繝槭Φ繝牙ｮ溯｣・    /// </summary>
     public class JumpCommand : ICommand
     {
         private JumpCommandDefinition definition;
@@ -101,35 +101,35 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// ジャンプコマンド�E実衁E        /// </summary>
+        /// 繧ｸ繝｣繝ｳ繝励さ繝槭Φ繝峨・螳溯｡・        /// </summary>
         public void Execute()
         {
             if (executed) return;
 
-            // 実行前の状態を保存！Endo用�E�E            if (context is MonoBehaviour mono && mono.GetComponent<Rigidbody>() != null)
+            // 螳溯｡悟燕縺ｮ迥ｶ諷九ｒ菫晏ｭ假ｼ・ndo逕ｨ・・            if (context is MonoBehaviour mono && mono.GetComponent<Rigidbody>() != null)
             {
                 var rb = mono.GetComponent<Rigidbody>();
                 originalVelocity = rb.linearVelocity;
-                // 地面判定�E保存（実際の実裁E��は GroundCheck コンポ�Eネント等を参�E�E�E            }
+                // 蝨ｰ髱｢蛻､螳壹・菫晏ｭ假ｼ亥ｮ滄圀縺ｮ螳溯｣・〒縺ｯ GroundCheck 繧ｳ繝ｳ繝昴・繝阪Φ繝育ｭ峨ｒ蜿ら・・・            }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"Executing {definition.jumpType} jump: {definition.jumpForce} force, {definition.direction} direction");
 #endif
 
-            // 実際のジャンプ�E琁E��ここに実裁E            if (context is MonoBehaviour monoBehaviour && monoBehaviour.GetComponent<Rigidbody>() != null)
+            // 螳滄圀縺ｮ繧ｸ繝｣繝ｳ繝怜・逅・ｒ縺薙％縺ｫ螳溯｣・            if (context is MonoBehaviour monoBehaviour && monoBehaviour.GetComponent<Rigidbody>() != null)
             {
                 var rb = monoBehaviour.GetComponent<Rigidbody>();
                 
-                // 垂直速度のリセチE��
+                // 蝙ら峩騾溷ｺｦ縺ｮ繝ｪ繧ｻ繝・ヨ
                 if (definition.resetVerticalVelocity)
                 {
                     rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
                 }
 
-                // ジャンプ力の適用
+                // 繧ｸ繝｣繝ｳ繝怜鴨縺ｮ驕ｩ逕ｨ
                 Vector3 jumpVelocity = definition.direction.normalized * definition.jumpForce;
                 
-                // 水平ブ�Eスト�E追加
+                // 豌ｴ蟷ｳ繝悶・繧ｹ繝医・霑ｽ蜉
                 if (definition.horizontalBoost > 0f)
                 {
                     Vector3 horizontalDirection = new Vector3(definition.direction.x, 0f, definition.direction.z).normalized;
@@ -138,14 +138,14 @@ namespace asterivo.Unity60.Core.Commands.Definitions
 
                 rb.AddForce(jumpVelocity, ForceMode.VelocityChange);
 
-                // アニメーション制御
-                // パ�EチE��クルエフェクチE                // サウンドエフェクチE            }
+                // 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ蛻ｶ蠕｡
+                // 繝代・繝・ぅ繧ｯ繝ｫ繧ｨ繝輔ぉ繧ｯ繝・                // 繧ｵ繧ｦ繝ｳ繝峨お繝輔ぉ繧ｯ繝・            }
 
             executed = true;
         }
 
         /// <summary>
-        /// Undo操作（ジャンプ�E取り消し�E�E        /// </summary>
+        /// Undo謫堺ｽ懶ｼ医ず繝｣繝ｳ繝励・蜿悶ｊ豸医＠・・        /// </summary>
         public void Undo()
         {
             if (!executed || context == null) return;
@@ -164,7 +164,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// こ�EコマンドがUndo可能かどぁE��
+        /// 縺薙・繧ｳ繝槭Φ繝峨′Undo蜿ｯ閭ｽ縺九←縺・°
         /// </summary>
         public bool CanUndo => executed && context != null;
     }

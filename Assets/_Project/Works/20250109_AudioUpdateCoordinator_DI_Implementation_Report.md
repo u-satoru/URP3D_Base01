@@ -1,4 +1,4 @@
-# AudioUpdateCoordinator依存注入改善 実装レポート
+﻿# AudioUpdateCoordinator依存注入改善 実装レポート
 
 **実装日時**: 2025年1月9日  
 **プロジェクト**: URP3D_Base01 - Unity 6 3Dゲーム基盤プロジェクト  

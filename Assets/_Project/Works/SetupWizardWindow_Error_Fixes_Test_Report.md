@@ -1,4 +1,4 @@
-# SetupWizardWindow エラー修正後テスト検証レポート
+﻿# SetupWizardWindow エラー修正後テスト検証レポート
 
 ## 📊 実行概要
 - **実行日時**: 2025-01-21

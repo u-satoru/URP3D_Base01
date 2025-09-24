@@ -1,4 +1,4 @@
-# ObjectPool システム包括ガイド
+﻿# ObjectPool システム包括ガイド
 
 このガイドでは、Unity 6プロジェクトにおけるCommandパターン向けObjectPoolシステムの完全な実装、統合、パフォーマンス分析について説明します。
 

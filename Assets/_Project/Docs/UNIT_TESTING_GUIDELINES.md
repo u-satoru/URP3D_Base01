@@ -1,4 +1,4 @@
-# ユニットテスト実装ガイドライン (Unit Testing Guidelines)
+﻿# ユニットテスト実装ガイドライン (Unit Testing Guidelines)
 
 ## 1. はじめに
 

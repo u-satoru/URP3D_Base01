@@ -1,4 +1,4 @@
-# TASKS.md - Snapshot at 2025-09-14 07:50
+﻿# TASKS.md - Snapshot at 2025-09-14 07:50
 
 ※ 完全な内容は本体ファイルを参照
 

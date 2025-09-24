@@ -1,55 +1,55 @@
-using UnityEngine;
+﻿using UnityEngine;
 // using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// 回復コマンド�E定義、E    /// プレイヤーまた�EAIの回復アクションをカプセル化します、E    /// 
-    /// 主な機�E�E�E    /// - 体力・マナ・スタミナ等�E回復
-    /// - 回復タイプ（瞬間、継続、篁E���E��E管琁E    /// - 回復アイチE��めE��キルとの連携
-    /// - 回復エフェクトとアニメーション制御
+    /// 蝗槫ｾｩ繧ｳ繝槭Φ繝峨・螳夂ｾｩ縲・    /// 繝励Ξ繧､繝､繝ｼ縺ｾ縺溘・AI縺ｮ蝗槫ｾｩ繧｢繧ｯ繧ｷ繝ｧ繝ｳ繧偵き繝励そ繝ｫ蛹悶＠縺ｾ縺吶・    /// 
+    /// 荳ｻ縺ｪ讖溯・・・    /// - 菴灘鴨繝ｻ繝槭リ繝ｻ繧ｹ繧ｿ繝溘リ遲峨・蝗槫ｾｩ
+    /// - 蝗槫ｾｩ繧ｿ繧､繝暦ｼ育椪髢薙∫ｶ咏ｶ壹∫ｯ・峇・峨・邂｡逅・    /// - 蝗槫ｾｩ繧｢繧､繝・Β繧・せ繧ｭ繝ｫ縺ｨ縺ｮ騾｣謳ｺ
+    /// - 蝗槫ｾｩ繧ｨ繝輔ぉ繧ｯ繝医→繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ蛻ｶ蠕｡
     /// </summary>
     [System.Serializable]
     public class HealCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// 回復の種類を定義する列挙垁E        /// </summary>
+        /// 蝗槫ｾｩ縺ｮ遞ｮ鬘槭ｒ螳夂ｾｩ縺吶ｋ蛻玲嫌蝙・        /// </summary>
         public enum HealType
         {
-            Instant,        // 瞬間回復
-            Overtime,       // 継続回復
-            Area,           // 篁E��回復
-            Percentage,     // 割合回復
-            Full            // 完�E回復
+            Instant,        // 迸ｬ髢灘屓蠕ｩ
+            Overtime,       // 邯咏ｶ壼屓蠕ｩ
+            Area,           // 遽・峇蝗槫ｾｩ
+            Percentage,     // 蜑ｲ蜷亥屓蠕ｩ
+            Full            // 螳悟・蝗槫ｾｩ
         }
 
         /// <summary>
-        /// 回復対象のリソースタイチE        /// </summary>
+        /// 蝗槫ｾｩ蟇ｾ雎｡縺ｮ繝ｪ繧ｽ繝ｼ繧ｹ繧ｿ繧､繝・        /// </summary>
         public enum ResourceType
         {
-            Health,         // 体力
-            Mana,           // マナ
-            Stamina,        // スタミナ
-            All             // 全て
+            Health,         // 菴灘鴨
+            Mana,           // 繝槭リ
+            Stamina,        // 繧ｹ繧ｿ繝溘リ
+            All             // 蜈ｨ縺ｦ
         }
 
         [Header("Heal Parameters")]
         public HealType healType = HealType.Instant;
         public ResourceType targetResource = ResourceType.Health;
         public float healAmount = 50f;
-        public float percentage = 0f; // 割合回復時に使用�E�E-1�E�E
+        public float percentage = 0f; // 蜑ｲ蜷亥屓蠕ｩ譎ゅ↓菴ｿ逕ｨ・・-1・・
         [Header("Overtime Settings")]
-        [Tooltip("継続回復時�E総継続時閁E)]
+        [Tooltip("邯咏ｶ壼屓蠕ｩ譎ゅ・邱冗ｶ咏ｶ壽凾髢・)]
         public float duration = 5f;
-        [Tooltip("継続回復時�E回復間隔")]
+        [Tooltip("邯咏ｶ壼屓蠕ｩ譎ゅ・蝗槫ｾｩ髢馴囈")]
         public float tickInterval = 1f;
 
         [Header("Area Settings")]
-        [Tooltip("篁E��回復時�E効果篁E��")]
+        [Tooltip("遽・峇蝗槫ｾｩ譎ゅ・蜉ｹ譫懃ｯ・峇")]
         public float radius = 3f;
-        [Tooltip("篁E��回復の対象レイヤー")]
+        [Tooltip("遽・峇蝗槫ｾｩ縺ｮ蟇ｾ雎｡繝ｬ繧､繝､繝ｼ")]
         public LayerMask targetLayers = -1;
-        [Tooltip("自刁E��回復対象に含むぁE)]
+        [Tooltip("閾ｪ蛻・ｂ蝗槫ｾｩ蟇ｾ雎｡縺ｫ蜷ｫ繧縺・)]
         public bool includeSelf = true;
 
         [Header("Restrictions")]
@@ -63,14 +63,14 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public Color healEffectColor = Color.green;
 
         /// <summary>
-        /// チE��ォルトコンストラクタ
+        /// 繝・ヵ繧ｩ繝ｫ繝医さ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
         /// </summary>
         public HealCommandDefinition()
         {
         }
 
         /// <summary>
-        /// パラメータ付きコンストラクタ
+        /// 繝代Λ繝｡繝ｼ繧ｿ莉倥″繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
         /// </summary>
         public HealCommandDefinition(HealType type, ResourceType resource, float amount)
         {
@@ -80,36 +80,36 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 回復コマンドが実行可能かどぁE��を判定しまぁE        /// </summary>
+        /// 蝗槫ｾｩ繧ｳ繝槭Φ繝峨′螳溯｡悟庄閭ｽ縺九←縺・°繧貞愛螳壹＠縺ｾ縺・        /// </summary>
         public bool CanExecute(object context = null)
         {
-            // 基本皁E��実行可能性チェチE��
+            // 蝓ｺ譛ｬ逧・↑螳溯｡悟庄閭ｽ諤ｧ繝√ぉ繝・け
             if (healAmount <= 0f && percentage <= 0f) return false;
             
-            // 継続回復の場合�E追加チェチE��
+            // 邯咏ｶ壼屓蠕ｩ縺ｮ蝣ｴ蜷医・霑ｽ蜉繝√ぉ繝・け
             if (healType == HealType.Overtime)
             {
                 if (duration <= 0f || tickInterval <= 0f) return false;
             }
 
-            // 篁E��回復の場合�E追加チェチE��
+            // 遽・峇蝗槫ｾｩ縺ｮ蝣ｴ蜷医・霑ｽ蜉繝√ぉ繝・け
             if (healType == HealType.Area)
             {
                 if (radius <= 0f) return false;
             }
 
-            // コンチE��ストがある場合�E追加チェチE��
+            // 繧ｳ繝ｳ繝・く繧ｹ繝医′縺ゅｋ蝣ｴ蜷医・霑ｽ蜉繝√ぉ繝・け
             if (context != null)
             {
-                // マナ消費チェチE��
-                // クールダウンチェチE��
-                // 対象の回復可能性チェチE���E�既に満タンの場合等！E                // 状態異常チェチE���E�回復阻害チE��フ等！E            }
+                // 繝槭リ豸郁ｲｻ繝√ぉ繝・け
+                // 繧ｯ繝ｼ繝ｫ繝繧ｦ繝ｳ繝√ぉ繝・け
+                // 蟇ｾ雎｡縺ｮ蝗槫ｾｩ蜿ｯ閭ｽ諤ｧ繝√ぉ繝・け・域里縺ｫ貅繧ｿ繝ｳ縺ｮ蝣ｴ蜷育ｭ会ｼ・                // 迥ｶ諷狗焚蟶ｸ繝√ぉ繝・け・亥屓蠕ｩ髦ｻ螳ｳ繝・ヰ繝慕ｭ会ｼ・            }
 
             return true;
         }
 
         /// <summary>
-        /// 回復コマンドを作�EしまぁE        /// </summary>
+        /// 蝗槫ｾｩ繧ｳ繝槭Φ繝峨ｒ菴懈・縺励∪縺・        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
             if (!CanExecute(context))
@@ -120,14 +120,14 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// HealCommandDefinitionに対応する実際のコマンド実裁E    /// </summary>
+    /// HealCommandDefinition縺ｫ蟇ｾ蠢懊☆繧句ｮ滄圀縺ｮ繧ｳ繝槭Φ繝牙ｮ溯｣・    /// </summary>
     public class HealCommand : ICommand
     {
         private HealCommandDefinition definition;
         private object context;
         private bool executed = false;
         private float healedAmount = 0f;
-        private bool isActive = false; // 継続回復用
+        private bool isActive = false; // 邯咏ｶ壼屓蠕ｩ逕ｨ
 
         public HealCommand(HealCommandDefinition healDefinition, object executionContext)
         {
@@ -136,7 +136,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 回復コマンド�E実衁E        /// </summary>
+        /// 蝗槫ｾｩ繧ｳ繝槭Φ繝峨・螳溯｡・        /// </summary>
         public void Execute()
         {
             if (executed) return;
@@ -168,7 +168,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 瞬間回復の実衁E        /// </summary>
+        /// 迸ｬ髢灘屓蠕ｩ縺ｮ螳溯｡・        /// </summary>
         private void ExecuteInstantHeal()
         {
             if (context is MonoBehaviour mono)
@@ -179,23 +179,23 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 継続回復の開姁E        /// </summary>
+        /// 邯咏ｶ壼屓蠕ｩ縺ｮ髢句ｧ・        /// </summary>
         private void StartOvertimeHeal()
         {
             isActive = true;
-            // 実際の実裁E��は、Coroutine また�EUpdateループで定期皁E��ApplyHealを呼び出ぁE            
+            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ縲，oroutine 縺ｾ縺溘・Update繝ｫ繝ｼ繝励〒螳壽悄逧・↓ApplyHeal繧貞他縺ｳ蜃ｺ縺・            
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"Started overtime heal: {definition.healAmount} over {definition.duration}s");
 #endif
         }
 
         /// <summary>
-        /// 篁E��回復の実衁E        /// </summary>
+        /// 遽・峇蝗槫ｾｩ縺ｮ螳溯｡・        /// </summary>
         private void ExecuteAreaHeal()
         {
             if (context is MonoBehaviour mono)
             {
-                // 篁E��冁E�Eオブジェクトを検索
+                // 遽・峇蜀・・繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ讀懃ｴ｢
                 Collider[] targets = Physics.OverlapSphere(mono.transform.position, definition.radius, definition.targetLayers);
                 
                 foreach (var target in targets)
@@ -214,45 +214,45 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 割合回復の実衁E        /// </summary>
+        /// 蜑ｲ蜷亥屓蠕ｩ縺ｮ螳溯｡・        /// </summary>
         private void ExecutePercentageHeal()
         {
             if (context is MonoBehaviour mono)
             {
-                // 最大値の割合で回復�E�実際の実裁E��は HealthSystem から最大値を取得！E                float percentageAmount = 100f * definition.percentage; // 仮の値
+                // 譛螟ｧ蛟､縺ｮ蜑ｲ蜷医〒蝗槫ｾｩ・亥ｮ滄圀縺ｮ螳溯｣・〒縺ｯ HealthSystem 縺九ｉ譛螟ｧ蛟､繧貞叙蠕暦ｼ・                float percentageAmount = 100f * definition.percentage; // 莉ｮ縺ｮ蛟､
                 healedAmount = ApplyHeal(mono, percentageAmount);
                 ShowHealEffect(mono);
             }
         }
 
         /// <summary>
-        /// 完�E回復の実衁E        /// </summary>
+        /// 螳悟・蝗槫ｾｩ縺ｮ螳溯｡・        /// </summary>
         private void ExecuteFullHeal()
         {
             if (context is MonoBehaviour mono)
             {
-                // 最大値まで回復�E�実際の実裁E��は HealthSystem から最大値を取得！E                float fullAmount = 999f; // 仮の値
+                // 譛螟ｧ蛟､縺ｾ縺ｧ蝗槫ｾｩ・亥ｮ滄圀縺ｮ螳溯｣・〒縺ｯ HealthSystem 縺九ｉ譛螟ｧ蛟､繧貞叙蠕暦ｼ・                float fullAmount = 999f; // 莉ｮ縺ｮ蛟､
                 healedAmount = ApplyHeal(mono, fullAmount);
                 ShowHealEffect(mono);
             }
         }
 
         /// <summary>
-        /// 実際の回復処琁E��適用
+        /// 螳滄圀縺ｮ蝗槫ｾｩ蜃ｦ逅・ｒ驕ｩ逕ｨ
         /// </summary>
         private float ApplyHeal(MonoBehaviour target, float amount)
         {
             if (target == null) return 0f;
 
-            // 実際の実裁E��は、HealthSystem, ManaSystem, StaminaSystem等との連携
+            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ縲？ealthSystem, ManaSystem, StaminaSystem遲峨→縺ｮ騾｣謳ｺ
             float actualHealAmount = amount;
 
-            // オーバ�Eヒ�Eル制陁E            if (!definition.canOverheal)
+            // 繧ｪ繝ｼ繝舌・繝偵・繝ｫ蛻ｶ髯・            if (!definition.canOverheal)
             {
-                // 現在値と最大値から実際の回復量を計箁E                // actualHealAmount = Mathf.Min(amount, maxValue - currentValue);
+                // 迴ｾ蝨ｨ蛟､縺ｨ譛螟ｧ蛟､縺九ｉ螳滄圀縺ｮ蝗槫ｾｩ驥上ｒ險育ｮ・                // actualHealAmount = Mathf.Min(amount, maxValue - currentValue);
             }
 
-            // リソースタイプに応じた回復処琁E            switch (definition.targetResource)
+            // 繝ｪ繧ｽ繝ｼ繧ｹ繧ｿ繧､繝励↓蠢懊§縺溷屓蠕ｩ蜃ｦ逅・            switch (definition.targetResource)
             {
                 case HealCommandDefinition.ResourceType.Health:
                     // healthSystem.Heal(actualHealAmount);
@@ -264,7 +264,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                     // staminaSystem.RestoreStamina(actualHealAmount);
                     break;
                 case HealCommandDefinition.ResourceType.All:
-                    // 全リソースの回復
+                    // 蜈ｨ繝ｪ繧ｽ繝ｼ繧ｹ縺ｮ蝗槫ｾｩ
                     break;
             }
 
@@ -272,41 +272,41 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 回復エフェクト�E表示
+        /// 蝗槫ｾｩ繧ｨ繝輔ぉ繧ｯ繝医・陦ｨ遉ｺ
         /// </summary>
         private void ShowHealEffect(MonoBehaviour target)
         {
             if (!definition.showHealEffect || target == null) return;
 
-            // パ�EチE��クルエフェクチE            // サウンドエフェクチE            // UI表示�E�回復量�EポップアチE�E等！E
+            // 繝代・繝・ぅ繧ｯ繝ｫ繧ｨ繝輔ぉ繧ｯ繝・            // 繧ｵ繧ｦ繝ｳ繝峨お繝輔ぉ繧ｯ繝・            // UI陦ｨ遉ｺ・亥屓蠕ｩ驥上・繝昴ャ繝励い繝・・遲会ｼ・
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"Showing heal effect on {target.name}");
 #endif
         }
 
         /// <summary>
-        /// 継続回復の更新�E�外部から定期皁E��呼び出される！E        /// </summary>
+        /// 邯咏ｶ壼屓蠕ｩ縺ｮ譖ｴ譁ｰ・亥､夜Κ縺九ｉ螳壽悄逧・↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ繧具ｼ・        /// </summary>
         public void UpdateOvertimeHeal(float deltaTime)
         {
             if (!isActive || definition.healType != HealCommandDefinition.HealType.Overtime) return;
 
-            // 実際の実裁E��は、tickInterval ごとに回復処琁E��実衁E            // duration が経過したら終亁E        }
+            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ縲》ickInterval 縺斐→縺ｫ蝗槫ｾｩ蜃ｦ逅・ｒ螳溯｡・            // duration 縺檎ｵ碁℃縺励◆繧臥ｵゆｺ・        }
 
         /// <summary>
-        /// Undo操作（回復の取り消し�E�E        /// </summary>
+        /// Undo謫堺ｽ懶ｼ亥屓蠕ｩ縺ｮ蜿悶ｊ豸医＠・・        /// </summary>
         public void Undo()
         {
             if (!executed || healedAmount <= 0f) return;
 
-            // 回復した刁E��けダメージを与えて允E��戻ぁE            if (context is MonoBehaviour mono)
+            // 蝗槫ｾｩ縺励◆蛻・□縺代ム繝｡繝ｼ繧ｸ繧剃ｸ弱∴縺ｦ蜈・↓謌ｻ縺・            if (context is MonoBehaviour mono)
             {
-                // 実際の実裁E��は、回復した刁E�Eダメージを適用
+                // 螳滄圀縺ｮ螳溯｣・〒縺ｯ縲∝屓蠕ｩ縺励◆蛻・・繝繝｡繝ｼ繧ｸ繧帝←逕ｨ
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
                 UnityEngine.Debug.Log($"Undoing heal: removing {healedAmount} healed amount");
 #endif
             }
 
-            // 継続回復の停止
+            // 邯咏ｶ壼屓蠕ｩ縺ｮ蛛懈ｭ｢
             if (isActive)
             {
                 isActive = false;
@@ -316,12 +316,12 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// こ�EコマンドがUndo可能かどぁE��
+        /// 縺薙・繧ｳ繝槭Φ繝峨′Undo蜿ｯ閭ｽ縺九←縺・°
         /// </summary>
         public bool CanUndo => executed && healedAmount > 0f;
 
         /// <summary>
-        /// 継続回復が現在アクチE��ブかどぁE��
+        /// 邯咏ｶ壼屓蠕ｩ縺檎樟蝨ｨ繧｢繧ｯ繝・ぅ繝悶°縺ｩ縺・°
         /// </summary>
         public bool IsActive => isActive;
     }

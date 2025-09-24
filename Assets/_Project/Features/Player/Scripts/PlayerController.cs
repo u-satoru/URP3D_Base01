@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Debug = UnityEngine.Debug;
 using UnityEngine.InputSystem;
 using asterivo.Unity60.Core.Events;

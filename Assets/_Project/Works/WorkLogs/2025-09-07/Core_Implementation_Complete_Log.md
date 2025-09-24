@@ -1,4 +1,4 @@
-# Core Implementation Tasks 完了作業ログ
+﻿# Core Implementation Tasks 完了作業ログ
 
 **プロジェクト**: URP3D_Base01  
 **作業日**: 2025年9月7日  

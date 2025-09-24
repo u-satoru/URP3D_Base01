@@ -1,4 +1,4 @@
-# Phase 4.2: エンドツーエンドリグレッションテストシナリオ
+﻿# Phase 4.2: エンドツーエンドリグレッションテストシナリオ
 **作成日**: 2025年9月24日
 **フェーズ**: Template層の構築と最終検証
 **参照**: 3-Layer-Architecture-Migration-Design.md, 3-Layer-Architecture-Safe-Migration-Design.md

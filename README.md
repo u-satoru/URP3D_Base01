@@ -1,4 +1,4 @@
-# URP3D_Base01
+﻿# URP3D_Base01
 
 これはUnity 6で作成された3Dゲームプロジェクトのベーステンプレートです。Universal Render Pipeline (URP) を使用しています。
 

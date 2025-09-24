@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Audio;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Audio.Data;
@@ -12,12 +12,12 @@ using asterivo.Unity60.Core.Audio.Interfaces;
 namespace asterivo.Unity60.Core.Audio
 {
     /// <summary>
-    /// 空間音響シスチE��の中央管琁E��ラス�E�レガシー�E�E    /// スチE��スゲーム用の高度な3D音響処琁E��拁E��E    /// 新しいSpatialAudioServiceへの移行を推奨
+    /// 遨ｺ髢馴浹髻ｿ繧ｷ繧ｹ繝・Β縺ｮ荳ｭ螟ｮ邂｡逅・け繝ｩ繧ｹ・医Ξ繧ｬ繧ｷ繝ｼ・・    /// 繧ｹ繝・Ν繧ｹ繧ｲ繝ｼ繝逕ｨ縺ｮ鬮伜ｺｦ縺ｪ3D髻ｳ髻ｿ蜃ｦ逅・ｒ諡・ｽ・    /// 譁ｰ縺励＞SpatialAudioService縺ｸ縺ｮ遘ｻ陦後ｒ謗ｨ螂ｨ
     /// </summary>
     [System.Obsolete("Use SpatialAudioService instead. This class will be removed in future versions.")]
     public class SpatialAudioManager : MonoBehaviour, ISpatialAudioService, IInitializable
     {
-        // ✁ETask 3: Legacy Singleton警告シスチE���E�後方互換性のため�E�E        
+        // 笨・Task 3: Legacy Singleton隴ｦ蜻翫す繧ｹ繝・Β・亥ｾ梧婿莠呈鋤諤ｧ縺ｮ縺溘ａ・・        
 
 
         [Header("Audio Manager Settings")]
@@ -43,28 +43,28 @@ namespace asterivo.Unity60.Core.Audio
         [SerializeField] private AudioMixerGroup effectMixerGroup;
         [SerializeField] private AudioMixerGroup stealthMixerGroup;
         
-        // オーチE��オソースプ�Eル
+        // 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｽ繝ｼ繧ｹ繝励・繝ｫ
         private Queue<AudioSource> audioSourcePool = new Queue<AudioSource>();
         private List<AudioSource> activeAudioSources = new List<AudioSource>();
         
-        // 聴取老E��通常はプレイヤー�E�E        private Transform listener;
+        // 閨ｴ蜿冶・ｼ磯壼ｸｸ縺ｯ繝励Ξ繧､繝､繝ｼ・・        private Transform listener;
         private AudioListener audioListener;
         
-        // オクルージョンチェチE��用
+        // 繧ｪ繧ｯ繝ｫ繝ｼ繧ｸ繝ｧ繝ｳ繝√ぉ繝・け逕ｨ
         private Dictionary<AudioSource, float> occlusionValues = new Dictionary<AudioSource, float>();
         
-        // ✁ESingleton パターンを完�E削除 - ServiceLocator専用実裁E        
-        // IInitializable実裁E        public int Priority => 20; // 空間音響は基本オーチE��オシスチE��の後に初期匁E        public bool IsInitialized { get; private set; }
+        // 笨・Singleton 繝代ち繝ｼ繝ｳ繧貞ｮ悟・蜑企勁 - ServiceLocator蟆ら畑螳溯｣・        
+        // IInitializable螳溯｣・        public int Priority => 20; // 遨ｺ髢馴浹髻ｿ縺ｯ蝓ｺ譛ｬ繧ｪ繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β縺ｮ蠕後↓蛻晄悄蛹・        public bool IsInitialized { get; private set; }
         
         #region Unity Lifecycle
         
         private void Awake()
         {
-            // ✁ETask 3: Legacy Singleton警告シスチE��用のinstance設宁E            
+            // 笨・Task 3: Legacy Singleton隴ｦ蜻翫す繧ｹ繝・Β逕ｨ縺ｮinstance險ｭ螳・            
             
             DontDestroyOnLoad(gameObject);
             
-            // ServiceLocatorに登録
+            // ServiceLocator縺ｫ逋ｻ骭ｲ
             if (FeatureFlags.UseServiceLocator)
             {
                 ServiceLocator.RegisterService<ISpatialAudioService>(this);
@@ -90,8 +90,8 @@ namespace asterivo.Unity60.Core.Audio
         
         private void OnDestroy()
         {
-            // ✁EServiceLocator専用実裁E�Eみ - Singletonパターン完�E削除
-            // ServiceLocatorから登録解除
+            // 笨・ServiceLocator蟆ら畑螳溯｣・・縺ｿ - Singleton繝代ち繝ｼ繝ｳ螳悟・蜑企勁
+            // ServiceLocator縺九ｉ逋ｻ骭ｲ隗｣髯､
             if (FeatureFlags.UseServiceLocator)
             {
                 ServiceLocator.UnregisterService<ISpatialAudioService>();
@@ -108,7 +108,7 @@ namespace asterivo.Unity60.Core.Audio
         #region IInitializable Implementation
         
         /// <summary>
-        /// IInitializable実裁E- 空間音響シスチE��の初期匁E        /// </summary>
+        /// IInitializable螳溯｣・- 遨ｺ髢馴浹髻ｿ繧ｷ繧ｹ繝・Β縺ｮ蛻晄悄蛹・        /// </summary>
         public void Initialize()
         {
             if (IsInitialized) return;
@@ -131,7 +131,7 @@ namespace asterivo.Unity60.Core.Audio
         #region ISpatialAudioService Implementation
         
         /// <summary>
-        /// 3D空間でサウンドを再生
+        /// 3D遨ｺ髢薙〒繧ｵ繧ｦ繝ｳ繝峨ｒ蜀咲函
         /// </summary>
         public void Play3DSound(string soundId, Vector3 position, float maxDistance = 50f, float volume = 1f)
         {
@@ -141,7 +141,7 @@ namespace asterivo.Unity60.Core.Audio
                 return;
             }
             
-            // 既存�E機�Eを使用�E�EoundDataSOを作�Eして使用�E�E            var soundData = CreateDefaultSoundData(soundId);
+            // 譌｢蟄倥・讖溯・繧剃ｽｿ逕ｨ・・oundDataSO繧剃ｽ懈・縺励※菴ｿ逕ｨ・・            var soundData = CreateDefaultSoundData(soundId);
             if (soundData != null)
             {
                 PlaySoundAtPosition(soundData, position, volume);
@@ -149,53 +149,53 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// 移動する音源を作�E
+        /// 遘ｻ蜍輔☆繧矩浹貅舌ｒ菴懈・
         /// </summary>
         public void CreateMovingSound(string soundId, Transform source, float maxDistance = 50f)
         {
             if (!IsInitialized || source == null) return;
             
-            // TODO: 移動する音源�E実裁E            EventLogger.LogStatic($"[SpatialAudioManager] Creating moving sound: {soundId}");
+            // TODO: 遘ｻ蜍輔☆繧矩浹貅舌・螳溯｣・            EventLogger.LogStatic($"[SpatialAudioManager] Creating moving sound: {soundId}");
         }
         
         /// <summary>
-        /// 環墁E��を設宁E        /// </summary>
+        /// 迺ｰ蠅・浹繧定ｨｭ螳・        /// </summary>
         public void SetAmbientSound(string soundId, float volume = 0.5f)
         {
             if (!IsInitialized) return;
             
-            // TODO: 環墁E��の実裁E            EventLogger.LogStatic($"[SpatialAudioManager] Setting ambient sound: {soundId}");
+            // TODO: 迺ｰ蠅・浹縺ｮ螳溯｣・            EventLogger.LogStatic($"[SpatialAudioManager] Setting ambient sound: {soundId}");
         }
         
         /// <summary>
-        /// オクルージョン�E��E蔽�E�を更新
+        /// 繧ｪ繧ｯ繝ｫ繝ｼ繧ｸ繝ｧ繝ｳ・磯・阡ｽ・峨ｒ譖ｴ譁ｰ
         /// </summary>
         public void UpdateOcclusion(Vector3 listenerPosition, Vector3 sourcePosition, float occlusionLevel)
         {
-            // 既存�Eオクルージョン機�Eを使用して更新
-            // 実裁E�E既存�EUpdateOcclusionメソチE��で行われてぁE��
+            // 譌｢蟄倥・繧ｪ繧ｯ繝ｫ繝ｼ繧ｸ繝ｧ繝ｳ讖溯・繧剃ｽｿ逕ｨ縺励※譖ｴ譁ｰ
+            // 螳溯｣・・譌｢蟄倥・UpdateOcclusion繝｡繧ｽ繝・ラ縺ｧ陦後ｏ繧後※縺・ｋ
         }
         
         /// <summary>
-        /// リバ�Eブゾーンを設宁E        /// </summary>
+        /// 繝ｪ繝舌・繝悶だ繝ｼ繝ｳ繧定ｨｭ螳・        /// </summary>
         public void SetReverbZone(string zoneId, float reverbLevel)
         {
             if (!IsInitialized) return;
             
-            // TODO: リバ�Eブゾーンの実裁E            EventLogger.LogStatic($"[SpatialAudioManager] Setting reverb zone: {zoneId}, level: {reverbLevel}");
+            // TODO: 繝ｪ繝舌・繝悶だ繝ｼ繝ｳ縺ｮ螳溯｣・            EventLogger.LogStatic($"[SpatialAudioManager] Setting reverb zone: {zoneId}, level: {reverbLevel}");
         }
         
         /// <summary>
-        /// ドップラー効果�E強度を設宁E        /// </summary>
+        /// 繝峨ャ繝励Λ繝ｼ蜉ｹ譫懊・蠑ｷ蠎ｦ繧定ｨｭ螳・        /// </summary>
         public void SetDopplerLevel(float level)
         {
             if (!IsInitialized) return;
             
-            // TODO: ドップラーレベルの実裁E            EventLogger.LogStatic($"[SpatialAudioManager] Setting Doppler level: {level}");
+            // TODO: 繝峨ャ繝励Λ繝ｼ繝ｬ繝吶Ν縺ｮ螳溯｣・            EventLogger.LogStatic($"[SpatialAudioManager] Setting Doppler level: {level}");
         }
         
         /// <summary>
-        /// リスナ�Eの位置を更新
+        /// 繝ｪ繧ｹ繝翫・縺ｮ菴咲ｽｮ繧呈峩譁ｰ
         /// </summary>
         public void UpdateListenerPosition(Vector3 position, Vector3 forward)
         {
@@ -207,12 +207,12 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// チE��ォルト�ESoundDataSOを作�E
+        /// 繝・ヵ繧ｩ繝ｫ繝医・SoundDataSO繧剃ｽ懈・
         /// </summary>
         private SoundDataSO CreateDefaultSoundData(string soundId)
         {
-            // 簡略実裁E 実際はリソース管琁E��スチE��から取征E            var soundData = ScriptableObject.CreateInstance<SoundDataSO>();
-            // TODO: soundIdからAudioClipを取得して設宁E            return soundData;
+            // 邁｡逡･螳溯｣・ 螳滄圀縺ｯ繝ｪ繧ｽ繝ｼ繧ｹ邂｡逅・す繧ｹ繝・Β縺九ｉ蜿門ｾ・            var soundData = ScriptableObject.CreateInstance<SoundDataSO>();
+            // TODO: soundId縺九ｉAudioClip繧貞叙蠕励＠縺ｦ險ｭ螳・            return soundData;
         }
         
         #endregion
@@ -220,7 +220,7 @@ namespace asterivo.Unity60.Core.Audio
         #region Public Interface
         
         /// <summary>
-        /// 空間音響でサウンドを再生
+        /// 遨ｺ髢馴浹髻ｿ縺ｧ繧ｵ繧ｦ繝ｳ繝峨ｒ蜀咲函
         /// </summary>
         public AudioSource PlaySoundAtPosition(SoundDataSO soundData, Vector3 position, float volumeMultiplier = 1f)
         {
@@ -244,7 +244,7 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// AudioEventDataを使用してサウンドを再生
+        /// AudioEventData繧剃ｽｿ逕ｨ縺励※繧ｵ繧ｦ繝ｳ繝峨ｒ蜀咲函
         /// </summary>
         public AudioSource PlaySoundFromEvent(AudioEventData eventData, SoundDataSO soundData)
         {
@@ -254,20 +254,20 @@ namespace asterivo.Unity60.Core.Audio
             
             if (audioSource != null)
             {
-                // イベントデータの追加設定を適用
+                // 繧､繝吶Φ繝医ョ繝ｼ繧ｿ縺ｮ霑ｽ蜉險ｭ螳壹ｒ驕ｩ逕ｨ
                 audioSource.pitch = soundData.GetRandomPitch() * eventData.pitch;
                 
-                // 表面材質による調整
+                // 陦ｨ髱｢譚占ｳｪ縺ｫ繧医ｋ隱ｿ謨ｴ
                 ApplySurfaceModifications(audioSource, eventData, soundData);
                 
-                // 優先度に応じた�E琁E                ApplyPrioritySettings(audioSource, eventData);
+                // 蜆ｪ蜈亥ｺｦ縺ｫ蠢懊§縺溷・逅・                ApplyPrioritySettings(audioSource, eventData);
             }
             
             return audioSource;
         }
         
         /// <summary>
-        /// カチE��リ対応�E音響再生シスチE��
+        /// 繧ｫ繝・ざ繝ｪ蟇ｾ蠢懊・髻ｳ髻ｿ蜀咲函繧ｷ繧ｹ繝・Β
         /// </summary>
         public AudioSource PlayCategorizedSound(SoundDataSO soundData, Vector3 position, 
             AudioCategory category, float volumeMultiplier = 1f)
@@ -277,7 +277,7 @@ namespace asterivo.Unity60.Core.Audio
             var audioSource = GetPooledAudioSource();
             if (audioSource == null) return null;
             
-            // カチE��リに応じたミキサーグループ設宁E            SetupCategorySettings(audioSource, category, soundData);
+            // 繧ｫ繝・ざ繝ｪ縺ｫ蠢懊§縺溘Α繧ｭ繧ｵ繝ｼ繧ｰ繝ｫ繝ｼ繝苓ｨｭ螳・            SetupCategorySettings(audioSource, category, soundData);
             SetupAudioSource(audioSource, soundData, position, volumeMultiplier);
             
             var clip = soundData.GetRandomClip();
@@ -293,15 +293,15 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// カチE��リに応じた音響設宁E        /// </summary>
+        /// 繧ｫ繝・ざ繝ｪ縺ｫ蠢懊§縺滄浹髻ｿ險ｭ螳・        /// </summary>
         private void SetupCategorySettings(AudioSource audioSource, AudioCategory category, SoundDataSO soundData)
         {
             switch (category)
             {
                 case AudioCategory.BGM:
                     audioSource.outputAudioMixerGroup = bgmMixerGroup;
-                    audioSource.spatialBlend = 0f; // BGMは2D音響
-                    audioSource.loop = true; // BGMは基本皁E��ルーチE                    break;
+                    audioSource.spatialBlend = 0f; // BGM縺ｯ2D髻ｳ髻ｿ
+                    audioSource.loop = true; // BGM縺ｯ蝓ｺ譛ｬ逧・↓繝ｫ繝ｼ繝・                    break;
                     
                 case AudioCategory.Ambient:
                     audioSource.outputAudioMixerGroup = ambientMixerGroup;
@@ -319,21 +319,21 @@ namespace asterivo.Unity60.Core.Audio
                     break;
                     
                 case AudioCategory.UI:
-                    // UIはミキサーグループを使わなぁE��合が多い
-                    audioSource.spatialBlend = 0f; // UI音響は常に2D
+                    // UI縺ｯ繝溘く繧ｵ繝ｼ繧ｰ繝ｫ繝ｼ繝励ｒ菴ｿ繧上↑縺・ｴ蜷医′螟壹＞
+                    audioSource.spatialBlend = 0f; // UI髻ｳ髻ｿ縺ｯ蟶ｸ縺ｫ2D
                     break;
             }
         }
         
         /// <summary>
-        /// 優先度設定�E適用
+        /// 蜆ｪ蜈亥ｺｦ險ｭ螳壹・驕ｩ逕ｨ
         /// </summary>
         private void ApplyPrioritySettings(AudioSource audioSource, AudioEventData eventData)
         {
-            // Unity AudioSource の priority は 0-256 の篁E���E�低い値ほど高優先度�E�E            int unityPriority = Mathf.RoundToInt((1f - eventData.priority) * 256f);
+            // Unity AudioSource 縺ｮ priority 縺ｯ 0-256 縺ｮ遽・峇・井ｽ弱＞蛟､縺ｻ縺ｩ鬮伜━蜈亥ｺｦ・・            int unityPriority = Mathf.RoundToInt((1f - eventData.priority) * 256f);
             audioSource.priority = Mathf.Clamp(unityPriority, 0, 256);
             
-            // レイヤー優先度による追加調整
+            // 繝ｬ繧､繝､繝ｼ蜆ｪ蜈亥ｺｦ縺ｫ繧医ｋ霑ｽ蜉隱ｿ謨ｴ
             if (eventData.layerPriority > 50)
             {
                 audioSource.priority = Mathf.Max(0, audioSource.priority - 50);
@@ -341,7 +341,7 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// 音源間の距離に基づく音量計箁E        /// </summary>
+        /// 髻ｳ貅宣俣縺ｮ霍晞屬縺ｫ蝓ｺ縺･縺城浹驥剰ｨ育ｮ・        /// </summary>
         public float CalculateVolumeAtDistance(float distance, float maxHearingRadius)
         {
             if (distance <= 0f) return 1f;
@@ -352,20 +352,20 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// 音源が聞こえるかどぁE��を判宁E        /// </summary>
+        /// 髻ｳ貅舌′閨槭％縺医ｋ縺九←縺・°繧貞愛螳・        /// </summary>
         public bool IsAudibleAtPosition(Vector3 soundPosition, float hearingRadius, Vector3 listenerPosition)
         {
             float distance = Vector3.Distance(soundPosition, listenerPosition);
             float volume = CalculateVolumeAtDistance(distance, hearingRadius);
             
-            // オクルージョンも老E�E
+            // 繧ｪ繧ｯ繝ｫ繝ｼ繧ｸ繝ｧ繝ｳ繧り・・
             if (enableOcclusion)
             {
                 float occlusion = CalculateOcclusion(soundPosition, listenerPosition);
                 volume *= (1f - occlusion);
             }
             
-            return volume > 0.01f; // 最小閾値
+            return volume > 0.01f; // 譛蟆城明蛟､
         }
         
         #endregion
@@ -373,7 +373,7 @@ namespace asterivo.Unity60.Core.Audio
         #region Private Methods
         
         /// <summary>
-        /// オーチE��オソースプ�Eルの初期匁E        /// </summary>
+        /// 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｽ繝ｼ繧ｹ繝励・繝ｫ縺ｮ蛻晄悄蛹・        /// </summary>
         private void InitializeAudioSourcePool()
         {
             for (int i = 0; i < maxConcurrentSounds; i++)
@@ -383,14 +383,14 @@ namespace asterivo.Unity60.Core.Audio
                 
                 var audioSource = go.AddComponent<AudioSource>();
                 audioSource.playOnAwake = false;
-                audioSource.spatialBlend = 1f; // 3D音響
+                audioSource.spatialBlend = 1f; // 3D髻ｳ髻ｿ
                 
                 audioSourcePool.Enqueue(audioSource);
             }
         }
         
         /// <summary>
-        /// AudioListenerを検索
+        /// AudioListener繧呈､懃ｴ｢
         /// </summary>
         private void FindAudioListener()
         {
@@ -402,7 +402,7 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// プ�EルからオーチE��オソースを取征E        /// </summary>
+        /// 繝励・繝ｫ縺九ｉ繧ｪ繝ｼ繝・ぅ繧ｪ繧ｽ繝ｼ繧ｹ繧貞叙蠕・        /// </summary>
         private AudioSource GetPooledAudioSource()
         {
             if (audioSourcePool.Count > 0)
@@ -413,13 +413,13 @@ namespace asterivo.Unity60.Core.Audio
             }
             
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            ProjectDebug.LogWarning("[SpatialAudioManager] オーチE��オソースプ�Eルが枯渁E��ました");
+            ProjectDebug.LogWarning("[SpatialAudioManager] 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｽ繝ｼ繧ｹ繝励・繝ｫ縺梧椡貂・＠縺ｾ縺励◆");
 #endif
             return null;
         }
         
         /// <summary>
-        /// オーチE��オソースを�Eールに返却
+        /// 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｽ繝ｼ繧ｹ繧偵・繝ｼ繝ｫ縺ｫ霑泌唆
         /// </summary>
         private void ReturnToPool(AudioSource audioSource)
         {
@@ -435,7 +435,7 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// オーチE��オソースの設宁E        /// </summary>
+        /// 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｽ繝ｼ繧ｹ縺ｮ險ｭ螳・        /// </summary>
         private void SetupAudioSource(AudioSource audioSource, SoundDataSO soundData, Vector3 position, float volumeMultiplier)
         {
             audioSource.transform.position = position;
@@ -457,7 +457,7 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// 表面材質による音響効果を適用
+        /// 陦ｨ髱｢譚占ｳｪ縺ｫ繧医ｋ髻ｳ髻ｿ蜉ｹ譫懊ｒ驕ｩ逕ｨ
         /// </summary>
         private void ApplySurfaceModifications(AudioSource audioSource, AudioEventData eventData, SoundDataSO soundData)
         {
@@ -469,7 +469,7 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// オクルージョン�E��E蔽�E��E計箁E        /// </summary>
+        /// 繧ｪ繧ｯ繝ｫ繝ｼ繧ｸ繝ｧ繝ｳ・磯・阡ｽ・峨・險育ｮ・        /// </summary>
         private float CalculateOcclusion(Vector3 soundPosition, Vector3 listenerPosition)
         {
             if (listener == null) return 0f;
@@ -479,7 +479,7 @@ namespace asterivo.Unity60.Core.Audio
             
             if (Physics.Raycast(soundPosition, direction.normalized, out RaycastHit hit, distance, obstacleLayerMask))
             {
-                // 障害物までの距離の割合で遮蔽度を計箁E                float occlusionFactor = hit.distance / distance;
+                // 髫懷ｮｳ迚ｩ縺ｾ縺ｧ縺ｮ霍晞屬縺ｮ蜑ｲ蜷医〒驕ｮ阡ｽ蠎ｦ繧定ｨ育ｮ・                float occlusionFactor = hit.distance / distance;
                 return Mathf.Lerp(maxOcclusionReduction, 0f, occlusionFactor);
             }
             
@@ -487,7 +487,7 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// 全アクチE��ブな音源�Eオクルージョンを更新
+        /// 蜈ｨ繧｢繧ｯ繝・ぅ繝悶↑髻ｳ貅舌・繧ｪ繧ｯ繝ｫ繝ｼ繧ｸ繝ｧ繝ｳ繧呈峩譁ｰ
         /// </summary>
         private void UpdateOcclusion()
         {
@@ -500,13 +500,13 @@ namespace asterivo.Unity60.Core.Audio
                     float occlusion = CalculateOcclusion(audioSource.transform.position, listener.position);
                     occlusionValues[audioSource] = occlusion;
                     
-                    // 音量にオクルージョンを適用
-                    // 注愁E ここでは簡略化�Eため直接音量を変更してぁE��すが、E                    // 実際にはLowPassFilterなどを使用する方が�E然でぁE                }
+                    // 髻ｳ驥上↓繧ｪ繧ｯ繝ｫ繝ｼ繧ｸ繝ｧ繝ｳ繧帝←逕ｨ
+                    // 豕ｨ諢・ 縺薙％縺ｧ縺ｯ邁｡逡･蛹悶・縺溘ａ逶ｴ謗･髻ｳ驥上ｒ螟画峩縺励※縺・∪縺吶′縲・                    // 螳滄圀縺ｫ縺ｯLowPassFilter縺ｪ縺ｩ繧剃ｽｿ逕ｨ縺吶ｋ譁ｹ縺瑚・辟ｶ縺ｧ縺・                }
             }
         }
         
         /// <summary>
-        /// 再生終亁E��にプ�Eルに返却するコルーチン
+        /// 蜀咲函邨ゆｺ・ｾ後↓繝励・繝ｫ縺ｫ霑泌唆縺吶ｋ繧ｳ繝ｫ繝ｼ繝√Φ
         /// </summary>
         private System.Collections.IEnumerator ReturnToPoolWhenFinished(AudioSource audioSource, float clipLength)
         {
@@ -523,7 +523,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (listener == null) return;
             
-            // アクチE��ブな音源�E可視化
+            // 繧｢繧ｯ繝・ぅ繝悶↑髻ｳ貅舌・蜿ｯ隕門喧
             Gizmos.color = Color.yellow;
             foreach (var audioSource in activeAudioSources)
             {

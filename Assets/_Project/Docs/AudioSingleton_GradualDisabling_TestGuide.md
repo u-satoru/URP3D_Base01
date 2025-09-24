@@ -1,4 +1,4 @@
-# Audio系Singleton段階的無効化テスト実行手順書
+﻿# Audio系Singleton段階的無効化テスト実行手順書
 
 **作成日**: 2025年9月12日  
 **対象**: Unity開発者  

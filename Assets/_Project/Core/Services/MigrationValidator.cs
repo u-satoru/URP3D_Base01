@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 using asterivo.Unity60.Core.Audio.Interfaces;
 // using asterivo.Unity60.Core.Debug;
@@ -9,7 +9,7 @@ using asterivo.Unity60.Core;
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// 移行完亁E��況�E検証チE�Eル
+    /// 遘ｻ陦悟ｮ御ｺ・憾豕√・讀懆ｨｼ繝・・繝ｫ
     /// </summary>
     public class MigrationValidator : MonoBehaviour
     {
@@ -38,17 +38,17 @@ namespace asterivo.Unity60.Core.Services
             
             bool allPassed = true;
             
-            // ServiceLocator基本機�Eの検証
+            // ServiceLocator蝓ｺ譛ｬ讖溯・縺ｮ讀懆ｨｼ
             allPassed &= ValidateServiceLocatorBasics();
             
-            // 吁E��ービスの検証
+            // 蜷・し繝ｼ繝薙せ縺ｮ讀懆ｨｼ
             allPassed &= ValidateAudioService();
             allPassed &= ValidateSpatialAudioService();
             allPassed &= ValidateStealthAudioService();
             allPassed &= ValidateEffectService();
             allPassed &= ValidateAudioUpdateService();
             
-            // Feature Flagsの検証
+            // Feature Flags縺ｮ讀懆ｨｼ
             allPassed &= ValidateFeatureFlags();
             
             string result = allPassed ? "PASSED" : "FAILED";
@@ -59,7 +59,7 @@ namespace asterivo.Unity60.Core.Services
         {
             ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] Validating ServiceLocator basics...");
             
-            // ServiceLocatorが動作してぁE��ことを確誁E            int serviceCount = ServiceLocator.GetServiceCount();
+            // ServiceLocator縺悟虚菴懊＠縺ｦ縺・ｋ縺薙→繧堤｢ｺ隱・            int serviceCount = ServiceLocator.GetServiceCount();
             if (serviceCount == 0)
             {
                 ServiceLocator.GetService<IEventLogger>()?.LogError("[MigrationValidator] ServiceLocator has no registered services");
@@ -155,7 +155,7 @@ namespace asterivo.Unity60.Core.Services
                 return false;
             }
             
-            // Week 3の期征E��れる設宁E            if (FeatureFlags.UseNewAudioService && 
+            // Week 3縺ｮ譛溷ｾ・＆繧後ｋ險ｭ螳・            if (FeatureFlags.UseNewAudioService && 
                 FeatureFlags.UseNewSpatialService && 
                 FeatureFlags.UseNewStealthService)
             {

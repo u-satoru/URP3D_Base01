@@ -1,4 +1,4 @@
-# Core Player StateMachine Architecture Design - 120個コンパイルエラー解決設計書
+﻿# Core Player StateMachine Architecture Design - 120個コンパイルエラー解決設計書
 
 ## 📋 ドキュメント情報
 

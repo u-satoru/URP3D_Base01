@@ -1,4 +1,4 @@
-namespace asterivo.Unity60.Core.Commands
+﻿namespace asterivo.Unity60.Core.Commands
 {
     /// <summary>
     /// コマンド実行とUndo/Redo機能を提供するインターフェース

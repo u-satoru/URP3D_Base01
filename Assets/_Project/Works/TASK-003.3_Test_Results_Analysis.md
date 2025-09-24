@@ -1,4 +1,4 @@
-# TASK-003.3 SetupWizardWindow テスト結果分析レポート
+﻿# TASK-003.3 SetupWizardWindow テスト結果分析レポート
 
 ## 📊 実行概要
 - **実行日時**: 2025-01-21

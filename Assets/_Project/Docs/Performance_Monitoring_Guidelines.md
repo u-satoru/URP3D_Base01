@@ -1,4 +1,4 @@
-# Performance Monitoring Guidelines
+﻿# Performance Monitoring Guidelines
 
 **更新日**: 2025-09-12  
 **バージョン**: 1.0  

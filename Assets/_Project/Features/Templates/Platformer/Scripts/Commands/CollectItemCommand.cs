@@ -1,4 +1,4 @@
-using asterivo.Unity60.Core.Commands;
+﻿using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Features.Templates.Platformer.Collectibles;
 
 namespace asterivo.Unity60.Features.Templates.Platformer.Commands

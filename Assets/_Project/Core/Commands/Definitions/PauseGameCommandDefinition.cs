@@ -1,31 +1,31 @@
-using UnityEngine;
+﻿using UnityEngine;
 // using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// ゲーム一時停止コマンド�E定義、E    /// ゲームの一時停止/再開アクションをカプセル化します、E    /// 
-    /// 主な機�E�E�E    /// - ゲーム時間の停止/再開
-    /// - 一時停止中のUI表示制御
-    /// - オーチE��オの一時停止/再開
-    /// - 入力�E無効匁E有効化制御
+    /// 繧ｲ繝ｼ繝荳譎ょ●豁｢繧ｳ繝槭Φ繝峨・螳夂ｾｩ縲・    /// 繧ｲ繝ｼ繝縺ｮ荳譎ょ●豁｢/蜀埼幕繧｢繧ｯ繧ｷ繝ｧ繝ｳ繧偵き繝励そ繝ｫ蛹悶＠縺ｾ縺吶・    /// 
+    /// 荳ｻ縺ｪ讖溯・・・    /// - 繧ｲ繝ｼ繝譎る俣縺ｮ蛛懈ｭ｢/蜀埼幕
+    /// - 荳譎ょ●豁｢荳ｭ縺ｮUI陦ｨ遉ｺ蛻ｶ蠕｡
+    /// - 繧ｪ繝ｼ繝・ぅ繧ｪ縺ｮ荳譎ょ●豁｢/蜀埼幕
+    /// - 蜈･蜉帙・辟｡蜉ｹ蛹・譛牙柑蛹門宛蠕｡
     /// </summary>
     [System.Serializable]
     public class PauseGameCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// 一時停止の種類を定義する列挙垁E        /// </summary>
+        /// 荳譎ょ●豁｢縺ｮ遞ｮ鬘槭ｒ螳夂ｾｩ縺吶ｋ蛻玲嫌蝙・        /// </summary>
         public enum PauseType
         {
-            Full,           // 完�E一時停止�E�時間、E��、�E力�Eて�E�E            Partial,        // 部刁E��時停止�E�時間�Eみ、E��は継続等！E            Menu,           // メニュー表示用一時停止
-            Dialog,         // ダイアログ表示用一時停止
-            Cutscene        // カチE��シーン用一時停止
+            Full,           // 螳悟・荳譎ょ●豁｢・域凾髢薙・浹縲∝・蜉帛・縺ｦ・・            Partial,        // 驛ｨ蛻・ｸ譎ょ●豁｢・域凾髢薙・縺ｿ縲・浹縺ｯ邯咏ｶ夂ｭ会ｼ・            Menu,           // 繝｡繝九Η繝ｼ陦ｨ遉ｺ逕ｨ荳譎ょ●豁｢
+            Dialog,         // 繝繧､繧｢繝ｭ繧ｰ陦ｨ遉ｺ逕ｨ荳譎ょ●豁｢
+            Cutscene        // 繧ｫ繝・ヨ繧ｷ繝ｼ繝ｳ逕ｨ荳譎ょ●豁｢
         }
 
         [Header("Pause Parameters")]
         public PauseType pauseType = PauseType.Full;
-        public bool toggleMode = true; // true: トグル形弁E false: 一時停止のみ
-        public bool allowUnpauseInCode = true; // コードから�E再開を許可するぁE
+        public bool toggleMode = true; // true: 繝医げ繝ｫ蠖｢蠑・ false: 荳譎ょ●豁｢縺ｮ縺ｿ
+        public bool allowUnpauseInCode = true; // 繧ｳ繝ｼ繝峨°繧峨・蜀埼幕繧定ｨｱ蜿ｯ縺吶ｋ縺・
         [Header("Time Control")]
         public bool pauseGameTime = true;
         public bool pausePhysics = true;
@@ -35,7 +35,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         [Header("Audio Control")]
         public bool pauseMusic = true;
         public bool pauseSFX = true;
-        public bool pauseVoice = false; // ボイスは継続する場合が多い
+        public bool pauseVoice = false; // 繝懊う繧ｹ縺ｯ邯咏ｶ壹☆繧句ｴ蜷医′螟壹＞
         public bool pauseAmbient = true;
 
         [Header("Input Control")]
@@ -53,22 +53,22 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         [Header("Visual Effects")]
         public bool showPauseIndicator = true;
         public string pauseIndicatorText = "PAUSED";
-        public bool showTimeScale = false; // チE��チE��用
+        public bool showTimeScale = false; // 繝・ヰ繝・げ逕ｨ
 
         [Header("Auto Pause")]
         public bool pauseOnFocusLost = true;
         public bool pauseOnMinimize = true;
-        public bool resumeOnFocusGain = false; // 手動再開を要求する場合�Efalse
+        public bool resumeOnFocusGain = false; // 謇句虚蜀埼幕繧定ｦ∵ｱゅ☆繧句ｴ蜷医・false
 
         /// <summary>
-        /// チE��ォルトコンストラクタ
+        /// 繝・ヵ繧ｩ繝ｫ繝医さ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
         /// </summary>
         public PauseGameCommandDefinition()
         {
         }
 
         /// <summary>
-        /// パラメータ付きコンストラクタ
+        /// 繝代Λ繝｡繝ｼ繧ｿ莉倥″繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
         /// </summary>
         public PauseGameCommandDefinition(PauseType type, bool isToggle = true)
         {
@@ -77,22 +77,22 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 一時停止コマンドが実行可能かどぁE��を判定しまぁE        /// </summary>
+        /// 荳譎ょ●豁｢繧ｳ繝槭Φ繝峨′螳溯｡悟庄閭ｽ縺九←縺・°繧貞愛螳壹＠縺ｾ縺・        /// </summary>
         public bool CanExecute(object context = null)
         {
-            // 基本皁E��実行可能性チェチE��
+            // 蝓ｺ譛ｬ逧・↑螳溯｡悟庄閭ｽ諤ｧ繝√ぉ繝・け
             if (backgroundDimAmount < 0f || backgroundDimAmount > 1f) return false;
 
-            // コンチE��ストがある場合�E追加チェチE��
+            // 繧ｳ繝ｳ繝・く繧ｹ繝医′縺ゅｋ蝣ｴ蜷医・霑ｽ蜉繝√ぉ繝・け
             if (context != null)
             {
-                // ゲームの状態チェチE���E�既に一時停止中、ローチE��ング中等！E                // 重要なシーンでの一時停止制限（カチE��シーン中等！E                // マルチ�Eレイゲームでの一時停止制紁E            }
+                // 繧ｲ繝ｼ繝縺ｮ迥ｶ諷九メ繧ｧ繝・け・域里縺ｫ荳譎ょ●豁｢荳ｭ縲√Ο繝ｼ繝・ぅ繝ｳ繧ｰ荳ｭ遲会ｼ・                // 驥崎ｦ√↑繧ｷ繝ｼ繝ｳ縺ｧ縺ｮ荳譎ょ●豁｢蛻ｶ髯撰ｼ医き繝・ヨ繧ｷ繝ｼ繝ｳ荳ｭ遲会ｼ・                // 繝槭Ν繝√・繝ｬ繧､繧ｲ繝ｼ繝縺ｧ縺ｮ荳譎ょ●豁｢蛻ｶ邏・            }
 
             return true;
         }
 
         /// <summary>
-        /// 一時停止コマンドを作�EしまぁE        /// </summary>
+        /// 荳譎ょ●豁｢繧ｳ繝槭Φ繝峨ｒ菴懈・縺励∪縺・        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
             if (!CanExecute(context))
@@ -103,7 +103,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// PauseGameCommandDefinitionに対応する実際のコマンド実裁E    /// </summary>
+    /// PauseGameCommandDefinition縺ｫ蟇ｾ蠢懊☆繧句ｮ滄圀縺ｮ繧ｳ繝槭Φ繝牙ｮ溯｣・    /// </summary>
     public class PauseGameCommand : ICommand
     {
         private PauseGameCommandDefinition definition;
@@ -119,7 +119,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 一時停止コマンド�E実衁E        /// </summary>
+        /// 荳譎ょ●豁｢繧ｳ繝槭Φ繝峨・螳溯｡・        /// </summary>
         public void Execute()
         {
             if (executed) return;
@@ -128,9 +128,9 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             UnityEngine.Debug.Log($"Executing {definition.pauseType} pause: toggle={definition.toggleMode}");
 #endif
 
-            // 現在の状態を保孁E            SaveCurrentState();
+            // 迴ｾ蝨ｨ縺ｮ迥ｶ諷九ｒ菫晏ｭ・            SaveCurrentState();
 
-            // トグルモード�E場合�E状態を刁E��替ぁE            if (definition.toggleMode)
+            // 繝医げ繝ｫ繝｢繝ｼ繝峨・蝣ｴ蜷医・迥ｶ諷九ｒ蛻・ｊ譖ｿ縺・            if (definition.toggleMode)
             {
                 if (isPaused)
                 {
@@ -143,7 +143,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             }
             else
             {
-                // 一時停止のみモード�E場合�E常に一時停止
+                // 荳譎ょ●豁｢縺ｮ縺ｿ繝｢繝ｼ繝峨・蝣ｴ蜷医・蟶ｸ縺ｫ荳譎ょ●豁｢
                 PauseGame();
             }
 
@@ -151,7 +151,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// ゲームの一時停止
+        /// 繧ｲ繝ｼ繝縺ｮ荳譎ょ●豁｢
         /// </summary>
         private void PauseGame()
         {
@@ -159,41 +159,41 @@ namespace asterivo.Unity60.Core.Commands.Definitions
 
             isPaused = true;
 
-            // 時間制御
+            // 譎る俣蛻ｶ蠕｡
             if (definition.pauseGameTime)
             {
                 Time.timeScale = 0f;
             }
 
-            // 物琁E�E一時停止
+            // 迚ｩ逅・・荳譎ょ●豁｢
             if (definition.pausePhysics)
             {
                 Physics.simulationMode = SimulationMode.Script;
                 Physics2D.simulationMode = SimulationMode2D.Script;
             }
 
-            // アニメーションの一時停止
+            // 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ荳譎ょ●豁｢
             if (definition.pauseAnimations)
             {
                 PauseAnimations();
             }
 
-            // パ�EチE��クルの一時停止
+            // 繝代・繝・ぅ繧ｯ繝ｫ縺ｮ荳譎ょ●豁｢
             if (definition.pauseParticles)
             {
                 PauseParticles();
             }
 
-            // オーチE��オ制御
+            // 繧ｪ繝ｼ繝・ぅ繧ｪ蛻ｶ蠕｡
             PauseAudio();
 
-            // 入力制御
+            // 蜈･蜉帛宛蠕｡
             ConfigureInputForPause();
 
-            // UI制御
+            // UI蛻ｶ蠕｡
             ConfigureUIForPause();
 
-            // 一時停止イベント�E発衁E            // EventSystem.Publish(new GamePausedEvent(definition.pauseType));
+            // 荳譎ょ●豁｢繧､繝吶Φ繝医・逋ｺ陦・            // EventSystem.Publish(new GamePausedEvent(definition.pauseType));
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log("Game paused");
@@ -201,17 +201,17 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// ゲームの再開
+        /// 繧ｲ繝ｼ繝縺ｮ蜀埼幕
         /// </summary>
         private void ResumeGame()
         {
             if (!isPaused) return;
 
-            // 状態�E復允E            RestorePreviousState();
+            // 迥ｶ諷九・蠕ｩ蜈・            RestorePreviousState();
 
             isPaused = false;
 
-            // 一時停止解除イベント�E発衁E            // EventSystem.Publish(new GameResumedEvent());
+            // 荳譎ょ●豁｢隗｣髯､繧､繝吶Φ繝医・逋ｺ陦・            // EventSystem.Publish(new GameResumedEvent());
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log("Game resumed");
@@ -219,7 +219,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 現在の状態を保孁E        /// </summary>
+        /// 迴ｾ蝨ｨ縺ｮ迥ｶ諷九ｒ菫晏ｭ・        /// </summary>
         private void SaveCurrentState()
         {
             previousState = new PauseState
@@ -227,49 +227,49 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             TimeScale = Time.timeScale,
             PhysicsSimulationMode = Physics.simulationMode,
             Physics2DSimulationMode = Physics2D.simulationMode,
-            // そ�E他�E状態も保孁E            };
+            // 縺昴・莉悶・迥ｶ諷九ｂ菫晏ｭ・            };
         }
 
         /// <summary>
-        /// 前�E状態を復允E        /// </summary>
+        /// 蜑阪・迥ｶ諷九ｒ蠕ｩ蜈・        /// </summary>
         private void RestorePreviousState()
         {
             if (previousState == null) return;
 
-            // 時間制御の復允E            if (definition.pauseGameTime)
+            // 譎る俣蛻ｶ蠕｡縺ｮ蠕ｩ蜈・            if (definition.pauseGameTime)
             {
                 Time.timeScale = previousState.TimeScale;
             }
 
-            // 物琁E�E復允E            if (definition.pausePhysics)
+            // 迚ｩ逅・・蠕ｩ蜈・            if (definition.pausePhysics)
             {
                 Physics.simulationMode = previousState.PhysicsSimulationMode;
                 Physics2D.simulationMode = previousState.Physics2DSimulationMode;
             }
 
-            // アニメーションの復允E            if (definition.pauseAnimations)
+            // 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ蠕ｩ蜈・            if (definition.pauseAnimations)
             {
                 ResumeAnimations();
             }
 
-            // パ�EチE��クルの復允E            if (definition.pauseParticles)
+            // 繝代・繝・ぅ繧ｯ繝ｫ縺ｮ蠕ｩ蜈・            if (definition.pauseParticles)
             {
                 ResumeParticles();
             }
 
-            // オーチE��オの復允E            ResumeAudio();
+            // 繧ｪ繝ｼ繝・ぅ繧ｪ縺ｮ蠕ｩ蜈・            ResumeAudio();
 
-            // 入力�E復允E            ConfigureInputForResume();
+            // 蜈･蜉帙・蠕ｩ蜈・            ConfigureInputForResume();
 
-            // UIの復允E            ConfigureUIForResume();
+            // UI縺ｮ蠕ｩ蜈・            ConfigureUIForResume();
         }
 
         /// <summary>
-        /// アニメーションの一時停止
+        /// 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ荳譎ょ●豁｢
         /// </summary>
         private void PauseAnimations()
         {
-            // 全てのAnimatorを検索して一時停止
+            // 蜈ｨ縺ｦ縺ｮAnimator繧呈､懃ｴ｢縺励※荳譎ょ●豁｢
             var animators = Object.FindObjectsByType<Animator>(FindObjectsSortMode.None);
             foreach (var animator in animators)
             {
@@ -281,11 +281,11 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// アニメーションの再開
+        /// 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ蜀埼幕
         /// </summary>
         private void ResumeAnimations()
         {
-            // 全てのAnimatorを検索して再開
+            // 蜈ｨ縺ｦ縺ｮAnimator繧呈､懃ｴ｢縺励※蜀埼幕
             var animators = Object.FindObjectsByType<Animator>(FindObjectsSortMode.None);
             foreach (var animator in animators)
             {
@@ -297,11 +297,11 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// パ�EチE��クルの一時停止
+        /// 繝代・繝・ぅ繧ｯ繝ｫ縺ｮ荳譎ょ●豁｢
         /// </summary>
         private void PauseParticles()
         {
-            // 全てのParticleSystemを検索して一時停止
+            // 蜈ｨ縺ｦ縺ｮParticleSystem繧呈､懃ｴ｢縺励※荳譎ょ●豁｢
             var particles = Object.FindObjectsByType<ParticleSystem>(FindObjectsSortMode.None);
             foreach (var particle in particles)
             {
@@ -313,11 +313,11 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// パ�EチE��クルの再開
+        /// 繝代・繝・ぅ繧ｯ繝ｫ縺ｮ蜀埼幕
         /// </summary>
         private void ResumeParticles()
         {
-            // 全てのParticleSystemを検索して再開
+            // 蜈ｨ縺ｦ縺ｮParticleSystem繧呈､懃ｴ｢縺励※蜀埼幕
             var particles = Object.FindObjectsByType<ParticleSystem>(FindObjectsSortMode.None);
             foreach (var particle in particles)
             {
@@ -329,17 +329,17 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// オーチE��オの一時停止制御
+        /// 繧ｪ繝ｼ繝・ぅ繧ｪ縺ｮ荳譎ょ●豁｢蛻ｶ蠕｡
         /// </summary>
         private void PauseAudio()
         {
-            // AudioSourceの一時停止制御
+            // AudioSource縺ｮ荳譎ょ●豁｢蛻ｶ蠕｡
             var audioSources = Object.FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
             foreach (var audioSource in audioSources)
             {
                 if (!audioSource.isPlaying) continue;
 
-                // タグまた�Eレイヤーによる制御
+                // 繧ｿ繧ｰ縺ｾ縺溘・繝ｬ繧､繝､繝ｼ縺ｫ繧医ｋ蛻ｶ蠕｡
                 bool shouldPause = false;
 
                 if (audioSource.CompareTag("Music") && definition.pauseMusic)
@@ -357,44 +357,44 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 }
             }
 
-            // AudioListener の一時停止
+            // AudioListener 縺ｮ荳譎ょ●豁｢
             AudioListener.pause = definition.pauseMusic || definition.pauseSFX;
         }
 
         /// <summary>
-        /// オーチE��オの再開制御
+        /// 繧ｪ繝ｼ繝・ぅ繧ｪ縺ｮ蜀埼幕蛻ｶ蠕｡
         /// </summary>
         private void ResumeAudio()
         {
-            // AudioSourceの再開制御
+            // AudioSource縺ｮ蜀埼幕蛻ｶ蠕｡
             var audioSources = Object.FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
             foreach (var audioSource in audioSources)
             {
-                if (audioSource.isPlaying) continue; // 既に再生中はスキチE�E
+                if (audioSource.isPlaying) continue; // 譌｢縺ｫ蜀咲函荳ｭ縺ｯ繧ｹ繧ｭ繝・・
 
-                // タグによる再開判定（実際の実裁E��はより詳細な管琁E��忁E��E��E                audioSource.UnPause();
+                // 繧ｿ繧ｰ縺ｫ繧医ｋ蜀埼幕蛻､螳夲ｼ亥ｮ滄圀縺ｮ螳溯｣・〒縺ｯ繧医ｊ隧ｳ邏ｰ縺ｪ邂｡逅・′蠢・ｦ・ｼ・                audioSource.UnPause();
             }
 
-            // AudioListener の再開
+            // AudioListener 縺ｮ蜀埼幕
             AudioListener.pause = false;
         }
 
         /// <summary>
-        /// 一時停止用の入力制御
+        /// 荳譎ょ●豁｢逕ｨ縺ｮ蜈･蜉帛宛蠕｡
         /// </summary>
         private void ConfigureInputForPause()
         {
             if (definition.disableGameplayInput)
             {
-                // ゲームプレイ入力�E無効化（実際の実裁E��は InputSystem との連携�E�E                // InputSystem.DisableActionMap("Gameplay");
+                // 繧ｲ繝ｼ繝繝励Ξ繧､蜈･蜉帙・辟｡蜉ｹ蛹厄ｼ亥ｮ滄圀縺ｮ螳溯｣・〒縺ｯ InputSystem 縺ｨ縺ｮ騾｣謳ｺ・・                // InputSystem.DisableActionMap("Gameplay");
             }
 
             if (definition.allowMenuInput)
             {
-                // メニュー入力�E有効匁E                // InputSystem.EnableActionMap("UI");
+                // 繝｡繝九Η繝ｼ蜈･蜉帙・譛牙柑蛹・                // InputSystem.EnableActionMap("UI");
             }
 
-            // マウスカーソルの制御
+            // 繝槭え繧ｹ繧ｫ繝ｼ繧ｽ繝ｫ縺ｮ蛻ｶ蠕｡
             if (definition.disableMouseCursor)
             {
                 Cursor.lockState = CursorLockMode.Locked;
@@ -408,61 +408,61 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 再開用の入力制御
+        /// 蜀埼幕逕ｨ縺ｮ蜈･蜉帛宛蠕｡
         /// </summary>
         private void ConfigureInputForResume()
         {
-            // ゲームプレイ入力�E復允E            // InputSystem.EnableActionMap("Gameplay");
+            // 繧ｲ繝ｼ繝繝励Ξ繧､蜈･蜉帙・蠕ｩ蜈・            // InputSystem.EnableActionMap("Gameplay");
 
-            // マウスカーソルの復允E            // 実際の実裁E��は previousState から復允E        }
+            // 繝槭え繧ｹ繧ｫ繝ｼ繧ｽ繝ｫ縺ｮ蠕ｩ蜈・            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ previousState 縺九ｉ蠕ｩ蜈・        }
 
         /// <summary>
-        /// 一時停止用のUI制御
+        /// 荳譎ょ●豁｢逕ｨ縺ｮUI蛻ｶ蠕｡
         /// </summary>
         private void ConfigureUIForPause()
         {
-            // 一時停止メニューの表示
+            // 荳譎ょ●豁｢繝｡繝九Η繝ｼ縺ｮ陦ｨ遉ｺ
             if (definition.showPauseMenu)
             {
                 ShowPauseMenu();
             }
 
-            // 背景の暗転
+            // 閭梧勹縺ｮ證苓ｻ｢
             if (definition.dimBackground)
             {
                 DimBackground(definition.backgroundDimAmount);
             }
 
-            // 背景のブラー
+            // 閭梧勹縺ｮ繝悶Λ繝ｼ
             if (definition.blurBackground)
             {
                 ApplyBackgroundBlur();
             }
 
-            // 一時停止インジケーターの表示
+            // 荳譎ょ●豁｢繧､繝ｳ繧ｸ繧ｱ繝ｼ繧ｿ繝ｼ縺ｮ陦ｨ遉ｺ
             if (definition.showPauseIndicator)
             {
                 ShowPauseIndicator(definition.pauseIndicatorText);
             }
 
-            // タイムスケール表示�E�デバッグ用�E�E            if (definition.showTimeScale)
+            // 繧ｿ繧､繝繧ｹ繧ｱ繝ｼ繝ｫ陦ｨ遉ｺ・医ョ繝舌ャ繧ｰ逕ｨ・・            if (definition.showTimeScale)
             {
                 ShowTimeScaleDebugInfo();
             }
         }
 
         /// <summary>
-        /// 再開用のUI制御
+        /// 蜀埼幕逕ｨ縺ｮUI蛻ｶ蠕｡
         /// </summary>
         private void ConfigureUIForResume()
         {
-            // 一時停止メニューの非表示
+            // 荳譎ょ●豁｢繝｡繝九Η繝ｼ縺ｮ髱櫁｡ｨ遉ｺ
             if (definition.showPauseMenu)
             {
                 HidePauseMenu();
             }
 
-            // 背景効果�E解除
+            // 閭梧勹蜉ｹ譫懊・隗｣髯､
             if (definition.dimBackground)
             {
                 RemoveBackgroundDim();
@@ -473,7 +473,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 RemoveBackgroundBlur();
             }
 
-            // インジケーターの非表示
+            // 繧､繝ｳ繧ｸ繧ｱ繝ｼ繧ｿ繝ｼ縺ｮ髱櫁｡ｨ遉ｺ
             if (definition.showPauseIndicator)
             {
                 HidePauseIndicator();
@@ -485,19 +485,19 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             }
         }
 
-        // UI制御メソチE���E�実際の実裁E��は UISystem との連携�E�E        private void ShowPauseMenu() { /* 一時停止メニュー表示 */ }
-        private void HidePauseMenu() { /* 一時停止メニュー非表示 */ }
-        private void DimBackground(float amount) { /* 背景暗転 */ }
-        private void RemoveBackgroundDim() { /* 背景暗転解除 */ }
-        private void ApplyBackgroundBlur() { /* 背景ブラー */ }
-        private void RemoveBackgroundBlur() { /* 背景ブラー解除 */ }
-        private void ShowPauseIndicator(string text) { /* 一時停止インジケーター表示 */ }
-        private void HidePauseIndicator() { /* 一時停止インジケーター非表示 */ }
-        private void ShowTimeScaleDebugInfo() { /* タイムスケール惁E��表示 */ }
-        private void HideTimeScaleDebugInfo() { /* タイムスケール惁E��非表示 */ }
+        // UI蛻ｶ蠕｡繝｡繧ｽ繝・ラ・亥ｮ滄圀縺ｮ螳溯｣・〒縺ｯ UISystem 縺ｨ縺ｮ騾｣謳ｺ・・        private void ShowPauseMenu() { /* 荳譎ょ●豁｢繝｡繝九Η繝ｼ陦ｨ遉ｺ */ }
+        private void HidePauseMenu() { /* 荳譎ょ●豁｢繝｡繝九Η繝ｼ髱櫁｡ｨ遉ｺ */ }
+        private void DimBackground(float amount) { /* 閭梧勹證苓ｻ｢ */ }
+        private void RemoveBackgroundDim() { /* 閭梧勹證苓ｻ｢隗｣髯､ */ }
+        private void ApplyBackgroundBlur() { /* 閭梧勹繝悶Λ繝ｼ */ }
+        private void RemoveBackgroundBlur() { /* 閭梧勹繝悶Λ繝ｼ隗｣髯､ */ }
+        private void ShowPauseIndicator(string text) { /* 荳譎ょ●豁｢繧､繝ｳ繧ｸ繧ｱ繝ｼ繧ｿ繝ｼ陦ｨ遉ｺ */ }
+        private void HidePauseIndicator() { /* 荳譎ょ●豁｢繧､繝ｳ繧ｸ繧ｱ繝ｼ繧ｿ繝ｼ髱櫁｡ｨ遉ｺ */ }
+        private void ShowTimeScaleDebugInfo() { /* 繧ｿ繧､繝繧ｹ繧ｱ繝ｼ繝ｫ諠・ｱ陦ｨ遉ｺ */ }
+        private void HideTimeScaleDebugInfo() { /* 繧ｿ繧､繝繧ｹ繧ｱ繝ｼ繝ｫ諠・ｱ髱櫁｡ｨ遉ｺ */ }
 
         /// <summary>
-        /// 外部からの再開要求！EenuやUI経由�E�E        /// </summary>
+        /// 螟夜Κ縺九ｉ縺ｮ蜀埼幕隕∵ｱゑｼ・enu繧ФI邨檎罰・・        /// </summary>
         public void RequestResume()
         {
             if (isPaused && definition.allowUnpauseInCode)
@@ -507,7 +507,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// アプリケーションフォーカス変更時�E処琁E        /// </summary>
+        /// 繧｢繝励Μ繧ｱ繝ｼ繧ｷ繝ｧ繝ｳ繝輔か繝ｼ繧ｫ繧ｹ螟画峩譎ゅ・蜃ｦ逅・        /// </summary>
         public void OnApplicationFocusChanged(bool hasFocus)
         {
             if (!hasFocus && definition.pauseOnFocusLost && !isPaused)
@@ -521,7 +521,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// アプリケーション最小化時�E処琁E        /// </summary>
+        /// 繧｢繝励Μ繧ｱ繝ｼ繧ｷ繝ｧ繝ｳ譛蟆丞喧譎ゅ・蜃ｦ逅・        /// </summary>
         public void OnApplicationPause(bool pauseStatus)
         {
             if (pauseStatus && definition.pauseOnMinimize && !isPaused)
@@ -531,7 +531,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Undo操作（一時停止状態�E取り消し�E�E        /// </summary>
+        /// Undo謫堺ｽ懶ｼ井ｸ譎ょ●豁｢迥ｶ諷九・蜿悶ｊ豸医＠・・        /// </summary>
         public void Undo()
         {
             if (!executed) return;
@@ -549,18 +549,18 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// こ�EコマンドがUndo可能かどぁE��
+        /// 縺薙・繧ｳ繝槭Φ繝峨′Undo蜿ｯ閭ｽ縺九←縺・°
         /// </summary>
         public bool CanUndo => executed;
 
         /// <summary>
-        /// 現在一時停止中かどぁE��
+        /// 迴ｾ蝨ｨ荳譎ょ●豁｢荳ｭ縺九←縺・°
         /// </summary>
         public bool IsPaused => isPaused;
     }
 
     /// <summary>
-    /// 一時停止前�E状態を保存するクラス
+    /// 荳譎ょ●豁｢蜑阪・迥ｶ諷九ｒ菫晏ｭ倥☆繧九け繝ｩ繧ｹ
     /// </summary>
     [System.Serializable]
     public class PauseState
@@ -571,6 +571,6 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public bool AudioListenerPause;
         public CursorLockMode CursorLockState;
         public bool CursorVisible;
-        // 忁E��に応じて他�E状態も追加
+        // 蠢・ｦ√↓蠢懊§縺ｦ莉悶・迥ｶ諷九ｂ霑ｽ蜉
     }
 }
