@@ -9,9 +9,8 @@ using DG.Tweening;
 using DG.Tweening.Plugins.Options;
 using DG.Tweening.Core;
 
-
-
-
+namespace asterivo.Unity60.Features.UI
+{
     /// <summary>
     /// UI状態データを格納する構造体（UIManager内でのローカル定義）
     /// </summary>
@@ -22,7 +21,7 @@ using DG.Tweening.Core;
         public UIPanelType panelType;
         public bool isVisible;
         public string metadata;
-        
+
         public override string ToString()
         {
             return $"UIState: {panelName} ({panelType}) - Visible: {isVisible}";
@@ -40,8 +39,6 @@ using DG.Tweening.Core;
         Dialog,
         Overlay
     }
-namespace asterivo.Unity60.Features.UI
-{
     /// <summary>
     /// 汎用UIマネージャー。イベント駆動アーキテクチャを使用してUI状態を管理します。
     /// 複数のUIパネルの表示・非表示を制御し、UI間の状態遷移を管理します。
