@@ -390,3 +390,4 @@ Claude Codeとの連携
 ```
 /spec-execute "他の仕様ファイルからプロジェクトのコンテキストを読み込んでください。次に、tasks.md の Task 3 を実行してください。src/rateLimiter.tsファイルを作成し、design.md で定義された通りにSlidingWindowRateLimiter クラスを実装してください。依存関係の実装はまだ行わないでください。" 43
 ```
+

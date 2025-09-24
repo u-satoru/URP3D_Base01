@@ -118,3 +118,4 @@ namespace asterivo.Unity60.Core.Events
         #endif
     }
 }
+

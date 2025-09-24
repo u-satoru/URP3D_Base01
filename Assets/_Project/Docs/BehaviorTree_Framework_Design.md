@@ -161,3 +161,4 @@ graph TD
 2.  Features層で、テスト用のシンプルな`ActionNode`（例：`LogMessageAction`）を実装する。
 3.  基本的なBTアセットを手動で作成し、`BehaviorTreeRunner`で実行できることを確認する。
 4.  (推奨) GraphViewベースのビジュアルエディタの開発に着手する。
+

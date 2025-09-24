@@ -153,3 +153,4 @@ C:\WINDOWS\SYSTEM32\dbghelp.dll:dbghelp.dll (00007FFA6F380000), size: 2367488 (r
 
 A crash has been intercepted by the crash handler. For call stack and other details, see the latest crash report generated in:
  * C:/Users/homul/AppData/Local/Temp/Unity/Editor/Crashes
+

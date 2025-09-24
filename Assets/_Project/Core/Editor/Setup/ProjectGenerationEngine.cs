@@ -554,3 +554,4 @@ namespace asterivo.Unity60.Core.Editor.Setup
         }
     }
 }
+

@@ -162,3 +162,4 @@ namespace asterivo.Unity60.Features.Player.States
         public bool IsPeeking => isPeeking;
     }
 }
+

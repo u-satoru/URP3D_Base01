@@ -1,4 +1,4 @@
-﻿ManifestVersion: 1
+ManifestVersion: 1
 ModuleID: Unity.Mathematics
 ModuleVersion: 1.0.1.0
 ModuleFiles:

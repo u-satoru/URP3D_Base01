@@ -83,3 +83,4 @@ namespace asterivo.Unity60.Core.Events
     [System.Serializable]
     public class Vector2UnityEvent : UnityEvent<Vector2> { }
 }
+

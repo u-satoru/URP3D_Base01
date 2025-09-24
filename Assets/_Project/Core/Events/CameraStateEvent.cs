@@ -39,3 +39,4 @@ namespace asterivo.Unity60.Core.Events
     [System.Serializable]
     public class UnityCameraStateEvent : UnityEvent<CameraState> { }
 }
+

@@ -269,3 +269,4 @@ public class InteractionPromptUI : MonoBehaviour
 -   `ICommandInvoker`が`ServiceLocator`に登録されていること。
 -   TextMeshProパッケージがプロジェクトにインポートされていること。
 -   "Interactable"という名前の`Layer`がUnityプロジェクトに設定されていること。
+

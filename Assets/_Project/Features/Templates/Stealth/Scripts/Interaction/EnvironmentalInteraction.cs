@@ -706,3 +706,4 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Interaction
         #endregion
     }
 }
+

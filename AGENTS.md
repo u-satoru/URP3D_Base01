@@ -32,3 +32,4 @@
 - Unity version is pinned to `6000.0.42f1` with URP; install the Windows, Android, and iOS build modules if you serialize platform-specific assets.
 - Keep `Packages/manifest.json` and `.asmdef` files authoritative; never hand-edit the generated `.csproj` files.
 - Scripts assume Windows PowerShell (`pwsh`); if you contribute from macOS/Linux, mirror the directory casing and update only cross-platform-safe tooling.
+

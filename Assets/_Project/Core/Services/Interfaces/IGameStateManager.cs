@@ -11,3 +11,4 @@ namespace asterivo.Unity60.Core.Services
         void ChangeGameState(GameState newState);
     }
 }
+

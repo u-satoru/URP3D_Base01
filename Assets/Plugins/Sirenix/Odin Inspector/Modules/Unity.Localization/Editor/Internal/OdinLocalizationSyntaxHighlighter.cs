@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // <copyright file="OdinLocalizationSyntaxHighlighter.cs" company="Sirenix ApS">
 // Copyright (c) Sirenix ApS. All rights reserved.
 // </copyright>

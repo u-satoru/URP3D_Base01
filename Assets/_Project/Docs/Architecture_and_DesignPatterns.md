@@ -429,3 +429,4 @@ stateDiagram-v2
     Alert --> Idle: Timeout
     Searching --> Idle: Timeout
 ```
+

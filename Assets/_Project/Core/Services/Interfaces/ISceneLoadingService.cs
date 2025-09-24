@@ -8,3 +8,4 @@ namespace asterivo.Unity60.Core.Services
         void LoadSceneWithMinTime(string sceneName);
     }
 }
+

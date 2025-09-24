@@ -59,3 +59,4 @@ namespace asterivo.Unity60.Core
         public void ResumeGame() => SetPauseState(false);
     }
 }
+

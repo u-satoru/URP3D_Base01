@@ -405,3 +405,4 @@ Tests/Results/
 - **PM/QA**: Markdownで進捗確認、意思決定支援
 - **CI/CD**: XMLで自動判定、ビルド継続可否決定
 - **ドキュメント**: Markdownでプロジェクト記録保持
+

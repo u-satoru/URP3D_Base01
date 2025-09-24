@@ -34,3 +34,4 @@ namespace asterivo.Unity60.Features.Player.States
         void HandleInput(DetailedPlayerStateMachine stateMachine, Vector2 moveInput, bool jumpInput);
     }
 }
+
