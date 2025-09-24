@@ -1,39 +1,48 @@
 # TODO - 2025年9月24日
 
 ## 最新状況
-Phase 4「Template層の構築と最終検証」を開始しました。
-Phase 4.1でTemplate層のアセット移動（シーン14、プレハブ9、ScriptableObject 8ファイル）を実施。
-Unity Editor内でのMissing Reference確認が必要です。
+Phase 4「Template層の構築と最終検証」を実施中。
+Phase 4.1のアセット移動確認完了（シーン14、プレハブ9、ScriptableObject 15ファイル）。
+Phase 4.2のリグレッションテストシナリオと手順書を作成完了。
+Unity Editor内でのMissing Reference確認とテスト実施が必要です。
 
 **参照タスクリスト**: `Assets/_Project/Docs/Works/20250922_1015/3-Layer-Architecture-Migration-Detailed-Tasks.md`
+**新規作成ドキュメント**: `Assets/_Project/Docs/Works/20250924_Phase4/` フォルダ参照
 
 ---
 
 ## 🎯 次のアクションアイテム
 
-### 即座に実行可能なタスク
-1. **Unity EditorでのMissing Reference確認（最優先）**
+### 即座に実行可能なタスク（Unity Editor必須）
+1. **Unity EditorでのMissing Reference確認と修正（最優先）**
    ```bash
    # Unity 6000.0.42f1を起動
-   # プロジェクトを開く
-   # コンパイル完了を待つ
-   # 移動したシーンを開いてMissing Reference確認
-   # Console ウィンドウでエラー/警告を確認
+   # Template_Scene_Testing_Manual.md に従ってテスト実施
+   # 各シーンを順次開いてMissing Reference確認
+   # Console Windowでエラー/警告を確認
+   # 必要に応じて参照を修正
    ```
 
-2. **Phase 4.1の参照修正**
-   - 移動したシーンのMissing Reference修正
-   - プレハブの参照切れ修正
-   - ScriptableObjectの参照確認
+2. **リグレッションテスト実施**
+   - Phase4.2_Regression_Test_Scenarios.md に基づくテスト
+   - 各Templateシーンの動作確認
+   - チェックリストへの記録
 
-3. **バージョン管理へのコミット**
-   - 31ファイルのアセット移動をGitにコミット
-   - コミットメッセージ: "Phase 4.1: Move Template assets to appropriate folders"
+3. **テスト結果のコミット**
+   ```bash
+   git add -A
+   git commit -m "Phase 4.2: Complete regression test preparation and documentation"
+   ```
+
+### 実施済みタスク（本日完了）
+- ✅ Phase 4.1のアセット移動状況確認
+- ✅ Phase 4.2のリグレッションテストシナリオ作成
+- ✅ Template層シーン動作確認手順書作成
+- ✅ Phase 4実施報告書作成
 
 ### 推奨される次ステップ
-- **Phase 4.2準備**: リグレッションテストシナリオの作成
-- **Phase 4.3準備**: パフォーマンステスト基準の確認
-- **ドキュメント更新**: Phase 4.1の実施内容を反映
+- **Phase 4.3準備**: パフォーマンステスト実施（Unity Profiler使用）
+- **Phase 5準備**: プロジェクトクリーンアップとドキュメント最終化
 
 ---
 
