@@ -6,7 +6,7 @@ using asterivo.Unity60.Core.Events;
 // using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Data;
-// using asterivo.Unity60.Core.Services; // Removed to avoid circular dependency
+// using asterivo.Unity60.Core.Services.Interfaces; // Removed to avoid circular dependency
 using Sirenix.OdinInspector;
 // using asterivo.Unity60.Core.Helpers;
 

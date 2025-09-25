@@ -1,6 +1,5 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Services.Interfaces;
-// using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Events;
 // using asterivo.Unity60.Features.Combat.Services;
 // using asterivo.Unity60.Features.Combat.Interfaces;
@@ -10,7 +9,7 @@ using asterivo.Unity60.Core.Events;
 namespace asterivo.Unity60.Core.Bootstrap
 {
     /// <summary>
-    /// ゲーム起動時の初期化を拁E��するブートストラチE��ー
+    /// ゲーム起動時の初期化を担当するブートストラッパー
     /// ServiceLocatorへのサービス登録と初期化を行う
     /// </summary>
     [DefaultExecutionOrder(-1000)]
@@ -34,7 +33,7 @@ namespace asterivo.Unity60.Core.Bootstrap
 
         private void Awake()
         {
-            // シングルトン管琁E
+            // シングルトン管理
             if (_instance != null && _instance != this)
             {
                 if (_enableDebugLogs)
@@ -70,7 +69,7 @@ namespace asterivo.Unity60.Core.Bootstrap
         #region Initialization
 
         /// <summary>
-        /// ゲームサービスの初期匁E
+        /// ゲームサービスの初期化
         /// </summary>
         public void Initialize()
         {
@@ -84,14 +83,14 @@ namespace asterivo.Unity60.Core.Bootstrap
             if (_enableDebugLogs)
                 Debug.Log("[GameBootstrapper] Starting initialization...");
 
-            // ServiceLocatorのクリア�E�念のため�E�E
+            // ServiceLocatorのクリア（念のため）
             ServiceLocator.Clear();
 
-            // 吁E��ービスの登録と初期匁E
+            // 各サービスの登録と初期化
             RegisterCoreServices();
             RegisterFeatureServices();
 
-            // GameEventBridgeの作�E
+            // GameEventBridgeの作成
             if (_createGameEventBridge)
             {
                 CreateGameEventBridge();
@@ -118,8 +117,8 @@ namespace asterivo.Unity60.Core.Bootstrap
                     Debug.Log("[GameBootstrapper] Registered EventManager");
             }
 
-            // 他�Eコアサービスもここに追加
-            // 侁E AudioManager, InputManager, SaveManager など
+            // 他のコアサービスもここに追加
+            // 例: AudioManager, InputManager, SaveManager など
         }
 
         /// <summary>
@@ -127,30 +126,34 @@ namespace asterivo.Unity60.Core.Bootstrap
         /// </summary>
         private void RegisterFeatureServices()
         {
-            // CombatServiceの登録
-            var combatService = new CombatService();
-            ServiceLocator.Register<ICombatService>(combatService);
+            // TODO: Feature層のサービス登録は後で実装
+            // Core層からFeature層への参照は禁止されているため
+            // これらのサービスは別の場所で登録する必要がある
 
-            if (_enableDebugLogs)
-                Debug.Log("[GameBootstrapper] Registered CombatService");
+            // // CombatServiceの登録
+            // var combatService = new CombatService();
+            // ServiceLocator.Register<ICombatService>(combatService);
+            //
+            // if (_enableDebugLogs)
+            //     Debug.Log("[GameBootstrapper] Registered CombatService");
+            //
+            // // GameManagerServiceの登録
+            // var gameManagerService = new GameManagerService();
+            // ServiceLocator.Register<IGameManager>(gameManagerService);
+            //
+            // if (_enableDebugLogs)
+            //     Debug.Log("[GameBootstrapper] Registered GameManagerService");
 
-            // GameManagerServiceの登録
-            var gameManagerService = new GameManagerService();
-            ServiceLocator.Register<IGameManager>(gameManagerService);
-
-            if (_enableDebugLogs)
-                Debug.Log("[GameBootstrapper] Registered GameManagerService");
-
-            // 封E��皁E��Feature層のサービスをここに追加
-            // 侁E PlayerManager, AIManager, UIManager など
+            // 将来的にFeature層のサービスをここに追加
+            // 例: PlayerManager, AIManager, UIManager など
         }
 
         /// <summary>
-        /// GameEventBridgeの作�E
+        /// GameEventBridgeの作成
         /// </summary>
         private void CreateGameEventBridge()
         {
-            // GameEventBridgeコンポ�Eネントを追加
+            // GameEventBridgeコンポーネントを追加
             var bridgeGO = new GameObject("GameEventBridge");
             bridgeGO.transform.SetParent(transform);
             var bridge = bridgeGO.AddComponent<GameEventBridge>();
@@ -160,7 +163,7 @@ namespace asterivo.Unity60.Core.Bootstrap
         }
 
         /// <summary>
-        /// クリーンアチE�E処琁E
+        /// クリーンアップ処理
         /// </summary>
         private void Cleanup()
         {
@@ -178,12 +181,12 @@ namespace asterivo.Unity60.Core.Bootstrap
         #region Public Static Methods
 
         /// <summary>
-        /// 初期化されてぁE��かチェチE��
+        /// 初期化されているかチェック
         /// </summary>
         public static bool IsInitialized => _isInitialized;
 
         /// <summary>
-        /// 手動初期化（忁E��に応じて�E�E
+        /// 手動初期化（必要に応じて）
         /// </summary>
         public static void InitializeManually()
         {
@@ -198,7 +201,7 @@ namespace asterivo.Unity60.Core.Bootstrap
         }
 
         /// <summary>
-        /// サービスの取得（便利メソチE���E�E
+        /// サービスの取得（便利メソッド）
         /// </summary>
         public static T GetService<T>() where T : IService
         {
@@ -211,7 +214,7 @@ namespace asterivo.Unity60.Core.Bootstrap
         }
 
         /// <summary>
-        /// サービスの取得（安�E版！E
+        /// サービスの取得（安全版）
         /// </summary>
         public static bool TryGetService<T>(out T service) where T : IService
         {
@@ -257,4 +260,3 @@ namespace asterivo.Unity60.Core.Bootstrap
         #endregion
     }
 }
-

@@ -1,7 +1,7 @@
 using System;
 using asterivo.Unity60.Core.Services.Interfaces;
 using System.Collections.Generic;
-// using asterivo.Unity60.Core.Services;
+// using asterivo.Unity60.Core.Services.Interfaces;
 using UnityEngine;
 
 namespace asterivo.Unity60.Core.Patterns

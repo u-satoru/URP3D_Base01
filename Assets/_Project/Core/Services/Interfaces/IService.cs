@@ -1,4 +1,4 @@
-namespace asterivo.Unity60.Core.Services
+namespace asterivo.Unity60.Core.Services.Interfaces
 {
     /// <summary>
     /// Base interface for all services in the Service Locator pattern

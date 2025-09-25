@@ -58,7 +58,9 @@ namespace asterivo.Unity60.Core.Audio.Services
         [SerializeField, ReadOnly] private float currentTensionLevel;
         [SerializeField, ReadOnly] private bool isStealthModeActive;
 
-        // IInitializable実裁E        public int Priority => 10; // オーチE��オシスチE��は早めに初期匁E        public bool IsInitialized { get; private set; }
+        // IInitializable実装
+        public int Priority => 10; // オーディオシステムは早めに初期化
+        public bool IsInitialized { get; private set; }
 
         private bool isPaused = false;
         private float pausedBGMVolume = 0f;
