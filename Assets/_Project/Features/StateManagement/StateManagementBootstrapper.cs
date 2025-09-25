@@ -1,4 +1,4 @@
-﻿using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Patterns;
 using UnityEngine;
 

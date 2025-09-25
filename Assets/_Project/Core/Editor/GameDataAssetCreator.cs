@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using asterivo.Unity60.Core.ScriptableObjects.Data;
 

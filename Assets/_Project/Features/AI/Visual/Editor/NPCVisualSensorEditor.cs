@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using asterivo.Unity60.Features.AI.Visual;
 using asterivo.Unity60.Core.Data;

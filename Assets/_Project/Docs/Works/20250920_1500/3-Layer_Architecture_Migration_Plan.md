@@ -1,4 +1,4 @@
-﻿# 3層アーキテクチャ移行計画書 (3-Layer Architecture Migration Plan)
+# 3層アーキテクチャ移行計画書 (3-Layer Architecture Migration Plan)
 
 - **バージョン**: 1.0
 - **作成日**: 2025年9月20日

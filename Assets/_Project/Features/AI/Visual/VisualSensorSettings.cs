@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using asterivo.Unity60.Features.AI.Configuration;
 using Sirenix.OdinInspector;
 

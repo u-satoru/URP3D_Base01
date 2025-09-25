@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 // // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 // using asterivo.Unity60.Core; // 逶ｴ謗･蜿ら・繧帝∩縺代：eatureFlags邨檎罰縺ｫ邨ｱ荳
 

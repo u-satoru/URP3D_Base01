@@ -1,4 +1,4 @@
-﻿using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Core.Events;
 
 namespace asterivo.Unity60.Core.Services
 {

@@ -1,4 +1,4 @@
-﻿namespace asterivo.Unity60.Features.Templates.TPS.Player.StateMachine
+namespace asterivo.Unity60.Features.Templates.TPS.Player.StateMachine
 {
     /// <summary>
     /// Interface for all TPS player states

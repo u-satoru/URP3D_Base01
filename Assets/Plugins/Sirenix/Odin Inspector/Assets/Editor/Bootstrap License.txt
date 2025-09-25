@@ -1,4 +1,4 @@
-﻿Odin Inspector makes use of the Bootstrap icon library.
+Odin Inspector makes use of the Bootstrap icon library.
 The library has been packed into the SdfIconAtlas.png 
 file as SDF data.
 

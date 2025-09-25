@@ -1,4 +1,4 @@
-﻿# ServiceLocator登録サービス一覧
+# ServiceLocator登録サービス一覧
 
 このドキュメントは、プロジェクトの`ServiceLocator`を通じて利用可能なサービスの一覧とその詳細を記載します。
 各サービスは、その役割に応じて「Core Services」と「Feature Services」に分類されています。

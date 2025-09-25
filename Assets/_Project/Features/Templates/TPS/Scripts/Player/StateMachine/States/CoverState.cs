@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using asterivo.Unity60.Features.Templates.TPS.Cover;
 
 namespace asterivo.Unity60.Features.Templates.TPS.Player.StateMachine.States

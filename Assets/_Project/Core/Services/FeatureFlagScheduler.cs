@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using asterivo.Unity60.Core;
 // using asterivo.Unity60.Core.Debug;

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 // using asterivo.Unity60.Core.Data;
 
 namespace asterivo.Unity60.Core.Events

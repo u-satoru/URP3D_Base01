@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 
 namespace asterivo.Unity60.Core.Services
 {

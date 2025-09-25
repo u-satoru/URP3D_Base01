@@ -1,4 +1,4 @@
-﻿# Code Review Checklist
+# Code Review Checklist
 
 **更新日**: 2025-09-12  
 **バージョン**: 1.0  

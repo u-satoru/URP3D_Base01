@@ -1,4 +1,4 @@
-﻿# インタラクションシステム 設計書 (Interaction System Design)
+# インタラクションシステム 設計書 (Interaction System Design)
 
 ## 1. 概要
 

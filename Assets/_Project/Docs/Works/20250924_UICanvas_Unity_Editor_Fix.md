@@ -1,4 +1,4 @@
-﻿# UICanvas.prefab Unity Editor修正手順
+# UICanvas.prefab Unity Editor修正手順
 
 ## ⚠️ 重要な注意事項
 このエラーはファイルシステム側では既に対処済みですが、Unity Editorの内部キャッシュが原因で継続して表示されています。

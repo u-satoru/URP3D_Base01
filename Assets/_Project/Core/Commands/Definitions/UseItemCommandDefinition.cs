@@ -1,22 +1,32 @@
-﻿using UnityEngine;
+using UnityEngine;
 // using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// 繧｢繧､繝・Β菴ｿ逕ｨ繧ｳ繝槭Φ繝峨・螳夂ｾｩ縲・    /// 繝励Ξ繧､繝､繝ｼ縺ｮ繧､繝ｳ繝吶Φ繝医Μ繧｢繧､繝・Β菴ｿ逕ｨ繧｢繧ｯ繧ｷ繝ｧ繝ｳ繧偵き繝励そ繝ｫ蛹悶＠縺ｾ縺吶・    /// 
-    /// 荳ｻ縺ｪ讖溯・・・    /// - 蜷・ｨｮ繧｢繧､繝・Β繧ｿ繧､繝暦ｼ域ｶ郁怜刀縲∵ｭｦ蝎ｨ縲・亟蜈ｷ遲会ｼ峨・菴ｿ逕ｨ
-    /// - 繧｢繧､繝・Β菴ｿ逕ｨ譚｡莉ｶ縺ｨ蛻ｶ邏・・邂｡逅・    /// - 菴ｿ逕ｨ蜉ｹ譫懊・驕ｩ逕ｨ縺ｨ謖∫ｶ壽凾髢鍋ｮ｡逅・    /// - 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｨ繧ｨ繝輔ぉ繧ｯ繝医・蛻ｶ蠕｡
+    /// Item use command definition.
+    /// Encapsulates player's inventory item use actions.
+    ///
+    /// Main features:
+    /// - Various item types (consumables, weapons, tools, etc.)
+    /// - Item use conditions and restrictions management
+    /// - Use effect application and duration management
+    /// - Animation and effect control
     /// </summary>
     [System.Serializable]
     public class UseItemCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// 繧｢繧､繝・Β菴ｿ逕ｨ縺ｮ遞ｮ鬘槭ｒ螳夂ｾｩ縺吶ｋ蛻玲嫌蝙・        /// </summary>
+        /// Item use type enumeration
+        /// </summary>
         public enum UseType
         {
-            Instant,        // 迸ｬ髢謎ｽｿ逕ｨ・域ｶ郁怜刀遲会ｼ・            Equip,          // 陬・ｙ・域ｭｦ蝎ｨ縲・亟蜈ｷ遲会ｼ・            Activate,       // 襍ｷ蜍包ｼ磯％蜈ｷ縲√せ繧ｭ繝ｫ繧｢繧､繝・Β遲会ｼ・            Consume,        // 豸郁ｲｻ菴ｿ逕ｨ
-            Toggle          // 繧ｪ繝ｳ/繧ｪ繝募・繧頑崛縺・        }
+            Instant,        // Instant use (consumables, etc.)
+            Equip,          // Equipment (weapons, armor, etc.)
+            Activate,       // Activate (tools, skill items, etc.)
+            Consume,        // Consumable use
+            Toggle          // On/Off toggle
+        }
 
         [Header("Item Usage Parameters")]
         public UseType useType = UseType.Instant;
@@ -41,11 +51,11 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public bool playUseAnimation = true;
         public string useAnimationTrigger = "UseItem";
         public float animationDuration = 1f;
-        public float usageDelay = 0f; // 蜉ｹ譫憺←逕ｨ縺ｾ縺ｧ縺ｮ驕・ｻｶ
+        public float usageDelay = 0f; // Delay before effect application
 
         [Header("Cooldown")]
         public float cooldownDuration = 0f;
-        public bool globalCooldown = false; // 蜈ｨ繧｢繧､繝・Β縺ｮ菴ｿ逕ｨ繧貞宛髯舌☆繧九°
+        public bool globalCooldown = false; // Whether to limit use of all items
 
         [Header("Effects")]
         public bool showUseEffect = true;
@@ -53,14 +63,14 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public string useEffectName = "";
 
         /// <summary>
-        /// 繝・ヵ繧ｩ繝ｫ繝医さ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
+        /// Default constructor
         /// </summary>
         public UseItemCommandDefinition()
         {
         }
 
         /// <summary>
-        /// 繝代Λ繝｡繝ｼ繧ｿ莉倥″繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
+        /// Parameterized constructor
         /// </summary>
         public UseItemCommandDefinition(UseType type, string itemId, bool consume = true)
         {
@@ -70,28 +80,32 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繧｢繧､繝・Β菴ｿ逕ｨ繧ｳ繝槭Φ繝峨′螳溯｡悟庄閭ｽ縺九←縺・°繧貞愛螳壹＠縺ｾ縺・        /// </summary>
+        /// Check if item use command can be executed
+        /// </summary>
         public bool CanExecute(object context = null)
         {
-            // 蝓ｺ譛ｬ逧・↑螳溯｡悟庄閭ｽ諤ｧ繝√ぉ繝・け
+            // Basic executability check
             if (string.IsNullOrEmpty(targetItemId) && itemSlotIndex < 0) return false;
-            
+
             if (requiresTargeting && maxTargetDistance <= 0f) return false;
             if (animationDuration < 0f || usageDelay < 0f) return false;
 
-            // 繧ｳ繝ｳ繝・く繧ｹ繝医′縺ゅｋ蝣ｴ蜷医・霑ｽ蜉繝√ぉ繝・け
+            // Additional checks if context exists
             if (context != null)
             {
-                // 繧､繝ｳ繝吶Φ繝医Μ蜀・・繧｢繧､繝・Β蟄伜惠繝√ぉ繝・け
-                // 繧｢繧､繝・Β菴ｿ逕ｨ蜿ｯ閭ｽ迥ｶ諷九メ繧ｧ繝・け
-                // 繧ｯ繝ｼ繝ｫ繝繧ｦ繝ｳ繝√ぉ繝・け
-                // 菴ｿ逕ｨ譚｡莉ｶ繝√ぉ繝・け・域姶髣倅ｸｭ縲∫ｧｻ蜍穂ｸｭ遲会ｼ・                // 繝励Ξ繧､繝､繝ｼ縺ｮ迥ｶ諷九メ繧ｧ繝・け・医せ繧ｿ繝ｳ縲∵ｲ磯ｻ咏ｭ会ｼ・            }
+                // Item existence check in inventory
+                // Item usability state check
+                // Cooldown check
+                // Use condition check (in combat, moving, etc.)
+                // Player state check (stun, silence, etc.)
+            }
 
             return true;
         }
 
         /// <summary>
-        /// 繧｢繧､繝・Β菴ｿ逕ｨ繧ｳ繝槭Φ繝峨ｒ菴懈・縺励∪縺・        /// </summary>
+        /// Create item use command instance
+        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
             if (!CanExecute(context))
@@ -102,7 +116,8 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// UseItemCommandDefinition縺ｫ蟇ｾ蠢懊☆繧句ｮ滄圀縺ｮ繧ｳ繝槭Φ繝牙ｮ溯｣・    /// </summary>
+    /// Actual implementation of item use command
+    /// </summary>
     public class UseItemCommand : ICommand
     {
         private UseItemCommandDefinition definition;
@@ -120,12 +135,14 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繧｢繧､繝・Β菴ｿ逕ｨ繧ｳ繝槭Φ繝峨・螳溯｡・        /// </summary>
+        /// Execute item use command
+        /// </summary>
         public void Execute()
         {
             if (executed) return;
 
-            // 菴ｿ逕ｨ蟇ｾ雎｡繧｢繧､繝・Β縺ｮ蜿門ｾ・            targetItem = GetTargetItem();
+            // Get target item
+            targetItem = GetTargetItem();
             if (targetItem == null)
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -134,7 +151,8 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 return;
             }
 
-            // 繧ｿ繝ｼ繧ｲ繝・ぅ繝ｳ繧ｰ縺悟ｿ・ｦ√↑蝣ｴ蜷医・蜃ｦ逅・            if (definition.requiresTargeting)
+            // Process if targeting is required
+            if (definition.requiresTargeting)
             {
                 targetObject = FindTarget();
                 if (targetObject == null && definition.requiresTargeting)
@@ -150,15 +168,18 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             UnityEngine.Debug.Log($"Executing {definition.useType} item use: {targetItem.GetItemName()}");
 #endif
 
-            // 菴ｿ逕ｨ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ蜀咲函
+            // Play use animation
             if (definition.playUseAnimation)
             {
                 PlayUseAnimation();
             }
 
-            // 驕・ｻｶ縺後≠繧句ｴ蜷医・驕・ｻｶ螳溯｡後√◎縺・〒縺ｪ縺代ｌ縺ｰ蜊ｳ蠎ｧ縺ｫ螳溯｡・            if (definition.usageDelay > 0f)
+            // If there's a delay, execute after delay, otherwise execute immediately
+            if (definition.usageDelay > 0f)
             {
-                // 螳滄圀縺ｮ螳溯｣・〒縺ｯ Coroutine 縺ｾ縺溘・ Timer 縺ｧ驕・ｻｶ螳溯｡・                // 迴ｾ蝨ｨ縺ｯ蜊ｳ蠎ｧ縺ｫ螳溯｡・                ApplyItemEffect();
+                // Actual implementation would use Coroutine or Timer for delayed execution
+                // Currently executing immediately
+                ApplyItemEffect();
             }
             else
             {
@@ -169,34 +190,44 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 菴ｿ逕ｨ蟇ｾ雎｡縺ｮ繧｢繧､繝・Β繧貞叙蠕・        /// </summary>
+        /// Check if command can be executed
+        /// </summary>
+        public bool CanExecute()
+        {
+            return !executed && definition.CanExecute(context);
+        }
+
+        /// <summary>
+        /// Get target item
+        /// </summary>
         private IUsableItem GetTargetItem()
         {
-            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ InventorySystem 縺ｨ縺ｮ騾｣謳ｺ
-            
-            // 繧｢繧､繝・ΒID縺ｧ縺ｮ讀懃ｴ｢
+            // Actual implementation would integrate with InventorySystem
+
+            // Search by item ID
             if (!string.IsNullOrEmpty(definition.targetItemId))
             {
                 // return inventorySystem.GetItemById(definition.targetItemId);
             }
-            
-            // 繧ｹ繝ｭ繝・ヨ繧､繝ｳ繝・ャ繧ｯ繧ｹ縺ｧ縺ｮ讀懃ｴ｢
+
+            // Search by slot index
             if (definition.itemSlotIndex >= 0)
             {
                 // return inventorySystem.GetItemAtSlot(definition.itemSlotIndex);
             }
 
-            // 莉ｮ縺ｮ螳溯｣・            return new MockUsableItem(definition.targetItemId);
+            // Temporary implementation
+            return new MockUsableItem(definition.targetItemId);
         }
 
         /// <summary>
-        /// 繧ｿ繝ｼ繧ｲ繝・ヨ繧ｪ繝悶ず繧ｧ繧ｯ繝医・讀懃ｴ｢
+        /// Find target object
         /// </summary>
         private GameObject FindTarget()
         {
             if (context is not MonoBehaviour mono) return null;
 
-            // 繧ｫ繝｡繝ｩ縺ｾ縺溘・繝励Ξ繧､繝､繝ｼ縺ｮ蜑肴婿蜷代↓Raycast
+            // Raycast forward from camera or player
             Ray ray = new Ray(mono.transform.position, mono.transform.forward);
             RaycastHit hit;
 
@@ -209,7 +240,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 菴ｿ逕ｨ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ蜀咲函
+        /// Play use animation
         /// </summary>
         private void PlayUseAnimation()
         {
@@ -223,7 +254,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繧｢繧､繝・Β蜉ｹ譫懊・驕ｩ逕ｨ
+        /// Apply item effect
         /// </summary>
         private void ApplyItemEffect()
         {
@@ -248,25 +279,27 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                     break;
             }
 
-            // 繧｢繧､繝・Β縺ｮ豸郁ｲｻ蜃ｦ逅・            if (definition.consumeOnUse)
+            // Item consumption processing
+            if (definition.consumeOnUse)
             {
                 ConsumeItem();
             }
 
-            // 繧ｨ繝輔ぉ繧ｯ繝医・陦ｨ遉ｺ
+            // Show effects
             if (definition.showUseEffect)
             {
                 ShowUseEffect();
             }
 
-            // 繧ｯ繝ｼ繝ｫ繝繧ｦ繝ｳ縺ｮ髢句ｧ・            if (definition.cooldownDuration > 0f)
+            // Start cooldown
+            if (definition.cooldownDuration > 0f)
             {
                 StartCooldown();
             }
         }
 
         /// <summary>
-        /// 迸ｬ髢灘柑譫懊・驕ｩ逕ｨ
+        /// Apply instant effect
         /// </summary>
         private void ApplyInstantEffect()
         {
@@ -279,15 +312,15 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 陬・ｙ蜉ｹ譫懊・驕ｩ逕ｨ
+        /// Apply equip effect
         /// </summary>
         private void ApplyEquipEffect()
         {
             if (context is MonoBehaviour mono)
             {
-                // 螳滄圀縺ｮ螳溯｣・〒縺ｯ EquipmentSystem 縺ｨ縺ｮ騾｣謳ｺ
+                // Actual implementation would integrate with EquipmentSystem
                 // equipmentSystem.EquipItem(targetItem);
-                
+
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
                 UnityEngine.Debug.Log($"Equipped {targetItem.GetItemName()}");
 #endif
@@ -295,13 +328,13 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 襍ｷ蜍募柑譫懊・驕ｩ逕ｨ
+        /// Apply activate effect
         /// </summary>
         private void ApplyActivateEffect()
         {
             isEffectActive = true;
             effectStartTime = Time.time;
-            
+
             targetItem.OnActivate(context, targetObject);
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -310,7 +343,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 豸郁ｲｻ蜉ｹ譫懊・驕ｩ逕ｨ
+        /// Apply consume effect
         /// </summary>
         private void ApplyConsumeEffect()
         {
@@ -323,11 +356,12 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繝医げ繝ｫ蜉ｹ譫懊・驕ｩ逕ｨ
+        /// Apply toggle effect
         /// </summary>
         private void ApplyToggleEffect()
         {
-            // 繧｢繧､繝・Β縺ｮ迴ｾ蝨ｨ縺ｮ迥ｶ諷九ｒ蜿門ｾ励＠縺ｦ蛻・ｊ譖ｿ縺・            bool currentState = targetItem.GetToggleState();
+            // Get current state of item and toggle it
+            bool currentState = targetItem.GetToggleState();
             targetItem.SetToggleState(!currentState);
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -336,66 +370,74 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繧｢繧､繝・Β縺ｮ豸郁ｲｻ蜃ｦ逅・        /// </summary>
+        /// Consume item
+        /// </summary>
         private void ConsumeItem()
         {
-            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ InventorySystem 縺ｨ縺ｮ騾｣謳ｺ
+            // Actual implementation would integrate with InventorySystem
             // inventorySystem.ConsumeItem(targetItem);
-            
+
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"Item consumed: {targetItem.GetItemName()}");
 #endif
         }
 
         /// <summary>
-        /// 菴ｿ逕ｨ繧ｨ繝輔ぉ繧ｯ繝医・陦ｨ遉ｺ
+        /// Show use effect
         /// </summary>
         private void ShowUseEffect()
         {
             if (context is not MonoBehaviour mono) return;
 
-            // 繝代・繝・ぅ繧ｯ繝ｫ繧ｨ繝輔ぉ繧ｯ繝・            if (!string.IsNullOrEmpty(definition.useEffectName))
+            // Particle effects
+            if (!string.IsNullOrEmpty(definition.useEffectName))
             {
                 // effectSystem.PlayEffect(definition.useEffectName, mono.transform.position);
             }
 
-            // 繧ｵ繧ｦ繝ｳ繝峨お繝輔ぉ繧ｯ繝・            // audioSystem.PlaySound(targetItem.GetUseSound());
+            // Sound effects
+            // audioSystem.PlaySound(targetItem.GetUseSound());
 
-            // UI 繧ｨ繝輔ぉ繧ｯ繝・            // uiSystem.ShowItemUseNotification(targetItem);
+            // UI effects
+            // uiSystem.ShowItemUseNotification(targetItem);
         }
 
         /// <summary>
-        /// 繧ｯ繝ｼ繝ｫ繝繧ｦ繝ｳ縺ｮ髢句ｧ・        /// </summary>
+        /// Start cooldown
+        /// </summary>
         private void StartCooldown()
         {
-            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ CooldownSystem 縺ｨ縺ｮ騾｣謳ｺ
+            // Actual implementation would integrate with CooldownSystem
             // cooldownSystem.StartCooldown(targetItem.GetItemId(), definition.cooldownDuration);
-            
+
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"Started cooldown: {definition.cooldownDuration}s");
 #endif
         }
 
         /// <summary>
-        /// 邯咏ｶ壼柑譫懊・譖ｴ譁ｰ・亥､夜Κ縺九ｉ螳壽悄逧・↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ繧具ｼ・        /// </summary>
+        /// Update continuous effect (called periodically from external)
+        /// </summary>
         public void UpdateItemEffect(float deltaTime)
         {
             if (!isEffectActive || definition.effectDuration <= 0f) return;
 
             float elapsedTime = Time.time - effectStartTime;
-            
+
             if (elapsedTime >= definition.effectDuration)
             {
                 EndItemEffect();
             }
             else
             {
-                // 邯咏ｶ壼柑譫懊・譖ｴ譁ｰ蜃ｦ逅・                targetItem?.UpdateEffect(context, deltaTime);
+                // Update continuous effect processing
+                targetItem?.UpdateEffect(context, deltaTime);
             }
         }
 
         /// <summary>
-        /// 繧｢繧､繝・Β蜉ｹ譫懊・邨ゆｺ・        /// </summary>
+        /// End item effect
+        /// </summary>
         private void EndItemEffect()
         {
             isEffectActive = false;
@@ -407,27 +449,29 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Undo謫堺ｽ懶ｼ医い繧､繝・Β菴ｿ逕ｨ縺ｮ蜿悶ｊ豸医＠・・        /// </summary>
+        /// Undo operation (cancel item use)
+        /// </summary>
         public void Undo()
         {
             if (!executed) return;
 
-            // 繧｢繧､繝・Β蜉ｹ譫懊・蜿悶ｊ豸医＠
+            // Cancel item effect
             if (isEffectActive)
             {
                 EndItemEffect();
             }
 
-            // 菴ｿ逕ｨ縺励◆繧｢繧､繝・Β縺ｮ蠕ｩ蜈・ｼ域ｶ郁ｲｻ縺励※縺・◆蝣ｴ蜷茨ｼ・            if (definition.consumeOnUse && targetItem != null)
+            // Restore used item (if consumed)
+            if (definition.consumeOnUse && targetItem != null)
             {
-                // 螳滄圀縺ｮ螳溯｣・〒縺ｯ InventorySystem 縺ｨ縺ｮ騾｣謳ｺ
+                // Actual implementation would integrate with InventorySystem
                 // inventorySystem.RestoreItem(targetItem);
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
                 UnityEngine.Debug.Log($"Restored consumed item: {targetItem.GetItemName()}");
 #endif
             }
 
-            // 陬・ｙ繧｢繧､繝・Β縺ｮ蜿悶ｊ螟悶＠
+            // Unequip equipped item
             if (definition.useType == UseItemCommandDefinition.UseType.Equip)
             {
                 // equipmentSystem.UnequipItem(targetItem);
@@ -437,18 +481,18 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 縺薙・繧ｳ繝槭Φ繝峨′Undo蜿ｯ閭ｽ縺九←縺・°
+        /// Whether this command can be undone
         /// </summary>
         public bool CanUndo => executed && (definition.consumeOnUse || definition.useType == UseItemCommandDefinition.UseType.Equip);
 
         /// <summary>
-        /// 繧｢繧､繝・Β蜉ｹ譫懊′迴ｾ蝨ｨ繧｢繧ｯ繝・ぅ繝悶°縺ｩ縺・°
+        /// Whether item effect is currently active
         /// </summary>
         public bool IsEffectActive => isEffectActive;
     }
 
     /// <summary>
-    /// 菴ｿ逕ｨ蜿ｯ閭ｽ繧｢繧､繝・Β縺ｮ繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ
+    /// Usable item interface
     /// </summary>
     public interface IUsableItem
     {
@@ -464,7 +508,8 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// 繝・せ繝育畑縺ｮ繝｢繝・け繧｢繧､繝・Β螳溯｣・    /// </summary>
+    /// Mock item implementation for testing
+    /// </summary>
     internal class MockUsableItem : IUsableItem
     {
         private string itemId;

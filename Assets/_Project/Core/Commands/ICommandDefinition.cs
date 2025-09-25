@@ -1,4 +1,4 @@
-﻿namespace asterivo.Unity60.Core.Commands
+namespace asterivo.Unity60.Core.Commands
 {
     /// <summary>
     /// Interface for command definitions that can be serialized and used to create commands

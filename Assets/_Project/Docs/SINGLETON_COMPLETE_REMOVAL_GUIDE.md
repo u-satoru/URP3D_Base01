@@ -1,4 +1,4 @@
-﻿# 🚀 Complete Singleton Removal Guide
+# 🚀 Complete Singleton Removal Guide
 
 このガイドでは、Singleton Pattern Migration準拠済みのクラスから完全にSingletonパターンを削除する手順を説明します。
 

@@ -1,4 +1,4 @@
-﻿# 作業ログ - Platformer Template Configuration コンパイルエラー分析
+# 作業ログ - Platformer Template Configuration コンパイルエラー分析
 
 ## 📅 作業情報
 

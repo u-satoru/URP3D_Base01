@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,8 +10,8 @@ using asterivo.Unity60.Core.Services;
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// Step 3.12: 鬮伜ｺｦ縺ｪ邱頑･譎ゅΟ繝ｼ繝ｫ繝舌ャ繧ｯ逶｣隕悶す繧ｹ繝・Β
-    /// 繧ｷ繧ｹ繝・Β迥ｶ諷九・邯咏ｶ夂噪逶｣隕悶∽ｺ域ｸｬ逧・撫鬘梧､懷・縲∬・蜍募ｯｾ蠢懈ｩ溯・
+    /// Step 3.12: Advanced Emergency Rollback Monitoring System
+    /// Continuous system state monitoring, issue prediction, and automatic response mechanism
     /// </summary>
     public class AdvancedRollbackMonitor : MonoBehaviour
     {
@@ -19,70 +19,72 @@ namespace asterivo.Unity60.Core.Services
         [SerializeField] private bool enableContinuousMonitoring = true;
         [SerializeField] private bool enablePredictiveAnalysis = true;
         [SerializeField] private bool enableAutoRecovery = true;
-        [SerializeField] private float monitoringInterval = 5f; // 5遘偵＃縺ｨ
-        [SerializeField] private float healthCheckInterval = 10f; // 10遘偵＃縺ｨ
-        
+        [SerializeField] private float monitoringInterval = 5f; // Every 5 seconds
+        [SerializeField] private float healthCheckInterval = 10f; // Every 10 seconds
+
         [Header("Thresholds")]
         [SerializeField] private int criticalHealthThreshold = 30;
         [SerializeField] private int warningHealthThreshold = 60;
         [SerializeField] private int maxConsecutiveFailures = 3;
-        [SerializeField] private float performanceThreshold = 0.5f; // 50%諤ｧ閭ｽ菴惹ｸ九〒隴ｦ蜻・        
+        [SerializeField] private float performanceThreshold = 0.5f; // Warning at 50% performance drop
+
         [Header("Current Status")]
         [SerializeField] private SystemHealthLevel currentHealthLevel = SystemHealthLevel.Unknown;
         [SerializeField] private int consecutiveFailures = 0;
         [SerializeField] private float lastHealthScore = 100f;
         [SerializeField] private string lastIssueDetected = "";
-        
-        // 逶｣隕悶ョ繝ｼ繧ｿ
+
+        // Monitoring data
         private List<HealthSnapshot> healthHistory = new List<HealthSnapshot>();
         private Dictionary<string, ServiceHealthMetrics> serviceMetrics = new Dictionary<string, ServiceHealthMetrics>();
         private Queue<SystemIssue> recentIssues = new Queue<SystemIssue>();
-        
+
         private const int MAX_HEALTH_HISTORY = 100;
         private const int MAX_RECENT_ISSUES = 20;
-        
+
         private void Start()
         {
             InitializeMonitoring();
-            
+
             if (enableContinuousMonitoring)
             {
                 InvokeRepeating(nameof(PerformSystemCheck), monitoringInterval, monitoringInterval);
                 InvokeRepeating(nameof(PerformHealthAnalysis), healthCheckInterval, healthCheckInterval);
             }
-            
+
             ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Advanced monitoring system started");
         }
-        
+
         private void OnDestroy()
         {
             SaveMonitoringData();
         }
-        
+
         /// <summary>
-        /// 逶｣隕悶す繧ｹ繝・Β縺ｮ蛻晄悄蛹・        /// </summary>
+        /// Initialize monitoring system
+        /// </summary>
         private void InitializeMonitoring()
         {
             LoadMonitoringData();
             RegisterServiceMetrics();
             PerformInitialHealthCheck();
-            
+
             ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Monitoring system initialized");
         }
-        
+
         /// <summary>
-        /// 繧ｵ繝ｼ繝薙せ繝｡繝医Μ繧ｯ繧ｹ縺ｮ逋ｻ骭ｲ
+        /// Register service metrics
         /// </summary>
         private void RegisterServiceMetrics()
         {
             string[] services = {
                 "AudioService",
-                "SpatialAudioService", 
+                "SpatialAudioService",
                 "StealthAudioService",
                 "EffectService",
                 "AudioUpdateService"
             };
-            
+
             foreach (var service in services)
             {
                 serviceMetrics[service] = new ServiceHealthMetrics
@@ -96,41 +98,44 @@ namespace asterivo.Unity60.Core.Services
                 };
             }
         }
-        
+
         /// <summary>
-        /// 繧ｷ繧ｹ繝・Β繝√ぉ繝・け縺ｮ螳溯｡・        /// </summary>
+        /// Perform system check
+        /// </summary>
         private void PerformSystemCheck()
         {
             if (!enableContinuousMonitoring) return;
-            
+
             try
             {
-                // 蝓ｺ譛ｬ逧・↑繧ｷ繧ｹ繝・Β蛛･蜈ｨ諤ｧ繝√ぉ繝・け
+                // Basic system health check
                 var healthStatus = EmergencyRollback.CheckSystemHealth();
                 UpdateHealthHistory(healthStatus);
-                
-                // 繧ｵ繝ｼ繝薙せ蛻･隧ｳ邏ｰ繝√ぉ繝・け
+
+                // Individual service check
                 CheckIndividualServices();
-                
-                // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ繝｡繝医Μ繧ｯ繧ｹ繝√ぉ繝・け
+
+                // Performance metrics check
                 CheckPerformanceMetrics();
-                
-                // 莠域ｸｬ蛻・梵縺ｮ螳溯｡・                if (enablePredictiveAnalysis)
+
+                // Predictive analysis execution
+                if (enablePredictiveAnalysis)
                 {
                     PerformPredictiveAnalysis();
                 }
-                
-                // 蝠城｡梧､懷・縺ｨ蟇ｾ蠢・                DetectAndHandleIssues(healthStatus);
-                
+
+                // Issue detection and handling
+                DetectAndHandleIssues(healthStatus);
+
             }
             catch (Exception ex)
             {
                 ServiceLocator.GetService<IEventLogger>()?.LogError($"[AdvancedRollbackMonitor] System check failed: {ex.Message}");
             }
         }
-        
+
         /// <summary>
-        /// 蛛･蜈ｨ諤ｧ螻･豁ｴ縺ｮ譖ｴ譁ｰ
+        /// Update health history
         /// </summary>
         private void UpdateHealthHistory(SystemHealthStatus healthStatus)
         {
@@ -142,24 +147,24 @@ namespace asterivo.Unity60.Core.Services
                 IssueCount = healthStatus.Issues.Count,
                 HasInconsistentConfiguration = healthStatus.HasInconsistentConfiguration
             };
-            
+
             healthHistory.Add(snapshot);
             if (healthHistory.Count > MAX_HEALTH_HISTORY)
             {
                 healthHistory.RemoveAt(0);
             }
-            
-            // 迴ｾ蝨ｨ縺ｮ蛛･蜈ｨ諤ｧ繝ｬ繝吶Ν繧呈峩譁ｰ
+
+            // Update current health level
             UpdateCurrentHealthLevel(healthStatus.HealthScore);
         }
-        
+
         /// <summary>
-        /// 迴ｾ蝨ｨ縺ｮ蛛･蜈ｨ諤ｧ繝ｬ繝吶Ν繧呈峩譁ｰ
+        /// Update current health level
         /// </summary>
         private void UpdateCurrentHealthLevel(int healthScore)
         {
             SystemHealthLevel newLevel;
-            
+
             if (healthScore >= 80)
                 newLevel = SystemHealthLevel.Excellent;
             else if (healthScore >= warningHealthThreshold)
@@ -168,23 +173,24 @@ namespace asterivo.Unity60.Core.Services
                 newLevel = SystemHealthLevel.Warning;
             else
                 newLevel = SystemHealthLevel.Critical;
-            
+
             if (newLevel != currentHealthLevel)
             {
                 var previousLevel = currentHealthLevel;
                 currentHealthLevel = newLevel;
                 OnHealthLevelChanged(previousLevel, newLevel, healthScore);
             }
-            
+
             lastHealthScore = healthScore;
         }
-        
+
         /// <summary>
-        /// 蛛･蜈ｨ諤ｧ繝ｬ繝吶Ν螟画峩譎ゅ・蜃ｦ逅・        /// </summary>
+        /// Handle health level change
+        /// </summary>
         private void OnHealthLevelChanged(SystemHealthLevel previous, SystemHealthLevel current, int score)
         {
-            ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Health level changed: {previous} -> {current} (Score: {score})");
-            
+            ServiceLocator.GetService<IEventLogger>()?.Log($"[AdvancedRollbackMonitor] Health level changed: {previous} -> {current} (Score: {score})");
+
             switch (current)
             {
                 case SystemHealthLevel.Critical:
@@ -202,9 +208,9 @@ namespace asterivo.Unity60.Core.Services
                     break;
             }
         }
-        
+
         /// <summary>
-        /// 蛟句挨繧ｵ繝ｼ繝薙せ縺ｮ繝√ぉ繝・け
+        /// Check individual services
         /// </summary>
         private void CheckIndividualServices()
         {
@@ -212,16 +218,16 @@ namespace asterivo.Unity60.Core.Services
             {
                 var serviceName = kvp.Key;
                 var metrics = kvp.Value;
-                
+
                 try
                 {
                     bool isHealthy = CheckServiceHealth(serviceName);
                     float responseTime = MeasureServiceResponseTime(serviceName);
-                    
+
                     metrics.LastCheckTime = DateTime.Now;
                     metrics.IsHealthy = isHealthy;
                     metrics.ResponseTime = responseTime;
-                    
+
                     if (isHealthy)
                     {
                         metrics.SuccessRate = Mathf.Min(100f, metrics.SuccessRate + 1f);
@@ -231,18 +237,18 @@ namespace asterivo.Unity60.Core.Services
                         metrics.ErrorCount++;
                         metrics.SuccessRate = Mathf.Max(0f, metrics.SuccessRate - 5f);
                     }
-                    
+
                     serviceMetrics[serviceName] = metrics;
                 }
                 catch (Exception ex)
                 {
-                    ServiceLocator.GetService<IEventLogger>()?.LogError("[AdvancedRollbackMonitor] Service check failed for {serviceName}: {ex.Message}");
+                    ServiceLocator.GetService<IEventLogger>()?.LogError($"[AdvancedRollbackMonitor] Service check failed for {serviceName}: {ex.Message}");
                 }
             }
         }
-        
+
         /// <summary>
-        /// 繧ｵ繝ｼ繝薙せ蛛･蜈ｨ諤ｧ縺ｮ蛟句挨繝√ぉ繝・け
+        /// Check individual service health
         /// </summary>
         private bool CheckServiceHealth(string serviceName)
         {
@@ -262,27 +268,30 @@ namespace asterivo.Unity60.Core.Services
                     return false;
             }
         }
-        
+
         /// <summary>
-        /// 繧ｵ繝ｼ繝薙せ蠢懃ｭ疲凾髢薙・貂ｬ螳・        /// </summary>
+        /// Measure service response time
+        /// </summary>
         private float MeasureServiceResponseTime(string serviceName)
         {
             var stopwatch = System.Diagnostics.Stopwatch.StartNew();
-            
+
             try
             {
-                // 邁｡蜊倥↑蠢懃ｭ疲凾髢捺ｸｬ螳夲ｼ亥ｮ滄圀縺ｮ繧ｵ繝ｼ繝薙せ蜻ｼ縺ｳ蜃ｺ縺暦ｼ・                CheckServiceHealth(serviceName);
+                // Simple response time measurement (actual service call)
+                CheckServiceHealth(serviceName);
                 stopwatch.Stop();
                 return (float)stopwatch.ElapsedMilliseconds;
             }
             catch
             {
                 stopwatch.Stop();
-                return -1f; // 繧ｨ繝ｩ繝ｼ縺ｮ蝣ｴ蜷・            }
+                return -1f; // Error case
+            }
         }
-        
+
         /// <summary>
-        /// 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ繝｡繝医Μ繧ｯ繧ｹ縺ｮ繝√ぉ繝・け
+        /// Check performance metrics
         /// </summary>
         private void CheckPerformanceMetrics()
         {
@@ -291,82 +300,87 @@ namespace asterivo.Unity60.Core.Services
                 float frameTime = Time.deltaTime;
                 float fps = 1f / frameTime;
                 float targetFps = Application.targetFrameRate > 0 ? Application.targetFrameRate : 60f;
-                
+
                 float performanceRatio = fps / targetFps;
-                
+
                 if (performanceRatio < performanceThreshold)
                 {
-                    RecordIssue($"Performance degradation detected: {performanceRatio:P1} of target FPS", 
+                    RecordIssue($"Performance degradation detected: {performanceRatio:P1} of target FPS",
                                IssueType.Performance, IssueSeverity.Warning);
                 }
             }
             catch (Exception ex)
             {
-                ServiceLocator.GetService<IEventLogger>()?.LogError("[AdvancedRollbackMonitor] Performance check failed: {ex.Message}");
+                ServiceLocator.GetService<IEventLogger>()?.LogError($"[AdvancedRollbackMonitor] Performance check failed: {ex.Message}");
             }
         }
-        
+
         /// <summary>
-        /// 莠域ｸｬ蛻・梵縺ｮ螳溯｡・        /// </summary>
+        /// Perform predictive analysis
+        /// </summary>
         private void PerformPredictiveAnalysis()
         {
-            if (healthHistory.Count < 5) return; // 譛菴・蝗槭・繝・・繧ｿ縺悟ｿ・ｦ・            
+            if (healthHistory.Count < 5) return; // Need minimum data
+
             try
             {
-                // 蛛･蜈ｨ諤ｧ繧ｹ繧ｳ繧｢縺ｮ蛯ｾ蜷大・譫・                AnalyzeHealthTrend();
-                
-                // 繧ｨ繝ｩ繝ｼ逋ｺ逕溘ヱ繧ｿ繝ｼ繝ｳ縺ｮ蛻・梵
+                // Analyze health trends
+                AnalyzeHealthTrend();
+
+                // Analyze error patterns
                 AnalyzeErrorPatterns();
-                
-                // 繧ｵ繝ｼ繝薙せ蜩∬ｳｪ縺ｮ蜉｣蛹紋ｺ域ｸｬ
+
+                // Predict service degradation
                 PredictServiceDegradation();
-                
+
             }
             catch (Exception ex)
             {
-                ServiceLocator.GetService<IEventLogger>()?.LogError("[AdvancedRollbackMonitor] Predictive analysis failed: {ex.Message}");
+                ServiceLocator.GetService<IEventLogger>()?.LogError($"[AdvancedRollbackMonitor] Predictive analysis failed: {ex.Message}");
             }
         }
-        
+
         /// <summary>
-        /// 蛛･蜈ｨ諤ｧ蛯ｾ蜷代・蛻・梵
+        /// Analyze health trends
         /// </summary>
         private void AnalyzeHealthTrend()
         {
             if (healthHistory.Count < 10) return;
-            
+
             var recent10 = healthHistory.GetRange(healthHistory.Count - 10, 10);
             float avgRecent = 0f;
             float avgOlder = 0f;
-            
+
             for (int i = 0; i < 5; i++)
             {
                 avgOlder += recent10[i].HealthScore;
                 avgRecent += recent10[i + 5].HealthScore;
             }
-            
+
             avgOlder /= 5f;
             avgRecent /= 5f;
-            
+
             float trendChange = avgRecent - avgOlder;
-            
-            if (trendChange < -15f) // 15轤ｹ莉･荳翫・謔ｪ蛹・            {
-                RecordIssue($"Negative health trend detected: {trendChange:F1} point decline", 
+
+            if (trendChange < -15f) // More than 15 point decline
+            {
+                RecordIssue($"Negative health trend detected: {trendChange:F1} point decline",
                            IssueType.HealthTrend, IssueSeverity.Warning);
             }
         }
-        
+
         /// <summary>
-        /// 繧ｨ繝ｩ繝ｼ繝代ち繝ｼ繝ｳ縺ｮ蛻・梵
+        /// Analyze error patterns
         /// </summary>
         private void AnalyzeErrorPatterns()
         {
             var recentIssuesList = recentIssues.ToArray();
             if (recentIssuesList.Length < 3) return;
-            
-            // 蜷檎ｨｮ縺ｮ繧ｨ繝ｩ繝ｼ縺檎洒譛滄俣縺ｫ隍・焚逋ｺ逕溘＠縺ｦ縺・ｋ蝣ｴ蜷・            var issueGroups = new Dictionary<string, int>();
-            var cutoffTime = DateTime.Now.AddMinutes(-10); // 驕主悉10蛻・俣
-            
+
+            // Check if same errors occur multiple times recently
+            var issueGroups = new Dictionary<string, int>();
+            var cutoffTime = DateTime.Now.AddMinutes(-10); // Last 10 minutes
+
             foreach (var issue in recentIssuesList)
             {
                 if (issue.Timestamp > cutoffTime)
@@ -376,39 +390,41 @@ namespace asterivo.Unity60.Core.Services
                     issueGroups[issue.Description]++;
                 }
             }
-            
+
             foreach (var kvp in issueGroups)
             {
-                if (kvp.Value >= 3) // 蜷後§蝠城｡後′3蝗樔ｻ･荳・                {
-                    RecordIssue($"Recurring issue pattern detected: '{kvp.Key}' occurred {kvp.Value} times", 
+                if (kvp.Value >= 3) // Same issue 3+ times
+                {
+                    RecordIssue($"Recurring issue pattern detected: '{kvp.Key}' occurred {kvp.Value} times",
                                IssueType.RecurringError, IssueSeverity.Error);
                 }
             }
         }
-        
+
         /// <summary>
-        /// 繧ｵ繝ｼ繝薙せ蜩∬ｳｪ蜉｣蛹悶・莠域ｸｬ
+        /// Predict service quality degradation
         /// </summary>
         private void PredictServiceDegradation()
         {
             foreach (var kvp in serviceMetrics)
             {
                 var metrics = kvp.Value;
-                
+
                 if (metrics.SuccessRate < 90f && metrics.ErrorCount > 5)
                 {
                     RecordIssue($"Service quality degradation predicted for {metrics.ServiceName}: " +
-                               $"Success rate {metrics.SuccessRate:F1}%, Errors: {metrics.ErrorCount}", 
+                               $"Success rate {metrics.SuccessRate:F1}%, Errors: {metrics.ErrorCount}",
                                IssueType.ServiceDegradation, IssueSeverity.Warning);
                 }
             }
         }
-        
+
         /// <summary>
-        /// 蝠城｡後・讀懷・縺ｨ蟇ｾ蠢・        /// </summary>
+        /// Detect issues and handle
+        /// </summary>
         private void DetectAndHandleIssues(SystemHealthStatus healthStatus)
         {
-            // 騾｣邯壼､ｱ謨励き繧ｦ繝ｳ繧ｿ繝ｼ縺ｮ譖ｴ譁ｰ
+            // Update consecutive failure counter
             if (!healthStatus.IsHealthy)
             {
                 consecutiveFailures++;
@@ -417,31 +433,33 @@ namespace asterivo.Unity60.Core.Services
             {
                 consecutiveFailures = 0;
             }
-            
-            // 邱頑･莠区・縺ｮ讀懷・
+
+            // Detect emergency condition
             if (consecutiveFailures >= maxConsecutiveFailures)
             {
                 HandleEmergencyCondition($"System failed {consecutiveFailures} consecutive health checks");
             }
-            
-            // 險ｭ螳夂泝逶ｾ縺ｮ讀懷・
+
+            // Detect configuration inconsistency
             if (healthStatus.HasInconsistentConfiguration)
             {
                 HandleConfigurationInconsistency(healthStatus.Issues);
             }
         }
-        
+
         /// <summary>
-        /// 邱頑･莠区・縺ｮ蟇ｾ蠢・        /// </summary>
+        /// Handle emergency condition
+        /// </summary>
         private void HandleEmergencyCondition(string reason)
         {
             ServiceLocator.GetService<IEventLogger>()?.LogError($"[AdvancedRollbackMonitor] EMERGENCY CONDITION: {reason}");
-            
+
             if (enableAutoRecovery)
             {
                 ServiceLocator.GetService<IEventLogger>()?.LogError("[AdvancedRollbackMonitor] Attempting automatic recovery...");
-                
-                // 谿ｵ髫守噪縺ｪ蝗槫ｾｩ繧定ｩｦ陦・                if (TryGradualRecovery())
+
+                // Try gradual recovery
+                if (TryGradualRecovery())
                 {
                     ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Gradual recovery succeeded");
                     consecutiveFailures = 0;
@@ -458,37 +476,40 @@ namespace asterivo.Unity60.Core.Services
                 EmergencyRollback.SetEmergencyFlag($"Emergency condition detected: {reason}");
             }
         }
-        
+
         /// <summary>
-        /// 谿ｵ髫守噪蝗槫ｾｩ縺ｮ隧ｦ陦・        /// </summary>
+        /// Try gradual recovery
+        /// </summary>
         private bool TryGradualRecovery()
         {
             try
             {
                 ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Attempting gradual recovery...");
-                
-                // Step 1: 譛譁ｰ縺ｮ繧ｵ繝ｼ繝薙せ險ｭ螳壹ｒ辟｡蜉ｹ蛹・                if (FeatureFlags.UseNewStealthService)
+
+                // Step 1: Disable newest service settings
+                if (FeatureFlags.UseNewStealthService)
                 {
                     FeatureFlags.UseNewStealthService = false;
                     ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Disabled StealthService");
                     if (CheckSystemHealthImprovement()) return true;
                 }
-                
-                // Step 2: Spatial Audio險ｭ螳壹ｒ辟｡蜉ｹ蛹・                if (FeatureFlags.UseNewSpatialService)
+
+                // Step 2: Disable Spatial Audio settings
+                if (FeatureFlags.UseNewSpatialService)
                 {
                     FeatureFlags.UseNewSpatialService = false;
                     ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Disabled SpatialService");
                     if (CheckSystemHealthImprovement()) return true;
                 }
-                
-                // Step 3: 逶｣隕匁ｩ溯・繧剃ｸ譎ょ●豁｢
+
+                // Step 3: Temporarily stop monitoring
                 if (FeatureFlags.EnableMigrationMonitoring)
                 {
                     FeatureFlags.EnableMigrationMonitoring = false;
                     ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Disabled migration monitoring");
                     if (CheckSystemHealthImprovement()) return true;
                 }
-                
+
                 return false;
             }
             catch (Exception ex)
@@ -497,68 +518,78 @@ namespace asterivo.Unity60.Core.Services
                 return false;
             }
         }
-        
+
         /// <summary>
-        /// 繧ｷ繧ｹ繝・Β蛛･蜈ｨ諤ｧ縺ｮ謾ｹ蝟・ｒ遒ｺ隱・        /// </summary>
+        /// Check system health improvement
+        /// </summary>
         private bool CheckSystemHealthImprovement()
         {
-            System.Threading.Thread.Sleep(1000); // 1遘貞ｾ・ｩ・            
+            System.Threading.Thread.Sleep(1000); // Wait 1 second
+
             var healthStatus = EmergencyRollback.CheckSystemHealth();
             return healthStatus.HealthScore > criticalHealthThreshold;
         }
-        
+
         /// <summary>
-        /// 險ｭ螳夂泝逶ｾ縺ｮ蟇ｾ蠢・        /// </summary>
+        /// Handle configuration inconsistency
+        /// </summary>
         private void HandleConfigurationInconsistency(List<string> issues)
         {
             foreach (var issue in issues)
             {
-                RecordIssue($"Configuration inconsistency: {issue}", 
+                RecordIssue($"Configuration inconsistency: {issue}",
                            IssueType.Configuration, IssueSeverity.Warning);
             }
-            
+
             lastIssueDetected = $"Configuration issues: {issues.Count} problems detected";
         }
-        
+
         /// <summary>
-        /// 驥榊､ｧ蛛･蜈ｨ諤ｧ繝ｬ繝吶Ν縺ｮ蜃ｦ逅・        /// </summary>
+        /// Handle critical health level
+        /// </summary>
         private void HandleCriticalHealthLevel(int score)
         {
             ServiceLocator.GetService<IEventLogger>()?.LogError($"[AdvancedRollbackMonitor] CRITICAL HEALTH LEVEL: Score {score}");
-            
+
             if (enableAutoRecovery)
             {
                 HandleEmergencyCondition($"Critical health level: {score}");
             }
         }
-        
+
         /// <summary>
-        /// 隴ｦ蜻雁▼蜈ｨ諤ｧ繝ｬ繝吶Ν縺ｮ蜃ｦ逅・        /// </summary>
+        /// Handle warning health level
+        /// </summary>
         private void HandleWarningHealthLevel(int score)
         {
             ServiceLocator.GetService<IEventLogger>()?.LogWarning($"[AdvancedRollbackMonitor] WARNING HEALTH LEVEL: Score {score}");
-            
-            // 莠磯亟逧・蒔鄂ｮ縺ｮ螳溯｡・            PerformPreventiveMeasures();
+
+            // Perform preventive measures
+            PerformPreventiveMeasures();
         }
-        
+
         /// <summary>
-        /// 蛛･蜈ｨ諤ｧ蝗槫ｾｩ縺ｮ蜃ｦ逅・        /// </summary>
+        /// Handle health recovery
+        /// </summary>
         private void HandleHealthRecovery(SystemHealthLevel previous, SystemHealthLevel current)
         {
             ServiceLocator.GetService<IEventLogger>()?.Log($"[AdvancedRollbackMonitor] System health recovered from {previous} to {current}");
-            
-            // 蝗槫ｾｩ蠕後・螳牙ｮ壽ｧ遒ｺ隱・            InvokeRepeating(nameof(ConfirmHealthStability), 30f, 10f);
+
+            // Confirm stability after recovery
+            InvokeRepeating(nameof(ConfirmHealthStability), 30f, 10f);
         }
-        
+
         /// <summary>
-        /// 莠磯亟逧・蒔鄂ｮ縺ｮ螳溯｡・        /// </summary>
+        /// Perform preventive measures
+        /// </summary>
         private void PerformPreventiveMeasures()
         {
             ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Performing preventive measures...");
-            
-            // 繧ｬ繝吶・繧ｸ繧ｳ繝ｬ繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ螳溯｡・            System.GC.Collect();
-            
-            // 繧ｵ繝ｼ繝薙せ邨ｱ險医・繝ｪ繧ｻ繝・ヨ
+
+            // Execute garbage collection
+            System.GC.Collect();
+
+            // Reset service statistics
             foreach (var key in serviceMetrics.Keys.ToArray())
             {
                 var metrics = serviceMetrics[key];
@@ -569,9 +600,10 @@ namespace asterivo.Unity60.Core.Services
                 }
             }
         }
-        
+
         /// <summary>
-        /// 蛛･蜈ｨ諤ｧ螳牙ｮ壽ｧ縺ｮ遒ｺ隱・        /// </summary>
+        /// Confirm health stability
+        /// </summary>
         private void ConfirmHealthStability()
         {
             if (currentHealthLevel == SystemHealthLevel.Good || currentHealthLevel == SystemHealthLevel.Excellent)
@@ -580,63 +612,66 @@ namespace asterivo.Unity60.Core.Services
                 ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Health stability confirmed");
             }
         }
-        
+
         /// <summary>
-        /// 蛛･蜈ｨ諤ｧ蛻・梵縺ｮ螳溯｡・        /// </summary>
+        /// Perform health analysis
+        /// </summary>
         private void PerformHealthAnalysis()
         {
             if (healthHistory.Count < 5) return;
-            
-            // 驕主悉縺ｮ蛯ｾ蜷大・譫・            AnalyzeLongTermTrends();
-            
-            // 繧ｵ繝ｼ繝薙せ蜩∬ｳｪ繝ｬ繝昴・繝医・逕滓・
-            if (healthHistory.Count % 12 == 0) // 1蛻・＃縺ｨ・・遘津・2蝗橸ｼ・            {
+
+            // Analyze long-term trends
+            AnalyzeLongTermTrends();
+
+            // Generate service quality report
+            if (healthHistory.Count % 12 == 0) // Every minute (5 seconds x 12 times)
+            {
                 GenerateServiceQualityReport();
             }
         }
-        
+
         /// <summary>
-        /// 髟ｷ譛溷だ蜷代・蛻・梵
+        /// Analyze long-term trends
         /// </summary>
         private void AnalyzeLongTermTrends()
         {
             if (healthHistory.Count < 20) return;
-            
+
             var recent = healthHistory.GetRange(healthHistory.Count - 10, 10);
             var older = healthHistory.GetRange(healthHistory.Count - 20, 10);
-            
+
             float avgRecent = (float)recent.Average(h => h.HealthScore);
             float avgOlder = (float)older.Average(h => h.HealthScore);
-            
+
             float longTermTrend = avgRecent - avgOlder;
-            
+
             if (Math.Abs(longTermTrend) > 5f)
             {
                 string trendDirection = longTermTrend > 0 ? "improving" : "declining";
                 ServiceLocator.GetService<IEventLogger>()?.Log($"[AdvancedRollbackMonitor] Long-term health trend: {trendDirection} by {Math.Abs(longTermTrend):F1} points");
             }
         }
-        
+
         /// <summary>
-        /// 繧ｵ繝ｼ繝薙せ蜩∬ｳｪ繝ｬ繝昴・繝医・逕滓・
+        /// Generate service quality report
         /// </summary>
         private void GenerateServiceQualityReport()
         {
             ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] === Service Quality Report ===");
-            
+
             foreach (var kvp in serviceMetrics)
             {
                 var metrics = kvp.Value;
-                string status = metrics.IsHealthy ? "笨・ : "笶・;
+                string status = metrics.IsHealthy ? "OK" : "FAIL";
                 ServiceLocator.GetService<IEventLogger>()?.Log($"  {status} {metrics.ServiceName}: " +
                                $"Success Rate: {metrics.SuccessRate:F1}%, " +
                                $"Avg Response: {metrics.ResponseTime:F1}ms, " +
                                $"Errors: {metrics.ErrorCount}");
             }
         }
-        
+
         /// <summary>
-        /// 蝠城｡後・險倬鹸
+        /// Record issue
         /// </summary>
         private void RecordIssue(string description, IssueType type, IssueSeverity severity)
         {
@@ -647,14 +682,15 @@ namespace asterivo.Unity60.Core.Services
                 Type = type,
                 Severity = severity
             };
-            
+
             recentIssues.Enqueue(issue);
             if (recentIssues.Count > MAX_RECENT_ISSUES)
             {
                 recentIssues.Dequeue();
             }
-            
-            // 繝ｭ繧ｰ蜃ｺ蜉・            switch (severity)
+
+            // Log output
+            switch (severity)
             {
                 case IssueSeverity.Info:
                     ServiceLocator.GetService<IEventLogger>()?.Log($"[AdvancedRollbackMonitor] {description}");
@@ -667,9 +703,10 @@ namespace asterivo.Unity60.Core.Services
                     break;
             }
         }
-        
+
         /// <summary>
-        /// 逶｣隕悶ョ繝ｼ繧ｿ縺ｮ菫晏ｭ・        /// </summary>
+        /// Save monitoring data
+        /// </summary>
         private void SaveMonitoringData()
         {
             try
@@ -684,9 +721,9 @@ namespace asterivo.Unity60.Core.Services
                 ServiceLocator.GetService<IEventLogger>()?.LogError($"[AdvancedRollbackMonitor] Failed to save monitoring data: {ex.Message}");
             }
         }
-        
+
         /// <summary>
-        /// 逶｣隕悶ョ繝ｼ繧ｿ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ
+        /// Load monitoring data
         /// </summary>
         private void LoadMonitoringData()
         {
@@ -701,20 +738,20 @@ namespace asterivo.Unity60.Core.Services
                 ServiceLocator.GetService<IEventLogger>()?.LogError($"[AdvancedRollbackMonitor] Failed to load monitoring data: {ex.Message}");
             }
         }
-        
+
         /// <summary>
-        /// 蛻晏屓蛛･蜈ｨ諤ｧ繝√ぉ繝・け
+        /// Perform initial health check
         /// </summary>
         private void PerformInitialHealthCheck()
         {
             var healthStatus = EmergencyRollback.CheckSystemHealth();
             UpdateHealthHistory(healthStatus);
-            
+
             ServiceLocator.GetService<IEventLogger>()?.Log($"[AdvancedRollbackMonitor] Initial health check: {healthStatus.HealthScore}% ({currentHealthLevel})");
         }
-        
+
         /// <summary>
-        /// 逶｣隕也憾豕√Ξ繝昴・繝医・逕滓・
+        /// Generate monitoring report
         /// </summary>
         [ContextMenu("Generate Monitoring Report")]
         public void GenerateMonitoringReport()
@@ -727,15 +764,15 @@ namespace asterivo.Unity60.Core.Services
             ServiceLocator.GetService<IEventLogger>()?.Log($"  Auto Recovery: {enableAutoRecovery}");
             ServiceLocator.GetService<IEventLogger>()?.Log($"  Health History: {healthHistory.Count} entries");
             ServiceLocator.GetService<IEventLogger>()?.Log($"  Recent Issues: {recentIssues.Count} issues");
-            
+
             if (!string.IsNullOrEmpty(lastIssueDetected))
             {
                 ServiceLocator.GetService<IEventLogger>()?.Log($"  Last Issue: {lastIssueDetected}");
             }
         }
-        
+
         /// <summary>
-        /// 逶｣隕悶す繧ｹ繝・Β縺ｮ繝ｪ繧ｻ繝・ヨ
+        /// Reset monitoring system
         /// </summary>
         [ContextMenu("Reset Monitoring System")]
         public void ResetMonitoringSystem()
@@ -747,16 +784,16 @@ namespace asterivo.Unity60.Core.Services
             currentHealthLevel = SystemHealthLevel.Unknown;
             lastHealthScore = 100f;
             lastIssueDetected = "";
-            
+
             RegisterServiceMetrics();
             PerformInitialHealthCheck();
-            
+
             ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Monitoring system reset");
         }
     }
-    
+
     /// <summary>
-    /// 繧ｷ繧ｹ繝・Β蛛･蜈ｨ諤ｧ繝ｬ繝吶Ν
+    /// System health level
     /// </summary>
     public enum SystemHealthLevel
     {
@@ -766,9 +803,9 @@ namespace asterivo.Unity60.Core.Services
         Good = 3,
         Excellent = 4
     }
-    
+
     /// <summary>
-    /// 蛛･蜈ｨ諤ｧ繧ｹ繝翫ャ繝励す繝ｧ繝・ヨ
+    /// Health snapshot
     /// </summary>
     [System.Serializable]
     public class HealthSnapshot
@@ -779,9 +816,9 @@ namespace asterivo.Unity60.Core.Services
         public int IssueCount;
         public bool HasInconsistentConfiguration;
     }
-    
+
     /// <summary>
-    /// 繧ｵ繝ｼ繝薙せ蛛･蜈ｨ諤ｧ繝｡繝医Μ繧ｯ繧ｹ
+    /// Service health metrics
     /// </summary>
     [System.Serializable]
     public class ServiceHealthMetrics
@@ -793,9 +830,10 @@ namespace asterivo.Unity60.Core.Services
         public int ErrorCount;
         public float SuccessRate;
     }
-    
+
     /// <summary>
-    /// 繧ｷ繧ｹ繝・Β蝠城｡・    /// </summary>
+    /// System issue
+    /// </summary>
     [System.Serializable]
     public class SystemIssue
     {
@@ -804,9 +842,10 @@ namespace asterivo.Unity60.Core.Services
         public IssueType Type;
         public IssueSeverity Severity;
     }
-    
+
     /// <summary>
-    /// 蝠城｡後ち繧､繝・    /// </summary>
+    /// Issue type
+    /// </summary>
     public enum IssueType
     {
         Configuration,
@@ -816,9 +855,9 @@ namespace asterivo.Unity60.Core.Services
         RecurringError,
         SystemFailure
     }
-    
+
     /// <summary>
-    /// 蝠城｡碁㍾隕∝ｺｦ
+    /// Issue severity
     /// </summary>
     public enum IssueSeverity
     {

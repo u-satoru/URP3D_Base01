@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 // using asterivo.Unity60.Core.Player; // Removed to avoid circular dependency
 
 namespace asterivo.Unity60.Core.Patterns

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 using asterivo.Unity60.Core.Audio.Interfaces;
 // using asterivo.Unity60.Core.Debug;
@@ -155,18 +155,17 @@ namespace asterivo.Unity60.Core.Services
                 return false;
             }
             
-            // Week 3縺ｮ譛溷ｾ・＆繧後ｋ險ｭ螳・            if (FeatureFlags.UseNewAudioService && 
-                FeatureFlags.UseNewSpatialService && 
+            // Week 3 expected settings
+            if (FeatureFlags.UseNewAudioService &&
+                FeatureFlags.UseNewSpatialService &&
                 FeatureFlags.UseNewStealthService)
             {
                 ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] All new services are enabled");
                 return true;
             }
-            else
-            {
-                ServiceLocator.GetService<IEventLogger>()?.LogWarning("[MigrationValidator] Some new services are still disabled");
-                return false;
-            }
+
+            ServiceLocator.GetService<IEventLogger>()?.LogWarning("[MigrationValidator] Some new services are still disabled");
+            return false;
         }
     }
 }

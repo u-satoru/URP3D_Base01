@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using asterivo.Unity60.Features.Templates.FPS.Data;
 using asterivo.Unity60.Features.Templates.FPS.Player;
 using asterivo.Unity60.Features.Templates.FPS.Configuration;

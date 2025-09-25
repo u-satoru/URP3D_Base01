@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Audio; // GameState enum逕ｨ

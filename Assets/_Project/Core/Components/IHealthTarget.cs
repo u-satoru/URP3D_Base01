@@ -1,4 +1,4 @@
-﻿namespace asterivo.Unity60.Core.Components
+namespace asterivo.Unity60.Core.Components
 {
     /// <summary>
     /// ヘルス関連の操作を受け取ることができるオブジェクトのインターフェース

@@ -1,4 +1,4 @@
-﻿# TASK-003.4 Genre Selection System - Final Test Report
+# TASK-003.4 Genre Selection System - Final Test Report
 
 **Date**: 2025-09-09  
 **Task**: TODO.md Phase 2 TASK-003.4 - ジャンル選択システム実装  

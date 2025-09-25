@@ -1,4 +1,4 @@
-﻿using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core;
 using System;
 using System.Collections.Generic;
@@ -33,8 +33,9 @@ namespace asterivo.Unity60.Core.Services
             
             if (enableAutoProgression)
             {
-                InvokeRepeating(nameof(CheckScheduleProgression), 60f, 60f); // 1分ごとに確認            }
-            
+                InvokeRepeating(nameof(CheckScheduleProgression), 60f, 60f); // 1分ごとに確認
+            }
+
             EventLogger.LogStatic($"[SingletonDisableScheduler] Started - Current Day: {currentDay}, Auto: {enableAutoProgression}");
         }
         

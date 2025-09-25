@@ -1,4 +1,4 @@
-﻿{
+{
     "name": "asterivo.Unity60.Core.StateMachine.Editor",
     "rootNamespace": "asterivo.Unity60.Core.Patterns.StateMachine.Editor",
     "references": [

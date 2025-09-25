@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using asterivo.Unity60.Features.Player.States;
 
 namespace asterivo.Unity60.Features.Player.Commands

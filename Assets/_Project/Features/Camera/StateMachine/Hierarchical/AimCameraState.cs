@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using asterivo.Unity60.Core.Patterns.StateMachine;
 using asterivo.Unity60.Core.StateMachine;
 using asterivo.Unity60.Features.Camera.States;

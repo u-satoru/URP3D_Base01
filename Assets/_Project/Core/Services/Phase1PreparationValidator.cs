@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 // using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Audio;

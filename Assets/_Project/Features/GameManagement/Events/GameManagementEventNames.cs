@@ -1,4 +1,4 @@
-﻿namespace asterivo.Unity60.Features.GameManagement.Events
+namespace asterivo.Unity60.Features.GameManagement.Events
 {
     /// <summary>
     /// GameManagement機能で使用されるイベント名の定義

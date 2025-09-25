@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using asterivo.Unity60.Features.Templates.Platformer.Collectibles;
 using Sirenix.OdinInspector;
 

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Settings

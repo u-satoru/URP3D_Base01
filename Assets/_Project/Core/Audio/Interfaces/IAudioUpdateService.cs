@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core.Audio;  // AudioCoordinatorStats と AudioSystemSyncData の参照用
 using asterivo.Unity60.Core.Audio.Interfaces;  // IAudioUpdatable の参照用

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using NUnit.Framework;
 using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core;

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Debug = UnityEngine.Debug;
 using UnityEngine.AI;
 using System.Collections.Generic;

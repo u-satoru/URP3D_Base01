@@ -1,4 +1,4 @@
-﻿# StealthTemplateConfiguration コンパイルエラー詳細分析レポート
+# StealthTemplateConfiguration コンパイルエラー詳細分析レポート
 
 ## 📋 文書管理情報
 

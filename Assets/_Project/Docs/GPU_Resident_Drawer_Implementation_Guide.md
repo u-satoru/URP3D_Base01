@@ -1,4 +1,4 @@
-﻿# GPU Resident Drawer Implementation Guide
+# GPU Resident Drawer Implementation Guide
 
 ## 概要
 

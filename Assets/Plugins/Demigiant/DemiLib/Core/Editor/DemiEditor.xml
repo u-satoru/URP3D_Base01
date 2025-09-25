@@ -734,7 +734,7 @@
             Add key, automatically formatting these special keys:<para/>
             /<para/>
             +<para/>
-            →
+            â†’
             </summary>
             <param name="newLine">If TRUE and there's other keys/targets, adds the new key on a new line preceded by a comma</param>
         </member>

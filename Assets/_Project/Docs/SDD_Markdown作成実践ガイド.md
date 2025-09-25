@@ -1,4 +1,4 @@
-﻿# SDD Markdownドキュメント作成実践ガイド
+# SDD Markdownドキュメント作成実践ガイド
 
 ## 概要
 

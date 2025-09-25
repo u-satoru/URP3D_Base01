@@ -1,4 +1,4 @@
-﻿# Core層ServiceLocator「真のServiceLocator」検証レポート
+# Core層ServiceLocator「真のServiceLocator」検証レポート
 
 ## 📋 文書管理情報
 

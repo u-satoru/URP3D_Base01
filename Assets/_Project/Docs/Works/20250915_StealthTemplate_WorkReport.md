@@ -1,4 +1,4 @@
-﻿# Stealth Template Configuration 作業報告書
+# Stealth Template Configuration 作業報告書
 
 ## 作業概要
 

@@ -1,4 +1,4 @@
-﻿namespace asterivo.Unity60.Core.Audio.Interfaces
+namespace asterivo.Unity60.Core.Audio.Interfaces
 {
     /// <summary>
     /// オーディオシステムで更新可能なコンポーネント

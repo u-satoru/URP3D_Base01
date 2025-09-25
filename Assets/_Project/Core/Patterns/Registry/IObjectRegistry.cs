@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace asterivo.Unity60.Core.Patterns.Registry

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using asterivo.Unity60.Features.Templates.Platformer.Settings;
 
 namespace asterivo.Unity60.Features.Templates.Platformer.Data

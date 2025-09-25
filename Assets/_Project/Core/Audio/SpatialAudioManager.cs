@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Audio;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Audio.Data;

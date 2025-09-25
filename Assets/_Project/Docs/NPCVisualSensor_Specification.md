@@ -1,4 +1,4 @@
-﻿# NPCVisualSensor システム仕様書
+# NPCVisualSensor システム仕様書
 
 ## 概要
 

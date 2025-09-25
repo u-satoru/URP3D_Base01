@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Features.Templates.Stealth.Environment;
 using asterivo.Unity60.Features.Templates.Stealth.Events;

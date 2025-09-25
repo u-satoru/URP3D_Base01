@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 // using asterivo.Unity60.Core.Debug;
 // // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 using asterivo.Unity60.Core.Services;
@@ -12,46 +12,47 @@ using System;
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// 螳悟・Singleton閼ｱ蜊ｴ繝励Ο繧ｻ繧ｹ邂｡逅・す繧ｹ繝・Β
-    /// 谿ｵ髫守噪縺九▽螳牙・縺ｪSingleton螳悟・蜑企勁繧堤ｮ｡逅・    /// </summary>
+    /// Complete Singleton Removal Process Management System
+    /// Manages the phased and safe complete removal of Singletons
+    /// </summary>
     public class SingletonRemovalPlan : MonoBehaviour
     {
         [Header("Removal Configuration")]
         [SerializeField] private bool enableAutoRemoval = false;
         [SerializeField] private bool requireManualConfirmation = true;
         [SerializeField] private bool createComprehensiveBackup = true;
-        
+
         [Header("Target Classes")]
         [SerializeField] private string[] singletonClasses = {
             "AudioManager",
-            "SpatialAudioManager", 
+            "SpatialAudioManager",
             "EffectManager",
             "CommandPoolService",
             "EventLogger",
             "CinemachineIntegration"
         };
-        
+
         [Header("Progress Tracking")]
         [SerializeField] private bool removalCompleted = false;
         [SerializeField] private string removalStartTime = "";
         [SerializeField] private string removalCompletionTime = "";
-        
+
         private Dictionary<string, RemovalStep[]> removalPlan;
-        
+
         private void Awake()
         {
             InitializeRemovalPlan();
             LoadRemovalState();
         }
-        
+
         /// <summary>
-        /// 蜑企勁繝励Λ繝ｳ繧貞・譛溷喧
+        /// Initialize removal plan
         /// </summary>
         private void InitializeRemovalPlan()
         {
             removalPlan = new Dictionary<string, RemovalStep[]>();
-            
-            // 蜷・け繝ｩ繧ｹ縺ｮ蜑企勁繧ｹ繝・ャ繝励ｒ螳夂ｾｩ
+
+            // Define removal steps for each class
             removalPlan["AudioManager"] = new RemovalStep[]
             {
                 new RemovalStep("private static AudioManager instance;", RemovalAction.Delete),
@@ -61,7 +62,7 @@ namespace asterivo.Unity60.Core.Services
                 new RemovalStep("DontDestroyOnLoad(gameObject);", RemovalAction.Keep),
                 new RemovalStep("IAudioService interface methods", RemovalAction.Keep)
             };
-            
+
             removalPlan["SpatialAudioManager"] = new RemovalStep[]
             {
                 new RemovalStep("private static SpatialAudioManager instance;", RemovalAction.Delete),
@@ -70,7 +71,7 @@ namespace asterivo.Unity60.Core.Services
                 new RemovalStep("ServiceLocator.RegisterService<ISpatialAudioService>(this);", RemovalAction.Keep),
                 new RemovalStep("ISpatialAudioService interface methods", RemovalAction.Keep)
             };
-            
+
             removalPlan["EffectManager"] = new RemovalStep[]
             {
                 new RemovalStep("private static EffectManager instance;", RemovalAction.Delete),
@@ -79,7 +80,7 @@ namespace asterivo.Unity60.Core.Services
                 new RemovalStep("ServiceLocator.RegisterService<IEffectService>(this);", RemovalAction.Keep),
                 new RemovalStep("IEffectService interface methods", RemovalAction.Keep)
             };
-            
+
             removalPlan["CommandPoolService"] = new RemovalStep[]
             {
                 new RemovalStep("private static CommandPoolService instance;", RemovalAction.Delete),
@@ -88,7 +89,7 @@ namespace asterivo.Unity60.Core.Services
                 new RemovalStep("ServiceLocator.RegisterService<ICommandPoolService>(this);", RemovalAction.Keep),
                 new RemovalStep("ICommandPoolService interface methods", RemovalAction.Keep)
             };
-            
+
             removalPlan["EventLogger"] = new RemovalStep[]
             {
                 new RemovalStep("private static EventLogger instance;", RemovalAction.Delete),
@@ -97,7 +98,7 @@ namespace asterivo.Unity60.Core.Services
                 new RemovalStep("ServiceLocator.RegisterService<IEventLogger>(this);", RemovalAction.Keep),
                 new RemovalStep("IEventLogger interface methods", RemovalAction.Keep)
             };
-            
+
             removalPlan["CinemachineIntegration"] = new RemovalStep[]
             {
                 new RemovalStep("private static CinemachineIntegration instance;", RemovalAction.Delete),
@@ -107,9 +108,10 @@ namespace asterivo.Unity60.Core.Services
                 new RemovalStep("Camera management methods", RemovalAction.Keep)
             };
         }
-        
+
         /// <summary>
-        /// 螳悟・蜑企勁繝励Ο繧ｻ繧ｹ繧帝幕蟋・        /// </summary>
+        /// Start complete removal process
+        /// </summary>
         [ContextMenu("Start Complete Singleton Removal")]
         public void StartCompleteRemoval()
         {
@@ -118,51 +120,52 @@ namespace asterivo.Unity60.Core.Services
                 ProjectDebug.LogWarning("[SingletonRemovalPlan] Removal already completed");
                 return;
             }
-            
+
             if (!ValidatePreConditions())
             {
                 ProjectDebug.LogError("[SingletonRemovalPlan] Pre-conditions not met for removal");
                 return;
             }
-            
+
             if (requireManualConfirmation)
             {
-                ProjectDebug.LogWarning("[SingletonRemovalPlan] 笞・・CRITICAL: This will PERMANENTLY remove all Singleton patterns");
+                ProjectDebug.LogWarning("[SingletonRemovalPlan] CRITICAL: This will PERMANENTLY remove all Singleton patterns");
                 ProjectDebug.LogWarning("[SingletonRemovalPlan] Call ExecuteCompleteRemoval() to proceed with confirmation");
                 return;
             }
-            
+
             ExecuteCompleteRemoval();
         }
-        
+
         /// <summary>
-        /// 莠句燕譚｡莉ｶ繧呈､懆ｨｼ
+        /// Validate pre-conditions
         /// </summary>
         private bool ValidatePreConditions()
         {
             ProjectDebug.Log("[SingletonRemovalPlan] Validating pre-conditions...");
-            
-            // 1. ServiceLocator 縺梧怏蜉ｹ縺ｧ縺ゅｋ縺薙→
+
+            // 1. ServiceLocator must be enabled
             if (!FeatureFlags.UseServiceLocator)
             {
                 ProjectDebug.LogError("[SingletonRemovalPlan] ServiceLocator must be enabled");
                 return false;
             }
-            
-            // 2. 縺吶∋縺ｦ縺ｮ繧ｵ繝ｼ繝薙せ縺郡erviceLocator縺ｫ逋ｻ骭ｲ縺輔ｌ縺ｦ縺・ｋ縺薙→
+
+            // 2. All services must be registered in ServiceLocator
             bool allServicesRegistered = ValidateServiceRegistration();
             if (!allServicesRegistered)
             {
                 ProjectDebug.LogError("[SingletonRemovalPlan] Not all services are properly registered");
                 return false;
             }
-            
-            // 3. 遘ｻ陦瑚ｭｦ蜻翫′辟｡蜉ｹ蛹悶＆繧後※縺・ｋ縺薙→・亥ｮ悟・遘ｻ陦梧ｸ医∩・・            if (FeatureFlags.EnableMigrationWarnings)
+
+            // 3. Migration warnings should be disabled (complete migration)
+            if (FeatureFlags.EnableMigrationWarnings)
             {
                 ProjectDebug.LogWarning("[SingletonRemovalPlan] Migration warnings still enabled - consider disabling first");
             }
-            
-            // 4. 繧ｷ繧ｹ繝・Β蛛･蜈ｨ諤ｧ繝√ぉ繝・け
+
+            // 4. System health check
             var healthStatus = asterivo.Unity60.Core.Services.EmergencyRollback.CheckSystemHealth();
             if (!healthStatus.IsHealthy)
             {
@@ -173,13 +176,13 @@ namespace asterivo.Unity60.Core.Services
                 }
                 return false;
             }
-            
-            ProjectDebug.Log("[SingletonRemovalPlan] 笨・All pre-conditions validated");
+
+            ProjectDebug.Log("[SingletonRemovalPlan] All pre-conditions validated");
             return true;
         }
-        
+
         /// <summary>
-        /// 繧ｵ繝ｼ繝薙せ逋ｻ骭ｲ迥ｶ豕√ｒ讀懆ｨｼ
+        /// Validate service registration
         /// </summary>
         private bool ValidateServiceRegistration()
         {
@@ -191,14 +194,14 @@ namespace asterivo.Unity60.Core.Services
                 var commandPoolService = ServiceLocator.GetService<ICommandPoolService>();
                 var eventLogger = ServiceLocator.GetService<IEventLogger>();
                 // var cinemachineIntegration = ServiceLocator.GetService<CinemachineIntegration>(); // Commented out - namespace issue
-                
-                bool allRegistered = audioService != null && 
-                                   spatialService != null && 
-                                   effectService != null && 
-                                   commandPoolService != null && 
+
+                bool allRegistered = audioService != null &&
+                                   spatialService != null &&
+                                   effectService != null &&
+                                   commandPoolService != null &&
                                    eventLogger != null;
                                    // cinemachineIntegration check removed due to namespace issue
-                
+
                 ProjectDebug.Log($"[SingletonRemovalPlan] Service registration validation: {allRegistered}");
                 return allRegistered;
             }
@@ -208,56 +211,60 @@ namespace asterivo.Unity60.Core.Services
                 return false;
             }
         }
-        
+
         /// <summary>
-        /// 遒ｺ隱肴ｸ医∩螳悟・蜑企勁繧貞ｮ溯｡・        /// </summary>
+        /// Execute confirmed complete removal
+        /// </summary>
         [ContextMenu("Execute Complete Removal (CONFIRMED)")]
         public void ExecuteCompleteRemoval()
         {
             ProjectDebug.Log("[SingletonRemovalPlan] === STARTING COMPLETE SINGLETON REMOVAL ===");
             removalStartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            
+
             if (createComprehensiveBackup)
             {
                 CreateComprehensiveBackup();
             }
-            
-            // Phase 1: Legacy Singleton螳悟・辟｡蜉ｹ蛹・            ExecutePhase1_DisableLegacySingletons();
-            
-            // Phase 2: 迚ｩ逅・噪繧ｳ繝ｼ繝牙炎髯､縺ｮ貅門ｙ
+
+            // Phase 1: Disable Legacy Singletons completely
+            ExecutePhase1_DisableLegacySingletons();
+
+            // Phase 2: Prepare physical code removal
             ExecutePhase2_PreparePhysicalRemoval();
-            
-            // Phase 3: 譛邨よ､懆ｨｼ縺ｨ繝槭・繧ｯ
+
+            // Phase 3: Final validation and marking
             ExecutePhase3_FinalValidation();
-            
+
             removalCompletionTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             removalCompleted = true;
             SaveRemovalState();
-            
+
             ProjectDebug.Log("[SingletonRemovalPlan] === COMPLETE SINGLETON REMOVAL FINISHED ===");
             GenerateRemovalReport();
         }
-        
+
         /// <summary>
-        /// Phase 1: Legacy Singleton螳悟・辟｡蜉ｹ蛹・        /// </summary>
+        /// Phase 1: Disable Legacy Singletons completely
+        /// </summary>
         private void ExecutePhase1_DisableLegacySingletons()
         {
             ProjectDebug.Log("[SingletonRemovalPlan] Phase 1: Disabling Legacy Singletons...");
-            
-            // FeatureFlags繧呈怙邨ら憾諷九↓險ｭ螳・            FeatureFlags.DisableLegacySingletons = true;
+
+            // Set FeatureFlags to final state
+            FeatureFlags.DisableLegacySingletons = true;
             FeatureFlags.EnableMigrationWarnings = false;
             FeatureFlags.EnableMigrationMonitoring = false;
-            
-            ProjectDebug.Log("[SingletonRemovalPlan] 笨・Legacy Singletons completely disabled");
+
+            ProjectDebug.Log("[SingletonRemovalPlan] Legacy Singletons completely disabled");
         }
-        
+
         /// <summary>
-        /// Phase 2: 迚ｩ逅・噪蜑企勁縺ｮ貅門ｙ
+        /// Phase 2: Prepare physical removal
         /// </summary>
         private void ExecutePhase2_PreparePhysicalRemoval()
         {
             ProjectDebug.Log("[SingletonRemovalPlan] Phase 2: Preparing Physical Code Removal...");
-            
+
             foreach (var className in singletonClasses)
             {
                 if (removalPlan.ContainsKey(className))
@@ -265,75 +272,78 @@ namespace asterivo.Unity60.Core.Services
                     GenerateRemovalInstructions(className, removalPlan[className]);
                 }
             }
-            
-            ProjectDebug.Log("[SingletonRemovalPlan] 笨・Physical removal instructions generated");
+
+            ProjectDebug.Log("[SingletonRemovalPlan] Physical removal instructions generated");
         }
-        
+
         /// <summary>
-        /// Phase 3: 譛邨よ､懆ｨｼ
+        /// Phase 3: Final validation
         /// </summary>
         private void ExecutePhase3_FinalValidation()
         {
             ProjectDebug.Log("[SingletonRemovalPlan] Phase 3: Final Validation...");
-            
-            // 繧ｵ繝ｼ繝薙せ縺梧ｭ｣蟶ｸ縺ｫ蜍穂ｽ懊☆繧九％縺ｨ繧堤｢ｺ隱・            bool servicesWorking = ValidateServiceRegistration();
-            
+
+            // Ensure services still work correctly
+            bool servicesWorking = ValidateServiceRegistration();
+
             if (servicesWorking)
             {
-                ProjectDebug.Log("[SingletonRemovalPlan] 笨・All services validated post-removal");
+                ProjectDebug.Log("[SingletonRemovalPlan] All services validated post-removal");
             }
             else
             {
-                ProjectDebug.LogError("[SingletonRemovalPlan] 笶・Service validation failed");
-                // 邱頑･繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ繧呈署譯・                ProjectDebug.LogWarning("[SingletonRemovalPlan] Consider emergency rollback");
+                ProjectDebug.LogError("[SingletonRemovalPlan] Service validation failed");
+                // Prompt for emergency rollback
+                ProjectDebug.LogWarning("[SingletonRemovalPlan] Consider emergency rollback");
             }
         }
-        
+
         /// <summary>
-        /// 蛹・峡逧・ヰ繝・け繧｢繝・・繧剃ｽ懈・
+        /// Create comprehensive backup
         /// </summary>
         private void CreateComprehensiveBackup()
         {
             ProjectDebug.Log("[SingletonRemovalPlan] Creating comprehensive backup...");
-            
+
             string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmm");
             string backupKey = $"SingletonRemoval_Backup_{timestamp}";
-            
-            // FeatureFlags迥ｶ諷九ｒ繝舌ャ繧ｯ繧｢繝・・
+
+            // Backup FeatureFlags state
             PlayerPrefs.SetString($"{backupKey}_FeatureFlags", SerializeFeatureFlags());
-            
-            // 蜷・け繝ｩ繧ｹ縺ｮ迴ｾ蝨ｨ縺ｮ迥ｶ諷九ｒ險倬鹸
+
+            // Record current state of each class
             foreach (var className in singletonClasses)
             {
                 PlayerPrefs.SetString($"{backupKey}_{className}_Status", "Singleton_Pattern_Active");
             }
-            
+
             PlayerPrefs.SetString("LastSingletonBackup", backupKey);
             PlayerPrefs.Save();
-            
-            ProjectDebug.Log($"[SingletonRemovalPlan] 笨・Backup created: {backupKey}");
+
+            ProjectDebug.Log($"[SingletonRemovalPlan] Backup created: {backupKey}");
         }
-        
+
         /// <summary>
-        /// 蜑企勁謖・､ｺ繧堤函謌・        /// </summary>
+        /// Generate removal instructions
+        /// </summary>
         private void GenerateRemovalInstructions(string className, RemovalStep[] steps)
         {
             ProjectDebug.Log($"[SingletonRemovalPlan] === {className} Removal Instructions ===");
-            
+
             for (int i = 0; i < steps.Length; i++)
             {
                 var step = steps[i];
-                string actionIcon = step.Action == RemovalAction.Delete ? "笶・ : "笨・;
+                string actionIcon = step.Action == RemovalAction.Delete ? "X" : "✓";
                 string actionText = step.Action == RemovalAction.Delete ? "DELETE" : "KEEP";
-                
+
                 ProjectDebug.Log($"[SingletonRemovalPlan] {i+1}. {actionIcon} {actionText}: {step.Description}");
             }
-            
+
             ProjectDebug.Log($"[SingletonRemovalPlan] === End {className} Instructions ===");
         }
-        
+
         /// <summary>
-        /// FeatureFlags繧偵す繝ｪ繧｢繝ｩ繧､繧ｺ
+        /// Serialize FeatureFlags
         /// </summary>
         private string SerializeFeatureFlags()
         {
@@ -342,9 +352,9 @@ namespace asterivo.Unity60.Core.Services
                    $"EnableMigrationWarnings:{FeatureFlags.EnableMigrationWarnings}," +
                    $"EnableMigrationMonitoring:{FeatureFlags.EnableMigrationMonitoring}";
         }
-        
+
         /// <summary>
-        /// 蜑企勁繝ｬ繝昴・繝医ｒ逕滓・
+        /// Generate removal report
         /// </summary>
         private void GenerateRemovalReport()
         {
@@ -354,7 +364,7 @@ namespace asterivo.Unity60.Core.Services
             ProjectDebug.Log($"Classes Processed: {singletonClasses.Length}");
             ProjectDebug.Log("Status: READY FOR MANUAL CODE DELETION");
             ProjectDebug.Log("");
-            ProjectDebug.Log("搭 MANUAL ACTION REQUIRED:");
+            ProjectDebug.Log("⚡ MANUAL ACTION REQUIRED:");
             ProjectDebug.Log("1. Review removal instructions above");
             ProjectDebug.Log("2. Manually delete Singleton code from each class");
             ProjectDebug.Log("3. Keep ServiceLocator registrations intact");
@@ -362,23 +372,26 @@ namespace asterivo.Unity60.Core.Services
             ProjectDebug.Log("5. Execute final validation");
             ProjectDebug.Log("=====================================");
         }
-        
+
         /// <summary>
-        /// 邱頑･繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ繧貞ｮ溯｡・        /// </summary>
+        /// Execute emergency rollback
+        /// </summary>
         [ContextMenu("Emergency Rollback")]
         public void EmergencyRollback()
         {
             ProjectDebug.LogWarning("[SingletonRemovalPlan] Executing emergency rollback...");
-            
-            // FeatureFlags繧貞ｮ牙・縺ｪ迥ｶ諷九↓謌ｻ縺・            FeatureFlags.DisableLegacySingletons = false;
+
+            // Reset FeatureFlags to safe state
+            FeatureFlags.DisableLegacySingletons = false;
             FeatureFlags.EnableMigrationWarnings = true;
             FeatureFlags.EnableMigrationMonitoring = true;
-            
-            ProjectDebug.Log("[SingletonRemovalPlan] 笨・Emergency rollback completed");
+
+            ProjectDebug.Log("[SingletonRemovalPlan] Emergency rollback completed");
         }
-        
+
         /// <summary>
-        /// 蜑企勁迥ｶ諷九ｒ菫晏ｭ・        /// </summary>
+        /// Save removal state
+        /// </summary>
         private void SaveRemovalState()
         {
             PlayerPrefs.SetInt("SingletonRemovalPlan_Completed", removalCompleted ? 1 : 0);
@@ -386,9 +399,9 @@ namespace asterivo.Unity60.Core.Services
             PlayerPrefs.SetString("SingletonRemovalPlan_CompletionTime", removalCompletionTime);
             PlayerPrefs.Save();
         }
-        
+
         /// <summary>
-        /// 蜑企勁迥ｶ諷九ｒ隱ｭ縺ｿ霎ｼ縺ｿ
+        /// Load removal state
         /// </summary>
         private void LoadRemovalState()
         {
@@ -397,29 +410,29 @@ namespace asterivo.Unity60.Core.Services
             removalCompletionTime = PlayerPrefs.GetString("SingletonRemovalPlan_CompletionTime", "");
         }
     }
-    
+
     /// <summary>
-    /// 蜑企勁繧ｹ繝・ャ繝怜ｮ夂ｾｩ
+    /// Removal step definition
     /// </summary>
     [System.Serializable]
     public class RemovalStep
     {
         public string Description;
         public RemovalAction Action;
-        
+
         public RemovalStep(string description, RemovalAction action)
         {
             Description = description;
             Action = action;
         }
     }
-    
+
     /// <summary>
-    /// 蜑企勁繧｢繧ｯ繧ｷ繝ｧ繝ｳ遞ｮ蛻･
+    /// Removal action type
     /// </summary>
     public enum RemovalAction
     {
-        Delete,  // 繧ｳ繝ｼ繝牙炎髯､
-        Keep     // 繧ｳ繝ｼ繝我ｿ晄戟
+        Delete,  // Delete code
+        Keep     // Keep code
     }
 }

@@ -1,4 +1,4 @@
-﻿# Week 2 TODO リスト - リファクタリング継続とPhase 2準備
+# Week 2 TODO リスト - リファクタリング継続とPhase 2準備
 
 **作成日**: 2025年9月11日  
 **基準文書**: Week 1実行結果, Refactoring_TODO_List.md  

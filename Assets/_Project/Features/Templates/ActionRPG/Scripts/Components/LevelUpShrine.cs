@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Interaction;
 using asterivo.Unity60.Core.Events;

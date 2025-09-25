@@ -1,4 +1,4 @@
-﻿# Day 3実行ログ - 名前空間統一とServiceHelper導入
+# Day 3実行ログ - 名前空間統一とServiceHelper導入
 
 **実行日**: 2025年9月10日  
 **基準文書**: Refactoring_QuickStart_Week1.md  

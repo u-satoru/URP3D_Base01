@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 namespace asterivo.Unity60.Features.Templates.Common

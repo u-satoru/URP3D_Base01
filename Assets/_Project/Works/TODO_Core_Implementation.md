@@ -1,4 +1,4 @@
-﻿# TODO: Core システム実装
+# TODO: Core システム実装
 
 **プロジェクト**: URP3D_Base01  
 **関連ドキュメント**: `Core_Implementation_Tasks.md`  

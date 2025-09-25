@@ -1,4 +1,4 @@
-﻿# SPEC.md - Snapshot at 2025-09-14 07:50
+# SPEC.md - Snapshot at 2025-09-14 07:50
 
 ※ SPEC.md内容は不変のため、プロジェクトルートのSPEC.mdを参照
 

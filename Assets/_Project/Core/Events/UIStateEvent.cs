@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 // using asterivo.Unity60.Core.UI; // UI moved to Features
 
 namespace asterivo.Unity60.Core.Events

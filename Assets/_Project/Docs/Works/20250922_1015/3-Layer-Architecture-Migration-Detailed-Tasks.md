@@ -1,4 +1,4 @@
-﻿# 3層アーキテクチャ移行 詳細タスクリスト
+# 3層アーキテクチャ移行 詳細タスクリスト
 
 **参照設計書**: `Assets/_Project/Docs/Works/20250922_1005/3-Layer-Architecture-Safe-Migration-Design.md`
 

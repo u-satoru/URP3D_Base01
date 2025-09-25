@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Services.Interfaces;

@@ -1,4 +1,4 @@
-﻿# Task 5: Step 3.11 - Singletonコードの物理的削除 作業ログ
+# Task 5: Step 3.11 - Singletonコードの物理的削除 作業ログ
 
 **作業日時**: 2025年1月10日 14:30  
 **担当**: Claude Code  

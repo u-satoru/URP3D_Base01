@@ -1,4 +1,4 @@
-﻿# NPCVisualSensor システム設計書
+# NPCVisualSensor システム設計書
 
 ## アーキテクチャ概要
 

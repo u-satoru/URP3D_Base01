@@ -1,20 +1,25 @@
-﻿using UnityEngine;
-// using asterivo.Unity60.Core.Commands;
+using UnityEngine;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// 繧ｸ繝｣繝ｳ繝励さ繝槭Φ繝峨・螳夂ｾｩ縲・    /// 繝励Ξ繧､繝､繝ｼ縺ｾ縺溘・AI縺ｮ繧ｸ繝｣繝ｳ繝励い繧ｯ繧ｷ繝ｧ繝ｳ繧偵き繝励そ繝ｫ蛹悶＠縺ｾ縺吶・    /// 
-    /// 荳ｻ縺ｪ讖溯・・・    /// - 繧ｸ繝｣繝ｳ繝怜鴨縺ｨ譁ｹ蜷代・謖・ｮ・    /// - 繧ｸ繝｣繝ｳ繝励ち繧､繝暦ｼ磯壼ｸｸ縲∽ｺ梧ｮｵ縲∝｣√・聞霍晞屬遲会ｼ峨・邂｡逅・    /// - 逹蝨ｰ蛻､螳壹→逹蝨ｰ蠕後・蜃ｦ逅・    /// - 繧ｹ繧ｿ繝溘リ豸郁ｲｻ縺ｨ繧ｯ繝ｼ繝ｫ繝繧ｦ繝ｳ縺ｮ閠・・
+    /// ジャンプコマンドの定義
+    /// プレイヤーまたはAIのジャンプアクションをカプセル化します
     /// </summary>
     [System.Serializable]
     public class JumpCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// 繧ｸ繝｣繝ｳ繝励・遞ｮ鬘槭ｒ螳夂ｾｩ縺吶ｋ蛻玲嫌蝙・        /// </summary>
+        /// ジャンプの種類を定義する列挙型
+        /// </summary>
         public enum JumpType
         {
-            Normal,     // 騾壼ｸｸ繧ｸ繝｣繝ｳ繝・            Double,     // 莠梧ｮｵ繧ｸ繝｣繝ｳ繝・            Wall,       // 螢√ず繝｣繝ｳ繝・            Long,       // 髟ｷ霍晞屬繧ｸ繝｣繝ｳ繝・            High        // 鬮倥ず繝｣繝ｳ繝・        }
+            Normal,     // 通常ジャンプ
+            Double,     // 二段ジャンプ
+            Wall,       // 壁ジャンプ
+            Long,       // 長距離ジャンプ
+            High        // 高ジャンプ
+        }
 
         [Header("Jump Parameters")]
         public JumpType jumpType = JumpType.Normal;
@@ -23,149 +28,233 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public float horizontalBoost = 0f;
 
         [Header("Physics")]
-        public float gravityScale = 1f;
-        public float airControlMultiplier = 0.5f;
-        public bool resetVerticalVelocity = true;
+        public float gravityMultiplier = 1f;
+        public float airControl = 0.5f;
+        public float maxAirSpeed = 5f;
+        public bool preserveMomentum = true;
 
-        [Header("Constraints")]
-        public bool requiresGrounded = true;
-        public float staminaCost = 20f;
-        public float cooldownTime = 0.5f;
+        [Header("Double Jump")]
+        public int maxJumpCount = 1;
+        public float doubleJumpForceMultiplier = 0.8f;
+        public bool resetVelocityOnDoubleJump = false;
+
+        [Header("Wall Jump")]
+        public float wallJumpAngle = 45f;
+        public float wallJumpForce = 8f;
+        public float wallSlideSpeed = 2f;
+        public LayerMask wallLayer = -1;
+
+        [Header("Stamina")]
+        public bool consumeStamina = false;
+        public float staminaCost = 10f;
+        public bool allowJumpWithoutStamina = false;
 
         [Header("Animation")]
-        public float jumpAnimationDuration = 0.3f;
-        public float landAnimationDuration = 0.2f;
+        public string jumpAnimationTrigger = "Jump";
+        public float animationCrossFade = 0.1f;
 
-        /// <summary>
-        /// 繝・ヵ繧ｩ繝ｫ繝医さ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
-        /// </summary>
-        public JumpCommandDefinition()
-        {
-        }
+        [Header("Effects")]
+        public bool playSound = true;
+        public string jumpSoundName = "Jump";
+        public bool spawnDustEffect = true;
+        public GameObject dustEffectPrefab;
 
-        /// <summary>
-        /// 繝代Λ繝｡繝ｼ繧ｿ莉倥″繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
-        /// </summary>
-        public JumpCommandDefinition(JumpType type, float force, Vector3 jumpDirection = default)
-        {
-            jumpType = type;
-            jumpForce = force;
-            direction = jumpDirection == default ? Vector3.up : jumpDirection.normalized;
-        }
+        [Header("Landing")]
+        public float landingImpactThreshold = 10f;
+        public bool playLandingSound = true;
+        public bool screenShakeOnLanding = false;
 
-        /// <summary>
-        /// 繧ｸ繝｣繝ｳ繝励さ繝槭Φ繝峨′螳溯｡悟庄閭ｽ縺九←縺・°繧貞愛螳壹＠縺ｾ縺・        /// </summary>
-        public bool CanExecute(object context = null)
-        {
-            // 蝓ｺ譛ｬ逧・↑螳溯｡悟庄閭ｽ諤ｧ繝√ぉ繝・け
-            if (jumpForce <= 0f) return false;
-            
-            // 譁ｹ蜷代・繧ｯ繝医Ν縺ｮ繝√ぉ繝・け
-            if (direction == Vector3.zero) return false;
-
-            // 繧ｳ繝ｳ繝・く繧ｹ繝医′縺ゅｋ蝣ｴ蜷医・霑ｽ蜉繝√ぉ繝・け
-            if (context != null)
-            {
-                // 蝨ｰ髱｢蛻､螳壹メ繧ｧ繝・け・・equiresGrounded縺梧怏蜉ｹ縺ｮ蝣ｴ蜷茨ｼ・                // 繧ｹ繧ｿ繝溘リ繝√ぉ繝・け
-                // 繧ｯ繝ｼ繝ｫ繝繧ｦ繝ｳ繝√ぉ繝・け
-                // 迥ｶ諷狗焚蟶ｸ繝√ぉ繝・け・磯ｺｻ逞ｺ縲√せ繧ｿ繝ｳ遲会ｼ・            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// 繧ｸ繝｣繝ｳ繝励さ繝槭Φ繝峨ｒ菴懈・縺励∪縺・        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
-            if (!CanExecute(context))
-                return null;
-
             return new JumpCommand(this, context);
         }
     }
 
     /// <summary>
-    /// JumpCommandDefinition縺ｫ蟇ｾ蠢懊☆繧句ｮ滄圀縺ｮ繧ｳ繝槭Φ繝牙ｮ溯｣・    /// </summary>
+    /// JumpCommandDefinitionに対応する実際のコマンド実装
+    /// </summary>
     public class JumpCommand : ICommand
     {
         private JumpCommandDefinition definition;
         private object context;
         private bool executed = false;
-        private Vector3 originalVelocity;
-        private bool wasGrounded;
 
-        public JumpCommand(JumpCommandDefinition jumpDefinition, object executionContext)
+        public JumpCommand(JumpCommandDefinition definition, object context = null)
         {
-            definition = jumpDefinition;
-            context = executionContext;
+            this.definition = definition;
+            this.context = context;
         }
 
-        /// <summary>
-        /// 繧ｸ繝｣繝ｳ繝励さ繝槭Φ繝峨・螳溯｡・        /// </summary>
         public void Execute()
         {
             if (executed) return;
 
-            // 螳溯｡悟燕縺ｮ迥ｶ諷九ｒ菫晏ｭ假ｼ・ndo逕ｨ・・            if (context is MonoBehaviour mono && mono.GetComponent<Rigidbody>() != null)
+            // コンテキストから必要な情報を取得
+            GameObject target = GetTargetFromContext();
+            if (target == null)
             {
-                var rb = mono.GetComponent<Rigidbody>();
-                originalVelocity = rb.linearVelocity;
-                // 蝨ｰ髱｢蛻､螳壹・菫晏ｭ假ｼ亥ｮ滄圀縺ｮ螳溯｣・〒縺ｯ GroundCheck 繧ｳ繝ｳ繝昴・繝阪Φ繝育ｭ峨ｒ蜿ら・・・            }
-
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            UnityEngine.Debug.Log($"Executing {definition.jumpType} jump: {definition.jumpForce} force, {definition.direction} direction");
+                UnityEngine.Debug.LogWarning("Jump command failed: No target found");
 #endif
+                return;
+            }
 
-            // 螳滄圀縺ｮ繧ｸ繝｣繝ｳ繝怜・逅・ｒ縺薙％縺ｫ螳溯｣・            if (context is MonoBehaviour monoBehaviour && monoBehaviour.GetComponent<Rigidbody>() != null)
+            // Rigidbodyコンポーネントの取得
+            Rigidbody rb = target.GetComponent<Rigidbody>();
+            if (rb == null)
             {
-                var rb = monoBehaviour.GetComponent<Rigidbody>();
-                
-                // 蝙ら峩騾溷ｺｦ縺ｮ繝ｪ繧ｻ繝・ヨ
-                if (definition.resetVerticalVelocity)
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                UnityEngine.Debug.LogWarning($"Jump command failed: No Rigidbody on {target.name}");
+#endif
+                return;
+            }
+
+            // スタミナチェック
+            if (definition.consumeStamina && !CheckStamina(target))
+            {
+                if (!definition.allowJumpWithoutStamina)
                 {
-                    rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                    UnityEngine.Debug.Log("Jump cancelled: Not enough stamina");
+#endif
+                    return;
                 }
+            }
 
-                // 繧ｸ繝｣繝ｳ繝怜鴨縺ｮ驕ｩ逕ｨ
-                Vector3 jumpVelocity = definition.direction.normalized * definition.jumpForce;
-                
-                // 豌ｴ蟷ｳ繝悶・繧ｹ繝医・霑ｽ蜉
-                if (definition.horizontalBoost > 0f)
-                {
-                    Vector3 horizontalDirection = new Vector3(definition.direction.x, 0f, definition.direction.z).normalized;
-                    jumpVelocity += horizontalDirection * definition.horizontalBoost;
-                }
+            // ジャンプ実行
+            PerformJump(target, rb);
 
-                rb.AddForce(jumpVelocity, ForceMode.VelocityChange);
+            // エフェクトの再生
+            PlayEffects(target);
 
-                // 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ蛻ｶ蠕｡
-                // 繝代・繝・ぅ繧ｯ繝ｫ繧ｨ繝輔ぉ繧ｯ繝・                // 繧ｵ繧ｦ繝ｳ繝峨お繝輔ぉ繧ｯ繝・            }
+            // スタミナ消費
+            if (definition.consumeStamina)
+            {
+                ConsumeStamina(target);
+            }
 
             executed = true;
         }
 
-        /// <summary>
-        /// Undo謫堺ｽ懶ｼ医ず繝｣繝ｳ繝励・蜿悶ｊ豸医＠・・        /// </summary>
-        public void Undo()
+        private GameObject GetTargetFromContext()
         {
-            if (!executed || context == null) return;
+            if (context is GameObject gameObject)
+                return gameObject;
 
-            if (context is MonoBehaviour mono && mono.GetComponent<Rigidbody>() != null)
-            {
-                var rb = mono.GetComponent<Rigidbody>();
-                rb.linearVelocity = originalVelocity;
+            if (context is Component component)
+                return component.gameObject;
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.Log("Jump undone - velocity restored");
-#endif
-            }
+            if (context is MonoBehaviour monoBehaviour)
+                return monoBehaviour.gameObject;
 
-            executed = false;
+            return null;
         }
 
-        /// <summary>
-        /// 縺薙・繧ｳ繝槭Φ繝峨′Undo蜿ｯ閭ｽ縺九←縺・°
-        /// </summary>
-        public bool CanUndo => executed && context != null;
+        private void PerformJump(GameObject target, Rigidbody rb)
+        {
+            Vector3 jumpVelocity = CalculateJumpVelocity();
+
+            if (definition.preserveMomentum)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z) + jumpVelocity;
+            }
+            else
+            {
+                rb.velocity = jumpVelocity;
+            }
+
+            // アニメーション再生
+            if (!string.IsNullOrEmpty(definition.jumpAnimationTrigger))
+            {
+                Animator animator = target.GetComponent<Animator>();
+                if (animator != null)
+                {
+                    animator.SetTrigger(definition.jumpAnimationTrigger);
+                }
+            }
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            UnityEngine.Debug.Log($"{target.name} jumped with force {jumpVelocity.magnitude}");
+#endif
+        }
+
+        private Vector3 CalculateJumpVelocity()
+        {
+            Vector3 jumpDir = definition.direction.normalized;
+            float force = definition.jumpForce;
+
+            switch (definition.jumpType)
+            {
+                case JumpCommandDefinition.JumpType.Double:
+                    force *= definition.doubleJumpForceMultiplier;
+                    break;
+
+                case JumpCommandDefinition.JumpType.Wall:
+                    force = definition.wallJumpForce;
+                    jumpDir = Quaternion.Euler(0, definition.wallJumpAngle, 0) * jumpDir;
+                    break;
+
+                case JumpCommandDefinition.JumpType.Long:
+                    force *= 0.8f;
+                    jumpDir.x += definition.horizontalBoost;
+                    jumpDir.z += definition.horizontalBoost;
+                    break;
+
+                case JumpCommandDefinition.JumpType.High:
+                    force *= 1.5f;
+                    break;
+            }
+
+            return jumpDir * force;
+        }
+
+        private bool CheckStamina(GameObject target)
+        {
+            // TODO: スタミナシステムとの統合
+            return true;
+        }
+
+        private void ConsumeStamina(GameObject target)
+        {
+            // TODO: スタミナシステムとの統合
+        }
+
+        private void PlayEffects(GameObject target)
+        {
+            // サウンド再生
+            if (definition.playSound && !string.IsNullOrEmpty(definition.jumpSoundName))
+            {
+                // TODO: オーディオシステムとの統合
+            }
+
+            // ダストエフェクト生成
+            if (definition.spawnDustEffect && definition.dustEffectPrefab != null)
+            {
+                GameObject effect = Object.Instantiate(definition.dustEffectPrefab,
+                    target.transform.position,
+                    Quaternion.identity);
+
+                Object.Destroy(effect, 2f);
+            }
+        }
+
+        public bool CanExecute()
+        {
+            if (executed) return false;
+
+            GameObject target = GetTargetFromContext();
+            if (target == null) return false;
+
+            Rigidbody rb = target.GetComponent<Rigidbody>();
+            if (rb == null) return false;
+
+            // スタミナチェック
+            if (definition.consumeStamina && !definition.allowJumpWithoutStamina)
+            {
+                return CheckStamina(target);
+            }
+
+            return true;
+        }
     }
 }

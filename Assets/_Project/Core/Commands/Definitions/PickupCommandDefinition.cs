@@ -1,26 +1,31 @@
-﻿using UnityEngine;
+using UnityEngine;
 // using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// 繧｢繧､繝・Β繝斐ャ繧ｯ繧｢繝・・繧ｳ繝槭Φ繝峨・螳夂ｾｩ縲・    /// 繝励Ξ繧､繝､繝ｼ縺ｮ繧｢繧､繝・Β蜿朱寔繧｢繧ｯ繧ｷ繝ｧ繝ｳ繧偵き繝励そ繝ｫ蛹悶＠縺ｾ縺吶・    /// 
-    /// 荳ｻ縺ｪ讖溯・・・    /// - 繧｢繧､繝・Β縺ｮ閾ｪ蜍・謇句虚繝斐ャ繧ｯ繧｢繝・・
-    /// - 繧､繝ｳ繝吶Φ繝医Μ螳ｹ驥上→繧｢繧､繝・Β蛻ｶ邏・・邂｡逅・    /// - 繝斐ャ繧ｯ繧｢繝・・遽・峇縺ｨ繝輔ぅ繝ｫ繧ｿ繝ｪ繝ｳ繧ｰ
-    /// - 繧｢繧､繝・Β諠・ｱ縺ｮ陦ｨ遉ｺ縺ｨ繝輔ぅ繝ｼ繝峨ヰ繝・け
+    /// Item pickup command definition.
+    /// Encapsulates player's item pickup actions.
+    ///
+    /// Main features:
+    /// - Manual or automatic item pickup
+    /// - Inventory capacity and item restriction management
+    /// - Pickup range and filtering
+    /// - Item information display and feedback
     /// </summary>
     [System.Serializable]
     public class PickupCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// 繝斐ャ繧ｯ繧｢繝・・縺ｮ遞ｮ鬘槭ｒ螳夂ｾｩ縺吶ｋ蛻玲嫌蝙・        /// </summary>
+        /// Pickup type enumeration
+        /// </summary>
         public enum PickupType
         {
-            Manual,         // 謇句虚繝斐ャ繧ｯ繧｢繝・・
-            Auto,           // 閾ｪ蜍輔ヴ繝・け繧｢繝・・
-            Selective,      // 驕ｸ謚樒噪繝斐ャ繧ｯ繧｢繝・・
-            Area,           // 遽・峇繝斐ャ繧ｯ繧｢繝・・
-            Magnetic        // 逎∝鴨繝斐ャ繧ｯ繧｢繝・・
+            Manual,         // Manual pickup
+            Auto,           // Automatic pickup
+            Selective,      // Selective pickup
+            Area,           // Area pickup
+            Magnetic        // Magnetic pickup
         }
 
         [Header("Pickup Parameters")]
@@ -30,22 +35,22 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public string itemTag = "Item";
 
         [Header("Item Filtering")]
-        [Tooltip("繝斐ャ繧ｯ繧｢繝・・蟇ｾ雎｡縺ｮ繧｢繧､繝・Β繧ｿ繧､繝・)]
+        [Tooltip("Allowed item types for pickup")]
         public string[] allowedItemTypes = { "Consumable", "Weapon", "Armor", "Key" };
-        [Tooltip("髯､螟悶☆繧九い繧､繝・Β繧ｿ繧､繝・)]
+        [Tooltip("Excluded item types")]
         public string[] excludedItemTypes = { };
         public bool respectInventoryCapacity = true;
 
         [Header("Area Pickup")]
-        [Tooltip("遽・峇繝斐ャ繧ｯ繧｢繝・・譎ゅ・蜉ｹ譫懃ｯ・峇")]
+        [Tooltip("Effective radius for area pickup")]
         public float areaRadius = 3f;
-        [Tooltip("荳蠎ｦ縺ｫ繝斐ャ繧ｯ繧｢繝・・縺吶ｋ譛螟ｧ蛟区焚")]
+        [Tooltip("Maximum number of items to pickup at once")]
         public int maxPickupCount = 10;
 
         [Header("Magnetic Pickup")]
-        [Tooltip("繧｢繧､繝・Β繧貞ｼ輔″蟇・○繧句鴨")]
+        [Tooltip("Force to attract items")]
         public float magneticForce = 5f;
-        [Tooltip("逎∝鴨縺ｮ蜉ｹ譫懈凾髢・)]
+        [Tooltip("Duration of magnetic effect")]
         public float magneticDuration = 2f;
 
         [Header("Animation & Effects")]
@@ -59,14 +64,14 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public string pickupSoundName = "ItemPickup";
 
         /// <summary>
-        /// 繝・ヵ繧ｩ繝ｫ繝医さ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
+        /// Default constructor
         /// </summary>
         public PickupCommandDefinition()
         {
         }
 
         /// <summary>
-        /// 繝代Λ繝｡繝ｼ繧ｿ莉倥″繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
+        /// Parameterized constructor
         /// </summary>
         public PickupCommandDefinition(PickupType type, float range, bool autoPickup = false)
         {
@@ -75,27 +80,30 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繝斐ャ繧ｯ繧｢繝・・繧ｳ繝槭Φ繝峨′螳溯｡悟庄閭ｽ縺九←縺・°繧貞愛螳壹＠縺ｾ縺・        /// </summary>
+        /// Check if pickup command can be executed
+        /// </summary>
         public bool CanExecute(object context = null)
         {
-            // 蝓ｺ譛ｬ逧・↑螳溯｡悟庄閭ｽ諤ｧ繝√ぉ繝・け
+            // Basic executability check
             if (pickupRange <= 0f) return false;
-            
+
             if (pickupType == PickupType.Area && areaRadius <= 0f) return false;
             if (pickupType == PickupType.Magnetic && (magneticForce <= 0f || magneticDuration <= 0f)) return false;
 
-            // 繧ｳ繝ｳ繝・く繧ｹ繝医′縺ゅｋ蝣ｴ蜷医・霑ｽ蜉繝√ぉ繝・け
+            // Additional checks if context exists
             if (context != null)
             {
-                // 繧､繝ｳ繝吶Φ繝医Μ縺ｮ螳ｹ驥上メ繧ｧ繝・け
-                // 繝励Ξ繧､繝､繝ｼ縺ｮ迥ｶ諷九メ繧ｧ繝・け・育ｧｻ蜍穂ｸｭ縲∵姶髣倅ｸｭ遲峨・蛻ｶ邏・ｼ・                // 遽・峇蜀・↓繝斐ャ繧ｯ繧｢繝・・蜿ｯ閭ｽ繧｢繧､繝・Β縺ｮ蟄伜惠繝√ぉ繝・け
+                // Inventory capacity check
+                // Player state check (moving, combat restrictions, etc.)
+                // Check for pickupable items in range
             }
 
             return true;
         }
 
         /// <summary>
-        /// 繝斐ャ繧ｯ繧｢繝・・繧ｳ繝槭Φ繝峨ｒ菴懈・縺励∪縺・        /// </summary>
+        /// Create pickup command instance
+        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
             if (!CanExecute(context))
@@ -106,7 +114,8 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// PickupCommandDefinition縺ｫ蟇ｾ蠢懊☆繧句ｮ滄圀縺ｮ繧ｳ繝槭Φ繝牙ｮ溯｣・    /// </summary>
+    /// Actual implementation of pickup command
+    /// </summary>
     public class PickupCommand : ICommand
     {
         private PickupCommandDefinition definition;
@@ -122,7 +131,8 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繝斐ャ繧ｯ繧｢繝・・繧ｳ繝槭Φ繝峨・螳溯｡・        /// </summary>
+        /// Execute pickup command
+        /// </summary>
         public void Execute()
         {
             if (executed) return;
@@ -154,7 +164,16 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 謇句虚繝斐ャ繧ｯ繧｢繝・・縺ｮ螳溯｡・        /// </summary>
+        /// Check if command can be executed
+        /// </summary>
+        public bool CanExecute()
+        {
+            return !executed && definition.CanExecute(context);
+        }
+
+        /// <summary>
+        /// Execute manual pickup
+        /// </summary>
         private void ExecuteManualPickup()
         {
             var targetItem = FindNearestPickupableItem();
@@ -165,43 +184,47 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 閾ｪ蜍輔ヴ繝・け繧｢繝・・縺ｮ螳溯｡・        /// </summary>
+        /// Execute automatic pickup
+        /// </summary>
         private void ExecuteAutoPickup()
         {
             var items = FindAllPickupableItems(definition.pickupRange);
             foreach (var item in items)
             {
                 if (!CanPickupItem(item)) continue;
-                
+
                 PickupItem(item);
-                
-                // 繧､繝ｳ繝吶Φ繝医Μ縺梧ｺ譚ｯ縺ｫ縺ｪ縺｣縺溷ｴ蜷医・蛛懈ｭ｢
+
+                // Stop if inventory becomes full
                 if (definition.respectInventoryCapacity && IsInventoryFull())
                     break;
             }
         }
 
         /// <summary>
-        /// 驕ｸ謚樒噪繝斐ャ繧ｯ繧｢繝・・縺ｮ螳溯｡・        /// </summary>
+        /// Execute selective pickup
+        /// </summary>
         private void ExecuteSelectivePickup()
         {
             var items = FindAllPickupableItems(definition.pickupRange);
-            
-            // 蜆ｪ蜈亥ｺｦ縺ｮ鬮倥＞繧｢繧､繝・Β縺九ｉ鬆・↓蜿門ｾ・            var prioritizedItems = SortItemsByPriority(items);
-            
+
+            // Get items in priority order
+            var prioritizedItems = SortItemsByPriority(items);
+
             foreach (var item in prioritizedItems)
             {
                 if (!CanPickupItem(item)) continue;
-                
+
                 PickupItem(item);
-                
+
                 if (definition.respectInventoryCapacity && IsInventoryFull())
                     break;
             }
         }
 
         /// <summary>
-        /// 遽・峇繝斐ャ繧ｯ繧｢繝・・縺ｮ螳溯｡・        /// </summary>
+        /// Execute area pickup
+        /// </summary>
         private void ExecuteAreaPickup()
         {
             var items = FindAllPickupableItems(definition.areaRadius);
@@ -211,10 +234,10 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             {
                 if (!CanPickupItem(item)) continue;
                 if (pickupCount >= definition.maxPickupCount) break;
-                
+
                 PickupItem(item);
                 pickupCount++;
-                
+
                 if (definition.respectInventoryCapacity && IsInventoryFull())
                     break;
             }
@@ -225,40 +248,43 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 逎∝鴨繝斐ャ繧ｯ繧｢繝・・縺ｮ螳溯｡・        /// </summary>
+        /// Execute magnetic pickup
+        /// </summary>
         private void ExecuteMagneticPickup()
         {
             var items = FindAllPickupableItems(definition.areaRadius);
             isMagneticActive = true;
 
-            // 繧｢繧､繝・Β繧貞ｼ輔″蟇・○繧句・逅・ｒ髢句ｧ・            foreach (var item in items)
+            // Start attracting items
+            foreach (var item in items)
             {
                 if (!CanPickupItem(item)) continue;
-                
+
                 StartItemAttraction(item);
             }
 
-            // 逎∝鴨蜉ｹ譫懊・邯咏ｶ壼・逅・ｼ亥ｮ滄圀縺ｮ螳溯｣・〒縺ｯ Coroutine 縺ｾ縺溘・UpdateLoop・・#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            // Magnetic effect duration processing (actual implementation would use Coroutine or UpdateLoop)
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"Magnetic pickup started: attracting {items.Count} items");
 #endif
         }
 
         /// <summary>
-        /// 譛繧りｿ代＞繝斐ャ繧ｯ繧｢繝・・蜿ｯ閭ｽ繧｢繧､繝・Β繧呈､懃ｴ｢
+        /// Find nearest pickupable item
         /// </summary>
         private GameObject FindNearestPickupableItem()
         {
             if (context is not MonoBehaviour mono) return null;
 
             Collider[] nearbyItems = Physics.OverlapSphere(mono.transform.position, definition.pickupRange, definition.itemLayer);
-            
+
             GameObject nearestItem = null;
             float nearestDistance = float.MaxValue;
 
             foreach (var itemCollider in nearbyItems)
             {
                 if (!IsValidPickupTarget(itemCollider.gameObject)) continue;
-                
+
                 float distance = Vector3.Distance(mono.transform.position, itemCollider.transform.position);
                 if (distance < nearestDistance)
                 {
@@ -271,16 +297,16 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 縺吶∋縺ｦ縺ｮ繝斐ャ繧ｯ繧｢繝・・蜿ｯ閭ｽ繧｢繧､繝・Β繧呈､懃ｴ｢
+        /// Find all pickupable items
         /// </summary>
         private System.Collections.Generic.List<GameObject> FindAllPickupableItems(float searchRange)
         {
             var items = new System.Collections.Generic.List<GameObject>();
-            
+
             if (context is not MonoBehaviour mono) return items;
 
             Collider[] nearbyItems = Physics.OverlapSphere(mono.transform.position, searchRange, definition.itemLayer);
-            
+
             foreach (var itemCollider in nearbyItems)
             {
                 if (IsValidPickupTarget(itemCollider.gameObject))
@@ -293,22 +319,22 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繧｢繧､繝・Β縺梧怏蜉ｹ縺ｪ繝斐ャ繧ｯ繧｢繝・・蟇ｾ雎｡縺九メ繧ｧ繝・け
+        /// Check if item is valid pickup target
         /// </summary>
         private bool IsValidPickupTarget(GameObject item)
         {
-            // 繧ｿ繧ｰ繝√ぉ繝・け
+            // Tag check
             if (!string.IsNullOrEmpty(definition.itemTag) && !item.CompareTag(definition.itemTag))
                 return false;
 
-            // 繧｢繧､繝・Β繧ｳ繝ｳ繝昴・繝阪Φ繝医・蟄伜惠繝√ぉ繝・け
+            // Item component existence check
             var itemComponent = item.GetComponent<IPickupableItem>();
             if (itemComponent == null) return false;
 
-            // 繧｢繧､繝・Β繧ｿ繧､繝励ヵ繧｣繝ｫ繧ｿ繝ｪ繝ｳ繧ｰ
+            // Item type filtering
             string itemType = itemComponent.GetItemType();
-            
-            // 髯､螟悶Μ繧ｹ繝医メ繧ｧ繝・け
+
+            // Exclusion list check
             if (definition.excludedItemTypes.Length > 0)
             {
                 foreach (var excludedType in definition.excludedItemTypes)
@@ -317,7 +343,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 }
             }
 
-            // 險ｱ蜿ｯ繝ｪ繧ｹ繝医メ繧ｧ繝・け
+            // Allowed list check
             if (definition.allowedItemTypes.Length > 0)
             {
                 bool isAllowed = false;
@@ -336,7 +362,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繧｢繧､繝・Β繧偵ヴ繝・け繧｢繝・・蜿ｯ閭ｽ縺九メ繧ｧ繝・け
+        /// Check if item can be picked up
         /// </summary>
         private bool CanPickupItem(GameObject item)
         {
@@ -348,36 +374,42 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繧､繝ｳ繝吶Φ繝医Μ縺梧ｺ譚ｯ縺九メ繧ｧ繝・け
+        /// Check if inventory is full
         /// </summary>
         private bool IsInventoryFull()
         {
-            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ InventorySystem 縺ｨ縺ｮ騾｣謳ｺ
-            return false; // 莉ｮ縺ｮ蛟､
+            // Actual implementation would integrate with InventorySystem
+            return false; // Temporary value
         }
 
         /// <summary>
-        /// 繧｢繧､繝・Β繧貞━蜈亥ｺｦ鬆・↓繧ｽ繝ｼ繝・        /// </summary>
+        /// Sort items by priority
+        /// </summary>
         private System.Collections.Generic.List<GameObject> SortItemsByPriority(System.Collections.Generic.List<GameObject> items)
         {
-            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ縲√い繧､繝・Β縺ｮ萓｡蛟､縲√Ξ繧｢繝ｪ繝・ぅ縲∝ｿ・ｦ∵ｧ遲峨〒蜆ｪ蜈亥ｺｦ繧呈ｱｺ螳・            return items; // 莉ｮ縺ｮ螳溯｣・        }
+            // Actual implementation would determine priority by item value, rarity, necessity, etc.
+            return items; // Temporary implementation
+        }
 
         /// <summary>
-        /// 螳滄圀縺ｮ繧｢繧､繝・Β繝斐ャ繧ｯ繧｢繝・・蜃ｦ逅・        /// </summary>
+        /// Actual item pickup processing
+        /// </summary>
         private void PickupItem(GameObject item)
         {
             var itemComponent = item.GetComponent<IPickupableItem>();
             if (itemComponent == null) return;
 
-            // 繧｢繧､繝・Β諠・ｱ縺ｮ蜿門ｾ・            var itemData = itemComponent.GetItemData();
+            // Get item data
+            var itemData = itemComponent.GetItemData();
 
-            // 繧､繝ｳ繝吶Φ繝医Μ縺ｫ霑ｽ蜉
-            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ InventorySystem 縺ｨ縺ｮ騾｣謳ｺ
-            
-            // 繧｢繧､繝・Β繧偵Ρ繝ｼ繝ｫ繝峨°繧牙炎髯､
-            pickedUpItems.Add(item); // Undo逕ｨ縺ｫ菫晏ｭ・            item.SetActive(false);
+            // Add to inventory
+            // Actual implementation would integrate with InventorySystem
 
-            // 繧ｨ繝輔ぉ繧ｯ繝医→繝輔ぅ繝ｼ繝峨ヰ繝・け
+            // Remove item from world
+            pickedUpItems.Add(item); // Save for Undo
+            item.SetActive(false);
+
+            // Effects and feedback
             PlayPickupEffects(item, itemData);
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -386,19 +418,22 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繧｢繧､繝・Β縺ｮ逎∝鴨縺ｫ繧医ｋ蠑輔″蟇・○髢句ｧ・        /// </summary>
+        /// Start item magnetic attraction
+        /// </summary>
         private void StartItemAttraction(GameObject item)
         {
-            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ縲∫黄逅・噪縺ｪ蜉帙∪縺溘・Tween繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｧ繧｢繧､繝・Β繧貞ｼ輔″蟇・○繧・            // 蠑輔″蟇・○螳御ｺ・凾縺ｫPickupItem()繧貞他縺ｳ蜃ｺ縺・        }
+            // Actual implementation would use physics force or Tween animation to attract items
+            // Call PickupItem() when attraction is complete
+        }
 
         /// <summary>
-        /// 繝斐ャ繧ｯ繧｢繝・・繧ｨ繝輔ぉ繧ｯ繝医・蜀咲函
+        /// Play pickup effects
         /// </summary>
         private void PlayPickupEffects(GameObject item, IItemData itemData)
         {
             if (context is not MonoBehaviour mono) return;
 
-            // 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ
+            // Animation
             if (definition.playPickupAnimation)
             {
                 var animator = mono.GetComponent<Animator>();
@@ -408,43 +443,51 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 }
             }
 
-            // 繝代・繝・ぅ繧ｯ繝ｫ繧ｨ繝輔ぉ繧ｯ繝・            if (definition.showPickupEffect)
+            // Particle effects
+            if (definition.showPickupEffect)
             {
-                // 繧ｨ繝輔ぉ繧ｯ繝育函謌・            }
-
-            // 繧ｵ繧ｦ繝ｳ繝峨お繝輔ぉ繧ｯ繝・            if (definition.playPickupSound)
-            {
-                // AudioSystem 縺ｨ縺ｮ騾｣謳ｺ
+                // Generate effects
             }
 
-            // 繧｢繧､繝・Β諠・ｱ陦ｨ遉ｺ
+            // Sound effects
+            if (definition.playPickupSound)
+            {
+                // Integration with AudioSystem
+            }
+
+            // Item info display
             if (definition.showItemInfo)
             {
-                // UI陦ｨ遉ｺ・医い繧､繝・Β蜷阪∬ｪｬ譏守ｭ会ｼ・            }
+                // UI display (item name, description, etc.)
+            }
         }
 
         /// <summary>
-        /// 逎∝鴨繝斐ャ繧ｯ繧｢繝・・縺ｮ譖ｴ譁ｰ・亥､夜Κ縺九ｉ螳壽悄逧・↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ繧具ｼ・        /// </summary>
+        /// Update magnetic pickup (called periodically from external)
+        /// </summary>
         public void UpdateMagneticPickup(float deltaTime)
         {
             if (!isMagneticActive) return;
 
-            // 蠑輔″蟇・○蜃ｦ逅・・譖ｴ譁ｰ
-            // 謖∫ｶ壽凾髢薙・邂｡逅・        }
+            // Update attraction processing
+            // Duration management
+        }
 
         /// <summary>
-        /// Undo謫堺ｽ懶ｼ医ヴ繝・け繧｢繝・・縺ｮ蜿悶ｊ豸医＠・・        /// </summary>
+        /// Undo operation (cancel pickup)
+        /// </summary>
         public void Undo()
         {
             if (!executed) return;
 
-            // 繝斐ャ繧ｯ繧｢繝・・縺励◆繧｢繧､繝・Β繧貞・縺ｮ菴咲ｽｮ縺ｫ謌ｻ縺・            foreach (var item in pickedUpItems)
+            // Return picked up items to original positions
+            foreach (var item in pickedUpItems)
             {
                 if (item != null)
                 {
                     item.SetActive(true);
-                    // 繧､繝ｳ繝吶Φ繝医Μ縺九ｉ蜑企勁
-                    // 螳滄圀縺ｮ螳溯｣・〒縺ｯ InventorySystem 縺ｨ縺ｮ騾｣謳ｺ
+                    // Remove from inventory
+                    // Actual implementation would integrate with InventorySystem
                 }
             }
 
@@ -458,18 +501,18 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 縺薙・繧ｳ繝槭Φ繝峨′Undo蜿ｯ閭ｽ縺九←縺・°
+        /// Whether this command can be undone
         /// </summary>
         public bool CanUndo => executed && pickedUpItems.Count > 0;
 
         /// <summary>
-        /// 逎∝鴨蜉ｹ譫懊′迴ｾ蝨ｨ繧｢繧ｯ繝・ぅ繝悶°縺ｩ縺・°
+        /// Whether magnetic effect is currently active
         /// </summary>
         public bool IsMagneticActive => isMagneticActive;
     }
 
     /// <summary>
-    /// 繝斐ャ繧ｯ繧｢繝・・蜿ｯ閭ｽ繧｢繧､繝・Β縺ｮ繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ
+    /// Pickupable item interface
     /// </summary>
     public interface IPickupableItem
     {
@@ -480,7 +523,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// 繧｢繧､繝・Β繝・・繧ｿ縺ｮ繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ
+    /// Item data interface
     /// </summary>
     public interface IItemData
     {

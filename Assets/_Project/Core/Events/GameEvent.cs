@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 // // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 using System.Linq;

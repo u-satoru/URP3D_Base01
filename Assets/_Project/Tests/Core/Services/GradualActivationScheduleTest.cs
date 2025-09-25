@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Services;

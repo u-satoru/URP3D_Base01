@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using asterivo.Unity60.Core;
@@ -8,9 +8,10 @@ using System;
 namespace asterivo.Unity60.Core
 {
     /// <summary>
-    /// Singleton竊担erviceLocator遘ｻ陦檎憾豕√・逶｣隕悶す繧ｹ繝・Β
-    /// Phase 3遘ｻ陦瑚ｨ育判 Step 3.2縺ｮ螳溯｣・    /// </summary>
-    public class MigrationMonitor : MonoBehaviour 
+    /// Monitoring system for Singleton to ServiceLocator migration.
+    /// Phase 3 migration plan Step 3.2 implementation.
+    /// </summary>
+    public class MigrationMonitor : MonoBehaviour
     {
         [TabGroup("Migration Status", "Current Status")]
         [Header("Service Migration Progress")]
@@ -20,129 +21,131 @@ namespace asterivo.Unity60.Core
         [SerializeField, ReadOnly] private bool updateServiceMigrated;
         [SerializeField, ReadOnly] private bool stealthServiceMigrated;
         [SerializeField, ReadOnly] private bool allServicesMigrated;
-        
+
         [TabGroup("Migration Status", "Performance")]
         [Header("Performance Metrics")]
         [SerializeField, ReadOnly] private float singletonCallCount;
         [SerializeField, ReadOnly] private float serviceLocatorCallCount;
         [SerializeField, ReadOnly] private float migrationProgress;
-        [SerializeField, ReadOnly] private float performanceRatio; // ServiceLocator/Singleton豈皮紫
-        
+        [SerializeField, ReadOnly] private float performanceRatio; // ServiceLocator/Singleton ratio
+
         [TabGroup("Migration Status", "Warnings")]
         [Header("Migration Warnings")]
         [SerializeField, ReadOnly] private List<string> activeSingletonUsages = new List<string>();
         [SerializeField, ReadOnly] private int totalWarningCount;
         [SerializeField, ReadOnly] private string lastWarningTime;
-        
+
         [TabGroup("Migration Status", "History")]
         [Header("Migration History")]
         [SerializeField, ReadOnly] private List<string> migrationEvents = new List<string>();
         [SerializeField, ReadOnly] private string migrationStartTime;
         [SerializeField, ReadOnly] private string lastMigrationEvent;
-        
-        // 蜀・Κ邨ｱ險医ョ繝ｼ繧ｿ
+
+        // Internal statistics data
         private Dictionary<Type, int> singletonUsageCount = new Dictionary<Type, int>();
         private Dictionary<Type, int> serviceLocatorUsageCount = new Dictionary<Type, int>();
         private Dictionary<string, DateTime> lastUsageTime = new Dictionary<string, DateTime>();
         private DateTime monitoringStartTime;
-        
-        // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ貂ｬ螳夂畑
+
+        // Performance measurement
         private Queue<float> recentFrameTimes = new Queue<float>();
-        private const int FRAME_HISTORY_SIZE = 60; // 60繝輔Ξ繝ｼ繝螻･豁ｴ
-        
+        private const int FRAME_HISTORY_SIZE = 60; // 60 frame history
+
         private void Awake()
         {
             monitoringStartTime = DateTime.Now;
             migrationStartTime = monitoringStartTime.ToString("yyyy-MM-dd HH:mm:ss");
-            
+
             LogMigrationEvent("MigrationMonitor initialized");
-            
+
             if (FeatureFlags.EnableDebugLogging)
             {
-                    Debug.Log("[MigrationMonitor] Migration monitoring started");
+                Debug.Log("[MigrationMonitor] Migration monitoring started");
             }
         }
-        
-        private void Update() 
+
+        private void Update()
         {
-            if (FeatureFlags.EnableMigrationMonitoring) 
+            if (FeatureFlags.EnableMigrationMonitoring)
             {
                 MonitorMigrationProgress();
                 UpdateMigrationStatus();
                 UpdatePerformanceMetrics();
             }
         }
-        
-        private void MonitorMigrationProgress() 
+
+        private void MonitorMigrationProgress()
         {
-            // 蜷・し繝ｼ繝薙せ縺ｮ遘ｻ陦檎憾豕√ｒ繝√ぉ繝・け
+            // Check migration status of each service
             audioServiceMigrated = CheckAudioServiceMigration();
             spatialServiceMigrated = CheckSpatialServiceMigration();
             effectServiceMigrated = CheckEffectServiceMigration();
             updateServiceMigrated = CheckUpdateServiceMigration();
             stealthServiceMigrated = CheckStealthServiceMigration();
-            
-            // 蜈ｨ菴薙・遘ｻ陦檎憾豕・            int migratedCount = 0;
+
+            // Overall migration status
+            int migratedCount = 0;
             if (audioServiceMigrated) migratedCount++;
             if (spatialServiceMigrated) migratedCount++;
             if (effectServiceMigrated) migratedCount++;
             if (updateServiceMigrated) migratedCount++;
             if (stealthServiceMigrated) migratedCount++;
-            
+
             float previousProgress = migrationProgress;
             migrationProgress = (float)migratedCount / 5.0f * 100f;
             allServicesMigrated = migratedCount == 5;
-            
-            // 騾ｲ謐怜､牙喧繧偵Ο繧ｰ縺ｫ險倬鹸
+
+            // Log progress changes
             if (Math.Abs(migrationProgress - previousProgress) > 0.1f)
             {
                 LogMigrationEvent($"Progress updated: {migrationProgress:F1}%");
             }
         }
-        
+
         private bool CheckAudioServiceMigration()
         {
-            return FeatureFlags.MigrateAudioManager && 
+            return FeatureFlags.MigrateAudioManager &&
                    FeatureFlags.UseServiceLocator &&
                    ServiceLocator.GetServiceCount() > 0;
         }
-        
+
         private bool CheckSpatialServiceMigration()
         {
-            return FeatureFlags.MigrateSpatialAudioManager && 
+            return FeatureFlags.MigrateSpatialAudioManager &&
                    FeatureFlags.UseServiceLocator;
         }
-        
+
         private bool CheckEffectServiceMigration()
         {
-            return FeatureFlags.MigrateEffectManager && 
+            return FeatureFlags.MigrateEffectManager &&
                    FeatureFlags.UseServiceLocator;
         }
-        
+
         private bool CheckUpdateServiceMigration()
         {
-            return FeatureFlags.MigrateAudioUpdateCoordinator && 
+            return FeatureFlags.MigrateAudioUpdateCoordinator &&
                    FeatureFlags.UseServiceLocator;
         }
-        
+
         private bool CheckStealthServiceMigration()
         {
-            return FeatureFlags.MigrateStealthAudioCoordinator && 
+            return FeatureFlags.MigrateStealthAudioCoordinator &&
                    FeatureFlags.UseServiceLocator;
         }
-        
+
         private void UpdateMigrationStatus()
         {
-            // 繧｢繧ｯ繝・ぅ繝悶↑Singleton菴ｿ逕ｨ邂・園縺ｮ繝ｪ繧ｹ繝医ｒ譖ｴ譁ｰ
+            // Update list of active Singleton usages
             activeSingletonUsages.Clear();
-            
+
             if (!audioServiceMigrated) activeSingletonUsages.Add("AudioManager.Instance");
             if (!spatialServiceMigrated) activeSingletonUsages.Add("SpatialAudioManager.Instance");
             if (!effectServiceMigrated) activeSingletonUsages.Add("EffectManager.Instance");
             if (!updateServiceMigrated) activeSingletonUsages.Add("AudioUpdateCoordinator.Instance");
             if (!stealthServiceMigrated) activeSingletonUsages.Add("StealthAudioCoordinator.Instance");
-            
-            // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ豈皮紫縺ｮ險育ｮ・            if (singletonCallCount > 0)
+
+            // Calculate performance ratio
+            if (singletonCallCount > 0)
             {
                 performanceRatio = serviceLocatorCallCount / singletonCallCount;
             }
@@ -151,21 +154,22 @@ namespace asterivo.Unity60.Core
                 performanceRatio = serviceLocatorCallCount > 0 ? float.PositiveInfinity : 0f;
             }
         }
-        
+
         private void UpdatePerformanceMetrics()
         {
-            // 繝輔Ξ繝ｼ繝譎る俣縺ｮ逶｣隕・            recentFrameTimes.Enqueue(Time.unscaledDeltaTime);
-            
+            // Monitor frame times
+            recentFrameTimes.Enqueue(Time.unscaledDeltaTime);
+
             if (recentFrameTimes.Count > FRAME_HISTORY_SIZE)
             {
                 recentFrameTimes.Dequeue();
             }
-            
-            // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ逡ｰ蟶ｸ縺ｮ讀懷・
+
+            // Check for performance anomalies
             if (recentFrameTimes.Count >= FRAME_HISTORY_SIZE)
             {
                 float averageFrameTime = GetAverageFrameTime();
-                if (averageFrameTime > 0.033f) // 30FPS髢ｾ蛟､
+                if (averageFrameTime > 0.033f) // 30FPS threshold
                 {
                     if (FeatureFlags.EnablePerformanceMeasurement)
                     {
@@ -174,11 +178,11 @@ namespace asterivo.Unity60.Core
                 }
             }
         }
-        
+
         private float GetAverageFrameTime()
         {
             if (recentFrameTimes.Count == 0) return 0f;
-            
+
             float total = 0f;
             foreach (float frameTime in recentFrameTimes)
             {
@@ -186,111 +190,113 @@ namespace asterivo.Unity60.Core
             }
             return total / recentFrameTimes.Count;
         }
-        
+
         /// <summary>
-        /// Singleton菴ｿ逕ｨ繧偵Ο繧ｰ縺ｫ險倬鹸
+        /// Log Singleton usage
         /// </summary>
         public void LogSingletonUsage(Type singletonType, string location)
         {
             if (singletonType == null) return;
-            
-            // 菴ｿ逕ｨ蝗樊焚縺ｮ險倬鹸
+
+            // Record usage count
             if (!singletonUsageCount.ContainsKey(singletonType))
             {
                 singletonUsageCount[singletonType] = 0;
             }
             singletonUsageCount[singletonType]++;
             singletonCallCount++;
-            
-            // 譛邨ゆｽｿ逕ｨ譎ょ綾縺ｮ險倬鹸
+
+            // Record last usage time
             string key = $"{singletonType.Name}@{location}";
             lastUsageTime[key] = DateTime.Now;
-            
-            // 隴ｦ蜻翫・險倬鹸
+
+            // Log warning
             if (FeatureFlags.EnableDebugLogging)
             {
                 string message = $"[MIGRATION] Singleton usage: {singletonType.Name} at {location}";
                 Debug.LogWarning(message);
-                
+
                 totalWarningCount++;
                 lastWarningTime = DateTime.Now.ToString("HH:mm:ss");
-                
+
                 LogMigrationEvent($"Singleton usage: {singletonType.Name}");
             }
         }
-        
+
         /// <summary>
-        /// ServiceLocator菴ｿ逕ｨ繧偵Ο繧ｰ縺ｫ險倬鹸
+        /// Log ServiceLocator usage
         /// </summary>
         public void LogServiceLocatorUsage(Type serviceType, string location = "Unknown")
         {
             if (serviceType == null) return;
-            
-            // 菴ｿ逕ｨ蝗樊焚縺ｮ險倬鹸
+
+            // Record usage count
             if (!serviceLocatorUsageCount.ContainsKey(serviceType))
             {
                 serviceLocatorUsageCount[serviceType] = 0;
             }
             serviceLocatorUsageCount[serviceType]++;
             serviceLocatorCallCount++;
-            
-            // 譛邨ゆｽｿ逕ｨ譎ょ綾縺ｮ險倬鹸
+
+            // Record last usage time
             string key = $"{serviceType.Name}@{location}";
             lastUsageTime[key] = DateTime.Now;
-            
+
             if (FeatureFlags.EnableDebugLogging)
             {
                 Debug.Log($"[ServiceLocator] Service usage: {serviceType.Name} at {location}");
             }
         }
-        
+
         /// <summary>
-        /// 遘ｻ陦後う繝吶Φ繝医ｒ繝ｭ繧ｰ縺ｫ險倬鹸
+        /// Log migration event
         /// </summary>
         private void LogMigrationEvent(string eventDescription)
         {
             string timestamp = DateTime.Now.ToString("HH:mm:ss");
             string logEntry = $"[{timestamp}] {eventDescription}";
-            
+
             migrationEvents.Add(logEntry);
             lastMigrationEvent = logEntry;
-            
-            // 譛譁ｰ20莉ｶ縺ｾ縺ｧ菫晄戟
+
+            // Keep only latest 20 events
             if (migrationEvents.Count > 20)
             {
                 migrationEvents.RemoveAt(0);
             }
-            
+
             if (FeatureFlags.EnableDebugLogging)
             {
                 Debug.Log($"[MigrationMonitor] {eventDescription}");
             }
         }
-        
+
         /// <summary>
-        /// 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ隴ｦ蜻翫ｒ繝ｭ繧ｰ縺ｫ險倬鹸
+        /// Log performance warning
         /// </summary>
         private void LogPerformanceWarning(string warning)
         {
             string message = $"[PERFORMANCE] {warning}";
             UnityEngine.Debug.LogWarning(message);
             LogMigrationEvent($"Performance warning: {warning}");
-            
+
             totalWarningCount++;
             lastWarningTime = DateTime.Now.ToString("HH:mm:ss");
         }
-        
+
         #region Public API
-        
+
         /// <summary>
-        /// 迴ｾ蝨ｨ縺ｮ遘ｻ陦碁ｲ謐励ｒ蜿門ｾ・        /// </summary>
+        /// Get current migration progress
+        /// </summary>
         public float GetMigrationProgress()
         {
             return migrationProgress;
         }
-        
+
         /// <summary>
-        /// 迚ｹ螳壹し繝ｼ繝薙せ縺ｮ遘ｻ陦檎憾豕√ｒ蜿門ｾ・        /// </summary>
+        /// Get migration status of specific service
+        /// </summary>
         public bool IsServiceMigrated(string serviceName)
         {
             return serviceName.ToLower() switch
@@ -303,67 +309,69 @@ namespace asterivo.Unity60.Core
                 _ => false
             };
         }
-        
+
         /// <summary>
-        /// Singleton菴ｿ逕ｨ邨ｱ險医ｒ蜿門ｾ・        /// </summary>
+        /// Get Singleton usage statistics
+        /// </summary>
         public Dictionary<Type, int> GetSingletonUsageStats()
         {
             return new Dictionary<Type, int>(singletonUsageCount);
         }
-        
+
         /// <summary>
-        /// ServiceLocator菴ｿ逕ｨ邨ｱ險医ｒ蜿門ｾ・        /// </summary>
+        /// Get ServiceLocator usage statistics
+        /// </summary>
         public Dictionary<Type, int> GetServiceLocatorUsageStats()
         {
             return new Dictionary<Type, int>(serviceLocatorUsageCount);
         }
-        
+
         /// <summary>
-        /// 遘ｻ陦後・螳牙・諤ｧ繧定ｩ穂ｾ｡
+        /// Evaluate migration safety
         /// </summary>
         public bool IsMigrationSafe()
         {
-            // 蝓ｺ譛ｬ逧・↑螳牙・諤ｧ繝√ぉ繝・け
+            // Basic safety checks
             if (!FeatureFlags.UseServiceLocator) return false;
             if (!FeatureFlags.EnableMigrationMonitoring) return false;
-            
-            // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ螳牙・諤ｧ繝√ぉ繝・け
+
+            // Performance safety check
             float avgFrameTime = GetAverageFrameTime();
-            if (avgFrameTime > 0.040f) return false; // 25FPS莉･荳九・蜊ｱ髯ｺ
-            
-            // Singleton菴ｿ逕ｨ鬆ｻ蠎ｦ繝√ぉ繝・け
+            if (avgFrameTime > 0.040f) return false; // Below 25FPS is dangerous
+
+            // Singleton usage frequency check
             float recentSingletonUsage = GetRecentSingletonUsageRate();
-            if (recentSingletonUsage > 0.5f) return false; // 50%莉･荳慨ingleton菴ｿ逕ｨ縺ｯ蜊ｱ髯ｺ
-            
+            if (recentSingletonUsage > 0.5f) return false; // Over 50% Singleton usage is dangerous
+
             return true;
         }
-        
+
         private float GetRecentSingletonUsageRate()
         {
             float totalCalls = singletonCallCount + serviceLocatorCallCount;
             if (totalCalls == 0) return 0f;
             return singletonCallCount / totalCalls;
         }
-        
+
         #endregion
-        
+
         #region Editor Actions
-        
+
         [TabGroup("Migration Status", "Actions")]
         [Button("Force Migration Check")]
         private void ForceMigrationCheck()
         {
             MonitorMigrationProgress();
             UpdateMigrationStatus();
-            
+
             Debug.Log($"[MigrationMonitor] Progress: {migrationProgress:F1}% - " +
                       $"Audio: {audioServiceMigrated}, Spatial: {spatialServiceMigrated}, " +
                       $"Effect: {effectServiceMigrated}, Update: {updateServiceMigrated}, " +
                       $"Stealth: {stealthServiceMigrated}");
-            
+
             LogMigrationEvent($"Manual check executed - Progress: {migrationProgress:F1}%");
         }
-        
+
         [Button("Reset Counters")]
         private void ResetCounters()
         {
@@ -374,11 +382,11 @@ namespace asterivo.Unity60.Core
             totalWarningCount = 0;
             activeSingletonUsages.Clear();
             recentFrameTimes.Clear();
-            
+
             LogMigrationEvent("Counters reset by user");
             Debug.Log("[MigrationMonitor] All counters reset");
         }
-        
+
         [Button("Generate Migration Report")]
         private void GenerateMigrationReport()
         {
@@ -390,11 +398,11 @@ Monitoring Duration: {(DateTime.Now - monitoringStartTime).TotalHours:F1} hours
 
 MIGRATION PROGRESS:
 - Overall Progress: {migrationProgress:F1}%
-- Audio Service: {(audioServiceMigrated ? "笨・ : "笶・)}
-- Spatial Service: {(spatialServiceMigrated ? "笨・ : "笶・)}
-- Effect Service: {(effectServiceMigrated ? "笨・ : "笶・)}
-- Update Service: {(updateServiceMigrated ? "笨・ : "笶・)}
-- Stealth Service: {(stealthServiceMigrated ? "笨・ : "笶・)}
+- Audio Service: {(audioServiceMigrated ? "✓" : "✗")}
+- Spatial Service: {(spatialServiceMigrated ? "✓" : "✗")}
+- Effect Service: {(effectServiceMigrated ? "✓" : "✗")}
+- Update Service: {(updateServiceMigrated ? "✓" : "✗")}
+- Stealth Service: {(stealthServiceMigrated ? "✓" : "✗")}
 
 USAGE STATISTICS:
 - Singleton Calls: {singletonCallCount}
@@ -403,7 +411,7 @@ USAGE STATISTICS:
 - Total Warnings: {totalWarningCount}
 
 SAFETY STATUS:
-- Migration Safe: {(IsMigrationSafe() ? "笨・YES" : "笶・NO")}
+- Migration Safe: {(IsMigrationSafe() ? "✓ YES" : "✗ NO")}
 - Average Frame Time: {GetAverageFrameTime() * 1000:F2}ms
 - Recent Singleton Usage: {GetRecentSingletonUsageRate() * 100:F1}%
 
@@ -413,16 +421,16 @@ ACTIVE SINGLETON USAGES:
 RECENT EVENTS:
 {string.Join("\n", migrationEvents.ConvertAll(s => "  " + s))}
 =================================";
-            
+
             Debug.Log(report);
             LogMigrationEvent("Migration report generated");
         }
-        
+
         [Button("Test Emergency Rollback")]
         private void TestEmergencyRollback()
         {
 #if UNITY_EDITOR
-            if (UnityEditor.EditorUtility.DisplayDialog("Emergency Rollback Test", 
+            if (UnityEditor.EditorUtility.DisplayDialog("Emergency Rollback Test",
                 "This will test the emergency rollback system. Continue?", "Yes", "No"))
             {
                 LogMigrationEvent("Emergency rollback test initiated");
@@ -434,20 +442,20 @@ RECENT EVENTS:
             FeatureFlags.EmergencyRollback();
 #endif
         }
-        
+
         #endregion
-        
+
         #region Runtime Diagnostics
-        
+
         private void OnValidate()
         {
-            // 繧ｨ繝・ぅ繧ｿ縺ｧ縺ｮ蛟､螟画峩譎ゅ・讀懆ｨｼ
+            // Check on value changes in editor
             if (Application.isPlaying && FeatureFlags.EnableMigrationMonitoring)
             {
                 MonitorMigrationProgress();
             }
         }
-        
+
         private void OnApplicationPause(bool pauseStatus)
         {
             if (pauseStatus)
@@ -459,18 +467,18 @@ RECENT EVENTS:
                 LogMigrationEvent("Application resumed");
             }
         }
-        
+
         private void OnDestroy()
         {
             float totalHours = (float)(DateTime.Now - monitoringStartTime).TotalHours;
             LogMigrationEvent($"Monitor destroyed after {totalHours:F1} hours");
-            
+
             if (FeatureFlags.EnableDebugLogging)
             {
                 Debug.Log($"[MigrationMonitor] Monitoring session ended. Duration: {totalHours:F1} hours");
             }
         }
-        
+
         #endregion
     }
 }

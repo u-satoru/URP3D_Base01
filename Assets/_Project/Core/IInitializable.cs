@@ -1,4 +1,4 @@
-﻿namespace asterivo.Unity60.Core
+namespace asterivo.Unity60.Core
 {
     /// <summary>
     /// 初期化可能なシステムのインターフェース
