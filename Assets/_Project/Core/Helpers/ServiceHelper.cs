@@ -1,21 +1,22 @@
 using UnityEngine;
-// // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
-// using asterivo.Unity60.Core; // 逶ｴ謗･蜿ら・繧帝∩縺代：eatureFlags邨檎罰縺ｫ邨ｱ荳
+// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
+// using asterivo.Unity60.Core; // 直接参照を避け、FeatureFlags経由に統一
 
 namespace asterivo.Unity60.Core.Helpers
 {
     /// <summary>
-    /// 繧ｵ繝ｼ繝薙せ蜿門ｾ励・邨ｱ荳繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ
-    /// DRY蜴溷援驕募渚繧定ｧ｣豸医＠縲√し繝ｼ繝薙せ蜿門ｾ励Ο繧ｸ繝・け繧剃ｸ蜈・喧
+    /// サービス取得の統一インターフェース
+    /// DRY原則違反を解消し、サービス取得ロジックを一元化
     /// </summary>
     public static class ServiceHelper
     {
         /// <summary>
-        /// ServiceLocator繧貞━蜈医＠縲∝､ｱ謨玲凾縺ｯFindFirstObjectByType縺ｫ繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ
+        /// ServiceLocatorを優先し、失敗時はFindFirstObjectByTypeにフォールバック
         /// </summary>
         public static T GetServiceWithFallback<T>() where T : class
         {
-            // ServiceLocator菴ｿ逕ｨ・域耳螂ｨ・・            if (FeatureFlags.UseServiceLocator)
+            // ServiceLocator使用（推奨）
+            if (FeatureFlags.UseServiceLocator)
             {
                 var service = ServiceLocator.GetService<T>();
                 if (service != null) 
@@ -25,7 +26,8 @@ namespace asterivo.Unity60.Core.Helpers
                 }
             }
             
-            // 繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ: Unity讓呎ｺ匁､懃ｴ｢・磯幕逋ｺ繝薙Ν繝・繧ｨ繝・ぅ繧ｿ髯仙ｮ夲ｼ・            #if UNITY_EDITOR || DEVELOPMENT_BUILD
+            // フォールバック: Unity標準検索（開発ビルド/エディタ限定）
+            #if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (typeof(T).IsSubclassOf(typeof(UnityEngine.Object)))
             {
                 var unityObject = UnityEngine.Object.FindFirstObjectByType(typeof(T)) as T;
@@ -37,7 +39,8 @@ namespace asterivo.Unity60.Core.Helpers
             }
             #endif
 
-            // 譛ｬ逡ｪ繝薙Ν繝峨〒縺ｯ繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ縺励↑縺・            LogServiceNotFound<T>();
+            // 本番ビルドではフォールバックしない
+            LogServiceNotFound<T>();
             return null;
         }
         
@@ -57,4 +60,3 @@ namespace asterivo.Unity60.Core.Helpers
         }
     }
 }
-

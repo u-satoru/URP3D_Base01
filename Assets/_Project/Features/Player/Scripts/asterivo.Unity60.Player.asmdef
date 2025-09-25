@@ -1,0 +1,32 @@
+{
+    "name": "asterivo.Unity60.Player",
+    "rootNamespace": "asterivo.Unity60.Player",
+    "references": [
+        "asterivo.Unity60.Core",
+        "asterivo.Unity60.Core.Events",
+        "asterivo.Unity60.Core.Commands",
+        "asterivo.Unity60.Core.Audio",
+        "asterivo.Unity60.Core.Services",
+        "asterivo.Unity60.Core.Components",
+        "asterivo.Unity60.Core.Debug",
+        "asterivo.Unity60.Core.Shared",
+        "asterivo.Unity60.Camera",
+        "Unity.InputSystem",
+        "asterivo.Unity60.Core.Lifecycle"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.inputsystem",
+            "expression": "1.7.0",
+            "define": "NEW_INPUT_SYSTEM"
+        }
+    ],
+    "noEngineReferences": false
+}

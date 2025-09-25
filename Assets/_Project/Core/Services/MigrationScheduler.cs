@@ -2,14 +2,15 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using asterivo.Unity60.Core;
-// using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Services;
 
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// Step 3.7: 谿ｵ髫守噪讖溯・譛牙柑蛹悶せ繧ｱ繧ｸ繝･繝ｼ繝ｫ邂｡逅・す繧ｹ繝・Β
-    /// Day 1-2, Day 3-4, Day 5縺ｮ谿ｵ髫守噪縺ｪFeatureFlags譛牙柑蛹悶ｒ邂｡逅・    /// </summary>
+    /// Step 3.7: 段階的機能有効化スケジュール管理システム
+    /// Day 1-2, Day 3-4, Day 5の段階的なFeatureFlags有効化を管理
+    /// </summary>
     public class MigrationScheduler : MonoBehaviour
     {
         [Header("Schedule Configuration")]
@@ -33,17 +34,20 @@ namespace asterivo.Unity60.Core.Services
         private MigrationProgressTracker progressTracker;
 
         /// <summary>
-        /// 谿ｵ髫守噪遘ｻ陦後・繝輔ぉ繝ｼ繧ｺ螳夂ｾｩ
+        /// 段階的移行のフェーズ定義
         /// </summary>
         public enum MigrationPhase
         {
             NotStarted = 0,
-            Day1_2_Staging = 1,      // 繧ｹ繝・・繧ｸ繝ｳ繧ｰ迺ｰ蠅・ユ繧ｹ繝・            Day3_SpatialEnabled = 2,  // SpatialService譛牙柑蛹・            Day4_StealthEnabled = 3,  // StealthService譛牙柑蛹・ 
-            Day5_Validation = 4,      // 蜈ｨ讀懆ｨｼ縺ｨ螳牙ｮ壼喧
-            Completed = 5             // 繧ｹ繧ｱ繧ｸ繝･繝ｼ繝ｫ螳御ｺ・        }
+            Day1_2_Staging = 1,      // ステージング環境テスト
+            Day3_SpatialEnabled = 2,  // SpatialService有効化
+            Day4_StealthEnabled = 3,  // StealthService有効化  
+            Day5_Validation = 4,      // 全検証と安定化
+            Completed = 5             // スケジュール完了
+        }
 
         /// <summary>
-        /// 蜷・ｮｵ髫弱・險ｭ螳壼ｮ夂ｾｩ
+        /// 各段階の設定定義
         /// </summary>
         [System.Serializable]
         public struct PhaseConfiguration
@@ -69,7 +73,7 @@ namespace asterivo.Unity60.Core.Services
                 useNewStealthService = false,
                 disableLegacySingletons = false,
                 enablePerformanceMonitoring = true,
-                description = "繧ｹ繝・・繧ｸ繝ｳ繧ｰ迺ｰ蠅・〒縺ｮAudioService繝・せ繝・
+                description = "ステージング環境でのAudioServiceテスト"
             },
             new PhaseConfiguration
             {
@@ -80,7 +84,7 @@ namespace asterivo.Unity60.Core.Services
                 useNewStealthService = false,
                 disableLegacySingletons = false,
                 enablePerformanceMonitoring = true,
-                description = "SpatialAudioService enabled phase"
+                description = "SpatialAudioServiceの段階的有効化"
             },
             new PhaseConfiguration
             {
@@ -91,7 +95,7 @@ namespace asterivo.Unity60.Core.Services
                 useNewStealthService = true,
                 disableLegacySingletons = false,
                 enablePerformanceMonitoring = true,
-                description = "StealthAudioService enabled phase"
+                description = "StealthAudioServiceの段階的有効化"
             },
             new PhaseConfiguration
             {
@@ -100,9 +104,9 @@ namespace asterivo.Unity60.Core.Services
                 useNewAudioService = true,
                 useNewSpatialService = true,
                 useNewStealthService = true,
-                disableLegacySingletons = false, // Week 4 complete
+                disableLegacySingletons = false, // Week 4で対応予定
                 enablePerformanceMonitoring = true,
-                description = "Full service validation and stabilization"
+                description = "全サービス有効化での検証と安定化"
             }
         };
 
@@ -110,10 +114,12 @@ namespace asterivo.Unity60.Core.Services
 
         private void Awake()
         {
-            // 萓晏ｭ倥さ繝ｳ繝昴・繝阪Φ繝医・蛻晄悄蛹・            flagScheduler = GetComponent<FeatureFlagScheduler>() ?? gameObject.AddComponent<FeatureFlagScheduler>();
+            // 依存コンポーネントの初期化
+            flagScheduler = GetComponent<FeatureFlagScheduler>() ?? gameObject.AddComponent<FeatureFlagScheduler>();
             progressTracker = GetComponent<MigrationProgressTracker>() ?? gameObject.AddComponent<MigrationProgressTracker>();
             
-            // 蛻晄悄迥ｶ諷九・險ｭ螳・            if (currentPhase == MigrationPhase.NotStarted)
+            // 初期状態の設定
+            if (currentPhase == MigrationPhase.NotStarted)
             {
                 currentPhase = MigrationPhase.Day1_2_Staging;
                 scheduleStartTime = DateTime.Now;
@@ -149,7 +155,8 @@ namespace asterivo.Unity60.Core.Services
         #region Schedule Management
 
         /// <summary>
-        /// 繧ｹ繧ｱ繧ｸ繝･繝ｼ繝ｫ縺ｮ髢句ｧ・        /// </summary>
+        /// スケジュールの開始
+        /// </summary>
         [ContextMenu("Start Schedule")]
         public void StartSchedule()
         {
@@ -165,7 +172,7 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 谺｡縺ｮ繝輔ぉ繝ｼ繧ｺ縺ｫ騾ｲ繧
+        /// 次のフェーズに進む
         /// </summary>
         [ContextMenu("Advance to Next Phase")]
         public void AdvanceToNextPhase()
@@ -178,7 +185,7 @@ namespace asterivo.Unity60.Core.Services
 
             var previousPhase = currentPhase;
             
-            // 谺｡縺ｮ繝輔ぉ繝ｼ繧ｺ縺ｫ騾ｲ繧
+            // 次のフェーズに進む
             switch (currentPhase)
             {
                 case MigrationPhase.Day1_2_Staging:
@@ -209,13 +216,14 @@ namespace asterivo.Unity60.Core.Services
             if (scheduleCompleted)
             {
                 progressTracker.RecordScheduleCompletion();
-                LogScheduleInfo("脂 Migration schedule completed successfully!");
+                LogScheduleInfo("🎉 Migration schedule completed successfully!");
             }
         }
 
         /// <summary>
-        /// 謇句虚縺ｧ繝輔ぉ繝ｼ繧ｺ繧定ｨｭ螳・        /// </summary>
-        /// <param name="targetPhase">險ｭ螳壹☆繧九ヵ繧ｧ繝ｼ繧ｺ</param>
+        /// 手動でフェーズを設定
+        /// </summary>
+        /// <param name="targetPhase">設定するフェーズ</param>
         [ContextMenu("Set Phase Manually")]
         public void SetPhaseManually(MigrationPhase targetPhase)
         {
@@ -240,7 +248,7 @@ namespace asterivo.Unity60.Core.Services
         #region Configuration Application
 
         /// <summary>
-        /// 迴ｾ蝨ｨ縺ｮ繝輔ぉ繝ｼ繧ｺ險ｭ螳壹ｒFeatureFlags縺ｫ驕ｩ逕ｨ
+        /// 現在のフェーズ設定をFeatureFlagsに適用
         /// </summary>
         private void ApplyCurrentPhaseConfiguration()
         {
@@ -257,8 +265,9 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 迴ｾ蝨ｨ縺ｮ繝輔ぉ繝ｼ繧ｺ險ｭ螳壹ｒ蜿門ｾ・        /// </summary>
-        /// <returns>繝輔ぉ繝ｼ繧ｺ險ｭ螳・/returns>
+        /// 現在のフェーズ設定を取得
+        /// </summary>
+        /// <returns>フェーズ設定</returns>
         private PhaseConfiguration? GetCurrentPhaseConfiguration()
         {
             // Manual override check
@@ -283,7 +292,7 @@ namespace asterivo.Unity60.Core.Services
         #region Automatic Schedule Update
 
         /// <summary>
-        /// 閾ｪ蜍輔せ繧ｱ繧ｸ繝･繝ｼ繝ｫ縺ｮ譖ｴ譁ｰ
+        /// 自動スケジュールの更新
         /// </summary>
         private void UpdateAutomaticSchedule()
         {
@@ -296,8 +305,9 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 迴ｾ蝨ｨ縺ｮ繝輔ぉ繝ｼ繧ｺ縺ｮ邯咏ｶ壽凾髢薙ｒ蜿門ｾ・        /// </summary>
-        /// <returns>邯咏ｶ壽凾髢難ｼ育ｧ抵ｼ・/returns>
+        /// 現在のフェーズの継続時間を取得
+        /// </summary>
+        /// <returns>継続時間（秒）</returns>
         private float GetCurrentPhaseDuration()
         {
             switch (currentPhase)
@@ -316,7 +326,7 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 迴ｾ蝨ｨ縺ｮ繝輔ぉ繝ｼ繧ｺ邨碁℃譎る俣縺ｮ譖ｴ譁ｰ
+        /// 現在のフェーズ経過時間の更新
         /// </summary>
         private void UpdateCurrentPhaseTime()
         {
@@ -331,8 +341,9 @@ namespace asterivo.Unity60.Core.Services
         #region Status and Information
 
         /// <summary>
-        /// 迴ｾ蝨ｨ縺ｮ騾ｲ陦檎憾豕∵ュ蝣ｱ繧貞叙蠕・        /// </summary>
-        /// <returns>騾ｲ陦檎憾豕∵ュ蝣ｱ</returns>
+        /// 現在の進行状況情報を取得
+        /// </summary>
+        /// <returns>進行状況情報</returns>
         public ScheduleStatus GetCurrentStatus()
         {
             var config = GetCurrentPhaseConfiguration();
@@ -350,7 +361,8 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 繧ｹ繧ｱ繧ｸ繝･繝ｼ繝ｫ迥ｶ豕√・讒矩菴・        /// </summary>
+        /// スケジュール状況の構造体
+        /// </summary>
         [System.Serializable]
         public struct ScheduleStatus
         {
@@ -368,7 +380,8 @@ namespace asterivo.Unity60.Core.Services
         #region Debugging and Logging
 
         /// <summary>
-        /// 迴ｾ蝨ｨ縺ｮ迥ｶ豕√ｒ繝ｬ繝昴・繝・        /// </summary>
+        /// 現在の状況をレポート
+        /// </summary>
         [ContextMenu("Report Current Status")]
         public void ReportCurrentStatus()
         {
@@ -382,7 +395,7 @@ namespace asterivo.Unity60.Core.Services
             LogScheduleInfo($"Completed: {status.isCompleted}");
             LogScheduleInfo($"Automatic Mode: {status.isAutomaticMode}");
             
-            // FeatureFlags迥ｶ諷九・陦ｨ遉ｺ
+            // FeatureFlags状態の表示
             var config = GetCurrentPhaseConfiguration();
             if (config.HasValue)
             {
@@ -396,8 +409,9 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 繧ｹ繧ｱ繧ｸ繝･繝ｼ繝ｫ繝ｭ繧ｰ縺ｮ蜃ｺ蜉・        /// </summary>
-        /// <param name="message">繝｡繝・そ繝ｼ繧ｸ</param>
+        /// スケジュールログの出力
+        /// </summary>
+        /// <param name="message">メッセージ</param>
         private void LogScheduleInfo(string message)
         {
             if (enableDebugLogging)

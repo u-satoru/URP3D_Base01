@@ -1,29 +1,31 @@
 using UnityEngine;
-// using asterivo.Unity60.Core.Commands;
+using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Audio.Data;
-// using asterivo.Unity60.Core.Debug;
 
 namespace asterivo.Unity60.Core.Audio.Commands
 {
     /// <summary>
-    /// 音声再生コマンチE- ObjectPoolに対応したリセチE��可能な実裁E    /// スチE��スゲーム用の高機�E音響シスチE��
+    /// 音声再生コマンド - ObjectPoolに対応したリセット可能な実装
+    /// ステルスゲーム用の高機能音響システム
     /// </summary>
     public class PlaySoundCommand : IResettableCommand
     {
-        // コマンド実行に忁E��なチE�Eタ
+        // コマンド実行に必要なデータ
         private AudioEventData audioData;
         private SoundDataSO soundData;
         private AudioSource audioSource;
         private Transform listenerTransform;
         
-        // 実行状態�E管琁E        private bool wasExecuted = false;
+        // 実行状態の管理
+        private bool wasExecuted = false;
         private float originalVolume;
         private float originalPitch;
         
         public bool CanUndo => true;
         
         /// <summary>
-        /// IResettableCommand.Initialize実裁E        /// </summary>
+        /// IResettableCommand.Initialize実装
+        /// </summary>
         public void Initialize(params object[] parameters)
     {
         if (parameters.Length >= 3)
@@ -34,7 +36,8 @@ namespace asterivo.Unity60.Core.Audio.Commands
     }
     
     /// <summary>
-    /// コマンド�E初期匁E    /// </summary>
+    /// コマンドの初期化
+    /// </summary>
     public void Initialize(AudioEventData data, SoundDataSO soundAsset, AudioSource source, Transform listener = null)
         {
             audioData = data;
@@ -45,14 +48,13 @@ namespace asterivo.Unity60.Core.Audio.Commands
         }
         
         /// <summary>
-        /// 音声を�E甁E        /// </summary>
+        /// 音声を再生
+        /// </summary>
         public void Execute()
         {
             if (audioSource == null || soundData == null)
             {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-                ProjectDebug.LogWarning("[PlaySoundCommand] AudioSource または SoundData が null です");
-#endif
+                UnityEngine.Debug.LogWarning("[PlaySoundCommand] AudioSource または SoundData が null です");
                 return;
             }
             
@@ -68,7 +70,7 @@ namespace asterivo.Unity60.Core.Audio.Commands
             // 表面素材による調整
             ApplySurfaceModifications();
             
-            // クリチE�Eの選択と再生
+            // クリップの選択と再生
             var clip = soundData.GetRandomClip();
             if (clip != null)
             {
@@ -83,7 +85,8 @@ namespace asterivo.Unity60.Core.Audio.Commands
         }
         
         /// <summary>
-        /// 再生を停止�E�Endo操作！E        /// </summary>
+        /// 再生を停止（Undo操作）
+        /// </summary>
         public void Undo()
         {
             if (wasExecuted && audioSource != null && audioSource.isPlaying)
@@ -97,7 +100,8 @@ namespace asterivo.Unity60.Core.Audio.Commands
         }
         
         /// <summary>
-        /// コマンドをリセチE���E�EbjectPool用�E�E        /// </summary>
+        /// コマンドをリセット（ObjectPool用）
+        /// </summary>
         public void Reset()
         {
             audioData = default;
@@ -110,17 +114,20 @@ namespace asterivo.Unity60.Core.Audio.Commands
         }
         
         /// <summary>
-        /// 基本皁E��音響設定を適用
+        /// 基本的な音響設定を適用
         /// </summary>
         private void ApplyAudioSettings()
         {
-            // 允E�E値を保孁E            originalVolume = audioSource.volume;
+            // 元の値を保存
+            originalVolume = audioSource.volume;
             originalPitch = audioSource.pitch;
             
-            // 新しい値を設宁E            audioSource.volume = soundData.GetRandomVolume() * audioData.volume;
+            // 新しい値を設定
+            audioSource.volume = soundData.GetRandomVolume() * audioData.volume;
             audioSource.pitch = soundData.GetRandomPitch() * audioData.pitch;
             
-            // ミキサーグループ�E設宁E            if (soundData.MixerGroup != null)
+            // ミキサーグループの設定
+            if (soundData.MixerGroup != null)
             {
                 audioSource.outputAudioMixerGroup = soundData.MixerGroup;
             }
@@ -136,7 +143,8 @@ namespace asterivo.Unity60.Core.Audio.Commands
             audioSource.maxDistance = soundData.MaxDistance;
             audioSource.rolloffMode = soundData.RolloffMode;
             
-            // 位置の設宁E            if (audioData.worldPosition != Vector3.zero)
+            // 位置の設定
+            if (audioData.worldPosition != Vector3.zero)
             {
                 audioSource.transform.position = audioData.worldPosition;
             }
@@ -153,17 +161,18 @@ namespace asterivo.Unity60.Core.Audio.Commands
                 float surfaceVolumeMultiplier = soundData.GetVolumeMultiplierForSurface(audioData.surfaceType);
                 audioSource.volume *= surfaceVolumeMultiplier;
                 
-                // 聴取篁E��の調整�E�EudioDataに反映�E�E                audioData.hearingRadius = soundData.GetHearingRadiusForSurface(audioData.surfaceType);
+                // 聴取範囲の調整（AudioDataに反映）
+                audioData.hearingRadius = soundData.GetHearingRadiusForSurface(audioData.surfaceType);
             }
         }
         
         #if UNITY_EDITOR || DEVELOPMENT_BUILD
         /// <summary>
-        /// チE��チE��用の再生ログ
+        /// デバッグ用の再生ログ
         /// </summary>
         private void LogPlayback()
         {
-            ProjectDebug.Log($"<color=cyan>[PlaySoundCommand]</color> Playing '{soundData.SoundID}' " +
+            UnityEngine.Debug.Log($"<color=cyan>[PlaySoundCommand]</color> Playing '{soundData.SoundID}' " +
                      $"at {audioData.worldPosition} | Volume: {audioSource.volume:F2} | " +
                      $"Surface: {audioData.surfaceType} | Hearing Radius: {audioData.hearingRadius:F1}m");
         }

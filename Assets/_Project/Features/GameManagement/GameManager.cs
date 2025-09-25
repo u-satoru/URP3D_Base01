@@ -359,4 +359,3 @@ public void OnEventRaised(object value)
         // Coroutine management no longer required here
     }
 }
-

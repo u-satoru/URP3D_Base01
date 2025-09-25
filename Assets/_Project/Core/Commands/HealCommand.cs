@@ -1,38 +1,51 @@
 using UnityEngine;
-// using asterivo.Unity60.Core.Components;
+using asterivo.Unity60.Core.Components;
 
 namespace asterivo.Unity60.Core.Commands
 {
     /// <summary>
-    /// 蟇ｾ雎｡縺ｮ菴灘鴨繧貞屓蠕ｩ縺輔○繧九さ繝槭Φ繝牙ｮ溯｣・・    /// IResettableCommand繧貞ｮ溯｣・＠縺ｦ縺翫ｊ縲＾bjectPool縺ｫ繧医ｋ蜀榊茜逕ｨ縺ｫ蟇ｾ蠢懊＠縺ｦ縺・∪縺吶・    /// 
-    /// 荳ｻ縺ｪ讖溯・・・    /// - 菴灘鴨縺ｮ蝗槫ｾｩ蜃ｦ逅・・螳溯｡・    /// - Undo謫堺ｽ懊↓繧医ｋ繝繝｡繝ｼ繧ｸ縺ｮ驕ｩ逕ｨ・亥屓蠕ｩ縺ｮ蜿悶ｊ豸医＠・・    /// - ObjectPool菴ｿ逕ｨ譎ゅ・迥ｶ諷九Μ繧ｻ繝・ヨ讖溯・
-    /// - 繝代Λ繝｡繝ｼ繧ｿ繝ｼ縺ｫ繧医ｋ譟碑ｻ溘↑蛻晄悄蛹・    /// </summary>
+    /// 対象の体力を回復させるコマンド実装。
+    /// IResettableCommandを実装しており、ObjectPoolによる再利用に対応しています。
+    /// 
+    /// 主な機能：
+    /// - 体力の回復処理の実行
+    /// - Undo操作によるダメージの適用（回復の取り消し）
+    /// - ObjectPool使用時の状態リセット機能
+    /// - パラメーターによる柔軟な初期化
+    /// </summary>
     public class HealCommand : IResettableCommand
     {
         /// <summary>
-        /// 蝗槫ｾｩ蜃ｦ逅・・蟇ｾ雎｡縺ｨ縺ｪ繧九・繝ｫ繧ｹ繧ｿ繝ｼ繧ｲ繝・ヨ
+        /// 回復処理の対象となるヘルスターゲット
         /// </summary>
         private IHealthTarget _target;
         
         /// <summary>
-        /// 蝗槫ｾｩ縺吶ｋ菴灘鴨縺ｮ驥・        /// </summary>
+        /// 回復する体力の量
+        /// </summary>
         private int _healAmount;
 
         /// <summary>
-        /// 縺薙・繧ｳ繝槭Φ繝峨′Undo謫堺ｽ懊ｒ繧ｵ繝昴・繝医☆繧九°縺ｩ縺・°繧堤､ｺ縺励∪縺吶・        /// 蝗槫ｾｩ繧ｳ繝槭Φ繝峨・蟶ｸ縺ｫUndo蜿ｯ閭ｽ・医ム繝｡繝ｼ繧ｸ縺ｫ螟画鋤・峨〒縺吶・        /// </summary>
+        /// このコマンドがUndo操作をサポートするかどうかを示します。
+        /// 回復コマンドは常にUndo可能（ダメージに変換）です。
+        /// </summary>
         public bool CanUndo => true; 
 
         /// <summary>
-        /// 繝励・繝ｫ蛹門ｯｾ蠢懊・繝・ヵ繧ｩ繝ｫ繝医さ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ縲・        /// ObjectPool菴ｿ逕ｨ譎ゅ↓蠢・ｦ√↑蠑墓焚縺ｪ縺励さ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ縺ｧ縺吶・        /// 螳滄圀縺ｮ繝代Λ繝｡繝ｼ繧ｿ縺ｯ蠕後〒Initialize()繝｡繧ｽ繝・ラ縺ｧ險ｭ螳壹＠縺ｾ縺吶・        /// </summary>
+        /// プール化対応のデフォルトコンストラクタ。
+        /// ObjectPool使用時に必要な引数なしコンストラクタです。
+        /// 実際のパラメータは後でInitialize()メソッドで設定します。
+        /// </summary>
         public HealCommand()
         {
-            // 繝励・繝ｫ蛹門ｯｾ蠢懶ｼ壹ヱ繝ｩ繝｡繝ｼ繧ｿ繝ｼ縺ｪ縺励さ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
+            // プール化対応：パラメーターなしコンストラクタ
         }
 
         /// <summary>
-        /// 繝代Λ繝｡繝ｼ繧ｿ繝ｼ莉倥″繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ縲ら峩謗･繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ蛹匁凾縺ｫ菴ｿ逕ｨ縺輔ｌ縺ｾ縺吶・        /// </summary>
-        /// <param name="target">蝗槫ｾｩ蟇ｾ雎｡縺ｮ繝倥Ν繧ｹ繧ｿ繝ｼ繧ｲ繝・ヨ</param>
-        /// <param name="healAmount">蝗槫ｾｩ縺吶ｋ菴灘鴨驥擾ｼ域ｭ｣縺ｮ蛟､・・/param>
+        /// パラメーター付きコンストラクタ。直接インスタンス化時に使用されます。
+        /// </summary>
+        /// <param name="target">回復対象のヘルスターゲット</param>
+        /// <param name="healAmount">回復する体力量（正の値）</param>
         public HealCommand(IHealthTarget target, int healAmount)
         {
             _target = target;
@@ -40,7 +53,9 @@ namespace asterivo.Unity60.Core.Commands
         }
 
         /// <summary>
-        /// 蝗槫ｾｩ繧ｳ繝槭Φ繝峨ｒ螳溯｡後＠縺ｾ縺吶・        /// 蟇ｾ雎｡縺ｮIHealthTarget縺ｫ蟇ｾ縺励※Heal()繝｡繧ｽ繝・ラ繧貞他縺ｳ蜃ｺ縺励∵欠螳壹＆繧後◆驥上・菴灘鴨繧貞屓蠕ｩ縺輔○縺ｾ縺吶・        /// </summary>
+        /// 回復コマンドを実行します。
+        /// 対象のIHealthTargetに対してHeal()メソッドを呼び出し、指定された量の体力を回復させます。
+        /// </summary>
         public void Execute()
         {
             if (_target == null)
@@ -59,7 +74,9 @@ namespace asterivo.Unity60.Core.Commands
         
 
         /// <summary>
-        /// 繧ｳ繝槭Φ繝峨・迥ｶ諷九ｒ繝ｪ繧ｻ繝・ヨ縺励＾bjectPool縺ｫ霑泌唆縺吶ｋ貅門ｙ繧偵＠縺ｾ縺吶・        /// IResettableCommand縺ｮ螳溯｣・→縺励※縲√・繝ｼ繝ｫ蛹悶＆繧後◆髫帙・蜀榊茜逕ｨ蜑阪↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・        /// </summary>
+        /// コマンドの状態をリセットし、ObjectPoolに返却する準備をします。
+        /// IResettableCommandの実装として、プール化された際の再利用前に呼び出されます。
+        /// </summary>
         public void Reset()
         {
             _target = null;
@@ -67,14 +84,16 @@ namespace asterivo.Unity60.Core.Commands
         }
 
         /// <summary>
-        /// ObjectPool菴ｿ逕ｨ譎ゅ↓譁ｰ縺励＞繝代Λ繝｡繝ｼ繧ｿ繝ｼ縺ｧ繧ｳ繝槭Φ繝峨ｒ蛻晄悄蛹悶＠縺ｾ縺吶・        /// IResettableCommand縺ｮ螳溯｣・→縺励※縲√・繝ｼ繝ｫ縺九ｉ縺ｮ蜿門ｾ玲凾縺ｫ蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・        /// </summary>
-        /// <param name="parameters">蛻晄悄蛹悶ヱ繝ｩ繝｡繝ｼ繧ｿ繝ｼ驟榊・縲・0]=IHealthTarget, [1]=int・亥屓蠕ｩ驥擾ｼ・/param>
+        /// ObjectPool使用時に新しいパラメーターでコマンドを初期化します。
+        /// IResettableCommandの実装として、プールからの取得時に呼び出されます。
+        /// </summary>
+        /// <param name="parameters">初期化パラメーター配列。[0]=IHealthTarget, [1]=int（回復量）</param>
         public void Initialize(params object[] parameters)
         {
             if (parameters.Length < 2)
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogError("HealCommand.Initialize: 譛菴・縺､縺ｮ繝代Λ繝｡繝ｼ繧ｿ繝ｼ・・arget, healAmount・峨′蠢・ｦ√〒縺吶・);
+                UnityEngine.Debug.LogError("HealCommand.Initialize: 最低2つのパラメーター（target, healAmount）が必要です。");
 #endif
                 return;
             }
@@ -83,7 +102,7 @@ namespace asterivo.Unity60.Core.Commands
             if (_target == null)
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogError("HealCommand.Initialize: 譛蛻昴・繝代Λ繝｡繝ｼ繧ｿ繝ｼ縺ｯIHealthTarget縺ｧ縺ゅｋ蠢・ｦ√′縺ゅｊ縺ｾ縺吶・);
+                UnityEngine.Debug.LogError("HealCommand.Initialize: 最初のパラメーターはIHealthTargetである必要があります。");
 #endif
                 return;
             }
@@ -95,16 +114,18 @@ namespace asterivo.Unity60.Core.Commands
             else
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogError("HealCommand.Initialize: 2逡ｪ逶ｮ縺ｮ繝代Λ繝｡繝ｼ繧ｿ繝ｼ縺ｯint・亥屓蠕ｩ驥擾ｼ峨〒縺ゅｋ蠢・ｦ√′縺ゅｊ縺ｾ縺吶・);
+                UnityEngine.Debug.LogError("HealCommand.Initialize: 2番目のパラメーターはint（回復量）である必要があります。");
 #endif
                 return;
             }
         }
         
         /// <summary>
-        /// 繧医ｊ蝙句ｮ牙・縺ｪ蛻晄悄蛹悶Γ繧ｽ繝・ラ縲・        /// object[]繧剃ｽｿ逕ｨ縺吶ｋ豎守畑迚医→逡ｰ縺ｪ繧翫∝梛螳牙・諤ｧ縺御ｿ晁ｨｼ縺輔ｌ縺ｦ縺・∪縺吶・        /// </summary>
-        /// <param name="target">蝗槫ｾｩ蟇ｾ雎｡縺ｮ繝倥Ν繧ｹ繧ｿ繝ｼ繧ｲ繝・ヨ</param>
-        /// <param name="healAmount">蝗槫ｾｩ縺吶ｋ菴灘鴨驥擾ｼ域ｭ｣縺ｮ蛟､・・/param>
+        /// より型安全な初期化メソッド。
+        /// object[]を使用する汎用版と異なり、型安全性が保証されています。
+        /// </summary>
+        /// <param name="target">回復対象のヘルスターゲット</param>
+        /// <param name="healAmount">回復する体力量（正の値）</param>
         public void Initialize(IHealthTarget target, int healAmount)
         {
             _target = target;
@@ -112,7 +133,9 @@ namespace asterivo.Unity60.Core.Commands
         }
         
         /// <summary>
-        /// 蝗槫ｾｩ繧ｳ繝槭Φ繝峨ｒ蜿悶ｊ豸医＠縺ｾ縺呻ｼ・ndo・峨・        /// 蝗槫ｾｩ縺励◆驥上→蜷後§繝繝｡繝ｼ繧ｸ繧貞ｯｾ雎｡縺ｫ荳弱∴繧九％縺ｨ縺ｧ縲∝屓蠕ｩ繧貞叙繧頑ｶ医＠縺ｾ縺吶・        /// </summary>
+        /// 回復コマンドを取り消します（Undo）。
+        /// 回復した量と同じダメージを対象に与えることで、回復を取り消します。
+        /// </summary>
         public void Undo()
         {
             if (_target == null)

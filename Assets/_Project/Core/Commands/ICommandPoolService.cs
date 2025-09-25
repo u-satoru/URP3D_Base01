@@ -3,45 +3,45 @@
 namespace asterivo.Unity60.Core.Commands
 {
     /// <summary>
-    /// 繧ｳ繝槭Φ繝峨・繝ｼ繝ｫ繧ｵ繝ｼ繝薙せ縺ｮ繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ
-    /// ServiceLocator繝代ち繝ｼ繝ｳ縺ｧ縺ｮ萓晏ｭ俶ｧ豕ｨ蜈･繧呈髪謠ｴ
+    /// コマンド�Eールサービスのインターフェース
+    /// ServiceLocatorパターンでの依存性注入を支援
     /// </summary>
     public interface ICommandPoolService
     {
         /// <summary>
-        /// CommandPoolManager縺ｸ縺ｮ逶ｴ謗･繧｢繧ｯ繧ｻ繧ｹ
-        /// 鬮伜ｺｦ縺ｪ蛻ｶ蠕｡繧・き繧ｹ繧ｿ繝繝励・繝ｫ謫堺ｽ懊↓菴ｿ逕ｨ
+        /// CommandPoolManagerへの直接アクセス
+        /// 高度な制御めE��スタムプ�Eル操作に使用
         /// </summary>
         CommandPoolManager PoolManager { get; }
 
         /// <summary>
-        /// 謖・ｮ壹＠縺溷梛縺ｮ繧ｳ繝槭Φ繝峨ｒ繝励・繝ｫ縺九ｉ蜿門ｾ励＠縺ｾ縺・        /// </summary>
-        /// <typeparam name="T">蜿門ｾ励☆繧九さ繝槭Φ繝峨・蝙・/typeparam>
-        /// <returns>菴ｿ逕ｨ蜿ｯ閭ｽ縺ｪ繧ｳ繝槭Φ繝峨う繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ</returns>
+        /// 持E��した型のコマンドをプ�Eルから取得しまぁE        /// </summary>
+        /// <typeparam name="T">取得するコマンド�E垁E/typeparam>
+        /// <returns>使用可能なコマンドインスタンス</returns>
         T GetCommand<T>() where T : class, ICommand, new();
 
         /// <summary>
-        /// 菴ｿ逕ｨ螳御ｺ・＠縺溘さ繝槭Φ繝峨ｒ繝励・繝ｫ縺ｫ霑泌唆縺励∪縺・        /// </summary>
-        /// <typeparam name="T">霑泌唆縺吶ｋ繧ｳ繝槭Φ繝峨・蝙・/typeparam>
-        /// <param name="command">繝励・繝ｫ縺ｫ霑泌唆縺吶ｋ繧ｳ繝槭Φ繝峨う繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ</param>
+        /// 使用完亁E��たコマンドをプ�Eルに返却しまぁE        /// </summary>
+        /// <typeparam name="T">返却するコマンド�E垁E/typeparam>
+        /// <param name="command">プ�Eルに返却するコマンドインスタンス</param>
         void ReturnCommand<T>(T command) where T : ICommand;
 
         /// <summary>
-        /// 謖・ｮ壹＠縺溘さ繝槭Φ繝牙梛縺ｮ繝励・繝ｫ邨ｱ險域ュ蝣ｱ繧貞叙蠕励＠縺ｾ縺・        /// </summary>
-        /// <typeparam name="T">邨ｱ險域ュ蝣ｱ繧貞叙蠕励☆繧九さ繝槭Φ繝峨・蝙・/typeparam>
-        /// <returns>繧ｳ繝槭Φ繝峨・繝ｼ繝ｫ縺ｮ邨ｱ險域ュ蝣ｱ</returns>
+        /// 持E��したコマンド型のプ�Eル統計情報を取得しまぁE        /// </summary>
+        /// <typeparam name="T">統計情報を取得するコマンド�E垁E/typeparam>
+        /// <returns>コマンド�Eールの統計情報</returns>
         CommandStatistics GetStatistics<T>() where T : ICommand;
 
         /// <summary>
-        /// 蜈ｨ繧ｳ繝槭Φ繝峨・繝ｼ繝ｫ縺ｮ繝・ヰ繝・げ諠・ｱ繧偵Ο繧ｰ縺ｫ蜃ｺ蜉帙＠縺ｾ縺・        /// </summary>
+        /// 全コマンド�EールのチE��チE��惁E��をログに出力しまぁE        /// </summary>
         void LogDebugInfo();
 
         /// <summary>
-        /// 繧ｵ繝ｼ繝薙せ縺ｮ迥ｶ諷狗｢ｺ隱阪→繝・ヰ繝・げ諠・ｱ繧偵Ο繧ｰ縺ｫ蜃ｺ蜉帙＠縺ｾ縺・        /// </summary>
+        /// サービスの状態確認とチE��チE��惁E��をログに出力しまぁE        /// </summary>
         void LogServiceStatus();
 
         /// <summary>
-        /// 繧ｵ繝ｼ繝薙せ縺ｮ繧ｯ繝ｪ繝ｼ繝ｳ繧｢繝・・蜃ｦ逅・ｒ螳溯｡後＠縺ｾ縺・        /// </summary>
+        /// サービスのクリーンアチE�E処琁E��実行しまぁE        /// </summary>
         void Cleanup();
     }
 }

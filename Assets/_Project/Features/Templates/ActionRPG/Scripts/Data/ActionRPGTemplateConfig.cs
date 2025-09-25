@@ -1,7 +1,7 @@
 using UnityEngine;
 using asterivo.Unity60.Features.Templates.Common;
 
-namespace asterivo.Unity60.Features.ActionRPG.Data
+namespace asterivo.Unity60.Features.Templates.ActionRPG.Data
 {
     /// <summary>
     /// ActionRPGテンプレートの設定データ

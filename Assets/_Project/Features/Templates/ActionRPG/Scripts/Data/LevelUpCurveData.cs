@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace asterivo.Unity60.Features.ActionRPG.Data
+namespace asterivo.Unity60.Features.Templates.ActionRPG.Data
 {
     /// <summary>
     /// レベルアップのための経験値カーブデータ

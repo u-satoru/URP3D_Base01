@@ -5,24 +5,33 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
-// using asterivo.Unity60.Core.Commands;
+using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// 繧ｲ繝ｼ繝繝ｭ繝ｼ繝峨さ繝槭Φ繝峨・螳夂ｾｩ縲・    /// 菫晏ｭ倥＆繧後◆繧ｲ繝ｼ繝迥ｶ諷九・隱ｭ縺ｿ霎ｼ縺ｿ繧｢繧ｯ繧ｷ繝ｧ繝ｳ繧偵き繝励そ繝ｫ蛹悶＠縺ｾ縺吶・    /// 
-    /// 荳ｻ縺ｪ讖溯・・・    /// - 繧ｻ繝ｼ繝悶ヵ繧｡繧､繝ｫ縺九ｉ縺ｮ繧ｲ繝ｼ繝迥ｶ諷句ｾｩ蜈・    /// - 繝ｭ繝ｼ繝牙ｯｾ雎｡繝・・繧ｿ縺ｮ驕ｸ謚・    /// - 繝・・繧ｿ謨ｴ蜷域ｧ繝√ぉ繝・け縺ｨ繧ｨ繝ｩ繝ｼ繝上Φ繝峨Μ繝ｳ繧ｰ
-    /// - 繝ｭ繝ｼ繝牙ｮ御ｺ・夂衍縺ｨ繧ｷ繝ｼ繝ｳ驕ｷ遘ｻ
+    /// ゲームロードコマンドの定義。
+    /// 保存されたゲーム状態の読み込みアクションをカプセル化します。
+    /// 
+    /// 主な機能：
+    /// - セーブファイルからのゲーム状態復元
+    /// - ロード対象データの選択
+    /// - データ整合性チェックとエラーハンドリング
+    /// - ロード完了通知とシーン遷移
     /// </summary>
     [System.Serializable]
     public class LoadGameCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// 繝ｭ繝ｼ繝峨・遞ｮ鬘槭ｒ螳夂ｾｩ縺吶ｋ蛻玲嫌蝙・        /// </summary>
+        /// ロードの種類を定義する列挙型
+        /// </summary>
         public enum LoadType
         {
-            Full,           // 螳悟・繝ｭ繝ｼ繝・            Partial,        // 驛ｨ蛻・Ο繝ｼ繝・            QuickLoad,      // 繧ｯ繧､繝・け繝ｭ繝ｼ繝・            Continue,       // 邯壹″縺九ｉ蜀埼幕
-            NewGamePlus     // 蠑輔″邯吶℃隕∫ｴ莉倥″譁ｰ隕上ご繝ｼ繝
+            Full,           // 完全ロード
+            Partial,        // 部分ロード
+            QuickLoad,      // クイックロード
+            Continue,       // 続きから再開
+            NewGamePlus     // 引き継ぎ要素付き新規ゲーム
         }
 
         [Header("Load Parameters")]
@@ -48,26 +57,27 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public bool createBackup = true;
         public bool verifyDataIntegrity = true;
         public bool handleVersionMismatch = true;
-        public bool allowPartialLoad = false; // 繝・・繧ｿ縺ｮ荳驛ｨ縺梧ｬ謳阪＠縺ｦ縺・※繧らｶ夊｡後☆繧九°
+        public bool allowPartialLoad = false; // データの一部が欠損していても続行するか
 
         [Header("User Experience")]
         public bool showLoadProgress = true;
         public bool showSuccessNotification = false;
-        public float maxLoadTime = 10f; // 繧ｿ繧､繝繧｢繧ｦ繝域凾髢・
+        public float maxLoadTime = 10f; // タイムアウト時間
+
         [Header("Error Handling")]
         public bool showErrorDialog = true;
         public bool fallbackToDefault = false;
         public string fallbackSaveSlot = "";
 
         /// <summary>
-        /// 繝・ヵ繧ｩ繝ｫ繝医さ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
+        /// デフォルトコンストラクタ
         /// </summary>
         public LoadGameCommandDefinition()
         {
         }
 
         /// <summary>
-        /// 繝代Λ繝｡繝ｼ繧ｿ莉倥″繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
+        /// パラメータ付きコンストラクタ
         /// </summary>
         public LoadGameCommandDefinition(LoadType type, int slot, string fileName = "")
         {
@@ -77,33 +87,36 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繝ｭ繝ｼ繝峨さ繝槭Φ繝峨′螳溯｡悟庄閭ｽ縺九←縺・°繧貞愛螳壹＠縺ｾ縺・        /// </summary>
+        /// ロードコマンドが実行可能かどうかを判定します
+        /// </summary>
         public bool CanExecute(object context = null)
         {
-            // 蝓ｺ譛ｬ逧・↑螳溯｡悟庄閭ｽ諤ｧ繝√ぉ繝・け
+            // 基本的な実行可能性チェック
             if (loadSlot < 0 && string.IsNullOrEmpty(saveFileName)) return false;
             if (maxLoadTime <= 0f) return false;
 
-            // 繝ｭ繝ｼ繝牙ｯｾ雎｡縺御ｽ輔ｂ驕ｸ謚槭＆繧後※縺・↑縺・ｴ蜷医・荳榊庄
+            // ロード対象が何も選択されていない場合は不可
             if (!loadPlayerData && !loadWorldState && !loadProgress && !loadSettings && !loadStatistics)
                 return false;
 
-            // 繧ｳ繝ｳ繝・く繧ｹ繝医′縺ゅｋ蝣ｴ蜷医・霑ｽ蜉繝√ぉ繝・け
+            // コンテキストがある場合の追加チェック
             if (context != null)
             {
-                // 繧ｻ繝ｼ繝悶ヵ繧｡繧､繝ｫ縺ｮ蟄伜惠繝√ぉ繝・け
+                // セーブファイルの存在チェック
                 string filePath = GetSaveFilePath();
                 if (!System.IO.File.Exists(filePath)) return false;
 
-                // 迴ｾ蝨ｨ縺ｮ迥ｶ諷九メ繧ｧ繝・け・域里縺ｫ繝ｭ繝ｼ繝我ｸｭ遲峨・荳榊庄・・                // 繝｡繝｢繝ｪ菴ｿ逕ｨ驥上メ繧ｧ繝・け
-                // 莉悶・驥崎ｦ√↑蜃ｦ逅・ｸｭ縺ｮ蛻ｶ邏・メ繧ｧ繝・け
+                // 現在の状態チェック（既にロード中等は不可）
+                // メモリ使用量チェック
+                // 他の重要な処理中の制約チェック
             }
 
             return true;
         }
 
         /// <summary>
-        /// 繝ｭ繝ｼ繝峨さ繝槭Φ繝峨ｒ菴懈・縺励∪縺・        /// </summary>
+        /// ロードコマンドを作成します
+        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
             if (!CanExecute(context))
@@ -113,7 +126,8 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繧ｻ繝ｼ繝悶ヵ繧｡繧､繝ｫ縺ｮ繝代せ繧貞叙蠕・        /// </summary>
+        /// セーブファイルのパスを取得
+        /// </summary>
         private string GetSaveFilePath()
         {
             string saveDirectory = System.IO.Path.Combine(Application.persistentDataPath, "Saves");
@@ -131,7 +145,8 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// LoadGameCommandDefinition縺ｫ蟇ｾ蠢懊☆繧句ｮ滄圀縺ｮ繧ｳ繝槭Φ繝牙ｮ溯｣・    /// </summary>
+    /// LoadGameCommandDefinitionに対応する実際のコマンド実装
+    /// </summary>
     public class LoadGameCommand : ICommand
     {
         private LoadGameCommandDefinition definition;
@@ -140,7 +155,8 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         private bool loadInProgress = false;
         private string loadedFilePath = "";
         private System.DateTime loadStartTime;
-        private ISaveData previousGameState; // Undo逕ｨ縺ｮ迴ｾ蝨ｨ縺ｮ迥ｶ諷倶ｿ晏ｭ・
+        private ISaveData previousGameState; // Undo用の現在の状態保存
+
         public LoadGameCommand(LoadGameCommandDefinition loadDefinition, object executionContext)
         {
             definition = loadDefinition;
@@ -148,7 +164,8 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繝ｭ繝ｼ繝峨さ繝槭Φ繝峨・螳溯｡・        /// </summary>
+        /// ロードコマンドの実行
+        /// </summary>
         public void Execute()
         {
             if (executed || loadInProgress) return;
@@ -160,18 +177,19 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             UnityEngine.Debug.Log($"Executing {definition.loadType} load: slot={definition.loadSlot}, file='{definition.saveFileName}'");
 #endif
 
-            // 迴ｾ蝨ｨ縺ｮ迥ｶ諷九ｒ繝舌ャ繧ｯ繧｢繝・・・・ndo逕ｨ・・            if (definition.createBackup)
+            // 現在の状態をバックアップ（Undo用）
+            if (definition.createBackup)
             {
                 BackupCurrentGameState();
             }
 
-            // 繝ｭ繝ｼ繝峨・繝ｭ繧ｰ繝ｬ繧ｹUI縺ｮ陦ｨ遉ｺ
+            // ロードプログレスUIの表示
             if (definition.showLoadProgress)
             {
                 ShowLoadProgressUI();
             }
 
-            // 繝ｭ繝ｼ繝・ぅ繝ｳ繧ｰ繧ｹ繧ｯ繝ｪ繝ｼ繝ｳ縺ｮ陦ｨ遉ｺ
+            // ローディングスクリーンの表示
             if (definition.showLoadingScreen)
             {
                 ShowLoadingScreen();
@@ -179,7 +197,8 @@ namespace asterivo.Unity60.Core.Commands.Definitions
 
             try
             {
-                // 螳滄圀縺ｮ繝ｭ繝ｼ繝牙・逅・                ExecuteLoadOperation();
+                // 実際のロード処理
+                ExecuteLoadOperation();
             }
             catch (System.Exception ex)
             {
@@ -191,52 +210,57 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 螳滄圀縺ｮ繝ｭ繝ｼ繝牙・逅・ｒ螳溯｡・        /// </summary>
+        /// 実際のロード処理を実行
+        /// </summary>
         private void ExecuteLoadOperation()
         {
-            // 繧ｻ繝ｼ繝悶ヵ繧｡繧､繝ｫ縺ｮ繝代せ蜿門ｾ・            loadedFilePath = GetLoadFilePath();
+            // セーブファイルのパス取得
+            loadedFilePath = GetLoadFilePath();
 
-            // 繝輔ぃ繧､繝ｫ蟄伜惠繝√ぉ繝・け
+            // ファイル存在チェック
             if (!System.IO.File.Exists(loadedFilePath))
             {
                 throw new System.IO.FileNotFoundException($"Save file not found: {loadedFilePath}");
             }
 
-            // 繝・・繧ｿ謨ｴ蜷域ｧ縺ｮ莠句燕繝√ぉ繝・け
+            // データ整合性の事前チェック
             if (definition.validateBeforeLoad)
             {
                 ValidateSaveFile(loadedFilePath);
             }
 
-            // 繧ｻ繝ｼ繝悶ヵ繧｡繧､繝ｫ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ
+            // セーブファイルの読み込み
             ISaveData saveData = ReadSaveFile(loadedFilePath);
 
-            // 繝・・繧ｿ謨ｴ蜷域ｧ縺ｮ讀懆ｨｼ
+            // データ整合性の検証
             if (definition.verifyDataIntegrity)
             {
                 VerifyDataIntegrity(saveData);
             }
 
-            // 繝舌・繧ｸ繝ｧ繝ｳ莠呈鋤諤ｧ繝√ぉ繝・け
+            // バージョン互換性チェック
             if (definition.handleVersionMismatch)
             {
                 HandleVersionCompatibility(saveData);
             }
 
-            // 繧｢繧ｻ繝・ヨ縺ｮ繝励Μ繝ｭ繝ｼ繝・            if (definition.preloadAssets)
+            // アセットのプリロード
+            if (definition.preloadAssets)
             {
                 PreloadRequiredAssets(saveData);
             }
 
-            // 繧ｲ繝ｼ繝迥ｶ諷九・蠕ｩ蜈・            RestoreGameState(saveData);
+            // ゲーム状態の復元
+            RestoreGameState(saveData);
 
-            // 繧ｷ繝ｼ繝ｳ驕ｷ遘ｻ
+            // シーン遷移
             if (definition.changeScene && !string.IsNullOrEmpty(definition.targetScene))
             {
                 TransitionToTargetScene();
             }
 
-            // 繝ｭ繝ｼ繝牙ｮ御ｺ・・逅・            OnLoadCompleted();
+            // ロード完了処理
+            OnLoadCompleted();
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"Load completed: {loadedFilePath}");
@@ -244,7 +268,8 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繧ｻ繝ｼ繝悶ヵ繧｡繧､繝ｫ縺ｮ繝代せ繧貞叙蠕・        /// </summary>
+        /// セーブファイルのパスを取得
+        /// </summary>
         private string GetLoadFilePath()
         {
             string saveDirectory = System.IO.Path.Combine(Application.persistentDataPath, "Saves");
@@ -273,7 +298,8 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 譛譁ｰ縺ｮ繧ｻ繝ｼ繝悶ヵ繧｡繧､繝ｫ繧貞叙蠕・        /// </summary>
+        /// 最新のセーブファイルを取得
+        /// </summary>
         private string GetLatestSaveFile()
         {
             string saveDirectory = System.IO.Path.Combine(Application.persistentDataPath, "Saves");
@@ -284,31 +310,32 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 throw new System.IO.FileNotFoundException("No save files found");
             }
 
-            // 譛譁ｰ縺ｮ繝輔ぃ繧､繝ｫ繧貞叙蠕・            System.Array.Sort(saveFiles, (x, y) => 
+            // 最新のファイルを取得
+            System.Array.Sort(saveFiles, (x, y) => 
                 System.IO.File.GetLastWriteTime(y).CompareTo(System.IO.File.GetLastWriteTime(x)));
 
             return System.IO.Path.GetFileName(saveFiles[0]);
         }
 
         /// <summary>
-        /// 繧ｻ繝ｼ繝悶ヵ繧｡繧､繝ｫ縺ｮ莠句燕讀懆ｨｼ
+        /// セーブファイルの事前検証
         /// </summary>
         private void ValidateSaveFile(string filePath)
         {
             var fileInfo = new System.IO.FileInfo(filePath);
             
-            // 繝輔ぃ繧､繝ｫ繧ｵ繧､繧ｺ繝√ぉ繝・け
+            // ファイルサイズチェック
             if (fileInfo.Length == 0)
             {
                 throw new System.Exception("Save file is empty");
             }
 
-            if (fileInfo.Length < 100) // 譛蟆上し繧､繧ｺ繝√ぉ繝・け
+            if (fileInfo.Length < 100) // 最小サイズチェック
             {
                 throw new System.Exception("Save file appears to be corrupted (too small)");
             }
 
-            // 繝輔ぃ繧､繝ｫ諡｡蠑ｵ蟄舌メ繧ｧ繝・け
+            // ファイル拡張子チェック
             if (!filePath.EndsWith(".sav"))
             {
                 throw new System.ArgumentException("Invalid save file format");
@@ -320,7 +347,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繧ｻ繝ｼ繝悶ヵ繧｡繧､繝ｫ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ
+        /// セーブファイルの読み込み
         /// </summary>
         private ISaveData ReadSaveFile(string filePath)
         {
@@ -328,10 +355,12 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             {
                 string jsonData = System.IO.File.ReadAllText(filePath);
                 
-                // 螳滄圀縺ｮ螳溯｣・〒縺ｯ驕ｩ蛻・↑繝・す繝ｪ繧｢繝ｩ繧､繧ｼ繝ｼ繧ｷ繝ｧ繝ｳ・・SON縲。inary遲会ｼ峨ｒ菴ｿ逕ｨ
+                // 実際の実装では適切なデシリアライゼーション（JSON、Binary等）を使用
                 var saveData = JsonUtility.FromJson<GameSaveData>(jsonData);
                 
-                // 證怜捷蛹悶＆繧後※縺・ｋ蝣ｴ蜷医・蠕ｩ蜿ｷ蛹門・逅・                // 蝨ｧ邵ｮ縺輔ｌ縺ｦ縺・ｋ蝣ｴ蜷医・螻暮幕蜃ｦ逅・                
+                // 暗号化されている場合の復号化処理
+                // 圧縮されている場合の展開処理
+                
                 return saveData;
             }
             catch (System.Exception ex)
@@ -341,7 +370,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繝・・繧ｿ謨ｴ蜷域ｧ縺ｮ讀懆ｨｼ
+        /// データ整合性の検証
         /// </summary>
         private void VerifyDataIntegrity(ISaveData saveData)
         {
@@ -350,9 +379,9 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 throw new System.Exception("Save data is null");
             }
 
-            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ縲√メ繧ｧ繝・け繧ｵ繝縲√ワ繝・す繝･蛟､遲峨↓繧医ｋ讀懆ｨｼ
-            // 蠢・医ョ繝ｼ繧ｿ縺ｮ蟄伜惠繝√ぉ繝・け
-            // 繝・・繧ｿ蠖｢蠑上・讀懆ｨｼ
+            // 実際の実装では、チェックサム、ハッシュ値等による検証
+            // 必須データの存在チェック
+            // データ形式の検証
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log("Data integrity verified");
@@ -360,7 +389,8 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繝舌・繧ｸ繝ｧ繝ｳ莠呈鋤諤ｧ縺ｮ蜃ｦ逅・        /// </summary>
+        /// バージョン互換性の処理
+        /// </summary>
         private void HandleVersionCompatibility(ISaveData saveData)
         {
             if (saveData is GameSaveData gameSave && gameSave.SaveInfo != null)
@@ -374,50 +404,59 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                     UnityEngine.Debug.LogWarning($"Version mismatch: save={saveVersion}, current={currentVersion}");
 #endif
 
-                    // 繝舌・繧ｸ繝ｧ繝ｳ髢薙・蟾ｮ蛻・ｒ蜃ｦ逅・                    // 蠢・ｦ√↓蠢懊§縺ｦ繝・・繧ｿ螟画鋤
-                    // 莠呈鋤諤ｧ縺ｮ縺ｪ縺・ヰ繝ｼ繧ｸ繝ｧ繝ｳ縺ｮ蝣ｴ蜷医・繧ｨ繝ｩ繝ｼ
+                    // バージョン間の差分を処理
+                    // 必要に応じてデータ変換
+                    // 互換性のないバージョンの場合はエラー
                 }
             }
         }
 
         /// <summary>
-        /// 蠢・ｦ√↑繧｢繧ｻ繝・ヨ縺ｮ繝励Μ繝ｭ繝ｼ繝・        /// </summary>
+        /// 必要なアセットのプリロード
+        /// </summary>
         private void PreloadRequiredAssets(ISaveData saveData)
         {
-            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ縲√そ繝ｼ繝悶ョ繝ｼ繧ｿ縺ｫ蜷ｫ縺ｾ繧後ｋ諠・ｱ縺九ｉ
-            // 蠢・ｦ√↑繧｢繧ｻ繝・ヨ・医す繝ｼ繝ｳ縲√・繝ｪ繝輔ぃ繝也ｭ会ｼ峨ｒ莠句燕繝ｭ繝ｼ繝・
+            // 実際の実装では、セーブデータに含まれる情報から
+            // 必要なアセット（シーン、プリファブ等）を事前ロード
+
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log("Preloading required assets...");
 #endif
         }
 
         /// <summary>
-        /// 繧ｲ繝ｼ繝迥ｶ諷九・蠕ｩ蜈・        /// </summary>
+        /// ゲーム状態の復元
+        /// </summary>
         private void RestoreGameState(ISaveData saveData)
         {
             if (saveData is not GameSaveData gameSave) return;
 
-            // 繝励Ξ繧､繝､繝ｼ繝・・繧ｿ縺ｮ蠕ｩ蜈・            if (definition.loadPlayerData && gameSave.PlayerData != null)
+            // プレイヤーデータの復元
+            if (definition.loadPlayerData && gameSave.PlayerData != null)
             {
                 RestorePlayerData(gameSave.PlayerData);
             }
 
-            // 繝ｯ繝ｼ繝ｫ繝臥憾諷九・蠕ｩ蜈・            if (definition.loadWorldState && gameSave.WorldState != null)
+            // ワールド状態の復元
+            if (definition.loadWorldState && gameSave.WorldState != null)
             {
                 RestoreWorldState(gameSave.WorldState);
             }
 
-            // 騾ｲ陦檎憾豕√・蠕ｩ蜈・            if (definition.loadProgress && gameSave.ProgressData != null)
+            // 進行状況の復元
+            if (definition.loadProgress && gameSave.ProgressData != null)
             {
                 RestoreProgressData(gameSave.ProgressData);
             }
 
-            // 險ｭ螳壹・蠕ｩ蜈・            if (definition.loadSettings && gameSave.SettingsData != null)
+            // 設定の復元
+            if (definition.loadSettings && gameSave.SettingsData != null)
             {
                 RestoreSettingsData(gameSave.SettingsData);
             }
 
-            // 邨ｱ險医ョ繝ｼ繧ｿ縺ｮ蠕ｩ蜈・            if (definition.loadStatistics && gameSave.StatisticsData != null)
+            // 統計データの復元
+            if (definition.loadStatistics && gameSave.StatisticsData != null)
             {
                 RestoreStatisticsData(gameSave.StatisticsData);
             }
@@ -428,11 +467,11 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 繧ｿ繝ｼ繧ｲ繝・ヨ繧ｷ繝ｼ繝ｳ縺ｸ縺ｮ驕ｷ遘ｻ
+        /// ターゲットシーンへの遷移
         /// </summary>
         private void TransitionToTargetScene()
         {
-            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ SceneManager 縺ｨ縺ｮ騾｣謳ｺ
+            // 実際の実装では SceneManager との連携
             // UnityEngine.SceneManagement.SceneManager.LoadScene(definition.targetScene);
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -441,24 +480,27 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 迴ｾ蝨ｨ縺ｮ繧ｲ繝ｼ繝迥ｶ諷九ｒ繝舌ャ繧ｯ繧｢繝・・
+        /// 現在のゲーム状態をバックアップ
         /// </summary>
         private void BackupCurrentGameState()
         {
-            // Undo逕ｨ縺ｫ迴ｾ蝨ｨ縺ｮ迥ｶ諷九ｒ菫晏ｭ・            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ迴ｾ蝨ｨ縺ｮ繧ｲ繝ｼ繝迥ｶ諷九ｒ蜿朱寔
-            previousGameState = new GameSaveData(); // 莉ｮ縺ｮ螳溯｣・
+            // Undo用に現在の状態を保存
+            // 実際の実装では現在のゲーム状態を収集
+            previousGameState = new GameSaveData(); // 仮の実装
+
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log("Current game state backed up");
 #endif
         }
 
         /// <summary>
-        /// 繝ｭ繝ｼ繝牙ｮ御ｺ・・逅・        /// </summary>
+        /// ロード完了処理
+        /// </summary>
         private void OnLoadCompleted()
         {
             loadInProgress = false;
 
-            // UI 縺ｮ髱櫁｡ｨ遉ｺ
+            // UI の非表示
             if (definition.showLoadProgress)
             {
                 HideLoadProgressUI();
@@ -469,22 +511,24 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 HideLoadingScreen();
             }
 
-            // 謌仙粥騾夂衍縺ｮ陦ｨ遉ｺ
+            // 成功通知の表示
             if (definition.showSuccessNotification)
             {
                 ShowLoadSuccessNotification();
             }
 
-            // 繝ｭ繝ｼ繝牙ｮ御ｺ・う繝吶Φ繝医・逋ｺ陦・            // EventSystem.Publish(new GameLoadedEvent(definition.loadSlot, loadedFilePath));
+            // ロード完了イベントの発行
+            // EventSystem.Publish(new GameLoadedEvent(definition.loadSlot, loadedFilePath));
         }
 
         /// <summary>
-        /// 繝ｭ繝ｼ繝峨お繝ｩ繝ｼ縺ｮ蜃ｦ逅・        /// </summary>
+        /// ロードエラーの処理
+        /// </summary>
         private void HandleLoadError(System.Exception exception)
         {
             loadInProgress = false;
 
-            // UI 縺ｮ髱櫁｡ｨ遉ｺ
+            // UI の非表示
             if (definition.showLoadProgress)
             {
                 HideLoadProgressUI();
@@ -495,13 +539,14 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 HideLoadingScreen();
             }
 
-            // 繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ蜃ｦ逅・            if (definition.fallbackToDefault && !string.IsNullOrEmpty(definition.fallbackSaveSlot))
+            // フォールバック処理
+            if (definition.fallbackToDefault && !string.IsNullOrEmpty(definition.fallbackSaveSlot))
             {
                 TryFallbackLoad();
                 return;
             }
 
-            // 繧ｨ繝ｩ繝ｼ騾夂衍縺ｮ陦ｨ遉ｺ
+            // エラー通知の表示
             if (definition.showErrorDialog)
             {
                 ShowLoadErrorDialog(exception.Message);
@@ -511,16 +556,19 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             UnityEngine.Debug.LogError($"Load failed: {exception}");
 #endif
 
-            // 繝ｭ繝ｼ繝牙､ｱ謨励う繝吶Φ繝医・逋ｺ陦・            // EventSystem.Publish(new LoadFailedEvent(exception));
+            // ロード失敗イベントの発行
+            // EventSystem.Publish(new LoadFailedEvent(exception));
         }
 
         /// <summary>
-        /// 繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ繝ｭ繝ｼ繝峨・隧ｦ陦・        /// </summary>
+        /// フォールバックロードの試行
+        /// </summary>
         private void TryFallbackLoad()
         {
             try
             {
-                // 繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ繧ｻ繝ｼ繝悶せ繝ｭ繝・ヨ縺九ｉ縺ｮ繝ｭ繝ｼ繝・                var fallbackDefinition = new LoadGameCommandDefinition(definition.loadType, int.Parse(definition.fallbackSaveSlot));
+                // フォールバックセーブスロットからのロード
+                var fallbackDefinition = new LoadGameCommandDefinition(definition.loadType, int.Parse(definition.fallbackSaveSlot));
                 var fallbackCommand = new LoadGameCommand(fallbackDefinition, context);
                 fallbackCommand.Execute();
 
@@ -537,26 +585,29 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             }
         }
 
-        // 蜷・ｨｮ繝・・繧ｿ蠕ｩ蜈・Γ繧ｽ繝・ラ・亥ｮ滄圀縺ｮ螳溯｣・〒縺ｯ蟇ｾ蠢懊☆繧九す繧ｹ繝・Β縺ｨ縺ｮ騾｣謳ｺ・・        private void RestorePlayerData(IPlayerData playerData) { /* 繝励Ξ繧､繝､繝ｼ繝・・繧ｿ蠕ｩ蜈・*/ }
-        private void RestoreWorldState(IWorldState worldState) { /* 繝ｯ繝ｼ繝ｫ繝臥憾諷句ｾｩ蜈・*/ }
-        private void RestoreProgressData(IProgressData progressData) { /* 騾ｲ陦檎憾豕∝ｾｩ蜈・*/ }
-        private void RestoreSettingsData(ISettingsData settingsData) { /* 險ｭ螳壼ｾｩ蜈・*/ }
-        private void RestoreStatisticsData(IStatisticsData statisticsData) { /* 邨ｱ險医ョ繝ｼ繧ｿ蠕ｩ蜈・*/ }
+        // 各種データ復元メソッド（実際の実装では対応するシステムとの連携）
+        private void RestorePlayerData(IPlayerData playerData) { /* プレイヤーデータ復元 */ }
+        private void RestoreWorldState(IWorldState worldState) { /* ワールド状態復元 */ }
+        private void RestoreProgressData(IProgressData progressData) { /* 進行状況復元 */ }
+        private void RestoreSettingsData(ISettingsData settingsData) { /* 設定復元 */ }
+        private void RestoreStatisticsData(IStatisticsData statisticsData) { /* 統計データ復元 */ }
 
-        // UI蛻ｶ蠕｡繝｡繧ｽ繝・ラ・亥ｮ滄圀縺ｮ螳溯｣・〒縺ｯ UISystem 縺ｨ縺ｮ騾｣謳ｺ・・        private void ShowLoadProgressUI() { /* 繝ｭ繝ｼ繝峨・繝ｭ繧ｰ繝ｬ繧ｹ陦ｨ遉ｺ */ }
-        private void HideLoadProgressUI() { /* 繝ｭ繝ｼ繝峨・繝ｭ繧ｰ繝ｬ繧ｹ髱櫁｡ｨ遉ｺ */ }
-        private void ShowLoadingScreen() { /* 繝ｭ繝ｼ繝・ぅ繝ｳ繧ｰ逕ｻ髱｢陦ｨ遉ｺ */ }
-        private void HideLoadingScreen() { /* 繝ｭ繝ｼ繝・ぅ繝ｳ繧ｰ逕ｻ髱｢髱櫁｡ｨ遉ｺ */ }
-        private void ShowLoadSuccessNotification() { /* 謌仙粥騾夂衍 */ }
-        private void ShowLoadErrorDialog(string error) { /* 繧ｨ繝ｩ繝ｼ繝繧､繧｢繝ｭ繧ｰ陦ｨ遉ｺ */ }
+        // UI制御メソッド（実際の実装では UISystem との連携）
+        private void ShowLoadProgressUI() { /* ロードプログレス表示 */ }
+        private void HideLoadProgressUI() { /* ロードプログレス非表示 */ }
+        private void ShowLoadingScreen() { /* ローディング画面表示 */ }
+        private void HideLoadingScreen() { /* ローディング画面非表示 */ }
+        private void ShowLoadSuccessNotification() { /* 成功通知 */ }
+        private void ShowLoadErrorDialog(string error) { /* エラーダイアログ表示 */ }
 
         /// <summary>
-        /// 繝ｭ繝ｼ繝峨・譖ｴ譁ｰ・医ち繧､繝繧｢繧ｦ繝医メ繧ｧ繝・け遲峨∝､夜Κ縺九ｉ螳壽悄逧・↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ繧具ｼ・        /// </summary>
+        /// ロードの更新（タイムアウトチェック等、外部から定期的に呼び出される）
+        /// </summary>
         public void UpdateLoad()
         {
             if (!loadInProgress) return;
 
-            // 繧ｿ繧､繝繧｢繧ｦ繝医メ繧ｧ繝・け
+            // タイムアウトチェック
             var elapsed = System.DateTime.Now - loadStartTime;
             if (elapsed.TotalSeconds > definition.maxLoadTime)
             {
@@ -565,12 +616,14 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Undo謫堺ｽ懶ｼ医Ο繝ｼ繝牙燕縺ｮ迥ｶ諷九↓謌ｻ縺呻ｼ・        /// </summary>
+        /// Undo操作（ロード前の状態に戻す）
+        /// </summary>
         public void Undo()
         {
             if (!executed || previousGameState == null) return;
 
-            // 繝舌ャ繧ｯ繧｢繝・・縺励◆迥ｶ諷九↓謌ｻ縺・            RestoreGameState(previousGameState);
+            // バックアップした状態に戻す
+            RestoreGameState(previousGameState);
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log("Load undone - restored previous game state");
@@ -580,12 +633,12 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// 縺薙・繧ｳ繝槭Φ繝峨′Undo蜿ｯ閭ｽ縺九←縺・°
+        /// このコマンドがUndo可能かどうか
         /// </summary>
         public bool CanUndo => executed && previousGameState != null && definition.createBackup;
 
         /// <summary>
-        /// 迴ｾ蝨ｨ繝ｭ繝ｼ繝牙・逅・ｸｭ縺九←縺・°
+        /// 現在ロード処理中かどうか
         /// </summary>
         public bool IsLoadInProgress => loadInProgress;
     }

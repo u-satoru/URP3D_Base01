@@ -5,18 +5,18 @@ using asterivo.Unity60.Core.Audio.Controllers;
 using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Events;
 // using asterivo.Unity60.Core.Debug;
-using asterivo.Unity60.Core;
 // using asterivo.Unity60.Core.Shared;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Audio.Services;
-// using asterivo.Unity60.Core.Helpers;
+using asterivo.Unity60.Core.Helpers;
+using asterivo.Unity60.Core;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio
 {
     /// <summary>
     /// オーディオシステム全体の統一更新コーディネーター（ServiceLocator対応）
-    /// リアルタイム同期の最適化とパフォーマンス向上を提供
+    /// リアルタイム同期の最適化とパフォーマンス向上を担当
     /// Service Locatorパターンを使用して他のサービスと連携
     /// </summary>
     public class AudioUpdateCoordinator : MonoBehaviour, IAudioUpdateService, IInitializable
@@ -24,7 +24,8 @@ namespace asterivo.Unity60.Core.Audio
         [Header("Update Settings")]
         [SerializeField, Range(0.05f, 1f)] private float updateInterval = AudioConstants.AUDIO_UPDATE_INTERVAL;
         [SerializeField] private bool enableCoordinatedUpdates = true;
-        // TODO: バッチ�E琁E��の一度に更新するAudioSourceの最大数制限（パフォーマンス最適化用�E�E#pragma warning disable CS0414 // Field assigned but never used - planned for performance batch processing
+        // TODO: バッチ処理での一度に更新するAudioSourceの最大数制限（パフォーマンス最適化用）
+#pragma warning disable CS0414 // Field assigned but never used - planned for performance batch processing
         [SerializeField, Range(1, 10)] private int maxAudioSourcesPerUpdate = 5;
 #pragma warning restore CS0414
 
@@ -38,24 +39,27 @@ namespace asterivo.Unity60.Core.Audio
         [SerializeField, ReadOnly] private int totalManagedAudioSources;
         [SerializeField, ReadOnly] private int activeAudioSources;
 
-        // シスチE��参�E
+        // システム参照
         private WeatherAmbientController weatherController;
         private TimeAmbientController timeController;
         private MaskingEffectController maskingController;
         private StealthAudioCoordinator stealthCoordinator;
         private Transform playerTransform;
 
-        // 最適化用キャチE��ュ
+        // 最適化用キャッシュ
         private Dictionary<Vector3Int, List<AudioSource>> spatialAudioCache;
         private HashSet<AudioSource> trackedAudioSources;
         private Queue<AudioSource> updateQueue;
         private Coroutine coordinatedUpdateCoroutine;
         
-        // IAudioUpdatable管琁E        private HashSet<IAudioUpdatable> registeredUpdatables;
+        // IAudioUpdatable管理
+        private HashSet<IAudioUpdatable> registeredUpdatables;
 
-        // 削除: 同期イベント�Eインターフェースで定義済み
+        // 削除: 同期イベントはインターフェースで定義済み
 
-        // IInitializable実裁E        public int Priority => 15; // オーチE��オ更新コーチE��ネ�Eターは基本サービスの後に初期匁E        public bool IsInitialized { get; private set; }
+        // IInitializable実装
+        public int Priority => 15; // オーディオ更新コーディネーターは基本サービスの後に初期化
+        public bool IsInitialized { get; private set; }
 
         
         
@@ -68,13 +72,14 @@ namespace asterivo.Unity60.Core.Audio
         
         public bool IsCoordinatedUpdateEnabled => enableCoordinatedUpdates;
         
-        // イベンチE        public event System.Action<AudioSystemSyncData> OnAudioSystemSync;
+        // イベント
+        public event System.Action<AudioSystemSyncData> OnAudioSystemSync;
 
         #region Unity Lifecycle
 
         private void Awake()
         {
-            // ✁EServiceLocator専用実裁E�Eみ - Singletonパターン完�E削除
+            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
             DontDestroyOnLoad(gameObject);
             
             if (FeatureFlags.UseServiceLocator)
@@ -97,7 +102,7 @@ namespace asterivo.Unity60.Core.Audio
 
         private void OnDestroy()
         {
-            // ✁EServiceLocator専用実裁E�Eみ - Singletonパターン完�E削除
+            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
             if (FeatureFlags.UseServiceLocator)
             {
                 ServiceLocator.UnregisterService<IAudioUpdateService>();
@@ -140,7 +145,8 @@ namespace asterivo.Unity60.Core.Audio
         #region Initialization
 
         /// <summary>
-        /// コーチE��ネ�Eターの初期匁E        /// </summary>
+        /// コーディネーターの初期化
+        /// </summary>
         private void InitializeCoordinator()
         {
             spatialAudioCache = new Dictionary<Vector3Int, List<AudioSource>>();
@@ -152,7 +158,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// シスチE��参�Eの検索
+        /// システム参照の検索
         /// </summary>
         private void FindSystemReferences()
         {
@@ -172,7 +178,8 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 空間キャチE��ュの初期匁E        /// </summary>
+        /// 空間キャッシュの初期化
+        /// </summary>
         private void InitializeSpatialCache()
         {
             spatialAudioCache.Clear();
@@ -184,7 +191,7 @@ namespace asterivo.Unity60.Core.Audio
         #region IAudioUpdateService Implementation
 
         /// <summary>
-        /// 更新可能なコンポ�Eネントを登録
+        /// 更新可能なコンポーネントを登録
         /// </summary>
         public void RegisterUpdatable(IAudioUpdatable updatable)
         {
@@ -200,7 +207,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 更新可能なコンポ�Eネント�E登録解除
+        /// 更新可能なコンポーネントの登録解除
         /// </summary>
         public void UnregisterUpdatable(IAudioUpdatable updatable)
         {
@@ -220,7 +227,8 @@ namespace asterivo.Unity60.Core.Audio
         #region Coordinated Update System
 
         /// <summary>
-        /// 協調更新の開姁E        /// </summary>
+        /// 協調更新の開始
+        /// </summary>
         public void StartCoordinatedUpdates()
         {
             if (coordinatedUpdateCoroutine == null)
@@ -244,24 +252,27 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// メインの協調更新ルーチE        /// </summary>
+        /// メインの協調更新ループ
+        /// </summary>
         private IEnumerator CoordinatedUpdateLoop()
         {
             while (enableCoordinatedUpdates)
             {
                 float updateStartTime = Time.realtimeSinceStartup;
 
-                // 空間キャチE��ュの定期皁E��再構篁E                if (Time.frameCount % (int)(60 * updateInterval * 5) == 0) // 紁E秒間隁E                {
+                // 空間キャッシュの定期的な再構築
+                if (Time.frameCount % (int)(60 * updateInterval * 5) == 0) // 約5秒間隔
+                {
                     RebuildSpatialCache();
                 }
 
-                // 同期チE�Eタの作�E
+                // 同期データの作成
                 var syncData = CreateAudioSystemSyncData();
 
-                // 全シスチE��の協調更新
+                // 全システムの協調更新
                 UpdateAllAudioSystems(syncData);
 
-                // 同期イベント�E発火
+                // 同期イベントの発火
                 OnAudioSystemSync?.Invoke(syncData);
                 
                 // 登録されたIAudioUpdatableの更新
@@ -275,7 +286,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 全オーチE��オシスチE��の更新
+        /// 全オーディオシステムの更新
         /// </summary>
         private void UpdateAllAudioSystems(AudioSystemSyncData syncData)
         {
@@ -319,7 +330,7 @@ namespace asterivo.Unity60.Core.Audio
                     }
                     catch (System.Exception ex)
                     {
-                        ServiceLocator.GetService<IEventLogger>().LogError($"[AudioUpdateCoordinator] Error updating {updatable.GetType().Name}: {ex.Message}");
+                        EventLogger.LogErrorStatic($"[AudioUpdateCoordinator] Error updating {updatable.GetType().Name}: {ex.Message}");
                     }
                 }
             }
@@ -334,9 +345,11 @@ namespace asterivo.Unity60.Core.Audio
         /// </summary>
         private void UpdateWeatherControllerOptimized(AudioSystemSyncData syncData)
         {
-            // 天気変更が忁E��な場合�Eみ処琁E            if (syncData.weatherChanged)
+            // 天気変更が必要な場合のみ処理
+            if (syncData.weatherChanged)
             {
-                // 非同期での天気変更�E�既存メソチE��を活用�E�E                // WeatherControllerは既に効玁E��な実裁E�Eため、そのまま使用
+                // 非同期での天気変更（既存メソッドを活用）
+                // WeatherControllerは既に効率的な実装のため、そのまま使用
             }
         }
 
@@ -345,12 +358,14 @@ namespace asterivo.Unity60.Core.Audio
         /// </summary>
         private void UpdateTimeControllerOptimized(AudioSystemSyncData syncData)
         {
-            // 時間変更が忁E��な場合�Eみ処琁E            if (syncData.timeChanged)
+            // 時間変更が必要な場合のみ処理
+            if (syncData.timeChanged)
             {
                 timeController.ChangeTimeOfDay(syncData.currentTimeOfDay);
             }
 
-            // 音量調整�E�スチE��ス状態に応じて�E�E            if (syncData.stealthStateChanged)
+            // 音量調整（ステルス状態に応じて）
+            if (syncData.stealthStateChanged)
             {
                 float volumeMultiplier = syncData.isStealthActive ? 0.6f : 1f;
                 timeController.SetMasterVolume(syncData.ambientVolume * volumeMultiplier);
@@ -364,7 +379,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (syncData.nearbyAudioSources.Count > 0)
             {
-                // バッチ�E琁E��マスキング効果を適用
+                // バッチ処理でマスキング効果を適用
                 foreach (var audioSource in syncData.nearbyAudioSources)
                 {
                     if (audioSource != null && audioSource.isPlaying)
@@ -380,11 +395,11 @@ namespace asterivo.Unity60.Core.Audio
         /// </summary>
         private void NotifyStealthCoordinator(AudioSystemSyncData syncData)
         {
-            // スチE��ス状態に変化がある場合�Eみ通知
+            // ステルス状態に変化がある場合のみ通知
             if (syncData.stealthStateChanged)
             {
                 // StealthCoordinatorに状態変更を通知
-                // 既存�EイベントシスチE��を活用
+                // 既存のイベントシステムを活用
             }
         }
 
@@ -393,7 +408,8 @@ namespace asterivo.Unity60.Core.Audio
         #region Spatial Cache System
 
         /// <summary>
-        /// 空間キャチE��ュの再構篁E        /// </summary>
+        /// 空間キャッシュの再構築
+        /// </summary>
         private void RebuildSpatialCache()
         {
             spatialAudioCache.Clear();
@@ -401,7 +417,7 @@ namespace asterivo.Unity60.Core.Audio
 
             if (playerTransform == null) return;
 
-            // 効玁E��なAudioSource検索
+            // 効率的なAudioSource検索
             var allAudioSources = FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
             totalManagedAudioSources = allAudioSources.Length;
             activeAudioSources = 0;
@@ -410,14 +426,14 @@ namespace asterivo.Unity60.Core.Audio
             {
                 if (audioSource == null) continue;
 
-                // レイヤーマスクチェチE��
+                // レイヤーマスクチェック
                 if ((audioSourceLayerMask.value & (1 << audioSource.gameObject.layer)) == 0) continue;
 
-                // 距離チェチE��
+                // 距離チェック
                 float distance = Vector3.Distance(audioSource.transform.position, playerTransform.position);
                 if (distance > maxAudioDetectionRange) continue;
 
-                // 空間グリチE��への登録
+                // 空間グリッドへの登録
                 Vector3Int gridKey = WorldToGridKey(audioSource.transform.position);
                 if (!spatialAudioCache.ContainsKey(gridKey))
                 {
@@ -437,7 +453,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// ワールド座標をグリチE��キーに変換
+        /// ワールド座標をグリッドキーに変換
         /// </summary>
         private Vector3Int WorldToGridKey(Vector3 worldPosition)
         {
@@ -449,13 +465,15 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 近傍AudioSourceの効玁E��取征E        /// </summary>
+        /// 近傍AudioSourceの効率的取得
+        /// </summary>
         public List<AudioSource> GetNearbyAudioSources(Vector3 center, float radius)
         {
             var result = new List<AudioSource>();
             Vector3Int centerGrid = WorldToGridKey(center);
 
-            // グリチE��篁E��の計箁E            int gridRadius = Mathf.CeilToInt(radius / spatialGridSize);
+            // グリッド範囲の計算
+            int gridRadius = Mathf.CeilToInt(radius / spatialGridSize);
 
             for (int x = -gridRadius; x <= gridRadius; x++)
             {
@@ -488,13 +506,13 @@ namespace asterivo.Unity60.Core.Audio
         #region Sync Data Creation
 
         /// <summary>
-        /// オーディオシステム同期データの作�E
+        /// オーディオシステム同期データの作成
         /// </summary>
         private AudioSystemSyncData CreateAudioSystemSyncData()
         {
             var syncData = new AudioSystemSyncData();
 
-            // 基本惁E��
+            // 基本情報
             syncData.deltaTime = Time.deltaTime;
             syncData.currentTime = Time.time;
             syncData.playerPosition = playerTransform?.position ?? Vector3.zero;
@@ -504,13 +522,14 @@ namespace asterivo.Unity60.Core.Audio
             syncData.isStealthActive = stealthCoordinator != null && stealthCoordinator.ShouldReduceNonStealthAudio();
             syncData.stealthStateChanged = previousStealthState != syncData.isStealthActive;
 
-            // 時間惁E��
+            // 時間情報
             var currentSystemTime = System.DateTime.Now;
             var newTimeOfDay = DetermineTimeOfDayFromSystemTime(currentSystemTime);
             syncData.timeChanged = syncData.currentTimeOfDay != newTimeOfDay;
             syncData.currentTimeOfDay = newTimeOfDay;
 
-            // 天気情報�E�EynamicAudioEnvironmentから取得！E            var dynamicEnvironment = ServiceHelper.GetServiceWithFallback<DynamicAudioEnvironment>();
+            // 天気情報（DynamicAudioEnvironmentから取得）
+            var dynamicEnvironment = ServiceHelper.GetServiceWithFallback<DynamicAudioEnvironment>();
             if (dynamicEnvironment != null)
             {
                 var (env, weather, time) = dynamicEnvironment.GetCurrentState();
@@ -519,7 +538,7 @@ namespace asterivo.Unity60.Core.Audio
                 syncData.currentEnvironmentType = env;
             }
 
-            // 音量設定 ServiceLocator優先、Singletonフォールバック
+            // 音量設定: ServiceLocator優先、Singletonフォールバック
             var audioService = GetAudioService();
             if (audioService != null)
             {
@@ -532,13 +551,13 @@ namespace asterivo.Unity60.Core.Audio
                 }
                 catch (System.Exception ex)
                 {
-                    ServiceLocator.GetService<IEventLogger>().LogError($"[AudioUpdateCoordinator] Failed to get audio state from service: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[AudioUpdateCoordinator] Failed to get audio state from service: {ex.Message}");
                 }
             }
             else
             {
-                // フォールバック: FindFirstObjectByType (ServiceLocator専用実裁E
-                // ✁EServiceLocator専用実裁E- 直接AudioManagerを検索
+                // フォールバック: FindFirstObjectByType (ServiceLocator専用実装)
+                // ✅ ServiceLocator専用実装 - 直接AudioManagerを検索
                 var audioManager = ServiceHelper.GetServiceWithFallback<AudioManager>();
                 if (audioManager != null)
                 {
@@ -557,23 +576,26 @@ namespace asterivo.Unity60.Core.Audio
                     }
                     catch (System.Exception ex)
                     {
-                        ServiceLocator.GetService<IEventLogger>().LogError($"[AudioUpdateCoordinator] Failed to get audio state from AudioManager: {ex.Message}");
+                        EventLogger.LogErrorStatic($"[AudioUpdateCoordinator] Failed to get audio state from AudioManager: {ex.Message}");
                     }
                 }
             }
 
-            // 近傍AudioSource�E�空間キャチE��ュを活用�E�E            if (playerTransform != null)
+            // 近傍AudioSource（空間キャッシュを活用）
+            if (playerTransform != null)
             {
                 syncData.nearbyAudioSources = GetNearbyAudioSources(playerTransform.position, maxAudioDetectionRange);
                 
-                // マスキング強度の計箁E                syncData.currentMaskingStrength = CalculateCurrentMaskingStrength(syncData.nearbyAudioSources);
+                // マスキング強度の計算
+                syncData.currentMaskingStrength = CalculateCurrentMaskingStrength(syncData.nearbyAudioSources);
             }
 
             return syncData;
         }
 
         /// <summary>
-        /// シスチE��時刻から時間帯を判宁E        /// </summary>
+        /// システム時刻から時間帯を判定
+        /// </summary>
         private TimeOfDay DetermineTimeOfDayFromSystemTime(System.DateTime time)
         {
             int hour = time.Hour;
@@ -589,7 +611,8 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 現在のマスキング強度を計箁E        /// </summary>
+        /// 現在のマスキング強度を計算
+        /// </summary>
         private float CalculateCurrentMaskingStrength(List<AudioSource> audioSources)
         {
             float maxMasking = 0f;
@@ -598,7 +621,8 @@ namespace asterivo.Unity60.Core.Audio
             {
                 if (audioSource != null && audioSource.isPlaying)
                 {
-                    // 音量と距離に基づく�Eスキング強度の計箁E                    float distance = Vector3.Distance(audioSource.transform.position, playerTransform.position);
+                    // 音量と距離に基づくマスキング強度の計算
+                    float distance = Vector3.Distance(audioSource.transform.position, playerTransform.position);
                     float volumeContribution = audioSource.volume;
                     float distanceAttenuation = 1f - (distance / maxAudioDetectionRange);
                     
@@ -621,7 +645,8 @@ namespace asterivo.Unity60.Core.Audio
         {
             updateInterval = Mathf.Clamp(interval, 0.05f, 1f);
             
-            // 現在の更新を�E閁E            if (coordinatedUpdateCoroutine != null)
+            // 現在の更新を再開
+            if (coordinatedUpdateCoroutine != null)
             {
                 StopCoordinatedUpdates();
                 StartCoordinatedUpdates();
@@ -646,14 +671,16 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 空間キャチE��ュの手動再構篁E        /// </summary>
+        /// 空間キャッシュの手動再構築
+        /// </summary>
         public void ForceRebuildSpatialCache()
         {
             RebuildSpatialCache();
         }
 
         /// <summary>
-        /// パフォーマンス統計�E取征E        /// </summary>
+        /// パフォーマンス統計の取得
+        /// </summary>
         public AudioCoordinatorStats GetPerformanceStats()
         {
             return new AudioCoordinatorStats
@@ -672,7 +699,9 @@ namespace asterivo.Unity60.Core.Audio
         #region Service Access Methods
 
         /// <summary>
-        /// ServiceLocator優先でIAudioServiceを取征E        /// Phase 3移行パターンの実裁E        /// </summary>
+        /// ServiceLocator優先でIAudioServiceを取得
+        /// Phase 3移行パターンの実装
+        /// </summary>
         private IAudioService GetAudioService()
         {
             if (FeatureFlags.UseServiceLocator)
@@ -683,7 +712,7 @@ namespace asterivo.Unity60.Core.Audio
                 }
                 catch (System.Exception ex)
                 {
-                    ServiceLocator.GetService<IEventLogger>().LogError($"[AudioUpdateCoordinator] Failed to get IAudioService from ServiceLocator: {ex.Message}");
+                    EventLogger.LogErrorStatic($"[AudioUpdateCoordinator] Failed to get IAudioService from ServiceLocator: {ex.Message}");
                 }
             }
             return null;
@@ -733,11 +762,11 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (playerTransform == null) return;
 
-            // 検�E篁E��の可視化
+            // 検出範囲の可視化
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(playerTransform.position, maxAudioDetectionRange);
 
-            // 空間グリチE��の可視化
+            // 空間グリッドの可視化
             Gizmos.color = Color.cyan;
             Vector3Int playerGrid = WorldToGridKey(playerTransform.position);
             Vector3 gridCenter = new Vector3(playerGrid.x * spatialGridSize, playerGrid.y * spatialGridSize, playerGrid.z * spatialGridSize);
@@ -769,7 +798,7 @@ namespace asterivo.Unity60.Core.Audio
     [System.Serializable]
     public class AudioSystemSyncData
     {
-        [Header("基本惁E��")]
+        [Header("基本情報")]
         public float currentTime;
         public float deltaTime;
         public Vector3 playerPosition;
@@ -791,13 +820,14 @@ namespace asterivo.Unity60.Core.Audio
         public float ambientVolume;
         public float effectVolume;
 
-        [Header("オーチE��オソース惁E��")]
+        [Header("オーディオソース情報")]
         public List<AudioSource> nearbyAudioSources = new List<AudioSource>();
         public float currentMaskingStrength;
     }
 
     /// <summary>
-    /// オーディオコーディネーターのパフォーマンス統計    /// </summary>
+    /// オーディオコーディネーターのパフォーマンス統計
+    /// </summary>
     [System.Serializable]
     public struct AudioCoordinatorStats
     {
@@ -810,7 +840,4 @@ namespace asterivo.Unity60.Core.Audio
     }
 
     #endregion
-
-} // namespace asterivo.Unity60.Core.Audio
-
-
+}

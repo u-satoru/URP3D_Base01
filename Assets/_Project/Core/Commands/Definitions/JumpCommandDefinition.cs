@@ -1,10 +1,17 @@
 using UnityEngine;
+using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// ジャンプコマンドの定義
-    /// プレイヤーまたはAIのジャンプアクションをカプセル化します
+    /// ジャンプコマンドの定義。
+    /// プレイヤーまたはAIのジャンプアクションをカプセル化します。
+    /// 
+    /// 主な機能：
+    /// - ジャンプ力と方向の指定
+    /// - ジャンプタイプ（通常、二段、壁、長距離等）の管理
+    /// - 着地判定と着地後の処理
+    /// - スタミナ消費とクールダウンの考慮
     /// </summary>
     [System.Serializable]
     public class JumpCommandDefinition : ICommandDefinition
@@ -28,44 +35,67 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public float horizontalBoost = 0f;
 
         [Header("Physics")]
-        public float gravityMultiplier = 1f;
-        public float airControl = 0.5f;
-        public float maxAirSpeed = 5f;
-        public bool preserveMomentum = true;
+        public float gravityScale = 1f;
+        public float airControlMultiplier = 0.5f;
+        public bool resetVerticalVelocity = true;
 
-        [Header("Double Jump")]
-        public int maxJumpCount = 1;
-        public float doubleJumpForceMultiplier = 0.8f;
-        public bool resetVelocityOnDoubleJump = false;
-
-        [Header("Wall Jump")]
-        public float wallJumpAngle = 45f;
-        public float wallJumpForce = 8f;
-        public float wallSlideSpeed = 2f;
-        public LayerMask wallLayer = -1;
-
-        [Header("Stamina")]
-        public bool consumeStamina = false;
-        public float staminaCost = 10f;
-        public bool allowJumpWithoutStamina = false;
+        [Header("Constraints")]
+        public bool requiresGrounded = true;
+        public float staminaCost = 20f;
+        public float cooldownTime = 0.5f;
 
         [Header("Animation")]
-        public string jumpAnimationTrigger = "Jump";
-        public float animationCrossFade = 0.1f;
+        public float jumpAnimationDuration = 0.3f;
+        public float landAnimationDuration = 0.2f;
 
-        [Header("Effects")]
-        public bool playSound = true;
-        public string jumpSoundName = "Jump";
-        public bool spawnDustEffect = true;
-        public GameObject dustEffectPrefab;
+        /// <summary>
+        /// デフォルトコンストラクタ
+        /// </summary>
+        public JumpCommandDefinition()
+        {
+        }
 
-        [Header("Landing")]
-        public float landingImpactThreshold = 10f;
-        public bool playLandingSound = true;
-        public bool screenShakeOnLanding = false;
+        /// <summary>
+        /// パラメータ付きコンストラクタ
+        /// </summary>
+        public JumpCommandDefinition(JumpType type, float force, Vector3 jumpDirection = default)
+        {
+            jumpType = type;
+            jumpForce = force;
+            direction = jumpDirection == default ? Vector3.up : jumpDirection.normalized;
+        }
 
+        /// <summary>
+        /// ジャンプコマンドが実行可能かどうかを判定します
+        /// </summary>
+        public bool CanExecute(object context = null)
+        {
+            // 基本的な実行可能性チェック
+            if (jumpForce <= 0f) return false;
+            
+            // 方向ベクトルのチェック
+            if (direction == Vector3.zero) return false;
+
+            // コンテキストがある場合の追加チェック
+            if (context != null)
+            {
+                // 地面判定チェック（requiresGroundedが有効の場合）
+                // スタミナチェック
+                // クールダウンチェック
+                // 状態異常チェック（麻痺、スタン等）
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// ジャンプコマンドを作成します
+        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
+            if (!CanExecute(context))
+                return null;
+
             return new JumpCommand(this, context);
         }
     }
@@ -78,183 +108,88 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         private JumpCommandDefinition definition;
         private object context;
         private bool executed = false;
+        private Vector3 originalVelocity;
+        private bool wasGrounded;
 
-        public JumpCommand(JumpCommandDefinition definition, object context = null)
+        public JumpCommand(JumpCommandDefinition jumpDefinition, object executionContext)
         {
-            this.definition = definition;
-            this.context = context;
+            definition = jumpDefinition;
+            context = executionContext;
         }
 
+        /// <summary>
+        /// ジャンプコマンドの実行
+        /// </summary>
         public void Execute()
         {
             if (executed) return;
 
-            // コンテキストから必要な情報を取得
-            GameObject target = GetTargetFromContext();
-            if (target == null)
+            // 実行前の状態を保存（Undo用）
+            if (context is MonoBehaviour mono && mono.GetComponent<Rigidbody>() != null)
             {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogWarning("Jump command failed: No target found");
-#endif
-                return;
+                var rb = mono.GetComponent<Rigidbody>();
+                originalVelocity = rb.linearVelocity;
+                // 地面判定の保存（実際の実装では GroundCheck コンポーネント等を参照）
             }
 
-            // Rigidbodyコンポーネントの取得
-            Rigidbody rb = target.GetComponent<Rigidbody>();
-            if (rb == null)
-            {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogWarning($"Jump command failed: No Rigidbody on {target.name}");
+            UnityEngine.Debug.Log($"Executing {definition.jumpType} jump: {definition.jumpForce} force, {definition.direction} direction");
 #endif
-                return;
-            }
 
-            // スタミナチェック
-            if (definition.consumeStamina && !CheckStamina(target))
+            // 実際のジャンプ処理をここに実装
+            if (context is MonoBehaviour monoBehaviour && monoBehaviour.GetComponent<Rigidbody>() != null)
             {
-                if (!definition.allowJumpWithoutStamina)
+                var rb = monoBehaviour.GetComponent<Rigidbody>();
+                
+                // 垂直速度のリセット
+                if (definition.resetVerticalVelocity)
                 {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-                    UnityEngine.Debug.Log("Jump cancelled: Not enough stamina");
-#endif
-                    return;
+                    rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
                 }
-            }
 
-            // ジャンプ実行
-            PerformJump(target, rb);
+                // ジャンプ力の適用
+                Vector3 jumpVelocity = definition.direction.normalized * definition.jumpForce;
+                
+                // 水平ブーストの追加
+                if (definition.horizontalBoost > 0f)
+                {
+                    Vector3 horizontalDirection = new Vector3(definition.direction.x, 0f, definition.direction.z).normalized;
+                    jumpVelocity += horizontalDirection * definition.horizontalBoost;
+                }
 
-            // エフェクトの再生
-            PlayEffects(target);
+                rb.AddForce(jumpVelocity, ForceMode.VelocityChange);
 
-            // スタミナ消費
-            if (definition.consumeStamina)
-            {
-                ConsumeStamina(target);
+                // アニメーション制御
+                // パーティクルエフェクト
+                // サウンドエフェクト
             }
 
             executed = true;
         }
 
-        private GameObject GetTargetFromContext()
+        /// <summary>
+        /// Undo操作（ジャンプの取り消し）
+        /// </summary>
+        public void Undo()
         {
-            if (context is GameObject gameObject)
-                return gameObject;
+            if (!executed || context == null) return;
 
-            if (context is Component component)
-                return component.gameObject;
-
-            if (context is MonoBehaviour monoBehaviour)
-                return monoBehaviour.gameObject;
-
-            return null;
-        }
-
-        private void PerformJump(GameObject target, Rigidbody rb)
-        {
-            Vector3 jumpVelocity = CalculateJumpVelocity();
-
-            if (definition.preserveMomentum)
+            if (context is MonoBehaviour mono && mono.GetComponent<Rigidbody>() != null)
             {
-                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z) + jumpVelocity;
-            }
-            else
-            {
-                rb.velocity = jumpVelocity;
-            }
-
-            // アニメーション再生
-            if (!string.IsNullOrEmpty(definition.jumpAnimationTrigger))
-            {
-                Animator animator = target.GetComponent<Animator>();
-                if (animator != null)
-                {
-                    animator.SetTrigger(definition.jumpAnimationTrigger);
-                }
-            }
+                var rb = mono.GetComponent<Rigidbody>();
+                rb.linearVelocity = originalVelocity;
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            UnityEngine.Debug.Log($"{target.name} jumped with force {jumpVelocity.magnitude}");
+                UnityEngine.Debug.Log("Jump undone - velocity restored");
 #endif
-        }
-
-        private Vector3 CalculateJumpVelocity()
-        {
-            Vector3 jumpDir = definition.direction.normalized;
-            float force = definition.jumpForce;
-
-            switch (definition.jumpType)
-            {
-                case JumpCommandDefinition.JumpType.Double:
-                    force *= definition.doubleJumpForceMultiplier;
-                    break;
-
-                case JumpCommandDefinition.JumpType.Wall:
-                    force = definition.wallJumpForce;
-                    jumpDir = Quaternion.Euler(0, definition.wallJumpAngle, 0) * jumpDir;
-                    break;
-
-                case JumpCommandDefinition.JumpType.Long:
-                    force *= 0.8f;
-                    jumpDir.x += definition.horizontalBoost;
-                    jumpDir.z += definition.horizontalBoost;
-                    break;
-
-                case JumpCommandDefinition.JumpType.High:
-                    force *= 1.5f;
-                    break;
             }
 
-            return jumpDir * force;
+            executed = false;
         }
 
-        private bool CheckStamina(GameObject target)
-        {
-            // TODO: スタミナシステムとの統合
-            return true;
-        }
-
-        private void ConsumeStamina(GameObject target)
-        {
-            // TODO: スタミナシステムとの統合
-        }
-
-        private void PlayEffects(GameObject target)
-        {
-            // サウンド再生
-            if (definition.playSound && !string.IsNullOrEmpty(definition.jumpSoundName))
-            {
-                // TODO: オーディオシステムとの統合
-            }
-
-            // ダストエフェクト生成
-            if (definition.spawnDustEffect && definition.dustEffectPrefab != null)
-            {
-                GameObject effect = Object.Instantiate(definition.dustEffectPrefab,
-                    target.transform.position,
-                    Quaternion.identity);
-
-                Object.Destroy(effect, 2f);
-            }
-        }
-
-        public bool CanExecute()
-        {
-            if (executed) return false;
-
-            GameObject target = GetTargetFromContext();
-            if (target == null) return false;
-
-            Rigidbody rb = target.GetComponent<Rigidbody>();
-            if (rb == null) return false;
-
-            // スタミナチェック
-            if (definition.consumeStamina && !definition.allowJumpWithoutStamina)
-            {
-                return CheckStamina(target);
-            }
-
-            return true;
-        }
+        /// <summary>
+        /// このコマンドがUndo可能かどうか
+        /// </summary>
+        public bool CanUndo => executed && context != null;
     }
 }

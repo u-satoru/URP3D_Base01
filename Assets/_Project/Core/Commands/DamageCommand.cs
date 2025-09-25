@@ -1,11 +1,11 @@
 using UnityEngine;
-// using asterivo.Unity60.Core.Components;
+using asterivo.Unity60.Core.Components;
 
 namespace asterivo.Unity60.Core.Commands
 {
     /// <summary>
-    /// Command for dealing damage to health targets (繝峨く繝･繝｡繝ｳ繝育ｬｬ4遶:419-432陦檎岼縺ｮ螳溯｣・
-    /// 繝繝｡繝ｼ繧ｸ繧剃ｸ弱∴繧九さ繝槭Φ繝峨け繝ｩ繧ｹ
+    /// Command for dealing damage to health targets (ドキュメント第4章:419-432行目の実装)
+    /// ダメージを与えるコマンドクラス
     /// </summary>
     public class DamageCommand : IResettableCommand
     {
@@ -50,7 +50,7 @@ namespace asterivo.Unity60.Core.Commands
 
         public DamageCommand()
         {
-            // 繝励・繝ｫ蛹門ｯｾ蠢懶ｼ壹ヱ繝ｩ繝｡繝ｼ繧ｿ繝ｼ縺ｪ縺励さ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
+            // プール化対応：パラメーターなしコンストラクタ
         }
 
         public DamageCommand(IHealthTarget target, int damageAmount, string elementType = "physical")
@@ -99,7 +99,7 @@ namespace asterivo.Unity60.Core.Commands
             if (parameters.Length < 2)
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogError("DamageCommand.Initialize: 譛菴・縺､縺ｮ繝代Λ繝｡繝ｼ繧ｿ・・arget, damageAmount・峨′蠢・ｦ√〒縺吶・);
+                UnityEngine.Debug.LogError("DamageCommand.Initialize: 最低2つのパラメータ（target, damageAmount）が必要です。");
 #endif
                 return;
             }
@@ -108,7 +108,7 @@ namespace asterivo.Unity60.Core.Commands
             if (_target == null)
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogError("DamageCommand.Initialize: 譛蛻昴・繝代Λ繝｡繝ｼ繧ｿ縺ｯIHealthTarget縺ｧ縺ゅｋ蠢・ｦ√′縺ゅｊ縺ｾ縺吶・);
+                UnityEngine.Debug.LogError("DamageCommand.Initialize: 最初のパラメータはIHealthTargetである必要があります。");
 #endif
                 return;
             }
@@ -120,7 +120,7 @@ namespace asterivo.Unity60.Core.Commands
             else
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogError("DamageCommand.Initialize: 2逡ｪ逶ｮ縺ｮ繝代Λ繝｡繝ｼ繧ｿ縺ｯint・医ム繝｡繝ｼ繧ｸ驥擾ｼ峨〒縺ゅｋ蠢・ｦ√′縺ゅｊ縺ｾ縺吶・);
+                UnityEngine.Debug.LogError("DamageCommand.Initialize: 2番目のパラメータはint（ダメージ量）である必要があります。");
 #endif
                 return;
             }
@@ -131,7 +131,7 @@ namespace asterivo.Unity60.Core.Commands
         }
         
         /// <summary>
-        /// 繧医ｊ蝙句ｮ牙・縺ｪ蛻晄悄蛹悶Γ繧ｽ繝・ラ
+        /// より型安全な初期化メソッド
         /// </summary>
         public void Initialize(IHealthTarget target, int damageAmount, string elementType = "physical")
         {

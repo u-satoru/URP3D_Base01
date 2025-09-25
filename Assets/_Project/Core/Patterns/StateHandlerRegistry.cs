@@ -1,13 +1,14 @@
 using System;
+using asterivo.Unity60.Core.Services.Interfaces;
 using System.Collections.Generic;
-using asterivo.Unity60.Core.Services;
+// using asterivo.Unity60.Core.Services;
 using UnityEngine;
 
 namespace asterivo.Unity60.Core.Patterns
 {
     /// <summary>
-    /// 状態ハンドラーのレジストリ（Factory + Registry パターン）
-    /// ServiceLocatorに登録して使用するサービス実装
+    /// 状態ハンドラーのレジストリ�E�Eactory + Registry パターン�E�E
+    /// ServiceLocatorに登録して使用するサービス実裁E
     /// </summary>
     public class StateHandlerRegistry : IStateService
     {
@@ -20,7 +21,7 @@ namespace asterivo.Unity60.Core.Patterns
         }
 
         /// <summary>
-        /// サービスの初期化
+        /// サービスの初期匁E
         /// </summary>
         public void Initialize()
         {
@@ -28,12 +29,12 @@ namespace asterivo.Unity60.Core.Patterns
             {
                 Debug.Log("[StateHandlerRegistry] Initializing StateService");
                 isInitialized = true;
-                // Feature層から必要に応じてHandlerを登録する
+                // Feature層から忁E��に応じてHandlerを登録する
             }
         }
 
         /// <summary>
-        /// サービスのシャットダウン
+        /// サービスのシャチE��ダウン
         /// </summary>
         public void Shutdown()
         {
@@ -58,10 +59,10 @@ namespace asterivo.Unity60.Core.Patterns
         }
         
         /// <summary>
-        /// 状態ハンドラーを取得
+        /// 状態ハンドラーを取征E
         /// </summary>
-        /// <param name="state">対象の状態</param>
-        /// <returns>対応するハンドラー、存在しない場合はnull</returns>
+        /// <param name="state">対象の状慁E/param>
+        /// <returns>対応するハンドラー、存在しなぁE��合�Enull</returns>
         public IStateHandler GetHandler(int state) // Changed from PlayerState to int
         {
             handlers.TryGetValue(state, out IStateHandler handler);
@@ -69,19 +70,19 @@ namespace asterivo.Unity60.Core.Patterns
         }
         
         /// <summary>
-        /// 指定した状態のハンドラーが登録されているかチェック
+        /// 持E��した状態�Eハンドラーが登録されてぁE��かチェチE��
         /// </summary>
-        /// <param name="state">チェックする状態</param>
-        /// <returns>ハンドラーが存在する場合はtrue</returns>
+        /// <param name="state">チェチE��する状慁E/param>
+        /// <returns>ハンドラーが存在する場合�Etrue</returns>
         public bool HasHandler(int state) // Changed from PlayerState to int
         {
             return handlers.ContainsKey(state);
         }
         
         /// <summary>
-        /// 登録されている全ての状態を取得
+        /// 登録されてぁE��全ての状態を取征E
         /// </summary>
-        /// <returns>登録済み状態のコレクション</returns>
+        /// <returns>登録済み状態�Eコレクション</returns>
         public IEnumerable<int> GetRegisteredStates() // Changed from PlayerState to int
         {
             return handlers.Keys;
@@ -96,3 +97,4 @@ namespace asterivo.Unity60.Core.Patterns
         }
     }
 }
+

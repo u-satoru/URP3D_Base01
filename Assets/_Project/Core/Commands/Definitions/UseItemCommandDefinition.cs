@@ -1,31 +1,31 @@
 using UnityEngine;
-// using asterivo.Unity60.Core.Commands;
+using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// Item use command definition.
-    /// Encapsulates player's inventory item use actions.
-    ///
-    /// Main features:
-    /// - Various item types (consumables, weapons, tools, etc.)
-    /// - Item use conditions and restrictions management
-    /// - Use effect application and duration management
-    /// - Animation and effect control
+    /// アイテム使用コマンドの定義。
+    /// プレイヤーのインベントリアイテム使用アクションをカプセル化します。
+    /// 
+    /// 主な機能：
+    /// - 各種アイテムタイプ（消耗品、武器、防具等）の使用
+    /// - アイテム使用条件と制約の管理
+    /// - 使用効果の適用と持続時間管理
+    /// - アニメーションとエフェクトの制御
     /// </summary>
     [System.Serializable]
     public class UseItemCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// Item use type enumeration
+        /// アイテム使用の種類を定義する列挙型
         /// </summary>
         public enum UseType
         {
-            Instant,        // Instant use (consumables, etc.)
-            Equip,          // Equipment (weapons, armor, etc.)
-            Activate,       // Activate (tools, skill items, etc.)
-            Consume,        // Consumable use
-            Toggle          // On/Off toggle
+            Instant,        // 瞬間使用（消耗品等）
+            Equip,          // 装備（武器、防具等）
+            Activate,       // 起動（道具、スキルアイテム等）
+            Consume,        // 消費使用
+            Toggle          // オン/オフ切り替え
         }
 
         [Header("Item Usage Parameters")]
@@ -51,11 +51,11 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public bool playUseAnimation = true;
         public string useAnimationTrigger = "UseItem";
         public float animationDuration = 1f;
-        public float usageDelay = 0f; // Delay before effect application
+        public float usageDelay = 0f; // 効果適用までの遅延
 
         [Header("Cooldown")]
         public float cooldownDuration = 0f;
-        public bool globalCooldown = false; // Whether to limit use of all items
+        public bool globalCooldown = false; // 全アイテムの使用を制限するか
 
         [Header("Effects")]
         public bool showUseEffect = true;
@@ -63,14 +63,14 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public string useEffectName = "";
 
         /// <summary>
-        /// Default constructor
+        /// デフォルトコンストラクタ
         /// </summary>
         public UseItemCommandDefinition()
         {
         }
 
         /// <summary>
-        /// Parameterized constructor
+        /// パラメータ付きコンストラクタ
         /// </summary>
         public UseItemCommandDefinition(UseType type, string itemId, bool consume = true)
         {
@@ -80,31 +80,31 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Check if item use command can be executed
+        /// アイテム使用コマンドが実行可能かどうかを判定します
         /// </summary>
         public bool CanExecute(object context = null)
         {
-            // Basic executability check
+            // 基本的な実行可能性チェック
             if (string.IsNullOrEmpty(targetItemId) && itemSlotIndex < 0) return false;
-
+            
             if (requiresTargeting && maxTargetDistance <= 0f) return false;
             if (animationDuration < 0f || usageDelay < 0f) return false;
 
-            // Additional checks if context exists
+            // コンテキストがある場合の追加チェック
             if (context != null)
             {
-                // Item existence check in inventory
-                // Item usability state check
-                // Cooldown check
-                // Use condition check (in combat, moving, etc.)
-                // Player state check (stun, silence, etc.)
+                // インベントリ内のアイテム存在チェック
+                // アイテム使用可能状態チェック
+                // クールダウンチェック
+                // 使用条件チェック（戦闘中、移動中等）
+                // プレイヤーの状態チェック（スタン、沈黙等）
             }
 
             return true;
         }
 
         /// <summary>
-        /// Create item use command instance
+        /// アイテム使用コマンドを作成します
         /// </summary>
         public ICommand CreateCommand(object context = null)
         {
@@ -116,7 +116,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// Actual implementation of item use command
+    /// UseItemCommandDefinitionに対応する実際のコマンド実装
     /// </summary>
     public class UseItemCommand : ICommand
     {
@@ -135,13 +135,13 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Execute item use command
+        /// アイテム使用コマンドの実行
         /// </summary>
         public void Execute()
         {
             if (executed) return;
 
-            // Get target item
+            // 使用対象アイテムの取得
             targetItem = GetTargetItem();
             if (targetItem == null)
             {
@@ -151,7 +151,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 return;
             }
 
-            // Process if targeting is required
+            // ターゲティングが必要な場合の処理
             if (definition.requiresTargeting)
             {
                 targetObject = FindTarget();
@@ -168,17 +168,17 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             UnityEngine.Debug.Log($"Executing {definition.useType} item use: {targetItem.GetItemName()}");
 #endif
 
-            // Play use animation
+            // 使用アニメーションの再生
             if (definition.playUseAnimation)
             {
                 PlayUseAnimation();
             }
 
-            // If there's a delay, execute after delay, otherwise execute immediately
+            // 遅延がある場合は遅延実行、そうでなければ即座に実行
             if (definition.usageDelay > 0f)
             {
-                // Actual implementation would use Coroutine or Timer for delayed execution
-                // Currently executing immediately
+                // 実際の実装では Coroutine または Timer で遅延実行
+                // 現在は即座に実行
                 ApplyItemEffect();
             }
             else
@@ -190,44 +190,36 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Check if command can be executed
-        /// </summary>
-        public bool CanExecute()
-        {
-            return !executed && definition.CanExecute(context);
-        }
-
-        /// <summary>
-        /// Get target item
+        /// 使用対象のアイテムを取得
         /// </summary>
         private IUsableItem GetTargetItem()
         {
-            // Actual implementation would integrate with InventorySystem
-
-            // Search by item ID
+            // 実際の実装では InventorySystem との連携
+            
+            // アイテムIDでの検索
             if (!string.IsNullOrEmpty(definition.targetItemId))
             {
                 // return inventorySystem.GetItemById(definition.targetItemId);
             }
-
-            // Search by slot index
+            
+            // スロットインデックスでの検索
             if (definition.itemSlotIndex >= 0)
             {
                 // return inventorySystem.GetItemAtSlot(definition.itemSlotIndex);
             }
 
-            // Temporary implementation
+            // 仮の実装
             return new MockUsableItem(definition.targetItemId);
         }
 
         /// <summary>
-        /// Find target object
+        /// ターゲットオブジェクトの検索
         /// </summary>
         private GameObject FindTarget()
         {
             if (context is not MonoBehaviour mono) return null;
 
-            // Raycast forward from camera or player
+            // カメラまたはプレイヤーの前方向にRaycast
             Ray ray = new Ray(mono.transform.position, mono.transform.forward);
             RaycastHit hit;
 
@@ -240,7 +232,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Play use animation
+        /// 使用アニメーションの再生
         /// </summary>
         private void PlayUseAnimation()
         {
@@ -254,7 +246,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Apply item effect
+        /// アイテム効果の適用
         /// </summary>
         private void ApplyItemEffect()
         {
@@ -279,19 +271,19 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                     break;
             }
 
-            // Item consumption processing
+            // アイテムの消費処理
             if (definition.consumeOnUse)
             {
                 ConsumeItem();
             }
 
-            // Show effects
+            // エフェクトの表示
             if (definition.showUseEffect)
             {
                 ShowUseEffect();
             }
 
-            // Start cooldown
+            // クールダウンの開始
             if (definition.cooldownDuration > 0f)
             {
                 StartCooldown();
@@ -299,7 +291,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Apply instant effect
+        /// 瞬間効果の適用
         /// </summary>
         private void ApplyInstantEffect()
         {
@@ -312,15 +304,15 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Apply equip effect
+        /// 装備効果の適用
         /// </summary>
         private void ApplyEquipEffect()
         {
             if (context is MonoBehaviour mono)
             {
-                // Actual implementation would integrate with EquipmentSystem
+                // 実際の実装では EquipmentSystem との連携
                 // equipmentSystem.EquipItem(targetItem);
-
+                
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
                 UnityEngine.Debug.Log($"Equipped {targetItem.GetItemName()}");
 #endif
@@ -328,13 +320,13 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Apply activate effect
+        /// 起動効果の適用
         /// </summary>
         private void ApplyActivateEffect()
         {
             isEffectActive = true;
             effectStartTime = Time.time;
-
+            
             targetItem.OnActivate(context, targetObject);
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -343,7 +335,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Apply consume effect
+        /// 消費効果の適用
         /// </summary>
         private void ApplyConsumeEffect()
         {
@@ -356,11 +348,11 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Apply toggle effect
+        /// トグル効果の適用
         /// </summary>
         private void ApplyToggleEffect()
         {
-            // Get current state of item and toggle it
+            // アイテムの現在の状態を取得して切り替え
             bool currentState = targetItem.GetToggleState();
             targetItem.SetToggleState(!currentState);
 
@@ -370,73 +362,73 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Consume item
+        /// アイテムの消費処理
         /// </summary>
         private void ConsumeItem()
         {
-            // Actual implementation would integrate with InventorySystem
+            // 実際の実装では InventorySystem との連携
             // inventorySystem.ConsumeItem(targetItem);
-
+            
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"Item consumed: {targetItem.GetItemName()}");
 #endif
         }
 
         /// <summary>
-        /// Show use effect
+        /// 使用エフェクトの表示
         /// </summary>
         private void ShowUseEffect()
         {
             if (context is not MonoBehaviour mono) return;
 
-            // Particle effects
+            // パーティクルエフェクト
             if (!string.IsNullOrEmpty(definition.useEffectName))
             {
                 // effectSystem.PlayEffect(definition.useEffectName, mono.transform.position);
             }
 
-            // Sound effects
+            // サウンドエフェクト
             // audioSystem.PlaySound(targetItem.GetUseSound());
 
-            // UI effects
+            // UI エフェクト
             // uiSystem.ShowItemUseNotification(targetItem);
         }
 
         /// <summary>
-        /// Start cooldown
+        /// クールダウンの開始
         /// </summary>
         private void StartCooldown()
         {
-            // Actual implementation would integrate with CooldownSystem
+            // 実際の実装では CooldownSystem との連携
             // cooldownSystem.StartCooldown(targetItem.GetItemId(), definition.cooldownDuration);
-
+            
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"Started cooldown: {definition.cooldownDuration}s");
 #endif
         }
 
         /// <summary>
-        /// Update continuous effect (called periodically from external)
+        /// 継続効果の更新（外部から定期的に呼び出される）
         /// </summary>
         public void UpdateItemEffect(float deltaTime)
         {
             if (!isEffectActive || definition.effectDuration <= 0f) return;
 
             float elapsedTime = Time.time - effectStartTime;
-
+            
             if (elapsedTime >= definition.effectDuration)
             {
                 EndItemEffect();
             }
             else
             {
-                // Update continuous effect processing
+                // 継続効果の更新処理
                 targetItem?.UpdateEffect(context, deltaTime);
             }
         }
 
         /// <summary>
-        /// End item effect
+        /// アイテム効果の終了
         /// </summary>
         private void EndItemEffect()
         {
@@ -449,29 +441,29 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Undo operation (cancel item use)
+        /// Undo操作（アイテム使用の取り消し）
         /// </summary>
         public void Undo()
         {
             if (!executed) return;
 
-            // Cancel item effect
+            // アイテム効果の取り消し
             if (isEffectActive)
             {
                 EndItemEffect();
             }
 
-            // Restore used item (if consumed)
+            // 使用したアイテムの復元（消費していた場合）
             if (definition.consumeOnUse && targetItem != null)
             {
-                // Actual implementation would integrate with InventorySystem
+                // 実際の実装では InventorySystem との連携
                 // inventorySystem.RestoreItem(targetItem);
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
                 UnityEngine.Debug.Log($"Restored consumed item: {targetItem.GetItemName()}");
 #endif
             }
 
-            // Unequip equipped item
+            // 装備アイテムの取り外し
             if (definition.useType == UseItemCommandDefinition.UseType.Equip)
             {
                 // equipmentSystem.UnequipItem(targetItem);
@@ -481,18 +473,18 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Whether this command can be undone
+        /// このコマンドがUndo可能かどうか
         /// </summary>
         public bool CanUndo => executed && (definition.consumeOnUse || definition.useType == UseItemCommandDefinition.UseType.Equip);
 
         /// <summary>
-        /// Whether item effect is currently active
+        /// アイテム効果が現在アクティブかどうか
         /// </summary>
         public bool IsEffectActive => isEffectActive;
     }
 
     /// <summary>
-    /// Usable item interface
+    /// 使用可能アイテムのインターフェース
     /// </summary>
     public interface IUsableItem
     {
@@ -508,7 +500,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// Mock item implementation for testing
+    /// テスト用のモックアイテム実装
     /// </summary>
     internal class MockUsableItem : IUsableItem
     {

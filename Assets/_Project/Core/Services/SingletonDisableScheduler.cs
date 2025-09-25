@@ -3,7 +3,7 @@ using asterivo.Unity60.Core;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-// using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Debug;
 
 namespace asterivo.Unity60.Core.Services
 {
@@ -35,7 +35,7 @@ namespace asterivo.Unity60.Core.Services
             {
                 InvokeRepeating(nameof(CheckScheduleProgression), 60f, 60f); // 1分ごとに確認
             }
-
+            
             EventLogger.LogStatic($"[SingletonDisableScheduler] Started - Current Day: {currentDay}, Auto: {enableAutoProgression}");
         }
         
@@ -45,7 +45,8 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// スケジュールを開始する        /// </summary>
+        /// スケジュールを開始する
+        /// </summary>
         [ContextMenu("Start Schedule")]
         public void StartSchedule()
         {
@@ -86,7 +87,8 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 指定された日まで進める（手動制御用）        /// </summary>
+        /// 指定された日まで進める（手動制御用）
+        /// </summary>
         [ContextMenu("Advance to Day 2")]
         public void AdvanceToDay2() => AdvanceToDay(ScheduleDay.Day2_IssueFixing);
         
@@ -121,12 +123,14 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// Day 1: 警告システム有効化        /// </summary>
+        /// Day 1: 警告システム有効化
+        /// </summary>
         private void ExecuteDay1Configuration()
         {
             EventLogger.LogStatic("[SingletonDisableScheduler] === Day 1: Warnings Enabled ===");
             
-            // テスト環境で警告システム有効化            FeatureFlags.EnableMigrationWarnings = true;
+            // テスト環境で警告システム有効化
+            FeatureFlags.EnableMigrationWarnings = true;
             FeatureFlags.DisableLegacySingletons = false;
             
             if (isTestEnvironment)
@@ -150,11 +154,13 @@ namespace asterivo.Unity60.Core.Services
         {
             EventLogger.LogStatic("[SingletonDisableScheduler] === Day 2-3: Issue Fixing Period ===");
             
-            // 警告は継続、詳細な監視を開始            FeatureFlags.EnableMigrationWarnings = true;
+            // 警告は継続、詳細な監視を開始
+            FeatureFlags.EnableMigrationWarnings = true;
             FeatureFlags.DisableLegacySingletons = false;
             FeatureFlags.EnableMigrationMonitoring = true;
             
-            // 使用状況レポート生成            var monitor = FindFirstObjectByType<MigrationMonitor>();
+            // 使用状況レポート生成
+            var monitor = FindFirstObjectByType<MigrationMonitor>();
             monitor?.GenerateUsageReport();
             monitor?.GenerateMigrationRecommendations();
             
@@ -162,12 +168,16 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// Day 4: Singleton段階的無効化        /// </summary>
+        /// Day 4: Singleton段階的無効化
+        /// </summary>
         private void ExecuteDay4Configuration()
         {
             EventLogger.LogStatic("[SingletonDisableScheduler] === Day 4: Singleton Disabled ===");
             
-            // 本番環境でSingleton無効化            FeatureFlags.EnableMigrationWarnings = true; // 警告は継続            FeatureFlags.DisableLegacySingletons = true;  // Singleton無効化            
+            // 本番環境でSingleton無効化
+            FeatureFlags.EnableMigrationWarnings = true; // 警告は継続
+            FeatureFlags.DisableLegacySingletons = true;  // ✅ Singleton無効化
+            
             ServiceLocator.GetService<IEventLogger>()?.LogWarning("[SingletonDisableScheduler] Day 4: Legacy Singletons are now DISABLED");
             ServiceLocator.GetService<IEventLogger>()?.LogWarning("[SingletonDisableScheduler] Day 4: All code should use ServiceLocator from now on");
             
@@ -189,8 +199,10 @@ namespace asterivo.Unity60.Core.Services
             
             // 完全削除準備
             FeatureFlags.EnableMigrationWarnings = false; // 警告停止
-            FeatureFlags.DisableLegacySingletons = true;   // 無効化継続            
-            // 最終検証実行            var migrationValidator = FindFirstObjectByType<MigrationValidator>();
+            FeatureFlags.DisableLegacySingletons = true;   // 無効化継続
+            
+            // 最終検証実行
+            var migrationValidator = FindFirstObjectByType<MigrationValidator>();
             migrationValidator?.ValidateMigration();
             
             EventLogger.LogStatic("[SingletonDisableScheduler] Day 5: Ready for complete singleton code removal");
@@ -200,7 +212,8 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 日別設定を実行        /// </summary>
+        /// 日別設定を実行
+        /// </summary>
         private void ExecuteDayConfiguration(ScheduleDay day)
         {
             switch (day)
@@ -238,7 +251,8 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 現在のFeatureFlags状態のスナップショットを取得        /// </summary>
+        /// 現在のFeatureFlags状態のスナップショットを取得
+        /// </summary>
         private Dictionary<string, bool> GetCurrentFeatureFlagsSnapshot()
         {
             return new Dictionary<string, bool>
@@ -254,7 +268,8 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// スケジュール状態を保存        /// </summary>
+        /// スケジュール状態を保存
+        /// </summary>
         private void SaveScheduleState()
         {
             PlayerPrefs.SetInt("SingletonDisableScheduler_CurrentDay", (int)currentDay);
@@ -305,7 +320,8 @@ namespace asterivo.Unity60.Core.Services
             scheduleStartTimeString = "";
             executionHistory.Clear();
             
-            // FeatureFlagsを安全な状態に戻す            FeatureFlags.EnableMigrationWarnings = false;
+            // FeatureFlagsを安全な状態に戻す
+            FeatureFlags.EnableMigrationWarnings = false;
             FeatureFlags.DisableLegacySingletons = false;
             
             SaveScheduleState();
@@ -369,7 +385,7 @@ namespace asterivo.Unity60.Core.Services
             };
         }
     }
-
+    
     /// <summary>
     /// スケジュールの日程
     /// </summary>
@@ -383,7 +399,7 @@ namespace asterivo.Unity60.Core.Services
         Day5_CompleteRemoval = 5,
         Completed = 6
     }
-
+    
     /// <summary>
     /// 日別実行情報
     /// </summary>

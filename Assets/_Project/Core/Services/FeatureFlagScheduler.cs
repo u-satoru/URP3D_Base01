@@ -1,14 +1,14 @@
 using UnityEngine;
 using System.Collections.Generic;
 using asterivo.Unity60.Core;
-// using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Services;
 
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// Step 3.7: FeatureFlags蜍慕噪譖ｴ譁ｰ邂｡逅・け繝ｩ繧ｹ
-    /// MigrationScheduler縺九ｉ縺ｮ謖・､ｺ縺ｫ繧医ｊFeatureFlags繧呈ｮｵ髫守噪縺ｫ譖ｴ譁ｰ
+    /// Step 3.7: FeatureFlags動的更新管理クラス
+    /// MigrationSchedulerからの指示によりFeatureFlagsを段階的に更新
     /// </summary>
     public class FeatureFlagScheduler : MonoBehaviour
     {
@@ -28,7 +28,8 @@ namespace asterivo.Unity60.Core.Services
         [SerializeField] private List<FlagChangeRecord> changeHistory = new List<FlagChangeRecord>();
         
         /// <summary>
-        /// FeatureFlag螟画峩險倬鹸縺ｮ讒矩菴・        /// </summary>
+        /// FeatureFlag変更記録の構造体
+        /// </summary>
         [System.Serializable]
         public struct FlagChangeRecord
         {
@@ -42,21 +43,22 @@ namespace asterivo.Unity60.Core.Services
         
         private void Start()
         {
-            // 迴ｾ蝨ｨ縺ｮFeatureFlags縺ｮ迥ｶ諷九ｒ蛻晄悄蛹・            SyncWithCurrentFeatureFlags();
+            // 現在のFeatureFlagsの状態を初期化
+            SyncWithCurrentFeatureFlags();
             LogFlagInfo("FeatureFlagScheduler initialized");
         }
         
         #region Phase Configuration Application
         
         /// <summary>
-        /// 繝輔ぉ繝ｼ繧ｺ險ｭ螳壹ｒFeatureFlags縺ｫ驕ｩ逕ｨ
+        /// フェーズ設定をFeatureFlagsに適用
         /// </summary>
-        /// <param name="config">繝輔ぉ繝ｼ繧ｺ險ｭ螳・/param>
+        /// <param name="config">フェーズ設定</param>
         public void ApplyPhaseConfiguration(MigrationScheduler.PhaseConfiguration config)
         {
             LogFlagInfo($"Applying phase configuration: {config.phaseName}");
             
-            // 蜷・ヵ繝ｩ繧ｰ繧呈ｮｵ髫守噪縺ｫ譖ｴ譁ｰ
+            // 各フラグを段階的に更新
             UpdateFeatureFlag(nameof(FeatureFlags.UseServiceLocator), true, $"Phase: {config.phaseName}", config.phase);
             UpdateFeatureFlag(nameof(FeatureFlags.UseNewAudioService), config.useNewAudioService, $"Phase: {config.phaseName}", config.phase);
             UpdateFeatureFlag(nameof(FeatureFlags.UseNewSpatialService), config.useNewSpatialService, $"Phase: {config.phaseName}", config.phase);
@@ -64,12 +66,12 @@ namespace asterivo.Unity60.Core.Services
             UpdateFeatureFlag(nameof(FeatureFlags.AllowSingletonFallback), !config.disableLegacySingletons, $"Phase: {config.phaseName}", config.phase);
             UpdateFeatureFlag(nameof(FeatureFlags.EnablePerformanceMonitoring), config.enablePerformanceMonitoring, $"Phase: {config.phaseName}", config.phase);
             
-            // 萓晏ｭ倥☆繧倶ｻ悶・繝輔Λ繧ｰ繧よ峩譁ｰ
+            // 依存する他のフラグも更新
             UpdateFeatureFlag(nameof(FeatureFlags.MigrateStealthAudioCoordinator), config.useNewStealthService, $"Phase: {config.phaseName}", config.phase);
             UpdateFeatureFlag(nameof(FeatureFlags.EnableDebugLogging), true, $"Phase: {config.phaseName}", config.phase);
             UpdateFeatureFlag(nameof(FeatureFlags.EnableMigrationMonitoring), config.enablePerformanceMonitoring, $"Phase: {config.phaseName}", config.phase);
             
-            // 迴ｾ蝨ｨ縺ｮ迥ｶ諷九ｒ譖ｴ譁ｰ
+            // 現在の状態を更新
             SyncWithCurrentFeatureFlags();
             
             LogFlagInfo($"Successfully applied phase configuration: {config.phaseName}");
@@ -77,22 +79,24 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 蛟句挨縺ｮFeatureFlag繧呈峩譁ｰ
+        /// 個別のFeatureFlagを更新
         /// </summary>
-        /// <param name="flagName">繝輔Λ繧ｰ蜷・/param>
-        /// <param name="newValue">譁ｰ縺励＞蛟､</param>
-        /// <param name="reason">螟画峩逅・罰</param>
-        /// <param name="phase">迴ｾ蝨ｨ縺ｮ繝輔ぉ繝ｼ繧ｺ</param>
+        /// <param name="flagName">フラグ名</param>
+        /// <param name="newValue">新しい値</param>
+        /// <param name="reason">変更理由</param>
+        /// <param name="phase">現在のフェーズ</param>
         private void UpdateFeatureFlag(string flagName, bool newValue, string reason, MigrationScheduler.MigrationPhase phase)
         {
             bool oldValue = GetCurrentFlagValue(flagName);
             
-            // 蛟､縺悟､画峩縺輔ｌ繧句ｴ蜷医・縺ｿ蜃ｦ逅・            if (oldValue != newValue)
+            // 値が変更される場合のみ処理
+            if (oldValue != newValue)
             {
-                // FeatureFlags繧ｯ繝ｩ繧ｹ縺ｮ蟇ｾ蠢懊・繝ｭ繝代ユ繧｣繧呈峩譁ｰ
+                // FeatureFlagsクラスの対応プロパティを更新
                 SetFeatureFlagValue(flagName, newValue);
                 
-                // 螟画峩險倬鹸縺ｮ菫晏ｭ・                RecordFlagChange(flagName, oldValue, newValue, reason, phase);
+                // 変更記録の保存
+                RecordFlagChange(flagName, oldValue, newValue, reason, phase);
                 
                 if (logFlagChanges)
                 {
@@ -106,7 +110,7 @@ namespace asterivo.Unity60.Core.Services
         #region FeatureFlags Integration
         
         /// <summary>
-        /// 迴ｾ蝨ｨ縺ｮFeatureFlags縺ｨ蜷梧悄
+        /// 現在のFeatureFlagsと同期
         /// </summary>
         private void SyncWithCurrentFeatureFlags()
         {
@@ -119,9 +123,10 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 繝輔Λ繧ｰ蜷阪°繧臥樟蝨ｨ縺ｮ蛟､繧貞叙蠕・        /// </summary>
-        /// <param name="flagName">繝輔Λ繧ｰ蜷・/param>
-        /// <returns>迴ｾ蝨ｨ縺ｮ蛟､</returns>
+        /// フラグ名から現在の値を取得
+        /// </summary>
+        /// <param name="flagName">フラグ名</param>
+        /// <returns>現在の値</returns>
         private bool GetCurrentFlagValue(string flagName)
         {
             switch (flagName)
@@ -151,12 +156,13 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 繝輔Λ繧ｰ蜷阪↓蟇ｾ蠢懊☆繧句､繧定ｨｭ螳・        /// </summary>
-        /// <param name="flagName">繝輔Λ繧ｰ蜷・/param>
-        /// <param name="value">險ｭ螳壼､</param>
+        /// フラグ名に対応する値を設定
+        /// </summary>
+        /// <param name="flagName">フラグ名</param>
+        /// <param name="value">設定値</param>
         private void SetFeatureFlagValue(string flagName, bool value)
         {
-            // FeatureFlags繧ｯ繝ｩ繧ｹ縺ｯ譌｢縺ｫPlayerPrefs邨檎罰縺ｧ蜍慕噪譖ｴ譁ｰ蟇ｾ蠢懈ｸ医∩
+            // FeatureFlagsクラスは既にPlayerPrefs経由で動的更新対応済み
             
             switch (flagName)
             {
@@ -207,13 +213,13 @@ namespace asterivo.Unity60.Core.Services
         #region Change History Management
         
         /// <summary>
-        /// 繝輔Λ繧ｰ螟画峩繧定ｨ倬鹸
+        /// フラグ変更を記録
         /// </summary>
-        /// <param name="flagName">繝輔Λ繧ｰ蜷・/param>
-        /// <param name="oldValue">蜿､縺・､</param>
-        /// <param name="newValue">譁ｰ縺励＞蛟､</param>
-        /// <param name="reason">螟画峩逅・罰</param>
-        /// <param name="phase">迴ｾ蝨ｨ縺ｮ繝輔ぉ繝ｼ繧ｺ</param>
+        /// <param name="flagName">フラグ名</param>
+        /// <param name="oldValue">古い値</param>
+        /// <param name="newValue">新しい値</param>
+        /// <param name="reason">変更理由</param>
+        /// <param name="phase">現在のフェーズ</param>
         private void RecordFlagChange(string flagName, bool oldValue, bool newValue, string reason, MigrationScheduler.MigrationPhase phase)
         {
             var record = new FlagChangeRecord
@@ -228,14 +234,15 @@ namespace asterivo.Unity60.Core.Services
             
             changeHistory.Add(record);
             
-            // 螻･豁ｴ繧ｵ繧､繧ｺ繧貞宛髯撰ｼ医Γ繝｢繝ｪ菴ｿ逕ｨ驥上ｒ蛻ｶ蠕｡・・            if (changeHistory.Count > 100)
+            // 履歴サイズを制限（メモリ使用量を制御）
+            if (changeHistory.Count > 100)
             {
                 changeHistory.RemoveRange(0, changeHistory.Count - 100);
             }
         }
         
         /// <summary>
-        /// 螟画峩螻･豁ｴ繧偵け繝ｪ繧｢
+        /// 変更履歴をクリア
         /// </summary>
         [ContextMenu("Clear Change History")]
         public void ClearChangeHistory()
@@ -245,7 +252,8 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 螟画峩螻･豁ｴ繧偵Ξ繝昴・繝・        /// </summary>
+        /// 変更履歴をレポート
+        /// </summary>
         [ContextMenu("Report Change History")]
         public void ReportChangeHistory()
         {
@@ -271,7 +279,8 @@ namespace asterivo.Unity60.Core.Services
         #region Status and Information
         
         /// <summary>
-        /// 迴ｾ蝨ｨ縺ｮ繝輔Λ繧ｰ迥ｶ諷九ｒ繝ｭ繧ｰ蜃ｺ蜉・        /// </summary>
+        /// 現在のフラグ状態をログ出力
+        /// </summary>
         [ContextMenu("Log Current Flag States")]
         public void LogCurrentFlagStates()
         {
@@ -285,12 +294,13 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 繝輔Λ繧ｰ邨ｱ險域ュ蝣ｱ繧貞叙蠕・        /// </summary>
-        /// <returns>繝輔Λ繧ｰ邨ｱ險域ュ蝣ｱ</returns>
+        /// フラグ統計情報を取得
+        /// </summary>
+        /// <returns>フラグ統計情報</returns>
         public FlagStatistics GetFlagStatistics()
         {
             int enabledFlags = 0;
-            int totalFlags = 6; // 邂｡逅・ｯｾ雎｡繝輔Λ繧ｰ謨ｰ
+            int totalFlags = 6; // 管理対象フラグ数
             
             if (currentUseServiceLocator) enabledFlags++;
             if (currentUseNewAudioService) enabledFlags++;
@@ -310,7 +320,8 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 繝輔Λ繧ｰ邨ｱ險域ュ蝣ｱ縺ｮ讒矩菴・        /// </summary>
+        /// フラグ統計情報の構造体
+        /// </summary>
         [System.Serializable]
         public struct FlagStatistics
         {
@@ -326,9 +337,10 @@ namespace asterivo.Unity60.Core.Services
         #region Testing and Development Support
         
         /// <summary>
-        /// 繝・せ繝育畑縺ｮ謇句虚繝輔Λ繧ｰ險ｭ螳・        /// </summary>
-        /// <param name="flagName">繝輔Λ繧ｰ蜷・/param>
-        /// <param name="value">險ｭ螳壼､</param>
+        /// テスト用の手動フラグ設定
+        /// </summary>
+        /// <param name="flagName">フラグ名</param>
+        /// <param name="value">設定値</param>
         [ContextMenu("Set Flag Manually")]
         public void SetFlagManually(string flagName, bool value)
         {
@@ -338,7 +350,8 @@ namespace asterivo.Unity60.Core.Services
         }
         
         /// <summary>
-        /// 蜈ｨ繝輔Λ繧ｰ繧偵Μ繧ｻ繝・ヨ・磯幕逋ｺ逕ｨ・・        /// </summary>
+        /// 全フラグをリセット（開発用）
+        /// </summary>
         [ContextMenu("Reset All Flags")]
         public void ResetAllFlags()
         {
@@ -360,8 +373,9 @@ namespace asterivo.Unity60.Core.Services
         #region Logging
         
         /// <summary>
-        /// 繝輔Λ繧ｰ髢｢騾｣繝ｭ繧ｰ縺ｮ蜃ｺ蜉・        /// </summary>
-        /// <param name="message">繝｡繝・そ繝ｼ繧ｸ</param>
+        /// フラグ関連ログの出力
+        /// </summary>
+        /// <param name="message">メッセージ</param>
         private void LogFlagInfo(string message)
         {
             if (enableDebugLogging)

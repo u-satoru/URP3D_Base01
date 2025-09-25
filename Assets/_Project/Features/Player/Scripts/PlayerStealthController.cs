@@ -4,7 +4,7 @@ using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Debug;
 using Sirenix.OdinInspector;
 
-namespace asterivo.Unity60.Features.Player
+namespace asterivo.Unity60.Features.Player.Scripts
 {
     /// <summary>
     /// プレイヤーのステルス機能制御コンポーネント

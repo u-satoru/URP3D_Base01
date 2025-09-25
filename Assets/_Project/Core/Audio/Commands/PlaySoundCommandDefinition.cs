@@ -1,14 +1,12 @@
 using UnityEngine;
-// using asterivo.Unity60.Core.Commands;
+using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Audio.Data;
-// using asterivo.Unity60.Core.Debug;
-using Debug = UnityEngine.Debug;
 
 namespace asterivo.Unity60.Core.Audio.Commands
 {
     /// <summary>
     /// PlaySoundCommandの定義ScriptableObject
-    /// エチE��タからコマンドを設定�E管琁E��るため�E基盤
+    /// エディタからコマンドを設定・管理するための基盤
     /// </summary>
     [CreateAssetMenu(fileName = "New Play Sound Command", menuName = "asterivo.Unity60/Audio/Commands/Play Sound Command")]
     public class PlaySoundCommandDefinition : ScriptableObject, ICommandDefinition
@@ -26,53 +24,35 @@ namespace asterivo.Unity60.Core.Audio.Commands
         public int PoolSize => poolSize;
         
         /// <summary>
-        /// ICommandDefinition.CanExecute実裁E        /// </summary>
+        /// ICommandDefinition.CanExecute実装
+        /// </summary>
         public bool CanExecute(object context = null)
         {
             return soundData != null;
         }
         
         /// <summary>
-        /// ICommandDefinition.CreateCommand実裁E        /// </summary>
+        /// ICommandDefinition.CreateCommand実装
+        /// </summary>
         public ICommand CreateCommand(object context = null)
         {
             return CreateCommand();
         }
         
         /// <summary>
-        /// コマンドインスタンスを作�E
-        /// 新しいCommandPoolServiceを使用
+        /// コマンドインスタンスを作成
         /// </summary>
         public ICommand CreateCommand()
         {
-            PlaySoundCommand command = null;
-            
-            if (usePooling)
-            {
-                var poolService = ServiceLocator.GetService<ICommandPoolService>();
-                if (poolService != null)
-                {
-                    command = poolService.GetCommand<PlaySoundCommand>();
-                }
-                else
-                {
-                    // フォールバック�E�直接作�E
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-                    ProjectDebug.LogWarning("CommandPoolService not available, creating PlaySoundCommand directly");
-#endif
-                    command = new PlaySoundCommand();
-                }
-            }
-            else
-            {
-                command = new PlaySoundCommand();
-            }
+            var command = usePooling ? 
+                CommandPool.Instance.GetCommand<PlaySoundCommand>() : 
+                new PlaySoundCommand();
             
             return command;
         }
         
         /// <summary>
-        /// チE��ォルト設定でコマンドを作�E
+        /// デフォルト設定でコマンドを作成
         /// </summary>
         public PlaySoundCommand CreatePlaySoundCommand(AudioSource audioSource, Transform listener = null)
         {
@@ -82,7 +62,7 @@ namespace asterivo.Unity60.Core.Audio.Commands
         }
         
         /// <summary>
-        /// カスタム設定でコマンドを作�E
+        /// カスタム設定でコマンドを作成
         /// </summary>
         public PlaySoundCommand CreatePlaySoundCommand(AudioEventData customData, AudioSource audioSource, Transform listener = null)
         {

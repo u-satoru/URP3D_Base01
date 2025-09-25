@@ -1,41 +1,41 @@
 using UnityEngine;
-// using asterivo.Unity60.Core.Commands;
+using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// Crouch command definition.
-    /// Encapsulates player or AI crouch actions.
-    ///
-    /// Main features:
-    /// - Initiate and end crouch state
-    /// - Modify movement speed and stealth effectiveness
-    /// - Adjust collision size
-    /// - Control animation and camera
+    /// しゃがみ（クラウチ）コマンドの定義。
+    /// プレイヤーまたはAIのしゃがみアクションをカプセル化します。
+    /// 
+    /// 主な機能：
+    /// - しゃがみ状態の開始と終了
+    /// - 移動速度の変更とステルス効果
+    /// - コリジョンサイズの調整
+    /// - アニメーションとカメラの制御
     /// </summary>
     [System.Serializable]
     public class CrouchCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// Enum defining types of crouch
+        /// しゃがみの種類を定義する列挙型
         /// </summary>
         public enum CrouchType
         {
-            Normal,     // Normal crouch
-            Sneak,      // Stealth-focused crouch
-            Cover,      // Crouch for cover usage
-            Slide       // Sliding
+            Normal,     // 通常のしゃがみ
+            Sneak,      // ステルス重視のしゃがみ
+            Cover,      // 遮蔽物利用のしゃがみ
+            Slide       // スライディング
         }
 
         [Header("Crouch Parameters")]
         public CrouchType crouchType = CrouchType.Normal;
-        public bool toggleMode = true; // true: toggle mode, false: hold-to-crouch mode
+        public bool toggleMode = true; // true: トグル形式, false: 押し続ける形式
         public float speedMultiplier = 0.5f;
         public float heightReduction = 0.5f;
 
         [Header("Stealth Effects")]
-        public float noiseReduction = 0.7f; // Sound reduction rate
-        public float visibilityReduction = 0.3f; // Visibility reduction rate
+        public float noiseReduction = 0.7f; // 音の削減率
+        public float visibilityReduction = 0.3f; // 視認性の削減率
         public bool canHideInTallGrass = true;
 
         [Header("Movement Constraints")]
@@ -53,14 +53,14 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public bool maintainGroundContact = true;
 
         /// <summary>
-        /// Default constructor
+        /// デフォルトコンストラクタ
         /// </summary>
         public CrouchCommandDefinition()
         {
         }
 
         /// <summary>
-        /// Parameterized constructor
+        /// パラメータ付きコンストラクタ
         /// </summary>
         public CrouchCommandDefinition(CrouchType type, bool isToggle, float speedMult = 0.5f)
         {
@@ -70,31 +70,31 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Determine if crouch command can be executed
+        /// しゃがみコマンドが実行可能かどうかを判定します
         /// </summary>
         public bool CanExecute(object context = null)
         {
-            // Basic executability check
-            if (speedMultiplier < 0f || heightReduction < 0f || heightReduction > 1f)
+            // 基本的な実行可能性チェック
+            if (speedMultiplier < 0f || heightReduction < 0f || heightReduction > 1f) 
+                return false;
+            
+            if (transitionDuration < 0f) 
                 return false;
 
-            if (transitionDuration < 0f)
-                return false;
-
-            // Additional checks if context exists
+            // コンテキストがある場合の追加チェック
             if (context != null)
             {
-                // Check current terrain (impossible on steep slopes)
-                // Check ceiling height (restriction where standing up is impossible)
-                // State exceptions (foot injuries, etc.)
-                // Animation state check (impossible during jump)
+                // 現在の地形チェック（急斜面では不可等）
+                // 天井の高さチェック（立ち上がれない場所での制限）
+                // 状態異常チェック（足の負傷等）
+                // アニメーション状態チェック（ジャンプ中は不可等）
             }
 
             return true;
         }
 
         /// <summary>
-        /// Create crouch command
+        /// しゃがみコマンドを作成します
         /// </summary>
         public ICommand CreateCommand(object context = null)
         {
@@ -106,7 +106,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// Actual command implementation corresponding to CrouchCommandDefinition
+    /// CrouchCommandDefinitionに対応する実際のコマンド実装
     /// </summary>
     public class CrouchCommand : ICommand
     {
@@ -125,7 +125,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Execute crouch command
+        /// しゃがみコマンドの実行
         /// </summary>
         public void Execute()
         {
@@ -135,7 +135,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             UnityEngine.Debug.Log($"Executing {definition.crouchType} crouch: toggle={definition.toggleMode}");
 #endif
 
-            // Toggle mode switches state
+            // トグルモードの場合は状態を切り替え
             if (definition.toggleMode)
             {
                 if (isCrouching)
@@ -149,7 +149,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             }
             else
             {
-                // Hold mode always starts crouch
+                // 押し続けモードの場合は常にしゃがみ開始
                 StartCrouch();
             }
 
@@ -157,21 +157,21 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Start crouch state
+        /// しゃがみ状態の開始
         /// </summary>
         private void StartCrouch()
         {
             if (isCrouching) return;
 
-            // Save state before execution (for Undo)
+            // 実行前の状態を保存（Undo用）
             SaveOriginalState();
 
             isCrouching = true;
 
-            // Implement actual crouch processing here
+            // 実際のしゃがみ処理をここに実装
             if (context is MonoBehaviour mono)
             {
-                // Adjust collider height
+                // コライダーの高さ調整
                 if (definition.adjustColliderHeight && mono.GetComponent<CapsuleCollider>() != null)
                 {
                     var collider = mono.GetComponent<CapsuleCollider>();
@@ -179,11 +179,11 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                     collider.center = new Vector3(collider.center.x, collider.center.y - (originalHeight * definition.heightReduction * 0.5f), collider.center.z);
                 }
 
-                // Adjust movement speed (link with PlayerController)
-                // Animation control
-                // Adjust camera position
-                // Apply stealth state
-                // Sound effects
+                // 移動速度の調整（PlayerControllerとの連携）
+                // アニメーション制御
+                // カメラ位置の調整
+                // ステルス状態の適用
+                // サウンドエフェクト
             }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -192,13 +192,13 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Stand up processing
+        /// 立ち上がり処理
         /// </summary>
         private void StandUp()
         {
             if (!isCrouching) return;
 
-            // Check ceiling (whether standing up is possible)
+            // 天井チェック（立ち上がれるかどうか）
             if (!CanStandUp())
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -209,7 +209,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
 
             isCrouching = false;
 
-            // Restore state
+            // 状態の復元
             RestoreOriginalState();
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -218,42 +218,42 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Check if standing up is possible
+        /// 立ち上がり可能かチェック
         /// </summary>
         private bool CanStandUp()
         {
-            // In actual implementation, check with Raycast if there are no obstacles above
-            // Currently always returns true
+            // 実際の実装では、頭上に障害物がないかRaycastでチェック
+            // 現在は常にtrueを返す
             return true;
         }
 
         /// <summary>
-        /// Save original state
+        /// 元の状態を保存
         /// </summary>
         private void SaveOriginalState()
         {
             if (context is MonoBehaviour mono)
             {
-                // Save collider height
+                // コライダーの高さ保存
                 if (mono.GetComponent<CapsuleCollider>() != null)
                 {
                     originalHeight = mono.GetComponent<CapsuleCollider>().height;
                 }
 
-                // Save other states
+                // その他の状態保存
                 // originalSpeed = playerController.moveSpeed;
                 // originalCameraPosition = camera.localPosition;
             }
         }
 
         /// <summary>
-        /// Restore original state
+        /// 元の状態を復元
         /// </summary>
         private void RestoreOriginalState()
         {
             if (context is MonoBehaviour mono)
             {
-                // Restore collider
+                // コライダーの復元
                 if (definition.adjustColliderHeight && mono.GetComponent<CapsuleCollider>() != null)
                 {
                     var collider = mono.GetComponent<CapsuleCollider>();
@@ -261,14 +261,14 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                     collider.center = new Vector3(collider.center.x, 0f, collider.center.z);
                 }
 
-                // Restore other states
+                // その他の状態復元
                 // playerController.moveSpeed = originalSpeed;
                 // camera.localPosition = originalCameraPosition;
             }
         }
 
         /// <summary>
-        /// End crouch in hold mode
+        /// 押し続けモードでのしゃがみ終了
         /// </summary>
         public void EndCrouch()
         {
@@ -279,7 +279,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Undo operation (force release crouch state)
+        /// Undo操作（しゃがみ状態の強制解除）
         /// </summary>
         public void Undo()
         {
@@ -298,12 +298,12 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Whether this command can be undone
+        /// このコマンドがUndo可能かどうか
         /// </summary>
         public bool CanUndo => executed;
 
         /// <summary>
-        /// Whether currently crouching
+        /// 現在しゃがんでいるかどうか
         /// </summary>
         public bool IsCrouching => isCrouching;
     }

@@ -2,21 +2,22 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using asterivo.Unity60.Core;
-// using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Services;
 
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// Step 3.7: 谿ｵ髫守噪遘ｻ陦後・騾ｲ陦檎憾豕∫屮隕悶→讀懆ｨｼ讖溯・
-    /// 蜷・ヵ繧ｧ繝ｼ繧ｺ縺ｮ謌仙粥/螟ｱ謨励・霑ｽ霍｡縲√ヱ繝輔か繝ｼ繝槭Φ繧ｹ貂ｬ螳壹∵､懆ｨｼ讖溯・繧呈署萓・    /// </summary>
+    /// Step 3.7: 段階的移行の進行状況監視と検証機能
+    /// 各フェーズの成功/失敗の追跡、パフォーマンス測定、検証機能を提供
+    /// </summary>
     public class MigrationProgressTracker : MonoBehaviour
     {
         [Header("Monitoring Configuration")]
         [SerializeField] private bool enableProgressTracking = true;
         [SerializeField] private bool enablePerformanceMonitoring = true;
         [SerializeField] private bool enableDebugLogging = true;
-        [SerializeField] private float validationInterval = 10f; // 10遘帝俣髫斐〒讀懆ｨｼ
+        [SerializeField] private float validationInterval = 10f; // 10秒間隔で検証
 
         [Header("Current Progress Status")]
         [SerializeField] private MigrationScheduler.MigrationPhase currentPhase;
@@ -37,7 +38,8 @@ namespace asterivo.Unity60.Core.Services
             new Dictionary<MigrationScheduler.MigrationPhase, PhaseStatistics>();
 
         /// <summary>
-        /// 繝輔ぉ繝ｼ繧ｺ驕ｷ遘ｻ險倬鹸縺ｮ讒矩菴・        /// </summary>
+        /// フェーズ遷移記録の構造体
+        /// </summary>
         [System.Serializable]
         public struct PhaseTransitionRecord
         {
@@ -52,7 +54,8 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 讀懆ｨｼ邨先棡縺ｮ讒矩菴・        /// </summary>
+        /// 検証結果の構造体
+        /// </summary>
         [System.Serializable]
         public struct ValidationResult
         {
@@ -68,7 +71,8 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 繝輔ぉ繝ｼ繧ｺ邨ｱ險医・讒矩菴・        /// </summary>
+        /// フェーズ統計の構造体
+        /// </summary>
         [System.Serializable]
         public struct PhaseStatistics
         {
@@ -84,7 +88,8 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 繝輔ぉ繝ｼ繧ｺ讀懆ｨｼ邨先棡縺ｮ讒矩菴・        /// </summary>
+        /// フェーズ検証結果の構造体
+        /// </summary>
         [System.Serializable]
         public struct PhaseValidationSummary
         {
@@ -123,25 +128,28 @@ namespace asterivo.Unity60.Core.Services
         #region Progress Tracking
 
         /// <summary>
-        /// 騾ｲ陦檎憾豕∬ｿｽ霍｡縺ｮ髢句ｧ・        /// </summary>
+        /// 進行状況追跡の開始
+        /// </summary>
         public void StartProgressTracking()
         {
             LogProgress("Starting migration progress tracking");
             
-            // 迴ｾ蝨ｨ縺ｮ繝輔ぉ繝ｼ繧ｺ繧定ｨ倬鹸
+            // 現在のフェーズを記録
             currentPhase = MigrationScheduler.MigrationPhase.Day1_2_Staging;
             phaseStartTime = Time.time;
             currentPhaseValid = false;
 
-            // 邨ｱ險医ョ繝ｼ繧ｿ縺ｮ蛻晄悄蛹・            InitializePhaseStatistics();
+            // 統計データの初期化
+            InitializePhaseStatistics();
             
-            // 蛻晄悄讀懆ｨｼ縺ｮ螳溯｡・            PerformInitialValidation();
+            // 初期検証の実行
+            PerformInitialValidation();
         }
 
         /// <summary>
-        /// 繝輔ぉ繝ｼ繧ｺ髢句ｧ九・險倬鹸
+        /// フェーズ開始の記録
         /// </summary>
-        /// <param name="phase">髢句ｧ九☆繧九ヵ繧ｧ繝ｼ繧ｺ</param>
+        /// <param name="phase">開始するフェーズ</param>
         public void RecordPhaseStart(MigrationScheduler.MigrationPhase phase)
         {
             LogProgress($"Phase started: {phase}");
@@ -149,37 +157,37 @@ namespace asterivo.Unity60.Core.Services
             currentPhase = phase;
             phaseStartTime = Time.time;
             
-            // 邨ｱ險医ョ繝ｼ繧ｿ縺ｮ譖ｴ譁ｰ
+            // 統計データの更新
             UpdatePhaseStatistics(phase, PhaseEvent.Enter);
             
-            // 繝輔ぉ繝ｼ繧ｺ髢句ｧ区凾縺ｮ讀懆ｨｼ
+            // フェーズ開始時の検証
             var validation = ValidateCurrentPhase();
             currentPhaseValid = validation.allServicesWorking;
             
             if (!currentPhaseValid)
             {
-                LogProgress($"笞・・Phase {phase} started with validation issues: {validation.issues}");
+                LogProgress($"⚠️ Phase {phase} started with validation issues: {validation.issues}");
             }
         }
 
         /// <summary>
-        /// 繝輔ぉ繝ｼ繧ｺ驕ｷ遘ｻ縺ｮ險倬鹸
+        /// フェーズ遷移の記録
         /// </summary>
-        /// <param name="fromPhase">驕ｷ遘ｻ蜈・ヵ繧ｧ繝ｼ繧ｺ</param>
-        /// <param name="toPhase">驕ｷ遘ｻ蜈医ヵ繧ｧ繝ｼ繧ｺ</param>
+        /// <param name="fromPhase">遷移元フェーズ</param>
+        /// <param name="toPhase">遷移先フェーズ</param>
         public void RecordPhaseTransition(MigrationScheduler.MigrationPhase fromPhase, MigrationScheduler.MigrationPhase toPhase)
         {
             float transitionTime = Time.time - phaseStartTime;
             
             LogProgress($"Phase transition: {fromPhase} -> {toPhase} (Duration: {transitionTime:F1}s)");
             
-            // 驕ｷ遘ｻ蜑榊ｾ後・讀懆ｨｼ
+            // 遷移前後の検証
             var preValidation = ValidatePhaseDetailed(fromPhase);
             var postValidation = ValidatePhaseDetailed(toPhase);
             
             bool successful = postValidation.isValid;
             
-            // 驕ｷ遘ｻ險倬鹸縺ｮ菴懈・
+            // 遷移記録の作成
             var record = new PhaseTransitionRecord
             {
                 fromPhase = fromPhase,
@@ -194,7 +202,7 @@ namespace asterivo.Unity60.Core.Services
             
             transitionHistory.Add(record);
             
-            // 邨ｱ險医・譖ｴ譁ｰ
+            // 統計の更新
             if (successful)
             {
                 successfulTransitions++;
@@ -207,40 +215,41 @@ namespace asterivo.Unity60.Core.Services
                 UpdatePhaseStatistics(fromPhase, PhaseEvent.FailedExit);
             }
             
-            // 蟷ｳ蝮・・遘ｻ譎る俣縺ｮ譖ｴ譁ｰ
+            // 平均遷移時間の更新
             UpdateAverageTransitionTime(transitionTime);
             lastTransitionTime = transitionTime;
             
-            // 迴ｾ蝨ｨ縺ｮ繝輔ぉ繝ｼ繧ｺ迥ｶ諷九・譖ｴ譁ｰ
+            // 現在のフェーズ状態の更新
             currentPhase = toPhase;
             phaseStartTime = Time.time;
             currentPhaseValid = successful;
             
-            LogProgress($"Transition result: {(successful ? "笨・SUCCESS" : "笶・FAILED")}");
+            LogProgress($"Transition result: {(successful ? "✅ SUCCESS" : "❌ FAILED")}");
         }
 
         /// <summary>
-        /// 繧ｹ繧ｱ繧ｸ繝･繝ｼ繝ｫ螳御ｺ・・險倬鹸
+        /// スケジュール完了の記録
         /// </summary>
         public void RecordScheduleCompletion()
         {
             LogProgress("Migration schedule completed successfully!");
             
-            // 螳御ｺ・ｵｱ險医・險倬鹸
+            // 完了統計の記録
             float totalTime = Time.time - phaseStartTime;
             LogProgress($"Total migration time: {totalTime:F1} seconds");
             LogProgress($"Successful transitions: {successfulTransitions}");
             LogProgress($"Failed transitions: {failedTransitions}");
             LogProgress($"Success rate: {GetOverallSuccessRate():P1}");
             
-            // 譛邨よ､懆ｨｼ縺ｮ螳溯｡・            var finalValidation = ValidateCurrentPhase();
+            // 最終検証の実行
+            var finalValidation = ValidateCurrentPhase();
             if (finalValidation.allServicesWorking)
             {
-                LogProgress("脂 Final validation passed - Migration completed successfully!");
+                LogProgress("🎉 Final validation passed - Migration completed successfully!");
             }
             else
             {
-                LogProgress($"笞・・Final validation issues: {finalValidation.issues}");
+                LogProgress($"⚠️ Final validation issues: {finalValidation.issues}");
             }
             
             SaveProgressData();
@@ -251,9 +260,9 @@ namespace asterivo.Unity60.Core.Services
         #region Validation System
 
         /// <summary>
-        /// 迴ｾ蝨ｨ縺ｮ繝輔ぉ繝ｼ繧ｺ縺ｮ讀懆ｨｼ
+        /// 現在のフェーズの検証
         /// </summary>
-        /// <returns>讀懆ｨｼ邨先棡</returns>
+        /// <returns>検証結果</returns>
         [ContextMenu("Validate Current Phase")]
         public ValidationResult ValidateCurrentPhase()
         {
@@ -261,10 +270,10 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 謖・ｮ壹ヵ繧ｧ繝ｼ繧ｺ縺ｮ讀懆ｨｼ
+        /// 指定フェーズの検証
         /// </summary>
-        /// <param name="phase">讀懆ｨｼ縺吶ｋ繝輔ぉ繝ｼ繧ｺ</param>
-        /// <returns>讀懆ｨｼ邨先棡</returns>
+        /// <param name="phase">検証するフェーズ</param>
+        /// <returns>検証結果</returns>
         private ValidationResult ValidatePhase(MigrationScheduler.MigrationPhase phase)
         {
             float startTime = Time.time;
@@ -280,9 +289,11 @@ namespace asterivo.Unity60.Core.Services
                 issues = ""
             };
             
-            // 蜈ｨ繧ｵ繝ｼ繝薙せ蜍穂ｽ懃｢ｺ隱・            result.allServicesWorking = result.serviceLocatorWorking;
+            // 全サービス動作確認
+            result.allServicesWorking = result.serviceLocatorWorking;
             
-            // 繝輔ぉ繝ｼ繧ｺ蛻･縺ｮ蠢・ｦ√し繝ｼ繝薙せ遒ｺ隱・            switch (phase)
+            // フェーズ別の必要サービス確認
+            switch (phase)
             {
                 case MigrationScheduler.MigrationPhase.Day1_2_Staging:
                     result.allServicesWorking &= result.audioServiceWorking;
@@ -300,7 +311,7 @@ namespace asterivo.Unity60.Core.Services
             
             result.validationTime = Time.time - startTime;
             
-            // 蝠城｡後・蜿朱寔
+            // 問題の収集
             List<string> issues = new List<string>();
             if (!result.serviceLocatorWorking) issues.Add("ServiceLocator not working");
             if (!result.audioServiceWorking && ShouldValidateAudioService(phase)) issues.Add("AudioService not working");
@@ -313,7 +324,7 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 螳壽悄逧・↑讀懆ｨｼ繝√ぉ繝・け
+        /// 定期的な検証チェック
         /// </summary>
         private void PerformValidationCheck()
         {
@@ -326,29 +337,32 @@ namespace asterivo.Unity60.Core.Services
             if (!validation.allServicesWorking)
             {
                 failedValidationChecks++;
-                LogProgress($"笶・Validation failed for {currentPhase}: {validation.issues}");
+                LogProgress($"❌ Validation failed for {currentPhase}: {validation.issues}");
                 
-                // 閾ｪ蜍穂ｿｮ蠕ｩ縺ｮ隧ｦ陦鯉ｼ亥ｿ・ｦ√↓蠢懊§縺ｦ螳溯｣・ｼ・                if (FeatureFlags.EnableAutoRollback)
+                // 自動修復の試行（必要に応じて実装）
+                if (FeatureFlags.EnableAutoRollback)
                 {
                     AttemptAutoRepair(validation);
                 }
             }
             
-            // 螻･豁ｴ繧ｵ繧､繧ｺ縺ｮ蛻ｶ髯・            if (validationHistory.Count > 100)
+            // 履歴サイズの制限
+            if (validationHistory.Count > 100)
             {
                 validationHistory.RemoveRange(0, validationHistory.Count - 100);
             }
         }
 
         /// <summary>
-        /// 蛻晄悄讀懆ｨｼ縺ｮ螳溯｡・        /// </summary>
+        /// 初期検証の実行
+        /// </summary>
         private void PerformInitialValidation()
         {
             LogProgress("Performing initial validation...");
             var validation = ValidateCurrentPhase();
             validationHistory.Add(validation);
             
-            LogProgress($"Initial validation result: {(validation.allServicesWorking ? "笨・PASSED" : "笶・FAILED")}");
+            LogProgress($"Initial validation result: {(validation.allServicesWorking ? "✅ PASSED" : "❌ FAILED")}");
             if (!validation.allServicesWorking)
             {
                 LogProgress($"Issues found: {validation.issues}");
@@ -360,14 +374,16 @@ namespace asterivo.Unity60.Core.Services
         #region Service Validation
 
         /// <summary>
-        /// ServiceLocator縺ｮ蜍穂ｽ懃｢ｺ隱・        /// </summary>
-        /// <returns>蜍穂ｽ懊＠縺ｦ縺・ｋ蝣ｴ蜷・rue</returns>
+        /// ServiceLocatorの動作確認
+        /// </summary>
+        /// <returns>動作している場合true</returns>
         private bool ValidateServiceLocator()
         {
             try
             {
-                // ServiceLocator縺悟虚菴懊＠縺ｦ縺・ｋ縺狗｢ｺ隱搾ｼ医し繝ｼ繝薙せ謨ｰ縺ｧ蛻､螳夲ｼ・                int serviceCount = ServiceLocator.GetServiceCount();
-                return serviceCount >= 0; // 繧ｵ繝ｼ繝薙せ謨ｰ縺悟叙蠕励〒縺阪ｌ縺ｰ蜍穂ｽ應ｸｭ
+                // ServiceLocatorが動作しているか確認（サービス数で判定）
+                int serviceCount = ServiceLocator.GetServiceCount();
+                return serviceCount >= 0; // サービス数が取得できれば動作中
             }
             catch (Exception ex)
             {
@@ -377,13 +393,14 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// AudioService縺ｮ蜍穂ｽ懃｢ｺ隱・        /// </summary>
-        /// <returns>蜍穂ｽ懊＠縺ｦ縺・ｋ蝣ｴ蜷・rue</returns>
+        /// AudioServiceの動作確認
+        /// </summary>
+        /// <returns>動作している場合true</returns>
         private bool ValidateAudioService()
         {
             try
             {
-                if (!FeatureFlags.UseNewAudioService) return true; // 辟｡蜉ｹ蛹悶＆繧後※縺・ｋ蝣ｴ蜷医・繧ｹ繧ｭ繝・・
+                if (!FeatureFlags.UseNewAudioService) return true; // 無効化されている場合はスキップ
                 
                 var result = ServiceMigrationHelper.GetAudioService(true, "ProgressTracker", false);
                 return result.IsSuccessful && result.Service != null;
@@ -396,16 +413,19 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// SpatialService縺ｮ蜍穂ｽ懃｢ｺ隱・        /// </summary>
-        /// <returns>蜍穂ｽ懊＠縺ｦ縺・ｋ蝣ｴ蜷・rue</returns>
+        /// SpatialServiceの動作確認
+        /// </summary>
+        /// <returns>動作している場合true</returns>
         private bool ValidateSpatialService()
         {
             try
             {
-                if (!FeatureFlags.UseNewSpatialService) return true; // 辟｡蜉ｹ蛹悶＆繧後※縺・ｋ蝣ｴ蜷医・繧ｹ繧ｭ繝・・
+                if (!FeatureFlags.UseNewSpatialService) return true; // 無効化されている場合はスキップ
                 
-                // SpatialAudioService縺ｮ蜍穂ｽ懃｢ｺ隱阪Ο繧ｸ繝・け・井ｻｮ螳溯｣・ｼ・                LogProgress("SpatialService validation - implementation needed");
-                return true; // TODO: 螳滄圀縺ｮ繧ｵ繝ｼ繝薙せ讀懆ｨｼ繧貞ｮ溯｣・            }
+                // SpatialAudioServiceの動作確認ロジック（仮実装）
+                LogProgress("SpatialService validation - implementation needed");
+                return true; // TODO: 実際のサービス検証を実装
+            }
             catch (Exception ex)
             {
                 LogProgress($"SpatialService validation failed: {ex.Message}");
@@ -414,13 +434,14 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// StealthService縺ｮ蜍穂ｽ懃｢ｺ隱・        /// </summary>
-        /// <returns>蜍穂ｽ懊＠縺ｦ縺・ｋ蝣ｴ蜷・rue</returns>
+        /// StealthServiceの動作確認
+        /// </summary>
+        /// <returns>動作している場合true</returns>
         private bool ValidateStealthService()
         {
             try
             {
-                if (!FeatureFlags.UseNewStealthService) return true; // 辟｡蜉ｹ蛹悶＆繧後※縺・ｋ蝣ｴ蜷医・繧ｹ繧ｭ繝・・
+                if (!FeatureFlags.UseNewStealthService) return true; // 無効化されている場合はスキップ
                 
                 var result = ServiceMigrationHelper.GetStealthAudioService(true, "ProgressTracker", false);
                 return result.IsSuccessful && result.Service != null;
@@ -433,7 +454,8 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 繝輔ぉ繝ｼ繧ｺ縺ｫ蠢懊§縺溘し繝ｼ繝薙せ讀懆ｨｼ縺ｮ蠢・ｦ∵ｧ蛻､螳・        /// </summary>
+        /// フェーズに応じたサービス検証の必要性判定
+        /// </summary>
         private bool ShouldValidateAudioService(MigrationScheduler.MigrationPhase phase)
         {
             return phase >= MigrationScheduler.MigrationPhase.Day1_2_Staging;
@@ -454,7 +476,8 @@ namespace asterivo.Unity60.Core.Services
         #region Statistics and Reporting
 
         /// <summary>
-        /// 繝輔ぉ繝ｼ繧ｺ邨ｱ險医・蛻晄悄蛹・        /// </summary>
+        /// フェーズ統計の初期化
+        /// </summary>
         private void InitializePhaseStatistics()
         {
             var phases = Enum.GetValues(typeof(MigrationScheduler.MigrationPhase));
@@ -473,10 +496,10 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 繝輔ぉ繝ｼ繧ｺ邨ｱ險医・譖ｴ譁ｰ
+        /// フェーズ統計の更新
         /// </summary>
-        /// <param name="phase">繝輔ぉ繝ｼ繧ｺ</param>
-        /// <param name="eventType">繧､繝吶Φ繝育ｨｮ蛻･</param>
+        /// <param name="phase">フェーズ</param>
+        /// <param name="eventType">イベント種別</param>
         private void UpdatePhaseStatistics(MigrationScheduler.MigrationPhase phase, PhaseEvent eventType)
         {
             if (!phaseStats.ContainsKey(phase)) return;
@@ -499,7 +522,8 @@ namespace asterivo.Unity60.Core.Services
                     break;
             }
             
-            // 謌仙粥邇・・險育ｮ・            if (stats.enterCount > 0)
+            // 成功率の計算
+            if (stats.enterCount > 0)
             {
                 stats.successRate = (float)stats.successCount / stats.enterCount;
             }
@@ -508,9 +532,9 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 蟷ｳ蝮・・遘ｻ譎る俣縺ｮ譖ｴ譁ｰ
+        /// 平均遷移時間の更新
         /// </summary>
-        /// <param name="newTransitionTime">譁ｰ縺励＞驕ｷ遘ｻ譎る俣</param>
+        /// <param name="newTransitionTime">新しい遷移時間</param>
         private void UpdateAverageTransitionTime(float newTransitionTime)
         {
             int totalTransitions = successfulTransitions + failedTransitions;
@@ -518,8 +542,9 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 蜈ｨ菴鍋噪縺ｪ謌仙粥邇・・蜿門ｾ・        /// </summary>
-        /// <returns>謌仙粥邇・ｼ・.0-1.0・・/returns>
+        /// 全体的な成功率の取得
+        /// </summary>
+        /// <returns>成功率（0.0-1.0）</returns>
         public float GetOverallSuccessRate()
         {
             int totalTransitions = successfulTransitions + failedTransitions;
@@ -527,7 +552,7 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 騾ｲ陦檎憾豕√Ξ繝昴・繝医・逕滓・
+        /// 進行状況レポートの生成
         /// </summary>
         [ContextMenu("Generate Progress Report")]
         public void GenerateProgressReport()
@@ -549,14 +574,17 @@ namespace asterivo.Unity60.Core.Services
                 LogProgress($"Validation Failure Rate: {validationFailureRate:P1}");
             }
             
-            // 譛霑代・蝠城｡後・繝ｬ繝昴・繝・            ReportRecentIssues();
+            // 最近の問題のレポート
+            ReportRecentIssues();
         }
 
         /// <summary>
-        /// 譛霑代・蝠城｡後・繝ｬ繝昴・繝・        /// </summary>
+        /// 最近の問題のレポート
+        /// </summary>
         private void ReportRecentIssues()
         {
-            var recentValidations = validationHistory.FindAll(v => Time.time - v.timestamp < 60f); // 驕主悉1蛻・            var issueValidations = recentValidations.FindAll(v => !v.allServicesWorking);
+            var recentValidations = validationHistory.FindAll(v => Time.time - v.timestamp < 60f); // 過去1分
+            var issueValidations = recentValidations.FindAll(v => !v.allServicesWorking);
             
             if (issueValidations.Count > 0)
             {
@@ -573,19 +601,22 @@ namespace asterivo.Unity60.Core.Services
         #region Auto Repair
 
         /// <summary>
-        /// 閾ｪ蜍穂ｿｮ蠕ｩ縺ｮ隧ｦ陦・        /// </summary>
-        /// <param name="validation">讀懆ｨｼ邨先棡</param>
+        /// 自動修復の試行
+        /// </summary>
+        /// <param name="validation">検証結果</param>
         private void AttemptAutoRepair(ValidationResult validation)
         {
             LogProgress($"Attempting auto-repair for {validation.phase}...");
             
-            // 蝓ｺ譛ｬ逧・↑菫ｮ蠕ｩ謇矩・            if (!validation.serviceLocatorWorking)
+            // 基本的な修復手順
+            if (!validation.serviceLocatorWorking)
             {
                 LogProgress("ServiceLocator issue detected - attempting restart");
-                // TODO: ServiceLocator蜀榊・譛溷喧繝ｭ繧ｸ繝・け
+                // TODO: ServiceLocator再初期化ロジック
             }
             
-            // 繧医ｊ隧ｳ邏ｰ縺ｪ菫ｮ蠕ｩ繝ｭ繧ｸ繝・け縺ｯ蠢・ｦ√↓蠢懊§縺ｦ螳溯｣・            LogProgress("Auto-repair attempt completed");
+            // より詳細な修復ロジックは必要に応じて実装
+            LogProgress("Auto-repair attempt completed");
         }
 
         #endregion
@@ -593,12 +624,14 @@ namespace asterivo.Unity60.Core.Services
         #region Data Persistence
 
         /// <summary>
-        /// 騾ｲ陦檎憾豕√ョ繝ｼ繧ｿ縺ｮ菫晏ｭ・        /// </summary>
+        /// 進行状況データの保存
+        /// </summary>
         private void SaveProgressData()
         {
             try
             {
-                // PlayerPrefs縺ｫ蝓ｺ譛ｬ邨ｱ險医ｒ菫晏ｭ・                PlayerPrefs.SetInt("MigrationProgress_SuccessfulTransitions", successfulTransitions);
+                // PlayerPrefsに基本統計を保存
+                PlayerPrefs.SetInt("MigrationProgress_SuccessfulTransitions", successfulTransitions);
                 PlayerPrefs.SetInt("MigrationProgress_FailedTransitions", failedTransitions);
                 PlayerPrefs.SetFloat("MigrationProgress_AverageTransitionTime", averageTransitionTime);
                 PlayerPrefs.SetInt("MigrationProgress_TotalValidationChecks", totalValidationChecks);
@@ -614,7 +647,7 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 騾ｲ陦檎憾豕√ョ繝ｼ繧ｿ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ
+        /// 進行状況データの読み込み
         /// </summary>
         private void LoadProgressData()
         {
@@ -639,7 +672,8 @@ namespace asterivo.Unity60.Core.Services
         #region Utility Types
 
         /// <summary>
-        /// 繝輔ぉ繝ｼ繧ｺ繧､繝吶Φ繝医・遞ｮ鬘・        /// </summary>
+        /// フェーズイベントの種類
+        /// </summary>
         private enum PhaseEvent
         {
             Enter,
@@ -648,7 +682,7 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 繝輔ぉ繝ｼ繧ｺ讀懆ｨｼ縺ｮ繝倥Ν繝代・髢｢謨ｰ
+        /// フェーズ検証のヘルパー関数
         /// </summary>
         private PhaseValidationSummary ValidatePhaseDetailed(MigrationScheduler.MigrationPhase phase)
         {
@@ -675,8 +709,9 @@ namespace asterivo.Unity60.Core.Services
         #region Logging
 
         /// <summary>
-        /// 騾ｲ陦檎憾豕√Ο繧ｰ縺ｮ蜃ｺ蜉・        /// </summary>
-        /// <param name="message">繝｡繝・そ繝ｼ繧ｸ</param>
+        /// 進行状況ログの出力
+        /// </summary>
+        /// <param name="message">メッセージ</param>
         private void LogProgress(string message)
         {
             if (enableDebugLogging)

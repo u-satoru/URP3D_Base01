@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Data;
-using asterivo.Unity60.Features.AI.Configuration;
+using asterivo.Unity60.Stealth.Detection;
 // using asterivo.Unity60.Features.AI.Audio; // TODO: Implement Audio module
 using Sirenix.OdinInspector;
 
@@ -106,7 +106,7 @@ namespace asterivo.Unity60.Features.AI.Visual
         [BoxGroup("Detection/Components/Required")]
         [Required]
         [LabelText("Detection Configuration")]
-        [SerializeField] private AIDetectionConfiguration detectionConfig;
+        [SerializeField] private DetectionConfiguration detectionConfig;
         
         [BoxGroup("Detection/Components/Required")]
         [Required]

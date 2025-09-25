@@ -1,15 +1,16 @@
 using UnityEngine;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core.Services.Interfaces;
+// using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Features.Combat.Services;
-using asterivo.Unity60.Features.Combat.Interfaces;
-using asterivo.Unity60.Features.GameManagement.Services;
-using asterivo.Unity60.Features.GameManagement.Interfaces;
+// using asterivo.Unity60.Features.Combat.Services;
+// using asterivo.Unity60.Features.Combat.Interfaces;
+// using asterivo.Unity60.Features.GameManagement.Services;
+// using asterivo.Unity60.Features.GameManagement.Interfaces;
 
 namespace asterivo.Unity60.Core.Bootstrap
 {
     /// <summary>
-    /// ゲーム起動時の初期化を担当するブートストラッパー
+    /// ゲーム起動時の初期化を拁E��するブートストラチE��ー
     /// ServiceLocatorへのサービス登録と初期化を行う
     /// </summary>
     [DefaultExecutionOrder(-1000)]
@@ -33,7 +34,7 @@ namespace asterivo.Unity60.Core.Bootstrap
 
         private void Awake()
         {
-            // シングルトン管理
+            // シングルトン管琁E
             if (_instance != null && _instance != this)
             {
                 if (_enableDebugLogs)
@@ -69,7 +70,7 @@ namespace asterivo.Unity60.Core.Bootstrap
         #region Initialization
 
         /// <summary>
-        /// ゲームサービスの初期化
+        /// ゲームサービスの初期匁E
         /// </summary>
         public void Initialize()
         {
@@ -83,14 +84,14 @@ namespace asterivo.Unity60.Core.Bootstrap
             if (_enableDebugLogs)
                 Debug.Log("[GameBootstrapper] Starting initialization...");
 
-            // ServiceLocatorのクリア（念のため）
+            // ServiceLocatorのクリア�E�念のため�E�E
             ServiceLocator.Clear();
 
-            // 各サービスの登録と初期化
+            // 吁E��ービスの登録と初期匁E
             RegisterCoreServices();
             RegisterFeatureServices();
 
-            // GameEventBridgeの作成
+            // GameEventBridgeの作�E
             if (_createGameEventBridge)
             {
                 CreateGameEventBridge();
@@ -117,8 +118,8 @@ namespace asterivo.Unity60.Core.Bootstrap
                     Debug.Log("[GameBootstrapper] Registered EventManager");
             }
 
-            // 他のコアサービスもここに追加
-            // 例: AudioManager, InputManager, SaveManager など
+            // 他�Eコアサービスもここに追加
+            // 侁E AudioManager, InputManager, SaveManager など
         }
 
         /// <summary>
@@ -140,16 +141,16 @@ namespace asterivo.Unity60.Core.Bootstrap
             if (_enableDebugLogs)
                 Debug.Log("[GameBootstrapper] Registered GameManagerService");
 
-            // 将来的にFeature層のサービスをここに追加
-            // 例: PlayerManager, AIManager, UIManager など
+            // 封E��皁E��Feature層のサービスをここに追加
+            // 侁E PlayerManager, AIManager, UIManager など
         }
 
         /// <summary>
-        /// GameEventBridgeの作成
+        /// GameEventBridgeの作�E
         /// </summary>
         private void CreateGameEventBridge()
         {
-            // GameEventBridgeコンポーネントを追加
+            // GameEventBridgeコンポ�Eネントを追加
             var bridgeGO = new GameObject("GameEventBridge");
             bridgeGO.transform.SetParent(transform);
             var bridge = bridgeGO.AddComponent<GameEventBridge>();
@@ -159,7 +160,7 @@ namespace asterivo.Unity60.Core.Bootstrap
         }
 
         /// <summary>
-        /// クリーンアップ処理
+        /// クリーンアチE�E処琁E
         /// </summary>
         private void Cleanup()
         {
@@ -177,12 +178,12 @@ namespace asterivo.Unity60.Core.Bootstrap
         #region Public Static Methods
 
         /// <summary>
-        /// 初期化されているかチェック
+        /// 初期化されてぁE��かチェチE��
         /// </summary>
         public static bool IsInitialized => _isInitialized;
 
         /// <summary>
-        /// 手動初期化（必要に応じて）
+        /// 手動初期化（忁E��に応じて�E�E
         /// </summary>
         public static void InitializeManually()
         {
@@ -197,7 +198,7 @@ namespace asterivo.Unity60.Core.Bootstrap
         }
 
         /// <summary>
-        /// サービスの取得（便利メソッド）
+        /// サービスの取得（便利メソチE���E�E
         /// </summary>
         public static T GetService<T>() where T : IService
         {
@@ -210,7 +211,7 @@ namespace asterivo.Unity60.Core.Bootstrap
         }
 
         /// <summary>
-        /// サービスの取得（安全版）
+        /// サービスの取得（安�E版！E
         /// </summary>
         public static bool TryGetService<T>(out T service) where T : IService
         {
@@ -256,3 +257,4 @@ namespace asterivo.Unity60.Core.Bootstrap
         #endregion
     }
 }
+

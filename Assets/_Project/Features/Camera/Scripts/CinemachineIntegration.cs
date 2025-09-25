@@ -9,7 +9,7 @@ using asterivo.Unity60.Core.Helpers;
 using asterivo.Unity60.Core.Debug;
 using System.Collections.Generic;
 using System.Collections;
-using CameraState = asterivo.Unity60.Features.Camera.CameraState;
+using CameraState = asterivo.Unity60.Camera.CameraState;
 using CoreCameraState = asterivo.Unity60.Core.Events.CameraState;
 using CoreCameraStateEvent = asterivo.Unity60.Core.Events.CameraStateEvent;
 

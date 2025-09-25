@@ -1,37 +1,37 @@
 using UnityEngine;
-// using asterivo.Unity60.Core.Commands;
+using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// Game pause command definition.
-    /// Encapsulates game pause/resume actions.
-    ///
-    /// Main features:
-    /// - Game time pause/resume
-    /// - UI display control during pause
-    /// - Audio pause/resume
-    /// - Input disabling and management
+    /// ゲーム一時停止コマンドの定義。
+    /// ゲームの一時停止/再開アクションをカプセル化します。
+    /// 
+    /// 主な機能：
+    /// - ゲーム時間の停止/再開
+    /// - 一時停止中のUI表示制御
+    /// - オーディオの一時停止/再開
+    /// - 入力の無効化/有効化制御
     /// </summary>
     [System.Serializable]
     public class PauseGameCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// Types of pause behavior
+        /// 一時停止の種類を定義する列挙型
         /// </summary>
         public enum PauseType
         {
-            Full,           // Complete pause (time, sound, input all stopped)
-            Partial,        // Partial pause (only time, sound continues)
-            Menu,           // Menu display pause
-            Dialog,         // Dialog display pause
-            Cutscene        // Cutscene pause
+            Full,           // 完全一時停止（時間、音、入力全て）
+            Partial,        // 部分一時停止（時間のみ、音は継続等）
+            Menu,           // メニュー表示用一時停止
+            Dialog,         // ダイアログ表示用一時停止
+            Cutscene        // カットシーン用一時停止
         }
 
         [Header("Pause Parameters")]
         public PauseType pauseType = PauseType.Full;
-        public bool toggleMode = true; // true: toggle mode, false: pause only
-        public bool allowUnpauseInCode = true; // Allow resume from code
+        public bool toggleMode = true; // true: トグル形式, false: 一時停止のみ
+        public bool allowUnpauseInCode = true; // コードからの再開を許可するか
 
         [Header("Time Control")]
         public bool pauseGameTime = true;
@@ -42,7 +42,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         [Header("Audio Control")]
         public bool pauseMusic = true;
         public bool pauseSFX = true;
-        public bool pauseVoice = false; // Voice often continues during pause
+        public bool pauseVoice = false; // ボイスは継続する場合が多い
         public bool pauseAmbient = true;
 
         [Header("Input Control")]
@@ -60,22 +60,22 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         [Header("Visual Effects")]
         public bool showPauseIndicator = true;
         public string pauseIndicatorText = "PAUSED";
-        public bool showTimeScale = false; // For debug
+        public bool showTimeScale = false; // デバッグ用
 
         [Header("Auto Pause")]
         public bool pauseOnFocusLost = true;
         public bool pauseOnMinimize = true;
-        public bool resumeOnFocusGain = false; // false to require manual resume
+        public bool resumeOnFocusGain = false; // 手動再開を要求する場合はfalse
 
         /// <summary>
-        /// Default constructor
+        /// デフォルトコンストラクタ
         /// </summary>
         public PauseGameCommandDefinition()
         {
         }
 
         /// <summary>
-        /// Parameterized constructor
+        /// パラメータ付きコンストラクタ
         /// </summary>
         public PauseGameCommandDefinition(PauseType type, bool isToggle = true)
         {
@@ -84,26 +84,26 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Check if pause command can be executed
+        /// 一時停止コマンドが実行可能かどうかを判定します
         /// </summary>
         public bool CanExecute(object context = null)
         {
-            // Basic executability check
+            // 基本的な実行可能性チェック
             if (backgroundDimAmount < 0f || backgroundDimAmount > 1f) return false;
 
-            // Additional checks if context exists
+            // コンテキストがある場合の追加チェック
             if (context != null)
             {
-                // Game state checks (already paused, loading, etc.)
-                // Pause restrictions in important scenes (cutscenes, etc.)
-                // Pause control in multiplayer games
+                // ゲームの状態チェック（既に一時停止中、ローディング中等）
+                // 重要なシーンでの一時停止制限（カットシーン中等）
+                // マルチプレイゲームでの一時停止制約
             }
 
             return true;
         }
 
         /// <summary>
-        /// Create pause command instance
+        /// 一時停止コマンドを作成します
         /// </summary>
         public ICommand CreateCommand(object context = null)
         {
@@ -115,7 +115,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// Actual implementation of pause command
+    /// PauseGameCommandDefinitionに対応する実際のコマンド実装
     /// </summary>
     public class PauseGameCommand : ICommand
     {
@@ -132,7 +132,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Execute pause command
+        /// 一時停止コマンドの実行
         /// </summary>
         public void Execute()
         {
@@ -142,10 +142,10 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             UnityEngine.Debug.Log($"Executing {definition.pauseType} pause: toggle={definition.toggleMode}");
 #endif
 
-            // Save current state
+            // 現在の状態を保存
             SaveCurrentState();
 
-            // Toggle mode switches state
+            // トグルモードの場合は状態を切り替え
             if (definition.toggleMode)
             {
                 if (isPaused)
@@ -159,7 +159,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             }
             else
             {
-                // Pause only mode always pauses
+                // 一時停止のみモードの場合は常に一時停止
                 PauseGame();
             }
 
@@ -167,15 +167,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Check if command can be executed
-        /// </summary>
-        public bool CanExecute()
-        {
-            return !executed && definition.CanExecute(context);
-        }
-
-        /// <summary>
-        /// Pause the game
+        /// ゲームの一時停止
         /// </summary>
         private void PauseGame()
         {
@@ -183,41 +175,41 @@ namespace asterivo.Unity60.Core.Commands.Definitions
 
             isPaused = true;
 
-            // Time control
+            // 時間制御
             if (definition.pauseGameTime)
             {
                 Time.timeScale = 0f;
             }
 
-            // Physics pause
+            // 物理の一時停止
             if (definition.pausePhysics)
             {
                 Physics.simulationMode = SimulationMode.Script;
                 Physics2D.simulationMode = SimulationMode2D.Script;
             }
 
-            // Animation pause
+            // アニメーションの一時停止
             if (definition.pauseAnimations)
             {
                 PauseAnimations();
             }
 
-            // Particle pause
+            // パーティクルの一時停止
             if (definition.pauseParticles)
             {
                 PauseParticles();
             }
 
-            // Audio control
+            // オーディオ制御
             PauseAudio();
 
-            // Input control
+            // 入力制御
             ConfigureInputForPause();
 
-            // UI control
+            // UI制御
             ConfigureUIForPause();
 
-            // Raise pause event
+            // 一時停止イベントの発行
             // EventSystem.Publish(new GamePausedEvent(definition.pauseType));
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -226,18 +218,18 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Resume the game
+        /// ゲームの再開
         /// </summary>
         private void ResumeGame()
         {
             if (!isPaused) return;
 
-            // Restore state
+            // 状態の復元
             RestorePreviousState();
 
             isPaused = false;
 
-            // Raise resume event
+            // 一時停止解除イベントの発行
             // EventSystem.Publish(new GameResumedEvent());
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -246,67 +238,67 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Save current state
+        /// 現在の状態を保存
         /// </summary>
         private void SaveCurrentState()
         {
             previousState = new PauseState
             {
-                TimeScale = Time.timeScale,
-                PhysicsSimulationMode = Physics.simulationMode,
-                Physics2DSimulationMode = Physics2D.simulationMode,
-                // Save other states as needed
+            TimeScale = Time.timeScale,
+            PhysicsSimulationMode = Physics.simulationMode,
+            Physics2DSimulationMode = Physics2D.simulationMode,
+            // その他の状態も保存
             };
         }
 
         /// <summary>
-        /// Restore previous state
+        /// 前の状態を復元
         /// </summary>
         private void RestorePreviousState()
         {
             if (previousState == null) return;
 
-            // Restore time control
+            // 時間制御の復元
             if (definition.pauseGameTime)
             {
                 Time.timeScale = previousState.TimeScale;
             }
 
-            // Restore physics
+            // 物理の復元
             if (definition.pausePhysics)
             {
                 Physics.simulationMode = previousState.PhysicsSimulationMode;
                 Physics2D.simulationMode = previousState.Physics2DSimulationMode;
             }
 
-            // Restore animations
+            // アニメーションの復元
             if (definition.pauseAnimations)
             {
                 ResumeAnimations();
             }
 
-            // Restore particles
+            // パーティクルの復元
             if (definition.pauseParticles)
             {
                 ResumeParticles();
             }
 
-            // Restore audio
+            // オーディオの復元
             ResumeAudio();
 
-            // Restore input
+            // 入力の復元
             ConfigureInputForResume();
 
-            // Restore UI
+            // UIの復元
             ConfigureUIForResume();
         }
 
         /// <summary>
-        /// Pause animations
+        /// アニメーションの一時停止
         /// </summary>
         private void PauseAnimations()
         {
-            // Find all Animators and pause them
+            // 全てのAnimatorを検索して一時停止
             var animators = Object.FindObjectsByType<Animator>(FindObjectsSortMode.None);
             foreach (var animator in animators)
             {
@@ -318,11 +310,11 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Resume animations
+        /// アニメーションの再開
         /// </summary>
         private void ResumeAnimations()
         {
-            // Find all Animators and resume them
+            // 全てのAnimatorを検索して再開
             var animators = Object.FindObjectsByType<Animator>(FindObjectsSortMode.None);
             foreach (var animator in animators)
             {
@@ -334,11 +326,11 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Pause particles
+        /// パーティクルの一時停止
         /// </summary>
         private void PauseParticles()
         {
-            // Find all ParticleSystems and pause them
+            // 全てのParticleSystemを検索して一時停止
             var particles = Object.FindObjectsByType<ParticleSystem>(FindObjectsSortMode.None);
             foreach (var particle in particles)
             {
@@ -350,11 +342,11 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Resume particles
+        /// パーティクルの再開
         /// </summary>
         private void ResumeParticles()
         {
-            // Find all ParticleSystems and resume them
+            // 全てのParticleSystemを検索して再開
             var particles = Object.FindObjectsByType<ParticleSystem>(FindObjectsSortMode.None);
             foreach (var particle in particles)
             {
@@ -366,17 +358,17 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Audio pause control
+        /// オーディオの一時停止制御
         /// </summary>
         private void PauseAudio()
         {
-            // AudioSource pause control
+            // AudioSourceの一時停止制御
             var audioSources = Object.FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
             foreach (var audioSource in audioSources)
             {
                 if (!audioSource.isPlaying) continue;
 
-                // Control by tag or layer
+                // タグまたはレイヤーによる制御
                 bool shouldPause = false;
 
                 if (audioSource.CompareTag("Music") && definition.pauseMusic)
@@ -394,47 +386,47 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 }
             }
 
-            // AudioListener pause
+            // AudioListener の一時停止
             AudioListener.pause = definition.pauseMusic || definition.pauseSFX;
         }
 
         /// <summary>
-        /// Audio resume control
+        /// オーディオの再開制御
         /// </summary>
         private void ResumeAudio()
         {
-            // AudioSource resume control
+            // AudioSourceの再開制御
             var audioSources = Object.FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
             foreach (var audioSource in audioSources)
             {
-                if (audioSource.isPlaying) continue; // Skip if already playing
+                if (audioSource.isPlaying) continue; // 既に再生中はスキップ
 
-                // Resume based on tag (actual implementation needs more detailed management)
+                // タグによる再開判定（実際の実装ではより詳細な管理が必要）
                 audioSource.UnPause();
             }
 
-            // AudioListener resume
+            // AudioListener の再開
             AudioListener.pause = false;
         }
 
         /// <summary>
-        /// Configure input for pause
+        /// 一時停止用の入力制御
         /// </summary>
         private void ConfigureInputForPause()
         {
             if (definition.disableGameplayInput)
             {
-                // Disable gameplay input (actual implementation needs InputSystem integration)
+                // ゲームプレイ入力の無効化（実際の実装では InputSystem との連携）
                 // InputSystem.DisableActionMap("Gameplay");
             }
 
             if (definition.allowMenuInput)
             {
-                // Enable menu input
+                // メニュー入力の有効化
                 // InputSystem.EnableActionMap("UI");
             }
 
-            // Mouse cursor control
+            // マウスカーソルの制御
             if (definition.disableMouseCursor)
             {
                 Cursor.lockState = CursorLockMode.Locked;
@@ -448,47 +440,47 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Configure input for resume
+        /// 再開用の入力制御
         /// </summary>
         private void ConfigureInputForResume()
         {
-            // Restore gameplay input
+            // ゲームプレイ入力の復元
             // InputSystem.EnableActionMap("Gameplay");
 
-            // Restore mouse cursor
-            // Actual implementation should restore from previousState
+            // マウスカーソルの復元
+            // 実際の実装では previousState から復元
         }
 
         /// <summary>
-        /// Configure UI for pause
+        /// 一時停止用のUI制御
         /// </summary>
         private void ConfigureUIForPause()
         {
-            // Show pause menu
+            // 一時停止メニューの表示
             if (definition.showPauseMenu)
             {
                 ShowPauseMenu();
             }
 
-            // Dim background
+            // 背景の暗転
             if (definition.dimBackground)
             {
                 DimBackground(definition.backgroundDimAmount);
             }
 
-            // Blur background
+            // 背景のブラー
             if (definition.blurBackground)
             {
                 ApplyBackgroundBlur();
             }
 
-            // Show pause indicator
+            // 一時停止インジケーターの表示
             if (definition.showPauseIndicator)
             {
                 ShowPauseIndicator(definition.pauseIndicatorText);
             }
 
-            // Show time scale (for debug)
+            // タイムスケール表示（デバッグ用）
             if (definition.showTimeScale)
             {
                 ShowTimeScaleDebugInfo();
@@ -496,17 +488,17 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Configure UI for resume
+        /// 再開用のUI制御
         /// </summary>
         private void ConfigureUIForResume()
         {
-            // Hide pause menu
+            // 一時停止メニューの非表示
             if (definition.showPauseMenu)
             {
                 HidePauseMenu();
             }
 
-            // Remove background effects
+            // 背景効果の解除
             if (definition.dimBackground)
             {
                 RemoveBackgroundDim();
@@ -517,7 +509,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                 RemoveBackgroundBlur();
             }
 
-            // Hide indicators
+            // インジケーターの非表示
             if (definition.showPauseIndicator)
             {
                 HidePauseIndicator();
@@ -529,20 +521,20 @@ namespace asterivo.Unity60.Core.Commands.Definitions
             }
         }
 
-        // UI control methods (actual implementation needs UISystem integration)
-        private void ShowPauseMenu() { /* Show pause menu */ }
-        private void HidePauseMenu() { /* Hide pause menu */ }
-        private void DimBackground(float amount) { /* Dim background */ }
-        private void RemoveBackgroundDim() { /* Remove background dim */ }
-        private void ApplyBackgroundBlur() { /* Apply background blur */ }
-        private void RemoveBackgroundBlur() { /* Remove background blur */ }
-        private void ShowPauseIndicator(string text) { /* Show pause indicator */ }
-        private void HidePauseIndicator() { /* Hide pause indicator */ }
-        private void ShowTimeScaleDebugInfo() { /* Show time scale info */ }
-        private void HideTimeScaleDebugInfo() { /* Hide time scale info */ }
+        // UI制御メソッド（実際の実装では UISystem との連携）
+        private void ShowPauseMenu() { /* 一時停止メニュー表示 */ }
+        private void HidePauseMenu() { /* 一時停止メニュー非表示 */ }
+        private void DimBackground(float amount) { /* 背景暗転 */ }
+        private void RemoveBackgroundDim() { /* 背景暗転解除 */ }
+        private void ApplyBackgroundBlur() { /* 背景ブラー */ }
+        private void RemoveBackgroundBlur() { /* 背景ブラー解除 */ }
+        private void ShowPauseIndicator(string text) { /* 一時停止インジケーター表示 */ }
+        private void HidePauseIndicator() { /* 一時停止インジケーター非表示 */ }
+        private void ShowTimeScaleDebugInfo() { /* タイムスケール情報表示 */ }
+        private void HideTimeScaleDebugInfo() { /* タイムスケール情報非表示 */ }
 
         /// <summary>
-        /// Resume request from external source (menu or UI system)
+        /// 外部からの再開要求（MenuやUI経由）
         /// </summary>
         public void RequestResume()
         {
@@ -553,7 +545,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Application focus change handling
+        /// アプリケーションフォーカス変更時の処理
         /// </summary>
         public void OnApplicationFocusChanged(bool hasFocus)
         {
@@ -568,7 +560,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Application minimize handling
+        /// アプリケーション最小化時の処理
         /// </summary>
         public void OnApplicationPause(bool pauseStatus)
         {
@@ -579,7 +571,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Undo operation (cancel pause state)
+        /// Undo操作（一時停止状態の取り消し）
         /// </summary>
         public void Undo()
         {
@@ -598,18 +590,18 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Whether this command can be undone
+        /// このコマンドがUndo可能かどうか
         /// </summary>
         public bool CanUndo => executed;
 
         /// <summary>
-        /// Whether currently paused
+        /// 現在一時停止中かどうか
         /// </summary>
         public bool IsPaused => isPaused;
     }
 
     /// <summary>
-    /// Class to save state before pause
+    /// 一時停止前の状態を保存するクラス
     /// </summary>
     [System.Serializable]
     public class PauseState
@@ -620,6 +612,6 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public bool AudioListenerPause;
         public CursorLockMode CursorLockState;
         public bool CursorVisible;
-        // Add other states as needed
+        // 必要に応じて他の状態も追加
     }
 }

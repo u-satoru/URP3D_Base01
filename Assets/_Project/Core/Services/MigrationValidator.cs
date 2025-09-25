@@ -1,15 +1,15 @@
 using UnityEngine;
 
 using asterivo.Unity60.Core.Audio.Interfaces;
-// using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Services;
-// // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
+// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 using asterivo.Unity60.Core;
 
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// 遘ｻ陦悟ｮ御ｺ・憾豕√・讀懆ｨｼ繝・・繝ｫ
+    /// 移行完了状況の検証ツール
     /// </summary>
     public class MigrationValidator : MonoBehaviour
     {
@@ -38,17 +38,17 @@ namespace asterivo.Unity60.Core.Services
             
             bool allPassed = true;
             
-            // ServiceLocator蝓ｺ譛ｬ讖溯・縺ｮ讀懆ｨｼ
+            // ServiceLocator基本機能の検証
             allPassed &= ValidateServiceLocatorBasics();
             
-            // 蜷・し繝ｼ繝薙せ縺ｮ讀懆ｨｼ
+            // 各サービスの検証
             allPassed &= ValidateAudioService();
             allPassed &= ValidateSpatialAudioService();
             allPassed &= ValidateStealthAudioService();
             allPassed &= ValidateEffectService();
             allPassed &= ValidateAudioUpdateService();
             
-            // Feature Flags縺ｮ讀懆ｨｼ
+            // Feature Flagsの検証
             allPassed &= ValidateFeatureFlags();
             
             string result = allPassed ? "PASSED" : "FAILED";
@@ -59,7 +59,8 @@ namespace asterivo.Unity60.Core.Services
         {
             ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] Validating ServiceLocator basics...");
             
-            // ServiceLocator縺悟虚菴懊＠縺ｦ縺・ｋ縺薙→繧堤｢ｺ隱・            int serviceCount = ServiceLocator.GetServiceCount();
+            // ServiceLocatorが動作していることを確認
+            int serviceCount = ServiceLocator.GetServiceCount();
             if (serviceCount == 0)
             {
                 ServiceLocator.GetService<IEventLogger>()?.LogError("[MigrationValidator] ServiceLocator has no registered services");
@@ -155,17 +156,19 @@ namespace asterivo.Unity60.Core.Services
                 return false;
             }
             
-            // Week 3 expected settings
-            if (FeatureFlags.UseNewAudioService &&
-                FeatureFlags.UseNewSpatialService &&
+            // Week 3の期待される設定
+            if (FeatureFlags.UseNewAudioService && 
+                FeatureFlags.UseNewSpatialService && 
                 FeatureFlags.UseNewStealthService)
             {
                 ServiceLocator.GetService<IEventLogger>()?.Log("[MigrationValidator] All new services are enabled");
                 return true;
             }
-
-            ServiceLocator.GetService<IEventLogger>()?.LogWarning("[MigrationValidator] Some new services are still disabled");
-            return false;
+            else
+            {
+                ServiceLocator.GetService<IEventLogger>()?.LogWarning("[MigrationValidator] Some new services are still disabled");
+                return false;
+            }
         }
     }
 }

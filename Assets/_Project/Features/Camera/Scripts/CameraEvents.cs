@@ -1,7 +1,7 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
 
-namespace asterivo.Unity60.Features.Camera
+namespace asterivo.Unity60.Camera
 {
     /// <summary>
     /// カメラの状態

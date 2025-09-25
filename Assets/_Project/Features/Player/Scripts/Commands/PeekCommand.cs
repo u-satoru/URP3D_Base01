@@ -1,9 +1,6 @@
 using UnityEngine;
 using asterivo.Unity60.Core.Commands;
-using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Core.Services;
 using asterivo.Unity60.Features.Player.States;
-using asterivo.Unity60.Features.Player.Events;
 
 namespace asterivo.Unity60.Features.Player.Commands
 {
@@ -50,15 +47,7 @@ namespace asterivo.Unity60.Features.Player.Commands
                 // 元の位置に戻す
                 _stateMachine.transform.position = _originalPosition;
                 _isPeeking = false;
-
-                // 覗き見終了イベントを発行
-                // TODO: IEventManagerの実装後に有効化
-                object eventManager = null;
-                if (eventManager != null)
-                {
-                    eventManager.RaiseEvent("PlayerPeekEnded", _originalPosition);
-                }
-
+                
                 Debug.Log("Returned to original cover position");
             }
         }
@@ -106,26 +95,11 @@ namespace asterivo.Unity60.Features.Player.Commands
         /// </summary>
         private void AdjustCameraForPeek()
         {
-            // GameEventを使用してカメラシステムに通知
-            var peekEventData = new PlayerPeekEventData(
-                _definition.peekDirection,
-                _definition.peekIntensity,
-                _stateMachine.transform.position,
-                _stateMachine.transform.rotation,
-                _originalPosition
-            );
-
-            // ServiceLocatorからEventManagerを取得してイベントを発行
-            var eventManager = null // TODO: IEventManagerの実装後に有効化;
-            if (eventManager != null)
-            {
-                eventManager.RaiseEvent("PlayerPeek", peekEventData);
-                Debug.Log($"Raised PlayerPeek event - Direction: {_definition.peekDirection}, Intensity: {_definition.peekIntensity}");
-            }
-            else
-            {
-                Debug.LogWarning("EventManager not found in ServiceLocator. Camera system will not be notified of peek action.");
-            }
+            // カメラシステムとの統合
+            // 実際の実装では、CameraStateMachineやCinemachineとの連携が必要
+            
+            // 覗き見イベントを発行してカメラシステムに通知
+            // onPeekStarted?.Raise(new PeekEventData(_definition.peekDirection, _definition.peekIntensity));
         }
     }
 }

@@ -4,14 +4,14 @@ using System.Linq;
 using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Services;
-// using asterivo.Unity60.Core.Debug;
-// // using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
+using asterivo.Unity60.Core.Debug;
+// using asterivo.Unity60.Core.Debug; // Removed to avoid circular dependency
 
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// Step 3.12: Advanced Emergency Rollback Monitoring System
-    /// Continuous system state monitoring, issue prediction, and automatic response mechanism
+    /// Step 3.12: 高度な緊急時ロールバック監視システム
+    /// システム状態の継続的監視、予測的問題検出、自動対応機能
     /// </summary>
     public class AdvancedRollbackMonitor : MonoBehaviour
     {
@@ -19,72 +19,72 @@ namespace asterivo.Unity60.Core.Services
         [SerializeField] private bool enableContinuousMonitoring = true;
         [SerializeField] private bool enablePredictiveAnalysis = true;
         [SerializeField] private bool enableAutoRecovery = true;
-        [SerializeField] private float monitoringInterval = 5f; // Every 5 seconds
-        [SerializeField] private float healthCheckInterval = 10f; // Every 10 seconds
-
+        [SerializeField] private float monitoringInterval = 5f; // 5秒ごと
+        [SerializeField] private float healthCheckInterval = 10f; // 10秒ごと
+        
         [Header("Thresholds")]
         [SerializeField] private int criticalHealthThreshold = 30;
         [SerializeField] private int warningHealthThreshold = 60;
         [SerializeField] private int maxConsecutiveFailures = 3;
-        [SerializeField] private float performanceThreshold = 0.5f; // Warning at 50% performance drop
-
+        [SerializeField] private float performanceThreshold = 0.5f; // 50%性能低下で警告
+        
         [Header("Current Status")]
         [SerializeField] private SystemHealthLevel currentHealthLevel = SystemHealthLevel.Unknown;
         [SerializeField] private int consecutiveFailures = 0;
         [SerializeField] private float lastHealthScore = 100f;
         [SerializeField] private string lastIssueDetected = "";
-
-        // Monitoring data
+        
+        // 監視データ
         private List<HealthSnapshot> healthHistory = new List<HealthSnapshot>();
         private Dictionary<string, ServiceHealthMetrics> serviceMetrics = new Dictionary<string, ServiceHealthMetrics>();
         private Queue<SystemIssue> recentIssues = new Queue<SystemIssue>();
-
+        
         private const int MAX_HEALTH_HISTORY = 100;
         private const int MAX_RECENT_ISSUES = 20;
-
+        
         private void Start()
         {
             InitializeMonitoring();
-
+            
             if (enableContinuousMonitoring)
             {
                 InvokeRepeating(nameof(PerformSystemCheck), monitoringInterval, monitoringInterval);
                 InvokeRepeating(nameof(PerformHealthAnalysis), healthCheckInterval, healthCheckInterval);
             }
-
+            
             ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Advanced monitoring system started");
         }
-
+        
         private void OnDestroy()
         {
             SaveMonitoringData();
         }
-
+        
         /// <summary>
-        /// Initialize monitoring system
+        /// 監視システムの初期化
         /// </summary>
         private void InitializeMonitoring()
         {
             LoadMonitoringData();
             RegisterServiceMetrics();
             PerformInitialHealthCheck();
-
+            
             ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Monitoring system initialized");
         }
-
+        
         /// <summary>
-        /// Register service metrics
+        /// サービスメトリクスの登録
         /// </summary>
         private void RegisterServiceMetrics()
         {
             string[] services = {
                 "AudioService",
-                "SpatialAudioService",
+                "SpatialAudioService", 
                 "StealthAudioService",
                 "EffectService",
                 "AudioUpdateService"
             };
-
+            
             foreach (var service in services)
             {
                 serviceMetrics[service] = new ServiceHealthMetrics
@@ -98,44 +98,44 @@ namespace asterivo.Unity60.Core.Services
                 };
             }
         }
-
+        
         /// <summary>
-        /// Perform system check
+        /// システムチェックの実行
         /// </summary>
         private void PerformSystemCheck()
         {
             if (!enableContinuousMonitoring) return;
-
+            
             try
             {
-                // Basic system health check
+                // 基本的なシステム健全性チェック
                 var healthStatus = EmergencyRollback.CheckSystemHealth();
                 UpdateHealthHistory(healthStatus);
-
-                // Individual service check
+                
+                // サービス別詳細チェック
                 CheckIndividualServices();
-
-                // Performance metrics check
+                
+                // パフォーマンスメトリクスチェック
                 CheckPerformanceMetrics();
-
-                // Predictive analysis execution
+                
+                // 予測分析の実行
                 if (enablePredictiveAnalysis)
                 {
                     PerformPredictiveAnalysis();
                 }
-
-                // Issue detection and handling
+                
+                // 問題検出と対応
                 DetectAndHandleIssues(healthStatus);
-
+                
             }
             catch (Exception ex)
             {
                 ServiceLocator.GetService<IEventLogger>()?.LogError($"[AdvancedRollbackMonitor] System check failed: {ex.Message}");
             }
         }
-
+        
         /// <summary>
-        /// Update health history
+        /// 健全性履歴の更新
         /// </summary>
         private void UpdateHealthHistory(SystemHealthStatus healthStatus)
         {
@@ -147,24 +147,24 @@ namespace asterivo.Unity60.Core.Services
                 IssueCount = healthStatus.Issues.Count,
                 HasInconsistentConfiguration = healthStatus.HasInconsistentConfiguration
             };
-
+            
             healthHistory.Add(snapshot);
             if (healthHistory.Count > MAX_HEALTH_HISTORY)
             {
                 healthHistory.RemoveAt(0);
             }
-
-            // Update current health level
+            
+            // 現在の健全性レベルを更新
             UpdateCurrentHealthLevel(healthStatus.HealthScore);
         }
-
+        
         /// <summary>
-        /// Update current health level
+        /// 現在の健全性レベルを更新
         /// </summary>
         private void UpdateCurrentHealthLevel(int healthScore)
         {
             SystemHealthLevel newLevel;
-
+            
             if (healthScore >= 80)
                 newLevel = SystemHealthLevel.Excellent;
             else if (healthScore >= warningHealthThreshold)
@@ -173,24 +173,24 @@ namespace asterivo.Unity60.Core.Services
                 newLevel = SystemHealthLevel.Warning;
             else
                 newLevel = SystemHealthLevel.Critical;
-
+            
             if (newLevel != currentHealthLevel)
             {
                 var previousLevel = currentHealthLevel;
                 currentHealthLevel = newLevel;
                 OnHealthLevelChanged(previousLevel, newLevel, healthScore);
             }
-
+            
             lastHealthScore = healthScore;
         }
-
+        
         /// <summary>
-        /// Handle health level change
+        /// 健全性レベル変更時の処理
         /// </summary>
         private void OnHealthLevelChanged(SystemHealthLevel previous, SystemHealthLevel current, int score)
         {
-            ServiceLocator.GetService<IEventLogger>()?.Log($"[AdvancedRollbackMonitor] Health level changed: {previous} -> {current} (Score: {score})");
-
+            ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Health level changed: {previous} -> {current} (Score: {score})");
+            
             switch (current)
             {
                 case SystemHealthLevel.Critical:
@@ -208,9 +208,9 @@ namespace asterivo.Unity60.Core.Services
                     break;
             }
         }
-
+        
         /// <summary>
-        /// Check individual services
+        /// 個別サービスのチェック
         /// </summary>
         private void CheckIndividualServices()
         {
@@ -218,16 +218,16 @@ namespace asterivo.Unity60.Core.Services
             {
                 var serviceName = kvp.Key;
                 var metrics = kvp.Value;
-
+                
                 try
                 {
                     bool isHealthy = CheckServiceHealth(serviceName);
                     float responseTime = MeasureServiceResponseTime(serviceName);
-
+                    
                     metrics.LastCheckTime = DateTime.Now;
                     metrics.IsHealthy = isHealthy;
                     metrics.ResponseTime = responseTime;
-
+                    
                     if (isHealthy)
                     {
                         metrics.SuccessRate = Mathf.Min(100f, metrics.SuccessRate + 1f);
@@ -237,18 +237,18 @@ namespace asterivo.Unity60.Core.Services
                         metrics.ErrorCount++;
                         metrics.SuccessRate = Mathf.Max(0f, metrics.SuccessRate - 5f);
                     }
-
+                    
                     serviceMetrics[serviceName] = metrics;
                 }
                 catch (Exception ex)
                 {
-                    ServiceLocator.GetService<IEventLogger>()?.LogError($"[AdvancedRollbackMonitor] Service check failed for {serviceName}: {ex.Message}");
+                    ServiceLocator.GetService<IEventLogger>()?.LogError("[AdvancedRollbackMonitor] Service check failed for {serviceName}: {ex.Message}");
                 }
             }
         }
-
+        
         /// <summary>
-        /// Check individual service health
+        /// サービス健全性の個別チェック
         /// </summary>
         private bool CheckServiceHealth(string serviceName)
         {
@@ -268,17 +268,17 @@ namespace asterivo.Unity60.Core.Services
                     return false;
             }
         }
-
+        
         /// <summary>
-        /// Measure service response time
+        /// サービス応答時間の測定
         /// </summary>
         private float MeasureServiceResponseTime(string serviceName)
         {
             var stopwatch = System.Diagnostics.Stopwatch.StartNew();
-
+            
             try
             {
-                // Simple response time measurement (actual service call)
+                // 簡単な応答時間測定（実際のサービス呼び出し）
                 CheckServiceHealth(serviceName);
                 stopwatch.Stop();
                 return (float)stopwatch.ElapsedMilliseconds;
@@ -286,12 +286,12 @@ namespace asterivo.Unity60.Core.Services
             catch
             {
                 stopwatch.Stop();
-                return -1f; // Error case
+                return -1f; // エラーの場合
             }
         }
-
+        
         /// <summary>
-        /// Check performance metrics
+        /// パフォーマンスメトリクスのチェック
         /// </summary>
         private void CheckPerformanceMetrics()
         {
@@ -300,87 +300,87 @@ namespace asterivo.Unity60.Core.Services
                 float frameTime = Time.deltaTime;
                 float fps = 1f / frameTime;
                 float targetFps = Application.targetFrameRate > 0 ? Application.targetFrameRate : 60f;
-
+                
                 float performanceRatio = fps / targetFps;
-
+                
                 if (performanceRatio < performanceThreshold)
                 {
-                    RecordIssue($"Performance degradation detected: {performanceRatio:P1} of target FPS",
+                    RecordIssue($"Performance degradation detected: {performanceRatio:P1} of target FPS", 
                                IssueType.Performance, IssueSeverity.Warning);
                 }
             }
             catch (Exception ex)
             {
-                ServiceLocator.GetService<IEventLogger>()?.LogError($"[AdvancedRollbackMonitor] Performance check failed: {ex.Message}");
+                ServiceLocator.GetService<IEventLogger>()?.LogError("[AdvancedRollbackMonitor] Performance check failed: {ex.Message}");
             }
         }
-
+        
         /// <summary>
-        /// Perform predictive analysis
+        /// 予測分析の実行
         /// </summary>
         private void PerformPredictiveAnalysis()
         {
-            if (healthHistory.Count < 5) return; // Need minimum data
-
+            if (healthHistory.Count < 5) return; // 最低5回のデータが必要
+            
             try
             {
-                // Analyze health trends
+                // 健全性スコアの傾向分析
                 AnalyzeHealthTrend();
-
-                // Analyze error patterns
+                
+                // エラー発生パターンの分析
                 AnalyzeErrorPatterns();
-
-                // Predict service degradation
+                
+                // サービス品質の劣化予測
                 PredictServiceDegradation();
-
+                
             }
             catch (Exception ex)
             {
-                ServiceLocator.GetService<IEventLogger>()?.LogError($"[AdvancedRollbackMonitor] Predictive analysis failed: {ex.Message}");
+                ServiceLocator.GetService<IEventLogger>()?.LogError("[AdvancedRollbackMonitor] Predictive analysis failed: {ex.Message}");
             }
         }
-
+        
         /// <summary>
-        /// Analyze health trends
+        /// 健全性傾向の分析
         /// </summary>
         private void AnalyzeHealthTrend()
         {
             if (healthHistory.Count < 10) return;
-
+            
             var recent10 = healthHistory.GetRange(healthHistory.Count - 10, 10);
             float avgRecent = 0f;
             float avgOlder = 0f;
-
+            
             for (int i = 0; i < 5; i++)
             {
                 avgOlder += recent10[i].HealthScore;
                 avgRecent += recent10[i + 5].HealthScore;
             }
-
+            
             avgOlder /= 5f;
             avgRecent /= 5f;
-
+            
             float trendChange = avgRecent - avgOlder;
-
-            if (trendChange < -15f) // More than 15 point decline
+            
+            if (trendChange < -15f) // 15点以上の悪化
             {
-                RecordIssue($"Negative health trend detected: {trendChange:F1} point decline",
+                RecordIssue($"Negative health trend detected: {trendChange:F1} point decline", 
                            IssueType.HealthTrend, IssueSeverity.Warning);
             }
         }
-
+        
         /// <summary>
-        /// Analyze error patterns
+        /// エラーパターンの分析
         /// </summary>
         private void AnalyzeErrorPatterns()
         {
             var recentIssuesList = recentIssues.ToArray();
             if (recentIssuesList.Length < 3) return;
-
-            // Check if same errors occur multiple times recently
+            
+            // 同種のエラーが短期間に複数発生している場合
             var issueGroups = new Dictionary<string, int>();
-            var cutoffTime = DateTime.Now.AddMinutes(-10); // Last 10 minutes
-
+            var cutoffTime = DateTime.Now.AddMinutes(-10); // 過去10分間
+            
             foreach (var issue in recentIssuesList)
             {
                 if (issue.Timestamp > cutoffTime)
@@ -390,41 +390,41 @@ namespace asterivo.Unity60.Core.Services
                     issueGroups[issue.Description]++;
                 }
             }
-
+            
             foreach (var kvp in issueGroups)
             {
-                if (kvp.Value >= 3) // Same issue 3+ times
+                if (kvp.Value >= 3) // 同じ問題が3回以上
                 {
-                    RecordIssue($"Recurring issue pattern detected: '{kvp.Key}' occurred {kvp.Value} times",
+                    RecordIssue($"Recurring issue pattern detected: '{kvp.Key}' occurred {kvp.Value} times", 
                                IssueType.RecurringError, IssueSeverity.Error);
                 }
             }
         }
-
+        
         /// <summary>
-        /// Predict service quality degradation
+        /// サービス品質劣化の予測
         /// </summary>
         private void PredictServiceDegradation()
         {
             foreach (var kvp in serviceMetrics)
             {
                 var metrics = kvp.Value;
-
+                
                 if (metrics.SuccessRate < 90f && metrics.ErrorCount > 5)
                 {
                     RecordIssue($"Service quality degradation predicted for {metrics.ServiceName}: " +
-                               $"Success rate {metrics.SuccessRate:F1}%, Errors: {metrics.ErrorCount}",
+                               $"Success rate {metrics.SuccessRate:F1}%, Errors: {metrics.ErrorCount}", 
                                IssueType.ServiceDegradation, IssueSeverity.Warning);
                 }
             }
         }
-
+        
         /// <summary>
-        /// Detect issues and handle
+        /// 問題の検出と対応
         /// </summary>
         private void DetectAndHandleIssues(SystemHealthStatus healthStatus)
         {
-            // Update consecutive failure counter
+            // 連続失敗カウンターの更新
             if (!healthStatus.IsHealthy)
             {
                 consecutiveFailures++;
@@ -433,32 +433,32 @@ namespace asterivo.Unity60.Core.Services
             {
                 consecutiveFailures = 0;
             }
-
-            // Detect emergency condition
+            
+            // 緊急事態の検出
             if (consecutiveFailures >= maxConsecutiveFailures)
             {
                 HandleEmergencyCondition($"System failed {consecutiveFailures} consecutive health checks");
             }
-
-            // Detect configuration inconsistency
+            
+            // 設定矛盾の検出
             if (healthStatus.HasInconsistentConfiguration)
             {
                 HandleConfigurationInconsistency(healthStatus.Issues);
             }
         }
-
+        
         /// <summary>
-        /// Handle emergency condition
+        /// 緊急事態の対応
         /// </summary>
         private void HandleEmergencyCondition(string reason)
         {
             ServiceLocator.GetService<IEventLogger>()?.LogError($"[AdvancedRollbackMonitor] EMERGENCY CONDITION: {reason}");
-
+            
             if (enableAutoRecovery)
             {
                 ServiceLocator.GetService<IEventLogger>()?.LogError("[AdvancedRollbackMonitor] Attempting automatic recovery...");
-
-                // Try gradual recovery
+                
+                // 段階的な回復を試行
                 if (TryGradualRecovery())
                 {
                     ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Gradual recovery succeeded");
@@ -476,40 +476,40 @@ namespace asterivo.Unity60.Core.Services
                 EmergencyRollback.SetEmergencyFlag($"Emergency condition detected: {reason}");
             }
         }
-
+        
         /// <summary>
-        /// Try gradual recovery
+        /// 段階的回復の試行
         /// </summary>
         private bool TryGradualRecovery()
         {
             try
             {
                 ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Attempting gradual recovery...");
-
-                // Step 1: Disable newest service settings
+                
+                // Step 1: 最新のサービス設定を無効化
                 if (FeatureFlags.UseNewStealthService)
                 {
                     FeatureFlags.UseNewStealthService = false;
                     ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Disabled StealthService");
                     if (CheckSystemHealthImprovement()) return true;
                 }
-
-                // Step 2: Disable Spatial Audio settings
+                
+                // Step 2: Spatial Audio設定を無効化
                 if (FeatureFlags.UseNewSpatialService)
                 {
                     FeatureFlags.UseNewSpatialService = false;
                     ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Disabled SpatialService");
                     if (CheckSystemHealthImprovement()) return true;
                 }
-
-                // Step 3: Temporarily stop monitoring
+                
+                // Step 3: 監視機能を一時停止
                 if (FeatureFlags.EnableMigrationMonitoring)
                 {
                     FeatureFlags.EnableMigrationMonitoring = false;
                     ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Disabled migration monitoring");
                     if (CheckSystemHealthImprovement()) return true;
                 }
-
+                
                 return false;
             }
             catch (Exception ex)
@@ -518,78 +518,78 @@ namespace asterivo.Unity60.Core.Services
                 return false;
             }
         }
-
+        
         /// <summary>
-        /// Check system health improvement
+        /// システム健全性の改善を確認
         /// </summary>
         private bool CheckSystemHealthImprovement()
         {
-            System.Threading.Thread.Sleep(1000); // Wait 1 second
-
+            System.Threading.Thread.Sleep(1000); // 1秒待機
+            
             var healthStatus = EmergencyRollback.CheckSystemHealth();
             return healthStatus.HealthScore > criticalHealthThreshold;
         }
-
+        
         /// <summary>
-        /// Handle configuration inconsistency
+        /// 設定矛盾の対応
         /// </summary>
         private void HandleConfigurationInconsistency(List<string> issues)
         {
             foreach (var issue in issues)
             {
-                RecordIssue($"Configuration inconsistency: {issue}",
+                RecordIssue($"Configuration inconsistency: {issue}", 
                            IssueType.Configuration, IssueSeverity.Warning);
             }
-
+            
             lastIssueDetected = $"Configuration issues: {issues.Count} problems detected";
         }
-
+        
         /// <summary>
-        /// Handle critical health level
+        /// 重大健全性レベルの処理
         /// </summary>
         private void HandleCriticalHealthLevel(int score)
         {
             ServiceLocator.GetService<IEventLogger>()?.LogError($"[AdvancedRollbackMonitor] CRITICAL HEALTH LEVEL: Score {score}");
-
+            
             if (enableAutoRecovery)
             {
                 HandleEmergencyCondition($"Critical health level: {score}");
             }
         }
-
+        
         /// <summary>
-        /// Handle warning health level
+        /// 警告健全性レベルの処理
         /// </summary>
         private void HandleWarningHealthLevel(int score)
         {
             ServiceLocator.GetService<IEventLogger>()?.LogWarning($"[AdvancedRollbackMonitor] WARNING HEALTH LEVEL: Score {score}");
-
-            // Perform preventive measures
+            
+            // 予防的措置の実行
             PerformPreventiveMeasures();
         }
-
+        
         /// <summary>
-        /// Handle health recovery
+        /// 健全性回復の処理
         /// </summary>
         private void HandleHealthRecovery(SystemHealthLevel previous, SystemHealthLevel current)
         {
             ServiceLocator.GetService<IEventLogger>()?.Log($"[AdvancedRollbackMonitor] System health recovered from {previous} to {current}");
-
-            // Confirm stability after recovery
+            
+            // 回復後の安定性確認
             InvokeRepeating(nameof(ConfirmHealthStability), 30f, 10f);
         }
-
+        
         /// <summary>
-        /// Perform preventive measures
+        /// 予防的措置の実行
         /// </summary>
         private void PerformPreventiveMeasures()
         {
             ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Performing preventive measures...");
-
-            // Execute garbage collection
+            
+            // ガベージコレクションの実行
             System.GC.Collect();
-
-            // Reset service statistics
+            
+            // サービス統計のリセット
             foreach (var key in serviceMetrics.Keys.ToArray())
             {
                 var metrics = serviceMetrics[key];
@@ -600,9 +600,9 @@ namespace asterivo.Unity60.Core.Services
                 }
             }
         }
-
+        
         /// <summary>
-        /// Confirm health stability
+        /// 健全性安定性の確認
         /// </summary>
         private void ConfirmHealthStability()
         {
@@ -612,66 +612,66 @@ namespace asterivo.Unity60.Core.Services
                 ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Health stability confirmed");
             }
         }
-
+        
         /// <summary>
-        /// Perform health analysis
+        /// 健全性分析の実行
         /// </summary>
         private void PerformHealthAnalysis()
         {
             if (healthHistory.Count < 5) return;
-
-            // Analyze long-term trends
+            
+            // 過去の傾向分析
             AnalyzeLongTermTrends();
-
-            // Generate service quality report
-            if (healthHistory.Count % 12 == 0) // Every minute (5 seconds x 12 times)
+            
+            // サービス品質レポートの生成
+            if (healthHistory.Count % 12 == 0) // 1分ごと（5秒×12回）
             {
                 GenerateServiceQualityReport();
             }
         }
-
+        
         /// <summary>
-        /// Analyze long-term trends
+        /// 長期傾向の分析
         /// </summary>
         private void AnalyzeLongTermTrends()
         {
             if (healthHistory.Count < 20) return;
-
+            
             var recent = healthHistory.GetRange(healthHistory.Count - 10, 10);
             var older = healthHistory.GetRange(healthHistory.Count - 20, 10);
-
+            
             float avgRecent = (float)recent.Average(h => h.HealthScore);
             float avgOlder = (float)older.Average(h => h.HealthScore);
-
+            
             float longTermTrend = avgRecent - avgOlder;
-
+            
             if (Math.Abs(longTermTrend) > 5f)
             {
                 string trendDirection = longTermTrend > 0 ? "improving" : "declining";
                 ServiceLocator.GetService<IEventLogger>()?.Log($"[AdvancedRollbackMonitor] Long-term health trend: {trendDirection} by {Math.Abs(longTermTrend):F1} points");
             }
         }
-
+        
         /// <summary>
-        /// Generate service quality report
+        /// サービス品質レポートの生成
         /// </summary>
         private void GenerateServiceQualityReport()
         {
             ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] === Service Quality Report ===");
-
+            
             foreach (var kvp in serviceMetrics)
             {
                 var metrics = kvp.Value;
-                string status = metrics.IsHealthy ? "OK" : "FAIL";
+                string status = metrics.IsHealthy ? "✅" : "❌";
                 ServiceLocator.GetService<IEventLogger>()?.Log($"  {status} {metrics.ServiceName}: " +
                                $"Success Rate: {metrics.SuccessRate:F1}%, " +
                                $"Avg Response: {metrics.ResponseTime:F1}ms, " +
                                $"Errors: {metrics.ErrorCount}");
             }
         }
-
+        
         /// <summary>
-        /// Record issue
+        /// 問題の記録
         /// </summary>
         private void RecordIssue(string description, IssueType type, IssueSeverity severity)
         {
@@ -682,14 +682,14 @@ namespace asterivo.Unity60.Core.Services
                 Type = type,
                 Severity = severity
             };
-
+            
             recentIssues.Enqueue(issue);
             if (recentIssues.Count > MAX_RECENT_ISSUES)
             {
                 recentIssues.Dequeue();
             }
-
-            // Log output
+            
+            // ログ出力
             switch (severity)
             {
                 case IssueSeverity.Info:
@@ -703,9 +703,9 @@ namespace asterivo.Unity60.Core.Services
                     break;
             }
         }
-
+        
         /// <summary>
-        /// Save monitoring data
+        /// 監視データの保存
         /// </summary>
         private void SaveMonitoringData()
         {
@@ -721,9 +721,9 @@ namespace asterivo.Unity60.Core.Services
                 ServiceLocator.GetService<IEventLogger>()?.LogError($"[AdvancedRollbackMonitor] Failed to save monitoring data: {ex.Message}");
             }
         }
-
+        
         /// <summary>
-        /// Load monitoring data
+        /// 監視データの読み込み
         /// </summary>
         private void LoadMonitoringData()
         {
@@ -738,20 +738,20 @@ namespace asterivo.Unity60.Core.Services
                 ServiceLocator.GetService<IEventLogger>()?.LogError($"[AdvancedRollbackMonitor] Failed to load monitoring data: {ex.Message}");
             }
         }
-
+        
         /// <summary>
-        /// Perform initial health check
+        /// 初回健全性チェック
         /// </summary>
         private void PerformInitialHealthCheck()
         {
             var healthStatus = EmergencyRollback.CheckSystemHealth();
             UpdateHealthHistory(healthStatus);
-
+            
             ServiceLocator.GetService<IEventLogger>()?.Log($"[AdvancedRollbackMonitor] Initial health check: {healthStatus.HealthScore}% ({currentHealthLevel})");
         }
-
+        
         /// <summary>
-        /// Generate monitoring report
+        /// 監視状況レポートの生成
         /// </summary>
         [ContextMenu("Generate Monitoring Report")]
         public void GenerateMonitoringReport()
@@ -764,15 +764,15 @@ namespace asterivo.Unity60.Core.Services
             ServiceLocator.GetService<IEventLogger>()?.Log($"  Auto Recovery: {enableAutoRecovery}");
             ServiceLocator.GetService<IEventLogger>()?.Log($"  Health History: {healthHistory.Count} entries");
             ServiceLocator.GetService<IEventLogger>()?.Log($"  Recent Issues: {recentIssues.Count} issues");
-
+            
             if (!string.IsNullOrEmpty(lastIssueDetected))
             {
                 ServiceLocator.GetService<IEventLogger>()?.Log($"  Last Issue: {lastIssueDetected}");
             }
         }
-
+        
         /// <summary>
-        /// Reset monitoring system
+        /// 監視システムのリセット
         /// </summary>
         [ContextMenu("Reset Monitoring System")]
         public void ResetMonitoringSystem()
@@ -784,16 +784,16 @@ namespace asterivo.Unity60.Core.Services
             currentHealthLevel = SystemHealthLevel.Unknown;
             lastHealthScore = 100f;
             lastIssueDetected = "";
-
+            
             RegisterServiceMetrics();
             PerformInitialHealthCheck();
-
+            
             ServiceLocator.GetService<IEventLogger>()?.Log("[AdvancedRollbackMonitor] Monitoring system reset");
         }
     }
-
+    
     /// <summary>
-    /// System health level
+    /// システム健全性レベル
     /// </summary>
     public enum SystemHealthLevel
     {
@@ -803,9 +803,9 @@ namespace asterivo.Unity60.Core.Services
         Good = 3,
         Excellent = 4
     }
-
+    
     /// <summary>
-    /// Health snapshot
+    /// 健全性スナップショット
     /// </summary>
     [System.Serializable]
     public class HealthSnapshot
@@ -816,9 +816,9 @@ namespace asterivo.Unity60.Core.Services
         public int IssueCount;
         public bool HasInconsistentConfiguration;
     }
-
+    
     /// <summary>
-    /// Service health metrics
+    /// サービス健全性メトリクス
     /// </summary>
     [System.Serializable]
     public class ServiceHealthMetrics
@@ -830,9 +830,9 @@ namespace asterivo.Unity60.Core.Services
         public int ErrorCount;
         public float SuccessRate;
     }
-
+    
     /// <summary>
-    /// System issue
+    /// システム問題
     /// </summary>
     [System.Serializable]
     public class SystemIssue
@@ -842,9 +842,9 @@ namespace asterivo.Unity60.Core.Services
         public IssueType Type;
         public IssueSeverity Severity;
     }
-
+    
     /// <summary>
-    /// Issue type
+    /// 問題タイプ
     /// </summary>
     public enum IssueType
     {
@@ -855,9 +855,9 @@ namespace asterivo.Unity60.Core.Services
         RecurringError,
         SystemFailure
     }
-
+    
     /// <summary>
-    /// Issue severity
+    /// 問題重要度
     /// </summary>
     public enum IssueSeverity
     {

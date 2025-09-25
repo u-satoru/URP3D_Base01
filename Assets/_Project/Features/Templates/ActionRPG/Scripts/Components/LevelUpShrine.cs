@@ -2,10 +2,10 @@ using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Interaction;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Features.ActionRPG.Components;
+using asterivo.Unity60.Features.Templates.ActionRPG.Components;
 using DG.Tweening;
 
-namespace asterivo.Unity60.Features.ActionRPG.Components
+namespace asterivo.Unity60.Features.Templates.ActionRPG.Components
 {
     /// <summary>
     /// レベルアップ神殿コンポーネント

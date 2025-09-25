@@ -1,30 +1,31 @@
 using UnityEngine;
+using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// Interaction command definition
-    /// Encapsulates player's interaction with environment objects
-    ///
-    /// Main features:
-    /// - Object interaction (doors, switches, NPCs)
-    /// - Interaction range and conditions management
-    /// - Animation and effects during interaction
-    /// - Multiple interaction types support
+    /// インタラクションコマンドの定義。
+    /// プレイヤーの環境オブジェクトとの相互作用をカプセル化します。
+    /// 
+    /// 主な機能：
+    /// - オブジェクトとのインタラクション（ドア、スイッチ、NPC等）
+    /// - インタラクション範囲と条件の管理
+    /// - インタラクション時のアニメーションとエフェクト
+    /// - 複数段階のインタラクション対応
     /// </summary>
     [System.Serializable]
     public class InteractCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// Types of interactions
+        /// インタラクションの種類を定義する列挙型
         /// </summary>
         public enum InteractionType
         {
-            Instant,        // Instant interaction
-            Hold,           // Hold to interact
-            Multi,          // Multiple interactions required
-            Contextual,     // Context-dependent interaction
-            Proximity       // Proximity-based automatic interaction
+            Instant,        // 瞬間的なインタラクション
+            Hold,           // 長押しインタラクション
+            Multi,          // 複数回インタラクション
+            Contextual,     // 文脈依存インタラクション
+            Proximity       // 近接自動インタラクション
         }
 
         [Header("Interaction Parameters")]
@@ -34,21 +35,21 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         public string targetTag = "Interactable";
 
         [Header("Hold Interaction")]
-        [Tooltip("Duration required for hold interaction")]
+        [Tooltip("長押しインタラクションの必要時間")]
         public float holdDuration = 1f;
-        [Tooltip("Can cancel during hold")]
+        [Tooltip("長押し中にキャンセル可能か")]
         public bool canCancelHold = true;
 
         [Header("Multi Interaction")]
-        [Tooltip("Required number of interactions")]
+        [Tooltip("必要なインタラクション回数")]
         public int requiredInteractions = 3;
-        [Tooltip("Maximum interval between interactions")]
+        [Tooltip("インタラクション間の最大間隔")]
         public float maxInteractionInterval = 2f;
 
         [Header("Requirements")]
         public bool requiresLineOfSight = true;
         public bool requiresFacing = true;
-        [Tooltip("Required facing angle in degrees")]
+        [Tooltip("必要な向きの角度範囲（度）")]
         public float facingAngle = 90f;
 
         [Header("Animation")]
@@ -59,17 +60,17 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         [Header("Effects")]
         public bool showInteractionPrompt = true;
         public string promptText = "Press E to interact";
-        public bool showProgressBar = false;
+        public bool showProgressBar = false; // 長押し時等
 
         /// <summary>
-        /// Default constructor
+        /// デフォルトコンストラクタ
         /// </summary>
         public InteractCommandDefinition()
         {
         }
 
         /// <summary>
-        /// Parameterized constructor
+        /// パラメータ付きコンストラクタ
         /// </summary>
         public InteractCommandDefinition(InteractionType type, float range, string tag = "Interactable")
         {
@@ -79,21 +80,47 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Create interaction command instance
+        /// インタラクションコマンドが実行可能かどうかを判定します
+        /// </summary>
+        public bool CanExecute(object context = null)
+        {
+            // 基本的な実行可能性チェック
+            if (interactionRange <= 0f) return false;
+            
+            if (interactionType == InteractionType.Hold && holdDuration <= 0f) return false;
+            if (interactionType == InteractionType.Multi && requiredInteractions <= 0) return false;
+
+            // コンテキストがある場合の追加チェック
+            if (context != null)
+            {
+                // 範囲内にインタラクト可能オブジェクトがあるかチェック
+                // 視線チェック（requiresLineOfSight）
+                // 向きチェック（requiresFacing）
+                // プレイヤーの状態チェック（アニメーション中は不可等）
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// インタラクションコマンドを作成します
         /// </summary>
         public ICommand CreateCommand(object context = null)
         {
+            if (!CanExecute(context))
+                return null;
+
             return new InteractCommand(this, context);
         }
     }
 
     /// <summary>
-    /// Actual implementation of interaction command
+    /// InteractCommandDefinitionに対応する実際のコマンド実装
     /// </summary>
     public class InteractCommand : ICommand
     {
-        private readonly InteractCommandDefinition definition;
-        private readonly object context;
+        private InteractCommandDefinition definition;
+        private object context;
         private bool executed = false;
         private GameObject targetObject;
         private bool isInteracting = false;
@@ -107,13 +134,13 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Execute interaction command
+        /// インタラクションコマンドの実行
         /// </summary>
         public void Execute()
         {
             if (executed) return;
 
-            // Find interactable target
+            // インタラクション対象を検索
             targetObject = FindInteractableTarget();
             if (targetObject == null)
             {
@@ -150,56 +177,33 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Check if command can be executed
-        /// </summary>
-        public bool CanExecute()
-        {
-            // Basic executability check
-            if (definition.interactionRange <= 0f) return false;
-
-            if (definition.interactionType == InteractCommandDefinition.InteractionType.Hold &&
-                definition.holdDuration <= 0f) return false;
-
-            if (definition.interactionType == InteractCommandDefinition.InteractionType.Multi &&
-                definition.requiredInteractions <= 0) return false;
-
-            return !executed;
-        }
-
-        /// <summary>
-        /// Find interactable target within range
+        /// インタラクト可能な対象を検索
         /// </summary>
         private GameObject FindInteractableTarget()
         {
             if (context is not MonoBehaviour mono) return null;
 
-            // Search for objects in range
-            Collider[] nearbyObjects = Physics.OverlapSphere(
-                mono.transform.position,
-                definition.interactionRange,
-                definition.interactableLayer);
-
+            // 範囲内のオブジェクトを検索
+            Collider[] nearbyObjects = Physics.OverlapSphere(mono.transform.position, definition.interactionRange, definition.interactableLayer);
+            
             GameObject closestTarget = null;
             float closestDistance = float.MaxValue;
 
             foreach (var obj in nearbyObjects)
             {
-                // Tag check
-                if (!string.IsNullOrEmpty(definition.targetTag) &&
-                    !obj.CompareTag(definition.targetTag))
+                // タグチェック
+                if (!string.IsNullOrEmpty(definition.targetTag) && !obj.CompareTag(definition.targetTag))
                     continue;
 
-                // Line of sight check
-                if (definition.requiresLineOfSight &&
-                    !HasLineOfSight(mono.transform, obj.transform))
+                // 視線チェック
+                if (definition.requiresLineOfSight && !HasLineOfSight(mono.transform, obj.transform))
                     continue;
 
-                // Facing check
-                if (definition.requiresFacing &&
-                    !IsFacing(mono.transform, obj.transform))
+                // 向きチェック
+                if (definition.requiresFacing && !IsFacing(mono.transform, obj.transform))
                     continue;
 
-                // Select closest object
+                // 最も近いオブジェクトを選択
                 float distance = Vector3.Distance(mono.transform.position, obj.transform.position);
                 if (distance < closestDistance)
                 {
@@ -212,23 +216,23 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Check line of sight
+        /// 視線判定
         /// </summary>
         private bool HasLineOfSight(Transform from, Transform to)
         {
             Vector3 direction = to.position - from.position;
-
-            if (Physics.Raycast(from.position, direction.normalized,
-                out RaycastHit hit, direction.magnitude))
+            RaycastHit hit;
+            
+            if (Physics.Raycast(from.position, direction.normalized, out hit, direction.magnitude))
             {
                 return hit.collider.transform == to;
             }
-
+            
             return true;
         }
 
         /// <summary>
-        /// Check if facing target
+        /// 向き判定
         /// </summary>
         private bool IsFacing(Transform from, Transform to)
         {
@@ -238,13 +242,13 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Execute instant interaction
+        /// 瞬間インタラクションの実行
         /// </summary>
         private void ExecuteInstantInteraction()
         {
             if (targetObject != null)
             {
-                // Call interactable component
+                // インタラクト可能コンポーネントの呼び出し
                 var interactable = targetObject.GetComponent<IInteractable>();
                 interactable?.OnInteract(context);
 
@@ -254,20 +258,21 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Start hold interaction
+        /// 長押しインタラクションの開始
         /// </summary>
         private void StartHoldInteraction()
         {
             isInteracting = true;
             interactionProgress = 0f;
 
+            // 継続的な更新処理の開始（実際の実装では Coroutine またはUpdateLoop）
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"Started hold interaction: {definition.holdDuration}s required");
 #endif
         }
 
         /// <summary>
-        /// Execute multi-step interaction
+        /// 複数回インタラクションの実行
         /// </summary>
         private void ExecuteMultiInteraction()
         {
@@ -279,67 +284,68 @@ namespace asterivo.Unity60.Core.Commands.Definitions
 
             if (currentInteractionCount >= definition.requiredInteractions)
             {
-                // Complete when required count reached
+                // 必要回数に達した場合の処理
                 CompleteMultiInteraction();
             }
             else
             {
-                // Show progress feedback
+                // まだ必要回数に達していない場合のフィードバック
                 ShowProgressFeedback();
             }
         }
 
         /// <summary>
-        /// Execute contextual interaction
+        /// 文脈依存インタラクションの実行
         /// </summary>
         private void ExecuteContextualInteraction()
         {
-            // Execute different logic based on current context
+            // 現在の状況に応じて異なる処理を実行
+            // 例：時間帯、アイテム所持状況、クエスト進行状況等
+            
             var interactable = targetObject?.GetComponent<IContextualInteractable>();
             interactable?.OnContextualInteract(context, GetCurrentContext());
         }
 
         /// <summary>
-        /// Execute proximity-based interaction
+        /// 近接自動インタラクションの実行
         /// </summary>
         private void ExecuteProximityInteraction()
         {
-            // Automatically triggered while player is in range
+            // プレイヤーが範囲内にいる間、自動的に継続されるインタラクション
             var interactable = targetObject?.GetComponent<IProximityInteractable>();
             interactable?.OnProximityInteract(context);
         }
 
         /// <summary>
-        /// Complete multi-step interaction
+        /// 複数回インタラクションの完了処理
         /// </summary>
         private void CompleteMultiInteraction()
         {
             var interactable = targetObject?.GetComponent<IInteractable>();
             interactable?.OnInteract(context);
-
+            
             currentInteractionCount = 0;
             ShowInteractionEffect();
         }
 
         /// <summary>
-        /// Update hold interaction (called periodically from outside)
+        /// 長押しインタラクションの更新（外部から定期的に呼び出される）
         /// </summary>
         public void UpdateHoldInteraction(float deltaTime)
         {
-            if (!isInteracting ||
-                definition.interactionType != InteractCommandDefinition.InteractionType.Hold)
+            if (!isInteracting || definition.interactionType != InteractCommandDefinition.InteractionType.Hold)
                 return;
 
             interactionProgress += deltaTime;
 
-            // Update progress bar
+            // プログレスバーの更新
             if (definition.showProgressBar)
             {
                 float progress = interactionProgress / definition.holdDuration;
-                // TODO: Update UI
+                // UI更新処理
             }
 
-            // Check completion
+            // 完了チェック
             if (interactionProgress >= definition.holdDuration)
             {
                 CompleteHoldInteraction();
@@ -347,7 +353,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Complete hold interaction
+        /// 長押しインタラクションの完了
         /// </summary>
         private void CompleteHoldInteraction()
         {
@@ -361,7 +367,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Play interaction animation
+        /// インタラクションアニメーションの再生
         /// </summary>
         private void PlayInteractionAnimation()
         {
@@ -375,13 +381,13 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Show interaction effect
+        /// インタラクションエフェクトの表示
         /// </summary>
         private void ShowInteractionEffect()
         {
-            // TODO: Particle effects
-            // TODO: Sound effects
-            // TODO: UI feedback
+            // パーティクルエフェクト
+            // サウンドエフェクト
+            // UIフィードバック
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log("Showing interaction effect");
@@ -389,25 +395,25 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Show progress feedback
+        /// 進行状況フィードバックの表示
         /// </summary>
         private void ShowProgressFeedback()
         {
-            // TODO: Show progress UI
-            // TODO: Sound feedback
+            // 進行状況のUI表示
+            // サウンドフィードバック
         }
 
         /// <summary>
-        /// Get current context information
+        /// 現在のコンテキスト情報を取得
         /// </summary>
         private object GetCurrentContext()
         {
-            // Return context information including time, held items, quest state, etc.
+            // 時間帯、所持アイテム、クエスト状況等を含むコンテキスト情報を返す
             return new { TimeOfDay = "Day", HasKey = false };
         }
 
         /// <summary>
-        /// Cancel ongoing interaction
+        /// インタラクションのキャンセル
         /// </summary>
         public void CancelInteraction()
         {
@@ -423,13 +429,39 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Properties
+        /// Undo操作（インタラクションの取り消し）
+        /// </summary>
+        public void Undo()
+        {
+            if (!executed) return;
+
+            // インタラクションの逆操作（可能な場合）
+            var interactable = targetObject?.GetComponent<IUndoableInteractable>();
+            interactable?.OnUndoInteract(context);
+
+            // 進行中のインタラクションをキャンセル
+            CancelInteraction();
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            UnityEngine.Debug.Log("Interaction undone");
+#endif
+
+            executed = false;
+        }
+
+        /// <summary>
+        /// このコマンドがUndo可能かどうか
+        /// </summary>
+        public bool CanUndo => executed && targetObject?.GetComponent<IUndoableInteractable>() != null;
+
+        /// <summary>
+        /// 現在インタラクション中かどうか
         /// </summary>
         public bool IsInteracting => isInteracting;
     }
 
     /// <summary>
-    /// Basic interactable object interface
+    /// 基本的なインタラクト可能オブジェクトのインターフェース
     /// </summary>
     public interface IInteractable
     {
@@ -437,7 +469,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// Contextual interactable object interface
+    /// 文脈依存インタラクト可能オブジェクトのインターフェース
     /// </summary>
     public interface IContextualInteractable
     {
@@ -445,7 +477,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// Proximity-based interactable object interface
+    /// 近接自動インタラクト可能オブジェクトのインターフェース
     /// </summary>
     public interface IProximityInteractable
     {
@@ -453,7 +485,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
     }
 
     /// <summary>
-    /// Undoable interactable object interface
+    /// Undo可能インタラクト可能オブジェクトのインターフェース
     /// </summary>
     public interface IUndoableInteractable
     {

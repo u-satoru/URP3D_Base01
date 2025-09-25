@@ -1,105 +1,83 @@
 using UnityEngine;
-// using asterivo.Unity60.Core.Commands;
+using asterivo.Unity60.Core.Commands;
 
 namespace asterivo.Unity60.Core.Commands.Definitions
 {
     /// <summary>
-    /// Heal command definition.
-    /// Encapsulates healing actions for players or AI.
-    ///
-    /// Main features:
-    /// - Health, Mana, Stamina recovery
-    /// - Heal types management (instant, overtime, area)
-    /// - Item and skill integration
-    /// - Healing effects and animation control
+    /// 回復コマンドの定義。
+    /// プレイヤーまたはAIの回復アクションをカプセル化します。
+    /// 
+    /// 主な機能：
+    /// - 体力・マナ・スタミナ等の回復
+    /// - 回復タイプ（瞬間、継続、範囲）の管理
+    /// - 回復アイテムやスキルとの連携
+    /// - 回復エフェクトとアニメーション制御
     /// </summary>
     [System.Serializable]
     public class HealCommandDefinition : ICommandDefinition
     {
         /// <summary>
-        /// Types of healing
+        /// 回復の種類を定義する列挙型
         /// </summary>
         public enum HealType
         {
-            Instant,        // Instant heal
-            Overtime,       // Heal over time
-            Area,           // Area heal
-            Percentage,     // Percentage heal
-            Full            // Full heal
+            Instant,        // 瞬間回復
+            Overtime,       // 継続回復
+            Area,           // 範囲回復
+            Percentage,     // 割合回復
+            Full            // 完全回復
         }
 
         /// <summary>
-        /// Resource type to heal
+        /// 回復対象のリソースタイプ
         /// </summary>
         public enum ResourceType
         {
-            Health,         // Health
-            Mana,           // Mana
-            Stamina,        // Stamina
-            All             // All resources
+            Health,         // 体力
+            Mana,           // マナ
+            Stamina,        // スタミナ
+            All             // 全て
         }
 
         [Header("Heal Parameters")]
         public HealType healType = HealType.Instant;
         public ResourceType targetResource = ResourceType.Health;
         public float healAmount = 50f;
-        public float percentage = 0f; // Used for percentage healing (0-1)
+        public float percentage = 0f; // 割合回復時に使用（0-1）
 
         [Header("Overtime Settings")]
-        [Tooltip("Total duration for heal over time")]
+        [Tooltip("継続回復時の総継続時間")]
         public float duration = 5f;
-        [Tooltip("Interval between heals")]
+        [Tooltip("継続回復時の回復間隔")]
         public float tickInterval = 1f;
 
         [Header("Area Settings")]
-        [Tooltip("Healing effect radius")]
+        [Tooltip("範囲回復時の効果範囲")]
         public float radius = 3f;
-        [Tooltip("Target layer for area healing")]
-        public LayerMask targetLayer = -1;
-        [Tooltip("Maximum number of targets")]
-        public int maxTargets = 5;
+        [Tooltip("範囲回復の対象レイヤー")]
+        public LayerMask targetLayers = -1;
+        [Tooltip("自分も回復対象に含むか")]
+        public bool includeSelf = true;
 
-        [Header("Requirements")]
-        public bool consumeItem = false;
-        public string requiredItemId = "";
-        public int requiredItemCount = 1;
-
-        [Header("Cooldown")]
-        public float cooldownTime = 1f;
-        public bool sharedCooldown = false;
-        public string cooldownGroup = "healing";
-
-        [Header("Animation")]
-        public bool playAnimation = true;
-        public string animationTrigger = "Heal";
-        public float animationDuration = 1f;
+        [Header("Restrictions")]
+        public bool canOverheal = false;
+        public float cooldownTime = 3f;
+        public float manaCost = 15f;
 
         [Header("Effects")]
         public bool showHealEffect = true;
-        public GameObject healEffectPrefab;
-        public Color healEffectColor = Color.green;
         public float effectDuration = 2f;
-
-        [Header("Sound")]
-        public bool playSound = true;
-        public string healSoundName = "Heal";
-        public float soundVolume = 1f;
-
-        [Header("Restrictions")]
-        public bool canSelfCast = true;
-        public bool requiresTarget = false;
-        public bool requiresLineOfSight = false;
-        public float maxCastRange = 10f;
+        public Color healEffectColor = Color.green;
 
         /// <summary>
-        /// Default constructor
+        /// デフォルトコンストラクタ
         /// </summary>
         public HealCommandDefinition()
         {
         }
 
         /// <summary>
-        /// Parameterized constructor
+        /// パラメータ付きコンストラクタ
         /// </summary>
         public HealCommandDefinition(HealType type, ResourceType resource, float amount)
         {
@@ -109,24 +87,59 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Create heal command instance
+        /// 回復コマンドが実行可能かどうかを判定します
+        /// </summary>
+        public bool CanExecute(object context = null)
+        {
+            // 基本的な実行可能性チェック
+            if (healAmount <= 0f && percentage <= 0f) return false;
+            
+            // 継続回復の場合の追加チェック
+            if (healType == HealType.Overtime)
+            {
+                if (duration <= 0f || tickInterval <= 0f) return false;
+            }
+
+            // 範囲回復の場合の追加チェック
+            if (healType == HealType.Area)
+            {
+                if (radius <= 0f) return false;
+            }
+
+            // コンテキストがある場合の追加チェック
+            if (context != null)
+            {
+                // マナ消費チェック
+                // クールダウンチェック
+                // 対象の回復可能性チェック（既に満タンの場合等）
+                // 状態異常チェック（回復阻害デバフ等）
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 回復コマンドを作成します
         /// </summary>
         public ICommand CreateCommand(object context = null)
         {
+            if (!CanExecute(context))
+                return null;
+
             return new HealCommand(this, context);
         }
     }
 
     /// <summary>
-    /// Actual implementation of heal command
+    /// HealCommandDefinitionに対応する実際のコマンド実装
     /// </summary>
     public class HealCommand : ICommand
     {
-        private readonly HealCommandDefinition definition;
-        private readonly object context;
+        private HealCommandDefinition definition;
+        private object context;
         private bool executed = false;
         private float healedAmount = 0f;
-        private bool isActive = false; // For overtime healing
+        private bool isActive = false; // 継続回復用
 
         public HealCommand(HealCommandDefinition healDefinition, object executionContext)
         {
@@ -135,237 +148,134 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Execute heal command
+        /// 回復コマンドの実行
         /// </summary>
         public void Execute()
         {
             if (executed) return;
 
-            // Check requirements
-            if (!CheckRequirements())
-            {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogWarning("Heal requirements not met");
-#endif
-                return;
-            }
-
-            // Get heal targets
-            var targets = GetHealTargets();
-            if (targets == null || targets.Length == 0)
-            {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.LogWarning("No valid heal targets found");
-#endif
-                return;
-            }
-
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-            UnityEngine.Debug.Log($"Executing {definition.healType} heal for {definition.healAmount} on {targets.Length} targets");
+            UnityEngine.Debug.Log($"Executing {definition.healType} heal: {definition.healAmount} {definition.targetResource}");
 #endif
 
-            // Apply healing based on type
             switch (definition.healType)
             {
                 case HealCommandDefinition.HealType.Instant:
-                    ExecuteInstantHeal(targets);
+                    ExecuteInstantHeal();
                     break;
                 case HealCommandDefinition.HealType.Overtime:
-                    StartOvertimeHeal(targets);
+                    StartOvertimeHeal();
                     break;
                 case HealCommandDefinition.HealType.Area:
                     ExecuteAreaHeal();
                     break;
                 case HealCommandDefinition.HealType.Percentage:
-                    ExecutePercentageHeal(targets);
+                    ExecutePercentageHeal();
                     break;
                 case HealCommandDefinition.HealType.Full:
-                    ExecuteFullHeal(targets);
+                    ExecuteFullHeal();
                     break;
             }
-
-            // Consume items if required
-            if (definition.consumeItem)
-            {
-                ConsumeRequiredItems();
-            }
-
-            // Play effects
-            PlayEffects(targets);
 
             executed = true;
         }
 
         /// <summary>
-        /// Check if command can be executed
+        /// 瞬間回復の実行
         /// </summary>
-        public bool CanExecute()
-        {
-            // Basic executability check
-            if (definition.healAmount <= 0f && definition.healType != HealCommandDefinition.HealType.Full)
-                return false;
-
-            // Resource check
-            if (definition.consumeItem && !HasRequiredItems())
-                return false;
-
-            // Cooldown check
-            // TODO: Implement cooldown system integration
-
-            return !executed;
-        }
-
-        /// <summary>
-        /// Check if requirements are met
-        /// </summary>
-        private bool CheckRequirements()
-        {
-            if (definition.consumeItem)
-            {
-                return HasRequiredItems();
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// Check if required items are available
-        /// </summary>
-        private bool HasRequiredItems()
-        {
-            // TODO: Integrate with inventory system
-            return true;
-        }
-
-        /// <summary>
-        /// Consume required items
-        /// </summary>
-        private void ConsumeRequiredItems()
-        {
-            // TODO: Integrate with inventory system
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-            UnityEngine.Debug.Log($"Consuming {definition.requiredItemCount} x {definition.requiredItemId}");
-#endif
-        }
-
-        /// <summary>
-        /// Get heal targets based on configuration
-        /// </summary>
-        private MonoBehaviour[] GetHealTargets()
+        private void ExecuteInstantHeal()
         {
             if (context is MonoBehaviour mono)
             {
-                if (definition.healType == HealCommandDefinition.HealType.Area)
-                {
-                    return GetAreaTargets(mono.transform.position);
-                }
-                else
-                {
-                    return new[] { mono };
-                }
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// Get area heal targets
-        /// </summary>
-        private MonoBehaviour[] GetAreaTargets(Vector3 center)
-        {
-            Collider[] colliders = Physics.OverlapSphere(center, definition.radius, definition.targetLayer);
-            System.Collections.Generic.List<MonoBehaviour> targets = new System.Collections.Generic.List<MonoBehaviour>();
-
-            int count = 0;
-            foreach (var collider in colliders)
-            {
-                if (count >= definition.maxTargets) break;
-
-                var mono = collider.GetComponent<MonoBehaviour>();
-                if (mono != null)
-                {
-                    targets.Add(mono);
-                    count++;
-                }
-            }
-
-            return targets.ToArray();
-        }
-
-        /// <summary>
-        /// Execute instant healing
-        /// </summary>
-        private void ExecuteInstantHeal(MonoBehaviour[] targets)
-        {
-            foreach (var target in targets)
-            {
-                healedAmount += ApplyHealing(target, definition.healAmount);
+                healedAmount = ApplyHeal(mono, definition.healAmount);
+                ShowHealEffect(mono);
             }
         }
 
         /// <summary>
-        /// Start healing over time
+        /// 継続回復の開始
         /// </summary>
-        private void StartOvertimeHeal(MonoBehaviour[] targets)
+        private void StartOvertimeHeal()
         {
             isActive = true;
-            float healPerTick = definition.healAmount / (definition.duration / definition.tickInterval);
-
+            // 実際の実装では、Coroutine またはUpdateループで定期的にApplyHealを呼び出す
+            
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            UnityEngine.Debug.Log($"Starting overtime heal: {healPerTick} per {definition.tickInterval}s for {definition.duration}s");
+            UnityEngine.Debug.Log($"Started overtime heal: {definition.healAmount} over {definition.duration}s");
 #endif
-            // TODO: Implement actual overtime healing with coroutine or update system
         }
 
         /// <summary>
-        /// Execute area healing
+        /// 範囲回復の実行
         /// </summary>
         private void ExecuteAreaHeal()
         {
-            var targets = GetAreaTargets(((MonoBehaviour)context).transform.position);
-            ExecuteInstantHeal(targets);
-        }
-
-        /// <summary>
-        /// Execute percentage healing
-        /// </summary>
-        private void ExecutePercentageHeal(MonoBehaviour[] targets)
-        {
-            foreach (var target in targets)
+            if (context is MonoBehaviour mono)
             {
-                // TODO: Get max health from health component
-                float maxHealth = 100f; // Placeholder
-                float healAmount = maxHealth * definition.percentage;
-                healedAmount += ApplyHealing(target, healAmount);
+                // 範囲内のオブジェクトを検索
+                Collider[] targets = Physics.OverlapSphere(mono.transform.position, definition.radius, definition.targetLayers);
+                
+                foreach (var target in targets)
+                {
+                    if (!definition.includeSelf && target.gameObject == mono.gameObject)
+                        continue;
+
+                    ApplyHeal(target.GetComponent<MonoBehaviour>(), definition.healAmount);
+                    ShowHealEffect(target.GetComponent<MonoBehaviour>());
+                }
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                UnityEngine.Debug.Log($"Area heal affected {targets.Length} targets");
+#endif
             }
         }
 
         /// <summary>
-        /// Execute full healing
+        /// 割合回復の実行
         /// </summary>
-        private void ExecuteFullHeal(MonoBehaviour[] targets)
+        private void ExecutePercentageHeal()
         {
-            foreach (var target in targets)
+            if (context is MonoBehaviour mono)
             {
-                // TODO: Get and restore to max health
-                float maxHealth = 100f; // Placeholder
-                healedAmount += ApplyHealing(target, maxHealth);
+                // 最大値の割合で回復（実際の実装では HealthSystem から最大値を取得）
+                float percentageAmount = 100f * definition.percentage; // 仮の値
+                healedAmount = ApplyHeal(mono, percentageAmount);
+                ShowHealEffect(mono);
             }
         }
 
         /// <summary>
-        /// Apply healing to target
+        /// 完全回復の実行
         /// </summary>
-        private float ApplyHealing(MonoBehaviour target, float amount)
+        private void ExecuteFullHeal()
+        {
+            if (context is MonoBehaviour mono)
+            {
+                // 最大値まで回復（実際の実装では HealthSystem から最大値を取得）
+                float fullAmount = 999f; // 仮の値
+                healedAmount = ApplyHeal(mono, fullAmount);
+                ShowHealEffect(mono);
+            }
+        }
+
+        /// <summary>
+        /// 実際の回復処理を適用
+        /// </summary>
+        private float ApplyHeal(MonoBehaviour target, float amount)
         {
             if (target == null) return 0f;
 
-            // TODO: Integrate with actual health/resource system
+            // 実際の実装では、HealthSystem, ManaSystem, StaminaSystem等との連携
             float actualHealAmount = amount;
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-            UnityEngine.Debug.Log($"Healing {target.name} for {actualHealAmount} {definition.targetResource}");
-#endif
+            // オーバーヒール制限
+            if (!definition.canOverheal)
+            {
+                // 現在値と最大値から実際の回復量を計算
+                // actualHealAmount = Mathf.Min(amount, maxValue - currentValue);
+            }
 
-            // Apply to appropriate resource
+            // リソースタイプに応じた回復処理
             switch (definition.targetResource)
             {
                 case HealCommandDefinition.ResourceType.Health:
@@ -378,7 +288,7 @@ namespace asterivo.Unity60.Core.Commands.Definitions
                     // staminaSystem.RestoreStamina(actualHealAmount);
                     break;
                 case HealCommandDefinition.ResourceType.All:
-                    // Restore all resources
+                    // 全リソースの回復
                     break;
             }
 
@@ -386,72 +296,65 @@ namespace asterivo.Unity60.Core.Commands.Definitions
         }
 
         /// <summary>
-        /// Play healing effects
+        /// 回復エフェクトの表示
         /// </summary>
-        private void PlayEffects(MonoBehaviour[] targets)
+        private void ShowHealEffect(MonoBehaviour target)
         {
-            if (!definition.showHealEffect && !definition.playSound) return;
+            if (!definition.showHealEffect || target == null) return;
 
-            foreach (var target in targets)
-            {
-                // Visual effect
-                if (definition.showHealEffect && definition.healEffectPrefab != null)
-                {
-                    var effect = Object.Instantiate(definition.healEffectPrefab,
-                        target.transform.position,
-                        Quaternion.identity);
-                    Object.Destroy(effect, definition.effectDuration);
-                }
+            // パーティクルエフェクト
+            // サウンドエフェクト
+            // UI表示（回復量のポップアップ等）
 
-                // Sound effect
-                if (definition.playSound)
-                {
-                    // TODO: Integrate with audio system
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                    UnityEngine.Debug.Log($"Playing heal sound: {definition.healSoundName}");
+            UnityEngine.Debug.Log($"Showing heal effect on {target.name}");
 #endif
-                }
-
-                // Animation
-                if (definition.playAnimation)
-                {
-                    var animator = target.GetComponent<Animator>();
-                    if (animator != null && !string.IsNullOrEmpty(definition.animationTrigger))
-                    {
-                        animator.SetTrigger(definition.animationTrigger);
-                    }
-                }
-            }
         }
 
         /// <summary>
-        /// Update overtime healing (called from external update loop)
+        /// 継続回復の更新（外部から定期的に呼び出される）
         /// </summary>
         public void UpdateOvertimeHeal(float deltaTime)
         {
             if (!isActive || definition.healType != HealCommandDefinition.HealType.Overtime) return;
 
-            // TODO: Implement actual overtime healing logic
+            // 実際の実装では、tickInterval ごとに回復処理を実行
+            // duration が経過したら終了
         }
 
         /// <summary>
-        /// Stop overtime healing
+        /// Undo操作（回復の取り消し）
         /// </summary>
-        public void StopOvertimeHeal()
+        public void Undo()
         {
+            if (!executed || healedAmount <= 0f) return;
+
+            // 回復した分だけダメージを与えて元に戻す
+            if (context is MonoBehaviour mono)
+            {
+                // 実際の実装では、回復した分のダメージを適用
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                UnityEngine.Debug.Log($"Undoing heal: removing {healedAmount} healed amount");
+#endif
+            }
+
+            // 継続回復の停止
             if (isActive)
             {
                 isActive = false;
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-                UnityEngine.Debug.Log("Stopped overtime healing");
-#endif
             }
+
+            executed = false;
         }
 
         /// <summary>
-        /// Properties
+        /// このコマンドがUndo可能かどうか
+        /// </summary>
+        public bool CanUndo => executed && healedAmount > 0f;
+
+        /// <summary>
+        /// 継続回復が現在アクティブかどうか
         /// </summary>
         public bool IsActive => isActive;
-        public float HealedAmount => healedAmount;
     }
 }

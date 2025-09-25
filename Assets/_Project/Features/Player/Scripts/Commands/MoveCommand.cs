@@ -31,4 +31,3 @@ namespace asterivo.Unity60.Features.Player.Commands
         }
     }
 }
-

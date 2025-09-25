@@ -9,7 +9,7 @@ using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 using Sirenix.OdinInspector;
 
-namespace asterivo.Unity60.Features.UI
+namespace asterivo.Unity60.Core.UI
 {
     /// <summary>
     /// メニューシステムを管理するクラス。

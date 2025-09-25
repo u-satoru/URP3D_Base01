@@ -5,14 +5,15 @@ using System.Collections.Generic;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Audio.Events;
 // using asterivo.Unity60.Core.Debug;
-using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
+using asterivo.Unity60.Core;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio.Services
 {
     /// <summary>
-    /// 遨ｺ髢馴浹髻ｿ繧ｵ繝ｼ繝薙せ・医う繝吶Φ繝磯ｧ・虚蝙具ｼ・    /// Singleton繝代ち繝ｼ繝ｳ繧剃ｽｿ繧上★縲√う繝吶Φ繝育ｵ檎罰縺ｧ蛻ｶ蠕｡
+    /// 空間音響サービス（イベント駆動型）
+    /// Singletonパターンを使わず、イベント経由で制御
     /// </summary>
     public class SpatialAudioService : MonoBehaviour, ISpatialAudioService, IInitializable
     {
@@ -39,13 +40,14 @@ namespace asterivo.Unity60.Core.Audio.Services
         private AudioListener mainListener;
         
         // IInitializable
-        public int Priority => 20; // 遨ｺ髢馴浹髻ｿ縺ｯ蝓ｺ譛ｬ繧ｪ繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β縺ｮ蠕後↓蛻晄悄蛹・        public bool IsInitialized { get; private set; }
+        public int Priority => 20; // 空間音響は基本オーディオシステムの後に初期化
+        public bool IsInitialized { get; private set; }
         
         #region Unity Lifecycle
         
         private void Awake()
         {
-            // ServiceLocator縺ｫ逋ｻ骭ｲ
+            // ServiceLocatorに登録
             if (FeatureFlags.UseServiceLocator)
             {
                 ServiceLocator.RegisterService<ISpatialAudioService>(this);
@@ -63,14 +65,18 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             Initialize();
             
-            // 繧､繝吶Φ繝医Μ繧ｹ繝翫・縺ｮ險ｭ螳・            if (onSpatialSoundRequested != null && FeatureFlags.UseEventDrivenAudio)
+            // イベントリスナーの設定
+            if (onSpatialSoundRequested != null && FeatureFlags.UseEventDrivenAudio)
             {
-                // SpatialAudioEvent逕ｨ縺ｮ繝ｪ繧ｹ繝翫・繧定ｿｽ蜉
-                // TODO: SpatialAudioEvent蟆ら畑縺ｮ繝ｪ繧ｹ繝翫・縺悟ｿ・ｦ・                // var listener = gameObject.AddComponent<SpatialAudioEventListener>();
+                // SpatialAudioEvent用のリスナーを追加
+                // TODO: SpatialAudioEvent専用のリスナーが必要
+                // var listener = gameObject.AddComponent<SpatialAudioEventListener>();
                 // listener.GameEvent = onSpatialSoundRequested;
                 // listener.OnEventRaised.AddListener(HandleSpatialSoundEvent);
                 
-                // 繧､繝吶Φ繝医Μ繧ｹ繝翫・縺ｨ縺励※逋ｻ骭ｲ縺吶ｋ縺ｫ縺ｯ蛻･縺ｮ譁ｹ豕輔′蠢・ｦ・                // TODO: GenericGameEventListener<SpatialAudioData>繧剃ｽｿ逕ｨ縺吶ｋ縺九・                // 縺ｾ縺溘・IGameEventListener<SpatialAudioData>繧貞ｮ溯｣・☆繧句ｿ・ｦ√′縺ゅｋ
+                // イベントリスナーとして登録するには別の方法が必要
+                // TODO: GenericGameEventListener<SpatialAudioData>を使用するか、
+                // またはIGameEventListener<SpatialAudioData>を実装する必要がある
             }
         }
         
@@ -95,7 +101,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             mainListener = FindFirstObjectByType<AudioListener>();
             if (mainListener == null)
             {
-                ServiceLocator.GetService<IEventLogger>().LogWarning("[SpatialAudioService] No AudioListener found in scene");
+                EventLogger.LogWarningStatic("[SpatialAudioService] No AudioListener found in scene");
             }
             
             SetupDefaultSettings();
@@ -121,11 +127,12 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             if (!IsInitialized)
             {
-                ServiceLocator.GetService<IEventLogger>().LogWarning("[SpatialAudioService] System not initialized");
+                EventLogger.LogWarningStatic("[SpatialAudioService] System not initialized");
                 return;
             }
             
-            // 繧､繝吶Φ繝磯ｧ・虚繝｢繝ｼ繝峨・蝣ｴ蜷・            if (FeatureFlags.UseEventDrivenAudio && onSpatialSoundRequested != null)
+            // イベント駆動モードの場合
+            if (FeatureFlags.UseEventDrivenAudio && onSpatialSoundRequested != null)
             {
                 var data = new SpatialAudioData
                 {
@@ -140,7 +147,8 @@ namespace asterivo.Unity60.Core.Audio.Services
             }
             else
             {
-                // 逶ｴ謗･螳溯｡・                PlaySpatialSound(soundId, position, maxDistance, volume);
+                // 直接実行
+                PlaySpatialSound(soundId, position, maxDistance, volume);
             }
         }
         
@@ -151,17 +159,18 @@ namespace asterivo.Unity60.Core.Audio.Services
             var audioSource = GetAvailableAudioSource();
             if (audioSource == null)
             {
-                ServiceLocator.GetService<IEventLogger>().LogWarning("[SpatialAudioService] No available audio sources");
+                EventLogger.LogWarningStatic("[SpatialAudioService] No available audio sources");
                 return;
             }
             
-            // 髻ｳ貅舌ｒTransform縺ｫ霑ｽ蠕薙＆縺帙ｋ
+            // 音源をTransformに追従させる
             audioSource.transform.SetParent(source);
             audioSource.transform.localPosition = Vector3.zero;
             
             ConfigureAudioSource(audioSource, maxDistance);
             
-            // AudioClip縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ・亥ｮ滄圀縺ｮ螳溯｣・〒縺ｯ驕ｩ蛻・↑繝ｪ繧ｽ繝ｼ繧ｹ邂｡逅・′蠢・ｦ・ｼ・            var clip = LoadAudioClip(soundId);
+            // AudioClipの読み込み（実際の実装では適切なリソース管理が必要）
+            var clip = LoadAudioClip(soundId);
             if (clip != null)
             {
                 audioSource.clip = clip;
@@ -174,7 +183,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         
         public void SetAmbientSound(string soundId, float volume = 0.5f)
         {
-            // 繧｢繝ｳ繝薙お繝ｳ繝医し繧ｦ繝ｳ繝峨・2D髻ｳ貅舌→縺励※蜀咲函
+            // アンビエントサウンドは2D音源として再生
             var audioSource = GetAvailableAudioSource();
             if (audioSource == null) return;
             
@@ -194,22 +203,23 @@ namespace asterivo.Unity60.Core.Audio.Services
         
         public void UpdateOcclusion(Vector3 listenerPosition, Vector3 sourcePosition, float occlusionLevel)
         {
-            // 繝ｬ繧､繧ｭ繝｣繧ｹ繝医〒驕ｮ阡ｽ迚ｩ繧呈､懷・
+            // レイキャストで遮蔽物を検出
             var direction = sourcePosition - listenerPosition;
             var distance = direction.magnitude;
             
             if (Physics.Raycast(listenerPosition, direction.normalized, out RaycastHit hit, distance))
             {
-                // 驕ｮ阡ｽ迚ｩ縺後≠繧句ｴ蜷医・浹驥上ｒ貂幄｡ｰ
+                // 遮蔽物がある場合、音量を減衰
                 foreach (var kvp in activeSources)
                 {
                     if (Vector3.Distance(kvp.Value.transform.position, sourcePosition) < 1f)
                     {
                         kvp.Value.volume *= (1f - occlusionLevel);
                         
-                        // 繝ｭ繝ｼ繝代せ繝輔ぅ繝ｫ繧ｿ縺ｮ驕ｩ逕ｨ・亥ｮ溯｣・′蠢・ｦ・ｼ・                        if (kvp.Value.outputAudioMixerGroup != null)
+                        // ローパスフィルタの適用（実装が必要）
+                        if (kvp.Value.outputAudioMixerGroup != null)
                         {
-                            // AudioMixer縺ｧ繝ｭ繝ｼ繝代せ繝輔ぅ繝ｫ繧ｿ繧貞宛蠕｡
+                            // AudioMixerでローパスフィルタを制御
                         }
                     }
                 }
@@ -220,7 +230,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             reverbZones[zoneId] = Mathf.Clamp01(reverbLevel);
             
-            // AudioMixer縺ｧ繝ｪ繝舌・繝悶Ξ繝吶Ν繧貞宛蠕｡
+            // AudioMixerでリバーブレベルを制御
             if (spatialMixerGroup != null)
             {
                 spatialMixerGroup.audioMixer.SetFloat($"Reverb_{zoneId}", reverbLevel);
@@ -307,7 +317,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                 return source;
             }
             
-            // 繝励・繝ｫ縺檎ｩｺ縺ｮ蝣ｴ蜷医∵怙繧ょ商縺・い繧ｯ繝・ぅ繝悶↑繧ｽ繝ｼ繧ｹ繧貞・蛻ｩ逕ｨ
+            // プールが空の場合、最も古いアクティブなソースを再利用
             if (activeSources.Count > 0)
             {
                 var oldestKey = new List<string>(activeSources.Keys)[0];
@@ -350,7 +360,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                 
                 activeSources[soundId] = audioSource;
                 
-                // 蜀咲函邨ゆｺ・ｾ後↓閾ｪ蜍慕噪縺ｫ霑泌唆
+                // 再生終了後に自動的に返却
                 StartCoroutine(ReturnSourceAfterPlay(audioSource, clip.length, soundId));
             }
         }
@@ -369,8 +379,9 @@ namespace asterivo.Unity60.Core.Audio.Services
         
         private AudioClip LoadAudioClip(string soundId)
         {
-            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ縲・←蛻・↑繝ｪ繧ｽ繝ｼ繧ｹ邂｡逅・す繧ｹ繝・Β縺九ｉ隱ｭ縺ｿ霎ｼ繧
-            // 縺薙％縺ｧ縺ｯ莉ｮ螳溯｣・            return Resources.Load<AudioClip>($"Audio/{soundId}");
+            // 実際の実装では、適切なリソース管理システムから読み込む
+            // ここでは仮実装
+            return Resources.Load<AudioClip>($"Audio/{soundId}");
         }
         
         private void HandleSpatialSoundEvent(SpatialAudioData data)
@@ -401,7 +412,8 @@ namespace asterivo.Unity60.Core.Audio.Services
         
         private void SetupDefaultSettings()
         {
-            // 繝・ヵ繧ｩ繝ｫ繝医・繝ｭ繝ｼ繝ｫ繧ｪ繝輔き繝ｼ繝悶ｒ險ｭ螳・            if (volumeRolloffCurve == null || volumeRolloffCurve.length == 0)
+            // デフォルトのロールオフカーブを設定
+            if (volumeRolloffCurve == null || volumeRolloffCurve.length == 0)
             {
                 volumeRolloffCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
             }

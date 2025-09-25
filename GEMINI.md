@@ -105,6 +105,7 @@
 ## 技術仕様
 
 - **Unity Version**: `6000.0.42f1`
+- **Unity Editor Path**: `C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Unity.exe`
 - **Render Pipeline**: Universal Render Pipeline (URP)
 - **Scripting Backend**: Mono
 - **API Compatibility Level**: .NET Standard 2.1

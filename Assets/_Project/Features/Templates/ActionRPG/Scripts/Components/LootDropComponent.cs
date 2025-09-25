@@ -2,9 +2,9 @@ using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Components;
-using asterivo.Unity60.Features.ActionRPG.Data;
+using asterivo.Unity60.Features.Templates.ActionRPG.Data;
 
-namespace asterivo.Unity60.Features.ActionRPG.Components
+namespace asterivo.Unity60.Features.Templates.ActionRPG.Components
 {
     /// <summary>
     /// 敵が倒された時のルートドロップを管理するコンポーネント
@@ -199,7 +199,7 @@ namespace asterivo.Unity60.Features.ActionRPG.Components
     {
         [Header("ルーン設定")]
         [SerializeField] private int _runeAmount = 100;
-        [SerializeField] private asterivo.Unity60.Features.ActionRPG.Data.ItemData _runeItemData;
+        [SerializeField] private asterivo.Unity60.Features.Templates.ActionRPG.Data.ItemData _runeItemData;
         
         [Header("ピックアップ設定")]
         [SerializeField] private float _pickupRange = 2.0f;
@@ -338,7 +338,7 @@ namespace asterivo.Unity60.Features.ActionRPG.Components
         /// <summary>
         /// ルーンItemDataを設定
         /// </summary>
-        public void SetRuneItemData(asterivo.Unity60.Features.ActionRPG.Data.ItemData itemData)
+        public void SetRuneItemData(asterivo.Unity60.Features.Templates.ActionRPG.Data.ItemData itemData)
         {
             _runeItemData = itemData;
         }

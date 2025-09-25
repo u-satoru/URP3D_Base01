@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Features.ActionRPG.Data;
+using asterivo.Unity60.Features.Templates.ActionRPG.Data;
 
-namespace asterivo.Unity60.Features.ActionRPG.Components
+namespace asterivo.Unity60.Features.Templates.ActionRPG.Components
 {
     /// <summary>
     /// プレイヤーのアイテム管理を行うコンポーネント
@@ -23,12 +23,12 @@ namespace asterivo.Unity60.Features.ActionRPG.Components
         [SerializeField] private GameEvent _onInventoryChanged;
 
         [Header("初期アイテム")]
-        [SerializeField] private asterivo.Unity60.Features.ActionRPG.Data.ItemData[] _startingItems;
+        [SerializeField] private asterivo.Unity60.Features.Templates.ActionRPG.Data.ItemData[] _startingItems;
         [SerializeField] private int[] _startingQuantities;
 
         // アイテムスロット
         private List<ItemSlot> _itemSlots;
-        private Dictionary<asterivo.Unity60.Features.ActionRPG.Data.ItemData, int> _itemCounts;
+        private Dictionary<asterivo.Unity60.Features.Templates.ActionRPG.Data.ItemData, int> _itemCounts;
 
         // プロパティ
         public int MaxSlots => _maxSlots;
@@ -51,7 +51,7 @@ namespace asterivo.Unity60.Features.ActionRPG.Components
         private void InitializeInventory()
         {
             _itemSlots = new List<ItemSlot>();
-            _itemCounts = new Dictionary<asterivo.Unity60.Features.ActionRPG.Data.ItemData, int>();
+            _itemCounts = new Dictionary<asterivo.Unity60.Features.Templates.ActionRPG.Data.ItemData, int>();
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace asterivo.Unity60.Features.ActionRPG.Components
         /// <summary>
         /// アイテムを追加
         /// </summary>
-        public bool AddItem(asterivo.Unity60.Features.ActionRPG.Data.ItemData itemData, int quantity = 1)
+        public bool AddItem(asterivo.Unity60.Features.Templates.ActionRPG.Data.ItemData itemData, int quantity = 1)
         {
             if (itemData == null || quantity <= 0) return false;
 
@@ -93,7 +93,7 @@ namespace asterivo.Unity60.Features.ActionRPG.Components
         /// <summary>
         /// スタック可能アイテムを追加
         /// </summary>
-        private bool AddStackableItem(asterivo.Unity60.Features.ActionRPG.Data.ItemData itemData, int quantity)
+        private bool AddStackableItem(asterivo.Unity60.Features.Templates.ActionRPG.Data.ItemData itemData, int quantity)
         {
             int remainingQuantity = quantity;
 
@@ -144,7 +144,7 @@ namespace asterivo.Unity60.Features.ActionRPG.Components
         /// <summary>
         /// スタック不可能アイテムを追加
         /// </summary>
-        private bool AddNonStackableItems(asterivo.Unity60.Features.ActionRPG.Data.ItemData itemData, int quantity)
+        private bool AddNonStackableItems(asterivo.Unity60.Features.Templates.ActionRPG.Data.ItemData itemData, int quantity)
         {
             int added = 0;
             
@@ -172,7 +172,7 @@ namespace asterivo.Unity60.Features.ActionRPG.Components
         /// <summary>
         /// アイテムを削除
         /// </summary>
-        public bool RemoveItem(asterivo.Unity60.Features.ActionRPG.Data.ItemData itemData, int quantity = 1)
+        public bool RemoveItem(asterivo.Unity60.Features.Templates.ActionRPG.Data.ItemData itemData, int quantity = 1)
         {
             if (itemData == null || quantity <= 0) return false;
             if (!HasItem(itemData, quantity)) return false;
@@ -213,7 +213,7 @@ namespace asterivo.Unity60.Features.ActionRPG.Components
         /// <summary>
         /// アイテムを使用
         /// </summary>
-        public bool UseItem(asterivo.Unity60.Features.ActionRPG.Data.ItemData itemData, int quantity = 1)
+        public bool UseItem(asterivo.Unity60.Features.Templates.ActionRPG.Data.ItemData itemData, int quantity = 1)
         {
             if (!CanUseItem(itemData)) return false;
             if (!HasItem(itemData, quantity)) return false;
@@ -236,7 +236,7 @@ namespace asterivo.Unity60.Features.ActionRPG.Components
         /// <summary>
         /// アイテムを使用可能かチェック
         /// </summary>
-        public bool CanUseItem(asterivo.Unity60.Features.ActionRPG.Data.ItemData itemData)
+        public bool CanUseItem(asterivo.Unity60.Features.Templates.ActionRPG.Data.ItemData itemData)
         {
             return itemData != null && itemData.CanUse();
         }
@@ -244,7 +244,7 @@ namespace asterivo.Unity60.Features.ActionRPG.Components
         /// <summary>
         /// アイテムを所持しているかチェック
         /// </summary>
-        public bool HasItem(asterivo.Unity60.Features.ActionRPG.Data.ItemData itemData, int quantity = 1)
+        public bool HasItem(asterivo.Unity60.Features.Templates.ActionRPG.Data.ItemData itemData, int quantity = 1)
         {
             if (itemData == null) return false;
             return GetItemCount(itemData) >= quantity;
@@ -253,7 +253,7 @@ namespace asterivo.Unity60.Features.ActionRPG.Components
         /// <summary>
         /// アイテムの所持数を取得
         /// </summary>
-        public int GetItemCount(asterivo.Unity60.Features.ActionRPG.Data.ItemData itemData)
+        public int GetItemCount(asterivo.Unity60.Features.Templates.ActionRPG.Data.ItemData itemData)
         {
             if (itemData == null) return 0;
             return _itemCounts.TryGetValue(itemData, out int count) ? count : 0;
@@ -262,7 +262,7 @@ namespace asterivo.Unity60.Features.ActionRPG.Components
         /// <summary>
         /// アイテム効果を適用
         /// </summary>
-        private void ApplyItemEffects(asterivo.Unity60.Features.ActionRPG.Data.ItemData itemData, int quantity)
+        private void ApplyItemEffects(asterivo.Unity60.Features.Templates.ActionRPG.Data.ItemData itemData, int quantity)
         {
             var healthComponent = GetComponent<asterivo.Unity60.Core.Combat.HealthComponent>();
             var statComponent = GetComponent<StatComponent>();
@@ -324,23 +324,23 @@ namespace asterivo.Unity60.Features.ActionRPG.Components
     [System.Serializable]
     public class ItemSlot
     {
-        [SerializeField] private asterivo.Unity60.Features.ActionRPG.Data.ItemData _itemData;
+        [SerializeField] private asterivo.Unity60.Features.Templates.ActionRPG.Data.ItemData _itemData;
         [SerializeField] private int _quantity;
 
-        public asterivo.Unity60.Features.ActionRPG.Data.ItemData ItemData => _itemData;
+        public asterivo.Unity60.Features.Templates.ActionRPG.Data.ItemData ItemData => _itemData;
         public int Quantity 
         { 
             get => _quantity;
             set => _quantity = Mathf.Max(0, value);
         }
 
-        public ItemSlot(asterivo.Unity60.Features.ActionRPG.Data.ItemData itemData, int quantity)
+        public ItemSlot(asterivo.Unity60.Features.Templates.ActionRPG.Data.ItemData itemData, int quantity)
         {
             _itemData = itemData;
             _quantity = quantity;
         }
 
         public bool IsEmpty => _itemData == null || _quantity <= 0;
-        public bool CanStackWith(asterivo.Unity60.Features.ActionRPG.Data.ItemData other) => _itemData == other && _itemData.Stackable;
+        public bool CanStackWith(asterivo.Unity60.Features.Templates.ActionRPG.Data.ItemData other) => _itemData == other && _itemData.Stackable;
     }
 }

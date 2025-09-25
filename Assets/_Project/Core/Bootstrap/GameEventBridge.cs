@@ -1,12 +1,14 @@
 using UnityEngine;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core.Services.Interfaces;
+// using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core.Events;
 using System.Collections.Generic;
 
 namespace asterivo.Unity60.Core.Bootstrap
 {
     /// <summary>
-    /// GameEventとEventManagerを橋渡しするブリッジクラス
-    /// ScriptableObjectベースのGameEventとServiceLocatorベースのEventManagerを統合
+    /// GameEventとEventManagerを橋渡しするブリチE��クラス
+    /// ScriptableObjectベ�EスのGameEventとServiceLocatorベ�EスのEventManagerを統吁E
     /// </summary>
     public class GameEventBridge : MonoBehaviour
     {
@@ -44,7 +46,7 @@ namespace asterivo.Unity60.Core.Bootstrap
 
         private void Initialize()
         {
-            // ServiceLocatorからEventManagerを取得
+            // ServiceLocatorからEventManagerを取征E
             if (ServiceLocator.TryGet<IEventManager>(out var eventManager))
             {
                 _eventManager = eventManager;
@@ -93,7 +95,7 @@ namespace asterivo.Unity60.Core.Bootstrap
         }
 
         /// <summary>
-        /// EventManagerのイベントをGameEventとして発行
+        /// EventManagerのイベントをGameEventとして発衁E
         /// </summary>
         /// <param name="eventName">イベント名</param>
         /// <param name="data">イベントデータ</param>
@@ -106,7 +108,7 @@ namespace asterivo.Unity60.Core.Bootstrap
         }
 
         /// <summary>
-        /// GameEventをEventManager経由で発行
+        /// GameEventをEventManager経由で発衁E
         /// </summary>
         /// <param name="gameEvent">発行するGameEvent</param>
         public static void RaiseGameEvent(GameEvent gameEvent)
@@ -141,12 +143,12 @@ namespace asterivo.Unity60.Core.Bootstrap
         #region Static Helpers
 
         /// <summary>
-        /// ブリッジが初期化されているか確認
+        /// ブリチE��が�E期化されてぁE��か確誁E
         /// </summary>
         public static bool IsInitialized => _instance != null && _instance._eventManager != null;
 
         /// <summary>
-        /// EventManagerへの直接アクセス（必要に応じて）
+        /// EventManagerへの直接アクセス�E�忁E��に応じて�E�E
         /// </summary>
         public static IEventManager GetEventManager()
         {
@@ -157,9 +159,9 @@ namespace asterivo.Unity60.Core.Bootstrap
     }
 
     /// <summary>
-    /// 型安全なGameEventとEventManagerの統合
+    /// 型安�EなGameEventとEventManagerの統吁E
     /// </summary>
-    /// <typeparam name="T">イベントデータの型</typeparam>
+    /// <typeparam name="T">イベントデータの垁E/typeparam>
     public class TypedGameEventBridge<T> where T : class
     {
         private readonly string _eventName;
@@ -172,7 +174,7 @@ namespace asterivo.Unity60.Core.Bootstrap
         }
 
         /// <summary>
-        /// 型安全なイベントを発行
+        /// 型安�Eなイベントを発衁E
         /// </summary>
         public void Raise(T data)
         {
@@ -180,7 +182,7 @@ namespace asterivo.Unity60.Core.Bootstrap
         }
 
         /// <summary>
-        /// 型安全なイベントを購読
+        /// 型安�Eなイベントを購読
         /// </summary>
         public void Subscribe(System.Action<T> handler)
         {
@@ -188,7 +190,7 @@ namespace asterivo.Unity60.Core.Bootstrap
         }
 
         /// <summary>
-        /// 型安全なイベントの購読を解除
+        /// 型安�Eなイベント�E購読を解除
         /// </summary>
         public void Unsubscribe(System.Action<T> handler)
         {
@@ -196,3 +198,4 @@ namespace asterivo.Unity60.Core.Bootstrap
         }
     }
 }
+

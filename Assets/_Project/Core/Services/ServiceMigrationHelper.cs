@@ -1,18 +1,19 @@
 using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
-// using asterivo.Unity60.Core.Debug;
+using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core.Services;
 
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// 繧ｵ繝ｼ繝薙せ谿ｵ髫守噪遘ｻ陦後・繝ｫ繝代・繧ｯ繝ｩ繧ｹ
-    /// Step 3.6 縺ｧ菴懈・縺輔ｌ縺滓ｮｵ髫守噪譖ｴ譁ｰ繝代ち繝ｼ繝ｳ縺ｮ豎守畑蛹・    /// </summary>
+    /// サービス段階的移行ヘルパークラス
+    /// Step 3.6 で作成された段階的更新パターンの汎用化
+    /// </summary>
     public static class ServiceMigrationHelper
     {
         /// <summary>
-        /// 谿ｵ髫守噪譖ｴ譁ｰ縺ｮ邨先棡繝・・繧ｿ
+        /// 段階的更新の結果データ
         /// </summary>
         public class MigrationResult<T> where T : class
         {
@@ -31,12 +32,13 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// IAudioService縺ｮ谿ｵ髫守噪蜿門ｾ・        /// ServiceLocator蜆ｪ蜈医√ヵ繧ｩ繝ｼ繝ｫ繝舌ャ繧ｯ莉倥″
+        /// IAudioServiceの段階的取得
+        /// ServiceLocator優先、フォールバック付き
         /// </summary>
-        /// <param name="useServiceLocator">ServiceLocator繧剃ｽｿ逕ｨ縺吶ｋ縺・/param>
-        /// <param name="context">蜻ｼ縺ｳ蜃ｺ縺怜・縺ｮ繧ｳ繝ｳ繝・く繧ｹ繝亥錐</param>
-        /// <param name="enableDebugLogs">繝・ヰ繝・げ繝ｭ繧ｰ繧呈怏蜉ｹ縺ｫ縺吶ｋ縺・/param>
-        /// <returns>蜿門ｾ礼ｵ先棡</returns>
+        /// <param name="useServiceLocator">ServiceLocatorを使用するか</param>
+        /// <param name="context">呼び出し元のコンテキスト名</param>
+        /// <param name="enableDebugLogs">デバッグログを有効にするか</param>
+        /// <returns>取得結果</returns>
         public static MigrationResult<IAudioService> GetAudioService(
             bool useServiceLocator = true, 
             string context = "Unknown", 
@@ -46,28 +48,31 @@ namespace asterivo.Unity60.Core.Services
 
             LogDebug($"[{context}] Getting IAudioService (useServiceLocator: {useServiceLocator})", enableDebugLogs);
 
-            // ServiceLocator蜆ｪ蜈亥叙蠕・            if (useServiceLocator && FeatureFlags.UseServiceLocator)
+            // ServiceLocator優先取得
+            if (useServiceLocator && FeatureFlags.UseServiceLocator)
             {
                 result = GetAudioServiceFromServiceLocator(context, enableDebugLogs);
                 
-                // ServiceLocator縺ｧ蜿門ｾ励〒縺阪◆蝣ｴ蜷医・縺昴ｌ繧定ｿ斐☆
+                // ServiceLocatorで取得できた場合はそれを返す
                 if (result.IsSuccessful)
                 {
                     return result;
                 }
             }
 
-            // 繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ: 繝ｬ繧ｬ繧ｷ繝ｼ譁ｹ蠑・            LogDebug($"[{context}] ServiceLocator failed, trying legacy fallback", enableDebugLogs);
+            // フォールバック: レガシー方式
+            LogDebug($"[{context}] ServiceLocator failed, trying legacy fallback", enableDebugLogs);
             return GetAudioServiceLegacy(context, enableDebugLogs);
         }
 
         /// <summary>
-        /// IStealthAudioService縺ｮ谿ｵ髫守噪蜿門ｾ・        /// ServiceLocator蜆ｪ蜈医√ヵ繧ｩ繝ｼ繝ｫ繝舌ャ繧ｯ莉倥″
+        /// IStealthAudioServiceの段階的取得
+        /// ServiceLocator優先、フォールバック付き
         /// </summary>
-        /// <param name="useServiceLocator">ServiceLocator繧剃ｽｿ逕ｨ縺吶ｋ縺・/param>
-        /// <param name="context">蜻ｼ縺ｳ蜃ｺ縺怜・縺ｮ繧ｳ繝ｳ繝・く繧ｹ繝亥錐</param>
-        /// <param name="enableDebugLogs">繝・ヰ繝・げ繝ｭ繧ｰ繧呈怏蜉ｹ縺ｫ縺吶ｋ縺・/param>
-        /// <returns>蜿門ｾ礼ｵ先棡</returns>
+        /// <param name="useServiceLocator">ServiceLocatorを使用するか</param>
+        /// <param name="context">呼び出し元のコンテキスト名</param>
+        /// <param name="enableDebugLogs">デバッグログを有効にするか</param>
+        /// <returns>取得結果</returns>
         public static MigrationResult<IStealthAudioService> GetStealthAudioService(
             bool useServiceLocator = true, 
             string context = "Unknown", 
@@ -77,39 +82,43 @@ namespace asterivo.Unity60.Core.Services
 
             LogDebug($"[{context}] Getting IStealthAudioService (useServiceLocator: {useServiceLocator})", enableDebugLogs);
 
-            // ServiceLocator蜆ｪ蜈亥叙蠕・            if (useServiceLocator && FeatureFlags.UseServiceLocator)
+            // ServiceLocator優先取得
+            if (useServiceLocator && FeatureFlags.UseServiceLocator)
             {
                 result = GetStealthAudioServiceFromServiceLocator(context, enableDebugLogs);
                 
-                // ServiceLocator縺ｧ蜿門ｾ励〒縺阪◆蝣ｴ蜷医・縺昴ｌ繧定ｿ斐☆
+                // ServiceLocatorで取得できた場合はそれを返す
                 if (result.IsSuccessful)
                 {
                     return result;
                 }
             }
 
-            // 繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ: 繝ｬ繧ｬ繧ｷ繝ｼ譁ｹ蠑・            LogDebug($"[{context}] ServiceLocator failed, trying legacy fallback", enableDebugLogs);
+            // フォールバック: レガシー方式
+            LogDebug($"[{context}] ServiceLocator failed, trying legacy fallback", enableDebugLogs);
             return GetStealthAudioServiceLegacy(context, enableDebugLogs);
         }
 
         /// <summary>
-        /// 谿ｵ髫守噪譖ｴ譁ｰ縺ｮ迥ｶ諷玖ｨｺ譁ｭ
+        /// 段階的更新の状態診断
         /// </summary>
-        /// <param name="context">蜻ｼ縺ｳ蜃ｺ縺怜・縺ｮ繧ｳ繝ｳ繝・く繧ｹ繝亥錐</param>
+        /// <param name="context">呼び出し元のコンテキスト名</param>
 /// <summary>
-        /// 谿ｵ髫守噪譖ｴ譁ｰ縺ｮ迥ｶ諷玖ｨｺ譁ｭ
+        /// 段階的更新の状態診断
         /// </summary>
-        /// <param name="context">蜻ｼ縺ｳ蜃ｺ縺怜・縺ｮ繧ｳ繝ｳ繝・く繧ｹ繝亥錐</param>
+        /// <param name="context">呼び出し元のコンテキスト名</param>
         public static void DiagnoseMigrationState(string context = "Unknown")
         {
             ServiceLocator.GetService<IEventLogger>()?.Log($"=== Migration State Diagnosis - {context} ===");
             
-            // FeatureFlags迥ｶ諷・            ServiceLocator.GetService<IEventLogger>()?.Log($"FeatureFlags.UseServiceLocator: {FeatureFlags.UseServiceLocator}");
+            // FeatureFlags状態
+            ServiceLocator.GetService<IEventLogger>()?.Log($"FeatureFlags.UseServiceLocator: {FeatureFlags.UseServiceLocator}");
             ServiceLocator.GetService<IEventLogger>()?.Log($"FeatureFlags.MigrateStealthAudioCoordinator: {FeatureFlags.MigrateStealthAudioCoordinator}");
             ServiceLocator.GetService<IEventLogger>()?.Log($"FeatureFlags.EnableDebugLogging: {FeatureFlags.EnableDebugLogging}");
             ServiceLocator.GetService<IEventLogger>()?.Log($"FeatureFlags.EnableMigrationMonitoring: {FeatureFlags.EnableMigrationMonitoring}");
             
-            // ServiceLocator迥ｶ諷・            try
+            // ServiceLocator状態
+            try
             {
                 var audioService = ServiceLocator.GetService<IAudioService>();
                 var stealthService = ServiceLocator.GetService<IStealthAudioService>();
@@ -122,17 +131,20 @@ namespace asterivo.Unity60.Core.Services
                 ServiceLocator.GetService<IEventLogger>()?.LogError($"ServiceLocator access failed: {ex.Message}");
             }
             
-            // 繝ｬ繧ｬ繧ｷ繝ｼ繧ｷ繧ｹ繝・Β迥ｶ諷・            // CheckLegacySystemState(); // Method not implemented - removed to fix compilation
+            // レガシーシステム状態
+            // CheckLegacySystemState(); // Method not implemented - removed to fix compilation
             
             ServiceLocator.GetService<IEventLogger>()?.Log($"=== End Migration State Diagnosis - {context} ===");
         }
 
         /// <summary>
-        /// 谿ｵ髫守噪譖ｴ譁ｰ縺ｮ謗ｨ螂ｨ險ｭ螳壼叙蠕・        /// </summary>
-        /// <returns>謗ｨ螂ｨ險ｭ螳壽ュ蝣ｱ</returns>
+        /// 段階的更新の推奨設定取得
+        /// </summary>
+        /// <returns>推奨設定情報</returns>
         public static (bool useServiceLocator, string reason) GetRecommendedSettings()
         {
-            // FeatureFlags縺ｫ蝓ｺ縺･縺・◆謗ｨ螂ｨ險ｭ螳壹・蛻､螳・            if (FeatureFlags.UseServiceLocator && FeatureFlags.MigrateStealthAudioCoordinator)
+            // FeatureFlagsに基づいた推奨設定の判定
+            if (FeatureFlags.UseServiceLocator && FeatureFlags.MigrateStealthAudioCoordinator)
             {
                 return (true, "ServiceLocator and migration flags are enabled");
             }
@@ -153,7 +165,8 @@ namespace asterivo.Unity60.Core.Services
         #region Private Methods
 
         /// <summary>
-        /// ServiceLocator縺九ｉIAudioService繧貞叙蠕・        /// </summary>
+        /// ServiceLocatorからIAudioServiceを取得
+        /// </summary>
         private static MigrationResult<IAudioService> GetAudioServiceFromServiceLocator(string context, bool enableDebugLogs)
         {
             var result = new MigrationResult<IAudioService>();
@@ -168,25 +181,26 @@ namespace asterivo.Unity60.Core.Services
                     result.IsSuccessful = true;
                     result.ServiceTypeName = result.Service.GetType().Name;
                     
-                    LogDebug($"[{context}] 笨・Successfully obtained IAudioService from ServiceLocator: {result.ServiceTypeName}", enableDebugLogs);
+                    LogDebug($"[{context}] ✅ Successfully obtained IAudioService from ServiceLocator: {result.ServiceTypeName}", enableDebugLogs);
                 }
                 else
                 {
                     result.ErrorMessage = "ServiceLocator returned null for IAudioService";
-                    LogDebug($"[{context}] 笶・ServiceLocator returned null for IAudioService", enableDebugLogs);
+                    LogDebug($"[{context}] ❌ ServiceLocator returned null for IAudioService", enableDebugLogs);
                 }
             }
             catch (System.Exception ex)
             {
                 result.ErrorMessage = ex.Message;
-                LogDebug($"[{context}] 笶・ServiceLocator IAudioService access failed: {ex.Message}", enableDebugLogs);
+                LogDebug($"[{context}] ❌ ServiceLocator IAudioService access failed: {ex.Message}", enableDebugLogs);
             }
 
             return result;
         }
 
         /// <summary>
-        /// ServiceLocator縺九ｉIStealthAudioService繧貞叙蠕・        /// </summary>
+        /// ServiceLocatorからIStealthAudioServiceを取得
+        /// </summary>
         private static MigrationResult<IStealthAudioService> GetStealthAudioServiceFromServiceLocator(string context, bool enableDebugLogs)
         {
             var result = new MigrationResult<IStealthAudioService>();
@@ -201,25 +215,26 @@ namespace asterivo.Unity60.Core.Services
                     result.IsSuccessful = true;
                     result.ServiceTypeName = result.Service.GetType().Name;
                     
-                    LogDebug($"[{context}] 笨・Successfully obtained IStealthAudioService from ServiceLocator: {result.ServiceTypeName}", enableDebugLogs);
+                    LogDebug($"[{context}] ✅ Successfully obtained IStealthAudioService from ServiceLocator: {result.ServiceTypeName}", enableDebugLogs);
                 }
                 else
                 {
                     result.ErrorMessage = "ServiceLocator returned null for IStealthAudioService";
-                    LogDebug($"[{context}] 笶・ServiceLocator returned null for IStealthAudioService", enableDebugLogs);
+                    LogDebug($"[{context}] ❌ ServiceLocator returned null for IStealthAudioService", enableDebugLogs);
                 }
             }
             catch (System.Exception ex)
             {
                 result.ErrorMessage = ex.Message;
-                LogDebug($"[{context}] 笶・ServiceLocator IStealthAudioService access failed: {ex.Message}", enableDebugLogs);
+                LogDebug($"[{context}] ❌ ServiceLocator IStealthAudioService access failed: {ex.Message}", enableDebugLogs);
             }
 
             return result;
         }
 
         /// <summary>
-        /// 繝ｬ繧ｬ繧ｷ繝ｼ譁ｹ蠑上〒IAudioService繧貞叙蠕・        /// </summary>
+        /// レガシー方式でIAudioServiceを取得
+        /// </summary>
         private static MigrationResult<IAudioService> GetAudioServiceLegacy(string context, bool enableDebugLogs)
         {
             var result = new MigrationResult<IAudioService>();
@@ -227,7 +242,7 @@ namespace asterivo.Unity60.Core.Services
             if (!FeatureFlags.AllowSingletonFallback)
             {
                 result.ErrorMessage = "Legacy singletons are disabled";
-                LogDebug($"[{context}] 笶・Legacy singletons are disabled", enableDebugLogs);
+                LogDebug($"[{context}] ❌ Legacy singletons are disabled", enableDebugLogs);
                 return result;
             }
 
@@ -243,7 +258,7 @@ namespace asterivo.Unity60.Core.Services
                     result.IsSuccessful = true;
                     result.ServiceTypeName = "AudioManager (Legacy)";
                     
-                    LogDebug($"[{context}] 笨・Successfully obtained IAudioService from legacy system", enableDebugLogs);
+                    LogDebug($"[{context}] ✅ Successfully obtained IAudioService from legacy system", enableDebugLogs);
                     
                     if (FeatureFlags.EnableMigrationMonitoring)
                     {
@@ -253,21 +268,22 @@ namespace asterivo.Unity60.Core.Services
                 else
                 {
                     result.ErrorMessage = "Legacy AudioManager not found";
-                    LogDebug($"[{context}] 笶・Legacy AudioManager not found", enableDebugLogs);
+                    LogDebug($"[{context}] ❌ Legacy AudioManager not found", enableDebugLogs);
                 }
 #pragma warning restore CS0618
             }
             catch (System.Exception ex)
             {
                 result.ErrorMessage = ex.Message;
-                LogDebug($"[{context}] 笶・Legacy IAudioService access failed: {ex.Message}", enableDebugLogs);
+                LogDebug($"[{context}] ❌ Legacy IAudioService access failed: {ex.Message}", enableDebugLogs);
             }
 
             return result;
         }
 
         /// <summary>
-        /// 繝ｬ繧ｬ繧ｷ繝ｼ譁ｹ蠑上〒IStealthAudioService繧貞叙蠕・        /// </summary>
+        /// レガシー方式でIStealthAudioServiceを取得
+        /// </summary>
         private static MigrationResult<IStealthAudioService> GetStealthAudioServiceLegacy(string context, bool enableDebugLogs)
         {
             var result = new MigrationResult<IStealthAudioService>();
@@ -275,7 +291,7 @@ namespace asterivo.Unity60.Core.Services
             if (!FeatureFlags.AllowSingletonFallback)
             {
                 result.ErrorMessage = "Legacy singletons are disabled";
-                LogDebug($"[{context}] 笶・Legacy singletons are disabled", enableDebugLogs);
+                LogDebug($"[{context}] ❌ Legacy singletons are disabled", enableDebugLogs);
                 return result;
             }
 
@@ -291,7 +307,7 @@ namespace asterivo.Unity60.Core.Services
                     result.IsSuccessful = true;
                     result.ServiceTypeName = "StealthAudioCoordinator (Legacy)";
                     
-                    LogDebug($"[{context}] 笨・Successfully obtained IStealthAudioService from legacy system", enableDebugLogs);
+                    LogDebug($"[{context}] ✅ Successfully obtained IStealthAudioService from legacy system", enableDebugLogs);
                     
                     if (FeatureFlags.EnableMigrationMonitoring)
                     {
@@ -301,21 +317,22 @@ namespace asterivo.Unity60.Core.Services
                 else
                 {
                     result.ErrorMessage = "Legacy StealthAudioCoordinator not found";
-                    LogDebug($"[{context}] 笶・Legacy StealthAudioCoordinator not found", enableDebugLogs);
+                    LogDebug($"[{context}] ❌ Legacy StealthAudioCoordinator not found", enableDebugLogs);
                 }
 #pragma warning restore CS0618
             }
             catch (System.Exception ex)
             {
                 result.ErrorMessage = ex.Message;
-                LogDebug($"[{context}] 笶・Legacy IStealthAudioService access failed: {ex.Message}", enableDebugLogs);
+                LogDebug($"[{context}] ❌ Legacy IStealthAudioService access failed: {ex.Message}", enableDebugLogs);
             }
 
             return result;
         }
 
         /// <summary>
-        /// 繝・ヰ繝・げ繝ｭ繧ｰ蜃ｺ蜉・        /// </summary>
+        /// デバッグログ出力
+        /// </summary>
         private static void LogDebug(string message, bool enableDebugLogs)
         {
             if (enableDebugLogs && FeatureFlags.EnableDebugLogging)
@@ -329,9 +346,10 @@ namespace asterivo.Unity60.Core.Services
         #region Convenience Methods
 
         /// <summary>
-        /// 蜊倡ｴ斐↑IAudioService蜿門ｾ暦ｼ医お繝ｩ繝ｼ繝上Φ繝峨Μ繝ｳ繧ｰ莉倥″・・        /// </summary>
-        /// <param name="context">蜻ｼ縺ｳ蜃ｺ縺怜・繧ｳ繝ｳ繝・く繧ｹ繝・/param>
-        /// <returns>IAudioService縺ｾ縺溘・null</returns>
+        /// 単純なIAudioService取得（エラーハンドリング付き）
+        /// </summary>
+        /// <param name="context">呼び出し元コンテキスト</param>
+        /// <returns>IAudioServiceまたはnull</returns>
         public static IAudioService GetAudioServiceSimple(string context = "Unknown")
         {
             var result = GetAudioService(true, context, false);
@@ -339,9 +357,10 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 蜊倡ｴ斐↑IStealthAudioService蜿門ｾ暦ｼ医お繝ｩ繝ｼ繝上Φ繝峨Μ繝ｳ繧ｰ莉倥″・・        /// </summary>
-        /// <param name="context">蜻ｼ縺ｳ蜃ｺ縺怜・繧ｳ繝ｳ繝・く繧ｹ繝・/param>
-        /// <returns>IStealthAudioService縺ｾ縺溘・null</returns>
+        /// 単純なIStealthAudioService取得（エラーハンドリング付き）
+        /// </summary>
+        /// <param name="context">呼び出し元コンテキスト</param>
+        /// <returns>IStealthAudioServiceまたはnull</returns>
         public static IStealthAudioService GetStealthAudioServiceSimple(string context = "Unknown")
         {
             var result = GetStealthAudioService(true, context, false);
@@ -349,18 +368,18 @@ namespace asterivo.Unity60.Core.Services
         }
 
         /// <summary>
-        /// 遘ｻ陦檎憾諷九・繧ｯ繧､繝・け繝√ぉ繝・け
+        /// 移行状態のクイックチェック
         /// </summary>
-        /// <returns>遘ｻ陦後′譛牙柑縺九←縺・°</returns>
+        /// <returns>移行が有効かどうか</returns>
         public static bool IsMigrationActive()
         {
             return FeatureFlags.UseServiceLocator && FeatureFlags.MigrateStealthAudioCoordinator;
         }
 
         /// <summary>
-        /// 繝ｬ繧ｬ繧ｷ繝ｼ繧ｷ繧ｹ繝・Β縺悟茜逕ｨ蜿ｯ閭ｽ縺九メ繧ｧ繝・け
+        /// レガシーシステムが利用可能かチェック
         /// </summary>
-        /// <returns>繝ｬ繧ｬ繧ｷ繝ｼ繧ｷ繧ｹ繝・Β縺悟茜逕ｨ蜿ｯ閭ｽ縺九←縺・°</returns>
+        /// <returns>レガシーシステムが利用可能かどうか</returns>
         public static bool IsLegacySystemAvailable()
         {
             return FeatureFlags.AllowSingletonFallback;
