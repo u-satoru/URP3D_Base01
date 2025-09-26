@@ -8,6 +8,7 @@ using asterivo.Unity60.Core.Events;
 // using asterivo.Unity60.Core.Debug;
 using asterivo.Unity60.Core;
 // using asterivo.Unity60.Core.Shared;
+using asterivo.Unity60.Core.Data;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio.Controllers

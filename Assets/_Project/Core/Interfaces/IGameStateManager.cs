@@ -1,4 +1,4 @@
-using asterivo.Unity60.Core.Audio; // GameState enum用
+using asterivo.Unity60.Core.Types; // GameState enum用
 
 namespace asterivo.Unity60.Core.Services
 {

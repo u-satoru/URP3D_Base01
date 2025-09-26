@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Audio;
+using asterivo.Unity60.Core.Data;
 
 namespace asterivo.Unity60.Core.Audio.Data
 {
