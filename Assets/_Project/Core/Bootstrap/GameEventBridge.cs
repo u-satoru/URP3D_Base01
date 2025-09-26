@@ -86,7 +86,7 @@ namespace asterivo.Unity60.Core.Bootstrap
                 // GameEventが発火したときにEventManagerにも伝播
                 var listener = _instance.gameObject.AddComponent<GameEventListener>();
                 listener.Event = gameEvent;
-                listener.Response = new UnityEngine.Events.UnityEvent();
+                // ResponseはUnityEventなので、AddListenerでコールバックを登録
                 listener.Response.AddListener(() => _instance.OnGameEventRaised(gameEvent));
 
                 Debug.Log($"[GameEventBridge] Mapped GameEvent to '{eventName}'");

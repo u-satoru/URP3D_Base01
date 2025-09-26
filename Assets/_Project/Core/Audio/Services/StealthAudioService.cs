@@ -102,12 +102,12 @@ namespace asterivo.Unity60.Core.Audio.Services
                     
                     if (FeatureFlags.EnableDebugLogging)
                     {
-                        EventLogger.LogStatic("[StealthAudioService] Successfully registered to ServiceLocator as IStealthAudioService");
+                        ServiceHelper.Log("[StealthAudioService] Successfully registered to ServiceLocator as IStealthAudioService");
                     }
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[StealthAudioService] Failed to register to ServiceLocator: {ex.Message}");
+                    ServiceHelper.LogError($"[StealthAudioService] Failed to register to ServiceLocator: {ex.Message}");
                     isServiceRegistered = false;
                 }
             }
@@ -126,12 +126,12 @@ namespace asterivo.Unity60.Core.Audio.Services
                     
                     if (FeatureFlags.EnableDebugLogging)
                     {
-                        EventLogger.LogStatic("[StealthAudioService] Unregistered from ServiceLocator");
+                        ServiceHelper.Log("[StealthAudioService] Unregistered from ServiceLocator");
                     }
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[StealthAudioService] Failed to unregister from ServiceLocator: {ex.Message}");
+                    ServiceHelper.LogError($"[StealthAudioService] Failed to unregister from ServiceLocator: {ex.Message}");
                 }
                 finally
                 {
@@ -161,7 +161,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogStatic("[StealthAudioService] Initialization complete");
+                ServiceHelper.Log("[StealthAudioService] Initialization complete");
             }
         }
 
@@ -174,13 +174,13 @@ namespace asterivo.Unity60.Core.Audio.Services
             // SerializeField による Inspector設定を推奨
             if (playerTransform == null)
             {
-                EventLogger.LogWarningStatic("[StealthAudioService] Player Transform not assigned! Please set in Inspector.");
+                ServiceHelper.LogWarning("[StealthAudioService] Player Transform not assigned! Please set in Inspector.");
             }
             else
             {
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.LogStatic("[StealthAudioService] Player reference found via Inspector");
+                    ServiceHelper.Log("[StealthAudioService] Player reference found via Inspector");
                 }
             }
         }
@@ -198,12 +198,12 @@ namespace asterivo.Unity60.Core.Audio.Services
                     
                     if (audioService != null && FeatureFlags.EnableDebugLogging)
                     {
-                        EventLogger.LogStatic("[StealthAudioService] Successfully retrieved AudioService from ServiceLocator");
+                        ServiceHelper.Log("[StealthAudioService] Successfully retrieved AudioService from ServiceLocator");
                     }
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[StealthAudioService] Failed to retrieve AudioService from ServiceLocator: {ex.Message}");
+                    ServiceHelper.LogError($"[StealthAudioService] Failed to retrieve AudioService from ServiceLocator: {ex.Message}");
                 }
             }
         }
@@ -231,7 +231,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             // 足音生成ロジック (従来のStealthAudioCoordinatorから移植)
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogStatic($"[StealthAudioService] Creating footstep at {position}, intensity: {intensity}, surface: {surfaceType}");
+                ServiceHelper.Log($"[StealthAudioService] Creating footstep at {position}, intensity: {intensity}, surface: {surfaceType}");
             }
 
             // TODO: 実際の足音生成実装
@@ -248,7 +248,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogStatic($"[StealthAudioService] Environment noise level set to: {level}");
+                ServiceHelper.Log($"[StealthAudioService] Environment noise level set to: {level}");
             }
         }
 
@@ -260,7 +260,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogStatic($"[StealthAudioService] Detectable sound emitted: {soundType} at {position}");
+                ServiceHelper.Log($"[StealthAudioService] Detectable sound emitted: {soundType} at {position}");
             }
         }
 
@@ -290,7 +290,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogStatic($"[StealthAudioService] Alert level music set: {level} -> {bgmName}");
+                ServiceHelper.Log($"[StealthAudioService] Alert level music set: {level} -> {bgmName}");
             }
         }
 
@@ -307,7 +307,7 @@ namespace asterivo.Unity60.Core.Audio.Services
 
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogStatic($"[StealthAudioService] Audio masking applied: {maskingLevel}");
+                ServiceHelper.Log($"[StealthAudioService] Audio masking applied: {maskingLevel}");
             }
         }
 
@@ -318,7 +318,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             // AI聴覚センサーへの通知ロジック
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogStatic($"[StealthAudioService] Notifying auditory sensors: origin={origin}, radius={radius}, intensity={intensity}");
+                ServiceHelper.Log($"[StealthAudioService] Notifying auditory sensors: origin={origin}, radius={radius}, intensity={intensity}");
             }
 
             // TODO: AI システムとの連携実装
@@ -338,12 +338,12 @@ namespace asterivo.Unity60.Core.Audio.Services
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.LogStatic($"[StealthAudioService] Stealth audio adjusted: level={stealthLevel}, reduction={volumeReduction}");
+                    ServiceHelper.Log($"[StealthAudioService] Stealth audio adjusted: level={stealthLevel}, reduction={volumeReduction}");
                 }
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogErrorStatic($"[StealthAudioService] Failed to adjust stealth audio: {ex.Message}");
+                ServiceHelper.LogError($"[StealthAudioService] Failed to adjust stealth audio: {ex.Message}");
             }
         }
 
@@ -480,7 +480,7 @@ namespace asterivo.Unity60.Core.Audio.Services
 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.LogStatic($"<color=orange>[StealthAudioService]</color> Stealth mode {(newStealthMode ? "activated" : "deactivated")}");
+                    ServiceHelper.Log($"<color=orange>[StealthAudioService]</color> Stealth mode {(newStealthMode ? "activated" : "deactivated")}");
                 }
             }
         }
@@ -578,7 +578,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogStatic($"[StealthAudioService] Stealth mode {(isStealthModeActive ? "activated" : "deactivated")}");
+                ServiceHelper.Log($"[StealthAudioService] Stealth mode {(isStealthModeActive ? "activated" : "deactivated")}");
             }
         }
 
@@ -588,11 +588,11 @@ namespace asterivo.Unity60.Core.Audio.Services
             var service = ServiceLocator.GetService<IStealthAudioService>();
             if (service != null)
             {
-                EventLogger.LogStatic($"[StealthAudioService] ✅ Service successfully retrieved from ServiceLocator");
+                ServiceHelper.Log($"[StealthAudioService] ✅ Service successfully retrieved from ServiceLocator");
             }
             else
             {
-                EventLogger.LogErrorStatic($"[StealthAudioService] ❌ Service not found in ServiceLocator");
+                ServiceHelper.LogError($"[StealthAudioService] ❌ Service not found in ServiceLocator");
             }
         }
 

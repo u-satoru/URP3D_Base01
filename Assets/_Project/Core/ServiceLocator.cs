@@ -15,7 +15,7 @@ namespace asterivo.Unity60.Core
     /// - 条件付きログによるランタイムオーバーヘッド削減
     /// - メモリアロケーション最小化
     /// </summary>
-    public static class ServiceLocator
+    public static partial class ServiceLocator
     {
         // パフォーマンス最適化: ConcurrentDictionaryで読み取り性能向上
         private static readonly ConcurrentDictionary<Type, object> services = new ConcurrentDictionary<Type, object>();

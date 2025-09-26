@@ -138,7 +138,7 @@ namespace asterivo.Unity60.Features.Player.Scripts
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogErrorStatic($"[PlayerStealthController] Legacy initialization failed: {ex.Message}");
+                ServiceHelper.LogError($"[PlayerStealthController] Legacy initialization failed: {ex.Message}");
             }
         }
 
@@ -149,13 +149,13 @@ namespace asterivo.Unity60.Features.Player.Scripts
         {
             if (audioService == null)
             {
-                EventLogger.LogErrorStatic("[PlayerStealthController] Failed to get IAudioService");
+                ServiceHelper.LogError("[PlayerStealthController] Failed to get IAudioService");
                 isServiceAvailable = false;
             }
 
             if (stealthAudioService == null)
             {
-                EventLogger.LogErrorStatic("[PlayerStealthController] Failed to get IStealthAudioService");
+                ServiceHelper.LogError("[PlayerStealthController] Failed to get IStealthAudioService");
                 isServiceAvailable = false;
             }
 
@@ -213,7 +213,7 @@ namespace asterivo.Unity60.Features.Player.Scripts
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[PlayerStealthController] Footstep creation failed: {ex.Message}");
+                    ServiceHelper.LogError($"[PlayerStealthController] Footstep creation failed: {ex.Message}");
                 }
             }
         }
@@ -234,7 +234,7 @@ namespace asterivo.Unity60.Features.Player.Scripts
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[PlayerStealthController] Stealth adjustment failed: {ex.Message}");
+                    ServiceHelper.LogError($"[PlayerStealthController] Stealth adjustment failed: {ex.Message}");
                 }
             }
         }
@@ -257,7 +257,7 @@ namespace asterivo.Unity60.Features.Player.Scripts
                 }
                 catch (System.Exception ex)
                 {
-                    EventLogger.LogErrorStatic($"[PlayerStealthController] Distraction creation failed: {ex.Message}");
+                    ServiceHelper.LogError($"[PlayerStealthController] Distraction creation failed: {ex.Message}");
                 }
             }
         }
@@ -306,7 +306,7 @@ namespace asterivo.Unity60.Features.Player.Scripts
         {
             if (!isServiceAvailable)
             {
-                EventLogger.LogErrorStatic("[PlayerStealthController] Services not available for testing");
+                ServiceHelper.LogError("[PlayerStealthController] Services not available for testing");
                 return;
             }
 
@@ -330,7 +330,7 @@ namespace asterivo.Unity60.Features.Player.Scripts
             }
             catch (System.Exception ex)
             {
-                EventLogger.LogErrorStatic($"[PlayerStealthController] ❌ Function test failed: {ex.Message}");
+                ServiceHelper.LogError($"[PlayerStealthController] ❌ Function test failed: {ex.Message}");
             }
         }
 

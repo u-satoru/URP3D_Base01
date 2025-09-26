@@ -115,7 +115,6 @@
 - **Command Line Interface**: PowerShell 7を使用してください。従来のコマンドプロンプト（cmd）ではなく、PowerShell 7を推奨します。これにより、最新のコマンドレット機能とUnity CLIツールとの互換性が向上します。
 - **タイムゾーン**: 日本標準時 (JST, UTC+9)
 - **日付形式**: `YYYYMMDD_HHMM`（例: `20231005_1430`）
-- **Claude Code の実行環境**: Windows 11 PowerShell 7
 - **ファイルをUpdateする際の注意点**: ファイルを更新する際は、必ず最新の状態を取得（ Read ）してから行い、競合が発生した場合は手動で解決してください。
 - **バッチモードコンパイル**: **バッチモードコンパイル前には、起動している Unity Editor インスタンスを確認し終了してください。**
 
@@ -145,7 +144,8 @@
 - `REQUIREMENTS.md` - 形式化された要件（AI生成） : @REQUIREMENTS.md
 - `DESIGN.md` - 技術設計書（AI生成） : @DESIGN.md
 - `TASKS.md` - 実装タスク一覧（AI生成） : TASKS.md
-- `TODO.md` - 進行中タスク管理（人間作成）
+- `TODO.md` - 進行中タスク管理（人間作成） : TODO.md
+
 
 
 #### 作業ディレクトリ配置（実装管理）

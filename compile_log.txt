@@ -1,15 +1,15 @@
 [Licensing::Module] Trying to connect to existing licensing client channel...
-[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-26T02:42:20.0643253Z"
-[Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 38588, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
+[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-26T07:24:19.4519123Z"
+[Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 58148, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
 [Licensing::Module] Error: LicensingClient has failed validation; ignoring
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.17.3+a4e98f1
-  Session Id:              ae38cdeb85be4ef5a04192d55f26a6bf
-  Correlation Id:          bd618608f42a0ff6ab1c5386ef3a3ad0
-  External correlation Id: 3802437075744264403
+  Session Id:              013b59dd5785423da81aabf7688e4a1e
+  Correlation Id:          bd66d0544daaeda4aa42da274a244b57
+  External correlation Id: 8119850925400875552
   Machine Id:              6v8irZboPhn9pIeIA+kbS+sqP0M=
-[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.01s, handshake: 0.07s)
-[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-26T02:42:20.1463522Z"
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.01s, handshake: 0.08s)
+[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-26T07:24:19.5480726Z"
 [Licensing::Module] Error: Access token is unavailable; failed to update
 [Licensing::Client] Successfully updated license
 Built from '6000.0/staging' branch; Version is '6000.0.42f1 (feb9a7235030) revision 16693671'; Using compiler version '193933523'; Build Type 'Release'
@@ -22,15 +22,12 @@ BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, I
 COMMAND LINE ARGUMENTS:
 C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Unity.exe
 -batchmode
--nographics
--projectPath
-D:\UnityProjects\URP3D_Base01
--executeMethod
-UnityEditor.Compilation.CompilationPipeline.RequestScriptCompilation
--logFile
-D:\UnityProjects\URP3D_Base01\compile_log.txt
 -quit
-Successfully changed project path to: D:\UnityProjects\URP3D_Base01
+-projectPath
+.
+-logFile
+compile_log.txt
+Successfully changed project path to: D:/UnityProjects/URP3D_Base01
 D:/UnityProjects/URP3D_Base01
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
     "memorysetup-bucket-allocator-granularity=16"
@@ -67,22 +64,22 @@ D:/UnityProjects/URP3D_Base01
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [48656]  Target information:
+Player connection [61136]  Target information:
 
-Player connection [48656]  * "[IP] 172.22.208.1 [Port] 55504 [Flags] 2 [Guid] 3739888854 [EditorId] 3739888854 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [61136]  * "[IP] 172.22.208.1 [Port] 55504 [Flags] 2 [Guid] 306397381 [EditorId] 306397381 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [48656]  * "[IP] 172.28.0.1 [Port] 55504 [Flags] 2 [Guid] 3739888854 [EditorId] 3739888854 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [61136]  * "[IP] 172.28.0.1 [Port] 55504 [Flags] 2 [Guid] 306397381 [EditorId] 306397381 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [48656]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 3739888854 [EditorId] 3739888854 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [61136]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 306397381 [EditorId] 306397381 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [48656]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 3739888854 [EditorId] 3739888854 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [61136]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 306397381 [EditorId] 306397381 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
 Unable to join player connection multicast group (err: 10013).
-Player connection [48656] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [61136] Host joined alternative multi-casting on [225.0.0.222:34997]...
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
 [Physics::Module] Id: 0xdecafbad
-[Package Manager] Connected to IPC stream "Upm-27268" after 0.5 seconds.
+[Package Manager] Connected to IPC stream "Upm-65872" after 0.2 seconds.
 Library Redirect Path: Library/
 [Package Manager] Restoring resolved packages state from cache
 [Licensing::Client] Successfully resolved entitlement details
@@ -231,25 +228,25 @@ Default GameObject BitMask: UI already registered
 [Physics::Module] Threading Mode: Multi-Threaded
 [Subsystems] No new subsystems found in resolved package list.
 Package Manager log level set to [2]
-[Package Manager] Done registering packages in 0.37 seconds
-Refreshing native plugins compatible for Editor in 2.39 ms, found 3 plugins.
+[Package Manager] Done registering packages in 0.29 seconds
+Refreshing native plugins compatible for Editor in 6.94 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.0.42f1 (feb9a7235030)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path D:/UnityProjects/URP3D_Base01/Assets
-Forcing GfxDevice: Null
 GfxDevice: creating device client; kGfxThreadingModeNonThreaded
-NullGfxDevice:
-    Version:  NULL 1.0 [1.0]
-    Renderer: Null Device
-    Vendor:   Unity Technologies
-Shader Hidden/ProbeVolume/VoxelizeScene is not supported: GPU does not support conservative rasterization
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 4060 Laptop GPU (ID=0x28a0)
+    Vendor:   NVIDIA
+    VRAM:     7957 MB
+    Driver:   32.0.15.7283
 [Licensing::Client] Successfully resolved entitlement details
 Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56268
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56872
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 ImportWorker Server TCP listen port: 0
@@ -262,46 +259,46 @@ Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 [Licensing::Client] Successfully resolved entitlement details
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
-Registered in 0.069825 seconds.
-- Loaded All Assemblies, in  0.971 seconds
+Registered in 3.119633 seconds.
+- Loaded All Assemblies, in 38.624 seconds
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 [usbmuxd] Send listen message
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 907 ms
+Android Extension - Scanning For ADB Devices 827 ms
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.550 seconds
-Domain Reload Profiling: 2510ms
-	BeginReloadAssembly (264ms)
+- Finished resetting the current domain, in  2.048 seconds
+Domain Reload Profiling: 40656ms
+	BeginReloadAssembly (26944ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (2ms)
-	RebuildCommonClasses (69ms)
-	RebuildNativeTypeToScriptingClass (30ms)
-	initialDomainReloadingComplete (183ms)
-	LoadAllAssembliesAndSetupDomain (413ms)
-		LoadAssemblies (262ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (1681ms)
+	RebuildNativeTypeToScriptingClass (20ms)
+	initialDomainReloadingComplete (3241ms)
+	LoadAllAssembliesAndSetupDomain (6722ms)
+		LoadAssemblies (27000ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (398ms)
-			TypeCache.Refresh (395ms)
-				TypeCache.ScanAssembly (365ms)
+		AnalyzeDomain (6653ms)
+			TypeCache.Refresh (6650ms)
+				TypeCache.ScanAssembly (5590ms)
 			BuildScriptInfoCaches (0ms)
 			ResolveRequiredComponents (1ms)
-	FinalizeReload (1551ms)
+	FinalizeReload (2048ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1496ms)
+		SetupLoadedEditorAssemblies (2004ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (1076ms)
-			SetLoadedEditorAssemblies (13ms)
-			BeforeProcessingInitializeOnLoad (84ms)
-			ProcessInitializeOnLoadAttributes (204ms)
-			ProcessInitializeOnLoadMethodAttributes (119ms)
+			InitializePlatformSupportModulesInManaged (1716ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (58ms)
+			ProcessInitializeOnLoadAttributes (149ms)
+			ProcessInitializeOnLoadMethodAttributes (76ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -568,20 +565,20 @@ The GUID inside 'Assets/Plugins/Sirenix/Odin Validator/Readme.txt.meta' cannot b
 The GUID inside 'Assets/Plugins/Sirenix/Readme.txt.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
 The GUID inside 'Assets/Resources.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
 The GUID inside 'Assets/Resources/DOTweenSettings.asset.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
+The contents of 'Assets/_Project/Core/Interfaces/IStateService.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
+YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
+YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
+The contents of 'Assets/_Project/Features/StateManagement/StateManagementBootstrapper.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
 YAML Parsing error 'Parser Failure at line 7: Expect ':' between key and value within mapping'
-YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
-YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
-YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
-YAML Parsing error 'Parser Failure at line 8: Expect ':' between key and value within mapping'
-YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
+The contents of 'Assets/_Project/Features/StateManagement/StateManager.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
 YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
 The contents of 'Assets/_Project/Features/Templates/Common/Prefabs/UI/BasicUICanvas.prefab.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
 The contents of 'Assets/_Project/Tests/Features/StateManagement/StateManagementIntegrationTest.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
-The contents of 'Assets/_Project/Core/Interfaces/IStateService.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
-The contents of 'Assets/_Project/Features/StateManagement/StateManagementBootstrapper.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
-The contents of 'Assets/_Project/Features/StateManagement/StateManager.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
-The contents of 'Assets/_Project/Tests/Features/StateManagement/StateManagementTests.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
+YAML Parsing error 'Parser Failure at line 8: Expect ':' between key and value within mapping'
 The contents of 'Assets/_Project/Tests/Features/StateManagement.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
+YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
+The contents of 'Assets/_Project/Tests/Features/StateManagement/StateManagementTests.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
 The .meta file Assets/_Project/Core/Interfaces/IStateService.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 The .meta file Assets/_Project/Features/StateManagement/StateManagementBootstrapper.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 The .meta file Assets/_Project/Features/StateManagement/StateManager.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
@@ -591,6 +588,7 @@ The .meta file Assets/_Project/Tests/Features/StateManagement/StateManagementInt
 The .meta file Assets/_Project/Tests/Features/StateManagement/StateManagementTests.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
 Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
 Assembly for Assembly Definition File 'Assets/_Project/Core/Optimization/asterivo.Unity60.Optimization.asmdef' will not be compiled, because it has no scripts associated with it.
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace ()
@@ -620,8 +618,8 @@ info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 43.2417ms
-Refreshing native plugins compatible for Editor in 1.56 ms, found 3 plugins.
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 52.6191ms
+Refreshing native plugins compatible for Editor in 1.51 ms, found 3 plugins.
 Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
 WorkingDir: D:/UnityProjects/URP3D_Base01
 info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
@@ -632,6 +630,7 @@ warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
       Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Runtime.InteropServices.WindowsRuntime.dll" in favor of "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetStandard\Extensions\2.0.0\System.Runtime.InteropServices.WindowsRuntime.dll"
 warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
       Assembly system.componentmodel.composition has duplicate hint path. Ignoring "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.ComponentModel.Composition.dll" in favor of "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetStandard\compat\2.1.0\shims\netfx\System.ComponentModel.Composition.dll"
+DisplayProgressbar: Compiling Scripts
 info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
       Resolved Unity.Burst.Cecil, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e with Library\PackageCache\com.unity.burst@7a907cf5a459\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll
 info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
@@ -639,11 +638,31 @@ info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 128.0316ms
-DisplayProgressbar: Compiling Scripts
-ExitCode: 3 Duration: 0s839ms
-[1275/1765  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
-[1597/1765  0s] Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.dll (+2 others)
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 792.7935ms
+Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Tools\netcorerun\netcorerun.exe "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1900b0aE.dag.json" "Library/Bee/1900b0aE-inputdata.json" "Library\Bee\buildprogram0.traceevents"
+WorkingDir: D:/UnityProjects/URP3D_Base01
+ExitCode: 4 Duration: 4s710ms
+Rebuilding DAG because FileSignature timestamp changed: Library/Bee/1900b0aE-inputdata.json
+[1263/1745  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra requires additional run (4.45 seconds), 2 items updated, 1262 evaluated
+ExitCode: 0 Duration: 6s237ms
+Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --dagfilejson="Library\Bee\1900b0aE.dag.json" --profile="Library/Bee/backend2.traceevents" ScriptAssemblies
+WorkingDir: D:/UnityProjects/URP3D_Base01
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Current configuration matches the requested one, skipping
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 2.0825ms
+ExitCode: 3 Duration: 1s536ms
+Finished compiling graph: 1749 nodes, 37327 flattened edges (28983 ToBuild, 306 ToUse), maximum node priority 2262
+[ 552/1745  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.rsp
+[1263/1745  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[1585/1745  0s] Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.dll (+2 others)
 ##### CommandLine
 "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.rsp2"
 ##### Contents of Library\Bee\artifacts\1900b0aE.dag\asterivo.Unity60.Core.rsp
@@ -1162,6 +1181,7 @@ ExitCode: 3 Duration: 0s839ms
 "Assets/_Project/Core/Audio/SpatialAudioManager.cs"
 "Assets/_Project/Core/Audio/StealthAudioCoordinator.cs"
 "Assets/_Project/Core/Audio/StealthAudioCoordinator_backup.cs"
+"Assets/_Project/Core/Audio/Types/AudioTypes.cs"
 "Assets/_Project/Core/Bootstrap/GameBootstrapper.cs"
 "Assets/_Project/Core/Bootstrap/GameBootstrapperPrefab.cs"
 "Assets/_Project/Core/Bootstrap/GameEventBridge.cs"
@@ -1215,6 +1235,10 @@ ExitCode: 3 Duration: 0s839ms
 "Assets/_Project/Core/Data/Items/ItemData.cs"
 "Assets/_Project/Core/Data/Skills/SkillData.cs"
 "Assets/_Project/Core/Data/StealthTypes.cs"
+"Assets/_Project/Core/Debug/EventLogger.cs"
+"Assets/_Project/Core/Debug/EventLoggerSettings.cs"
+"Assets/_Project/Core/Debug/IEventLogger.cs"
+"Assets/_Project/Core/Debug/ProjectDebug.cs"
 "Assets/_Project/Core/Events/BoolEventChannelSO.cs"
 "Assets/_Project/Core/Events/CameraStateEvent.cs"
 "Assets/_Project/Core/Events/CommandDefinitionGameEvent.cs"
@@ -1273,9 +1297,12 @@ ExitCode: 3 Duration: 0s839ms
 "Assets/_Project/Core/Patterns/StateMachine/StateMachine.cs"
 "Assets/_Project/Core/Patterns/StateMachine/StateTransitionManager.cs"
 "Assets/_Project/Core/ScriptableObjects/Data/GameDataSettings.cs"
+"Assets/_Project/Core/ServiceHelper.cs"
+"Assets/_Project/Core/ServiceLocator.Alias.cs"
 "Assets/_Project/Core/ServiceLocator.cs"
 "Assets/_Project/Core/Setup/GameGenre.cs"
 "Assets/_Project/Core/Setup/GenreManager.cs"
+"Assets/_Project/Core/Shared/AudioConstants.cs"
 "Assets/_Project/Core/SimplePhase1Executor.cs"
 "Assets/_Project/Core/SystemInitializer.cs"
 "Assets/_Project/Core/Types/GameState.cs"
@@ -1298,11 +1325,17 @@ DOTNET_MULTILEVEL_LOOKUP=0
 ##### ExitCode
 1
 ##### Output
+Assets\_Project\Core\Audio\Types\AudioTypes.cs(96,17): error CS0101: The namespace 'asterivo.Unity60.Core.Audio' already contains a definition for 'GameState'
+
+Assets\_Project\Core\Audio\Types\AudioTypes.cs(6,17): error CS0101: The namespace 'asterivo.Unity60.Core.Audio' already contains a definition for 'EnvironmentType'
+
+Assets\_Project\Core\Audio\Types\AudioTypes.cs(42,17): error CS0101: The namespace 'asterivo.Unity60.Core.Audio' already contains a definition for 'WeatherType'
+
+Assets\_Project\Core\Audio\Types\AudioTypes.cs(72,17): error CS0101: The namespace 'asterivo.Unity60.Core.Audio' already contains a definition for 'TimeOfDay'
+
 Assets\_Project\Core\Audio\AmbientManager.cs(162,17): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
 
 Assets\_Project\Core\Audio\AmbientManager.cs(74,17): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
-
-Assets\_Project\Core\Audio\Services\AudioService.cs(51,34): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
 
 Assets\_Project\Core\Interfaces\IStealthMechanicsService.cs(110,14): warning CS0108: 'IStealthMechanicsService.UpdateService()' hides inherited member 'IUpdatableService.UpdateService()'. Use the new keyword if hiding was intended.
 
@@ -1310,26 +1343,33 @@ Assets\_Project\Core\Interfaces\IStealthMechanicsService.cs(116,14): warning CS0
 
 Assets\_Project\Core\Interfaces\IStealthMechanicsService.cs(122,13): warning CS0108: 'IStealthMechanicsService.UpdatePriority' hides inherited member 'IUpdatableService.UpdatePriority'. Use the new keyword if hiding was intended.
 
-Assets\_Project\Core\Patterns\StateHandlerRegistry.cs(12,41): error CS0246: The type or namespace name 'IStateService' could not be found (are you missing a using directive or an assembly reference?)
-*** Tundra build failed (0.79 seconds), 2 items updated, 1765 evaluated
+Assets\_Project\Core\Audio\Services\AudioService.cs(51,34): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+*** Tundra build failed (1.50 seconds), 3 items updated, 1745 evaluated
 ## Script Compilation Error for: Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.dll (+2 others)
 ## CmdLine: "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.rsp2"
 ## Output:
+Assets\_Project\Core\Audio\Types\AudioTypes.cs(96,17): error CS0101: The namespace 'asterivo.Unity60.Core.Audio' already contains a definition for 'GameState'
+Assets\_Project\Core\Audio\Types\AudioTypes.cs(6,17): error CS0101: The namespace 'asterivo.Unity60.Core.Audio' already contains a definition for 'EnvironmentType'
+Assets\_Project\Core\Audio\Types\AudioTypes.cs(42,17): error CS0101: The namespace 'asterivo.Unity60.Core.Audio' already contains a definition for 'WeatherType'
+Assets\_Project\Core\Audio\Types\AudioTypes.cs(72,17): error CS0101: The namespace 'asterivo.Unity60.Core.Audio' already contains a definition for 'TimeOfDay'
 Assets\_Project\Core\Audio\AmbientManager.cs(162,17): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
 Assets\_Project\Core\Audio\AmbientManager.cs(74,17): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
-Assets\_Project\Core\Audio\Services\AudioService.cs(51,34): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
 Assets\_Project\Core\Interfaces\IStealthMechanicsService.cs(110,14): warning CS0108: 'IStealthMechanicsService.UpdateService()' hides inherited member 'IUpdatableService.UpdateService()'. Use the new keyword if hiding was intended.
 Assets\_Project\Core\Interfaces\IStealthMechanicsService.cs(116,14): warning CS0108: 'IStealthMechanicsService.NeedsUpdate' hides inherited member 'IUpdatableService.NeedsUpdate'. Use the new keyword if hiding was intended.
 Assets\_Project\Core\Interfaces\IStealthMechanicsService.cs(122,13): warning CS0108: 'IStealthMechanicsService.UpdatePriority' hides inherited member 'IUpdatableService.UpdatePriority'. Use the new keyword if hiding was intended.
-Assets\_Project\Core\Patterns\StateHandlerRegistry.cs(12,41): error CS0246: The type or namespace name 'IStateService' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Core\Audio\Services\AudioService.cs(51,34): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
 
+Assets\_Project\Core\Audio\Types\AudioTypes.cs(96,17): error CS0101: The namespace 'asterivo.Unity60.Core.Audio' already contains a definition for 'GameState'
+Assets\_Project\Core\Audio\Types\AudioTypes.cs(6,17): error CS0101: The namespace 'asterivo.Unity60.Core.Audio' already contains a definition for 'EnvironmentType'
+Assets\_Project\Core\Audio\Types\AudioTypes.cs(42,17): error CS0101: The namespace 'asterivo.Unity60.Core.Audio' already contains a definition for 'WeatherType'
+Assets\_Project\Core\Audio\Types\AudioTypes.cs(72,17): error CS0101: The namespace 'asterivo.Unity60.Core.Audio' already contains a definition for 'TimeOfDay'
 Assets\_Project\Core\Audio\AmbientManager.cs(162,17): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
 Assets\_Project\Core\Audio\AmbientManager.cs(74,17): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
-Assets\_Project\Core\Audio\Services\AudioService.cs(51,34): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
 Assets\_Project\Core\Interfaces\IStealthMechanicsService.cs(110,14): warning CS0108: 'IStealthMechanicsService.UpdateService()' hides inherited member 'IUpdatableService.UpdateService()'. Use the new keyword if hiding was intended.
 Assets\_Project\Core\Interfaces\IStealthMechanicsService.cs(116,14): warning CS0108: 'IStealthMechanicsService.NeedsUpdate' hides inherited member 'IUpdatableService.NeedsUpdate'. Use the new keyword if hiding was intended.
 Assets\_Project\Core\Interfaces\IStealthMechanicsService.cs(122,13): warning CS0108: 'IStealthMechanicsService.UpdatePriority' hides inherited member 'IUpdatableService.UpdatePriority'. Use the new keyword if hiding was intended.
-Assets\_Project\Core\Patterns\StateHandlerRegistry.cs(12,41): error CS0246: The type or namespace name 'IStateService' could not be found (are you missing a using directive or an assembly reference?)
-AssetDatabase: script compilation time: 1.594544s
+Assets\_Project\Core\Audio\Services\AudioService.cs(51,34): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+AssetDatabase: script compilation time: 13.663634s
+The GUID inside 'Assets/_Project.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
 Scripts have compiler errors.
 Exiting without the bug reporter. Application will terminate with return code 1

@@ -154,7 +154,7 @@ namespace asterivo.Unity60.Features.Validation
         public void AddInfo(string message)
         {
             infos.Add(message);
-            EventLogger.LogStatic($"[Validation] {message}");
+            ServiceHelper.Log($"[Validation] {message}");
         }
         
         /// <summary>

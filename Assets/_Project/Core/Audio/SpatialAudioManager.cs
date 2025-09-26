@@ -79,12 +79,12 @@ namespace asterivo.Unity60.Core.Audio
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.LogStatic("[SpatialAudioManager] Registered to ServiceLocator as ISpatialAudioService");
+                    ServiceHelper.Log("[SpatialAudioManager] Registered to ServiceLocator as ISpatialAudioService");
                 }
             }
             else
             {
-                EventLogger.LogWarningStatic("[SpatialAudioManager] ServiceLocator is disabled - service not registered");
+                ServiceHelper.LogWarning("[SpatialAudioManager] ServiceLocator is disabled - service not registered");
             }
             
             InitializeAudioSourcePool();
@@ -106,7 +106,7 @@ namespace asterivo.Unity60.Core.Audio
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.LogStatic("[SpatialAudioManager] Unregistered from ServiceLocator");
+                    ServiceHelper.Log("[SpatialAudioManager] Unregistered from ServiceLocator");
                 }
             }
         }
@@ -131,7 +131,7 @@ namespace asterivo.Unity60.Core.Audio
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogStatic("[SpatialAudioManager] Initialization complete (Legacy)");
+                ServiceHelper.Log("[SpatialAudioManager] Initialization complete (Legacy)");
             }
         }
         
@@ -146,7 +146,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (!IsInitialized)
             {
-                EventLogger.LogWarningStatic("[SpatialAudioManager] System not initialized");
+                ServiceHelper.LogWarning("[SpatialAudioManager] System not initialized");
                 return;
             }
             
@@ -166,7 +166,7 @@ namespace asterivo.Unity60.Core.Audio
             if (!IsInitialized || source == null) return;
             
             // TODO: 移動する音源の実装
-            EventLogger.LogStatic($"[SpatialAudioManager] Creating moving sound: {soundId}");
+            ServiceHelper.Log($"[SpatialAudioManager] Creating moving sound: {soundId}");
         }
         
         /// <summary>
@@ -177,7 +177,7 @@ namespace asterivo.Unity60.Core.Audio
             if (!IsInitialized) return;
             
             // TODO: 環境音の実装
-            EventLogger.LogStatic($"[SpatialAudioManager] Setting ambient sound: {soundId}");
+            ServiceHelper.Log($"[SpatialAudioManager] Setting ambient sound: {soundId}");
         }
         
         /// <summary>
@@ -197,7 +197,7 @@ namespace asterivo.Unity60.Core.Audio
             if (!IsInitialized) return;
             
             // TODO: リバーブゾーンの実装
-            EventLogger.LogStatic($"[SpatialAudioManager] Setting reverb zone: {zoneId}, level: {reverbLevel}");
+            ServiceHelper.Log($"[SpatialAudioManager] Setting reverb zone: {zoneId}, level: {reverbLevel}");
         }
         
         /// <summary>
@@ -208,7 +208,7 @@ namespace asterivo.Unity60.Core.Audio
             if (!IsInitialized) return;
             
             // TODO: ドップラーレベルの実装
-            EventLogger.LogStatic($"[SpatialAudioManager] Setting Doppler level: {level}");
+            ServiceHelper.Log($"[SpatialAudioManager] Setting Doppler level: {level}");
         }
         
         /// <summary>

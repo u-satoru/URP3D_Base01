@@ -36,7 +36,7 @@ namespace asterivo.Unity60.Core.Services
                 InvokeRepeating(nameof(CheckScheduleProgression), 60f, 60f); // 1分ごとに確認
             }
             
-            EventLogger.LogStatic($"[SingletonDisableScheduler] Started - Current Day: {currentDay}, Auto: {enableAutoProgression}");
+            ServiceHelper.Log($"[SingletonDisableScheduler] Started - Current Day: {currentDay}, Auto: {enableAutoProgression}");
         }
         
         private void OnDestroy()
@@ -63,7 +63,7 @@ namespace asterivo.Unity60.Core.Services
             ExecuteDay1Configuration();
             SaveScheduleState();
             
-            EventLogger.LogStatic($"[SingletonDisableScheduler] Schedule started at {scheduleStartTimeString}");
+            ServiceHelper.Log($"[SingletonDisableScheduler] Schedule started at {scheduleStartTimeString}");
         }
         
         /// <summary>
@@ -119,7 +119,7 @@ namespace asterivo.Unity60.Core.Services
             RecordDayTransition(previousDay, targetDay);
             SaveScheduleState();
             
-            EventLogger.LogStatic($"[SingletonDisableScheduler] Advanced from {previousDay} to {targetDay}");
+            ServiceHelper.Log($"[SingletonDisableScheduler] Advanced from {previousDay} to {targetDay}");
         }
         
         /// <summary>
@@ -127,7 +127,7 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void ExecuteDay1Configuration()
         {
-            EventLogger.LogStatic("[SingletonDisableScheduler] === Day 1: Warnings Enabled ===");
+            ServiceHelper.Log("[SingletonDisableScheduler] === Day 1: Warnings Enabled ===");
             
             // テスト環境で警告システム有効化
             FeatureFlags.EnableMigrationWarnings = true;
@@ -135,11 +135,11 @@ namespace asterivo.Unity60.Core.Services
             
             if (isTestEnvironment)
             {
-                EventLogger.LogStatic("[SingletonDisableScheduler] Day 1: Test environment - Migration warnings enabled");
+                ServiceHelper.Log("[SingletonDisableScheduler] Day 1: Test environment - Migration warnings enabled");
             }
             else
             {
-                EventLogger.LogStatic("[SingletonDisableScheduler] Day 1: Production environment - Migration warnings enabled");
+                ServiceHelper.Log("[SingletonDisableScheduler] Day 1: Production environment - Migration warnings enabled");
             }
             
             // MigrationMonitorの統計リセット
@@ -152,7 +152,7 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void ExecuteDay2_3Configuration()
         {
-            EventLogger.LogStatic("[SingletonDisableScheduler] === Day 2-3: Issue Fixing Period ===");
+            ServiceHelper.Log("[SingletonDisableScheduler] === Day 2-3: Issue Fixing Period ===");
             
             // 警告は継続、詳細な監視を開始
             FeatureFlags.EnableMigrationWarnings = true;
@@ -164,7 +164,7 @@ namespace asterivo.Unity60.Core.Services
             monitor?.GenerateUsageReport();
             monitor?.GenerateMigrationRecommendations();
             
-            EventLogger.LogStatic("[SingletonDisableScheduler] Day 2-3: Focus on fixing singleton usage based on warnings");
+            ServiceHelper.Log("[SingletonDisableScheduler] Day 2-3: Focus on fixing singleton usage based on warnings");
         }
         
         /// <summary>
@@ -172,7 +172,7 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void ExecuteDay4Configuration()
         {
-            EventLogger.LogStatic("[SingletonDisableScheduler] === Day 4: Singleton Disabled ===");
+            ServiceHelper.Log("[SingletonDisableScheduler] === Day 4: Singleton Disabled ===");
             
             // 本番環境でSingleton無効化
             FeatureFlags.EnableMigrationWarnings = true; // 警告は継続
@@ -195,7 +195,7 @@ namespace asterivo.Unity60.Core.Services
         /// </summary>
         private void ExecuteDay5Configuration()
         {
-            EventLogger.LogStatic("[SingletonDisableScheduler] === Day 5: Complete Removal Preparation ===");
+            ServiceHelper.Log("[SingletonDisableScheduler] === Day 5: Complete Removal Preparation ===");
             
             // 完全削除準備
             FeatureFlags.EnableMigrationWarnings = false; // 警告停止
@@ -205,8 +205,8 @@ namespace asterivo.Unity60.Core.Services
             var migrationValidator = FindFirstObjectByType<MigrationValidator>();
             migrationValidator?.ValidateMigration();
             
-            EventLogger.LogStatic("[SingletonDisableScheduler] Day 5: Ready for complete singleton code removal");
-            EventLogger.LogStatic("[SingletonDisableScheduler] Day 5: Migration process completed successfully");
+            ServiceHelper.Log("[SingletonDisableScheduler] Day 5: Ready for complete singleton code removal");
+            ServiceHelper.Log("[SingletonDisableScheduler] Day 5: Migration process completed successfully");
             
             currentDay = ScheduleDay.Completed;
         }
@@ -325,7 +325,7 @@ namespace asterivo.Unity60.Core.Services
             FeatureFlags.DisableLegacySingletons = false;
             
             SaveScheduleState();
-            EventLogger.LogStatic("[SingletonDisableScheduler] Schedule reset to initial state");
+            ServiceHelper.Log("[SingletonDisableScheduler] Schedule reset to initial state");
         }
         
         /// <summary>
@@ -334,27 +334,27 @@ namespace asterivo.Unity60.Core.Services
         [ContextMenu("Generate Status Report")]
         public void GenerateStatusReport()
         {
-            EventLogger.LogStatic("[SingletonDisableScheduler] === Schedule Status Report ===");
-            EventLogger.LogStatic($"  Current Day: {currentDay}");
-            EventLogger.LogStatic($"  Start Time: {scheduleStartTimeString}");
-            EventLogger.LogStatic($"  Day Duration: {dayDurationHours} hours");
-            EventLogger.LogStatic($"  Environment: {(isTestEnvironment ? "Test" : "Production")}");
-            EventLogger.LogStatic($"  Auto Progression: {enableAutoProgression}");
+            ServiceHelper.Log("[SingletonDisableScheduler] === Schedule Status Report ===");
+            ServiceHelper.Log($"  Current Day: {currentDay}");
+            ServiceHelper.Log($"  Start Time: {scheduleStartTimeString}");
+            ServiceHelper.Log($"  Day Duration: {dayDurationHours} hours");
+            ServiceHelper.Log($"  Environment: {(isTestEnvironment ? "Test" : "Production")}");
+            ServiceHelper.Log($"  Auto Progression: {enableAutoProgression}");
             
             if (currentDay != ScheduleDay.NotStarted)
             {
                 TimeSpan elapsed = DateTime.Now - scheduleStartTime;
-                EventLogger.LogStatic($"  Elapsed Time: {elapsed.TotalHours:F1} hours ({elapsed.TotalDays:F1} days)");
+                ServiceHelper.Log($"  Elapsed Time: {elapsed.TotalHours:F1} hours ({elapsed.TotalDays:F1} days)");
                 
                 float progress = GetScheduleProgress();
-                EventLogger.LogStatic($"  Overall Progress: {progress:F1}%");
+                ServiceHelper.Log($"  Overall Progress: {progress:F1}%");
             }
             
-            EventLogger.LogStatic("  Feature Flags Status:");
+            ServiceHelper.Log("  Feature Flags Status:");
             var snapshot = GetCurrentFeatureFlagsSnapshot();
             foreach (var kvp in snapshot)
             {
-                EventLogger.LogStatic($"    - {kvp.Key}: {kvp.Value}");
+                ServiceHelper.Log($"    - {kvp.Key}: {kvp.Value}");
             }
         }
         

@@ -99,7 +99,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             
             if (!useNewUpdateSystem)
             {
-                EventLogger.LogStatic("<color=yellow>[AudioUpdateService]</color> New update system disabled by feature flag");
+                ServiceHelper.Log("<color=yellow>[AudioUpdateService]</color> New update system disabled by feature flag");
                 enabled = false;
                 return;
             }
@@ -132,7 +132,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             // Service Locatorへの登録
             ServiceLocator.RegisterService<IAudioUpdateService>(this);
-            EventLogger.LogStatic("<color=green>[AudioUpdateService]</color> Service registered to ServiceLocator");
+            ServiceHelper.Log("<color=green>[AudioUpdateService]</color> Service registered to ServiceLocator");
             IsInitialized = true;
         }
         
@@ -145,7 +145,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             spatialAudioCache = new Dictionary<Vector3Int, List<AudioSource>>();
             trackedAudioSources = new HashSet<AudioSource>();
             
-            EventLogger.LogStatic("<color=green>[AudioUpdateService]</color> Audio update service initialized");
+            ServiceHelper.Log("<color=green>[AudioUpdateService]</color> Audio update service initialized");
         }
         
         private void FindSystemReferences()
@@ -162,7 +162,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                 playerTransform = audioListener.transform;
             }
             
-            EventLogger.LogStatic($"<color=green>[AudioUpdateService]</color> Found {GetFoundSystemsCount()} audio systems");
+            ServiceHelper.Log($"<color=green>[AudioUpdateService]</color> Found {GetFoundSystemsCount()} audio systems");
         }
         
         private void InitializeSpatialCache()
@@ -187,7 +187,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             updatables.Sort((a, b) => a.UpdatePriority.CompareTo(b.UpdatePriority));
             registeredUpdatables = updatables.Count;
             
-            EventLogger.LogStatic($"<color=green>[AudioUpdateService]</color> Registered updatable: {updatable.GetType().Name}");
+            ServiceHelper.Log($"<color=green>[AudioUpdateService]</color> Registered updatable: {updatable.GetType().Name}");
         }
         
         public void UnregisterUpdatable(IAudioUpdatable updatable)
@@ -199,7 +199,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             updatableSet.Remove(updatable);
             registeredUpdatables = updatables.Count;
             
-            EventLogger.LogStatic($"<color=green>[AudioUpdateService]</color> Unregistered updatable: {updatable.GetType().Name}");
+            ServiceHelper.Log($"<color=green>[AudioUpdateService]</color> Unregistered updatable: {updatable.GetType().Name}");
         }
         
         public void StartCoordinatedUpdates()
@@ -207,7 +207,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             if (coordinatedUpdateCoroutine == null)
             {
                 coordinatedUpdateCoroutine = StartCoroutine(CoordinatedUpdateLoop());
-                EventLogger.LogStatic("<color=green>[AudioUpdateService]</color> Coordinated updates started");
+                ServiceHelper.Log("<color=green>[AudioUpdateService]</color> Coordinated updates started");
             }
         }
         
@@ -217,7 +217,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             {
                 StopCoroutine(coordinatedUpdateCoroutine);
                 coordinatedUpdateCoroutine = null;
-                EventLogger.LogStatic("<color=green>[AudioUpdateService]</color> Coordinated updates stopped");
+                ServiceHelper.Log("<color=green>[AudioUpdateService]</color> Coordinated updates stopped");
             }
         }
         
@@ -328,7 +328,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                 }
                 catch (System.Exception e)
                 {
-                    EventLogger.LogErrorStatic($"[AudioUpdateService] Error updating {updatable.GetType().Name}: {e.Message}");
+                    ServiceHelper.LogError($"[AudioUpdateService] Error updating {updatable.GetType().Name}: {e.Message}");
                 }
             }
         }
@@ -440,7 +440,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                 }
             }
             
-            EventLogger.LogStatic($"<color=green>[AudioUpdateService]</color> Rebuilt spatial cache: {totalManagedAudioSources} total, {activeAudioSources} active");
+            ServiceHelper.Log($"<color=green>[AudioUpdateService]</color> Rebuilt spatial cache: {totalManagedAudioSources} total, {activeAudioSources} active");
         }
         
         private Vector3Int WorldToGridKey(Vector3 worldPosition)

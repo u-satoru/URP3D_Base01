@@ -296,7 +296,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (!bgmCategories.TryGetValue(category, out BGMTrack[] tracks) || tracks.Length == 0)
             {
-                var eventLogger = ServiceLocator.GetService<IEventLogger>(); if (eventLogger != null) eventLogger.LogWarning($"[BGMManager] No tracks found for category: {category}");
+                ServiceHelper.LogWarning($"[BGMManager] No tracks found for category: {category}");
                 return null;
             }
 
@@ -358,7 +358,7 @@ namespace asterivo.Unity60.Core.Audio
             // イベント発衁E            bgmTrackStartedEvent?.Raise();
             bgmChangeEvent?.RaiseAtPosition(track.trackName, transform.position);
 
-            var eventLogger = ServiceLocator.GetService<IEventLogger>(); if (eventLogger != null) eventLogger.Log($"<color=green>[BGMManager]</color> Playing BGM: {track.trackName} (Category: {track.category})");
+            ServiceHelper.Log($"<color=green>[BGMManager]</color> Playing BGM: {track.trackName} (Category: {track.category})");
         }
 
         /// <summary>

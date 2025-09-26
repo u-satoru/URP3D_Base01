@@ -223,7 +223,7 @@ namespace asterivo.Unity60.Core.Bootstrap
                 Debug.LogWarning($"[GameBootstrapper] Not initialized. Service {typeof(T).Name} may not be available.");
             }
 
-            return ServiceLocator.TryGet(out service);
+            return ServiceLocator.TryGet<T>(out service);
         }
 
         #endregion

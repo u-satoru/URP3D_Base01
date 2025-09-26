@@ -228,7 +228,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             
             if (enableDetailedLogging)
             {
-                EventLogger.LogStatic($"[AudioSingletonTest] {message}");
+                ServiceHelper.Log($"[AudioSingletonTest] {message}");
                 UnityEngine.Debug.Log($"[AudioSingletonTest] {message}");
             }
         }

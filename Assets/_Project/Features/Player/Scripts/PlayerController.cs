@@ -214,7 +214,7 @@ namespace asterivo.Unity60.Features.Player
                     
                     if (FeatureFlags.EnableMigrationWarnings)
                     {
-                        EventLogger.LogWarningStatic("[PlayerController] Using legacy Singleton access");
+                        ServiceHelper.LogWarning("[PlayerController] Using legacy Singleton access");
                     }
                 }
                 catch (System.Exception ex)
@@ -227,12 +227,12 @@ namespace asterivo.Unity60.Features.Player
             if (audioService == null)
             {
                 audioServiceStatus = "Failed: No Audio Service";
-                EventLogger.LogErrorStatic("[PlayerController] Failed to get IAudioService");
+                ServiceHelper.LogError("[PlayerController] Failed to get IAudioService");
             }
             
             if (enableStealthAudio && stealthAudioService == null)
             {
-                EventLogger.LogWarningStatic("[PlayerController] Failed to get IStealthAudioService");
+                ServiceHelper.LogWarning("[PlayerController] Failed to get IStealthAudioService");
             }
         }
         

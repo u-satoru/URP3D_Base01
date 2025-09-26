@@ -54,7 +54,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.LogStatic("[SpatialAudioService] Registered to ServiceLocator");
+                    ServiceHelper.Log("[SpatialAudioService] Registered to ServiceLocator");
                 }
             }
             
@@ -101,7 +101,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             mainListener = FindFirstObjectByType<AudioListener>();
             if (mainListener == null)
             {
-                EventLogger.LogWarningStatic("[SpatialAudioService] No AudioListener found in scene");
+                ServiceHelper.LogWarning("[SpatialAudioService] No AudioListener found in scene");
             }
             
             SetupDefaultSettings();
@@ -115,7 +115,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogStatic("[SpatialAudioService] Initialization complete");
+                ServiceHelper.Log("[SpatialAudioService] Initialization complete");
             }
         }
         
@@ -127,7 +127,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             if (!IsInitialized)
             {
-                EventLogger.LogWarningStatic("[SpatialAudioService] System not initialized");
+                ServiceHelper.LogWarning("[SpatialAudioService] System not initialized");
                 return;
             }
             
@@ -159,7 +159,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             var audioSource = GetAvailableAudioSource();
             if (audioSource == null)
             {
-                EventLogger.LogWarningStatic("[SpatialAudioService] No available audio sources");
+                ServiceHelper.LogWarning("[SpatialAudioService] No available audio sources");
                 return;
             }
             

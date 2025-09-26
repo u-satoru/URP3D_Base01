@@ -69,7 +69,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             weatherSoundLookup = new Dictionary<WeatherType, WeatherAmbientCollection>();
             activeWeatherLayers = new List<WeatherAmbientLayer>();
             
-            EventLogger.LogStatic("<color=cyan>[WeatherAmbientController]</color> Weather ambient controller initialized");
+            ServiceHelper.Log("<color=cyan>[WeatherAmbientController]</color> Weather ambient controller initialized");
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                 }
             }
             
-            EventLogger.LogStatic("<color=cyan>[WeatherAmbientController]</color> Built lookup for {weatherSoundLookup.Count} weather types");
+            ServiceHelper.Log($"<color=cyan>[WeatherAmbientController]</color> Built lookup for {weatherSoundLookup.Count} weather types");
         }
 
         /// <summary>
@@ -231,11 +231,11 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             isTransitioning = true;
             currentWeather = newWeather;
 
-            EventLogger.LogStatic($"<color=cyan>[WeatherAmbientController]</color> Starting transition to {newWeather}");
+            ServiceHelper.Log($"<color=cyan>[WeatherAmbientController]</color> Starting transition to {newWeather}");
 
             // 新しい天気音響を取征E            if (!weatherSoundLookup.TryGetValue(newWeather, out var weatherCollection))
             {
-                EventLogger.LogWarningStatic($"[WeatherAmbientController] No sound collection found for weather: {newWeather}");
+                ServiceHelper.LogWarning($"[WeatherAmbientController] No sound collection found for weather: {newWeather}");
                 isTransitioning = false;
                 yield break;
             }
@@ -244,7 +244,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             AudioSource availableSource = GetAvailableWeatherSource();
             if (availableSource == null)
             {
-                EventLogger.LogWarningStatic("[WeatherAmbientController] No available audio sources for weather transition");
+                ServiceHelper.LogWarning("[WeatherAmbientController] No available audio sources for weather transition");
                 isTransitioning = false;
                 yield break;
             }
@@ -267,7 +267,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             }
 
             isTransitioning = false;
-            EventLogger.LogStatic($"<color=cyan>[WeatherAmbientController]</color> Completed transition to {newWeather}");
+            ServiceHelper.Log($"<color=cyan>[WeatherAmbientController]</color> Completed transition to {newWeather}");
 
             // イベント発火
             if (weatherSoundTriggeredEvent != null)

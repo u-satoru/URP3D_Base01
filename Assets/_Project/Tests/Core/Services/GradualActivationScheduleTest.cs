@@ -530,11 +530,11 @@ namespace asterivo.Unity60.Tests.Core.Services
 
             if (allTestsPassed)
             {
-                EventLogger.LogStatic("脂 [SCHEDULE TEST] Step 3.7 Gradual Activation Schedule is working correctly!");
+                ServiceHelper.Log("脂 [SCHEDULE TEST] Step 3.7 Gradual Activation Schedule is working correctly!");
             }
             else
             {
-                EventLogger.LogErrorStatic("笶・[SCHEDULE TEST] Some Step 3.7 schedule components need attention.");
+                ServiceHelper.LogError("笶・[SCHEDULE TEST] Some Step 3.7 schedule components need attention.");
             }
         }
 
@@ -636,7 +636,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         {
             if (enableDetailedLogs)
             {
-                EventLogger.LogStatic($"[SCHEDULE_TEST] {message}");
+                ServiceHelper.Log($"[SCHEDULE_TEST] {message}");
             }
         }
 

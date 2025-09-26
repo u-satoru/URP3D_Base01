@@ -82,7 +82,7 @@ namespace asterivo.Unity60.Core.Audio
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.LogStatic("[EffectManager] Registered to ServiceLocator as IEffectService");
+                    ServiceHelper.Log("[EffectManager] Registered to ServiceLocator as IEffectService");
                 }
             }
             
@@ -103,7 +103,7 @@ namespace asterivo.Unity60.Core.Audio
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.LogStatic("[EffectManager] Unregistered from ServiceLocator");
+                    ServiceHelper.Log("[EffectManager] Unregistered from ServiceLocator");
                 }
             }
         }
@@ -144,7 +144,7 @@ namespace asterivo.Unity60.Core.Audio
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogStatic("[EffectManager] Initialization complete");
+                ServiceHelper.Log("[EffectManager] Initialization complete");
             }
         }
         
@@ -180,7 +180,7 @@ namespace asterivo.Unity60.Core.Audio
             if (!IsInitialized) return -1;
             
             // TODO: ループ効果音の実装
-            EventLogger.LogStatic($"[EffectManager] Starting looping effect: {effectId}");
+            ServiceHelper.Log($"[EffectManager] Starting looping effect: {effectId}");
             return 0; // 仮のID
         }
         
@@ -192,7 +192,7 @@ namespace asterivo.Unity60.Core.Audio
             if (!IsInitialized) return;
             
             // TODO: ループ効果音の停止実装
-            EventLogger.LogStatic($"[EffectManager] Stopping looping effect: {loopId}");
+            ServiceHelper.Log($"[EffectManager] Stopping looping effect: {loopId}");
         }
         
         /// <summary>
@@ -221,7 +221,7 @@ namespace asterivo.Unity60.Core.Audio
         public void SetEffectPitch(string effectId, float pitch)
         {
             // TODO: ピッチ設定の実装
-            EventLogger.LogStatic($"[EffectManager] Setting pitch for {effectId}: {pitch}");
+            ServiceHelper.Log($"[EffectManager] Setting pitch for {effectId}: {pitch}");
         }
         
         /// <summary>
@@ -232,7 +232,7 @@ namespace asterivo.Unity60.Core.Audio
             // TODO: プリロード機能の実装
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogStatic($"[EffectManager] Preloading {effectIds?.Length ?? 0} effects");
+                ServiceHelper.Log($"[EffectManager] Preloading {effectIds?.Length ?? 0} effects");
             }
         }
         
@@ -244,7 +244,7 @@ namespace asterivo.Unity60.Core.Audio
             // TODO: プールクリア機能の実装
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogStatic("[EffectManager] Clearing effect pool");
+                ServiceHelper.Log("[EffectManager] Clearing effect pool");
             }
         }
         
@@ -472,7 +472,7 @@ namespace asterivo.Unity60.Core.Audio
             // デフォルト効果音の作成（必要最小限のサウンド）
             CreateDefaultEffectsIfNeeded();
             
-            EventLogger.LogStatic($"[EffectManager] Loaded {totalLoaded} effect sounds from Resources. " +
+            ServiceHelper.Log($"[EffectManager] Loaded {totalLoaded} effect sounds from Resources. " +
                           $"Total effects in database: {effectDatabase.Count}");
                           
             // デバッグ情報：利用可能な効果音リストを出力
@@ -485,7 +485,7 @@ namespace asterivo.Unity60.Core.Audio
                 {
                     sb.AppendLine($"  - {kvp.Key}");
                 }
-                EventLogger.LogStatic(sb.ToString());
+                ServiceHelper.Log(sb.ToString());
             }
             #endif
         }
@@ -744,7 +744,7 @@ namespace asterivo.Unity60.Core.Audio
             StartCoroutine(ReturnToPoolWhenFinished(audioSource, soundData.GetRandomClip().length));
 
             #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            EventLogger.LogStatic($"Playing effect: {effectName} ({effectType}) with priority: {audioSource.priority}");
+            ServiceHelper.Log($"Playing effect: {effectName} ({effectType}) with priority: {audioSource.priority}");
             #endif
         }
         

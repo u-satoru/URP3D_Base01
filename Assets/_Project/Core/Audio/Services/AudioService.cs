@@ -77,7 +77,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.LogStatic("[AudioService] Registered to ServiceLocator");
+                    ServiceHelper.Log("[AudioService] Registered to ServiceLocator");
                 }
             }
         }
@@ -117,7 +117,7 @@ namespace asterivo.Unity60.Core.Audio.Services
 
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogStatic("[AudioService] Initialization complete");
+                ServiceHelper.Log("[AudioService] Initialization complete");
             }
         }
 
@@ -270,7 +270,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogStatic("[AudioService] Audio paused");
+                ServiceHelper.Log("[AudioService] Audio paused");
             }
         }
 
@@ -296,7 +296,7 @@ namespace asterivo.Unity60.Core.Audio.Services
             // 効果音は停止されたため、新しい音が�E生されるまで征E��E            
             if (FeatureFlags.EnableDebugLogging)
             {
-                EventLogger.LogStatic("[AudioService] Audio resumed");
+                ServiceHelper.Log("[AudioService] Audio resumed");
             }
         }
 
@@ -365,7 +365,7 @@ namespace asterivo.Unity60.Core.Audio.Services
                 
                 if (FeatureFlags.EnableDebugLogging)
                 {
-                    EventLogger.LogStatic($"[AudioService] Playing BGM: {bgmName} -> {category}, fadeTime: {fadeTime}");
+                    ServiceHelper.Log($"[AudioService] Playing BGM: {bgmName} -> {category}, fadeTime: {fadeTime}");
                 }
             }
         }

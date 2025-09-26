@@ -96,7 +96,7 @@ namespace asterivo.Unity60.Core.Audio
             environmentSoundLookup = new System.Collections.Generic.Dictionary<EnvironmentType, AmbientSoundCollection>();
             activeEnvironmentLayers = new System.Collections.Generic.List<EnvironmentAmbientLayer>();
             
-            EventLogger.LogStatic("<color=cyan>[AmbientManagerV2]</color> Ambient Manager V2 initialized with controller separation");
+            ServiceHelper.Log("<color=cyan>[AmbientManagerV2]</color> Ambient Manager V2 initialized with controller separation");
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace asterivo.Unity60.Core.Audio
                 ConfigureEnvironmentAudioSource(environmentSources[i]);
             }
             
-            EventLogger.LogStatic($"<color=cyan>[AmbientManagerV2]</color> Created {environmentSourceCount} environment audio sources");
+            ServiceHelper.Log($"<color=cyan>[AmbientManagerV2]</color> Created {environmentSourceCount} environment audio sources");
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace asterivo.Unity60.Core.Audio
                 }
             }
             
-            EventLogger.LogStatic($"<color=cyan>[AmbientManagerV2]</color> Built lookup for {environmentSoundLookup.Count} environment types");
+            ServiceHelper.Log($"<color=cyan>[AmbientManagerV2]</color> Built lookup for {environmentSoundLookup.Count} environment types");
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace asterivo.Unity60.Core.Audio
 
             if (!hasErrors)
             {
-                EventLogger.LogStatic("<color=green>[AmbientManagerV2]</color> All controllers validated successfully");
+                ServiceHelper.Log("<color=green>[AmbientManagerV2]</color> All controllers validated successfully");
             }
         }
 
@@ -358,7 +358,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             currentEnvironment = newEnvironment;
 
-            EventLogger.LogStatic($"<color=cyan>[AmbientManagerV2]</color> Starting environment transition to {newEnvironment}");
+            ServiceHelper.Log($"<color=cyan>[AmbientManagerV2]</color> Starting environment transition to {newEnvironment}");
 
             // 譁ｰ縺励＞迺ｰ蠅・浹髻ｿ繧貞叙蠕・            if (!environmentSoundLookup.TryGetValue(newEnvironment, out var environmentCollection))
             {
@@ -389,7 +389,7 @@ namespace asterivo.Unity60.Core.Audio
                 }
             }
 
-            EventLogger.LogStatic($"<color=cyan>[AmbientManagerV2]</color> Completed environment transition to {newEnvironment}");
+            ServiceHelper.Log($"<color=cyan>[AmbientManagerV2]</color> Completed environment transition to {newEnvironment}");
 
             // 繧､繝吶Φ繝育匱轣ｫ
             if (environmentSoundTriggeredEvent != null)
@@ -556,7 +556,7 @@ namespace asterivo.Unity60.Core.Audio
                     var coordinator = FindFirstObjectByType<AudioUpdateCoordinator>();
                     if (coordinator != null && asterivo.Unity60.Core.FeatureFlags.EnableDebugLogging)
                     {
-                        EventLogger.LogStatic("[AmbientManagerV2] Found AudioUpdateCoordinator via FindFirstObjectByType");
+                        ServiceHelper.Log("[AmbientManagerV2] Found AudioUpdateCoordinator via FindFirstObjectByType");
                     }
                     
                     return coordinator;

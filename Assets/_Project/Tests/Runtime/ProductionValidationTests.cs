@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Audio;
-using asterivo.Unity60.Core.Shared;
+// using asterivo.Unity60.Core.Shared; // Not needed - types are in Core namespace
 
 namespace asterivo.Unity60.Tests.Runtime
 {

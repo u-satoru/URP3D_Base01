@@ -1,5 +1,6 @@
 using UnityEngine;
 using asterivo.Unity60.Core.StateMachine;
+using asterivo.Unity60.Core.Audio;
 
 namespace asterivo.Unity60.Features.Player.StateMachine.Hierarchical
 {

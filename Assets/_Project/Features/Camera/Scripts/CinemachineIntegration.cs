@@ -4,7 +4,6 @@ using Unity.Cinemachine;
 using asterivo.Unity60.Core.Events;
 // using asterivo.Unity60.Core.Player; // Player moved to Features
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Helpers;
 using asterivo.Unity60.Core.Debug;
 using System.Collections.Generic;

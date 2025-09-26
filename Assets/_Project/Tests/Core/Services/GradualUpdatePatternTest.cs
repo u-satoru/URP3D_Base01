@@ -283,11 +283,11 @@ namespace asterivo.Unity60.Tests.Core.Services
 
             if (allTestsPassed)
             {
-                EventLogger.LogStatic("脂 [PATTERN TEST] Step 3.6 Gradual Update Patterns are working correctly!");
+                ServiceHelper.Log("脂 [PATTERN TEST] Step 3.6 Gradual Update Patterns are working correctly!");
             }
             else
             {
-                EventLogger.LogErrorStatic("笶・[PATTERN TEST] Some Step 3.6 patterns need attention.");
+                ServiceHelper.LogError("笶・[PATTERN TEST] Some Step 3.6 patterns need attention.");
             }
         }
 
@@ -348,7 +348,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         {
             if (enableDetailedLogs)
             {
-                EventLogger.LogStatic($"[PATTERN_TEST] {message}");
+                ServiceHelper.Log($"[PATTERN_TEST] {message}");
             }
         }
 

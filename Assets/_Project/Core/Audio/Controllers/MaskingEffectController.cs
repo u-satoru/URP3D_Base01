@@ -86,7 +86,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             trackingAudioSources = new List<MaskingAudioSource>();
             maskingStrengthCache = new Dictionary<AudioSource, float>();
             
-            EventLogger.LogStatic("<color=cyan>[MaskingEffectController]</color> Masking effect controller initialized");
+            ServiceHelper.Log("<color=cyan>[MaskingEffectController]</color> Masking effect controller initialized");
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         public void SetGlobalMaskingStrength(float strength)
         {
             globalMaskingStrength = Mathf.Clamp01(strength);
-            EventLogger.LogStatic($"<color=cyan>[MaskingEffectController]</color> Global masking strength set to {globalMaskingStrength:F2}");
+            ServiceHelper.Log($"<color=cyan>[MaskingEffectController]</color> Global masking strength set to {globalMaskingStrength:F2}");
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
                     if (audioUpdateService is AudioUpdateCoordinator coordinator && coordinator.enabled)
                     {
                         // 協調更新シスチE��に登録�E�イベント駁E���E�E                        coordinator.OnAudioSystemSync += OnAudioSystemSync;
-                        EventLogger.LogStatic("<color=cyan>[MaskingEffectController]</color> Registered with AudioUpdateCoordinator via ServiceLocator");
+                        ServiceHelper.Log("<color=cyan>[MaskingEffectController]</color> Registered with AudioUpdateCoordinator via ServiceLocator");
                         return;
                     }
                 }
@@ -259,7 +259,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
             if (fallbackCoordinator != null && fallbackCoordinator.enabled)
             {
                 fallbackCoordinator.OnAudioSystemSync += OnAudioSystemSync;
-                EventLogger.LogStatic("<color=cyan>[MaskingEffectController]</color> Registered with AudioUpdateCoordinator via fallback");
+                ServiceHelper.Log("<color=cyan>[MaskingEffectController]</color> Registered with AudioUpdateCoordinator via fallback");
                 return;
             }
             
@@ -426,7 +426,7 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         /// </summary>
         private IEnumerator ManualMaskingCoroutine(Vector3 position, float duration, float strength)
         {
-            EventLogger.LogStatic($"<color=cyan>[MaskingEffectController]</color> Manual masking triggered at {position} for {duration}s");
+            ServiceHelper.Log($"<color=cyan>[MaskingEffectController]</color> Manual masking triggered at {position} for {duration}s");
 
             float elapsed = 0f;
             bool wasActive = isMaskingActive;
