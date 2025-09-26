@@ -7,19 +7,20 @@ using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Helpers;
 using asterivo.Unity60.Core;
+using asterivo.Unity60.Core.Types;
 // using asterivo.Unity60.Core.Services.Interfaces; // Removed to avoid circular dependency
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio
 {
     /// <summary>
-    /// 最上位�EオーチE��オ制御シスチE��
-    /// 既存�EスチE��スオーチE��オシスチE��と新規シスチE��を統合管琁E
+    /// 最上位�EオーチE��オ制御シスチE��
+    /// 既存�EスチE��スオーチE��オシスチE��と新規シスチE��を統合管琁E
     /// ServiceLocator対応版
     /// </summary>
     public class AudioManager : MonoBehaviour, IAudioService, IInitializable
     {
-        // ✁ETask 3: Legacy Singleton警告シスチE���E�後方互換性のため�E�E
+        // ✁ETask 3: Legacy Singleton警告シスチE���E�後方互換性のため�E�E
         
 
 
@@ -68,7 +69,7 @@ namespace asterivo.Unity60.Core.Audio
         [SerializeField, ReadOnly] private float currentTensionLevel;
         [SerializeField, ReadOnly] private bool isStealthModeActive;
 
-        // 冁E��状慁E
+        // 冁E��状慁E
         private bool isInitialized = false;
         
         // IInitializable実裁E
@@ -111,7 +112,7 @@ namespace asterivo.Unity60.Core.Audio
         #region Initialization
 
         /// <summary>
-        /// IInitializable実裁E- オーチE��オマネージャーの初期匁E
+        /// IInitializable実裁E- オーチE��オマネージャーの初期匁E
         /// </summary>
         public void Initialize()
         {
@@ -156,7 +157,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 忁E��なコンポ�Eネント�E検証
+        /// 忁E��なコンポ�Eネント�E検証
         /// </summary>
         private void ValidateComponents()
         {
@@ -190,7 +191,7 @@ namespace asterivo.Unity60.Core.Audio
             
             if (FeatureFlags.UseServiceLocator)
             {
-                // TODO: AudioUpdateCoordinator用のインターフェースを作�E後に有効匁E
+                // TODO: AudioUpdateCoordinator用のインターフェースを作�E後に有効匁E
                 // coordinator = ServiceLocator.GetService<IAudioUpdateService>() as AudioUpdateCoordinator;
             }
             
@@ -202,7 +203,7 @@ namespace asterivo.Unity60.Core.Audio
             
             if (coordinator == null)
             {
-                // 専用のGameObjectを作�EしてAudioUpdateCoordinatorを追加
+                // 専用のGameObjectを作�EしてAudioUpdateCoordinatorを追加
                 GameObject coordinatorObject = new GameObject("AudioUpdateCoordinator");
                 coordinatorObject.transform.SetParent(transform);
                 coordinator = coordinatorObject.AddComponent<AudioUpdateCoordinator>();
@@ -223,7 +224,7 @@ namespace asterivo.Unity60.Core.Audio
         #region Game State Integration
 
         /// <summary>
-        /// ゲーム状態に応じたオーチE��オ制御
+        /// ゲーム状態に応じたオーチE��オ制御
         /// </summary>
         public void UpdateAudioForGameState(GameState state, float tensionLevel = 0f)
         {
@@ -239,16 +240,16 @@ namespace asterivo.Unity60.Core.Audio
                 bgmManager.UpdateForTensionLevel(tensionLevel, isStealthModeActive);
             }
 
-            // 環墁E��の更新
+            // 環墁E��の更新
             if (ambientManager != null)
             {
                 ambientManager.UpdateForStealthState(isStealthModeActive);
             }
 
-            // 動的環墁E��スチE��との連携
+            // 動的環墁E��スチE��との連携
             if (dynamicEnvironment != null)
             {
-                // DynamicAudioEnvironment の既存機�Eを活用
+                // DynamicAudioEnvironment の既存機�Eを活用
                 var (env, weather, time) = dynamicEnvironment.GetCurrentState();
                 UpdateAudioForEnvironmentalState(env, weather, time, tensionLevel);
             }
@@ -257,17 +258,17 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 環墁E��態に応じた音響制御
+        /// 環墁E��態に応じた音響制御
         /// </summary>
         private void UpdateAudioForEnvironmentalState(EnvironmentType env, WeatherType weather, TimeOfDay time, float tension)
         {
-            // 環墁E��応じたBGM調整
+            // 環墁E��応じたBGM調整
             if (bgmManager != null)
             {
                 bgmManager.UpdateForEnvironment(env, weather, time);
             }
 
-            // 環墁E��の調整
+            // 環墁E��の調整
             if (ambientManager != null)
             {
                 ambientManager.UpdateForEnvironment(env, weather, time);
@@ -321,7 +322,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// マスター音量�E設宁E
+        /// マスター音量�E設宁E
         /// </summary>
         public void SetMasterVolume(float volume)
         {
@@ -330,7 +331,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// BGM音量�E設宁E
+        /// BGM音量�E設宁E
         /// </summary>
         public void SetBGMVolume(float volume)
         {
@@ -339,7 +340,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 環墁E��音量�E設宁E
+        /// 環墁E��音量�E設宁E
         /// </summary>
         public void SetAmbientVolume(float volume)
         {
@@ -348,7 +349,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 効果音音量�E設宁E
+        /// 効果音音量�E設宁E
         /// </summary>
         public void SetEffectVolume(float volume)
         {
@@ -357,7 +358,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// スチE��ス音響音量�E設宁E
+        /// スチE��ス音響音量�E設宁E
         /// </summary>
         public void SetStealthAudioVolume(float volume)
         {
@@ -378,7 +379,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// スチE��スモード�E強制設宁E
+        /// スチE��スモード�E強制設宁E
         /// </summary>
         public void SetStealthModeOverride(bool forceStealthMode)
         {
@@ -408,7 +409,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// オーチE��オシスチE��の一時停止
+        /// オーチE��オシスチE��の一時停止
         /// </summary>
         public void PauseAllAudio()
         {
@@ -418,7 +419,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// オーチE��オシスチE��の再開
+        /// オーチE��オシスチE��の再開
         /// </summary>
         public void ResumeAllAudio()
         {
@@ -456,7 +457,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (effectManager != null)
             {
-                // 個別停止機�EがなぁE��め、�Eて停止
+                // 個別停止機�EがなぁE��め、�Eて停止
                 effectManager.StopAllEffects();
             }
         }
@@ -486,7 +487,7 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// アンビエント�Eリュームを取征E
+        /// アンビエント�Eリュームを取征E
         /// </summary>
         public float GetAmbientVolume()
         {
@@ -494,7 +495,7 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// エフェクト�Eリュームを取征E
+        /// エフェクト�Eリュームを取征E
         /// </summary>
         public float GetEffectVolume()
         {
@@ -502,7 +503,7 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// カチE��リ別のボリュームを設宁E
+        /// カチE��リ別のボリュームを設宁E
         /// </summary>
         public void SetCategoryVolume(string category, float volume)
         {
@@ -534,8 +535,8 @@ namespace asterivo.Unity60.Core.Audio
         /// </summary>
         public bool IsPlaying(string soundId)
         {
-            // EffectManagerには個別の状態チェチE��機�EがなぁE��め、仮実裁E
-            // TODO: 個別サウンド�E再生状態トラチE��ング機�Eを追加
+            // EffectManagerには個別の状態チェチE��機�EがなぁE��め、仮実裁E
+            // TODO: 個別サウンド�E再生状態トラチE��ング機�Eを追加
             return false;
         }
         
@@ -583,7 +584,7 @@ namespace asterivo.Unity60.Core.Audio
 
         private void OnValidate()
         {
-            // エチE��タでの値変更時に音量を即座に適用
+            // エチE��タでの値変更時に音量を即座に適用
             if (Application.isPlaying && isInitialized)
             {
                 ApplyVolumeSettings();
@@ -597,7 +598,7 @@ namespace asterivo.Unity60.Core.Audio
     #region Supporting Types
 
     /// <summary>
-    /// ゲーム状態�E定義
+    /// ゲーム状態�E定義
     /// </summary>
     public enum GameState
     {
@@ -613,7 +614,7 @@ namespace asterivo.Unity60.Core.Audio
     }
 
     /// <summary>
-    /// 音響シスチE��状態�E構造佁E
+    /// 音響シスチE��状態�E構造佁E
     /// </summary>
     [System.Serializable]
     public struct AudioSystemState

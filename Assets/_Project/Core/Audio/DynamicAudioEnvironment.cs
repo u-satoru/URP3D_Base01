@@ -3,6 +3,7 @@ using UnityEngine.Audio;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Audio.Events;
+using asterivo.Unity60.Core.Data;
 // using asterivo.Unity60.Core.Debug;
 
 namespace asterivo.Unity60.Core.Audio
@@ -412,33 +413,6 @@ namespace asterivo.Unity60.Core.Audio
     #region Supporting Classes and Enums
     
     /// <summary>
-    /// 環境の種類    /// </summary>
-    public enum EnvironmentType
-    {
-        Indoor,      // 室冁E        Outdoor,     // 屋夁E        Urban,       // 都市部
-
-        Cave,        // 洞突E        Forest,      // 森极E        Underwater   // 水中
-    }
-    
-    /// <summary>
-    /// 天候の種類
-    /// </summary>
-    public enum WeatherType
-    {
-        Clear,       // 晴天
-        Rain,        // 雨
-        Storm,       // 嵁E        Fog          // 霧
-    }
-    
-    /// <summary>
-    /// 時間帯
-    /// </summary>
-    public enum TimeOfDay
-    {
-        Day,         // 昼
-        Evening,     // 夕方
-        Night,       // 夁E        Dawn         // 明け方
-    }
     
     /// <summary>
     /// 環境プリセット
