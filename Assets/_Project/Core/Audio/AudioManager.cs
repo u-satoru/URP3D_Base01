@@ -597,21 +597,6 @@ namespace asterivo.Unity60.Core.Audio
 
     #region Supporting Types
 
-    /// <summary>
-    /// ゲーム状態�E定義
-    /// </summary>
-    public enum GameState
-    {
-        MainMenu,
-        Loading,
-        Gameplay,
-        Playing = Gameplay,  // Alias for backwards compatibility
-        Paused,
-        GameOver,
-        Victory,             // Added for game completion
-        Cutscene,
-        InGame = Gameplay    // Alias for audio system
-    }
 
     /// <summary>
     /// 音響シスチE��状態�E構造佁E
