@@ -1,5 +1,5 @@
-using NUnit.Framework;
-using asterivo.Unity60.Core.Services;
+﻿using NUnit.Framework;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Patterns;
 using asterivo.Unity60.Features.StateManagement;
 using asterivo.Unity60.Features.Player;
@@ -7,7 +7,7 @@ using asterivo.Unity60.Features.Player;
 namespace asterivo.Unity60.Tests.Features.StateManagement
 {
     /// <summary>
-    /// StateManagement機能のユニットテスト
+    /// StateManagement讖溯・縺ｮ繝ｦ繝九ャ繝医ユ繧ｹ繝・
     /// </summary>
     [TestFixture]
     public class StateManagementTests
@@ -17,23 +17,23 @@ namespace asterivo.Unity60.Tests.Features.StateManagement
         [SetUp]
         public void Setup()
         {
-            // ServiceLocatorをクリア
+            // ServiceLocator繧偵け繝ｪ繧｢
             ServiceLocator.Clear();
 
-            // StateManagementを初期化
+            // StateManagement繧貞・譛溷喧
             StateManagementBootstrapper.Initialize();
 
-            // StateServiceを取得
+            // StateService繧貞叙蠕・
             stateService = ServiceLocator.Get<IStateService>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            // StateManagementをシャットダウン
+            // StateManagement繧偵す繝｣繝・ヨ繝繧ｦ繝ｳ
             StateManagementBootstrapper.Shutdown();
 
-            // ServiceLocatorをクリア
+            // ServiceLocator繧偵け繝ｪ繧｢
             ServiceLocator.Clear();
         }
 
@@ -147,20 +147,20 @@ namespace asterivo.Unity60.Tests.Features.StateManagement
         [Test]
         public void Three_Layer_Architecture_Should_Be_Maintained()
         {
-            // Core層のインターフェースを通じてのみアクセス可能
+            // Core螻､縺ｮ繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ繧帝壹§縺ｦ縺ｮ縺ｿ繧｢繧ｯ繧ｻ繧ｹ蜿ｯ閭ｽ
             Assert.IsInstanceOf<IStateService>(stateService, "Should access through Core interface");
 
-            // StateHandlerRegistryはCore層、StateHandlerはFeature層
+            // StateHandlerRegistry縺ｯCore螻､縲ヾtateHandler縺ｯFeature螻､
             var handler = stateService.GetHandler((int)PlayerState.Idle);
             Assert.IsInstanceOf<IStateHandler>(handler, "Handler should implement Core interface");
 
-            // PlayerStateはFeature/Player層で定義されている
+            // PlayerState縺ｯFeature/Player螻､縺ｧ螳夂ｾｩ縺輔ｌ縺ｦ縺・ｋ
             Assert.AreEqual("asterivo.Unity60.Features.Player", typeof(PlayerState).Namespace,
                 "PlayerState should be in Feature layer");
         }
 
         /// <summary>
-        /// テスト用のStateContext実装
+        /// 繝・せ繝育畑縺ｮStateContext螳溯｣・
         /// </summary>
         private class TestStateContext : IStateContext
         {
@@ -174,3 +174,5 @@ namespace asterivo.Unity60.Tests.Features.StateManagement
         }
     }
 }
+
+

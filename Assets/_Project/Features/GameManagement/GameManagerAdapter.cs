@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
-using asterivo.Unity60.Core.Services;
-using asterivo.Unity60.Core.Services.Interfaces;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Types;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Events;
@@ -11,8 +11,8 @@ using asterivo.Unity60.Features.GameManagement.Events;
 namespace asterivo.Unity60.Features.GameManagement
 {
     /// <summary>
-    /// 既存のGameManager MonoBehaviourと新しいGameManagerServiceを繋ぐアダプター
-    /// レガシーコードとの互換性を保ちながら段階的移行を実現
+    /// 譌｢蟄倥・GameManager MonoBehaviour縺ｨ譁ｰ縺励＞GameManagerService繧堤ｹ九＄繧｢繝繝励ち繝ｼ
+    /// 繝ｬ繧ｬ繧ｷ繝ｼ繧ｳ繝ｼ繝峨→縺ｮ莠呈鋤諤ｧ繧剃ｿ昴■縺ｪ縺後ｉ谿ｵ髫守噪遘ｻ陦後ｒ螳溽樟
     /// </summary>
     public class GameManagerAdapter : MonoBehaviour
     {
@@ -31,7 +31,7 @@ namespace asterivo.Unity60.Features.GameManagement
         private IGameManager _gameManagerService;
         private IEventManager _eventManager;
 
-        // プロパティ（既存のGameManagerとの互換性）
+        // 繝励Ο繝代ユ繧｣・域里蟄倥・GameManager縺ｨ縺ｮ莠呈鋤諤ｧ・・
         public GameState CurrentGameState => _gameManagerService?.CurrentGameState ?? GameState.MainMenu;
         public GameState PreviousGameState => _gameManagerService?.PreviousGameState ?? GameState.MainMenu;
         public float GameTime => _gameManagerService?.GameTime ?? 0f;
@@ -42,7 +42,7 @@ namespace asterivo.Unity60.Features.GameManagement
 
         private void Awake()
         {
-            // ServiceLocatorからサービスを取得
+            // ServiceLocator縺九ｉ繧ｵ繝ｼ繝薙せ繧貞叙蠕・
             InitializeServices();
         }
 
@@ -60,12 +60,12 @@ namespace asterivo.Unity60.Features.GameManagement
 
         private void Update()
         {
-            // GameManagerServiceにゲーム時間の更新を委譲
+            // GameManagerService縺ｫ繧ｲ繝ｼ繝譎る俣縺ｮ譖ｴ譁ｰ繧貞ｧ碑ｭｲ
             if (_gameManagerService != null && CurrentGameState == GameState.Playing)
             {
                 _gameManagerService.UpdateGameTime(Time.deltaTime);
 
-                // レガシーイベント発行（必要に応じて）
+                // 繝ｬ繧ｬ繧ｷ繝ｼ繧､繝吶Φ繝育匱陦鯉ｼ亥ｿ・ｦ√↓蠢懊§縺ｦ・・
                 if (_useLegacyEventSystem && gameTimeUpdatedEvent != null)
                 {
                     gameTimeUpdatedEvent.Raise(GameTime);
@@ -79,7 +79,7 @@ namespace asterivo.Unity60.Features.GameManagement
 
         private void InitializeServices()
         {
-            // ServiceLocatorからサービスを取得
+            // ServiceLocator縺九ｉ繧ｵ繝ｼ繝薙せ繧貞叙蠕・
             if (!ServiceLocator.TryGet<IGameManager>(out _gameManagerService))
             {
                 LogWarning("GameManagerService not found in ServiceLocator");
@@ -125,7 +125,7 @@ namespace asterivo.Unity60.Features.GameManagement
         {
             if (_eventManager != null)
             {
-                // 新しいイベントシステムへの購読
+                // 譁ｰ縺励＞繧､繝吶Φ繝医す繧ｹ繝・Β縺ｸ縺ｮ雉ｼ隱ｭ
                 _eventManager.Subscribe<GameStateChangeData>(
                     GameManagementEventNames.OnGameStateChanged,
                     OnGameStateChanged);
@@ -144,7 +144,7 @@ namespace asterivo.Unity60.Features.GameManagement
 
         private void OnGameStateChanged(GameStateChangeData data)
         {
-            // レガシーイベントシステムへのブリッジ
+            // 繝ｬ繧ｬ繧ｷ繝ｼ繧､繝吶Φ繝医す繧ｹ繝・Β縺ｸ縺ｮ繝悶Μ繝・ず
             if (_useLegacyEventSystem && gameStateChangedEvent != null)
             {
                 gameStateChangedEvent.Raise(data.NewState);
@@ -155,10 +155,10 @@ namespace asterivo.Unity60.Features.GameManagement
 
         #endregion
 
-        #region Public API（GameManagerとの互換性）
+        #region Public API・・ameManager縺ｨ縺ｮ莠呈鋤諤ｧ・・
 
         /// <summary>
-        /// ゲームを開始
+        /// 繧ｲ繝ｼ繝繧帝幕蟋・
         /// </summary>
         public void StartGame()
         {
@@ -166,7 +166,7 @@ namespace asterivo.Unity60.Features.GameManagement
         }
 
         /// <summary>
-        /// ゲームを一時停止
+        /// 繧ｲ繝ｼ繝繧剃ｸ譎ょ●豁｢
         /// </summary>
         public void PauseGame()
         {
@@ -174,7 +174,7 @@ namespace asterivo.Unity60.Features.GameManagement
         }
 
         /// <summary>
-        /// ゲームを再開
+        /// 繧ｲ繝ｼ繝繧貞・髢・
         /// </summary>
         public void ResumeGame()
         {
@@ -182,7 +182,7 @@ namespace asterivo.Unity60.Features.GameManagement
         }
 
         /// <summary>
-        /// ゲームをリスタート
+        /// 繧ｲ繝ｼ繝繧偵Μ繧ｹ繧ｿ繝ｼ繝・
         /// </summary>
         public void RestartGame()
         {
@@ -190,7 +190,7 @@ namespace asterivo.Unity60.Features.GameManagement
         }
 
         /// <summary>
-        /// ゲームを終了
+        /// 繧ｲ繝ｼ繝繧堤ｵゆｺ・
         /// </summary>
         public void QuitGame()
         {
@@ -198,7 +198,7 @@ namespace asterivo.Unity60.Features.GameManagement
         }
 
         /// <summary>
-        /// メインメニューに戻る
+        /// 繝｡繧､繝ｳ繝｡繝九Η繝ｼ縺ｫ謌ｻ繧・
         /// </summary>
         public void ReturnToMenu()
         {
@@ -206,7 +206,7 @@ namespace asterivo.Unity60.Features.GameManagement
         }
 
         /// <summary>
-        /// ゲームオーバー
+        /// 繧ｲ繝ｼ繝繧ｪ繝ｼ繝舌・
         /// </summary>
         public void TriggerGameOver()
         {
@@ -214,7 +214,7 @@ namespace asterivo.Unity60.Features.GameManagement
         }
 
         /// <summary>
-        /// 勝利
+        /// 蜍晏茜
         /// </summary>
         public void TriggerVictory()
         {
@@ -222,7 +222,7 @@ namespace asterivo.Unity60.Features.GameManagement
         }
 
         /// <summary>
-        /// コマンドを実行
+        /// 繧ｳ繝槭Φ繝峨ｒ螳溯｡・
         /// </summary>
         public void ExecuteCommand(ICommand command)
         {
@@ -230,7 +230,7 @@ namespace asterivo.Unity60.Features.GameManagement
         }
 
         /// <summary>
-        /// 最後のコマンドを取り消し
+        /// 譛蠕後・繧ｳ繝槭Φ繝峨ｒ蜿悶ｊ豸医＠
         /// </summary>
         public void UndoLastCommand()
         {
@@ -238,7 +238,7 @@ namespace asterivo.Unity60.Features.GameManagement
         }
 
         /// <summary>
-        /// 最後のコマンドをやり直し
+        /// 譛蠕後・繧ｳ繝槭Φ繝峨ｒ繧・ｊ逶ｴ縺・
         /// </summary>
         public void RedoLastCommand()
         {
@@ -282,3 +282,5 @@ namespace asterivo.Unity60.Features.GameManagement
         #endregion
     }
 }
+
+

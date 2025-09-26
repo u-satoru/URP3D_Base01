@@ -1,11 +1,11 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Audio.Interfaces;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Data;
 using asterivo.Unity60.Features.Player.Scripts;
 using asterivo.Unity60.Player;
@@ -17,16 +17,16 @@ using UnityEngine.AI;
 namespace asterivo.Unity60.Features.Templates.Stealth
 {
     /// <summary>
-    /// ステルスゲームプレイマネージャー - 15分完結ステルスゲーム体験の実現
-    /// 最優先度ジャンルとしてのステルスアクション完全実装
-    /// Mission系統、NPC管理、検知システム、成功/失敗条件を統合管理
+    /// 繧ｹ繝・Ν繧ｹ繧ｲ繝ｼ繝繝励Ξ繧､繝槭ロ繝ｼ繧ｸ繝｣繝ｼ - 15蛻・ｮ檎ｵ舌せ繝・Ν繧ｹ繧ｲ繝ｼ繝菴馴ｨ薙・螳溽樟
+    /// 譛蜆ｪ蜈亥ｺｦ繧ｸ繝｣繝ｳ繝ｫ縺ｨ縺励※縺ｮ繧ｹ繝・Ν繧ｹ繧｢繧ｯ繧ｷ繝ｧ繝ｳ螳悟・螳溯｣・
+    /// Mission邉ｻ邨ｱ縲¨PC邂｡逅・∵､懃衍繧ｷ繧ｹ繝・Β縲∵・蜉・螟ｱ謨玲擅莉ｶ繧堤ｵｱ蜷育ｮ｡逅・
     /// </summary>
     public class StealthGameplayManager : MonoBehaviour
     {
         #region Gameplay Configuration
 
         [TabGroup("Gameplay", "Mission Settings")]
-        [Title("15-Minute Stealth Gameplay Configuration", "完結型ステルスアクション体験", TitleAlignments.Centered)]
+        [Title("15-Minute Stealth Gameplay Configuration", "螳檎ｵ仙梛繧ｹ繝・Ν繧ｹ繧｢繧ｯ繧ｷ繝ｧ繝ｳ菴馴ｨ・, TitleAlignments.Centered)]
 
         [Header("Game Duration Settings")]
         [SerializeField] private float missionTimeLimit = 900f; // 15 minutes
@@ -120,7 +120,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         #region Initialization
 
         /// <summary>
-        /// ゲームプレイマネージャーの初期化
+        /// 繧ｲ繝ｼ繝繝励Ξ繧､繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｮ蛻晄悄蛹・
         /// </summary>
         private void InitializeGameplayManager()
         {
@@ -142,16 +142,16 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                 totalObjectives = missionObjectives.Count;
                 currentGameState = StealthGameState.NotStarted;
 
-                LogDebug("[StealthGameplayManager] ✅ Gameplay manager initialized successfully");
+                LogDebug("[StealthGameplayManager] 笨・Gameplay manager initialized successfully");
             }
             catch (System.Exception ex)
             {
-                LogError($"[StealthGameplayManager] ❌ Initialization failed: {ex.Message}");
+                LogError($"[StealthGameplayManager] 笶・Initialization failed: {ex.Message}");
             }
         }
 
         /// <summary>
-        /// ミッション目標の設定
+        /// 繝溘ャ繧ｷ繝ｧ繝ｳ逶ｮ讓吶・險ｭ螳・
         /// </summary>
         private void SetupMissionObjectives()
         {
@@ -174,7 +174,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         #region Mission Generation
 
         /// <summary>
-        /// デフォルトミッションの自動生成（15分完結体験）
+        /// 繝・ヵ繧ｩ繝ｫ繝医Α繝・す繝ｧ繝ｳ縺ｮ閾ｪ蜍慕函謌撰ｼ・5蛻・ｮ檎ｵ蝉ｽ馴ｨ難ｼ・
         /// </summary>
         private void GenerateDefaultMission()
         {
@@ -191,8 +191,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                     {
                         ObjectiveID = $"collect_key_{i}",
                         ObjectiveType = StealthObjectiveType.CollectItem,
-                        Title = $"Key Item {i + 1} を取得",
-                        Description = $"重要アイテム{i + 1}を発見せずに取得してください",
+                        Title = $"Key Item {i + 1} 繧貞叙蠕・,
+                        Description = $"驥崎ｦ√い繧､繝・Β{i + 1}繧堤匱隕九○縺壹↓蜿門ｾ励＠縺ｦ縺上□縺輔＞",
                         TargetObject = keyItems[i].gameObject,
                         IsOptional = false,
                         TimeLimit = 300f // 5 minutes
@@ -208,8 +208,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                 {
                     ObjectiveID = "infiltrate_target",
                     ObjectiveType = StealthObjectiveType.ReachLocation,
-                    Title = "Target Area へ潜入",
-                    Description = "警備を回避してターゲットエリアに到達してください",
+                    Title = "Target Area 縺ｸ貎懷・",
+                    Description = "隴ｦ蛯吶ｒ蝗樣∩縺励※繧ｿ繝ｼ繧ｲ繝・ヨ繧ｨ繝ｪ繧｢縺ｫ蛻ｰ驕斐＠縺ｦ縺上□縺輔＞",
                     TargetObject = targetLocations[0].gameObject,
                     IsOptional = false,
                     TimeLimit = 420f // 7 minutes additional
@@ -225,7 +225,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                     ObjectiveID = "extract_mission",
                     ObjectiveType = StealthObjectiveType.Extraction,
                     Title = "Mission Exit",
-                    Description = "ミッション完了後、脱出ポイントに到達してください",
+                    Description = "繝溘ャ繧ｷ繝ｧ繝ｳ螳御ｺ・ｾ後∬┳蜃ｺ繝昴う繝ｳ繝医↓蛻ｰ驕斐＠縺ｦ縺上□縺輔＞",
                     TargetObject = missionExitPoint.gameObject,
                     IsOptional = false,
                     TimeLimit = 180f // 3 minutes additional
@@ -239,7 +239,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                 ObjectiveID = "stealth_bonus",
                 ObjectiveType = StealthObjectiveType.AvoidDetection,
                 Title = "Perfect Stealth Bonus",
-                Description = "一度も発見されることなくミッションを完了",
+                Description = "荳蠎ｦ繧ら匱隕九＆繧後ｋ縺薙→縺ｪ縺上Α繝・す繝ｧ繝ｳ繧貞ｮ御ｺ・,
                 IsOptional = true,
                 BonusScore = 1000
             };
@@ -248,7 +248,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             SetupMissionObjectives();
             totalObjectives = missionObjectives.Count;
 
-            LogDebug($"[StealthGameplayManager] ✅ Generated {missionObjectives.Count} objectives for 15-minute gameplay");
+            LogDebug($"[StealthGameplayManager] 笨・Generated {missionObjectives.Count} objectives for 15-minute gameplay");
         }
 
         #endregion
@@ -256,7 +256,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         #region Game Flow Management
 
         /// <summary>
-        /// ステルスゲームプレイの開始
+        /// 繧ｹ繝・Ν繧ｹ繧ｲ繝ｼ繝繝励Ξ繧､縺ｮ髢句ｧ・
         /// </summary>
         public void StartStealthGameplay()
         {
@@ -266,7 +266,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                 return;
             }
 
-            LogDebug("[StealthGameplayManager] 🎮 Starting 15-minute stealth gameplay experience...");
+            LogDebug("[StealthGameplayManager] 式 Starting 15-minute stealth gameplay experience...");
 
             currentGameState = StealthGameState.InProgress;
             missionTimeRemaining = missionTimeLimit;
@@ -296,11 +296,11 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             onGameStarted?.Raise();
             stealthAudioService?.SetAlertLevelMusic(AlertLevel.Relaxed);
 
-            LogDebug("[StealthGameplayManager] ✅ Stealth gameplay started - 15 minutes begins now!");
+            LogDebug("[StealthGameplayManager] 笨・Stealth gameplay started - 15 minutes begins now!");
         }
 
         /// <summary>
-        /// ゲーム進行の更新処理
+        /// 繧ｲ繝ｼ繝騾ｲ陦後・譖ｴ譁ｰ蜃ｦ逅・
         /// </summary>
         private void UpdateGameplaySystems()
         {
@@ -324,7 +324,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
-        /// ミッション目標の完了チェック
+        /// 繝溘ャ繧ｷ繝ｧ繝ｳ逶ｮ讓吶・螳御ｺ・メ繧ｧ繝・け
         /// </summary>
         private void CheckObjectiveCompletion()
         {
@@ -338,7 +338,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
-        /// 目標条件の具体的チェック
+        /// 逶ｮ讓呎擅莉ｶ縺ｮ蜈ｷ菴鍋噪繝√ぉ繝・け
         /// </summary>
         private bool CheckObjectiveCondition(StealthMissionObjective objective)
         {
@@ -366,7 +366,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
-        /// アイテム収集条件のチェック
+        /// 繧｢繧､繝・Β蜿朱寔譚｡莉ｶ縺ｮ繝√ぉ繝・け
         /// </summary>
         private bool CheckItemCollection(StealthMissionObjective objective, Vector3 playerPosition)
         {
@@ -388,7 +388,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
-        /// 到達地点条件のチェック
+        /// 蛻ｰ驕泌慍轤ｹ譚｡莉ｶ縺ｮ繝√ぉ繝・け
         /// </summary>
         private bool CheckLocationReached(StealthMissionObjective objective, Vector3 playerPosition)
         {
@@ -399,7 +399,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
-        /// 脱出条件のチェック
+        /// 閼ｱ蜃ｺ譚｡莉ｶ縺ｮ繝√ぉ繝・け
         /// </summary>
         private bool CheckExtractionCondition(StealthMissionObjective objective, Vector3 playerPosition)
         {
@@ -425,7 +425,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
-        /// ステルス維持条件のチェック
+        /// 繧ｹ繝・Ν繧ｹ邯ｭ謖∵擅莉ｶ縺ｮ繝√ぉ繝・け
         /// </summary>
         private bool CheckStealthMaintained(StealthMissionObjective objective)
         {
@@ -434,7 +434,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
-        /// 目標完了処理
+        /// 逶ｮ讓吝ｮ御ｺ・・逅・
         /// </summary>
         private void CompleteObjective(StealthMissionObjective objective)
         {
@@ -442,7 +442,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             objective.CompletionTime = Time.time;
             objectivesCompleted++;
 
-            LogDebug($"[StealthGameplayManager] ✅ Objective completed: {objective.Title}");
+            LogDebug($"[StealthGameplayManager] 笨・Objective completed: {objective.Title}");
 
             // UI Update
             if (uiManager != null)
@@ -468,7 +468,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         #region NPC Management
 
         /// <summary>
-        /// NPCパトロールシステムの初期化
+        /// NPC繝代ヨ繝ｭ繝ｼ繝ｫ繧ｷ繧ｹ繝・Β縺ｮ蛻晄悄蛹・
         /// </summary>
         private void InitializeNPCPatrols()
         {
@@ -490,11 +490,11 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                 }
             }
 
-            LogDebug($"[StealthGameplayManager] ✅ {patrolNPCs.Count} NPCs initialized for patrol");
+            LogDebug($"[StealthGameplayManager] 笨・{patrolNPCs.Count} NPCs initialized for patrol");
         }
 
         /// <summary>
-        /// グローバル警戒レベルの更新
+        /// 繧ｰ繝ｭ繝ｼ繝舌Ν隴ｦ謌偵Ξ繝吶Ν縺ｮ譖ｴ譁ｰ
         /// </summary>
         private void UpdateGlobalAlertLevel()
         {
@@ -505,7 +505,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                 GlobalAlertLevel previousLevel = globalAlertLevel;
                 globalAlertLevel = newAlertLevel;
 
-                LogDebug($"[StealthGameplayManager] Global alert level changed: {previousLevel} → {newAlertLevel}");
+                LogDebug($"[StealthGameplayManager] Global alert level changed: {previousLevel} 竊・{newAlertLevel}");
 
                 // Update Audio
                 AlertLevel audioAlertLevel = ConvertToAudioAlertLevel(globalAlertLevel);
@@ -523,7 +523,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
-        /// 全NPCの状態からグローバル警戒レベルを計算
+        /// 蜈ｨNPC縺ｮ迥ｶ諷九°繧峨げ繝ｭ繝ｼ繝舌Ν隴ｦ謌偵Ξ繝吶Ν繧定ｨ育ｮ・
         /// </summary>
         private GlobalAlertLevel CalculateGlobalAlertLevel()
         {
@@ -558,7 +558,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
-        /// 警戒レベル減衰処理
+        /// 隴ｦ謌偵Ξ繝吶Ν貂幄｡ｰ蜃ｦ逅・
         /// </summary>
         private IEnumerator AlertDecayCoroutine()
         {
@@ -584,7 +584,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         #region Game Timer & End Conditions
 
         /// <summary>
-        /// ゲームタイマーのコルーチン
+        /// 繧ｲ繝ｼ繝繧ｿ繧､繝槭・縺ｮ繧ｳ繝ｫ繝ｼ繝√Φ
         /// </summary>
         private IEnumerator GameTimerCoroutine()
         {
@@ -596,13 +596,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                 // Warning notifications
                 if (missionTimeRemaining == 300f) // 5 minutes remaining
                 {
-                    LogDebug("[StealthGameplayManager] ⏰ 5 minutes remaining!");
+                    LogDebug("[StealthGameplayManager] 竢ｰ 5 minutes remaining!");
                     if (uiManager != null)
                         uiManager.ShowTimeWarning(missionTimeRemaining);
                 }
                 else if (missionTimeRemaining == 60f) // 1 minute remaining
                 {
-                    LogDebug("[StealthGameplayManager] ⚠️ 1 minute remaining!");
+                    LogDebug("[StealthGameplayManager] 笞・・1 minute remaining!");
                     if (uiManager != null)
                         uiManager.ShowTimeWarning(missionTimeRemaining);
                 }
@@ -611,13 +611,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             // Time up
             if (currentGameState == StealthGameState.InProgress)
             {
-                LogDebug("[StealthGameplayManager] ⏰ Time's up! Mission failed.");
+                LogDebug("[StealthGameplayManager] 竢ｰ Time's up! Mission failed.");
                 EndGame(false, "Time limit exceeded");
             }
         }
 
         /// <summary>
-        /// ゲーム終了条件のチェック
+        /// 繧ｲ繝ｼ繝邨ゆｺ・擅莉ｶ縺ｮ繝√ぉ繝・け
         /// </summary>
         private void CheckGameEndConditions()
         {
@@ -648,7 +648,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
-        /// ゲーム終了処理
+        /// 繧ｲ繝ｼ繝邨ゆｺ・・逅・
         /// </summary>
         public void EndGame(bool success, string reason)
         {
@@ -691,11 +691,11 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                 onGameFailed?.Raise();
             }
 
-            LogDebug($"[StealthGameplayManager] 🎯 15-minute stealth gameplay completed! Score: {finalScore}");
+            LogDebug($"[StealthGameplayManager] 識 15-minute stealth gameplay completed! Score: {finalScore}");
         }
 
         /// <summary>
-        /// 最終スコアの計算
+        /// 譛邨ゅせ繧ｳ繧｢縺ｮ險育ｮ・
         /// </summary>
         private int CalculateFinalScore()
         {
@@ -718,7 +718,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         #region Utility Methods
 
         /// <summary>
-        /// 時間のフォーマット（mm:ss）
+        /// 譎る俣縺ｮ繝輔か繝ｼ繝槭ャ繝茨ｼ・m:ss・・
         /// </summary>
         private string FormatTime(float timeInSeconds)
         {
@@ -728,7 +728,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
-        /// グローバル警戒レベルを音響システム用に変換
+        /// 繧ｰ繝ｭ繝ｼ繝舌Ν隴ｦ謌偵Ξ繝吶Ν繧帝浹髻ｿ繧ｷ繧ｹ繝・Β逕ｨ縺ｫ螟画鋤
         /// </summary>
         private AlertLevel ConvertToAudioAlertLevel(GlobalAlertLevel globalLevel)
         {
@@ -743,7 +743,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
-        /// デバッグログ出力
+        /// 繝・ヰ繝・げ繝ｭ繧ｰ蜃ｺ蜉・
         /// </summary>
         private void LogDebug(string message)
         {
@@ -751,7 +751,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
-        /// エラーログ出力
+        /// 繧ｨ繝ｩ繝ｼ繝ｭ繧ｰ蜃ｺ蜉・
         /// </summary>
         private void LogError(string message)
         {
@@ -763,32 +763,32 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         #region Public API
 
         /// <summary>
-        /// 現在のゲーム状態を取得
+        /// 迴ｾ蝨ｨ縺ｮ繧ｲ繝ｼ繝迥ｶ諷九ｒ蜿門ｾ・
         /// </summary>
         public StealthGameState GetCurrentGameState() => currentGameState;
 
         /// <summary>
-        /// 残り時間を取得
+        /// 谿九ｊ譎る俣繧貞叙蠕・
         /// </summary>
         public float GetTimeRemaining() => missionTimeRemaining;
 
         /// <summary>
-        /// 完了した目標数を取得
+        /// 螳御ｺ・＠縺溽岼讓呎焚繧貞叙蠕・
         /// </summary>
         public int GetCompletedObjectives() => objectivesCompleted;
 
         /// <summary>
-        /// 全目標数を取得
+        /// 蜈ｨ逶ｮ讓呎焚繧貞叙蠕・
         /// </summary>
         public int GetTotalObjectives() => totalObjectives;
 
         /// <summary>
-        /// 現在のグローバル警戒レベルを取得
+        /// 迴ｾ蝨ｨ縺ｮ繧ｰ繝ｭ繝ｼ繝舌Ν隴ｦ謌偵Ξ繝吶Ν繧貞叙蠕・
         /// </summary>
         public GlobalAlertLevel GetGlobalAlertLevel() => globalAlertLevel;
 
         /// <summary>
-        /// 手動でゲーム開始
+        /// 謇句虚縺ｧ繧ｲ繝ｼ繝髢句ｧ・
         /// </summary>
         [Button("Start Game")]
         public void ManualStartGame()
@@ -800,7 +800,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
-        /// 手動でゲーム終了
+        /// 謇句虚縺ｧ繧ｲ繝ｼ繝邨ゆｺ・
         /// </summary>
         [Button("End Game")]
         public void ManualEndGame()
@@ -812,7 +812,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
-        /// ゲーム状態をリセット
+        /// 繧ｲ繝ｼ繝迥ｶ諷九ｒ繝ｪ繧ｻ繝・ヨ
         /// </summary>
         [Button("Reset Game")]
         public void ResetGame()
@@ -852,7 +852,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         #region Type Conversion Helper Methods
 
         /// <summary>
-        /// GlobalAlertLevelをAIAlertLevelに変換（設計書準拠）
+        /// GlobalAlertLevel繧但IAlertLevel縺ｫ螟画鋤・郁ｨｭ險域嶌貅匁侠・・
         /// </summary>
         private AIAlertLevel ConvertGlobalToAIAlertLevel(GlobalAlertLevel globalLevel)
         {
@@ -887,8 +887,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             LogDebug($"NPC Controllers: {patrolNPCs.Count}");
             LogDebug($"Key Items: {(keyItems?.Length ?? 0)}");
             LogDebug($"Target Locations: {(targetLocations?.Length ?? 0)}");
-            LogDebug($"Exit Point: {(missionExitPoint != null ? "✅ Set" : "❌ Missing")}");
-            LogDebug($"Stealth Audio Service: {(stealthAudioService != null ? "✅ Available" : "❌ Missing")}");
+            LogDebug($"Exit Point: {(missionExitPoint != null ? "笨・Set" : "笶・Missing")}");
+            LogDebug($"Stealth Audio Service: {(stealthAudioService != null ? "笨・Available" : "笶・Missing")}");
             LogDebug("=== Validation Complete ===");
         }
 #endif
@@ -899,7 +899,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
     #region Supporting Data Structures
 
     /// <summary>
-    /// ステルスゲーム状態の定義
+    /// 繧ｹ繝・Ν繧ｹ繧ｲ繝ｼ繝迥ｶ諷九・螳夂ｾｩ
     /// </summary>
     public enum StealthGameState
     {
@@ -910,40 +910,40 @@ namespace asterivo.Unity60.Features.Templates.Stealth
     }
 
     /// <summary>
-    /// ステルス難易度レベル
+    /// 繧ｹ繝・Ν繧ｹ髮｣譏灘ｺｦ繝ｬ繝吶Ν
     /// </summary>
     public enum StealthDifficulty
     {
-        Easy,    // より緩い検知、長い反応時間
-        Normal,  // 標準的なバランス
-        Hard,    // 厳しい検知、短い反応時間
-        Expert   // 非常に厳しい条件
+        Easy,    // 繧医ｊ邱ｩ縺・､懃衍縲・聞縺・渚蠢懈凾髢・
+        Normal,  // 讓呎ｺ也噪縺ｪ繝舌Λ繝ｳ繧ｹ
+        Hard,    // 蜴ｳ縺励＞讀懃衍縲∫洒縺・渚蠢懈凾髢・
+        Expert   // 髱槫ｸｸ縺ｫ蜴ｳ縺励＞譚｡莉ｶ
     }
 
     /// <summary>
-    /// グローバル警戒レベル
+    /// 繧ｰ繝ｭ繝ｼ繝舌Ν隴ｦ謌偵Ξ繝吶Ν
     /// </summary>
     public enum GlobalAlertLevel
     {
-        Normal,      // 通常状態
-        Suspicious,  // 一部NPCが警戒
-        Heightened,  // 警戒レベルが上昇
-        FullAlert    // 全面警戒状態
+        Normal,      // 騾壼ｸｸ迥ｶ諷・
+        Suspicious,  // 荳驛ｨNPC縺瑚ｭｦ謌・
+        Heightened,  // 隴ｦ謌偵Ξ繝吶Ν縺御ｸ頑・
+        FullAlert    // 蜈ｨ髱｢隴ｦ謌堤憾諷・
     }
 
     /// <summary>
-    /// ステルスミッション目標の種類
+    /// 繧ｹ繝・Ν繧ｹ繝溘ャ繧ｷ繝ｧ繝ｳ逶ｮ讓吶・遞ｮ鬘・
     /// </summary>
     public enum StealthObjectiveType
     {
-        CollectItem,     // アイテム収集
-        ReachLocation,   // 地点到達
-        AvoidDetection,  // 検知回避
-        Extraction       // 脱出
+        CollectItem,     // 繧｢繧､繝・Β蜿朱寔
+        ReachLocation,   // 蝨ｰ轤ｹ蛻ｰ驕・
+        AvoidDetection,  // 讀懃衍蝗樣∩
+        Extraction       // 閼ｱ蜃ｺ
     }
 
     /// <summary>
-    /// ステルスミッション目標の定義
+    /// 繧ｹ繝・Ν繧ｹ繝溘ャ繧ｷ繝ｧ繝ｳ逶ｮ讓吶・螳夂ｾｩ
     /// </summary>
     [System.Serializable]
     public class StealthMissionObjective
@@ -973,7 +973,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
 namespace asterivo.Unity60.Features.Templates.Stealth
 {
     /// <summary>
-    /// NPCパトロールコントローラー（StealthGameplayManagerで使用）
+    /// NPC繝代ヨ繝ｭ繝ｼ繝ｫ繧ｳ繝ｳ繝医Ο繝ｼ繝ｩ繝ｼ・・tealthGameplayManager縺ｧ菴ｿ逕ｨ・・
     /// </summary>
     public class NPCPatrolController : MonoBehaviour
     {
@@ -1035,3 +1035,5 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
     }
 }
+
+

@@ -1,6 +1,6 @@
 using asterivo.Unity60.Core.Commands;
 
-namespace asterivo.Unity60.Core.Services.Interfaces
+namespace asterivo.Unity60.Core
 {
     /// <summary>
     /// コマンドプール管理サービスのインターフェース

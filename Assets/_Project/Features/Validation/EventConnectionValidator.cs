@@ -1,33 +1,33 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Debug;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 
 namespace asterivo.Unity60.Features.Validation
 {
     /// <summary>
-    /// イベント接続の検証を行うバリデーター
+    /// 繧､繝吶Φ繝域磁邯壹・讀懆ｨｼ繧定｡後≧繝舌Μ繝・・繧ｿ繝ｼ
     /// </summary>
     public static class EventConnectionValidator
     {
         /// <summary>
-        /// システム全体のイベント接続を検証
+        /// 繧ｷ繧ｹ繝・Β蜈ｨ菴薙・繧､繝吶Φ繝域磁邯壹ｒ讀懆ｨｼ
         /// </summary>
-        /// <param name="validateCriticalOnly">重要なイベントのみを検証するか</param>
-        /// <returns>検証結果</returns>
+        /// <param name="validateCriticalOnly">驥崎ｦ√↑繧､繝吶Φ繝医・縺ｿ繧呈､懆ｨｼ縺吶ｋ縺・/param>
+        /// <returns>讀懆ｨｼ邨先棡</returns>
         public static ValidationResult ValidateAllEventConnections(bool validateCriticalOnly = true)
         {
             var result = new ValidationResult();
             
-            // GameEventの検証
+            // GameEvent縺ｮ讀懆ｨｼ
             ValidateGameEvents(result, validateCriticalOnly);
             
-            // EventListenerの検証
+            // EventListener縺ｮ讀懆ｨｼ
             ValidateEventListeners(result, validateCriticalOnly);
             
-            // コマンドイベントの検証
+            // 繧ｳ繝槭Φ繝峨う繝吶Φ繝医・讀懆ｨｼ
             ValidateCommandEvents(result, validateCriticalOnly);
             
             return result;
@@ -45,7 +45,7 @@ namespace asterivo.Unity60.Features.Validation
                     continue;
                 }
                 
-                // GameEventが適切に設定されているかチェック
+                // GameEvent縺碁←蛻・↓險ｭ螳壹＆繧後※縺・ｋ縺九メ繧ｧ繝・け
                 if (string.IsNullOrEmpty(gameEvent.name))
                 {
                     result.AddWarning($"GameEvent has no name: {gameEvent.GetInstanceID()}");
@@ -67,7 +67,7 @@ namespace asterivo.Unity60.Features.Validation
                     continue;
                 }
                 
-                // GameEventが設定されているかチェック
+                // GameEvent縺瑚ｨｭ螳壹＆繧後※縺・ｋ縺九メ繧ｧ繝・け
                 var gameEventField = listener.GetType().GetField("GameEvent", 
                     System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
                 
@@ -80,7 +80,7 @@ namespace asterivo.Unity60.Features.Validation
                     }
                 }
                 
-                // Responseが設定されているかチェック
+                // Response縺瑚ｨｭ螳壹＆繧後※縺・ｋ縺九メ繧ｧ繝・け
                 if (listener.Response == null)
                 {
                     result.AddWarning($"GameEventListener '{listener.name}' has no Response configured");
@@ -117,7 +117,7 @@ namespace asterivo.Unity60.Features.Validation
     }
     
     /// <summary>
-    /// 検証結果を格納するクラス
+    /// 讀懆ｨｼ邨先棡繧呈ｼ邏阪☆繧九け繝ｩ繧ｹ
     /// </summary>
     public class ValidationResult
     {
@@ -158,12 +158,13 @@ namespace asterivo.Unity60.Features.Validation
         }
         
         /// <summary>
-        /// 検証結果のサマリーを取得
+        /// 讀懆ｨｼ邨先棡縺ｮ繧ｵ繝槭Μ繝ｼ繧貞叙蠕・
         /// </summary>
-        /// <returns>結果のサマリー文字列</returns>
+        /// <returns>邨先棡縺ｮ繧ｵ繝槭Μ繝ｼ譁・ｭ怜・</returns>
         public string GetSummary()
         {
             return $"Validation Results: {errors.Count} errors, {warnings.Count} warnings, {infos.Count} info messages";
         }
     }
 }
+

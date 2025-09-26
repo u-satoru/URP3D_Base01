@@ -1,43 +1,43 @@
-using UnityEngine;
-using asterivo.Unity60.Core.Services;
+﻿using UnityEngine;
+using asterivo.Unity60.Core;
 
 namespace asterivo.Unity60.Features.ActionRPG
 {
     /// <summary>
-    /// ActionRPGマネージャーコンポーネント
-    /// GameObjectにアタッチして使用し、ActionRPG機能の管理を行う
+    /// ActionRPG繝槭ロ繝ｼ繧ｸ繝｣繝ｼ繧ｳ繝ｳ繝昴・繝阪Φ繝・
+    /// GameObject縺ｫ繧｢繧ｿ繝・メ縺励※菴ｿ逕ｨ縺励、ctionRPG讖溯・縺ｮ邂｡逅・ｒ陦後≧
     /// </summary>
     public class ActionRPGManager : MonoBehaviour
     {
         private IActionRPGService _actionRPGService;
         private bool _isInitialized;
 
-        // プロパティ
+        // 繝励Ο繝代ユ繧｣
         public bool IsInitialized => _isInitialized;
 
         void Awake()
         {
-            // Bootstrapperを使って初期化
+            // Bootstrapper繧剃ｽｿ縺｣縺ｦ蛻晄悄蛹・
             if (!ActionRPGBootstrapper.IsInitialized)
             {
                 ActionRPGBootstrapper.Initialize();
             }
 
-            // ServiceLocatorからサービスを取得
+            // ServiceLocator縺九ｉ繧ｵ繝ｼ繝薙せ繧貞叙蠕・
             if (ServiceLocator.TryGet<IActionRPGService>(out var service))
             {
                 _actionRPGService = service;
                 _isInitialized = true;
-                Debug.Log("ActionRPGManager: ServiceLocatorからActionRPGサービスを取得しました");
+                Debug.Log("ActionRPGManager: ServiceLocator縺九ｉActionRPG繧ｵ繝ｼ繝薙せ繧貞叙蠕励＠縺ｾ縺励◆");
             }
             else
             {
-                Debug.LogError("ActionRPGManager: ActionRPGサービスが登録されていません");
+                Debug.LogError("ActionRPGManager: ActionRPG繧ｵ繝ｼ繝薙せ縺檎匳骭ｲ縺輔ｌ縺ｦ縺・∪縺帙ｓ");
             }
         }
 
         /// <summary>
-        /// プレイヤーを設定
+        /// 繝励Ξ繧､繝､繝ｼ繧定ｨｭ螳・
         /// </summary>
         public void SetPlayer(GameObject playerObject)
         {
@@ -45,12 +45,12 @@ namespace asterivo.Unity60.Features.ActionRPG
             {
                 var registry = ActionRPGBootstrapper.GetServiceRegistry();
                 registry?.SetPlayerGameObject(playerObject);
-                Debug.Log($"ActionRPGManager: プレイヤーオブジェクトを設定: {playerObject.name}");
+                Debug.Log($"ActionRPGManager: 繝励Ξ繧､繝､繝ｼ繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ險ｭ螳・ {playerObject.name}");
             }
         }
 
         /// <summary>
-        /// 経験値を追加
+        /// 邨碁ｨ灘､繧定ｿｽ蜉
         /// </summary>
         public void AddExperience(int amount)
         {
@@ -58,7 +58,7 @@ namespace asterivo.Unity60.Features.ActionRPG
         }
 
         /// <summary>
-        /// ルーン収集を通知
+        /// 繝ｫ繝ｼ繝ｳ蜿朱寔繧帝夂衍
         /// </summary>
         public void NotifyResourceCollected(int amount)
         {
@@ -66,7 +66,7 @@ namespace asterivo.Unity60.Features.ActionRPG
         }
 
         /// <summary>
-        /// 現在の経験値情報を取得
+        /// 迴ｾ蝨ｨ縺ｮ邨碁ｨ灘､諠・ｱ繧貞叙蠕・
         /// </summary>
         public (int currentExp, int currentLevel, int expToNext) GetExperienceInfo()
         {
@@ -78,7 +78,7 @@ namespace asterivo.Unity60.Features.ActionRPG
         }
 
         /// <summary>
-        /// セッション統計を取得
+        /// 繧ｻ繝・す繝ｧ繝ｳ邨ｱ險医ｒ蜿門ｾ・
         /// </summary>
         public (int total, int session) GetRuneStatistics()
         {
@@ -91,7 +91,7 @@ namespace asterivo.Unity60.Features.ActionRPG
         }
 
         /// <summary>
-        /// セッション統計をリセット
+        /// 繧ｻ繝・す繝ｧ繝ｳ邨ｱ險医ｒ繝ｪ繧ｻ繝・ヨ
         /// </summary>
         public void ResetSessionStats()
         {
@@ -101,33 +101,33 @@ namespace asterivo.Unity60.Features.ActionRPG
 
         void OnDestroy()
         {
-            // コンポーネント破棄時のクリーンアップ
+            // 繧ｳ繝ｳ繝昴・繝阪Φ繝育ｴ譽・凾縺ｮ繧ｯ繝ｪ繝ｼ繝ｳ繧｢繝・・
             _actionRPGService = null;
             _isInitialized = false;
         }
 
         /// <summary>
-        /// デバッグ用: テスト経験値を追加
+        /// 繝・ヰ繝・げ逕ｨ: 繝・せ繝育ｵ碁ｨ灘､繧定ｿｽ蜉
         /// </summary>
         [ContextMenu("Add Test Experience (100)")]
         public void AddTestExperience()
         {
             AddExperience(100);
-            Debug.Log("ActionRPGManager: テスト経験値 100 を追加しました");
+            Debug.Log("ActionRPGManager: 繝・せ繝育ｵ碁ｨ灘､ 100 繧定ｿｽ蜉縺励∪縺励◆");
         }
 
         /// <summary>
-        /// デバッグ用: 大量経験値を追加
+        /// 繝・ヰ繝・げ逕ｨ: 螟ｧ驥冗ｵ碁ｨ灘､繧定ｿｽ蜉
         /// </summary>
         [ContextMenu("Add Large Experience (1000)")]
         public void AddLargeExperience()
         {
             AddExperience(1000);
-            Debug.Log("ActionRPGManager: テスト経験値 1000 を追加しました");
+            Debug.Log("ActionRPGManager: 繝・せ繝育ｵ碁ｨ灘､ 1000 繧定ｿｽ蜉縺励∪縺励◆");
         }
 
         /// <summary>
-        /// デバッグ情報をログ出力
+        /// 繝・ヰ繝・げ諠・ｱ繧偵Ο繧ｰ蜃ｺ蜉・
         /// </summary>
         [ContextMenu("Log Debug Info")]
         public void LogDebugInfo()
@@ -135,12 +135,14 @@ namespace asterivo.Unity60.Features.ActionRPG
             var expInfo = GetExperienceInfo();
             var runeStats = GetRuneStatistics();
             Debug.Log($"=== ActionRPG Manager Debug Info ===\n" +
-                     $"現在の経験値: {expInfo.currentExp}\n" +
-                     $"現在のレベル: {expInfo.currentLevel}\n" +
-                     $"次のレベルまで: {expInfo.expToNext}\n" +
-                     $"総ルーン収集数: {runeStats.total}\n" +
-                     $"セッションルーン収集数: {runeStats.session}\n" +
-                     $"初期化状態: {_isInitialized}");
+                     $"迴ｾ蝨ｨ縺ｮ邨碁ｨ灘､: {expInfo.currentExp}\n" +
+                     $"迴ｾ蝨ｨ縺ｮ繝ｬ繝吶Ν: {expInfo.currentLevel}\n" +
+                     $"谺｡縺ｮ繝ｬ繝吶Ν縺ｾ縺ｧ: {expInfo.expToNext}\n" +
+                     $"邱上Ν繝ｼ繝ｳ蜿朱寔謨ｰ: {runeStats.total}\n" +
+                     $"繧ｻ繝・す繝ｧ繝ｳ繝ｫ繝ｼ繝ｳ蜿朱寔謨ｰ: {runeStats.session}\n" +
+                     $"蛻晄悄蛹也憾諷・ {_isInitialized}");
         }
     }
 }
+
+

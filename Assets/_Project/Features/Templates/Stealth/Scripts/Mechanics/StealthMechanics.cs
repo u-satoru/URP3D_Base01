@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Debug;
@@ -16,13 +16,13 @@ using Sirenix.OdinInspector;
 namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
 {
     /// <summary>
-    /// ステルスメカニクス管理システム - ServiceLocator統合版
-    /// プレイヤーの隠蔽状態、発見状態、環境との相互作用を管理
+    /// 繧ｹ繝・Ν繧ｹ繝｡繧ｫ繝九け繧ｹ邂｡逅・す繧ｹ繝・Β - ServiceLocator邨ｱ蜷育沿
+    /// 繝励Ξ繧､繝､繝ｼ縺ｮ髫阡ｽ迥ｶ諷九∫匱隕狗憾諷九∫腸蠅・→縺ｮ逶ｸ莠剃ｽ懃畑繧堤ｮ｡逅・
     ///
-    /// ServiceLocator統合による価値実現:
-    /// - Learn & Grow: 統一APIによる学習コスト70%削減支援
-    /// - Ship & Scale: Interface契約による保守性・テスタビリティ向上
-    /// - 既存95%メモリ削減効果・67%速度改善の継承
+    /// ServiceLocator邨ｱ蜷医↓繧医ｋ萓｡蛟､螳溽樟:
+    /// - Learn & Grow: 邨ｱ荳API縺ｫ繧医ｋ蟄ｦ鄙偵さ繧ｹ繝・0%蜑頑ｸ帶髪謠ｴ
+    /// - Ship & Scale: Interface螂醍ｴ・↓繧医ｋ菫晏ｮ域ｧ繝ｻ繝・せ繧ｿ繝薙Μ繝・ぅ蜷台ｸ・
+    /// - 譌｢蟄・5%繝｡繝｢繝ｪ蜑頑ｸ帛柑譫懊・67%騾溷ｺｦ謾ｹ蝟・・邯呎価
     /// </summary>
     public class StealthMechanics : MonoBehaviour
     {
@@ -112,7 +112,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         private float lastUpdateTime;
         private Collider[] coverColliders = new Collider[10];
 
-        // IStealthMechanicsService 実装
+        // IStealthMechanicsService 螳溯｣・
         private StealthMechanicsConfig _serviceConfig;
         private bool _isServiceInitialized = false;
 
@@ -121,7 +121,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         #region IStealthMechanicsService Properties
 
         /// <summary>
-        /// プレイヤートランスフォーム（ServiceLocator統合API）
+        /// 繝励Ξ繧､繝､繝ｼ繝医Λ繝ｳ繧ｹ繝輔か繝ｼ繝・・erviceLocator邨ｱ蜷・PI・・
         /// </summary>
         public Transform PlayerTransform
         {
@@ -130,7 +130,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         }
 
         /// <summary>
-        /// ステルス機能有効/無効（ServiceLocator統合API）
+        /// 繧ｹ繝・Ν繧ｹ讖溯・譛牙柑/辟｡蜉ｹ・・erviceLocator邨ｱ蜷・PI・・
         /// </summary>
         public bool EnableStealthMechanics
         {
@@ -139,7 +139,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         }
 
         /// <summary>
-        /// 更新間隔（ServiceLocator統合API）
+        /// 譖ｴ譁ｰ髢馴囈・・erviceLocator邨ｱ蜷・PI・・
         /// </summary>
         public float UpdateInterval
         {
@@ -148,12 +148,12 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         }
 
         /// <summary>
-        /// 更新が必要かの動的判定（パフォーマンス最適化）
+        /// 譖ｴ譁ｰ縺悟ｿ・ｦ√°縺ｮ蜍慕噪蛻､螳夲ｼ医ヱ繝輔か繝ｼ繝槭Φ繧ｹ譛驕ｩ蛹厄ｼ・
         /// </summary>
         public bool NeedsUpdate => enableStealthMechanics && playerTransform != null;
 
         /// <summary>
-        /// 更新優先度（ステルス状態は他システムの基盤となるため高優先度）
+        /// 譖ｴ譁ｰ蜆ｪ蜈亥ｺｦ・医せ繝・Ν繧ｹ迥ｶ諷九・莉悶す繧ｹ繝・Β縺ｮ蝓ｺ逶､縺ｨ縺ｪ繧九◆繧・ｫ伜━蜈亥ｺｦ・・
         /// </summary>
         public int UpdatePriority => 10;
 
@@ -162,7 +162,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         #region IService Implementation
 
         /// <summary>
-        /// サービス登録時の初期化処理
+        /// 繧ｵ繝ｼ繝薙せ逋ｻ骭ｲ譎ゅ・蛻晄悄蛹門・逅・
         /// </summary>
         public void OnServiceRegistered()
         {
@@ -170,7 +170,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         }
 
         /// <summary>
-        /// サービス登録解除時のクリーンアップ処理
+        /// 繧ｵ繝ｼ繝薙せ逋ｻ骭ｲ隗｣髯､譎ゅ・繧ｯ繝ｪ繝ｼ繝ｳ繧｢繝・・蜃ｦ逅・
         /// </summary>
         public void OnServiceUnregistered()
         {
@@ -178,12 +178,12 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         }
 
         /// <summary>
-        /// サービスがアクティブかどうか
+        /// 繧ｵ繝ｼ繝薙せ縺後い繧ｯ繝・ぅ繝悶°縺ｩ縺・°
         /// </summary>
         public bool IsServiceActive => enabled && gameObject.activeInHierarchy;
 
         /// <summary>
-        /// サービス名（デバッグ・ログ用）
+        /// 繧ｵ繝ｼ繝薙せ蜷搾ｼ医ョ繝舌ャ繧ｰ繝ｻ繝ｭ繧ｰ逕ｨ・・
         /// </summary>
         public string ServiceName => "StealthMechanics";
 
@@ -192,10 +192,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         #region IConfigurableService Implementation
 
         /// <summary>
-        /// 設定による初期化（IConfigurableService<T>実装）
-        /// ScriptableObjectベースの設定データから初期化
+        /// 險ｭ螳壹↓繧医ｋ蛻晄悄蛹厄ｼ・ConfigurableService<T>螳溯｣・ｼ・
+        /// ScriptableObject繝吶・繧ｹ縺ｮ險ｭ螳壹ョ繝ｼ繧ｿ縺九ｉ蛻晄悄蛹・
         /// </summary>
-        /// <param name="config">ステルスメカニクス設定</param>
+        /// <param name="config">繧ｹ繝・Ν繧ｹ繝｡繧ｫ繝九け繧ｹ險ｭ螳・/param>
         public void Initialize(StealthMechanicsConfig config)
         {
             if (config == null)
@@ -206,7 +206,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
 
             _serviceConfig = config;
 
-            // 設定値を反映
+            // 險ｭ螳壼､繧貞渚譏
             enableStealthMechanics = config.enableStealthMechanics;
             updateInterval = config.updateInterval;
             baseVisibility = config.baseVisibility;
@@ -231,7 +231,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         }
 
         /// <summary>
-        /// サービスが初期化済みかどうか
+        /// 繧ｵ繝ｼ繝薙せ縺悟・譛溷喧貂医∩縺九←縺・°
         /// </summary>
         public bool IsInitialized => _isServiceInitialized;
 
@@ -240,8 +240,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         #region IUpdatableService Implementation
 
         /// <summary>
-        /// サービス更新処理（Update()の代替）
-        /// ServiceLocator統合による効率的更新管理
+        /// 繧ｵ繝ｼ繝薙せ譖ｴ譁ｰ蜃ｦ逅・ｼ・pdate()縺ｮ莉｣譖ｿ・・
+        /// ServiceLocator邨ｱ蜷医↓繧医ｋ蜉ｹ邇・噪譖ｴ譁ｰ邂｡逅・
         /// </summary>
         public void UpdateService()
         {
@@ -287,16 +287,16 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         
         private void Update()
         {
-            // ServiceLocator統合時とSingleton単体時の両立
-            // ServiceLocatorに登録されている場合は、UpdateService()で制御されるためUpdate()をスキップ
+            // ServiceLocator邨ｱ蜷域凾縺ｨSingleton蜊倅ｽ捺凾縺ｮ荳｡遶・
+            // ServiceLocator縺ｫ逋ｻ骭ｲ縺輔ｌ縺ｦ縺・ｋ蝣ｴ蜷医・縲ゞpdateService()縺ｧ蛻ｶ蠕｡縺輔ｌ繧九◆繧ゞpdate()繧偵せ繧ｭ繝・・
             bool isRegisteredAsService = ServiceLocator.HasService<StealthMechanics>();
 
             if (!isRegisteredAsService)
             {
-                // Singleton単体モード: 従来通りUpdate()で動作
+                // Singleton蜊倅ｽ薙Δ繝ｼ繝・ 蠕捺擂騾壹ｊUpdate()縺ｧ蜍穂ｽ・
                 UpdateService();
             }
-            // ServiceLocator統合モード: UpdateService()はServiceLocatorから呼び出される
+            // ServiceLocator邨ｱ蜷医Δ繝ｼ繝・ UpdateService()縺ｯServiceLocator縺九ｉ蜻ｼ縺ｳ蜃ｺ縺輔ｌ繧・
         }
         
         private void OnDestroy()
@@ -649,42 +649,42 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         #region Public API
         
         /// <summary>
-        /// 現在の可視性レベルを取得
+        /// 迴ｾ蝨ｨ縺ｮ蜿ｯ隕匁ｧ繝ｬ繝吶Ν繧貞叙蠕・
         /// </summary>
         public float GetVisibility() => currentVisibility;
         
         /// <summary>
-        /// 現在のノイズレベルを取得
+        /// 迴ｾ蝨ｨ縺ｮ繝弱う繧ｺ繝ｬ繝吶Ν繧貞叙蠕・
         /// </summary>
         public float GetNoiseLevel() => currentNoiseLevel;
         
         /// <summary>
-        /// プレイヤーがカバー内にいるか
+        /// 繝励Ξ繧､繝､繝ｼ縺後き繝舌・蜀・↓縺・ｋ縺・
         /// </summary>
         public bool IsInCover() => isInCover;
         
         /// <summary>
-        /// プレイヤーが影の中にいるか
+        /// 繝励Ξ繧､繝､繝ｼ縺悟ｽｱ縺ｮ荳ｭ縺ｫ縺・ｋ縺・
         /// </summary>
         public bool IsInShadow() => CalculateIsInShadow();
         
         /// <summary>
-        /// プレイヤーが検出されているか
+        /// 繝励Ξ繧､繝､繝ｼ縺梧､懷・縺輔ｌ縺ｦ縺・ｋ縺・
         /// </summary>
         public bool IsDetected() => isDetected;
         
         /// <summary>
-        /// 現在の検出レベルを取得
+        /// 迴ｾ蝨ｨ縺ｮ讀懷・繝ｬ繝吶Ν繧貞叙蠕・
         /// </summary>
         public float GetDetectionLevel() => detectionLevel;
         
         /// <summary>
-        /// 現在の警戒レベルを取得
+        /// 迴ｾ蝨ｨ縺ｮ隴ｦ謌偵Ξ繝吶Ν繧貞叙蠕・
         /// </summary>
         public AlertLevel GetAlertLevel() => currentAlertLevel;
         
         /// <summary>
-        /// 強制的にステルス状態に入る
+        /// 蠑ｷ蛻ｶ逧・↓繧ｹ繝・Ν繧ｹ迥ｶ諷九↓蜈･繧・
         /// </summary>
         public void ForceEnterStealth()
         {
@@ -695,7 +695,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         }
         
         /// <summary>
-        /// ディストラクションを作成
+        /// 繝・ぅ繧ｹ繝医Λ繧ｯ繧ｷ繝ｧ繝ｳ繧剃ｽ懈・
         /// </summary>
         public void CreateDistraction(Vector3 position, float radius)
         {
@@ -705,7 +705,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
 
 
         /// <summary>
-        /// 現在のステルス状態を取得
+        /// 迴ｾ蝨ｨ縺ｮ繧ｹ繝・Ν繧ｹ迥ｶ諷九ｒ蜿門ｾ・
         /// </summary>
         public StealthState CurrentState
         {
@@ -719,18 +719,18 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         }
 
         /// <summary>
-        /// 隠れ場所に入る
+        /// 髫繧悟ｴ謇縺ｫ蜈･繧・
         /// </summary>
         public void EnterHidingSpot(Transform hidingSpotTransform)
         {
             isInCover = true;
-            currentVisibility *= 0.1f; // 大幅に可視性を下げる
+            currentVisibility *= 0.1f; // 螟ｧ蟷・↓蜿ｯ隕匁ｧ繧剃ｸ九￡繧・
             string spotName = hidingSpotTransform != null ? hidingSpotTransform.name : "Unknown";
             eventLogger?.Log($"[StealthMechanics] Entered hiding spot: {spotName}");
         }
 
         /// <summary>
-        /// 隠れ場所から出る
+        /// 髫繧悟ｴ謇縺九ｉ蜃ｺ繧・
         /// </summary>
         public void ExitHidingSpot()
         {
@@ -739,11 +739,11 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         }
 
         /// <summary>
-        /// 環境による隠蔽効果を適用（設計書準拠）
+        /// 迺ｰ蠅・↓繧医ｋ髫阡ｽ蜉ｹ譫懊ｒ驕ｩ逕ｨ・郁ｨｭ險域嶌貅匁侠・・
         /// </summary>
         public void ApplyEnvironmentalConcealment(float concealmentFactor, string concealmentType = "environment")
         {
-            // 環境隠蔽効果を現在の可視性に適用
+            // 迺ｰ蠅・國阡ｽ蜉ｹ譫懊ｒ迴ｾ蝨ｨ縺ｮ蜿ｯ隕匁ｧ縺ｫ驕ｩ逕ｨ
             float modifiedVisibility = currentVisibility * (1f - Mathf.Clamp01(concealmentFactor));
             currentVisibility = Mathf.Clamp01(modifiedVisibility);
 
@@ -751,11 +751,11 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         }
 
         /// <summary>
-        /// 光による露出効果を適用（設計書準拠）
+        /// 蜈峨↓繧医ｋ髴ｲ蜃ｺ蜉ｹ譫懊ｒ驕ｩ逕ｨ・郁ｨｭ險域嶌貅匁侠・・
         /// </summary>
         public void ApplyLightExposure(float lightIntensity, Vector3 lightDirection)
         {
-            // 光の強度に基づいて可視性を上昇
+            // 蜈峨・蠑ｷ蠎ｦ縺ｫ蝓ｺ縺･縺・※蜿ｯ隕匁ｧ繧剃ｸ頑・
             float lightExposure = lightIntensity * lightVisibilityCurve.Evaluate(lightIntensity);
             currentVisibility = Mathf.Clamp01(currentVisibility + lightExposure * 0.3f);
 
@@ -763,16 +763,16 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         }
 
         /// <summary>
-        /// 隠れ場所との相互作用（設計書準拠）
+        /// 髫繧悟ｴ謇縺ｨ縺ｮ逶ｸ莠剃ｽ懃畑・郁ｨｭ險域嶌貅匁侠・・
         /// </summary>
         public void InteractWithHidingSpot(Transform hidingSpot, float effectiveness = 0.8f)
         {
             if (hidingSpot == null) return;
 
-            // 隠れ場所の効果を適用
+            // 髫繧悟ｴ謇縺ｮ蜉ｹ譫懊ｒ驕ｩ逕ｨ
             EnterHidingSpot(hidingSpot);
 
-            // 効果の強度を適用
+            // 蜉ｹ譫懊・蠑ｷ蠎ｦ繧帝←逕ｨ
             currentVisibility *= (1f - effectiveness);
 
             eventLogger?.Log($"[StealthMechanics] Interacted with hiding spot: {hidingSpot.name}, effectiveness: {effectiveness}");
@@ -837,3 +837,5 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Mechanics
         #endregion
     }
 }
+
+

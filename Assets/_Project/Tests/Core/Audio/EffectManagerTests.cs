@@ -1,18 +1,18 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using System.Collections;
 using asterivo.Unity60.Tests.Helpers;
 using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 
 namespace asterivo.Unity60.Tests.Core.Audio
 {
     /// <summary>
-    /// EffectManagerの単体テスト
-    /// オーディオエフェクトシステムのテスト
+    /// EffectManager縺ｮ蜊倅ｽ薙ユ繧ｹ繝・
+    /// 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｨ繝輔ぉ繧ｯ繝医す繧ｹ繝・Β縺ｮ繝・せ繝・
     /// </summary>
     [TestFixture]
     public class EffectManagerTests
@@ -27,14 +27,14 @@ namespace asterivo.Unity60.Tests.Core.Audio
         {
             TestHelpers.ResetFeatureFlagsForTest();
             
-            // ServiceLocatorのセットアップ
+            // ServiceLocator縺ｮ繧ｻ繝・ヨ繧｢繝・・
             TestHelpers.SetupTestServiceLocator();
             
-            // EffectManagerオブジェクトの作成
+            // EffectManager繧ｪ繝悶ず繧ｧ繧ｯ繝医・菴懈・
             effectManagerObject = TestHelpers.CreateTestGameObject("EffectManager");
             effectManager = effectManagerObject.AddComponent<EffectManager>();
             
-            // AudioSourceコンポーネントの追加
+            // AudioSource繧ｳ繝ｳ繝昴・繝阪Φ繝医・霑ｽ蜉
             effectManagerObject.AddComponent<AudioSource>();
         }
 
@@ -50,7 +50,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Basic Functionality Tests
 
         /// <summary>
-        /// EffectManagerが正常に初期化されることをテスト
+        /// EffectManager縺梧ｭ｣蟶ｸ縺ｫ蛻晄悄蛹悶＆繧後ｋ縺薙→繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void EffectManager_ShouldInitialize_Properly()
@@ -61,7 +61,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// EffectManagerがSingletonパターンで動作することをテスト
+        /// EffectManager縺郡ingleton繝代ち繝ｼ繝ｳ縺ｧ蜍穂ｽ懊☆繧九％縺ｨ繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void EffectManager_ShouldImplement_SingletonPattern()
@@ -80,7 +80,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Effect Playback Tests
 
         /// <summary>
-        /// エフェクト音声再生の基本機能をテスト
+        /// 繧ｨ繝輔ぉ繧ｯ繝磯浹螢ｰ蜀咲函縺ｮ蝓ｺ譛ｬ讖溯・繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void PlayEffect_ShouldExecute_WithoutErrors()
@@ -94,7 +94,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// エフェクト音声停止機能をテスト
+        /// 繧ｨ繝輔ぉ繧ｯ繝磯浹螢ｰ蛛懈ｭ｢讖溯・繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void StopEffect_ShouldExecute_WithoutErrors()
@@ -108,7 +108,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// エフェクト音量設定機能をテスト
+        /// 繧ｨ繝輔ぉ繧ｯ繝磯浹驥剰ｨｭ螳壽ｩ溯・繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void SetEffectVolume_ShouldUpdate_AudioSourceVolume()
@@ -125,7 +125,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// 複数エフェクトの同時再生をテスト
+        /// 隍・焚繧ｨ繝輔ぉ繧ｯ繝医・蜷梧凾蜀咲函繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void MultipleEffects_ShouldPlay_Simultaneously()
@@ -148,7 +148,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Effect Categories Tests
 
         /// <summary>
-        /// 異なるカテゴリのエフェクト再生をテスト
+        /// 逡ｰ縺ｪ繧九き繝・ざ繝ｪ縺ｮ繧ｨ繝輔ぉ繧ｯ繝亥・逕溘ｒ繝・せ繝・
         /// </summary>
         [TestCase("UI")]
         [TestCase("Combat")]
@@ -165,7 +165,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// エフェクトカテゴリごとの音量制御をテスト
+        /// 繧ｨ繝輔ぉ繧ｯ繝医き繝・ざ繝ｪ縺斐→縺ｮ髻ｳ驥丞宛蠕｡繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void SetCategoryVolume_ShouldAffect_CategoryEffects()
@@ -184,7 +184,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region ServiceHelper Integration Tests
 
         /// <summary>
-        /// ServiceHelper経由でEffectManagerが取得できることをテスト
+        /// ServiceHelper邨檎罰縺ｧEffectManager縺悟叙蠕励〒縺阪ｋ縺薙→繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void ServiceHelper_ShouldRetrieve_EffectManager()
@@ -200,7 +200,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// ServiceLocator無効時のフォールバック動作をテスト
+        /// ServiceLocator辟｡蜉ｹ譎ゅ・繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ蜍穂ｽ懊ｒ繝・せ繝・
         /// </summary>
         [Test]
         public void ServiceHelper_ShouldFallback_WhenServiceLocatorDisabled()
@@ -220,14 +220,14 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Performance Tests
 
         /// <summary>
-        /// エフェクト再生のパフォーマンステスト
+        /// 繧ｨ繝輔ぉ繧ｯ繝亥・逕溘・繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ繝・せ繝・
         /// </summary>
         [Test]
         public void PlayEffect_ShouldComplete_WithinPerformanceThreshold()
         {
             // Arrange
             string testEffectName = "performance-test-effect";
-            float maxExecutionTime = 0.001f; // 1ms以内
+            float maxExecutionTime = 0.001f; // 1ms莉･蜀・
 
             // Act & Assert
             TestHelpers.AssertExecutionTime(
@@ -238,14 +238,14 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// 大量エフェクトの同時再生パフォーマンステスト
+        /// 螟ｧ驥上お繝輔ぉ繧ｯ繝医・蜷梧凾蜀咲函繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ繝・せ繝・
         /// </summary>
         [Test]
         public void MassiveEffects_ShouldPlay_WithinPerformanceThreshold()
         {
             // Arrange
             int effectCount = 100;
-            float maxExecutionTime = 0.01f; // 10ms以内
+            float maxExecutionTime = 0.01f; // 10ms莉･蜀・
 
             // Act & Assert
             TestHelpers.AssertExecutionTime(
@@ -266,7 +266,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Error Handling Tests
 
         /// <summary>
-        /// null引数の処理をテスト
+        /// null蠑墓焚縺ｮ蜃ｦ逅・ｒ繝・せ繝・
         /// </summary>
         [Test]
         public void PlayEffect_ShouldHandle_NullInput()
@@ -277,7 +277,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// 空文字列引数の処理をテスト
+        /// 遨ｺ譁・ｭ怜・蠑墓焚縺ｮ蜃ｦ逅・ｒ繝・せ繝・
         /// </summary>
         [Test]
         public void PlayEffect_ShouldHandle_EmptyString()
@@ -288,7 +288,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// 存在しないエフェクトの処理をテスト
+        /// 蟄伜惠縺励↑縺・お繝輔ぉ繧ｯ繝医・蜃ｦ逅・ｒ繝・せ繝・
         /// </summary>
         [Test]
         public void PlayEffect_ShouldHandle_NonexistentEffect()
@@ -302,7 +302,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// 無効な音量値の処理をテスト
+        /// 辟｡蜉ｹ縺ｪ髻ｳ驥丞､縺ｮ蜃ｦ逅・ｒ繝・せ繝・
         /// </summary>
         [TestCase(-1.0f)]
         [TestCase(2.0f)]
@@ -320,7 +320,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Effect Pooling Tests
 
         /// <summary>
-        /// エフェクトプールの動作をテスト
+        /// 繧ｨ繝輔ぉ繧ｯ繝医・繝ｼ繝ｫ縺ｮ蜍穂ｽ懊ｒ繝・せ繝・
         /// </summary>
         [Test]
         public void EffectPool_ShouldReuse_AudioSources()
@@ -331,21 +331,21 @@ namespace asterivo.Unity60.Tests.Core.Audio
             // Act
             effectManager.PlayEffect(effectName);
             effectManager.StopAllEffects();
-            effectManager.PlayEffect(effectName); // 同じエフェクトを再生
+            effectManager.PlayEffect(effectName); // 蜷後§繧ｨ繝輔ぉ繧ｯ繝医ｒ蜀咲函
             
             // Assert
-            // プール機能が動作していればエラーが発生しない
+            // 繝励・繝ｫ讖溯・縺悟虚菴懊＠縺ｦ縺・ｌ縺ｰ繧ｨ繝ｩ繝ｼ縺檎匱逕溘＠縺ｪ縺・
             Assert.Pass("Effect pooling should work correctly");
         }
 
         /// <summary>
-        /// プールサイズ制限のテスト
+        /// 繝励・繝ｫ繧ｵ繧､繧ｺ蛻ｶ髯舌・繝・せ繝・
         /// </summary>
         [Test]
         public void EffectPool_ShouldHandle_PoolSizeLimit()
         {
             // Arrange
-            int maxPoolSize = 20; // 仮の最大プールサイズ
+            int maxPoolSize = 20; // 莉ｮ縺ｮ譛螟ｧ繝励・繝ｫ繧ｵ繧､繧ｺ
             
             // Act & Assert
             Assert.DoesNotThrow(() =>
@@ -362,7 +362,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Integration Tests
 
         /// <summary>
-        /// AudioManagerとの統合テスト
+        /// AudioManager縺ｨ縺ｮ邨ｱ蜷医ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void EffectManager_ShouldIntegrate_WithAudioManager()
@@ -377,16 +377,16 @@ namespace asterivo.Unity60.Tests.Core.Audio
             // Act & Assert
             Assert.DoesNotThrow(() =>
             {
-                // 通常の音声再生
+                // 騾壼ｸｸ縺ｮ髻ｳ螢ｰ蜀咲函
                 audioManager.PlaySound("normal-sound");
                 
-                // エフェクト音声再生
+                // 繧ｨ繝輔ぉ繧ｯ繝磯浹螢ｰ蜀咲函
                 effectManager.PlayEffect("effect-sound");
             }, "EffectManager should integrate with AudioManager");
         }
 
         /// <summary>
-        /// SpatialAudioManagerとの統合テスト
+        /// SpatialAudioManager縺ｨ縺ｮ邨ｱ蜷医ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void EffectManager_ShouldIntegrate_WithSpatialAudioManager()
@@ -401,16 +401,16 @@ namespace asterivo.Unity60.Tests.Core.Audio
             // Act & Assert
             Assert.DoesNotThrow(() =>
             {
-                // 空間音声再生
+                // 遨ｺ髢馴浹螢ｰ蜀咲函
                 spatialAudioManager.Play3DSound("spatial-sound", Vector3.forward * 5);
                 
-                // エフェクト音声再生
+                // 繧ｨ繝輔ぉ繧ｯ繝磯浹螢ｰ蜀咲函
                 effectManager.PlayEffect("effect-sound");
             }, "EffectManager should integrate with SpatialAudioManager");
         }
 
         /// <summary>
-        /// FeatureFlagsとの統合テスト
+        /// FeatureFlags縺ｨ縺ｮ邨ｱ蜷医ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void EffectManager_ShouldRespect_FeatureFlags()
@@ -434,7 +434,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Advanced Feature Tests
 
         /// <summary>
-        /// エフェクトの優先度システムをテスト
+        /// 繧ｨ繝輔ぉ繧ｯ繝医・蜆ｪ蜈亥ｺｦ繧ｷ繧ｹ繝・Β繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void EffectPriority_ShouldHandle_HighPriorityEffects()
@@ -447,12 +447,12 @@ namespace asterivo.Unity60.Tests.Core.Audio
             Assert.DoesNotThrow(() =>
             {
                 effectManager.PlayEffect(normalEffect);
-                effectManager.PlayCombatEffect(highPriorityEffect, Vector3.zero); // 高優先度
+                effectManager.PlayCombatEffect(highPriorityEffect, Vector3.zero); // 鬮伜━蜈亥ｺｦ
             }, "Effect priority system should work correctly");
         }
 
         /// <summary>
-        /// エフェクトのフェードイン/アウト機能をテスト
+        /// 繧ｨ繝輔ぉ繧ｯ繝医・繝輔ぉ繝ｼ繝峨う繝ｳ/繧｢繧ｦ繝域ｩ溯・繧偵ユ繧ｹ繝・
         /// </summary>
         [UnityTest]
         public IEnumerator EffectFade_ShouldWork_Correctly()
@@ -472,7 +472,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// エフェクトのループ再生をテスト
+        /// 繧ｨ繝輔ぉ繧ｯ繝医・繝ｫ繝ｼ繝怜・逕溘ｒ繝・せ繝・
         /// </summary>
         [Test]
         public void LoopedEffect_ShouldPlay_Continuously()
@@ -484,7 +484,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
             Assert.DoesNotThrow(() =>
             {
                 int loopId = effectManager.StartLoopingEffect(loopEffect, Vector3.zero);
-                // ループ停止
+                // 繝ｫ繝ｼ繝怜●豁｢
                 effectManager.StopLoopingEffect(loopId);
             }, "Looped effect should play and stop correctly");
         }
@@ -494,7 +494,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Helper Methods
 
         /// <summary>
-        /// EffectManagerの基本設定を検証
+        /// EffectManager縺ｮ蝓ｺ譛ｬ險ｭ螳壹ｒ讀懆ｨｼ
         /// </summary>
         private void AssertEffectManagerBasicSetup()
         {
@@ -503,7 +503,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// テスト用AudioClipを作成
+        /// 繝・せ繝育畑AudioClip繧剃ｽ懈・
         /// </summary>
         private AudioClip CreateTestEffectClip(string name = "TestEffectClip")
         {
@@ -511,7 +511,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// エフェクトカテゴリの有効性を検証
+        /// 繧ｨ繝輔ぉ繧ｯ繝医き繝・ざ繝ｪ縺ｮ譛牙柑諤ｧ繧呈､懆ｨｼ
         /// </summary>
         private void AssertValidEffectCategory(string category)
         {
@@ -522,3 +522,5 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #endregion
     }
 }
+
+

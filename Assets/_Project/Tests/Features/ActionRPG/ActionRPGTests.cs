@@ -1,16 +1,16 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.ActionRPG;
 using asterivo.Unity60.Features.ActionRPG.Services;
 
 namespace asterivo.Unity60.Tests.Features.ActionRPG
 {
     /// <summary>
-    /// ActionRPG機能のユニットテスト
+    /// ActionRPG讖溯・縺ｮ繝ｦ繝九ャ繝医ユ繧ｹ繝・
     /// </summary>
     [TestFixture]
     public class ActionRPGTests
@@ -18,10 +18,10 @@ namespace asterivo.Unity60.Tests.Features.ActionRPG
         [SetUp]
         public void Setup()
         {
-            // ServiceLocatorをクリア
+            // ServiceLocator繧偵け繝ｪ繧｢
             ServiceLocator.Clear();
             
-            // Bootstrapperの初期化状態をリセット（反射を使用）
+            // Bootstrapper縺ｮ蛻晄悄蛹也憾諷九ｒ繝ｪ繧ｻ繝・ヨ・亥渚蟆・ｒ菴ｿ逕ｨ・・
             var bootstrapperType = typeof(ActionRPGBootstrapper);
             var isInitializedField = bootstrapperType.GetField("_isInitialized", 
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
@@ -43,11 +43,11 @@ namespace asterivo.Unity60.Tests.Features.ActionRPG
 
             // Assert
             Assert.IsTrue(ActionRPGBootstrapper.IsInitialized,
-                "ActionRPGBootstrapperが初期化されていません");
+                "ActionRPGBootstrapper縺悟・譛溷喧縺輔ｌ縺ｦ縺・∪縺帙ｓ");
 
             var actionRPGService = ServiceLocator.TryGet<IActionRPGService>(out var service);
-            Assert.IsTrue(actionRPGService, "IActionRPGServiceがServiceLocatorに登録されていません");
-            Assert.IsNotNull(service, "IActionRPGServiceがnullです");
+            Assert.IsTrue(actionRPGService, "IActionRPGService縺郡erviceLocator縺ｫ逋ｻ骭ｲ縺輔ｌ縺ｦ縺・∪縺帙ｓ");
+            Assert.IsNotNull(service, "IActionRPGService縺系ull縺ｧ縺・);
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace asterivo.Unity60.Tests.Features.ActionRPG
             service.AddExperience(100);
 
             // Assert
-            Assert.AreEqual(100, experienceGained, "経験値イベントが発行されませんでした");
+            Assert.AreEqual(100, experienceGained, "邨碁ｨ灘､繧､繝吶Φ繝医′逋ｺ陦後＆繧後∪縺帙ｓ縺ｧ縺励◆");
         }
 
         [Test]
@@ -81,8 +81,8 @@ namespace asterivo.Unity60.Tests.Features.ActionRPG
             // Assert
             var registry = ActionRPGBootstrapper.GetServiceRegistry();
             var stats = registry.GetRuneStatistics();
-            Assert.AreEqual(80, stats.total, "ルーンの合計数が正しくありません");
-            Assert.AreEqual(80, stats.session, "セッションルーン数が正しくありません");
+            Assert.AreEqual(80, stats.total, "繝ｫ繝ｼ繝ｳ縺ｮ蜷郁ｨ域焚縺梧ｭ｣縺励￥縺ゅｊ縺ｾ縺帙ｓ");
+            Assert.AreEqual(80, stats.session, "繧ｻ繝・す繝ｧ繝ｳ繝ｫ繝ｼ繝ｳ謨ｰ縺梧ｭ｣縺励￥縺ゅｊ縺ｾ縺帙ｓ");
         }
 
         [Test]
@@ -100,8 +100,8 @@ namespace asterivo.Unity60.Tests.Features.ActionRPG
 
             // Assert
             var stats = registry.GetRuneStatistics();
-            Assert.AreEqual(100, stats.total, "合計ルーン数がリセットされてしまいました");
-            Assert.AreEqual(0, stats.session, "セッションルーン数がリセットされていません");
+            Assert.AreEqual(100, stats.total, "蜷郁ｨ医Ν繝ｼ繝ｳ謨ｰ縺後Μ繧ｻ繝・ヨ縺輔ｌ縺ｦ縺励∪縺・∪縺励◆");
+            Assert.AreEqual(0, stats.session, "繧ｻ繝・す繝ｧ繝ｳ繝ｫ繝ｼ繝ｳ謨ｰ縺後Μ繧ｻ繝・ヨ縺輔ｌ縺ｦ縺・∪縺帙ｓ");
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace asterivo.Unity60.Tests.Features.ActionRPG
             // Assert
             var retrievedPlayer = service.GetPlayerGameObject();
             Assert.AreEqual(mockPlayer, retrievedPlayer,
-                "プレイヤーオブジェクトが正しく設定されていません");
+                "繝励Ξ繧､繝､繝ｼ繧ｪ繝悶ず繧ｧ繧ｯ繝医′豁｣縺励￥險ｭ螳壹＆繧後※縺・∪縺帙ｓ");
 
             // Cleanup
             GameObject.DestroyImmediate(mockPlayer);
@@ -137,8 +137,8 @@ namespace asterivo.Unity60.Tests.Features.ActionRPG
             var expInfo = service.GetExperienceInfo();
 
             // Assert
-            Assert.AreEqual(0, expInfo.currentExp, "初期経験値が0ではありません");
-            Assert.AreEqual(1, expInfo.currentLevel, "初期レベルが1ではありません");
+            Assert.AreEqual(0, expInfo.currentExp, "蛻晄悄邨碁ｨ灘､縺・縺ｧ縺ｯ縺ゅｊ縺ｾ縺帙ｓ");
+            Assert.AreEqual(1, expInfo.currentLevel, "蛻晄悄繝ｬ繝吶Ν縺・縺ｧ縺ｯ縺ゅｊ縺ｾ縺帙ｓ");
         }
 
         [Test]
@@ -146,12 +146,12 @@ namespace asterivo.Unity60.Tests.Features.ActionRPG
         {
             // Act
             ActionRPGBootstrapper.Initialize();
-            ActionRPGBootstrapper.Initialize(); // 2回目の初期化
+            ActionRPGBootstrapper.Initialize(); // 2蝗樒岼縺ｮ蛻晄悄蛹・
 
-            // Assert - 2回目の初期化は無視されるべき
+            // Assert - 2蝗樒岼縺ｮ蛻晄悄蛹悶・辟｡隕悶＆繧後ｋ縺ｹ縺・
             Assert.IsTrue(ActionRPGBootstrapper.IsInitialized);
             
-            // ServiceLocatorに1つだけ登録されていることを確認
+            // ServiceLocator縺ｫ1縺､縺縺醍匳骭ｲ縺輔ｌ縺ｦ縺・ｋ縺薙→繧堤｢ｺ隱・
             Assert.IsTrue(ServiceLocator.TryGet<IActionRPGService>(out var service));
             Assert.IsNotNull(service);
         }
@@ -168,26 +168,28 @@ namespace asterivo.Unity60.Tests.Features.ActionRPG
 
             // Assert
             Assert.IsFalse(ActionRPGBootstrapper.IsInitialized,
-                "Shutdown後も初期化状態が維持されています");
+                "Shutdown蠕後ｂ蛻晄悄蛹也憾諷九′邯ｭ謖√＆繧後※縺・∪縺・);
         }
 
         [Test]
         public void Three_Layer_Architecture_Should_Be_Maintained()
         {
-            // Core層のIActionRPGServiceが存在
+            // Core螻､縺ｮIActionRPGService縺悟ｭ伜惠
             Assert.IsNotNull(typeof(IActionRPGService));
 
-            // Feature層のActionRPGServiceRegistryが存在
+            // Feature螻､縺ｮActionRPGServiceRegistry縺悟ｭ伜惠
             Assert.IsNotNull(typeof(ActionRPGServiceRegistry));
 
-            // ActionRPGBootstrapperがFeature層に存在
+            // ActionRPGBootstrapper縺熊eature螻､縺ｫ蟄伜惠
             Assert.IsNotNull(typeof(ActionRPGBootstrapper));
 
-            // 名前空間の検証
+            // 蜷榊燕遨ｺ髢薙・讀懆ｨｼ
             Assert.IsTrue(typeof(IActionRPGService).Namespace.Contains("Core.Services"),
-                "IActionRPGServiceがCore層に配置されていません");
+                "IActionRPGService縺靴ore螻､縺ｫ驟咲ｽｮ縺輔ｌ縺ｦ縺・∪縺帙ｓ");
             Assert.IsTrue(typeof(ActionRPGServiceRegistry).Namespace.Contains("Features.ActionRPG"),
-                "ActionRPGServiceRegistryがFeature層に配置されていません");
+                "ActionRPGServiceRegistry縺熊eature螻､縺ｫ驟咲ｽｮ縺輔ｌ縺ｦ縺・∪縺帙ｓ");
         }
     }
 }
+
+

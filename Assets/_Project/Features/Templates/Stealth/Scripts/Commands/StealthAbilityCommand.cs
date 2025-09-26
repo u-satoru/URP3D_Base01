@@ -1,34 +1,34 @@
-using UnityEngine;
+﻿using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Commands;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.Stealth.Services;
 using asterivo.Unity60.Features.Player.States;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 {
     /// <summary>
-    /// ステルス能力コマンドシステム
-    /// プレイヤーのステルス特殊能力をカプセル化
-    /// ServiceLocator統合とObjectPool最適化による高性能実装
+    /// 繧ｹ繝・Ν繧ｹ閭ｽ蜉帙さ繝槭Φ繝峨す繧ｹ繝・Β
+    /// 繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・Ν繧ｹ迚ｹ谿願・蜉帙ｒ繧ｫ繝励そ繝ｫ蛹・
+    /// ServiceLocator邨ｱ蜷医→ObjectPool譛驕ｩ蛹悶↓繧医ｋ鬮俶ｧ閭ｽ螳溯｣・
     /// </summary>
     public class StealthAbilityCommand : IResettableCommand
     {
         /// <summary>
-        /// ステルス能力の種類
+        /// 繧ｹ繝・Ν繧ｹ閭ｽ蜉帙・遞ｮ鬘・
         /// </summary>
         public enum StealthAbilityType
         {
-            InvisibilityCloak,      // 光学迷彩
-            SoundDampening,         // 音響減衰
-            MotionDetection,        // 動作検知
-            ThermalMasking,         // 熱源遮蔽
-            ElectronicJamming,      // 電子妨害
-            TimeSlowdown,           // 時間減速
-            WallPhase,              // 壁通過
-            ShadowMeld,             // 影融合
-            DistractionProjection, // 幻影投射
-            EnvironmentalCamouflage // 環境迷彩
+            InvisibilityCloak,      // 蜈牙ｭｦ霑ｷ蠖ｩ
+            SoundDampening,         // 髻ｳ髻ｿ貂幄｡ｰ
+            MotionDetection,        // 蜍穂ｽ懈､懃衍
+            ThermalMasking,         // 辭ｱ貅宣・阡ｽ
+            ElectronicJamming,      // 髮ｻ蟄仙ｦｨ螳ｳ
+            TimeSlowdown,           // 譎る俣貂幃・
+            WallPhase,              // 螢・夐℃
+            ShadowMeld,             // 蠖ｱ陞榊粋
+            DistractionProjection, // 蟷ｻ蠖ｱ謚募ｰ・
+            EnvironmentalCamouflage // 迺ｰ蠅・ｿｷ蠖ｩ
         }
 
         private StealthAbilityType _abilityType;
@@ -37,24 +37,24 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         private Vector3 _targetLocation;
         private GameObject _targetObject;
 
-        // 能力実行前の状態（Undo用）
+        // 閭ｽ蜉帛ｮ溯｡悟燕縺ｮ迥ｶ諷具ｼ・ndo逕ｨ・・
         private float _previousVisibility;
         private float _previousNoiseLevel;
         private bool _previousStealthMode;
         private Vector3 _previousPosition;
         private PlayerStateType _previousPlayerState;
 
-        // 能力効果の状態
+        // 閭ｽ蜉帛柑譫懊・迥ｶ諷・
         private bool _abilityActive;
         private float _remainingDuration;
         private float _activationTime;
 
-        // サービス参照
+        // 繧ｵ繝ｼ繝薙せ蜿ら・
         private IStealthService _stealthService;
         private DetailedPlayerStateMachine _playerStateMachine;
         private Transform _playerTransform;
 
-        // 実行結果
+        // 螳溯｡檎ｵ先棡
         private bool _wasExecuted;
         private bool _wasSuccessful;
 
@@ -64,7 +64,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         {
             if (_wasExecuted) return;
 
-            // ServiceLocator経由でサービス取得
+            // ServiceLocator邨檎罰縺ｧ繧ｵ繝ｼ繝薙せ蜿門ｾ・
             _stealthService = ServiceLocator.GetService<IStealthService>();
             _playerStateMachine = Object.FindObjectOfType<DetailedPlayerStateMachine>();
 
@@ -79,10 +79,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
                 return;
             }
 
-            // 現在の状態を保存（Undo用）
+            // 迴ｾ蝨ｨ縺ｮ迥ｶ諷九ｒ菫晏ｭ假ｼ・ndo逕ｨ・・
             SaveCurrentState();
 
-            // 能力実行
+            // 閭ｽ蜉帛ｮ溯｡・
             _wasSuccessful = ExecuteStealthAbility();
             _wasExecuted = true;
 
@@ -100,10 +100,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         {
             if (!_wasExecuted || !CanUndo) return;
 
-            // 能力効果を無効化
+            // 閭ｽ蜉帛柑譫懊ｒ辟｡蜉ｹ蛹・
             DeactivateAbility();
 
-            // 状態復元
+            // 迥ｶ諷句ｾｩ蜈・
             RestorePreviousState();
 
             _wasExecuted = false;
@@ -155,7 +155,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
             _abilityType = (StealthAbilityType)parameters[0];
 
-            // オプションパラメータ
+            // 繧ｪ繝励す繝ｧ繝ｳ繝代Λ繝｡繝ｼ繧ｿ
             _duration = parameters.Length > 1 ? (float)parameters[1] : 5.0f;
             _intensity = parameters.Length > 2 ? (float)parameters[2] : 1.0f;
             _targetLocation = parameters.Length > 3 ? (Vector3)parameters[3] : Vector3.zero;
@@ -163,7 +163,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// 型安全な初期化メソッド
+        /// 蝙句ｮ牙・縺ｪ蛻晄悄蛹悶Γ繧ｽ繝・ラ
         /// </summary>
         public void Initialize(StealthAbilityType abilityType, float duration = 5.0f, float intensity = 1.0f,
                               Vector3 targetLocation = default, GameObject targetObject = null)
@@ -218,7 +218,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// ステルス能力の具体的実行
+        /// 繧ｹ繝・Ν繧ｹ閭ｽ蜉帙・蜈ｷ菴鍋噪螳溯｡・
         /// </summary>
         private bool ExecuteStealthAbility()
         {
@@ -261,7 +261,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private bool ExecuteInvisibilityCloak()
         {
-            // 光学迷彩：完全透明化
+            // 蜈牙ｭｦ霑ｷ蠖ｩ・壼ｮ悟・騾乗・蛹・
             float invisibilityFactor = Mathf.Clamp01(1.0f - _intensity);
             _stealthService.UpdatePlayerVisibility(invisibilityFactor);
             _stealthService.SetStealthMode(true);
@@ -272,8 +272,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private bool ExecuteSoundDampening()
         {
-            // 音響減衰：音の大幅削減
-            float soundReduction = _intensity * 0.9f; // 最大90%削減
+            // 髻ｳ髻ｿ貂幄｡ｰ・夐浹縺ｮ螟ｧ蟷・炎貂・
+            float soundReduction = _intensity * 0.9f; // 譛螟ｧ90%蜑頑ｸ・
             _stealthService.UpdatePlayerNoiseLevel(_previousNoiseLevel * (1.0f - soundReduction));
 
             Debug.Log($"[StealthAbilityCommand] Sound dampening activated: {soundReduction * 100}% reduction");
@@ -282,13 +282,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private bool ExecuteMotionDetection()
         {
-            // 動作検知：周囲の敵の動きを感知
+            // 蜍穂ｽ懈､懃衍・壼捉蝗ｲ縺ｮ謨ｵ縺ｮ蜍輔″繧呈─遏･
             Collider[] nearbyEnemies = Physics.OverlapSphere(_playerTransform.position, 20.0f * _intensity,
                 LayerMask.GetMask("Enemy"));
 
             foreach (var enemy in nearbyEnemies)
             {
-                // 敵を検知済みとしてマーク（UI表示等）
+                // 謨ｵ繧呈､懃衍貂医∩縺ｨ縺励※繝槭・繧ｯ・・I陦ｨ遉ｺ遲会ｼ・
                 Debug.Log($"[MotionDetection] Enemy detected: {enemy.name} at {enemy.transform.position}");
             }
 
@@ -297,17 +297,17 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private bool ExecuteThermalMasking()
         {
-            // 熱源遮蔽：赤外線検知回避
+            // 辭ｱ貅宣・阡ｽ・夊ｵ､螟也ｷ壽､懃衍蝗樣∩
             _stealthService.UpdatePlayerVisibility(_previousVisibility * 0.3f);
 
-            // 熱源検知NPCに対する特別な隠蔽効果
+            // 辭ｱ貅先､懃衍NPC縺ｫ蟇ｾ縺吶ｋ迚ｹ蛻･縺ｪ髫阡ｽ蜉ｹ譫・
             Debug.Log("[StealthAbilityCommand] Thermal masking activated - immune to infrared detection");
             return true;
         }
 
         private bool ExecuteElectronicJamming()
         {
-            // 電子妨害：電子機器の無力化
+            // 髮ｻ蟄仙ｦｨ螳ｳ・夐崕蟄先ｩ溷勣縺ｮ辟｡蜉帛喧
             Collider[] electronics = Physics.OverlapSphere(_playerTransform.position, 10.0f * _intensity,
                 LayerMask.GetMask("Electronics"));
 
@@ -325,8 +325,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private bool ExecuteTimeSlowdown()
         {
-            // 時間減速：反応時間向上
-            Time.timeScale = 1.0f - (_intensity * 0.7f); // 最大70%減速
+            // 譎る俣貂幃滂ｼ壼渚蠢懈凾髢灘髄荳・
+            Time.timeScale = 1.0f - (_intensity * 0.7f); // 譛螟ｧ70%貂幃・
             Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
             Debug.Log($"[StealthAbilityCommand] Time slowdown activated: {Time.timeScale * 100}% speed");
@@ -335,7 +335,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private bool ExecuteWallPhase()
         {
-            // 壁通過：短距離瞬間移動
+            // 螢・夐℃・夂洒霍晞屬迸ｬ髢鍋ｧｻ蜍・
             if (_targetLocation != Vector3.zero)
             {
                 Vector3 direction = (_targetLocation - _playerTransform.position).normalized;
@@ -344,7 +344,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
                 RaycastHit hit;
                 if (Physics.Raycast(_playerTransform.position, direction, out hit, maxDistance))
                 {
-                    // 壁の向こう側に移動
+                    // 螢√・蜷代％縺・・縺ｫ遘ｻ蜍・
                     Vector3 phasePosition = hit.point + direction * 2.0f;
                     _playerTransform.position = phasePosition;
 
@@ -358,11 +358,11 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private bool ExecuteShadowMeld()
         {
-            // 影融合：影の中で完全隠蔽
+            // 蠖ｱ陞榊粋・壼ｽｱ縺ｮ荳ｭ縺ｧ螳悟・髫阡ｽ
             if (_stealthService.IsPlayerConcealed)
             {
-                _stealthService.UpdatePlayerVisibility(0.05f); // 95%視認性削減
-                _stealthService.UpdatePlayerNoiseLevel(0.0f);  // 完全無音
+                _stealthService.UpdatePlayerVisibility(0.05f); // 95%隕冶ｪ肴ｧ蜑頑ｸ・
+                _stealthService.UpdatePlayerNoiseLevel(0.0f);  // 螳悟・辟｡髻ｳ
 
                 Debug.Log("[StealthAbilityCommand] Shadow meld activated - near perfect concealment");
                 return true;
@@ -374,7 +374,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private bool ExecuteDistractionProjection()
         {
-            // 幻影投射：陽動用の幻影を作成
+            // 蟷ｻ蠖ｱ謚募ｰ・ｼ夐區蜍慕畑縺ｮ蟷ｻ蠖ｱ繧剃ｽ懈・
             Vector3 projectionPoint = _targetLocation != Vector3.zero ?
                 _targetLocation : _playerTransform.position + _playerTransform.forward * 10.0f;
 
@@ -386,7 +386,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private bool ExecuteEnvironmentalCamouflage()
         {
-            // 環境迷彩：周囲の環境に溶け込む
+            // 迺ｰ蠅・ｿｷ蠖ｩ・壼捉蝗ｲ縺ｮ迺ｰ蠅・↓貅ｶ縺題ｾｼ繧
             Collider[] envObjects = Physics.OverlapSphere(_playerTransform.position, 5.0f,
                 LayerMask.GetMask("Environment"));
 
@@ -407,16 +407,16 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
             switch (_abilityType)
             {
                 case StealthAbilityType.TimeSlowdown:
-                    // 時間スケールを元に戻す
+                    // 譎る俣繧ｹ繧ｱ繝ｼ繝ｫ繧貞・縺ｫ謌ｻ縺・
                     Time.timeScale = 1.0f;
                     Time.fixedDeltaTime = 0.02f;
                     break;
 
                 case StealthAbilityType.WallPhase:
-                    // 壁通過は瞬間効果なので特別な無効化は不要
+                    // 螢・夐℃縺ｯ迸ｬ髢灘柑譫懊↑縺ｮ縺ｧ迚ｹ蛻･縺ｪ辟｡蜉ｹ蛹悶・荳崎ｦ・
                     break;
 
-                // その他の能力は状態復元で処理
+                // 縺昴・莉悶・閭ｽ蜉帙・迥ｶ諷句ｾｩ蜈・〒蜃ｦ逅・
             }
 
             _abilityActive = false;
@@ -428,32 +428,32 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         #region Public Properties
 
         /// <summary>
-        /// 能力タイプ
+        /// 閭ｽ蜉帙ち繧､繝・
         /// </summary>
         public StealthAbilityType AbilityType => _abilityType;
 
         /// <summary>
-        /// 持続時間
+        /// 謖∫ｶ壽凾髢・
         /// </summary>
         public float Duration => _duration;
 
         /// <summary>
-        /// 強度
+        /// 蠑ｷ蠎ｦ
         /// </summary>
         public float Intensity => _intensity;
 
         /// <summary>
-        /// 能力がアクティブかどうか
+        /// 閭ｽ蜉帙′繧｢繧ｯ繝・ぅ繝悶°縺ｩ縺・°
         /// </summary>
         public bool IsActive => _abilityActive;
 
         /// <summary>
-        /// 残り時間
+        /// 谿九ｊ譎る俣
         /// </summary>
         public float RemainingDuration => _remainingDuration;
 
         /// <summary>
-        /// 実行が成功したかどうか
+        /// 螳溯｡後′謌仙粥縺励◆縺九←縺・°
         /// </summary>
         public bool WasSuccessful => _wasSuccessful;
 
@@ -462,7 +462,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         #region Public Methods
 
         /// <summary>
-        /// 能力の更新（持続時間管理）
+        /// 閭ｽ蜉帙・譖ｴ譁ｰ・域戟邯壽凾髢鍋ｮ｡逅・ｼ・
         /// </summary>
         public void UpdateAbility()
         {
@@ -472,14 +472,14 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
             if (_remainingDuration <= 0.0f)
             {
-                // 自動的に能力を無効化
+                // 閾ｪ蜍慕噪縺ｫ閭ｽ蜉帙ｒ辟｡蜉ｹ蛹・
                 DeactivateAbility();
                 Debug.Log($"[StealthAbilityCommand] {_abilityType} duration expired");
             }
         }
 
         /// <summary>
-        /// 手動で能力を無効化
+        /// 謇句虚縺ｧ閭ｽ蜉帙ｒ辟｡蜉ｹ蛹・
         /// </summary>
         public void ManualDeactivate()
         {
@@ -493,3 +493,5 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         #endregion
     }
 }
+
+

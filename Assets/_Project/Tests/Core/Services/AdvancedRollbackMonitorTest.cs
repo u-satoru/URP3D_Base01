@@ -1,15 +1,15 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 
 namespace asterivo.Unity60.Tests.Core.Services
 {
     /// <summary>
-    /// Step 3.12: 高度な緊急時ロールバック監視システムのテスト
-    /// AdvancedRollbackMonitor の包括的機能テスト
+    /// Step 3.12: 鬮伜ｺｦ縺ｪ邱頑･譎ゅΟ繝ｼ繝ｫ繝舌ャ繧ｯ逶｣隕悶す繧ｹ繝・Β縺ｮ繝・せ繝・
+    /// AdvancedRollbackMonitor 縺ｮ蛹・峡逧・ｩ溯・繝・せ繝・
     /// </summary>
     public class AdvancedRollbackMonitorTest
     {
@@ -23,30 +23,30 @@ namespace asterivo.Unity60.Tests.Core.Services
         [SetUp]
         public void Setup()
         {
-            // 元のFeatureFlags設定を保存
+            // 蜈・・FeatureFlags險ｭ螳壹ｒ菫晏ｭ・
             originalUseNewAudioService = asterivo.Unity60.Core.FeatureFlags.UseNewAudioService;
             originalUseNewSpatialService = asterivo.Unity60.Core.FeatureFlags.UseNewSpatialService;
             originalUseNewStealthService = asterivo.Unity60.Core.FeatureFlags.UseNewStealthService;
             originalEnableMigrationMonitoring = asterivo.Unity60.Core.FeatureFlags.EnableMigrationMonitoring;
 
-            // テスト用のAdvancedRollbackMonitorを作成
+            // 繝・せ繝育畑縺ｮAdvancedRollbackMonitor繧剃ｽ懈・
             monitorObject = new GameObject("AdvancedRollbackMonitorTest");
             monitor = monitorObject.AddComponent<AdvancedRollbackMonitor>();
 
-            // テスト用の初期設定
+            // 繝・せ繝育畑縺ｮ蛻晄悄險ｭ螳・
             ResetToSafeState();
         }
 
         [TearDown]
         public void TearDown()
         {
-            // FeatureFlags設定を復元
+            // FeatureFlags險ｭ螳壹ｒ蠕ｩ蜈・
             FeatureFlags.UseNewAudioService = originalUseNewAudioService;
             FeatureFlags.UseNewSpatialService = originalUseNewSpatialService;
             FeatureFlags.UseNewStealthService = originalUseNewStealthService;
             FeatureFlags.EnableMigrationMonitoring = originalEnableMigrationMonitoring;
 
-            // テストオブジェクトをクリーンアップ
+            // 繝・せ繝医が繝悶ず繧ｧ繧ｯ繝医ｒ繧ｯ繝ｪ繝ｼ繝ｳ繧｢繝・・
             if (monitorObject != null)
             {
                 Object.DestroyImmediate(monitorObject);
@@ -74,24 +74,24 @@ namespace asterivo.Unity60.Tests.Core.Services
         [UnityTest]
         public IEnumerator AdvancedRollbackMonitor_SystemInitialization_ShouldCompleteSuccessfully()
         {
-            // Act - Start()がSystem初期化を実行する
+            // Act - Start()縺郡ystem蛻晄悄蛹悶ｒ螳溯｡後☆繧・
             yield return new WaitForSeconds(0.2f);
 
-            // Assert - 初期化が完了していることを確認
+            // Assert - 蛻晄悄蛹悶′螳御ｺ・＠縺ｦ縺・ｋ縺薙→繧堤｢ｺ隱・
             LogAssert.Expect(LogType.Log, new System.Text.RegularExpressions.Regex(".*Advanced monitoring system started.*"));
         }
 
         [UnityTest]
         public IEnumerator AdvancedRollbackMonitor_HealthLevelMonitoring_ShouldDetectChanges()
         {
-            // Arrange - システムを不健全な状態にする
-            FeatureFlags.UseServiceLocator = false; // ServiceLocatorを無効化
-            FeatureFlags.UseNewAudioService = true;  // 矛盾した設定
+            // Arrange - 繧ｷ繧ｹ繝・Β繧剃ｸ榊▼蜈ｨ縺ｪ迥ｶ諷九↓縺吶ｋ
+            FeatureFlags.UseServiceLocator = false; // ServiceLocator繧堤┌蜉ｹ蛹・
+            FeatureFlags.UseNewAudioService = true;  // 遏帷崟縺励◆險ｭ螳・
 
-            // Act - 監視システムが変化を検出するまで待機
+            // Act - 逶｣隕悶す繧ｹ繝・Β縺悟､牙喧繧呈､懷・縺吶ｋ縺ｾ縺ｧ蠕・ｩ・
             yield return new WaitForSeconds(1f);
 
-            // Assert - 健全性レベルの変化が検出されることを期待
+            // Assert - 蛛･蜈ｨ諤ｧ繝ｬ繝吶Ν縺ｮ螟牙喧縺梧､懷・縺輔ｌ繧九％縺ｨ繧呈悄蠕・
             LogAssert.Expect(LogType.Warning, new System.Text.RegularExpressions.Regex(".*Health level changed.*"));
         }
 
@@ -109,55 +109,55 @@ namespace asterivo.Unity60.Tests.Core.Services
             // Act
             monitor.ResetMonitoringSystem();
 
-            // Assert - リセットが成功することを確認
+            // Assert - 繝ｪ繧ｻ繝・ヨ縺梧・蜉溘☆繧九％縺ｨ繧堤｢ｺ隱・
             LogAssert.Expect(LogType.Log, new System.Text.RegularExpressions.Regex(".*Monitoring system reset.*"));
         }
 
         [UnityTest]
         public IEnumerator AdvancedRollbackMonitor_ServiceHealthChecking_ShouldMonitorServices()
         {
-            // Arrange - ServiceLocatorを有効な状態にセットアップ
+            // Arrange - ServiceLocator繧呈怏蜉ｹ縺ｪ迥ｶ諷九↓繧ｻ繝・ヨ繧｢繝・・
             FeatureFlags.UseServiceLocator = true;
             FeatureFlags.UseNewAudioService = true;
             FeatureFlags.UseNewSpatialService = true;
 
-            // Act - 監視が開始されるまで待機
+            // Act - 逶｣隕悶′髢句ｧ九＆繧後ｋ縺ｾ縺ｧ蠕・ｩ・
             yield return new WaitForSeconds(1.5f);
 
-            // Assert - サービス健全性チェックが実行されることを確認
-            // 実際のサービスが登録されていない場合でも、チェック処理自体は実行される
+            // Assert - 繧ｵ繝ｼ繝薙せ蛛･蜈ｨ諤ｧ繝√ぉ繝・け縺悟ｮ溯｡後＆繧後ｋ縺薙→繧堤｢ｺ隱・
+            // 螳滄圀縺ｮ繧ｵ繝ｼ繝薙せ縺檎匳骭ｲ縺輔ｌ縺ｦ縺・↑縺・ｴ蜷医〒繧ゅ√メ繧ｧ繝・け蜃ｦ逅・・菴薙・螳溯｡後＆繧後ｋ
             LogAssert.Expect(LogType.Log, new System.Text.RegularExpressions.Regex(".*Service Quality Report.*"));
         }
 
         [UnityTest]
         public IEnumerator AdvancedRollbackMonitor_PredictiveAnalysis_ShouldDetectTrends()
         {
-            // Arrange - 予測分析を有効にして複数回の健全性データを生成
+            // Arrange - 莠域ｸｬ蛻・梵繧呈怏蜉ｹ縺ｫ縺励※隍・焚蝗槭・蛛･蜈ｨ諤ｧ繝・・繧ｿ繧堤函謌・
             yield return new WaitForSeconds(3f);
 
-            // Act - 十分なデータが蓄積された後、予測分析をトリガー
-            // 内部的に予測分析が実行される
+            // Act - 蜊∝・縺ｪ繝・・繧ｿ縺瑚塘遨阪＆繧後◆蠕後∽ｺ域ｸｬ蛻・梵繧偵ヨ繝ｪ繧ｬ繝ｼ
+            // 蜀・Κ逧・↓莠域ｸｬ蛻・梵縺悟ｮ溯｡後＆繧後ｋ
 
-            // Assert - 予測分析が実行されることを間接的に確認
-            // (直接的なテストは困難だが、エラーなく実行されることを確認)
+            // Assert - 莠域ｸｬ蛻・梵縺悟ｮ溯｡後＆繧後ｋ縺薙→繧帝俣謗･逧・↓遒ｺ隱・
+            // (逶ｴ謗･逧・↑繝・せ繝医・蝗ｰ髮｣縺縺後√お繝ｩ繝ｼ縺ｪ縺丞ｮ溯｡後＆繧後ｋ縺薙→繧堤｢ｺ隱・
             Assert.IsNotNull(monitor, "Monitor should continue functioning during predictive analysis");
         }
 
         [UnityTest]
         public IEnumerator AdvancedRollbackMonitor_EmergencyCondition_ShouldTriggerRecovery()
         {
-            // Arrange - 自動回復を有効化し、緊急状態をシミュレート
-            // 直接的な緊急状態のシミュレーションは困難なため、
-            // システム設定の矛盾を作成
+            // Arrange - 閾ｪ蜍募屓蠕ｩ繧呈怏蜉ｹ蛹悶＠縲∫ｷ頑･迥ｶ諷九ｒ繧ｷ繝溘Η繝ｬ繝ｼ繝・
+            // 逶ｴ謗･逧・↑邱頑･迥ｶ諷九・繧ｷ繝溘Η繝ｬ繝ｼ繧ｷ繝ｧ繝ｳ縺ｯ蝗ｰ髮｣縺ｪ縺溘ａ縲・
+            // 繧ｷ繧ｹ繝・Β險ｭ螳壹・遏帷崟繧剃ｽ懈・
             FeatureFlags.UseServiceLocator = false;
             FeatureFlags.UseNewAudioService = true;
             FeatureFlags.UseNewSpatialService = true;
             FeatureFlags.UseNewStealthService = true;
 
-            // Act - 監視システムが問題を検出するまで待機
+            // Act - 逶｣隕悶す繧ｹ繝・Β縺悟撫鬘後ｒ讀懷・縺吶ｋ縺ｾ縺ｧ蠕・ｩ・
             yield return new WaitForSeconds(2f);
 
-            // Assert - システムが問題を検出することを確認
+            // Assert - 繧ｷ繧ｹ繝・Β縺悟撫鬘後ｒ讀懷・縺吶ｋ縺薙→繧堤｢ｺ隱・
             var healthStatus = EmergencyRollback.CheckSystemHealth();
             Assert.IsFalse(healthStatus.IsHealthy, "System should be detected as unhealthy");
             Assert.IsTrue(healthStatus.HasInconsistentConfiguration, "Configuration inconsistency should be detected");
@@ -166,27 +166,27 @@ namespace asterivo.Unity60.Tests.Core.Services
         [UnityTest]
         public IEnumerator AdvancedRollbackMonitor_PerformanceMetrics_ShouldMonitorFrameRate()
         {
-            // Arrange - パフォーマンス監視を開始
+            // Arrange - 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ逶｣隕悶ｒ髢句ｧ・
             yield return new WaitForSeconds(1f);
 
-            // Act - フレームレート関連の処理が実行される
-            // (実際の性能劣化を再現するのは困難だが、監視機能の動作を確認)
+            // Act - 繝輔Ξ繝ｼ繝繝ｬ繝ｼ繝磯未騾｣縺ｮ蜃ｦ逅・′螳溯｡後＆繧後ｋ
+            // (螳滄圀縺ｮ諤ｧ閭ｽ蜉｣蛹悶ｒ蜀咲樟縺吶ｋ縺ｮ縺ｯ蝗ｰ髮｣縺縺後∫屮隕匁ｩ溯・縺ｮ蜍穂ｽ懊ｒ遒ｺ隱・
 
-            // Assert - パフォーマンス監視が動作することを確認
+            // Assert - 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ逶｣隕悶′蜍穂ｽ懊☆繧九％縺ｨ繧堤｢ｺ隱・
             Assert.IsNotNull(monitor, "Monitor should handle performance monitoring without errors");
         }
 
         [UnityTest]
         public IEnumerator AdvancedRollbackMonitor_ConfigurationInconsistency_ShouldDetectAndRecord()
         {
-            // Arrange - 設定の矛盾を作成
+            // Arrange - 險ｭ螳壹・遏帷崟繧剃ｽ懈・
             FeatureFlags.UseServiceLocator = false;
-            FeatureFlags.UseNewAudioService = true; // 矛盾: ServiceLocatorなしで新サービス使用
+            FeatureFlags.UseNewAudioService = true; // 遏帷崟: ServiceLocator縺ｪ縺励〒譁ｰ繧ｵ繝ｼ繝薙せ菴ｿ逕ｨ
 
-            // Act - 監視システムが矛盾を検出するまで待機
+            // Act - 逶｣隕悶す繧ｹ繝・Β縺檎泝逶ｾ繧呈､懷・縺吶ｋ縺ｾ縺ｧ蠕・ｩ・
             yield return new WaitForSeconds(1f);
 
-            // Assert - 設定矛盾が検出されることを確認
+            // Assert - 險ｭ螳夂泝逶ｾ縺梧､懷・縺輔ｌ繧九％縺ｨ繧堤｢ｺ隱・
             var healthStatus = EmergencyRollback.CheckSystemHealth();
             Assert.IsTrue(healthStatus.HasInconsistentConfiguration, 
                 "Configuration inconsistency should be detected");
@@ -195,15 +195,15 @@ namespace asterivo.Unity60.Tests.Core.Services
         [UnityTest]
         public IEnumerator AdvancedRollbackMonitor_LongTermTrendAnalysis_ShouldAnalyzeTrends()
         {
-            // Arrange - 長期間の監視データを蓄積するため、複数回の健全性チェックを実行
-            for (int i = 0; i < 25; i++) // 最低20回のデータが必要
+            // Arrange - 髟ｷ譛滄俣縺ｮ逶｣隕悶ョ繝ｼ繧ｿ繧定塘遨阪☆繧九◆繧√∬､・焚蝗槭・蛛･蜈ｨ諤ｧ繝√ぉ繝・け繧貞ｮ溯｡・
+            for (int i = 0; i < 25; i++) // 譛菴・0蝗槭・繝・・繧ｿ縺悟ｿ・ｦ・
             {
                 yield return new WaitForSeconds(0.1f);
             }
 
-            // Act - 長期傾向分析がバックグラウンドで実行される
+            // Act - 髟ｷ譛溷だ蜷大・譫舌′繝舌ャ繧ｯ繧ｰ繝ｩ繧ｦ繝ｳ繝峨〒螳溯｡後＆繧後ｋ
 
-            // Assert - エラーなく長期分析が実行されることを確認
+            // Assert - 繧ｨ繝ｩ繝ｼ縺ｪ縺城聞譛溷・譫舌′螳溯｡後＆繧後ｋ縺薙→繧堤｢ｺ隱・
             Assert.IsNotNull(monitor, "Monitor should handle long-term analysis without errors");
             LogAssert.Expect(LogType.Log, new System.Text.RegularExpressions.Regex(".*Service Quality Report.*"));
         }
@@ -211,50 +211,50 @@ namespace asterivo.Unity60.Tests.Core.Services
         [UnityTest]
         public IEnumerator AdvancedRollbackMonitor_GradualRecovery_ShouldAttemptStepwiseRecovery()
         {
-            // Arrange - 段階的回復をテストするため、全サービスを有効化
+            // Arrange - 谿ｵ髫守噪蝗槫ｾｩ繧偵ユ繧ｹ繝医☆繧九◆繧√∝・繧ｵ繝ｼ繝薙せ繧呈怏蜉ｹ蛹・
             FeatureFlags.UseNewAudioService = true;
             FeatureFlags.UseNewSpatialService = true;
             FeatureFlags.UseNewStealthService = true;
             FeatureFlags.EnableMigrationMonitoring = true;
 
-            // 不健全な状態を作成（実際の段階的回復のトリガーは困難）
+            // 荳榊▼蜈ｨ縺ｪ迥ｶ諷九ｒ菴懈・・亥ｮ滄圀縺ｮ谿ｵ髫守噪蝗槫ｾｩ縺ｮ繝医Μ繧ｬ繝ｼ縺ｯ蝗ｰ髮｣・・
             FeatureFlags.UseServiceLocator = false;
 
-            // Act - 監視システムが問題を検出し、対応を試みるまで待機
+            // Act - 逶｣隕悶す繧ｹ繝・Β縺悟撫鬘後ｒ讀懷・縺励∝ｯｾ蠢懊ｒ隧ｦ縺ｿ繧九∪縺ｧ蠕・ｩ・
             yield return new WaitForSeconds(2f);
 
-            // Assert - システムが段階的回復を試みることを間接的に確認
-            // (直接的なテストは困難だが、設定変更が行われる可能性がある)
+            // Assert - 繧ｷ繧ｹ繝・Β縺梧ｮｵ髫守噪蝗槫ｾｩ繧定ｩｦ縺ｿ繧九％縺ｨ繧帝俣謗･逧・↓遒ｺ隱・
+            // (逶ｴ謗･逧・↑繝・せ繝医・蝗ｰ髮｣縺縺後∬ｨｭ螳壼､画峩縺瑚｡後ｏ繧後ｋ蜿ｯ閭ｽ諤ｧ縺後≠繧・
             Assert.IsNotNull(monitor, "Monitor should attempt gradual recovery without crashing");
         }
 
         [UnityTest]
         public IEnumerator AdvancedRollbackMonitor_ServiceMetricsTracking_ShouldTrackMetrics()
         {
-            // Arrange - サービスメトリクス追跡のセットアップ
+            // Arrange - 繧ｵ繝ｼ繝薙せ繝｡繝医Μ繧ｯ繧ｹ霑ｽ霍｡縺ｮ繧ｻ繝・ヨ繧｢繝・・
             yield return new WaitForSeconds(1f);
 
-            // Act - サービスメトリクスが更新されるまで待機
+            // Act - 繧ｵ繝ｼ繝薙せ繝｡繝医Μ繧ｯ繧ｹ縺梧峩譁ｰ縺輔ｌ繧九∪縺ｧ蠕・ｩ・
             yield return new WaitForSeconds(2f);
 
-            // Assert - サービス品質レポートが生成されることを確認
+            // Assert - 繧ｵ繝ｼ繝薙せ蜩∬ｳｪ繝ｬ繝昴・繝医′逕滓・縺輔ｌ繧九％縺ｨ繧堤｢ｺ隱・
             LogAssert.Expect(LogType.Log, new System.Text.RegularExpressions.Regex(".*Service Quality Report.*"));
         }
 
         [UnityTest]
         public IEnumerator AdvancedRollbackMonitor_HealthStabilityConfirmation_ShouldConfirmStability()
         {
-            // Arrange - 健全な状態をセットアップ
+            // Arrange - 蛛･蜈ｨ縺ｪ迥ｶ諷九ｒ繧ｻ繝・ヨ繧｢繝・・
             FeatureFlags.UseServiceLocator = true;
             FeatureFlags.DisableLegacySingletons = true;
             FeatureFlags.UseNewAudioService = true;
             FeatureFlags.UseNewSpatialService = true;
             FeatureFlags.UseNewStealthService = true;
 
-            // Act - 健全性の安定性が確認されるまで待機
+            // Act - 蛛･蜈ｨ諤ｧ縺ｮ螳牙ｮ壽ｧ縺檎｢ｺ隱阪＆繧後ｋ縺ｾ縺ｧ蠕・ｩ・
             yield return new WaitForSeconds(2f);
 
-            // Assert - システムが健全な状態を維持することを確認
+            // Assert - 繧ｷ繧ｹ繝・Β縺悟▼蜈ｨ縺ｪ迥ｶ諷九ｒ邯ｭ謖√☆繧九％縺ｨ繧堤｢ｺ隱・
             var healthStatus = EmergencyRollback.CheckSystemHealth();
             Assert.IsTrue(healthStatus.HealthScore >= 70, 
                 $"System should maintain good health, score: {healthStatus.HealthScore}");
@@ -263,61 +263,63 @@ namespace asterivo.Unity60.Tests.Core.Services
         [UnityTest]
         public IEnumerator AdvancedRollbackMonitor_ErrorPatternDetection_ShouldDetectRecurringIssues()
         {
-            // Arrange - 繰り返し発生する問題をシミュレートするのは困難だが、
-            // エラーパターン検出機能が動作することを確認
+            // Arrange - 郢ｰ繧願ｿ斐＠逋ｺ逕溘☆繧句撫鬘後ｒ繧ｷ繝溘Η繝ｬ繝ｼ繝医☆繧九・縺ｯ蝗ｰ髮｣縺縺後・
+            // 繧ｨ繝ｩ繝ｼ繝代ち繝ｼ繝ｳ讀懷・讖溯・縺悟虚菴懊☆繧九％縺ｨ繧堤｢ｺ隱・
 
-            // Act - 監視システムがエラーパターンを分析するまで待機
+            // Act - 逶｣隕悶す繧ｹ繝・Β縺後お繝ｩ繝ｼ繝代ち繝ｼ繝ｳ繧貞・譫舌☆繧九∪縺ｧ蠕・ｩ・
             yield return new WaitForSeconds(3f);
 
-            // Assert - エラーパターン検出機能が動作することを確認
+            // Assert - 繧ｨ繝ｩ繝ｼ繝代ち繝ｼ繝ｳ讀懷・讖溯・縺悟虚菴懊☆繧九％縺ｨ繧堤｢ｺ隱・
             Assert.IsNotNull(monitor, "Monitor should handle error pattern detection without issues");
         }
 
         [UnityTest]
         public IEnumerator IntegrationTest_AdvancedMonitorWithEmergencyRollback_ShouldWorkTogether()
         {
-            // Arrange - 統合テスト用のセットアップ
+            // Arrange - 邨ｱ蜷医ユ繧ｹ繝育畑縺ｮ繧ｻ繝・ヨ繧｢繝・・
             FeatureFlags.EnableAutoRollback = true;
 
-            // 問題のある設定を作成
+            // 蝠城｡後・縺ゅｋ險ｭ螳壹ｒ菴懈・
             FeatureFlags.UseServiceLocator = false;
             FeatureFlags.UseNewAudioService = true;
 
-            // Act - 統合システムが動作するまで待機
+            // Act - 邨ｱ蜷医す繧ｹ繝・Β縺悟虚菴懊☆繧九∪縺ｧ蠕・ｩ・
             yield return new WaitForSeconds(2f);
 
-            // Assert - 両システムが連携して動作することを確認
+            // Assert - 荳｡繧ｷ繧ｹ繝・Β縺碁｣謳ｺ縺励※蜍穂ｽ懊☆繧九％縺ｨ繧堤｢ｺ隱・
             var healthStatus = EmergencyRollback.CheckSystemHealth();
             Assert.IsFalse(healthStatus.IsHealthy, "System should detect unhealthy state");
 
-            // 監視システムとロールバックシステムが連携動作
+            // 逶｣隕悶す繧ｹ繝・Β縺ｨ繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ繧ｷ繧ｹ繝・Β縺碁｣謳ｺ蜍穂ｽ・
             Assert.IsNotNull(monitor, "Advanced monitor should integrate with emergency rollback system");
         }
 
         [UnityTest]
         public IEnumerator AdvancedRollbackMonitor_PreventiveMeasures_ShouldExecutePreventiveActions()
         {
-            // Arrange - 警告レベルの健全性状態をシミュレート
-            // (直接的な制御は困難だが、予防的措置の実行を確認)
+            // Arrange - 隴ｦ蜻翫Ξ繝吶Ν縺ｮ蛛･蜈ｨ諤ｧ迥ｶ諷九ｒ繧ｷ繝溘Η繝ｬ繝ｼ繝・
+            // (逶ｴ謗･逧・↑蛻ｶ蠕｡縺ｯ蝗ｰ髮｣縺縺後∽ｺ磯亟逧・蒔鄂ｮ縺ｮ螳溯｡後ｒ遒ｺ隱・
 
-            // Act - 予防的措置がトリガーされる状況を待機
+            // Act - 莠磯亟逧・蒔鄂ｮ縺後ヨ繝ｪ繧ｬ繝ｼ縺輔ｌ繧狗憾豕√ｒ蠕・ｩ・
             yield return new WaitForSeconds(2f);
 
-            // Assert - 予防的措置が正常に実行されることを確認
+            // Assert - 莠磯亟逧・蒔鄂ｮ縺梧ｭ｣蟶ｸ縺ｫ螳溯｡後＆繧後ｋ縺薙→繧堤｢ｺ隱・
             Assert.IsNotNull(monitor, "Monitor should execute preventive measures without errors");
         }
 
         [Test]
         public void AdvancedRollbackMonitor_DataPersistence_ShouldSaveAndLoadData()
         {
-            // Arrange - データの保存をトリガー
-            // (OnDestroy時に自動保存される)
+            // Arrange - 繝・・繧ｿ縺ｮ菫晏ｭ倥ｒ繝医Μ繧ｬ繝ｼ
+            // (OnDestroy譎ゅ↓閾ｪ蜍穂ｿ晏ｭ倥＆繧後ｋ)
 
-            // Act - 監視データの保存/読み込み機能をテスト
+            // Act - 逶｣隕悶ョ繝ｼ繧ｿ縺ｮ菫晏ｭ・隱ｭ縺ｿ霎ｼ縺ｿ讖溯・繧偵ユ繧ｹ繝・
             monitor.ResetMonitoringSystem();
 
-            // Assert - データの永続化機能が動作することを確認
+            // Assert - 繝・・繧ｿ縺ｮ豌ｸ邯壼喧讖溯・縺悟虚菴懊☆繧九％縺ｨ繧堤｢ｺ隱・
             LogAssert.Expect(LogType.Log, new System.Text.RegularExpressions.Regex(".*Monitoring system reset.*"));
         }
     }
 }
+
+

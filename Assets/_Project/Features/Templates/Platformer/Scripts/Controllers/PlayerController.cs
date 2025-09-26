@@ -1,16 +1,16 @@
-using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.Platformer.Services;
 
 namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
 {
     /// <summary>
-    /// Player Controller：プラットフォーマープレイヤー統合制御システム
-    /// ServiceLocator + Event駆動アーキテクチャによる包括的プレイヤー制御
-    /// Learn & Grow価値実現：直感的操作・流体的動作・高度プラットフォーマーメカニクス
+    /// Player Controller・壹・繝ｩ繝・ヨ繝輔か繝ｼ繝槭・繝励Ξ繧､繝､繝ｼ邨ｱ蜷亥宛蠕｡繧ｷ繧ｹ繝・Β
+    /// ServiceLocator + Event鬧・虚繧｢繝ｼ繧ｭ繝・け繝√Ε縺ｫ繧医ｋ蛹・峡逧・・繝ｬ繧､繝､繝ｼ蛻ｶ蠕｡
+    /// Learn & Grow萓｡蛟､螳溽樟・夂峩諢溽噪謫堺ｽ懊・豬∽ｽ鍋噪蜍穂ｽ懊・鬮伜ｺｦ繝励Λ繝・ヨ繝輔か繝ｼ繝槭・繝｡繧ｫ繝九け繧ｹ
     /// </summary>
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Collider2D))]
@@ -56,7 +56,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         [SerializeField] private bool _showDebugInfo = false;
         [SerializeField] private bool _drawInteractionRadius = true;
 
-        // ServiceLocator統合
+        // ServiceLocator邨ｱ蜷・
         private IPlatformerPhysicsService _physicsService;
         private IPlatformerInputService _inputService;
         private IPlatformerAudioService _audioService;
@@ -64,25 +64,25 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         private ICollectionService _collectionService;
         private ICheckpointService _checkpointService;
 
-        // コンポーネント参照
+        // 繧ｳ繝ｳ繝昴・繝阪Φ繝亥盾辣ｧ
         private Rigidbody2D _rigidbody;
         private Collider2D _collider;
         private JumpController _jumpController;
 
-        // プレイヤー状態
+        // 繝励Ξ繧､繝､繝ｼ迥ｶ諷・
         private bool _isInvincible = false;
         private bool _isDead = false;
         private bool _isCrouching = false;
         private bool _isRunning = false;
         private bool _facingRight = true;
 
-        // 移動制御
+        // 遘ｻ蜍募宛蠕｡
         private Vector2 _velocity;
         private float _horizontalInput;
         private float _targetVelocityX;
         private float _velocityXSmoothing;
 
-        // アニメーション パラメータ ハッシュ
+        // 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ 繝代Λ繝｡繝ｼ繧ｿ 繝上ャ繧ｷ繝･
         private int _animSpeedHash;
         private int _animGroundedHash;
         private int _animJumpingHash;
@@ -98,19 +98,19 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
 
         private void Awake()
         {
-            // コンポーネント取得
+            // 繧ｳ繝ｳ繝昴・繝阪Φ繝亥叙蠕・
             _rigidbody = GetComponent<Rigidbody2D>();
             _collider = GetComponent<Collider2D>();
             _jumpController = GetComponent<JumpController>();
 
-            // アニメーター自動取得
+            // 繧｢繝九Γ繝ｼ繧ｿ繝ｼ閾ｪ蜍募叙蠕・
             if (_animator == null)
                 _animator = GetComponent<Animator>();
 
             if (_spriteRenderer == null)
                 _spriteRenderer = GetComponent<SpriteRenderer>();
 
-            // アニメーション パラメータ ハッシュ計算
+            // 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ 繝代Λ繝｡繝ｼ繧ｿ 繝上ャ繧ｷ繝･險育ｮ・
             if (_animator != null)
             {
                 _animSpeedHash = Animator.StringToHash("Speed");
@@ -120,17 +120,17 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
                 _animRunningHash = Animator.StringToHash("Running");
             }
 
-            // 初期値設定
+            // 蛻晄悄蛟､險ｭ螳・
             _currentHealth = _maxHealth;
             _velocity = Vector2.zero;
         }
 
         private void Start()
         {
-            // ServiceLocator統合：サービス取得
+            // ServiceLocator邨ｱ蜷茨ｼ壹し繝ｼ繝薙せ蜿門ｾ・
             InitializeServices();
 
-            // UI初期化
+            // UI蛻晄悄蛹・
             UpdateUI();
         }
 
@@ -138,18 +138,18 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             try
             {
-                // Physics Service：移動計算と物理演算
+                // Physics Service・夂ｧｻ蜍戊ｨ育ｮ励→迚ｩ逅・ｼ皮ｮ・
                 _physicsService = ServiceLocator.GetService<IPlatformerPhysicsService>();
                 if (_physicsService == null)
                 {
                     Debug.LogError("[PlayerController] IPlatformerPhysicsService not found in ServiceLocator!");
                 }
 
-                // Input Service：プレイヤー入力処理
+                // Input Service・壹・繝ｬ繧､繝､繝ｼ蜈･蜉帛・逅・
                 _inputService = ServiceLocator.GetService<IPlatformerInputService>();
                 if (_inputService != null)
                 {
-                    // Event駆動：入力イベント購読
+                    // Event鬧・虚・壼・蜉帙う繝吶Φ繝郁ｳｼ隱ｭ
                     _inputService.OnMovementChanged += OnMovementInput;
                     _inputService.OnCrouchPressed += OnCrouchPressed;
                     _inputService.OnCrouchReleased += OnCrouchReleased;
@@ -162,7 +162,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
                     Debug.LogError("[PlayerController] IPlatformerInputService not found in ServiceLocator!");
                 }
 
-                // Audio Service：移動・アクションサウンド
+                // Audio Service・夂ｧｻ蜍輔・繧｢繧ｯ繧ｷ繝ｧ繝ｳ繧ｵ繧ｦ繝ｳ繝・
                 if (_enableMovementSounds)
                 {
                     _audioService = ServiceLocator.GetService<IPlatformerAudioService>();
@@ -173,14 +173,14 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
                     }
                 }
 
-                // UI Service：ヘルス・スコア・ライフ表示
+                // UI Service・壹・繝ｫ繧ｹ繝ｻ繧ｹ繧ｳ繧｢繝ｻ繝ｩ繧､繝戊｡ｨ遉ｺ
                 _uiService = ServiceLocator.GetService<IPlatformerUIService>();
                 if (_uiService == null)
                 {
                     Debug.LogWarning("[PlayerController] IPlatformerUIService not found. UI updates will be disabled.");
                 }
 
-                // Collection Service：アイテム収集
+                // Collection Service・壹い繧､繝・Β蜿朱寔
                 _collectionService = ServiceLocator.GetService<ICollectionService>();
                 if (_collectionService != null)
                 {
@@ -188,10 +188,10 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
                     _collectionService.OnScoreChanged.AddListener(OnScoreUpdated);
                 }
 
-                // Checkpoint Service：セーブ・リスポーン
+                // Checkpoint Service・壹そ繝ｼ繝悶・繝ｪ繧ｹ繝昴・繝ｳ
                 _checkpointService = ServiceLocator.GetService<ICheckpointService>();
 
-                // JumpController連携
+                // JumpController騾｣謳ｺ
                 if (_jumpController != null)
                 {
                     _jumpController.OnJumpStarted += OnJumpStarted;
@@ -210,16 +210,16 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             if (_isDead) return;
 
-            // 入力処理
+            // 蜈･蜉帛・逅・
             ProcessInput();
 
-            // 移動計算
+            // 遘ｻ蜍戊ｨ育ｮ・
             CalculateMovement();
 
-            // アニメーション更新
+            // 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ譖ｴ譁ｰ
             UpdateAnimation();
 
-            // インタラクション検出
+            // 繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ讀懷・
             CheckInteractions();
         }
 
@@ -227,7 +227,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             if (_isDead) return;
 
-            // 物理移動適用
+            // 迚ｩ逅・ｧｻ蜍暮←逕ｨ
             ApplyMovement();
         }
 
@@ -235,7 +235,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             if (_inputService == null) return;
 
-            // 水平移動入力
+            // 豌ｴ蟷ｳ遘ｻ蜍募・蜉・
             _horizontalInput = _inputService.MovementInput.x;
         }
 
@@ -243,10 +243,10 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             if (_physicsService == null) return;
 
-            // 移動速度計算
+            // 遘ｻ蜍暮溷ｺｦ險育ｮ・
             float targetSpeed = _horizontalInput * _baseMovementSpeed;
 
-            // 走行・しゃがみ倍率適用
+            // 襍ｰ陦後・縺励ｃ縺後∩蛟咲紫驕ｩ逕ｨ
             if (_isRunning && !_isCrouching)
             {
                 targetSpeed *= _runSpeedMultiplier;
@@ -256,30 +256,30 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
                 targetSpeed *= _crouchSpeedMultiplier;
             }
 
-            // スムーズな加減速
+            // 繧ｹ繝繝ｼ繧ｺ縺ｪ蜉貂幃・
             _targetVelocityX = targetSpeed;
 
-            // Physics Service統合：移動計算
+            // Physics Service邨ｱ蜷茨ｼ夂ｧｻ蜍戊ｨ育ｮ・
             _velocity = _physicsService.CalculateMovement(_velocity, _horizontalInput, _jumpController.IsGrounded);
 
-            // スプライト反転
+            // 繧ｹ繝励Λ繧､繝亥渚霆｢
             UpdateSpriteDirection();
         }
 
         private void ApplyMovement()
         {
-            // X軸移動のスムーズ化
+            // X霆ｸ遘ｻ蜍輔・繧ｹ繝繝ｼ繧ｺ蛹・
             _velocity.x = Mathf.SmoothDamp(_velocity.x, _targetVelocityX, ref _velocityXSmoothing,
                 (_horizontalInput != 0) ? _accelerationTime : _decelerationTime);
 
-            // Physics Service統合：重力適用
+            // Physics Service邨ｱ蜷茨ｼ夐㍾蜉幃←逕ｨ
             if (_physicsService != null)
             {
                 bool isJumpPressed = _inputService?.JumpHeld ?? false;
                 _velocity = _physicsService.ApplyGravity(_velocity, _jumpController.IsGrounded, isJumpPressed);
             }
 
-            // Rigidbody2Dに速度適用
+            // Rigidbody2D縺ｫ騾溷ｺｦ驕ｩ逕ｨ
             _rigidbody.linearVelocity = _velocity;
         }
 
@@ -307,41 +307,41 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             if (_animator == null) return;
 
-            // 移動速度
+            // 遘ｻ蜍暮溷ｺｦ
             float speed = Mathf.Abs(_velocity.x);
             _animator.SetFloat(_animSpeedHash, speed);
 
-            // 地面状態
+            // 蝨ｰ髱｢迥ｶ諷・
             _animator.SetBool(_animGroundedHash, _jumpController.IsGrounded);
 
-            // ジャンプ状態
+            // 繧ｸ繝｣繝ｳ繝礼憾諷・
             _animator.SetBool(_animJumpingHash, _jumpController.IsJumping);
 
-            // しゃがみ状態
+            // 縺励ｃ縺後∩迥ｶ諷・
             _animator.SetBool(_animCrouchingHash, _isCrouching);
 
-            // 走行状態
+            // 襍ｰ陦檎憾諷・
             _animator.SetBool(_animRunningHash, _isRunning && speed > 0.1f);
         }
 
         private void CheckInteractions()
         {
-            // 収集可能アイテムの検出
+            // 蜿朱寔蜿ｯ閭ｽ繧｢繧､繝・Β縺ｮ讀懷・
             Collider2D[] collectibles = Physics2D.OverlapCircleAll(transform.position, _interactionRadius, _collectibleLayerMask);
             foreach (var collectible in collectibles)
             {
                 if (_collectionService != null)
                 {
-                    // Collection Service統合：アイテム収集処理
+                    // Collection Service邨ｱ蜷茨ｼ壹い繧､繝・Β蜿朱寔蜃ｦ逅・
                     // _collectionService.TryCollectItem(collectible.gameObject);
                 }
             }
         }
 
-        // 入力イベントハンドラー
+        // 蜈･蜉帙う繝吶Φ繝医ワ繝ｳ繝峨Λ繝ｼ
         private void OnMovementInput(Vector2 input)
         {
-            // MovementInput プロパティを使用するため、このイベントは主にデバッグ用
+            // MovementInput 繝励Ο繝代ユ繧｣繧剃ｽｿ逕ｨ縺吶ｋ縺溘ａ縲√％縺ｮ繧､繝吶Φ繝医・荳ｻ縺ｫ繝・ヰ繝・げ逕ｨ
             LogDebug($"Movement input: {input}");
         }
 
@@ -371,11 +371,11 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
 
         private void OnInteractPressed()
         {
-            // インタラクション処理
+            // 繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ蜃ｦ逅・
             Collider2D[] interactables = Physics2D.OverlapCircleAll(transform.position, _interactionRadius, _interactableLayerMask);
             foreach (var interactable in interactables)
             {
-                // インタラクション実行
+                // 繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ螳溯｡・
                 var interaction = interactable.GetComponent<IInteractable>();
                 if (interaction != null)
                 {
@@ -385,7 +385,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
             }
         }
 
-        // ジャンプイベントハンドラー
+        // 繧ｸ繝｣繝ｳ繝励う繝吶Φ繝医ワ繝ｳ繝峨Λ繝ｼ
         private void OnJumpStarted()
         {
             LogDebug("Jump started.");
@@ -395,22 +395,22 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             LogDebug("Player landed.");
 
-            // 着地音効果
+            // 逹蝨ｰ髻ｳ蜉ｹ譫・
             PlayMovementSound(_walkSoundEvent);
         }
 
-        // コレクションイベントハンドラー
+        // 繧ｳ繝ｬ繧ｯ繧ｷ繝ｧ繝ｳ繧､繝吶Φ繝医ワ繝ｳ繝峨Λ繝ｼ
         private void OnItemCollected(string itemType, int value)
         {
             LogDebug($"Item collected: {itemType}, Value: {value}");
 
-            // コレクション効果音
+            // 繧ｳ繝ｬ繧ｯ繧ｷ繝ｧ繝ｳ蜉ｹ譫憺浹
             if (_audioService != null)
             {
                 // _audioService.PlaySound("ItemCollected", transform.position);
             }
 
-            // アイテムタイプに応じた処理
+            // 繧｢繧､繝・Β繧ｿ繧､繝励↓蠢懊§縺溷・逅・
             switch (itemType.ToLower())
             {
                 case "health":
@@ -420,7 +420,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
                 case "coin":
                 case "gem":
                 case "score":
-                    // スコア処理は Collection Service が担当
+                    // 繧ｹ繧ｳ繧｢蜃ｦ逅・・ Collection Service 縺梧球蠖・
                     break;
             }
         }
@@ -431,36 +431,36 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
             OnScoreChanged?.Invoke(newScore);
         }
 
-        // ヘルス・ダメージシステム
+        // 繝倥Ν繧ｹ繝ｻ繝繝｡繝ｼ繧ｸ繧ｷ繧ｹ繝・Β
         public void TakeDamage(int damage)
         {
             if (_isDead || _isInvincible) return;
 
             _currentHealth = Mathf.Max(0, _currentHealth - damage);
 
-            // イベント発行
+            // 繧､繝吶Φ繝育匱陦・
             OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
 
-            // ダメージエフェクト
+            // 繝繝｡繝ｼ繧ｸ繧ｨ繝輔ぉ繧ｯ繝・
             if (_damageEffect != null)
             {
                 Instantiate(_damageEffect, transform.position, Quaternion.identity);
             }
 
-            // ダメージサウンド
+            // 繝繝｡繝ｼ繧ｸ繧ｵ繧ｦ繝ｳ繝・
             PlaySound(_damageSoundEvent);
 
-            // 無敵時間開始
+            // 辟｡謨ｵ譎る俣髢句ｧ・
             StartCoroutine(InvincibilityCoroutine());
 
-            // 死亡チェック
+            // 豁ｻ莠｡繝√ぉ繝・け
             if (_currentHealth <= 0)
             {
                 Die();
             }
             else
             {
-                // UI更新
+                // UI譖ｴ譁ｰ
                 UpdateUI();
             }
 
@@ -476,19 +476,19 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
 
             if (_currentHealth != oldHealth)
             {
-                // イベント発行
+                // 繧､繝吶Φ繝育匱陦・
                 OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
 
-                // 回復エフェクト
+                // 蝗槫ｾｩ繧ｨ繝輔ぉ繧ｯ繝・
                 if (_healEffect != null)
                 {
                     Instantiate(_healEffect, transform.position, Quaternion.identity);
                 }
 
-                // 回復サウンド
+                // 蝗槫ｾｩ繧ｵ繧ｦ繝ｳ繝・
                 PlaySound(_healSoundEvent);
 
-                // UI更新
+                // UI譖ｴ譁ｰ
                 UpdateUI();
 
                 LogDebug($"Player healed {amount}. Health: {_currentHealth}/{_maxHealth}");
@@ -502,24 +502,24 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
             _isDead = true;
             _lives--;
 
-            // イベント発行
+            // 繧､繝吶Φ繝育匱陦・
             OnPlayerDied?.Invoke();
             OnLivesChanged?.Invoke(_lives);
 
-            // アニメーション停止
+            // 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ蛛懈ｭ｢
             if (_animator != null)
             {
                 _animator.SetBool("Dead", true);
             }
 
-            // リスポーン処理
+            // 繝ｪ繧ｹ繝昴・繝ｳ蜃ｦ逅・
             if (_lives > 0)
             {
                 StartCoroutine(RespawnCoroutine());
             }
             else
             {
-                // ゲームオーバー
+                // 繧ｲ繝ｼ繝繧ｪ繝ｼ繝舌・
                 GameOver();
             }
 
@@ -530,7 +530,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             LogDebug("Game Over!");
 
-            // UI Service統合：ゲームオーバー画面表示
+            // UI Service邨ｱ蜷茨ｼ壹ご繝ｼ繝繧ｪ繝ｼ繝舌・逕ｻ髱｢陦ｨ遉ｺ
             if (_uiService != null)
             {
                 _uiService.ShowGameOverScreen();
@@ -541,29 +541,29 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             yield return new WaitForSeconds(2f);
 
-            // Checkpoint Service統合：最後のチェックポイントからリスポーン
+            // Checkpoint Service邨ｱ蜷茨ｼ壽怙蠕後・繝√ぉ繝・け繝昴う繝ｳ繝医°繧峨Μ繧ｹ繝昴・繝ｳ
             if (_checkpointService != null)
             {
                 var spawnPoint = _checkpointService.GetLastCheckpointPosition();
                 transform.position = spawnPoint;
             }
 
-            // ステータスリセット
+            // 繧ｹ繝・・繧ｿ繧ｹ繝ｪ繧ｻ繝・ヨ
             _currentHealth = _maxHealth;
             _isDead = false;
             _isInvincible = false;
 
-            // アニメーションリセット
+            // 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ繝ｪ繧ｻ繝・ヨ
             if (_animator != null)
             {
                 _animator.SetBool("Dead", false);
             }
 
-            // イベント発行
+            // 繧､繝吶Φ繝育匱陦・
             OnPlayerRespawned?.Invoke();
             OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
 
-            // UI更新
+            // UI譖ｴ譁ｰ
             UpdateUI();
 
             LogDebug("Player respawned.");
@@ -573,13 +573,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             _isInvincible = true;
 
-            // 無敵エフェクト
+            // 辟｡謨ｵ繧ｨ繝輔ぉ繧ｯ繝・
             if (_invincibilityEffect != null)
             {
                 _invincibilityEffect.SetActive(true);
             }
 
-            // スプライト点滅
+            // 繧ｹ繝励Λ繧､繝育せ貊・
             if (_spriteRenderer != null)
             {
                 float flashInterval = 0.1f;
@@ -601,7 +601,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
                 yield return new WaitForSeconds(_invincibilityTime);
             }
 
-            // 無敵解除
+            // 辟｡謨ｵ隗｣髯､
             _isInvincible = false;
 
             if (_invincibilityEffect != null)
@@ -639,7 +639,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
 
         private void OnDestroy()
         {
-            // Event駆動：イベント購読解除
+            // Event鬧・虚・壹う繝吶Φ繝郁ｳｼ隱ｭ隗｣髯､
             if (_inputService != null)
             {
                 _inputService.OnMovementChanged -= OnMovementInput;
@@ -667,11 +667,11 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             if (!_drawInteractionRadius) return;
 
-            // インタラクション範囲の可視化
+            // 繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ遽・峇縺ｮ蜿ｯ隕門喧
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, _interactionRadius);
 
-            // デバッグ情報表示
+            // 繝・ヰ繝・げ諠・ｱ陦ｨ遉ｺ
             if (_showDebugInfo)
             {
                 var labelPos = transform.position + Vector3.up * 3f;
@@ -684,7 +684,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
             }
         }
 
-        // 外部制御API
+        // 螟夜Κ蛻ｶ蠕｡API
         public void SetPosition(Vector3 position)
         {
             transform.position = position;
@@ -708,7 +708,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
             UpdateUI();
         }
 
-        // プロパティ
+        // 繝励Ο繝代ユ繧｣
         public int CurrentHealth => _currentHealth;
         public int MaxHealth => _maxHealth;
         public int Lives => _lives;
@@ -730,10 +730,12 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
     }
 
     /// <summary>
-    /// インタラクション可能オブジェクトのインターフェース
+    /// 繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ蜿ｯ閭ｽ繧ｪ繝悶ず繧ｧ繧ｯ繝医・繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ
     /// </summary>
     public interface IInteractable
     {
         void Interact(PlayerController player);
     }
 }
+
+

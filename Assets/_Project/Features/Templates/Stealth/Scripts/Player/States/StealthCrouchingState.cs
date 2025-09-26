@@ -1,24 +1,24 @@
-using UnityEngine;
+﻿using UnityEngine;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.Stealth.Services;
 using asterivo.Unity60.Features.Player.States;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
 {
     /// <summary>
-    /// ステルス特化のしゃがみ状態
-    /// 基本的なCrouchingStateの機能に加えて、StealthServiceとの完全統合を提供
-    /// 視認性の大幅低下、音響レベルの削減、移動速度の最適化
+    /// 繧ｹ繝・Ν繧ｹ迚ｹ蛹悶・縺励ｃ縺後∩迥ｶ諷・
+    /// 蝓ｺ譛ｬ逧・↑CrouchingState縺ｮ讖溯・縺ｫ蜉縺医※縲ヾtealthService縺ｨ縺ｮ螳悟・邨ｱ蜷医ｒ謠蝉ｾ・
+    /// 隕冶ｪ肴ｧ縺ｮ螟ｧ蟷・ｽ惹ｸ九・浹髻ｿ繝ｬ繝吶Ν縺ｮ蜑頑ｸ帙∫ｧｻ蜍暮溷ｺｦ縺ｮ譛驕ｩ蛹・
     /// </summary>
     public class StealthCrouchingState : IPlayerState
     {
         [Header("Stealth Crouching Configuration")]
-        [SerializeField] private float crouchSpeed = 1.5f; // 通常より更に低速
-        [SerializeField] private float stealthVisibilityReduction = 0.6f; // 60%視認性削減
-        [SerializeField] private float noiseReduction = 0.7f; // 70%騒音削減
+        [SerializeField] private float crouchSpeed = 1.5f; // 騾壼ｸｸ繧医ｊ譖ｴ縺ｫ菴朱・
+        [SerializeField] private float stealthVisibilityReduction = 0.6f; // 60%隕冶ｪ肴ｧ蜑頑ｸ・
+        [SerializeField] private float noiseReduction = 0.7f; // 70%鬨帝浹蜑頑ｸ・
         [SerializeField] private float originalHeight;
-        [SerializeField] private float crouchHeight = 1.0f; // 通常より更に低く
+        [SerializeField] private float crouchHeight = 1.0f; // 騾壼ｸｸ繧医ｊ譖ｴ縺ｫ菴弱￥
 
         private Vector2 _moveInput;
         private IStealthService _stealthService;
@@ -26,15 +26,15 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         private float _baseNoiseLevel;
 
         /// <summary>
-        /// ステルスしゃがみ状態開始
-        /// StealthServiceと連携し、最適な隠蔽姿勢を確立
+        /// 繧ｹ繝・Ν繧ｹ縺励ｃ縺後∩迥ｶ諷矩幕蟋・
+        /// StealthService縺ｨ騾｣謳ｺ縺励∵怙驕ｩ縺ｪ髫阡ｽ蟋ｿ蜍｢繧堤｢ｺ遶・
         /// </summary>
         public void Enter(DetailedPlayerStateMachine stateMachine)
         {
-            // ServiceLocator経由でStealthServiceを取得
+            // ServiceLocator邨檎罰縺ｧStealthService繧貞叙蠕・
             _stealthService = ServiceLocator.GetService<IStealthService>();
 
-            // 物理的な姿勢変更
+            // 迚ｩ逅・噪縺ｪ蟋ｿ蜍｢螟画峩
             if (stateMachine.CharacterController != null)
             {
                 originalHeight = stateMachine.CharacterController.height;
@@ -45,7 +45,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
                 stateMachine.CharacterController.center = center;
             }
 
-            // ステルスシステム統合
+            // 繧ｹ繝・Ν繧ｹ繧ｷ繧ｹ繝・Β邨ｱ蜷・
             if (_stealthService != null)
             {
                 _wasInStealthMode = _stealthService.IsStealthModeActive;
@@ -54,11 +54,11 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
                     _stealthService.SetStealthMode(true);
                 }
 
-                // 視認性大幅削減
+                // 隕冶ｪ肴ｧ螟ｧ蟷・炎貂・
                 _stealthService.UpdatePlayerVisibility(stealthVisibilityReduction);
             }
 
-            // 既存StealthMovement統合
+            // 譌｢蟄牢tealthMovement邨ｱ蜷・
             if (stateMachine.StealthMovement != null)
             {
                 stateMachine.StealthMovement.SetStance(Core.Data.MovementStance.Crouching);
@@ -69,12 +69,12 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
 
         /// <summary>
-        /// ステルスしゃがみ状態終了
-        /// ステルス設定を適切にリセット
+        /// 繧ｹ繝・Ν繧ｹ縺励ｃ縺後∩迥ｶ諷狗ｵゆｺ・
+        /// 繧ｹ繝・Ν繧ｹ險ｭ螳壹ｒ驕ｩ蛻・↓繝ｪ繧ｻ繝・ヨ
         /// </summary>
         public void Exit(DetailedPlayerStateMachine stateMachine)
         {
-            // 物理的姿勢復元
+            // 迚ｩ逅・噪蟋ｿ蜍｢蠕ｩ蜈・
             if (stateMachine.CharacterController != null)
             {
                 stateMachine.CharacterController.height = originalHeight;
@@ -84,16 +84,16 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
                 stateMachine.CharacterController.center = center;
             }
 
-            // ステルス設定復元
+            // 繧ｹ繝・Ν繧ｹ險ｭ螳壼ｾｩ蜈・
             if (_stealthService != null)
             {
-                // 前の状態がステルスモードでなかった場合は解除
+                // 蜑阪・迥ｶ諷九′繧ｹ繝・Ν繧ｹ繝｢繝ｼ繝峨〒縺ｪ縺九▲縺溷ｴ蜷医・隗｣髯､
                 if (!_wasInStealthMode)
                 {
                     _stealthService.SetStealthMode(false);
                 }
 
-                // 通常の視認性に戻す
+                // 騾壼ｸｸ縺ｮ隕冶ｪ肴ｧ縺ｫ謌ｻ縺・
                 _stealthService.UpdatePlayerVisibility(1.0f);
             }
 
@@ -101,15 +101,15 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
 
         /// <summary>
-        /// フレーム更新
-        /// ステルス状態の継続的監視
+        /// 繝輔Ξ繝ｼ繝譖ｴ譁ｰ
+        /// 繧ｹ繝・Ν繧ｹ迥ｶ諷九・邯咏ｶ夂噪逶｣隕・
         /// </summary>
         public void Update(DetailedPlayerStateMachine stateMachine)
         {
-            // ステルスサービスとの継続的同期
+            // 繧ｹ繝・Ν繧ｹ繧ｵ繝ｼ繝薙せ縺ｨ縺ｮ邯咏ｶ夂噪蜷梧悄
             if (_stealthService != null)
             {
-                // 移動による騒音レベル調整
+                // 遘ｻ蜍輔↓繧医ｋ鬨帝浹繝ｬ繝吶Ν隱ｿ謨ｴ
                 float currentNoiseLevel = _moveInput.magnitude > 0.1f ?
                     _baseNoiseLevel * noiseReduction : 0.0f;
 
@@ -118,8 +118,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
 
         /// <summary>
-        /// 物理更新
-        /// 低速で慎重な移動処理
+        /// 迚ｩ逅・峩譁ｰ
+        /// 菴朱溘〒諷朱㍾縺ｪ遘ｻ蜍募・逅・
         /// </summary>
         public void FixedUpdate(DetailedPlayerStateMachine stateMachine)
         {
@@ -129,59 +129,59 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
             Vector3 moveDirection = transform.right * _moveInput.x + transform.forward * _moveInput.y;
             moveDirection.y = 0;
 
-            // 重力処理
+            // 驥榊鴨蜃ｦ逅・
             if (!stateMachine.CharacterController.isGrounded)
             {
                 moveDirection.y += Physics.gravity.y * Time.fixedDeltaTime;
             }
 
-            // 更に慎重な移動（通常のCrouchingStateより低速）
+            // 譖ｴ縺ｫ諷朱㍾縺ｪ遘ｻ蜍包ｼ磯壼ｸｸ縺ｮCrouchingState繧医ｊ菴朱滂ｼ・
             stateMachine.CharacterController.Move(moveDirection.normalized * crouchSpeed * Time.fixedDeltaTime);
         }
 
         /// <summary>
-        /// 入力処理
-        /// ステルス特化の状態遷移ロジック
+        /// 蜈･蜉帛・逅・
+        /// 繧ｹ繝・Ν繧ｹ迚ｹ蛹悶・迥ｶ諷矩・遘ｻ繝ｭ繧ｸ繝・け
         /// </summary>
         public void HandleInput(DetailedPlayerStateMachine stateMachine, Vector2 moveInput, bool jumpInput)
         {
             _moveInput = moveInput;
 
-            // ジャンプ入力でしゃがみ解除（慎重な立ち上がり）
+            // 繧ｸ繝｣繝ｳ繝怜・蜉帙〒縺励ｃ縺後∩隗｣髯､・域・驥阪↑遶九■荳翫′繧奇ｼ・
             if (jumpInput)
             {
                 if (CanStandUpSafely(stateMachine))
                 {
-                    // ステルス状態を維持しながら遷移
+                    // 繧ｹ繝・Ν繧ｹ迥ｶ諷九ｒ邯ｭ謖√＠縺ｪ縺後ｉ驕ｷ遘ｻ
                     if (moveInput.magnitude > 0.1f)
                     {
-                        // ステルス歩行に遷移
+                        // 繧ｹ繝・Ν繧ｹ豁ｩ陦後↓驕ｷ遘ｻ
                         stateMachine.TransitionToState(PlayerStateType.Walking);
                     }
                     else
                     {
-                        // ステルス待機に遷移
+                        // 繧ｹ繝・Ν繧ｹ蠕・ｩ溘↓驕ｷ遘ｻ
                         stateMachine.TransitionToState(PlayerStateType.Idle);
                     }
                     return;
                 }
                 else
                 {
-                    // 立ち上がれない場合の警告（オプション）
+                    // 遶九■荳翫′繧後↑縺・ｴ蜷医・隴ｦ蜻奇ｼ医が繝励す繝ｧ繝ｳ・・
                     Debug.Log("[StealthCrouchingState] Cannot stand up safely - obstacle detected");
                 }
             }
 
-            // より深いステルス姿勢への遷移
+            // 繧医ｊ豺ｱ縺・せ繝・Ν繧ｹ蟋ｿ蜍｢縺ｸ縺ｮ驕ｷ遘ｻ
             if (Input.GetKeyDown(KeyCode.X))
             {
                 stateMachine.TransitionToState(PlayerStateType.Prone);
             }
 
-            // カバーアクション（遮蔽物への移動）
+            // 繧ｫ繝舌・繧｢繧ｯ繧ｷ繝ｧ繝ｳ・磯・阡ｽ迚ｩ縺ｸ縺ｮ遘ｻ蜍包ｼ・
             if (Input.GetKeyDown(KeyCode.C))
             {
-                // 近くの遮蔽物を探してカバー状態に遷移
+                // 霑代￥縺ｮ驕ｮ阡ｽ迚ｩ繧呈爾縺励※繧ｫ繝舌・迥ｶ諷九↓驕ｷ遘ｻ
                 if (FindNearestCover(stateMachine) != null)
                 {
                     stateMachine.TransitionToState(PlayerStateType.InCover);
@@ -190,23 +190,23 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
 
         /// <summary>
-        /// 安全な立ち上がり判定
-        /// 頭上の障害物チェックに加えて、敵の視線も考慮
+        /// 螳牙・縺ｪ遶九■荳翫′繧雁愛螳・
+        /// 鬆ｭ荳翫・髫懷ｮｳ迚ｩ繝√ぉ繝・け縺ｫ蜉縺医※縲∵雰縺ｮ隕也ｷ壹ｂ閠・・
         /// </summary>
         private bool CanStandUpSafely(DetailedPlayerStateMachine stateMachine)
         {
-            // 物理的障害物チェック
+            // 迚ｩ逅・噪髫懷ｮｳ迚ｩ繝√ぉ繝・け
             RaycastHit hit;
             Vector3 origin = stateMachine.transform.position + Vector3.up * crouchHeight;
             float checkDistance = originalHeight - crouchHeight;
 
             bool physicallyCanStand = !Physics.SphereCast(origin, 0.3f, Vector3.up, out hit, checkDistance);
 
-            // ステルス考慮: 立ち上がることで発見リスクが高まるかチェック
+            // 繧ｹ繝・Ν繧ｹ閠・・: 遶九■荳翫′繧九％縺ｨ縺ｧ逋ｺ隕九Μ繧ｹ繧ｯ縺碁ｫ倥∪繧九°繝√ぉ繝・け
             bool stealthSafe = true;
             if (_stealthService != null)
             {
-                // 現在の視認性が低い場合のみ安全とみなす
+                // 迴ｾ蝨ｨ縺ｮ隕冶ｪ肴ｧ縺御ｽ弱＞蝣ｴ蜷医・縺ｿ螳牙・縺ｨ縺ｿ縺ｪ縺・
                 stealthSafe = _stealthService.PlayerVisibilityFactor < 0.5f;
             }
 
@@ -214,11 +214,11 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
 
         /// <summary>
-        /// 最寄りのカバーポイントを探索
+        /// 譛蟇・ｊ縺ｮ繧ｫ繝舌・繝昴う繝ｳ繝医ｒ謗｢邏｢
         /// </summary>
         private Transform FindNearestCover(DetailedPlayerStateMachine stateMachine)
         {
-            // 簡易実装: "Cover"タグのオブジェクトを探索
+            // 邁｡譏灘ｮ溯｣・ "Cover"繧ｿ繧ｰ縺ｮ繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ謗｢邏｢
             GameObject[] coverObjects = GameObject.FindGameObjectsWithTag("Cover");
             Transform nearestCover = null;
             float nearestDistance = float.MaxValue;
@@ -226,7 +226,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
             foreach (GameObject cover in coverObjects)
             {
                 float distance = Vector3.Distance(stateMachine.transform.position, cover.transform.position);
-                if (distance < nearestDistance && distance <= 3.0f) // 3m以内のカバー
+                if (distance < nearestDistance && distance <= 3.0f) // 3m莉･蜀・・繧ｫ繝舌・
                 {
                     nearestDistance = distance;
                     nearestCover = cover.transform;
@@ -237,3 +237,5 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
     }
 }
+
+

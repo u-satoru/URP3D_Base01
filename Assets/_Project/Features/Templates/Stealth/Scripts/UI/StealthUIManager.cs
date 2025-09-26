@@ -1,11 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Components;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Data;
 using asterivo.Unity60.Features.Templates.Stealth.Data;
@@ -1060,13 +1060,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
         {
             LogDebug($"Showing learning tip: {tip}");
 
-            // Learn & Grow価値実現: インタラクティブチュートリアル
-            // TODO: 将来的にはUI要素の実装を追加
+            // Learn & Grow萓｡蛟､螳溽樟: 繧､繝ｳ繧ｿ繝ｩ繧ｯ繝・ぅ繝悶メ繝･繝ｼ繝医Μ繧｢繝ｫ
+            // TODO: 蟆・擂逧・↓縺ｯUI隕∫ｴ縺ｮ螳溯｣・ｒ霑ｽ蜉
             // - Learning tip overlay
             // - Progressive hint system
             // - Interactive highlights
 
-            // 現在は debug ログで学習支援を提供
+            // 迴ｾ蝨ｨ縺ｯ debug 繝ｭ繧ｰ縺ｧ蟄ｦ鄙呈髪謠ｴ繧呈署萓・
             Debug.Log($"<color=cyan>[Learn & Grow]</color> Learning Tip: {tip}");
         }
 
@@ -1083,7 +1083,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
             // - Countdown animation
             // - Audio warning sound
 
-            // 現在はログでタイムワーニングを表示
+            // 迴ｾ蝨ｨ縺ｯ繝ｭ繧ｰ縺ｧ繧ｿ繧､繝繝ｯ繝ｼ繝九Φ繧ｰ繧定｡ｨ遉ｺ
             Debug.Log($"<color=orange>[Time Warning]</color> {timeRemaining:F1} seconds remaining!");
         }
 
@@ -1102,13 +1102,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
             // - Statistics display
             // - Restart/continue options
 
-            // 現在はログでゲーム終了を表示
+            // 迴ｾ蝨ｨ縺ｯ繝ｭ繧ｰ縺ｧ繧ｲ繝ｼ繝邨ゆｺ・ｒ陦ｨ遉ｺ
             string resultText = success ? "SUCCESS" : "FAILURE";
             Debug.Log($"<color={(success ? "green" : "red")}>[Game End - {resultText}]</color> {message}");
         }
 
         /// <summary>
-        /// 設定の適用
+        /// 險ｭ螳壹・驕ｩ逕ｨ
         /// </summary>
         public void ApplyConfiguration(StealthUIConfig config)
         {
@@ -1159,3 +1159,5 @@ namespace asterivo.Unity60.Features.Templates.Stealth.UI
         #endregion
     }
 }
+
+

@@ -1,6 +1,6 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Features.Combat.Interfaces;
 using asterivo.Unity60.Features.Combat.Events;
@@ -8,8 +8,8 @@ using asterivo.Unity60.Features.Combat.Events;
 namespace asterivo.Unity60.Features.Combat.Services
 {
     /// <summary>
-    /// 戦闘システムサービスの実装
-    /// ServiceLocatorパターンで管理され、戦闘関連の中央制御を行う
+    /// 謌ｦ髣倥す繧ｹ繝・Β繧ｵ繝ｼ繝薙せ縺ｮ螳溯｣・
+    /// ServiceLocator繝代ち繝ｼ繝ｳ縺ｧ邂｡逅・＆繧後∵姶髣倬未騾｣縺ｮ荳ｭ螟ｮ蛻ｶ蠕｡繧定｡後≧
     /// </summary>
     public class CombatService : ICombatService
     {
@@ -26,7 +26,7 @@ namespace asterivo.Unity60.Features.Combat.Services
         {
             if (_isInitialized) return;
 
-            // EventManagerを取得
+            // EventManager繧貞叙蠕・
             _eventManager = ServiceLocator.TryGet<IEventManager>(out var eventManager) ? eventManager : null;
 
             _statistics.Reset();
@@ -61,27 +61,27 @@ namespace asterivo.Unity60.Features.Combat.Services
             if (!_isInitialized || target == null || damage <= 0)
                 return 0f;
 
-            // ヘルスコンポーネントを取得
+            // 繝倥Ν繧ｹ繧ｳ繝ｳ繝昴・繝阪Φ繝医ｒ蜿門ｾ・
             var health = GetHealth(target);
             if (health == null || !health.IsAlive)
                 return 0f;
 
-            // ダメージ情報が提供されていない場合は作成
+            // 繝繝｡繝ｼ繧ｸ諠・ｱ縺梧署萓帙＆繧後※縺・↑縺・ｴ蜷医・菴懈・
             if (damageInfo.Equals(default(DamageInfo)))
             {
                 damageInfo = new DamageInfo(damage);
             }
 
-            // ダメージを与える
+            // 繝繝｡繝ｼ繧ｸ繧剃ｸ弱∴繧・
             float actualDamage = health.TakeDamage(damage, damageInfo);
 
-            // 統計を更新
+            // 邨ｱ險医ｒ譖ｴ譁ｰ
             _statistics.TotalDamageDealt += (int)actualDamage;
 
-            // イベントを発行
+            // 繧､繝吶Φ繝医ｒ逋ｺ陦・
             RaiseDamageEvent(damageInfo.attacker, target, damageInfo, actualDamage);
 
-            // 死亡チェック
+            // 豁ｻ莠｡繝√ぉ繝・け
             if (!health.IsAlive)
             {
                 HandleDeath(target, damageInfo);
@@ -101,10 +101,10 @@ namespace asterivo.Unity60.Features.Combat.Services
 
             float actualHeal = health.Heal(amount);
 
-            // 統計を更新
+            // 邨ｱ險医ｒ譖ｴ譁ｰ
             _statistics.TotalHealing += (int)actualHeal;
 
-            // イベントを発行
+            // 繧､繝吶Φ繝医ｒ逋ｺ陦・
             RaiseHealEvent(target, actualHeal);
 
             return actualHeal;
@@ -115,7 +115,7 @@ namespace asterivo.Unity60.Features.Combat.Services
             if (!_isInitialized || attacker == null || target == null)
                 return;
 
-            // 攻撃者を戦闘状態に
+            // 謾ｻ謦・・ｒ謌ｦ髣倡憾諷九↓
             if (!_combatants.Contains(attacker))
             {
                 _combatants.Add(attacker);
@@ -125,7 +125,7 @@ namespace asterivo.Unity60.Features.Combat.Services
                 RaiseCombatStartedEvent(attacker, target);
             }
 
-            // 標的を戦闘状態に
+            // 讓咏噪繧呈姶髣倡憾諷九↓
             if (!_combatants.Contains(target))
             {
                 _combatants.Add(target);
@@ -143,7 +143,7 @@ namespace asterivo.Unity60.Features.Combat.Services
 
             if (_combatants.Remove(participant))
             {
-                // 戦闘時間を統計に追加
+                // 謌ｦ髣俶凾髢薙ｒ邨ｱ險医↓霑ｽ蜉
                 if (_combatStartTimes.TryGetValue(participant, out float startTime))
                 {
                     _statistics.CombatTime += Time.time - startTime;
@@ -178,7 +178,7 @@ namespace asterivo.Unity60.Features.Combat.Services
             if (health == null)
                 return;
 
-            // IHealthがGameObjectを持つコンポーネントか確認
+            // IHealth縺隈ameObject繧呈戟縺､繧ｳ繝ｳ繝昴・繝阪Φ繝医°遒ｺ隱・
             if (health is Component component && component != null)
             {
                 _healthComponents[component.gameObject] = health;
@@ -191,7 +191,7 @@ namespace asterivo.Unity60.Features.Combat.Services
             if (health == null)
                 return;
 
-            // 登録されているヘルスコンポーネントから削除
+            // 逋ｻ骭ｲ縺輔ｌ縺ｦ縺・ｋ繝倥Ν繧ｹ繧ｳ繝ｳ繝昴・繝阪Φ繝医°繧牙炎髯､
             if (health is Component component && component != null)
             {
                 if (_healthComponents.Remove(component.gameObject))
@@ -206,13 +206,13 @@ namespace asterivo.Unity60.Features.Combat.Services
             if (gameObject == null)
                 return null;
 
-            // キャッシュから取得
+            // 繧ｭ繝｣繝・す繝･縺九ｉ蜿門ｾ・
             if (_healthComponents.TryGetValue(gameObject, out var health))
             {
                 return health;
             }
 
-            // コンポーネントから検索
+            // 繧ｳ繝ｳ繝昴・繝阪Φ繝医°繧画､懃ｴ｢
             health = gameObject.GetComponent<IHealth>();
             if (health != null)
             {
@@ -235,16 +235,16 @@ namespace asterivo.Unity60.Features.Combat.Services
         {
             _statistics.Deaths++;
 
-            // 攻撃者がいる場合はキル数を増やす
+            // 謾ｻ謦・・′縺・ｋ蝣ｴ蜷医・繧ｭ繝ｫ謨ｰ繧貞｢励ｄ縺・
             if (lastDamageInfo.attacker != null)
             {
                 _statistics.Kills++;
             }
 
-            // 戦闘状態を終了
+            // 謌ｦ髣倡憾諷九ｒ邨ゆｺ・
             EndCombat(victim);
 
-            // 死亡イベントを発行
+            // 豁ｻ莠｡繧､繝吶Φ繝医ｒ逋ｺ陦・
             RaiseDeathEvent(victim, lastDamageInfo);
         }
 
@@ -301,3 +301,5 @@ namespace asterivo.Unity60.Features.Combat.Services
         #endregion
     }
 }
+
+

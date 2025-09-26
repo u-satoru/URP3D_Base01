@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.TPS.Combat.Data;
 using asterivo.Unity60.Features.Templates.TPS.Services;
 
@@ -400,3 +400,5 @@ namespace asterivo.Unity60.Features.Templates.TPS.Combat
         }
     }
 }
+
+

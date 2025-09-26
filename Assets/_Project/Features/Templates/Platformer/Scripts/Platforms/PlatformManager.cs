@@ -1,23 +1,23 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
 {
     /// <summary>
-    /// プラットフォーマー動的プラットフォーム管理システム
-    /// 移動プラットフォーム、回転プラットフォーム、消失プラットフォーム等を統合管理
-    /// 物理演算連動によるリアルなプラットフォーム挙動
+    /// 繝励Λ繝・ヨ繝輔か繝ｼ繝槭・蜍慕噪繝励Λ繝・ヨ繝輔か繝ｼ繝邂｡逅・す繧ｹ繝・Β
+    /// 遘ｻ蜍輔・繝ｩ繝・ヨ繝輔か繝ｼ繝縲∝屓霆｢繝励Λ繝・ヨ繝輔か繝ｼ繝縲∵ｶ亥､ｱ繝励Λ繝・ヨ繝輔か繝ｼ繝遲峨ｒ邨ｱ蜷育ｮ｡逅・
+    /// 迚ｩ逅・ｼ皮ｮ鈴｣蜍輔↓繧医ｋ繝ｪ繧｢繝ｫ縺ｪ繝励Λ繝・ヨ繝輔か繝ｼ繝謖吝虚
     /// </summary>
     public class PlatformManager : MonoBehaviour
     {
         #region Platform Configuration
 
         [TabGroup("Platforms", "Basic Settings")]
-        [Title("Platform Management System", "プラットフォーマー動的プラットフォーム統合管理", TitleAlignments.Centered)]
+        [Title("Platform Management System", "繝励Λ繝・ヨ繝輔か繝ｼ繝槭・蜍慕噪繝励Λ繝・ヨ繝輔か繝ｼ繝邨ｱ蜷育ｮ｡逅・, TitleAlignments.Centered)]
         [SerializeField] private bool enablePlatforms = true;
         [SerializeField] private bool debugMode = false;
         [SerializeField] private bool optimizePerformance = true;
@@ -213,11 +213,11 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
 
         public enum TriggerType
         {
-            Switch,       // オン/オフ切り替え
-            Pressure,     // 重さセンサー
-            Timed,        // タイマー式
-            Proximity,    // 近接センサー
-            Sequence      // シーケンス式
+            Switch,       // 繧ｪ繝ｳ/繧ｪ繝募・繧頑崛縺・
+            Pressure,     // 驥阪＆繧ｻ繝ｳ繧ｵ繝ｼ
+            Timed,        // 繧ｿ繧､繝槭・蠑・
+            Proximity,    // 霑第磁繧ｻ繝ｳ繧ｵ繝ｼ
+            Sequence      // 繧ｷ繝ｼ繧ｱ繝ｳ繧ｹ蠑・
         }
 
         #endregion
@@ -282,7 +282,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         #region Initialization
 
         /// <summary>
-        /// プラットフォーム管理システムの初期化
+        /// 繝励Λ繝・ヨ繝輔か繝ｼ繝邂｡逅・す繧ｹ繝・Β縺ｮ蛻晄悄蛹・
         /// </summary>
         private void InitializePlatformManager()
         {
@@ -290,29 +290,29 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
 
             try
             {
-                // カメラ参照取得
+                // 繧ｫ繝｡繝ｩ蜿ら・蜿門ｾ・
                 playerCamera = UnityEngine.Camera.main ?? FindFirstObjectByType<UnityEngine.Camera>();
 
-                // プラットフォームグループの初期化
+                // 繝励Λ繝・ヨ繝輔か繝ｼ繝繧ｰ繝ｫ繝ｼ繝励・蛻晄悄蛹・
                 InitializePlatformGroups();
 
-                // 全プラットフォームの検証・登録
+                // 蜈ｨ繝励Λ繝・ヨ繝輔か繝ｼ繝縺ｮ讀懆ｨｼ繝ｻ逋ｻ骭ｲ
                 ValidateAndRegisterPlatforms();
 
-                // Physics Materialの適用
+                // Physics Material縺ｮ驕ｩ逕ｨ
                 ApplyPhysicsMaterials();
 
                 isInitialized = true;
-                LogDebug("[PlatformManager] ✅ Platform Manager initialization completed successfully");
+                LogDebug("[PlatformManager] 笨・Platform Manager initialization completed successfully");
             }
             catch (System.Exception ex)
             {
-                LogError($"[PlatformManager] ❌ Platform Manager initialization failed: {ex.Message}");
+                LogError($"[PlatformManager] 笶・Platform Manager initialization failed: {ex.Message}");
             }
         }
 
         /// <summary>
-        /// プラットフォームグループの初期化
+        /// 繝励Λ繝・ヨ繝輔か繝ｼ繝繧ｰ繝ｫ繝ｼ繝励・蛻晄悄蛹・
         /// </summary>
         private void InitializePlatformGroups()
         {
@@ -324,22 +324,22 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// プラットフォームの検証・登録
+        /// 繝励Λ繝・ヨ繝輔か繝ｼ繝縺ｮ讀懆ｨｼ繝ｻ逋ｻ骭ｲ
         /// </summary>
         private void ValidateAndRegisterPlatforms()
         {
             allPlatforms.Clear();
 
-            // Moving Platformsの検証・登録
+            // Moving Platforms縺ｮ讀懆ｨｼ繝ｻ逋ｻ骭ｲ
             ValidateMovingPlatforms();
 
-            // Rotating Platformsの検証・登録
+            // Rotating Platforms縺ｮ讀懆ｨｼ繝ｻ逋ｻ骭ｲ
             ValidateRotatingPlatforms();
 
-            // Disappearing Platformsの検証・登録
+            // Disappearing Platforms縺ｮ讀懆ｨｼ繝ｻ逋ｻ骭ｲ
             ValidateDisappearingPlatforms();
 
-            // Trigger Platformsの検証・登録
+            // Trigger Platforms縺ｮ讀懆ｨｼ繝ｻ逋ｻ骭ｲ
             ValidateTriggerPlatforms();
 
             activePlatformCount = allPlatforms.Count;
@@ -347,7 +347,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// Moving Platformsの検証
+        /// Moving Platforms縺ｮ讀懆ｨｼ
         /// </summary>
         private void ValidateMovingPlatforms()
         {
@@ -361,7 +361,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
                     continue;
                 }
 
-                // 初期状態設定
+                // 蛻晄悄迥ｶ諷玖ｨｭ螳・
                 platform.currentWaypointIndex = 0;
                 platform.movementProgress = 0f;
                 platform.isMoving = !platform.activateOnPlayerNearby;
@@ -371,7 +371,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// Rotating Platformsの検証
+        /// Rotating Platforms縺ｮ讀懆ｨｼ
         /// </summary>
         private void ValidateRotatingPlatforms()
         {
@@ -379,14 +379,14 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
 
             foreach (var platform in rotatingPlatforms)
             {
-                // 初期状態設定
+                // 蛻晄悄迥ｶ諷玖ｨｭ螳・
                 platform.currentRotation = 0f;
                 platform.isRotating = platform.constantRotation;
             }
         }
 
         /// <summary>
-        /// Disappearing Platformsの検証
+        /// Disappearing Platforms縺ｮ讀懆ｨｼ
         /// </summary>
         private void ValidateDisappearingPlatforms()
         {
@@ -394,7 +394,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
 
             foreach (var platform in disappearingPlatforms)
             {
-                // 初期状態設定
+                // 蛻晄悄迥ｶ諷玖ｨｭ螳・
                 platform.isVisible = true;
                 platform.isTriggered = false;
                 platform.disappearTimer = 0f;
@@ -403,7 +403,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// Trigger Platformsの検証
+        /// Trigger Platforms縺ｮ讀懆ｨｼ
         /// </summary>
         private void ValidateTriggerPlatforms()
         {
@@ -411,13 +411,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
 
             foreach (var platform in triggerPlatforms)
             {
-                // 初期位置設定
+                // 蛻晄悄菴咲ｽｮ險ｭ螳・
                 if (platform.deactivatedPosition == Vector3.zero)
                 {
                     platform.deactivatedPosition = platform.platformTransform.position;
                 }
 
-                // Colliderの確認・設定
+                // Collider縺ｮ遒ｺ隱阪・險ｭ螳・
                 var collider = platform.platformTransform.GetComponent<Collider>();
                 if (collider != null)
                 {
@@ -427,25 +427,25 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// Physics Materialの適用
+        /// Physics Material縺ｮ驕ｩ逕ｨ
         /// </summary>
         private void ApplyPhysicsMaterials()
         {
             if (platformPhysicsMaterial == null)
             {
-                // デフォルトPhysics Materialの作成
+                // 繝・ヵ繧ｩ繝ｫ繝・hysics Material縺ｮ菴懈・
                 platformPhysicsMaterial = new PhysicsMaterial("PlatformMaterial");
                 platformPhysicsMaterial.staticFriction = platformFriction;
                 platformPhysicsMaterial.dynamicFriction = platformFriction;
                 platformPhysicsMaterial.bounciness = platformBounciness;
             }
 
-            // 全プラットフォームにPhysics Materialを適用
+            // 蜈ｨ繝励Λ繝・ヨ繝輔か繝ｼ繝縺ｫPhysics Material繧帝←逕ｨ
             ApplyPhysicsMaterialToAllPlatforms();
         }
 
         /// <summary>
-        /// 全プラットフォームへのPhysics Material適用
+        /// 蜈ｨ繝励Λ繝・ヨ繝輔か繝ｼ繝縺ｸ縺ｮPhysics Material驕ｩ逕ｨ
         /// </summary>
         private void ApplyPhysicsMaterialToAllPlatforms()
         {
@@ -473,35 +473,35 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         #region System Setup
 
         /// <summary>
-        /// プラットフォームシステムのセットアップ
+        /// 繝励Λ繝・ヨ繝輔か繝ｼ繝繧ｷ繧ｹ繝・Β縺ｮ繧ｻ繝・ヨ繧｢繝・・
         /// </summary>
         private void SetupPlatformSystem()
         {
             LogDebug("[PlatformManager] Setting up Platform System...");
 
-            // イベントリスナーの登録
+            // 繧､繝吶Φ繝医Μ繧ｹ繝翫・縺ｮ逋ｻ骭ｲ
             RegisterEventListeners();
 
-            // パフォーマンス最適化の初期設定
+            // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ譛驕ｩ蛹悶・蛻晄悄險ｭ螳・
             if (optimizePerformance)
             {
                 InitializePerformanceOptimization();
             }
 
-            LogDebug("[PlatformManager] ✅ Platform System setup completed");
+            LogDebug("[PlatformManager] 笨・Platform System setup completed");
         }
 
         /// <summary>
-        /// イベントリスナーの登録
+        /// 繧､繝吶Φ繝医Μ繧ｹ繝翫・縺ｮ逋ｻ骭ｲ
         /// </summary>
         private void RegisterEventListeners()
         {
-            // プレイヤーイベントのリスナー登録
-            // 例: プレイヤー位置更新、プレイヤージャンプ等
+            // 繝励Ξ繧､繝､繝ｼ繧､繝吶Φ繝医・繝ｪ繧ｹ繝翫・逋ｻ骭ｲ
+            // 萓・ 繝励Ξ繧､繝､繝ｼ菴咲ｽｮ譖ｴ譁ｰ縲√・繝ｬ繧､繝､繝ｼ繧ｸ繝｣繝ｳ繝礼ｭ・
         }
 
         /// <summary>
-        /// パフォーマンス最適化の初期設定
+        /// 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ譛驕ｩ蛹悶・蛻晄悄險ｭ螳・
         /// </summary>
         private void InitializePerformanceOptimization()
         {
@@ -513,43 +513,43 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         #region Update Systems
 
         /// <summary>
-        /// プラットフォームシステムの更新
+        /// 繝励Λ繝・ヨ繝輔か繝ｼ繝繧ｷ繧ｹ繝・Β縺ｮ譖ｴ譁ｰ
         /// </summary>
         private void UpdatePlatformSystem()
         {
             float startTime = Time.realtimeSinceStartup;
 
-            // Moving Platformsの更新
+            // Moving Platforms縺ｮ譖ｴ譁ｰ
             UpdateMovingPlatforms();
 
-            // Rotating Platformsの更新
+            // Rotating Platforms縺ｮ譖ｴ譁ｰ
             UpdateRotatingPlatforms();
 
-            // Disappearing Platformsの更新
+            // Disappearing Platforms縺ｮ譖ｴ譁ｰ
             UpdateDisappearingPlatforms();
 
-            // Trigger Platformsの更新
+            // Trigger Platforms縺ｮ譖ｴ譁ｰ
             UpdateTriggerPlatforms();
 
-            // プレイヤー運搬処理
+            // 繝励Ξ繧､繝､繝ｼ驕区成蜃ｦ逅・
             if (enablePlayerCarrying)
             {
                 UpdatePlayerCarrying();
             }
 
-            // パフォーマンス最適化
+            // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ譛驕ｩ蛹・
             if (optimizePerformance && Time.time - lastOptimizationTime > 1f)
             {
                 PerformOptimization();
                 lastOptimizationTime = Time.time;
             }
 
-            // パフォーマンス統計の更新
+            // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ邨ｱ險医・譖ｴ譁ｰ
             averageUpdateTime = (averageUpdateTime + (Time.realtimeSinceStartup - startTime)) / 2f;
         }
 
         /// <summary>
-        /// Moving Platformsの更新
+        /// Moving Platforms縺ｮ譖ｴ譁ｰ
         /// </summary>
         private void UpdateMovingPlatforms()
         {
@@ -557,13 +557,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
             {
                 if (platform.platformTransform == null) continue;
 
-                // プレイヤー近接チェック
+                // 繝励Ξ繧､繝､繝ｼ霑第磁繝√ぉ繝・け
                 if (platform.activateOnPlayerNearby)
                 {
                     CheckPlayerProximity(platform);
                 }
 
-                // 移動処理
+                // 遘ｻ蜍募・逅・
                 if (platform.isMoving && platform.waypoints.Count >= 2)
                 {
                     UpdatePlatformMovement(platform);
@@ -572,7 +572,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// プレイヤー近接チェック
+        /// 繝励Ξ繧､繝､繝ｼ霑第磁繝√ぉ繝・け
         /// </summary>
         private void CheckPlayerProximity(MovingPlatform platform)
         {
@@ -595,58 +595,58 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// プラットフォーム移動の更新
+        /// 繝励Λ繝・ヨ繝輔か繝ｼ繝遘ｻ蜍輔・譖ｴ譁ｰ
         /// </summary>
         private void UpdatePlatformMovement(MovingPlatform platform)
         {
-            // 待機時間のチェック
+            // 蠕・ｩ滓凾髢薙・繝√ぉ繝・け
             if (platform.pauseTimer > 0f)
             {
                 platform.pauseTimer -= Time.deltaTime;
                 return;
             }
 
-            // 現在のウェイポイントと次のウェイポイント
+            // 迴ｾ蝨ｨ縺ｮ繧ｦ繧ｧ繧､繝昴う繝ｳ繝医→谺｡縺ｮ繧ｦ繧ｧ繧､繝昴う繝ｳ繝・
             Transform currentWaypoint = platform.waypoints[platform.currentWaypointIndex];
             int nextIndex = (platform.currentWaypointIndex + 1) % platform.waypoints.Count;
             Transform nextWaypoint = platform.waypoints[nextIndex];
 
-            // 移動進行度の更新
+            // 遘ｻ蜍暮ｲ陦悟ｺｦ縺ｮ譖ｴ譁ｰ
             platform.movementProgress += platform.moveSpeed * Time.deltaTime /
                 Vector3.Distance(currentWaypoint.position, nextWaypoint.position);
 
-            // カーブによるスムーズ移動
+            // 繧ｫ繝ｼ繝悶↓繧医ｋ繧ｹ繝繝ｼ繧ｺ遘ｻ蜍・
             float curvedProgress = platform.movementCurve.Evaluate(platform.movementProgress);
 
-            // 位置の計算
+            // 菴咲ｽｮ縺ｮ險育ｮ・
             Vector3 newPosition = Vector3.Lerp(currentWaypoint.position, nextWaypoint.position, curvedProgress);
             platform.platformTransform.position = newPosition;
 
-            // ウェイポイント到達チェック
+            // 繧ｦ繧ｧ繧､繝昴う繝ｳ繝亥芦驕斐メ繧ｧ繝・け
             if (platform.movementProgress >= 1f)
             {
                 platform.movementProgress = 0f;
                 platform.currentWaypointIndex = nextIndex;
 
-                // 待機時間設定
+                // 蠕・ｩ滓凾髢楢ｨｭ螳・
                 if (platform.pauseAtWaypoint > 0f)
                 {
                     platform.pauseTimer = platform.pauseAtWaypoint;
                 }
 
-                // ループ処理
+                // 繝ｫ繝ｼ繝怜・逅・
                 if (!platform.loopMovement && platform.currentWaypointIndex == 0)
                 {
                     platform.isMoving = false;
                 }
             }
 
-            // エフェクト・サウンド再生
+            // 繧ｨ繝輔ぉ繧ｯ繝医・繧ｵ繧ｦ繝ｳ繝牙・逕・
             PlayMovementEffects(platform);
         }
 
         /// <summary>
-        /// Rotating Platformsの更新
+        /// Rotating Platforms縺ｮ譖ｴ譁ｰ
         /// </summary>
         private void UpdateRotatingPlatforms()
         {
@@ -654,13 +654,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
             {
                 if (platform.platformTransform == null) continue;
 
-                // 回転処理
+                // 蝗櫁ｻ｢蜃ｦ逅・
                 if (platform.isRotating)
                 {
                     float rotationAmount = platform.rotationSpeed * Time.deltaTime;
                     if (platform.reverseDirection) rotationAmount = -rotationAmount;
 
-                    // 制限チェック
+                    // 蛻ｶ髯舌メ繧ｧ繝・け
                     if (platform.useRotationLimits)
                     {
                         platform.currentRotation += rotationAmount;
@@ -676,11 +676,11 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
                         platform.currentRotation += rotationAmount;
                     }
 
-                    // 回転適用
+                    // 蝗櫁ｻ｢驕ｩ逕ｨ
                     platform.platformTransform.Rotate(platform.rotationAxis, rotationAmount);
                 }
 
-                // アクティベーション処理
+                // 繧｢繧ｯ繝・ぅ繝吶・繧ｷ繝ｧ繝ｳ蜃ｦ逅・
                 if (platform.isActivated && platform.activationTimer > 0f)
                 {
                     platform.activationTimer -= Time.deltaTime;
@@ -694,7 +694,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// Disappearing Platformsの更新
+        /// Disappearing Platforms縺ｮ譖ｴ譁ｰ
         /// </summary>
         private void UpdateDisappearingPlatforms()
         {
@@ -702,13 +702,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
             {
                 if (platform.platformTransform == null) continue;
 
-                // 警告処理
+                // 隴ｦ蜻雁・逅・
                 if (platform.isWarning)
                 {
                     UpdateWarningEffect(platform);
                 }
 
-                // 消失処理
+                // 豸亥､ｱ蜃ｦ逅・
                 if (platform.isTriggered && platform.isVisible)
                 {
                     platform.disappearTimer += Time.deltaTime;
@@ -719,7 +719,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
                     }
                 }
 
-                // 再出現処理
+                // 蜀榊・迴ｾ蜃ｦ逅・
                 if (!platform.isVisible && platform.autoReappear)
                 {
                     platform.reappearTimer += Time.deltaTime;
@@ -733,7 +733,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// Trigger Platformsの更新
+        /// Trigger Platforms縺ｮ譖ｴ譁ｰ
         /// </summary>
         private void UpdateTriggerPlatforms()
         {
@@ -741,7 +741,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
             {
                 if (platform.platformTransform == null) continue;
 
-                // クールダウン処理
+                // 繧ｯ繝ｼ繝ｫ繝繧ｦ繝ｳ蜃ｦ逅・
                 if (platform.isCooldown)
                 {
                     platform.cooldownTimer -= Time.deltaTime;
@@ -751,7 +751,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
                     }
                 }
 
-                // アクティベーション時間処理
+                // 繧｢繧ｯ繝・ぅ繝吶・繧ｷ繝ｧ繝ｳ譎る俣蜃ｦ逅・
                 if (platform.isActivated && !platform.requiresContinuousActivation)
                 {
                     platform.activationTimer -= Time.deltaTime;
@@ -761,7 +761,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
                     }
                 }
 
-                // 位置の補間
+                // 菴咲ｽｮ縺ｮ陬憺俣
                 Vector3 targetPosition = platform.isActivated ? platform.activatedPosition : platform.deactivatedPosition;
                 float currentProgress = platform.movementCurve.Evaluate(
                     Vector3.Distance(platform.platformTransform.position, platform.deactivatedPosition) /
@@ -773,22 +773,22 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// 物理更新処理
+        /// 迚ｩ逅・峩譁ｰ蜃ｦ逅・
         /// </summary>
         private void FixedUpdatePlatformSystem()
         {
-            // 物理演算関連の更新処理
+            // 迚ｩ逅・ｼ皮ｮ鈴未騾｣縺ｮ譖ｴ譁ｰ蜃ｦ逅・
             UpdatePlatformPhysics();
         }
 
         /// <summary>
-        /// プラットフォーム物理演算の更新
+        /// 繝励Λ繝・ヨ繝輔か繝ｼ繝迚ｩ逅・ｼ皮ｮ励・譖ｴ譁ｰ
         /// </summary>
         private void UpdatePlatformPhysics()
         {
-            // プレイヤー運搬物理処理
-            // プラットフォーム衝突処理
-            // 動的摩擦調整等
+            // 繝励Ξ繧､繝､繝ｼ驕区成迚ｩ逅・・逅・
+            // 繝励Λ繝・ヨ繝輔か繝ｼ繝陦晉ｪ∝・逅・
+            // 蜍慕噪鞫ｩ謫ｦ隱ｿ謨ｴ遲・
         }
 
         #endregion
@@ -796,17 +796,17 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         #region Platform Effects
 
         /// <summary>
-        /// 移動エフェクトの再生
+        /// 遘ｻ蜍輔お繝輔ぉ繧ｯ繝医・蜀咲函
         /// </summary>
         private void PlayMovementEffects(MovingPlatform platform)
         {
-            // パーティクルエフェクト
+            // 繝代・繝・ぅ繧ｯ繝ｫ繧ｨ繝輔ぉ繧ｯ繝・
             if (platform.movementEffect != null && !platform.movementEffect.isPlaying)
             {
                 platform.movementEffect.Play();
             }
 
-            // 移動サウンド
+            // 遘ｻ蜍輔し繧ｦ繝ｳ繝・
             if (platform.movementSound != null && !platform.movementSound.isPlaying)
             {
                 platform.movementSound.Play();
@@ -814,7 +814,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// 警告エフェクトの更新
+        /// 隴ｦ蜻翫お繝輔ぉ繧ｯ繝医・譖ｴ譁ｰ
         /// </summary>
         private void UpdateWarningEffect(DisappearingPlatform platform)
         {
@@ -828,7 +828,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// プラットフォームの消失
+        /// 繝励Λ繝・ヨ繝輔か繝ｼ繝縺ｮ豸亥､ｱ
         /// </summary>
         private void DisappearPlatform(DisappearingPlatform platform)
         {
@@ -836,7 +836,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
             platform.isWarning = false;
             platform.reappearTimer = 0f;
 
-            // エフェクト再生
+            // 繧ｨ繝輔ぉ繧ｯ繝亥・逕・
             if (platform.disappearEffect != null)
             {
                 platform.disappearEffect.Play();
@@ -847,7 +847,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
                 platform.disappearSound.Play();
             }
 
-            // フェードアウト処理
+            // 繝輔ぉ繝ｼ繝峨い繧ｦ繝亥・逅・
             if (platform.fadeOut || platform.shrinkOut)
             {
                 StartCoroutine(AnimateDisappear(platform));
@@ -861,7 +861,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// プラットフォームの再出現
+        /// 繝励Λ繝・ヨ繝輔か繝ｼ繝縺ｮ蜀榊・迴ｾ
         /// </summary>
         private void ReappearPlatform(DisappearingPlatform platform)
         {
@@ -869,7 +869,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
             platform.isTriggered = false;
             platform.disappearTimer = 0f;
 
-            // エフェクト再生
+            // 繧ｨ繝輔ぉ繧ｯ繝亥・逕・
             if (platform.reappearEffect != null)
             {
                 platform.reappearEffect.Play();
@@ -880,7 +880,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
                 platform.reappearSound.Play();
             }
 
-            // フェードイン処理
+            // 繝輔ぉ繝ｼ繝峨う繝ｳ蜃ｦ逅・
             if (platform.fadeOut || platform.shrinkOut)
             {
                 StartCoroutine(AnimateReappear(platform));
@@ -898,7 +898,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         #region Player Interaction
 
         /// <summary>
-        /// プレイヤー運搬処理の更新
+        /// 繝励Ξ繧､繝､繝ｼ驕区成蜃ｦ逅・・譖ｴ譁ｰ
         /// </summary>
         private void UpdatePlayerCarrying()
         {
@@ -906,20 +906,20 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
             {
                 if (platform.platformTransform == null) continue;
 
-                // プラットフォーム上のプレイヤーをチェック
+                // 繝励Λ繝・ヨ繝輔か繝ｼ繝荳翫・繝励Ξ繧､繝､繝ｼ繧偵メ繧ｧ繝・け
                 CheckPlayersOnPlatform(platform.platformTransform);
             }
         }
 
         /// <summary>
-        /// プラットフォーム上のプレイヤーチェック
+        /// 繝励Λ繝・ヨ繝輔か繝ｼ繝荳翫・繝励Ξ繧､繝､繝ｼ繝√ぉ繝・け
         /// </summary>
         private void CheckPlayersOnPlatform(Transform platformTransform)
         {
             Collider platformCollider = platformTransform.GetComponent<Collider>();
             if (platformCollider == null) return;
 
-            // プレイヤーオブジェクトの検索
+            // 繝励Ξ繧､繝､繝ｼ繧ｪ繝悶ず繧ｧ繧ｯ繝医・讀懃ｴ｢
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
             foreach (var player in players)
@@ -932,11 +932,11 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// プレイヤーがプラットフォーム上にいるかチェック
+        /// 繝励Ξ繧､繝､繝ｼ縺後・繝ｩ繝・ヨ繝輔か繝ｼ繝荳翫↓縺・ｋ縺九メ繧ｧ繝・け
         /// </summary>
         private bool IsPlayerOnPlatform(GameObject player, Collider platformCollider)
         {
-            // レイキャストによる判定
+            // 繝ｬ繧､繧ｭ繝｣繧ｹ繝医↓繧医ｋ蛻､螳・
             Vector3 rayStart = player.transform.position + Vector3.up * 0.1f;
             Vector3 rayDirection = Vector3.down;
             float rayDistance = 0.5f;
@@ -950,23 +950,23 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// プレイヤーに運搬力を適用
+        /// 繝励Ξ繧､繝､繝ｼ縺ｫ驕区成蜉帙ｒ驕ｩ逕ｨ
         /// </summary>
         private void ApplyCarryForce(GameObject player, Transform platform)
         {
             Rigidbody playerRb = player.GetComponent<Rigidbody>();
             if (playerRb != null)
             {
-                // プラットフォームの移動ベクトルを計算
-                // Note: 実際の実装では、プラットフォームの前フレーム位置を記録する必要があります
-                Vector3 platformMovement = Vector3.zero; // 簡略化
+                // 繝励Λ繝・ヨ繝輔か繝ｼ繝縺ｮ遘ｻ蜍輔・繧ｯ繝医Ν繧定ｨ育ｮ・
+                // Note: 螳滄圀縺ｮ螳溯｣・〒縺ｯ縲√・繝ｩ繝・ヨ繝輔か繝ｼ繝縺ｮ蜑阪ヵ繝ｬ繝ｼ繝菴咲ｽｮ繧定ｨ倬鹸縺吶ｋ蠢・ｦ√′縺ゅｊ縺ｾ縺・
+                Vector3 platformMovement = Vector3.zero; // 邁｡逡･蛹・
 
                 playerRb.MovePosition(playerRb.position + platformMovement);
             }
         }
 
         /// <summary>
-        /// トリガープラットフォームのアクティベート
+        /// 繝医Μ繧ｬ繝ｼ繝励Λ繝・ヨ繝輔か繝ｼ繝縺ｮ繧｢繧ｯ繝・ぅ繝吶・繝・
         /// </summary>
         public void ActivateTriggerPlatform(TriggerPlatform platform)
         {
@@ -981,7 +981,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
                 platform.cooldownTimer = platform.triggerCooldown;
             }
 
-            // エフェクト・サウンド再生
+            // 繧ｨ繝輔ぉ繧ｯ繝医・繧ｵ繧ｦ繝ｳ繝牙・逕・
             if (platform.activationEffect != null)
             {
                 platform.activationEffect.Play();
@@ -992,7 +992,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
                 platform.activationSound.Play();
             }
 
-            // マテリアル変更
+            // 繝槭ユ繝ｪ繧｢繝ｫ螟画峩
             if (platform.activatedMaterial != null)
             {
                 var renderer = platform.platformTransform.GetComponent<Renderer>();
@@ -1006,13 +1006,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// トリガープラットフォームのデアクティベート
+        /// 繝医Μ繧ｬ繝ｼ繝励Λ繝・ヨ繝輔か繝ｼ繝縺ｮ繝・い繧ｯ繝・ぅ繝吶・繝・
         /// </summary>
         private void DeactivateTriggerPlatform(TriggerPlatform platform)
         {
             platform.isActivated = false;
 
-            // マテリアル復元
+            // 繝槭ユ繝ｪ繧｢繝ｫ蠕ｩ蜈・
             if (platform.deactivatedMaterial != null)
             {
                 var renderer = platform.platformTransform.GetComponent<Renderer>();
@@ -1030,7 +1030,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         #region Performance Optimization
 
         /// <summary>
-        /// パフォーマンス最適化処理
+        /// 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ譛驕ｩ蛹門・逅・
         /// </summary>
         private void PerformOptimization()
         {
@@ -1038,7 +1038,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
 
             int culledCount = 0;
 
-            // 視野外プラットフォームのカリング
+            // 隕夜㍽螟悶・繝ｩ繝・ヨ繝輔か繝ｼ繝縺ｮ繧ｫ繝ｪ繝ｳ繧ｰ
             foreach (var platform in movingPlatforms)
             {
                 if (platform.platformTransform == null) continue;
@@ -1046,7 +1046,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
                 bool isVisible = IsVisibleFromCamera(platform.platformTransform.position);
                 bool wasMoving = platform.isMoving;
 
-                // 視野外の場合、一時停止
+                // 隕夜㍽螟悶・蝣ｴ蜷医∽ｸ譎ょ●豁｢
                 if (!isVisible && wasMoving && !platform.playerNearby)
                 {
                     platform.isMoving = false;
@@ -1062,7 +1062,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// カメラから見えるかどうかの判定
+        /// 繧ｫ繝｡繝ｩ縺九ｉ隕九∴繧九°縺ｩ縺・°縺ｮ蛻､螳・
         /// </summary>
         private bool IsVisibleFromCamera(Vector3 position)
         {
@@ -1136,7 +1136,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
                 yield return null;
             }
 
-            // 最終状態確保
+            // 譛邨ら憾諷狗｢ｺ菫・
             if (renderer != null)
             {
                 Color color = renderer.material.color;
@@ -1151,7 +1151,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         #region Public API
 
         /// <summary>
-        /// 指定タイプのプラットフォーム数を取得
+        /// 謖・ｮ壹ち繧､繝励・繝励Λ繝・ヨ繝輔か繝ｼ繝謨ｰ繧貞叙蠕・
         /// </summary>
         public int GetPlatformCount(PlatformType type)
         {
@@ -1166,7 +1166,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// 全プラットフォームのリセット
+        /// 蜈ｨ繝励Λ繝・ヨ繝輔か繝ｼ繝縺ｮ繝ｪ繧ｻ繝・ヨ
         /// </summary>
         public void ResetAllPlatforms()
         {
@@ -1179,7 +1179,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// Moving Platformsのリセット
+        /// Moving Platforms縺ｮ繝ｪ繧ｻ繝・ヨ
         /// </summary>
         private void ResetMovingPlatforms()
         {
@@ -1198,7 +1198,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// Rotating Platformsのリセット
+        /// Rotating Platforms縺ｮ繝ｪ繧ｻ繝・ヨ
         /// </summary>
         private void ResetRotatingPlatforms()
         {
@@ -1213,7 +1213,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// Disappearing Platformsのリセット
+        /// Disappearing Platforms縺ｮ繝ｪ繧ｻ繝・ヨ
         /// </summary>
         private void ResetDisappearingPlatforms()
         {
@@ -1229,7 +1229,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         }
 
         /// <summary>
-        /// Trigger Platformsのリセット
+        /// Trigger Platforms縺ｮ繝ｪ繧ｻ繝・ヨ
         /// </summary>
         private void ResetTriggerPlatforms()
         {
@@ -1314,13 +1314,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         {
             if (!enablePlatforms) return;
 
-            // Moving Platformsの可視化
+            // Moving Platforms縺ｮ蜿ｯ隕門喧
             DrawMovingPlatformGizmos();
 
-            // Rotating Platformsの可視化
+            // Rotating Platforms縺ｮ蜿ｯ隕門喧
             DrawRotatingPlatformGizmos();
 
-            // Trigger Platformsの可視化
+            // Trigger Platforms縺ｮ蜿ｯ隕門喧
             DrawTriggerPlatformGizmos();
         }
 
@@ -1332,7 +1332,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
 
                 Gizmos.color = platform.gizmosColor;
 
-                // ウェイポイントとパスの表示
+                // 繧ｦ繧ｧ繧､繝昴う繝ｳ繝医→繝代せ縺ｮ陦ｨ遉ｺ
                 for (int i = 0; i < platform.waypoints.Count; i++)
                 {
                     if (platform.waypoints[i] == null) continue;
@@ -1349,7 +1349,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
                     }
                 }
 
-                // 現在位置の表示
+                // 迴ｾ蝨ｨ菴咲ｽｮ縺ｮ陦ｨ遉ｺ
                 Gizmos.color = Color.white;
                 Gizmos.DrawWireCube(platform.platformTransform.position, Vector3.one * 1f);
             }
@@ -1364,7 +1364,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
                 Gizmos.color = platform.gizmosColor;
                 Gizmos.DrawWireSphere(platform.platformTransform.position, 2f);
 
-                // 回転軸の表示
+                // 蝗櫁ｻ｢霆ｸ縺ｮ陦ｨ遉ｺ
                 Gizmos.DrawRay(platform.platformTransform.position, platform.rotationAxis.normalized * 3f);
             }
         }
@@ -1375,15 +1375,15 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
             {
                 if (platform.platformTransform == null) continue;
 
-                // アクティベート位置
+                // 繧｢繧ｯ繝・ぅ繝吶・繝井ｽ咲ｽｮ
                 Gizmos.color = Color.green;
                 Gizmos.DrawWireCube(platform.activatedPosition, Vector3.one * 0.8f);
 
-                // デアクティベート位置
+                // 繝・い繧ｯ繝・ぅ繝吶・繝井ｽ咲ｽｮ
                 Gizmos.color = Color.red;
                 Gizmos.DrawWireCube(platform.deactivatedPosition, Vector3.one * 0.8f);
 
-                // 移動パス
+                // 遘ｻ蜍輔ヱ繧ｹ
                 Gizmos.color = Color.yellow;
                 Gizmos.DrawLine(platform.activatedPosition, platform.deactivatedPosition);
             }
@@ -1393,3 +1393,5 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Platforms
         #endregion
     }
 }
+
+

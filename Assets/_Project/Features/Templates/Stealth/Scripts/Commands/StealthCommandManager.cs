@@ -1,16 +1,16 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Commands;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.Stealth.Services;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 {
     /// <summary>
-    /// ステルスコマンド統合管理システム
-    /// 全ステルスコマンドの中央制御とServiceLocator統合
-    /// ObjectPool最適化による高性能コマンド実行環境
+    /// 繧ｹ繝・Ν繧ｹ繧ｳ繝槭Φ繝臥ｵｱ蜷育ｮ｡逅・す繧ｹ繝・Β
+    /// 蜈ｨ繧ｹ繝・Ν繧ｹ繧ｳ繝槭Φ繝峨・荳ｭ螟ｮ蛻ｶ蠕｡縺ｨServiceLocator邨ｱ蜷・
+    /// ObjectPool譛驕ｩ蛹悶↓繧医ｋ鬮俶ｧ閭ｽ繧ｳ繝槭Φ繝牙ｮ溯｡檎腸蠅・
     /// </summary>
     public class StealthCommandManager : MonoBehaviour
     {
@@ -23,16 +23,16 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         [SerializeField] private bool _enableDebugLogs = true;
         [SerializeField] private bool _trackCommandStatistics = true;
 
-        // コマンドプール管理
+        // 繧ｳ繝槭Φ繝峨・繝ｼ繝ｫ邂｡逅・
         private CommandPoolManager _commandPoolManager;
         private IStealthService _stealthService;
 
-        // アクティブコマンド管理
+        // 繧｢繧ｯ繝・ぅ繝悶さ繝槭Φ繝臥ｮ｡逅・
         private readonly List<StealthAbilityCommand> _activeAbilities = new();
         private readonly Stack<ICommand> _commandHistory = new();
         private readonly Dictionary<string, ICommand> _namedCommands = new();
 
-        // 統計情報
+        // 邨ｱ險域ュ蝣ｱ
         private int _totalCommandsExecuted;
         private int _totalCommandsUndone;
         private float _lastCommandExecutionTime;
@@ -60,15 +60,15 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         #region Initialization
 
         /// <summary>
-        /// コマンドプールの初期化
+        /// 繧ｳ繝槭Φ繝峨・繝ｼ繝ｫ縺ｮ蛻晄悄蛹・
         /// </summary>
         private void InitializeCommandPools()
         {
-            // CommandPoolManagerインスタンスを作成（Singletonではない）
+            // CommandPoolManager繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ繧剃ｽ懈・・・ingleton縺ｧ縺ｯ縺ｪ縺・ｼ・
             _commandPoolManager = new CommandPoolManager(_enableDebugLogs);
             _commandPoolManager.Initialize();
 
-            // プール設定を登録（プール自体は GetCommand<T>() 時に自動作成される）
+            // 繝励・繝ｫ險ｭ螳壹ｒ逋ｻ骭ｲ・医・繝ｼ繝ｫ閾ｪ菴薙・ GetCommand<T>() 譎ゅ↓閾ｪ蜍穂ｽ懈・縺輔ｌ繧具ｼ・
             var interactionConfig = new PoolConfiguration
             {
                 MaxSize = _interactionCommandPoolSize,
@@ -95,7 +95,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// サービスの初期化
+        /// 繧ｵ繝ｼ繝薙せ縺ｮ蛻晄悄蛹・
         /// </summary>
         private void InitializeServices()
         {
@@ -112,7 +112,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         #region Command Execution Methods
 
         /// <summary>
-        /// ステルス相互作用コマンドの実行
+        /// 繧ｹ繝・Ν繧ｹ逶ｸ莠剃ｽ懃畑繧ｳ繝槭Φ繝峨・螳溯｡・
         /// </summary>
         public bool ExecuteInteraction(StealthInteractionType interactionType,
                                      GameObject targetObject, float duration = 1.0f, bool requiresStealth = true,
@@ -130,7 +130,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// ステルス移動コマンドの実行
+        /// 繧ｹ繝・Ν繧ｹ遘ｻ蜍輔さ繝槭Φ繝峨・螳溯｡・
         /// </summary>
         public bool ExecuteMovement(StealthMovementCommand.StealthMovementType movementType, Vector3 targetPosition,
                                   float duration = 1.0f, float speedMultiplier = 1.0f, bool maintainStealth = true,
@@ -148,7 +148,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// ステルス能力コマンドの実行
+        /// 繧ｹ繝・Ν繧ｹ閭ｽ蜉帙さ繝槭Φ繝峨・螳溯｡・
         /// </summary>
         public bool ExecuteAbility(StealthAbilityCommand.StealthAbilityType abilityType, float duration = 5.0f,
                                  float intensity = 1.0f, Vector3 targetLocation = default,
@@ -164,7 +164,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
             command.Initialize(abilityType, duration, intensity, targetLocation, targetObject);
             bool success = ExecuteCommand(command, commandName);
 
-            // アクティブ能力リストに追加
+            // 繧｢繧ｯ繝・ぅ繝冶・蜉帙Μ繧ｹ繝医↓霑ｽ蜉
             if (success && command.IsActive)
             {
                 _activeAbilities.Add(command);
@@ -174,7 +174,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// 汎用コマンド実行
+        /// 豎守畑繧ｳ繝槭Φ繝牙ｮ溯｡・
         /// </summary>
         private bool ExecuteCommand(ICommand command, string commandName = null)
         {
@@ -182,16 +182,16 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
             {
                 command.Execute();
 
-                // 履歴に追加
+                // 螻･豁ｴ縺ｫ霑ｽ蜉
                 _commandHistory.Push(command);
 
-                // 名前付きコマンドの場合は辞書に追加
+                // 蜷榊燕莉倥″繧ｳ繝槭Φ繝峨・蝣ｴ蜷医・霎樊嶌縺ｫ霑ｽ蜉
                 if (!string.IsNullOrEmpty(commandName))
                 {
                     _namedCommands[commandName] = command;
                 }
 
-                // 統計更新
+                // 邨ｱ險域峩譁ｰ
                 if (_trackCommandStatistics)
                 {
                     _totalCommandsExecuted++;
@@ -215,7 +215,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         #region Command Management
 
         /// <summary>
-        /// 最後のコマンドをUndoする
+        /// 譛蠕後・繧ｳ繝槭Φ繝峨ｒUndo縺吶ｋ
         /// </summary>
         public bool UndoLastCommand()
         {
@@ -230,16 +230,16 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
             {
                 lastCommand.Undo();
 
-                // アクティブ能力から削除（能力コマンドの場合）
+                // 繧｢繧ｯ繝・ぅ繝冶・蜉帙°繧牙炎髯､・郁・蜉帙さ繝槭Φ繝峨・蝣ｴ蜷茨ｼ・
                 if (lastCommand is StealthAbilityCommand abilityCommand)
                 {
                     _activeAbilities.Remove(abilityCommand);
                 }
 
-                // コマンドプールに返却
+                // 繧ｳ繝槭Φ繝峨・繝ｼ繝ｫ縺ｫ霑泌唆
                 ReturnCommandToPool(lastCommand);
 
-                // 統計更新
+                // 邨ｱ險域峩譁ｰ
                 if (_trackCommandStatistics)
                 {
                     _totalCommandsUndone++;
@@ -256,7 +256,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// 名前付きコマンドをUndoする
+        /// 蜷榊燕莉倥″繧ｳ繝槭Φ繝峨ｒUndo縺吶ｋ
         /// </summary>
         public bool UndoNamedCommand(string commandName)
         {
@@ -270,16 +270,16 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
             {
                 command.Undo();
 
-                // 履歴と辞書から削除
+                // 螻･豁ｴ縺ｨ霎樊嶌縺九ｉ蜑企勁
                 _namedCommands.Remove(commandName);
 
-                // アクティブ能力から削除（能力コマンドの場合）
+                // 繧｢繧ｯ繝・ぅ繝冶・蜉帙°繧牙炎髯､・郁・蜉帙さ繝槭Φ繝峨・蝣ｴ蜷茨ｼ・
                 if (command is StealthAbilityCommand abilityCommand)
                 {
                     _activeAbilities.Remove(abilityCommand);
                 }
 
-                // コマンドプールに返却
+                // 繧ｳ繝槭Φ繝峨・繝ｼ繝ｫ縺ｫ霑泌唆
                 ReturnCommandToPool(command);
 
                 if (_enableDebugLogs)
@@ -293,18 +293,18 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// 全コマンド履歴をクリア
+        /// 蜈ｨ繧ｳ繝槭Φ繝牙ｱ･豁ｴ繧偵け繝ｪ繧｢
         /// </summary>
         public void ClearCommandHistory()
         {
-            // 履歴のコマンドをプールに返却
+            // 螻･豁ｴ縺ｮ繧ｳ繝槭Φ繝峨ｒ繝励・繝ｫ縺ｫ霑泌唆
             while (_commandHistory.Count > 0)
             {
                 var command = _commandHistory.Pop();
                 ReturnCommandToPool(command);
             }
 
-            // 名前付きコマンドも返却
+            // 蜷榊燕莉倥″繧ｳ繝槭Φ繝峨ｂ霑泌唆
             foreach (var command in _namedCommands.Values)
             {
                 ReturnCommandToPool(command);
@@ -318,7 +318,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// アクティブな全能力を無効化
+        /// 繧｢繧ｯ繝・ぅ繝悶↑蜈ｨ閭ｽ蜉帙ｒ辟｡蜉ｹ蛹・
         /// </summary>
         public void DeactivateAllAbilities()
         {
@@ -339,7 +339,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         #region Private Methods
 
         /// <summary>
-        /// アクティブ能力の更新
+        /// 繧｢繧ｯ繝・ぅ繝冶・蜉帙・譖ｴ譁ｰ
         /// </summary>
         private void UpdateActiveAbilities()
         {
@@ -348,7 +348,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
                 var ability = _activeAbilities[i];
                 ability.UpdateAbility();
 
-                // 期限切れの能力を削除
+                // 譛滄剞蛻・ｌ縺ｮ閭ｽ蜉帙ｒ蜑企勁
                 if (!ability.IsActive)
                 {
                     _activeAbilities.RemoveAt(i);
@@ -358,7 +358,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// コマンドをプールに返却
+        /// 繧ｳ繝槭Φ繝峨ｒ繝励・繝ｫ縺ｫ霑泌唆
         /// </summary>
         private void ReturnCommandToPool(ICommand command)
         {
@@ -369,25 +369,25 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// デバッグ入力処理
+        /// 繝・ヰ繝・げ蜈･蜉帛・逅・
         /// </summary>
         private void HandleDebugInput()
         {
             if (!_enableDebugLogs) return;
 
-            // U キーで最後のコマンドをUndo
+            // U 繧ｭ繝ｼ縺ｧ譛蠕後・繧ｳ繝槭Φ繝峨ｒUndo
             if (Input.GetKeyDown(KeyCode.U))
             {
                 UndoLastCommand();
             }
 
-            // Ctrl+U で全履歴クリア
+            // Ctrl+U 縺ｧ蜈ｨ螻･豁ｴ繧ｯ繝ｪ繧｢
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.U))
             {
                 ClearCommandHistory();
             }
 
-            // Ctrl+D で全能力無効化
+            // Ctrl+D 縺ｧ蜈ｨ閭ｽ蜉帷┌蜉ｹ蛹・
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.D))
             {
                 DeactivateAllAbilities();
@@ -399,32 +399,32 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         #region Public Properties & Methods
 
         /// <summary>
-        /// 実行されたコマンドの総数
+        /// 螳溯｡後＆繧後◆繧ｳ繝槭Φ繝峨・邱乗焚
         /// </summary>
         public int TotalCommandsExecuted => _totalCommandsExecuted;
 
         /// <summary>
-        /// Undoされたコマンドの総数
+        /// Undo縺輔ｌ縺溘さ繝槭Φ繝峨・邱乗焚
         /// </summary>
         public int TotalCommandsUndone => _totalCommandsUndone;
 
         /// <summary>
-        /// アクティブな能力の数
+        /// 繧｢繧ｯ繝・ぅ繝悶↑閭ｽ蜉帙・謨ｰ
         /// </summary>
         public int ActiveAbilitiesCount => _activeAbilities.Count;
 
         /// <summary>
-        /// コマンド履歴の数
+        /// 繧ｳ繝槭Φ繝牙ｱ･豁ｴ縺ｮ謨ｰ
         /// </summary>
         public int CommandHistoryCount => _commandHistory.Count;
 
         /// <summary>
-        /// 最後のコマンド実行時刻
+        /// 譛蠕後・繧ｳ繝槭Φ繝牙ｮ溯｡梧凾蛻ｻ
         /// </summary>
         public float LastCommandExecutionTime => _lastCommandExecutionTime;
 
         /// <summary>
-        /// 名前付きコマンドが存在するかチェック
+        /// 蜷榊燕莉倥″繧ｳ繝槭Φ繝峨′蟄伜惠縺吶ｋ縺九メ繧ｧ繝・け
         /// </summary>
         public bool HasNamedCommand(string commandName)
         {
@@ -432,7 +432,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// アクティブ能力リストの取得（読み取り専用）
+        /// 繧｢繧ｯ繝・ぅ繝冶・蜉帙Μ繧ｹ繝医・蜿門ｾ暦ｼ郁ｪｭ縺ｿ蜿悶ｊ蟆ら畑・・
         /// </summary>
         public IReadOnlyList<StealthAbilityCommand> GetActiveAbilities()
         {
@@ -440,7 +440,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// コマンド統計情報の取得
+        /// 繧ｳ繝槭Φ繝臥ｵｱ險域ュ蝣ｱ縺ｮ蜿門ｾ・
         /// </summary>
         public CommandStatistics GetStatistics()
         {
@@ -459,7 +459,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         {
             if (_commandPoolManager == null) return 0.0f;
 
-            // 全統計情報を取得して総合利用率を計算
+            // 蜈ｨ邨ｱ險域ュ蝣ｱ繧貞叙蠕励＠縺ｦ邱丞粋蛻ｩ逕ｨ邇・ｒ險育ｮ・
             var allStats = _commandPoolManager.GetAllStatistics();
             if (allStats.Count == 0) return 0.0f;
 
@@ -472,7 +472,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
                 totalReturns += kvp.Value.TotalReturns;
             }
 
-            // 簡易的な利用率計算（現在使用中のコマンド数 / 取得総数）
+            // 邁｡譏鍋噪縺ｪ蛻ｩ逕ｨ邇・ｨ育ｮ暦ｼ育樟蝨ｨ菴ｿ逕ｨ荳ｭ縺ｮ繧ｳ繝槭Φ繝画焚 / 蜿門ｾ礼ｷ乗焚・・
             int currentlyInUse = totalGets - totalReturns;
             return totalGets > 0 ? currentlyInUse / (float)totalGets : 0.0f;
         }
@@ -516,7 +516,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
     }
 
     /// <summary>
-    /// コマンド統計情報
+    /// 繧ｳ繝槭Φ繝臥ｵｱ險域ュ蝣ｱ
     /// </summary>
     [System.Serializable]
     public struct CommandStatistics
@@ -529,3 +529,5 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         public float PoolUtilization;
     }
 }
+
+

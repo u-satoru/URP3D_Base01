@@ -1,8 +1,8 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using System.Collections;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Bootstrap;
 using asterivo.Unity60.Features.Combat.Services;
 using asterivo.Unity60.Features.Combat.Interfaces;
@@ -11,8 +11,8 @@ using asterivo.Unity60.Features.Combat.Components;
 namespace asterivo.Unity60.Tests.Features.Combat
 {
     /// <summary>
-    /// ServiceLocatorとCombat機能の統合テスト
-    /// GameBootstrapperとの連携を検証
+    /// ServiceLocator縺ｨCombat讖溯・縺ｮ邨ｱ蜷医ユ繧ｹ繝・
+    /// GameBootstrapper縺ｨ縺ｮ騾｣謳ｺ繧呈､懆ｨｼ
     /// </summary>
     [TestFixture]
     public class CombatServiceLocatorIntegrationTests
@@ -23,7 +23,7 @@ namespace asterivo.Unity60.Tests.Features.Combat
         [SetUp]
         public void Setup()
         {
-            // ServiceLocatorをクリア
+            // ServiceLocator繧偵け繝ｪ繧｢
             ServiceLocator.Clear();
         }
 
@@ -213,3 +213,5 @@ namespace asterivo.Unity60.Tests.Features.Combat
         }
     }
 }
+
+

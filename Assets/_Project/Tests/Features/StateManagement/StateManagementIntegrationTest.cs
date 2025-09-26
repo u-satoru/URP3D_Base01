@@ -1,16 +1,16 @@
-using System.Collections;
+﻿using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.StateManagement;
 using asterivo.Unity60.Features.Player;
 
 namespace asterivo.Unity60.Tests.Features.StateManagement
 {
     /// <summary>
-    /// StateManagement機能の統合テスト
-    /// 実際のゲームシナリオでの動作を検証
+    /// StateManagement讖溯・縺ｮ邨ｱ蜷医ユ繧ｹ繝・
+    /// 螳滄圀縺ｮ繧ｲ繝ｼ繝繧ｷ繝翫Μ繧ｪ縺ｧ縺ｮ蜍穂ｽ懊ｒ讀懆ｨｼ
     /// </summary>
     [TestFixture]
     public class StateManagementIntegrationTest
@@ -21,13 +21,13 @@ namespace asterivo.Unity60.Tests.Features.StateManagement
         [SetUp]
         public void Setup()
         {
-            // ServiceLocatorをクリア
+            // ServiceLocator繧偵け繝ｪ繧｢
             ServiceLocator.Clear();
 
-            // StateManagementを初期化
+            // StateManagement繧貞・譛溷喧
             StateManagementBootstrapper.Initialize();
 
-            // テスト用GameObjectを作成
+            // 繝・せ繝育畑GameObject繧剃ｽ懈・
             testObject = new GameObject("TestStateManager");
             stateManager = testObject.AddComponent<StateManager>();
         }
@@ -35,23 +35,23 @@ namespace asterivo.Unity60.Tests.Features.StateManagement
         [TearDown]
         public void TearDown()
         {
-            // テストオブジェクトを破棄
+            // 繝・せ繝医が繝悶ず繧ｧ繧ｯ繝医ｒ遐ｴ譽・
             if (testObject != null)
             {
                 Object.DestroyImmediate(testObject);
             }
 
-            // StateManagementをシャットダウン
+            // StateManagement繧偵す繝｣繝・ヨ繝繧ｦ繝ｳ
             StateManagementBootstrapper.Shutdown();
 
-            // ServiceLocatorをクリア
+            // ServiceLocator繧偵け繝ｪ繧｢
             ServiceLocator.Clear();
         }
 
         [UnityTest]
         public IEnumerator StateManager_Should_Initialize_With_Idle_State()
         {
-            // Start()が実行されるのを待つ
+            // Start()縺悟ｮ溯｡後＆繧後ｋ縺ｮ繧貞ｾ・▽
             yield return null;
 
             // Assert
@@ -62,10 +62,10 @@ namespace asterivo.Unity60.Tests.Features.StateManagement
         [UnityTest]
         public IEnumerator StateManager_Should_Transition_Between_States()
         {
-            // Start()が実行されるのを待つ
+            // Start()縺悟ｮ溯｡後＆繧後ｋ縺ｮ繧貞ｾ・▽
             yield return null;
 
-            // Act - Idle → Walking
+            // Act - Idle 竊・Walking
             stateManager.ChangeState(PlayerState.Walking);
             yield return null;
 
@@ -73,7 +73,7 @@ namespace asterivo.Unity60.Tests.Features.StateManagement
             Assert.AreEqual(PlayerState.Walking, stateManager.CurrentState,
                 "Should transition to Walking state");
 
-            // Act - Walking → Running
+            // Act - Walking 竊・Running
             stateManager.ChangeState(PlayerState.Running);
             yield return null;
 
@@ -81,7 +81,7 @@ namespace asterivo.Unity60.Tests.Features.StateManagement
             Assert.AreEqual(PlayerState.Running, stateManager.CurrentState,
                 "Should transition to Running state");
 
-            // Act - Running → Combat
+            // Act - Running 竊・Combat
             stateManager.ChangeState(PlayerState.Combat);
             yield return null;
 
@@ -93,10 +93,10 @@ namespace asterivo.Unity60.Tests.Features.StateManagement
         [UnityTest]
         public IEnumerator StateManager_Should_Maintain_State_History()
         {
-            // Start()が実行されるのを待つ
+            // Start()縺悟ｮ溯｡後＆繧後ｋ縺ｮ繧貞ｾ・▽
             yield return null;
 
-            // Act - 複数の状態遷移を実行
+            // Act - 隍・焚縺ｮ迥ｶ諷矩・遘ｻ繧貞ｮ溯｡・
             stateManager.ChangeState(PlayerState.Walking);
             yield return null;
 
@@ -106,12 +106,12 @@ namespace asterivo.Unity60.Tests.Features.StateManagement
             stateManager.ChangeState(PlayerState.Jumping);
             yield return null;
 
-            // Assert - 履歴を検証
+            // Assert - 螻･豁ｴ繧呈､懆ｨｼ
             var history = stateManager.StateHistory;
             Assert.IsNotNull(history, "State history should not be null");
             Assert.Greater(history.Count, 0, "State history should have entries");
 
-            // 履歴に期待される状態が含まれているか確認
+            // 螻･豁ｴ縺ｫ譛溷ｾ・＆繧後ｋ迥ｶ諷九′蜷ｫ縺ｾ繧後※縺・ｋ縺狗｢ｺ隱・
             Assert.Contains(PlayerState.Idle, history as System.Collections.ICollection,
                 "History should contain Idle state");
             Assert.Contains(PlayerState.Walking, history as System.Collections.ICollection,
@@ -121,20 +121,20 @@ namespace asterivo.Unity60.Tests.Features.StateManagement
         [UnityTest]
         public IEnumerator StateManager_Should_Revert_To_Previous_State()
         {
-            // Start()が実行されるのを待つ
+            // Start()縺悟ｮ溯｡後＆繧後ｋ縺ｮ繧貞ｾ・▽
             yield return null;
 
-            // Act - 状態遷移を実行
+            // Act - 迥ｶ諷矩・遘ｻ繧貞ｮ溯｡・
             stateManager.ChangeState(PlayerState.Walking);
             yield return null;
 
             stateManager.ChangeState(PlayerState.Running);
             yield return null;
 
-            // 現在の状態を確認
+            // 迴ｾ蝨ｨ縺ｮ迥ｶ諷九ｒ遒ｺ隱・
             Assert.AreEqual(PlayerState.Running, stateManager.CurrentState);
 
-            // Act - 前の状態に戻る
+            // Act - 蜑阪・迥ｶ諷九↓謌ｻ繧・
             stateManager.RevertToPreviousState();
             yield return null;
 
@@ -146,20 +146,20 @@ namespace asterivo.Unity60.Tests.Features.StateManagement
         [UnityTest]
         public IEnumerator StateManager_Should_Skip_Same_State_Transition()
         {
-            // Start()が実行されるのを待つ
+            // Start()縺悟ｮ溯｡後＆繧後ｋ縺ｮ繧貞ｾ・▽
             yield return null;
 
-            // Act - Walking状態に遷移
+            // Act - Walking迥ｶ諷九↓驕ｷ遘ｻ
             stateManager.ChangeState(PlayerState.Walking);
             yield return null;
 
             var historyCountBefore = stateManager.StateHistory.Count;
 
-            // Act - 同じ状態に再度遷移を試みる
+            // Act - 蜷後§迥ｶ諷九↓蜀榊ｺｦ驕ｷ遘ｻ繧定ｩｦ縺ｿ繧・
             stateManager.ChangeState(PlayerState.Walking);
             yield return null;
 
-            // Assert - 履歴が増えていないことを確認
+            // Assert - 螻･豁ｴ縺悟｢励∴縺ｦ縺・↑縺・％縺ｨ繧堤｢ｺ隱・
             Assert.AreEqual(historyCountBefore, stateManager.StateHistory.Count,
                 "History should not change when transitioning to the same state");
         }
@@ -167,25 +167,25 @@ namespace asterivo.Unity60.Tests.Features.StateManagement
         [UnityTest]
         public IEnumerator StateManager_Should_Check_Transition_Availability()
         {
-            // Start()が実行されるのを待つ
+            // Start()縺悟ｮ溯｡後＆繧後ｋ縺ｮ繧貞ｾ・▽
             yield return null;
 
-            // Act & Assert - 登録済み状態
+            // Act & Assert - 逋ｻ骭ｲ貂医∩迥ｶ諷・
             Assert.IsTrue(stateManager.CanTransitionTo(PlayerState.Walking),
                 "Should be able to transition to registered state");
             Assert.IsTrue(stateManager.CanTransitionTo(PlayerState.Combat),
                 "Should be able to transition to registered state");
 
-            // 注: 未登録の状態のテストは、現在の実装では全ての基本状態が登録されているため省略
+            // 豕ｨ: 譛ｪ逋ｻ骭ｲ縺ｮ迥ｶ諷九・繝・せ繝医・縲∫樟蝨ｨ縺ｮ螳溯｣・〒縺ｯ蜈ｨ縺ｦ縺ｮ蝓ｺ譛ｬ迥ｶ諷九′逋ｻ骭ｲ縺輔ｌ縺ｦ縺・ｋ縺溘ａ逵∫払
         }
 
         [UnityTest]
         public IEnumerator StateManager_Should_Handle_Complex_Scenario()
         {
-            // Start()が実行されるのを待つ
+            // Start()縺悟ｮ溯｡後＆繧後ｋ縺ｮ繧貞ｾ・▽
             yield return null;
 
-            // シナリオ: プレイヤーが歩いて、走って、ジャンプして、戦闘に入り、死亡する
+            // 繧ｷ繝翫Μ繧ｪ: 繝励Ξ繧､繝､繝ｼ縺梧ｭｩ縺・※縲∬ｵｰ縺｣縺ｦ縲√ず繝｣繝ｳ繝励＠縺ｦ縲∵姶髣倥↓蜈･繧翫∵ｭｻ莠｡縺吶ｋ
 
             // Act & Assert - Walking
             stateManager.ChangeState(PlayerState.Walking);
@@ -217,7 +217,7 @@ namespace asterivo.Unity60.Tests.Features.StateManagement
             yield return new WaitForSeconds(0.1f);
             Assert.AreEqual(PlayerState.Dead, stateManager.CurrentState);
 
-            // 履歴が正しく記録されているか確認
+            // 螻･豁ｴ縺梧ｭ｣縺励￥險倬鹸縺輔ｌ縺ｦ縺・ｋ縺狗｢ｺ隱・
             var history = stateManager.StateHistory;
             Assert.GreaterOrEqual(history.Count, 5, "Should have multiple states in history");
         }
@@ -235,3 +235,5 @@ namespace asterivo.Unity60.Tests.Features.StateManagement
         }
     }
 }
+
+

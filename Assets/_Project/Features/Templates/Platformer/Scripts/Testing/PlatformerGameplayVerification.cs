@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.Platformer.Services;
 using asterivo.Unity60.Features.Templates.Platformer.Controllers;
 using asterivo.Unity60.Features.Templates.Platformer.Core;
@@ -12,23 +12,23 @@ using asterivo.Unity60.Features.Templates.Platformer.Core;
 namespace asterivo.Unity60.Features.Templates.Platformer.Testing
 {
     /// <summary>
-    /// Platformer Gameplay Verification：15分間ゲームプレイ検証システム
-    /// ServiceLocator + Event駆動アーキテクチャの包括的検証
-    /// Learn & Grow価値実現：迅速な品質保証・自動化テスト・実用性検証
+    /// Platformer Gameplay Verification・・5蛻・俣繧ｲ繝ｼ繝繝励Ξ繧､讀懆ｨｼ繧ｷ繧ｹ繝・Β
+    /// ServiceLocator + Event鬧・虚繧｢繝ｼ繧ｭ繝・け繝√Ε縺ｮ蛹・峡逧・､懆ｨｼ
+    /// Learn & Grow萓｡蛟､螳溽樟・夊ｿ・溘↑蜩∬ｳｪ菫晁ｨｼ繝ｻ閾ｪ蜍募喧繝・せ繝医・螳溽畑諤ｧ讀懆ｨｼ
     /// </summary>
     public class PlatformerGameplayVerification : MonoBehaviour
     {
         [Header("Verification Settings")]
         [SerializeField] private bool _runAutomaticVerification = true;
         [SerializeField] private bool _enablePerformanceMonitoring = true;
-        [SerializeField] private float _verificationDuration = 900f; // 15分 = 900秒
-        [SerializeField] private float _testInterval = 1f; // 1秒間隔でテスト実行
+        [SerializeField] private float _verificationDuration = 900f; // 15蛻・= 900遘・
+        [SerializeField] private float _testInterval = 1f; // 1遘帝俣髫斐〒繝・せ繝亥ｮ溯｡・
 
         [Header("Test Targets")]
         [SerializeField] private PlayerController _playerController;
         [SerializeField] private PlatformerServiceInitializer _serviceInitializer;
-        [SerializeField] private Transform[] _testWaypoints; // テスト用ウェイポイント
-        [SerializeField] private GameObject[] _testCollectibles; // テスト用収集アイテム
+        [SerializeField] private Transform[] _testWaypoints; // 繝・せ繝育畑繧ｦ繧ｧ繧､繝昴う繝ｳ繝・
+        [SerializeField] private GameObject[] _testCollectibles; // 繝・せ繝育畑蜿朱寔繧｢繧､繝・Β
 
         [Header("Performance Thresholds")]
         [SerializeField] private float _targetFPS = 60f;
@@ -41,20 +41,20 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
         [SerializeField] private KeyCode _toggleUIKey = KeyCode.F12;
         [SerializeField] private KeyCode _startTestKey = KeyCode.F11;
 
-        // 検証結果
+        // 讀懆ｨｼ邨先棡
         private VerificationResults _results = new VerificationResults();
         private bool _isVerificationRunning = false;
         private bool _showUI = false;
         private float _verificationStartTime;
         private int _testIterations = 0;
 
-        // パフォーマンス監視
+        // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ逶｣隕・
         private List<float> _fpsHistory = new List<float>();
         private List<float> _memoryHistory = new List<float>();
         private float _lastGCMemory;
         private float _gcAllocAccumulator;
 
-        // ServiceLocator統合
+        // ServiceLocator邨ｱ蜷・
         private IPlatformerPhysicsService _physicsService;
         private IPlatformerInputService _inputService;
         private IPlatformerAudioService _audioService;
@@ -69,17 +69,17 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
 
         private void Start()
         {
-            // コンポーネント自動検出
+            // 繧ｳ繝ｳ繝昴・繝阪Φ繝郁・蜍墓､懷・
             if (_playerController == null)
                 _playerController = FindObjectOfType<PlayerController>();
 
             if (_serviceInitializer == null)
                 _serviceInitializer = FindObjectOfType<PlatformerServiceInitializer>();
 
-            // サービス取得
+            // 繧ｵ繝ｼ繝薙せ蜿門ｾ・
             InitializeServices();
 
-            // 自動検証開始
+            // 閾ｪ蜍墓､懆ｨｼ髢句ｧ・
             if (_runAutomaticVerification)
             {
                 StartVerification();
@@ -110,13 +110,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
 
         private void Update()
         {
-            // UI切り替え
+            // UI蛻・ｊ譖ｿ縺・
             if (Input.GetKeyDown(_toggleUIKey))
             {
                 _showUI = !_showUI;
             }
 
-            // 手動テスト開始
+            // 謇句虚繝・せ繝磯幕蟋・
             if (Input.GetKeyDown(_startTestKey))
             {
                 if (!_isVerificationRunning)
@@ -129,13 +129,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
                 }
             }
 
-            // 検証実行中の処理
+            // 讀懆ｨｼ螳溯｡御ｸｭ縺ｮ蜃ｦ逅・
             if (_isVerificationRunning)
             {
                 UpdateVerification();
             }
 
-            // パフォーマンス監視
+            // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ逶｣隕・
             if (_enablePerformanceMonitoring)
             {
                 MonitorPerformance();
@@ -157,7 +157,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
             _testIterations = 0;
             _results = new VerificationResults();
 
-            // 初期テスト実行
+            // 蛻晄悄繝・せ繝亥ｮ溯｡・
             StartCoroutine(VerificationCoroutine());
         }
 
@@ -173,10 +173,10 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
 
             _isVerificationRunning = false;
 
-            // 最終結果生成
+            // 譛邨らｵ先棡逕滓・
             GenerateFinalResults();
 
-            // イベント発行
+            // 繧､繝吶Φ繝育匱陦・
             OnVerificationCompleted?.Invoke(_results);
 
             Debug.Log($"[PlatformerGameplayVerification] Verification completed. Total test iterations: {_testIterations}");
@@ -186,16 +186,16 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
         {
             while (_isVerificationRunning && (Time.time - _verificationStartTime) < _verificationDuration)
             {
-                // テストケース実行
+                // 繝・せ繝医こ繝ｼ繧ｹ螳溯｡・
                 yield return StartCoroutine(RunTestSuite());
 
                 _testIterations++;
 
-                // インターバル待機
+                // 繧､繝ｳ繧ｿ繝ｼ繝舌Ν蠕・ｩ・
                 yield return new WaitForSeconds(_testInterval);
             }
 
-            // 時間終了による自動停止
+            // 譎る俣邨ゆｺ・↓繧医ｋ閾ｪ蜍募●豁｢
             if (_isVerificationRunning)
             {
                 StopVerification();
@@ -204,34 +204,34 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
 
         private IEnumerator RunTestSuite()
         {
-            // Test 1: Service Locator統合テスト
+            // Test 1: Service Locator邨ｱ蜷医ユ繧ｹ繝・
             yield return StartCoroutine(TestServiceLocatorIntegration());
 
-            // Test 2: プレイヤー制御テスト
+            // Test 2: 繝励Ξ繧､繝､繝ｼ蛻ｶ蠕｡繝・せ繝・
             yield return StartCoroutine(TestPlayerController());
 
-            // Test 3: ジャンプ制御テスト
+            // Test 3: 繧ｸ繝｣繝ｳ繝怜宛蠕｡繝・せ繝・
             yield return StartCoroutine(TestJumpController());
 
-            // Test 4: 物理演算テスト
+            // Test 4: 迚ｩ逅・ｼ皮ｮ励ユ繧ｹ繝・
             yield return StartCoroutine(TestPhysicsService());
 
-            // Test 5: 入力システムテスト
+            // Test 5: 蜈･蜉帙す繧ｹ繝・Β繝・せ繝・
             yield return StartCoroutine(TestInputService());
 
-            // Test 6: オーディオシステムテスト
+            // Test 6: 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β繝・せ繝・
             yield return StartCoroutine(TestAudioService());
 
-            // Test 7: UIシステムテスト
+            // Test 7: UI繧ｷ繧ｹ繝・Β繝・せ繝・
             yield return StartCoroutine(TestUIService());
 
-            // Test 8: コレクションシステムテスト
+            // Test 8: 繧ｳ繝ｬ繧ｯ繧ｷ繝ｧ繝ｳ繧ｷ繧ｹ繝・Β繝・せ繝・
             yield return StartCoroutine(TestCollectionService());
 
-            // Test 9: チェックポイントシステムテスト
+            // Test 9: 繝√ぉ繝・け繝昴う繝ｳ繝医す繧ｹ繝・Β繝・せ繝・
             yield return StartCoroutine(TestCheckpointService());
 
-            // Test 10: Event駆動アーキテクチャテスト
+            // Test 10: Event鬧・虚繧｢繝ｼ繧ｭ繝・け繝√Ε繝・せ繝・
             yield return StartCoroutine(TestEventDrivenArchitecture());
         }
 
@@ -241,7 +241,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
 
             try
             {
-                // サービス初期化確認
+                // 繧ｵ繝ｼ繝薙せ蛻晄悄蛹也｢ｺ隱・
                 bool servicesInitialized = _serviceInitializer != null && _serviceInitializer.IsInitialized;
 
                 if (!servicesInitialized)
@@ -251,7 +251,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
                     yield break;
                 }
 
-                // 各サービスの登録確認
+                // 蜷・し繝ｼ繝薙せ縺ｮ逋ｻ骭ｲ遒ｺ隱・
                 var services = new Dictionary<string, bool>
                 {
                     { "PhysicsService", ServiceLocator.IsServiceRegistered<IPlatformerPhysicsService>() },
@@ -295,7 +295,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
                     yield break;
                 }
 
-                // プレイヤー基本状態確認
+                // 繝励Ξ繧､繝､繝ｼ蝓ｺ譛ｬ迥ｶ諷狗｢ｺ隱・
                 bool isAlive = _playerController.IsAlive;
                 bool hasHealth = _playerController.CurrentHealth > 0;
                 bool hasLives = _playerController.Lives > 0;
@@ -347,7 +347,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
                     yield break;
                 }
 
-                // ジャンプ機能テスト
+                // 繧ｸ繝｣繝ｳ繝玲ｩ溯・繝・せ繝・
                 bool canJump = jumpController.CanJump;
                 bool isGrounded = jumpController.IsGrounded;
                 int maxJumps = jumpController.MaxJumpCount;
@@ -380,7 +380,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
                     yield break;
                 }
 
-                // 物理設定確認
+                // 迚ｩ逅・ｨｭ螳夂｢ｺ隱・
                 float gravity = _physicsService.Gravity;
                 float jumpVelocity = _physicsService.JumpVelocity;
                 float moveSpeed = _physicsService.MoveSpeed;
@@ -417,7 +417,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
                     yield break;
                 }
 
-                // 入力システム確認
+                // 蜈･蜉帙す繧ｹ繝・Β遒ｺ隱・
                 Vector2 movement = _inputService.MovementInput;
                 bool jumpPressed = _inputService.JumpPressed;
 
@@ -446,7 +446,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
                     yield break;
                 }
 
-                // オーディオシステム確認 (実装依存)
+                // 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β遒ｺ隱・(螳溯｣・ｾ晏ｭ・
                 _results.AddSuccess(testName, "Audio service is active");
                 OnTestCaseCompleted?.Invoke(testName);
             }
@@ -472,7 +472,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
                     yield break;
                 }
 
-                // UI更新テスト
+                // UI譖ｴ譁ｰ繝・せ繝・
                 _uiService.UpdateHealthBar(100, 100);
                 _uiService.UpdateScore(0);
                 _uiService.UpdateLives(3);
@@ -502,7 +502,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
                     yield break;
                 }
 
-                // コレクションシステム確認
+                // 繧ｳ繝ｬ繧ｯ繧ｷ繝ｧ繝ｳ繧ｷ繧ｹ繝・Β遒ｺ隱・
                 _results.AddSuccess(testName, "Collection service is active");
                 OnTestCaseCompleted?.Invoke(testName);
             }
@@ -528,7 +528,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
                     yield break;
                 }
 
-                // チェックポイントシステム確認
+                // 繝√ぉ繝・け繝昴う繝ｳ繝医す繧ｹ繝・Β遒ｺ隱・
                 Vector3 checkpointPos = _checkpointService.GetLastCheckpointPosition();
 
                 _results.AddSuccess(testName, $"Checkpoint service active - Last checkpoint: {checkpointPos}");
@@ -549,8 +549,8 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
 
             try
             {
-                // Event駆動テスト（基本的な確認）
-                bool eventsWorking = true; // 実際の実装では具体的なイベントテストを行う
+                // Event鬧・虚繝・せ繝茨ｼ亥渕譛ｬ逧・↑遒ｺ隱搾ｼ・
+                bool eventsWorking = true; // 螳滄圀縺ｮ螳溯｣・〒縺ｯ蜈ｷ菴鍋噪縺ｪ繧､繝吶Φ繝医ユ繧ｹ繝医ｒ陦後≧
 
                 if (eventsWorking)
                 {
@@ -577,7 +577,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
             float elapsedTime = Time.time - _verificationStartTime;
             float remainingTime = _verificationDuration - elapsedTime;
 
-            // 進捗更新
+            // 騾ｲ謐玲峩譁ｰ
             _results.ElapsedTime = elapsedTime;
             _results.RemainingTime = Mathf.Max(0, remainingTime);
             _results.ProgressPercentage = (elapsedTime / _verificationDuration) * 100f;
@@ -585,31 +585,31 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
 
         private void MonitorPerformance()
         {
-            // FPS監視
+            // FPS逶｣隕・
             float currentFPS = 1f / Time.unscaledDeltaTime;
             _fpsHistory.Add(currentFPS);
-            if (_fpsHistory.Count > 60) // 直近60フレーム
+            if (_fpsHistory.Count > 60) // 逶ｴ霑・0繝輔Ξ繝ｼ繝
                 _fpsHistory.RemoveAt(0);
 
-            // メモリ監視
+            // 繝｡繝｢繝ｪ逶｣隕・
             float currentMemoryMB = (UnityEngine.Profiling.Profiler.GetTotalAllocatedMemory() / 1024f / 1024f);
             _memoryHistory.Add(currentMemoryMB);
             if (_memoryHistory.Count > 60)
                 _memoryHistory.RemoveAt(0);
 
-            // GC Allocation監視
+            // GC Allocation逶｣隕・
             float gcDelta = currentMemoryMB - _lastGCMemory;
             if (gcDelta > 0)
                 _gcAllocAccumulator += gcDelta;
             _lastGCMemory = currentMemoryMB;
 
-            // パフォーマンス結果更新
+            // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ邨先棡譖ｴ譁ｰ
             _results.AverageFPS = _fpsHistory.Count > 0 ? _fpsHistory[_fpsHistory.Count - 1] : 0;
             _results.MinFPS = _fpsHistory.Count > 0 ? Mathf.Min(_fpsHistory.ToArray()) : 0;
             _results.MaxMemoryMB = _memoryHistory.Count > 0 ? Mathf.Max(_memoryHistory.ToArray()) : 0;
             _results.GCAllocPerSecond = _gcAllocAccumulator / Time.time;
 
-            // 閾値チェック
+            // 髢ｾ蛟､繝√ぉ繝・け
             if (currentFPS < _minAcceptableFPS)
                 _results.AddWarning("Performance", $"FPS below acceptable threshold: {currentFPS:F1}");
             if (currentMemoryMB > _maxMemoryMB)
@@ -621,14 +621,14 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
             _results.TotalTestIterations = _testIterations;
             _results.OverallSuccess = _results.Failures.Count == 0 && _results.Errors.Count == 0;
 
-            // パフォーマンス総合評価
+            // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ邱丞粋隧穂ｾ｡
             bool performancePass = _results.MinFPS >= _minAcceptableFPS &&
                                  _results.MaxMemoryMB <= _maxMemoryMB &&
                                  _results.GCAllocPerSecond <= _maxGCAlloc;
 
             _results.PerformancePass = performancePass;
 
-            // 最終レポート生成
+            // 譛邨ゅΞ繝昴・繝育函謌・
             string report = GenerateReport();
             _results.FinalReport = report;
 
@@ -734,7 +734,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
     }
 
     /// <summary>
-    /// 検証結果データ構造
+    /// 讀懆ｨｼ邨先棡繝・・繧ｿ讒矩
     /// </summary>
     [System.Serializable]
     public class VerificationResults
@@ -746,13 +746,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
         public bool OverallSuccess;
         public bool PerformancePass;
 
-        // パフォーマンス結果
+        // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ邨先棡
         public float AverageFPS;
         public float MinFPS;
         public float MaxMemoryMB;
         public float GCAllocPerSecond;
 
-        // テスト結果
+        // 繝・せ繝育ｵ先棡
         public List<string> Successes = new List<string>();
         public List<string> Failures = new List<string>();
         public List<string> Errors = new List<string>();
@@ -781,3 +781,5 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Testing
         }
     }
 }
+
+

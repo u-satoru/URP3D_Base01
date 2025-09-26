@@ -1,35 +1,416 @@
-﻿# Repository Guidelines
+﻿# AGENT.md
 
-## Project Structure & Module Organization
-- Source lives under `Assets/_Project`: `Core` holds shared services (ServiceLocator, GameEvent, Command pipeline), `Features` layers gameplay systems, and `Features/Templates` store canonical sample implementations to reference not fork.
-- Scene and sandbox assets sit in `Assets/_Project/Scenes`, `_Sandbox`, and `Samples`; shared documentation sits in `Assets/_Project/Docs` with living notes in `Docs/Works`.
-- Automated tests mirror runtime layout in `Assets/_Project/Tests/<Domain>/<Editor|Runtime>`; Unity-generated outputs under root `Library/`, `Logs/`, and `Tests/Results/` are disposable and should stay untracked.
+ **じっくり考えて**
 
-## Build, Test, and Development Commands
-- Open the project with Unity 6000.0.42f1 via Hub or `& "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Unity.exe" -projectPath "%cd%"` to hydrate packages.
-- Batch edit-mode regression pass: `& "<UnityPath>\Unity.exe" -projectPath "%cd%" -batchmode -quit -runTests -testPlatform EditMode -testResults Assets/_Project/Tests/Results/editmode-results.xml`.
-- Add play-mode coverage by switching `-testPlatform PlayMode`; keep XML and log outputs inside `Assets/_Project/Tests/Results`.
-- Run the Architecture Compliance scanner inside the editor (`Tools > Architecture > Compliance Checker`) and `pwsh -File backup_project.ps1` before invasive refactors to snapshot the working tree.
+これは **Unity 6で作成された3Dゲームプロジェクトのベーステンプレート** です。 Universal Render Pipeline (URP) を使用しています。
 
-## Coding Style & Naming Conventions
-- Follow the Allman brace style with four-space indents; align with `Assets/_Project/Docs/CODING_CONVENTIONS.md`.
-- Root namespaces begin at `asterivo.Unity60.*`; features must not depend directly on other features, and templates never reach into `_Project.*`.
-- Classes, enums, and constants use `PascalCase`; interfaces prefix `I`; private fields stay `_camelCase`; locals are `camelCase`.
-- Prefer explicit types unless right-hand side is a constructor; expose serialized state with `[SerializeField] private` fields and document every public API with XML comments that explain intent.
+## 概要
 
-## Testing Guidelines
-- Place unit-level coverage for infrastructure in `Assets/_Project/Tests/Core/Editor`; gameplay behaviours belong in the corresponding `Features/<Feature>/Editor` or `Runtime` folders.
-- Mirror namespace paths when naming fixtures and suffix files with `Tests`; avoid multi-responsibility suites.
-- When submitting work, attach the relevant `Tests/Results/*.xml` or summary log and note any skipped suites; unexpected failures should be recorded in `Assets/_Project/Logs`.
+このプロジェクトは、*Service Locator + Event駆動のハイブリッドアーキテクチャ（最重要）とコマンドパターンを組み合わせた、拡張性の高い3Dゲームの基盤を提供します。Scriptable Objectを活用し、データとロジックの分離を促進することで、効率的な開発とメンテナンスを目的としています。
 
-## Commit & Pull Request Guidelines
-- Keep commits single-purpose with concise titles (`Core: tighten ServiceLocator caching`); the existing history mixes English and Japanese - match the dominant style of the area you touch.
-- Reference the related entry in `TASKS.md` or external ticket in the PR description, list the validation you performed, and include screenshots or short clips for visual updates.
-- PRs should call out architecture impacts, new assets, and any manual setup required so downstream template consumers can reproduce the change.
-- Before requesting review, ensure the compliance checker and at least one automated test pass are green; flag known gaps explicitly.
+## 制作想定ゲーム
 
-## Environment & Configuration Tips
-- Unity version is pinned to `6000.0.42f1` with URP; install the Windows, Android, and iOS build modules if you serialize platform-specific assets.
-- Keep `Packages/manifest.json` and `.asmdef` files authoritative; never hand-edit the generated `.csproj` files.
-- Scripts assume Windows PowerShell (`pwsh`); if you contribute from macOS/Linux, mirror the directory casing and update only cross-platform-safe tooling.
+- **シングルプレイゲーム**
+- ステルスアクションゲーム
+- サバイバルホラーゲーム
+- 3Dプラットフォーマー
+- TPS/FPSゲーム(一人称視点/三人称視点、キャラクター切り替え可能)
+- アクションRPG
+- アドベンチャーゲーム
+
+## 対応プラットフォーム
+- iOS
+- Android
+- Windows
+
+## 主な機能
+
+- **ServiceLocator + Event駆駆動のハイブリッドアーキテクチャ(最重要)**:グローバルサービスへのアクセスとイベントベースの通信を組み合わせたハイブリッドアプローチ。
+- **3層構造 (`Core` ← `Feature` ← `Template`) (最重要)**
+  - プロジェクト全体の関心事を3つの層に分離し、`Core` ← `Feature` ← `Template` という一方向の依存関係を徹底することで、高い再利用性と拡張性を実現します。
+  - **`Core`層 (ゲームのOS)**: ジャンルを問わない普遍的な「仕組み」を提供します。イベントシステム、コマンドパターン、ServiceLocatorなど、プロジェクトの根幹をなすシステムがここに配置されます。
+  - **`Feature`層 (ゲームのアプリケーション)**: `Core`層の仕組みを利用して作られた、具体的なゲーム機能の「部品」です。プレイヤーの移動、AIの視覚センサー、武器システムなど、単体で機能するモジュールがここに属します。
+  - **`Template`層 (ゲームのドキュメント)**: `Feature`層の部品を組み合わせて、特定のゲームジャンル（ステルス、FPSなど）の「ひな形」を構築します。主にシーン、設定済みプレハブ、バランス調整用のScriptableObjectで構成され、ゲームデザイナーの作業領域となります。
+- **イベント駆動型アーキテクチャ**: `GameEvent` を介したコンポーネント間の疎結合な連携。
+- **階層化ステートマシン (HSM)**: 複雑な状態管理を可能にする階層化ステートマシンの実装。
+- **Commandパターン**: ゲーム内のアクション（例：ダメージ、回復）をオブジェクトとしてカプセル化し、再利用と管理を容易にします。
+- **Observerパターン**: 状態変化を監視し、関連コンポーネントに通知する仕組み。
+- **ObjectPool最適化**: 頻繁に作成・破棄されるコマンドオブジェクトをプール化し、メモリ効率とパフォーマンスを大幅に向上させます（95%のメモリ削減効果）。
+- **Scriptable Objectベースのデータ管理**: キャラクターのステータスやアイテム情報などをアセットとして管理。
+- **Strategyパターン**: アルゴリズムのファミリーを定義し、カプセル化して相互に置き換え可能にする。
+- **Factory+Registryパターン**: オブジェクト生成をFactory、管理をRegistryで分離。
+- **Lifecycle Managementパターン**: オブジェクトの生成・使用・破棄を一元管理。
+- **3Dサウンドシステム**: 3D空間オーディオ、NPCの聴覚センサー、動的環境サウンド、オーディオマスキング機能を含む包括的な音響システム。
+- **基本的なプレイヤー機能**: 移動やインタラクションの基盤。
+- **エディタ拡張**: コマンドの発行やイベントの流れを視覚化するカスタムウィンドウ。
+
+## アーキテクチャとデザインパターン
+
+このプロジェクトでは、主に以下のアーキテクチャとデザインパターンが採用されています。
+
+1.  **3層アーキテクチャ (`Core` ← `Feature` ← `Template`) (最重要)**
+    *   プロジェクト全体の関心事を3つの層に分離し、`Core` ← `Feature` ← `Template` という一方向の依存関係を徹底することで、高い再利用性と拡張性を実現します。
+    *   **`Core`層 (ゲームのOS)**: ジャンルを問わない普遍的な「仕組み」を提供します。イベントシステム、コマンドパターン、ServiceLocatorなど、プロジェクトの根幹をなすシステムがここに配置されます。
+    *   **`Feature`層 (ゲームのアプリケーション)**: `Core`層の仕組みを利用して作られた、具体的なゲーム機能の「部品」です。プレイヤーの移動、AIの視覚センサー、武器システムなど、単体で機能するモジュールがここに属します。
+    *   **`Template`層 (ゲームのドキュメント)**: `Feature`層の部品を組み合わせて、特定のゲームジャンル（ステルス、FPSなど）の「ひな形」を構築します。主にシーン、設定済みプレハブ、バランス調整用のScriptableObjectで構成され、ゲームデザイナーの作業領域となります。
+
+2.  **Service Locator + Event駆動のハイブリッドアプローチ**:
+    *   主に **`Core`層** で実装されている中核的なパターンです。`ServiceLocator` を通じて `AudioManager` や `InputManager` などのグローバルサービスにアクセスし、`GameEvent` を通じて各層 (`Core`, `Feature`, `Template`) が疎結合に連携します。
+    *   サービスロケーターを使用して、アプリケーション全体で共有されるサービス（例：オーディオマネージャー、ゲームマネージャーなど）へのアクセスを提供します。
+    *   これにより、依存関係の注入が不要になり、コードの可読性と保守性が向上します。イベント駆動型アーキテクチャと組み合わせることで、サービス間の疎結合な通信も実現しています。
+    *   またこれらのパターンを組み合わせることで、関心事の分離が促進され、拡張性、再利用性、メンテナンス性の高い構造を目指しています。
+    *   例えば、オーディオシステムはサービスロケーターを通じてアクセスされ、ゲーム内の様々なイベント（例：プレイヤーがダメージを受けた、アイテムを取得したなど）に応じて動的にサウンドを再生します。
+    *   また、ゲームマネージャーはサービスロケーターを介してアクセスされ、ゲームの状態変更（例：ゲーム開始、ゲームオーバーなど）に応じて適切な処理を実行します。
+    *   これらのサービスは、イベントチャネルを通じて他のコンポーネントと通信し、疎結合な設計を実現しています。
+    *   これにより、各コンポーネントは他のコンポーネントの詳細を知らなくても、必要なサービスにアクセスし、イベントに応じた動作を行うことができます。
+
+
+3.  **イベント駆動型アーキテクチャ (Event-Driven Architecture)**:
+    *   コンポーネント間の結合を疎にするため、`ScriptableObject` をベースにしたイベントチャネル（`GameEvent`）を使用しています。
+    *   これにより、あるオブジェクトが別のオブジェクトを直接参照することなく、イベントの発行と購読を通じて通信できます。例えば、プレイヤーがダメージを受けたとき、「PlayerDamaged」イベントが発行され、UIやサウンドシステムがそれをリッスンして各自の処理を行います。
+
+
+4.  **コマンドパターン (Command Pattern)**:
+    *   ゲーム内で行われる操作（例: 攻撃、回復、アイテム使用）を「コマンド」というオブジェクトとしてカプセル化しています。
+    *   これにより、操作の実行、取り消し（Undo）、再実行（Redo）、遅延実行、キューイングなどが容易になります。`ICommand` インターフェースとそれを実装した具体的なコマンドクラス（`DamageCommand`, `HealCommand`など）がこれにあたります。
+
+5.  **ObjectPool最適化パターン (Object Pool Pattern)**:
+    *   頻繁に作成・破棄されるコマンドオブジェクトを事前作成したプールから再利用することで、メモリ確保コストとガベージコレクションを大幅に削減します。
+    *   `CommandPool`が中央管理し、`IResettableCommand`インターフェースによって状態リセット可能なコマンドの安全な再利用を実現します。測定結果では95%メモリ使用量削減と67%の実行速度改善を達成しています。
+
+6.  **ScriptableObjectベースのデータ駆動設計**:
+    *   キャラクターのステータス、アイテムのスペック、イベント定義など、多くのゲームデータを `ScriptableObject` として作成し、アセットとして管理しています。
+    *   これにより、プログラマー以外のチームメンバー（ゲームデザイナーなど）も、コードを触ることなくゲームのバランス調整やデータ編集が可能になります。
+
+7.  **階層化されたState パターン**:
+    *   キャラクターやオブジェクトの状態管理に使用されます。各状態（例: 待機、移動、攻撃、死亡など）を個別のクラスとして実装し、状態遷移を明確に管理します。
+    *   キャラクターの状態（待機、歩行、攻撃中など）を個別のクラスとして管理するために使用が推奨されています。（`StatePattern_Migration_Guide.md`より）
+
+8.  **Strategy パターン**:
+    *   アルゴリズムのファミリーを定義し、それぞれをカプセル化して相互に置き換え可能にするために使用されます。これにより、アルゴリズムの変更が容易になり、クライアントコードは具体的なアルゴリズムに依存しなくなります。
+
+9.  **Factory+Registry パターン**:
+    *   オブジェクトの生成を担当するファクトリーと、生成されたオブジェクトを管理するレジストリを組み合わせることで、柔軟で拡張性のあるシステムを構築します。これにより、新しいオブジェクトタイプの追加が容易になり、依存関係の管理が改善されます。
+
+10. **Lifecycle Management パターン**:
+    *   オブジェクトのライフサイクル（生成、使用、破棄）を管理するためのパターンです。これにより、リソースの効率的な使用とメモリリークの防止が可能になります。
+
+11. **Delegate パターン**:
+    *   関数ポインタのように振る舞うオブジェクトを使用して、メソッドの呼び出しをカプセル化します。これにより、コールバックやイベントハンドリングが柔軟に行えます。
+
+## アーキテクチャ制約
+
+- **Dependency Injection (DI) フレームワークは使用しない**。
+
+## 技術仕様
+
+- **Unity Version**: `6000.0.42f1`
+- **Unity Editor Path**: `C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Unity.exe`
+- **Render Pipeline**: Universal Render Pipeline (URP)
+- **Scripting Backend**: Mono
+- **API Compatibility Level**: .NET Standard 2.1
+
+## 開発環境要件
+
+- **Command Line Interface**: PowerShell 7を使用してください。従来のコマンドプロンプト（cmd）ではなく、PowerShell 7を推奨します。これにより、最新のコマンドレット機能とUnity CLIツールとの互換性が向上します。
+- **タイムゾーン**: 日本標準時 (JST, UTC+9)
+- **日付形式**: `YYYYMMDD_HHMM`（例: `20231005_1430`）
+- **バッチモードコンパイル**: **バッチモードコンパイル前には、起動している Unity Editor インスタンスを確認し終了してください。**
+
+## ディレクトリ構成
+
+-   `Assets/_Project/Core`: **【Core層】** ゲームのコアロジック。ジャンル非依存の普遍的な仕組みを配置します。
+-   `Assets/_Project/Features`: **【Feature層】** 各機能の実装。`Core`層を基盤とした、再利用可能なゲーム機能の「部品」を配置します。
+-   `Assets/_Project/Features/Templates`: **【Template層】** ゲームジャンルのひな形。`Feature`層の機能を組み合わせたシーン、プレハブ、データアセットを配置します。
+    -   `Assets/_Project/Features/Templates/[ジャンル名]`: 各ジャンル（Stealth, Platformerなど）に特化したアセットを格納します。
+    -   `Assets/_Project/Features/Templates/Common`: 複数のテンプレートで共有するアセットを格納します。
+-   `Assets/_Project/Tests`: ユニットテストとプレイモードテスト。`Core`, `Feature` 層のロジックをテストするコードを配置します。
+-   `Assets/_Project/Scenes`: **[廃止予定]** シーンは原則として `Template` 層 (`Assets/_Project/Features/Templates/[ジャンル名]/Scenes`) に配置します。
+-   `Assets/_Project/Logs` : システムログファイル。 **ログファイルは必ずここに配置してください**。
+-   `Assets/_Project/Docs`: プロジェクト関連のドキュメント。 **ドキュメントは必ずここに配置してください**。
+-   `Assets/_Project/Docs/Works`: 作業報告フォルダ（YYYYMMDD_HHMM）でフォルダを作成し、 @SPEC.md、@REQUIREMENTS.md、@DESIGN.md、@TASKS.md、@TODO.md など、各ファイルのスナップショットを保管します。 作業報告は `WORKS_LOG.md` に記録してください。 **作業報告は必ずここに配置してください**。
+-   `Assets/_Project/ThirdParty`: サードパーティ製アセットのラッピング。
+-   `Assets/Plugins`: サードパーティ製アセット。 **直接編集しないでください**。
+
+## スペック駆動開発（SDD）の実践
+
+このプロジェクトでは、AIツールと連携したスペック駆動開発（SDD）を推奨しています。SDDは人間の意図を段階的に機械実行可能な命令に変換するパイプラインとして機能します。
+
+### SDD Markdownファイル構成
+
+#### プロジェクトルート配置（基盤仕様書）
+- `SPEC.md` - 初期構想・要件定義（人間作成） : @SPEC.md
+- `REQUIREMENTS.md` - 形式化された要件（AI生成） : @REQUIREMENTS.md
+- `DESIGN.md` - 技術設計書（AI生成） : @DESIGN.md
+- `TASKS.md` - 実装タスク一覧（AI生成） : TASKS.md
+- `TODO.md` - 進行中タスク管理（人間作成）
+
+
+#### 作業ディレクトリ配置（実装管理）
+- `Assets/_Project/Docs/Works/` - 作業ログ保管庫（日時フォルダ（YYYYMMDD_HHMM）で、`SPEC.md`、`REQUIREMENTS.md`、`DESIGN.md`、`TASKS.md`、`TODO.md`など、各ファイルのスナップショットを保管します）。
+
+### SDD 5つのフェーズ
+1. **構想**（SPEC.md） - 高レベルビジョンの定義
+2. **形式化**（REQUIREMENTS.md） - 構造化された要件定義
+3. **設計**（DESIGN.md） - 技術的実装戦略
+4. **分解**（TASKS.md） - 実行可能なタスクリスト
+5. **実装・検証** - AIによるコード生成と品質保証
+
+### Claude Code連携
+各フェーズでClaude Codeと効果的に連携し、以下のようなワークフローを実現：
+- `/spec-create` - SPEC.mdからREQUIREMENTS.mdを生成
+- `/design-create` - REQUIREMENTS.mdからDESIGN.mdを生成
+- `/tasks-create` - DESIGN.mdからTASKS.mdを生成
+- `/todo-execute` - TODO.mdの最高優先度タスクを実行
+- `/create-test` - 実装コードからユニットテストを生成
+
+詳細は [`Assets/_Project/Docs/SDD_Markdown作成実践ガイド.md`](Assets/_Project/Docs/SDD_Markdown作成実践ガイド.md) を参照してください。
+
+## **MCPサーバー優先順位付けのための戦略的フレームワーク**
+
+### **1. MCPサーバー機能と制御レベルの比較概要**
+
+このセクションでは、第II部の分析を統合し、アーキテクトが一目で参照できる明確な要約表を提示します。
+
+**表1.1: MCPサーバーの能力と優先順位付けマトリクス**
+
+| サーバー | 主な役割 | データスコープ | 制御レベル | 主要ユースケース | 解決する主要課題 |
+| :---- | :---- | :---- | :---- | :---- | :---- |
+| ddg-serch | リアルタイムウェブ検索 | グローバルインターネット（非構造化） | **読み取り専用**（情報検索） | 一般知識の質問、最新情報の検索 | 知識のカットオフとリアルタイム性 |
+| context7 | 技術文書検索 | 公開コードライブラリ（構造化） | **読み取り専用**（情報検索） | 正確で最新のコード記述、API利用のデバッグ | コードのハルシネーションとドキュメントの陳腐化 |
+| deepwiki | コードベース分析 | 特定のGitリポジトリ（意味的） | **読み取り専用**（情報検索） | 新規プロジェクトへの参加、複雑なアーキテクチャの理解 | コードベースの理解とオンボーディングの摩擦 |
+| github | GitHub API操作 | GitHubリポジトリメタデータ（issues、PRs、コミット履歴） | **読み書き**（リポジトリ操作） | Issue/PR作成・管理、コード検索、リポジトリ操作、ブランチ管理 | GitHub UIを介さない効率的な開発ワークフロー自動化 |
+| git | バージョン管理 | ローカル/リモートリポジトリ | **読み書き**（状態変更） | コードコミットの自動化、ブランチ管理、パッチ適用 | 手動でのバージョン管理とコード統合 |
+| blender-mcp | 3Dコンテンツ制作 | Blenderアプリケーションの状態 | **読み書き**（アプリケーション制御） | 自然言語からの3Dアセットのプロシージャル生成 | 3Dモデリングの高い技術的障壁 |
+| Unity-MCP | ゲーム開発 | Unity Editorの状態 | **読み書き**（アプリケーション制御） | レベルデザインの自動化、ゲームアセット管理、テスト実行 | 反復的/手動のゲーム開発タスク |
+
+この表は、エージェントのアーキテクトが直面する「特定のサブタスクに適したツールはどれか？」という複雑な決定を支援します。単なる機能リストではなく、複数の戦略的な軸に沿ってツールを比較する視点を提供します。「制御レベル」の列は、安全な読み取り専用サーバーと、強力だがリスクの高い読み書きサーバーを即座に区別します。「データスコープ」の列は、各サーバーが提供する情報の粒度を明確にします。「解決する主要課題」の列は、各サーバーの価値提案を特定のペインポイントの観点から捉えます。これにより、アーキテ...
+
+### **2. MCPサーバ優先順位付けのカスケード：多層的な意思決定モデル**
+
+これは、ユーザーの「 **しっかり考えて** 」優先度を教えてほしいという要求に答えるための中心的なフレームワークです。構造化されたトップダウンの意思決定プロセスを提示します。
+
+#### **レイヤー1：タスクドメインの定義（エージェントの高レベルな目標は何か？）**
+
+* **知識獲得:** 情報を学習または検索することが目標です。
+  * **人間の優先度:** ddg-serch, context7, deepwiki。
+  * **AIの優先度:** 1. ddg-serch (最新かつ広範な情報を得るため)、2. context7 (技術的な正確性を確保するため)、3. deepwiki (特定のコードベースを深く理解するため)。AIは通常、広い文脈から具体的な情報へと絞り込んでいきます。
+* **ソフトウェア開発:** コードの記述、修正、または管理が目標です。
+  * **人間の優先度:** github, git, context7, deepwiki。
+  * **AIの優先度:** 1. context7/deepwiki (変更を加える前に、正確な情報とコードベースの理解を深めるため)、2. github (Issue/PRでのコラボレーション、コード検索、リポジトリ操作)、3. git (計画に基づき、実際にコードを変更するため)。AIは行動を起こす前に、まず状況を完全に把握し、GitHub上でのコラボレーションを考慮することを優先します。
+* **クリエイティブ制作:** デジタルアセット（3Dモデル、ゲームレベル）の作成が目標です。
+  * **人間の優先度:** blender-mcp, unityMCP。
+  * **AIの優先度:** blender-mcpまたはunityMCPがタスクの中心となります。AIは、与えられた指示を実行するために、これらのサーバーを直接的かつ継続的に使用します。
+  * **ユースケース別AI優先度（3Dゲーム制作）:**
+    1. **unityMCP (最高):** ゲームエンジン内での直接的な操作が最優先されます。AIはシーンの状態確認 (get_editor_state) とコマンド実行 (execute_editor_command) を繰り返し、アセットの配置、レベルデザイン、コンポーネントの調整などを自律的に行います。
+    2. **blender-mcp (高):** Unityにインポートするカスタム3Dモデルやアセットを制作するために使用されます。AIは自然言語の指示からプロシージャルにアセットを生成します。
+    3. **context7 (高):** UnityのAPI、C#スクリプティング、または特定のプラグインに関する正確な技術情報を取得するために不可欠です。これにより、AIが生成するコードの品質と正確性が保証されます。
+    4. **github (中-高):** プロジェクトのIssue管理、バグレポート、機能要求の追跡、他の開発者とのPRを通じたコラボレーションを行います。AIはプロジェクト進行状況をGitHub上で可視化し、チーム開発を支援します。
+    5. **git (中):** 作成されたゲームアセット、シーンファイル、スクリプトのバージョン管理を行います。AIはタスクの節目で変更をコミットし、プロジェクトの整合性を保ちます。
+    6. **ddg-serch (低):** 新しいアセットストアの検索、特定のエラーに関するコミュニティの解決策の調査、または一般的なデザインのインスピレーションを得るために補助的に使用されます。
+
+#### **レイヤー2：情報の具体性の判断（必要な知識の粒度はどの程度か？）**
+
+* **グローバル＆リアルタイム:** 最新の出来事や一般的なトピック向け。
+  * **人間の優先度:** ddg-serch。
+  * **AIの優先度:** **最高。** タスクの初期段階で、AIはまずddg-serchを使い、現状の把握や一般的な情報収集を行います。これは、あらゆるタスクの出発点となります。
+* **公開＆技術的:** 特定の公開ライブラリやAPIの使用向け。
+  * **人間の優先度:** context7。
+  * **AIの優先度:** **高。** ddg-serchでの調査後、特にソフトウェア開発タスクにおいて、AIはcontext7を利用して信頼性の高い技術情報を取得し、ハルシネーションを避けます。
+* **プライベート＆アーキテクチャ的:** 特定のコードベースの内部動作の理解向け。
+  * **人間の優先度:** deepwiki。
+  * **AIの優先度:** **中〜高。** 特定のコードベースに対する変更や分析が求められる場合、AIはdeepwikiを優先的に使用し、コードの構造や依存関係を正確に理解しようとします。
+
+#### **レイヤー3：制御の所在の評価（エージェントは読み取り（READ）または書き込み（WRITE）が必要か？）**
+
+これは、セキュリティと能力に関する最も重要な区別です。
+
+* **読み取り専用（情報収集）:** リスクが低く、コンテキストを提供するために使用されます。
+  * **人間の優先度:** ddg-serch, context7, deepwiki。これらは情報探索タスクのデフォルトとすべきです。
+  * **AIの優先度:** **常に最優先。** AIエージェントは、状態を変更するアクション（書き込み）を実行する前に、まず読み取り専用サーバーを使用して可能な限り多くの情報を収集し、状況を完全に理解しようとします。これは、安全で効果的なタスク遂行のための基本原則です。
+* **読み書き（状態変更）:** リスクが高く、明示的なユーザーの同意が必要です。アクションを実行するために使用されます。
+  * **人間の優先度:** github, git, blender-mcp, unityMCP。これらはエージェントの目標が明確に何かを変更することである場合にのみ有効にすべきです。
+  * **AIの優先度:** **計画後の段階で優先。** AIは、情報収集と分析に基づいて詳細な実行計画を立てた後、ユーザーの承認を得てから初めて書き込み操作を行います。GitHubでのIssue/PR作成・更新、ローカルコード変更、アプリケーション制御など、自律的な意思決定による予期せぬ変更を避けるため、このステップは慎重に扱われます。
+
+#### **レイヤー4：環境の複雑性の評価（エージェントは何と対話しているか？）**
+
+* **テキスト/データ:** 単純な構造化または非構造化データ。
+  * **人間の優先度:** ddg-serch, context7, github, git。
+  * **AIの優先度:** **高。** これらのサーバーは基本的な情報収集とコード操作の基盤であり、多くのタスクで頻繁に使用されます。GitHubのIssue/PRテキスト処理、メタデータ管理も含め、AIはこれらの比較的単純な対話を通じて、より複雑なタスクの準備をします。
+* **ステートフルなアプリケーション:** 独自の内部状態、UI、ロジックを持つ複雑なアプリケーション。
+  * **人間の優先度:** blender-mcp, unityMCP。これらのサーバーはより強力ですが、より複雑なプロンプトやエラーハンドリングが必要になる場合があります。
+  * **AIの優先度:** **タスク特化型で高。** クリエイティブ制作のような特定のタスクでは、これらのサーバーが中心的な役割を果たします。AIは、get_editor_stateのようなツールで現在の状態を頻繁に確認し、execute_editor_commandで少しずつ変更を加えるという、観察と行動のループを繰り返します 32。
+
+#### **レイヤー5：セキュリティとガバナンスの態勢の考慮（「影響範囲」はどの程度か？）**
+
+* **個人/開発者ワークフロー:** セキュリティ制約が低い。
+  * **人間の優先度:** ローカルのgitサーバー、githubサーバー、blender-mcpは許容されます。
+  * **AIの優先度:** AIは環境の制約を認識しますが、この環境では幅広いツールを自由に利用してタスクの解決を試みます。GitHubサーバーを使用する際は、パブリックリポジトリでの情報開示に注意し、プライベートリポジトリでの適切なアクセス制御を確保します。ただし、それでもなお、破壊的な操作の前にはユーザーの確認を求めることが推奨される設計となります。
+
+## 主要なパッケージ
+
+-   `com.unity.render-pipelines.universal`: Universal Render Pipeline
+-   `com.unity.inputsystem`: 新しい入力システム
+-   `com.unity.cinemachine`: 高度なカメラ制御
+-   `com.unity.ai.navigation`: ナビゲーションと経路探索
+-   `com.unity.test-framework`: ユニットテストとプレイモードテスト
+-   `com.unity.timeline`: タイムラインとカットシーン制御
+-   `com.unity.addressables`: アセット管理と動的ロード
+-   `com.unity.probuilder`: 3Dモデリングとレベルデザイン
+-   `UniTask`: 非同期プログラミングライブラリ（[Cysharp](https://github.com/Cysharp/UniTask)）
+
+## サードパーティ製アセット/ライブラリ
+-   `UniTask`: 非同期プログラミングライブラリ（[Cysharp](https://github.com/Cysharp/UniTask)）
+-   `DOTween Pro`: 高度なアニメーションとタイムライン制御（[Demigiant](http://dotween.demigiant.com/)）
+-   `Odin Inspector`: エディタ拡張とカスタムインスペクタ（[Sirenix](https://odininspector.com/)）
+-   `Odin Serializer`: 高度なシリアライゼーション（[Sirenix](https://odininspector.com/)）
+-   `Odin Validator`: データ検証ツール（[Sirenix](https://odininspector.com/)）
+
+## **注意事項**
+- **コーディング規約の遵守**: 新しいコードを記述する際やリファクタリングを行う際は、必ず [`CODING_CONVENTIONS.md`](Assets/_Project/Docs/CODING_CONVENTIONS.md) に記載された規約を遵守してください。
+- **Core層インターフェース設計ガイドラインの遵守**: Core層のインターフェースを設計・実装する際は、[`CORE_INTERFACE_DESIGN_GUIDELINES.md`](Assets/_Project/Docs/CORE_INTERFACE_DESIGN_GUIDELINES.md) の原則を必ず遵守してください。
+- **ユニットテスト実装ガイドラインの遵守**: 新規機能の実装やバグ修正を行う際は、必ず [`UNIT_TESTING_GUIDELINES.md`](Assets/_Project/Docs/UNIT_TESTING_GUIDELINES.md) に従ってテストを記述してください。
+- **新しい機能は必ず `Assets/_Project/Features` に追加**: 新しい機能やモジュールは必ず `Assets/_Project/Features` に追加してください。**機能コードはCoreに混在させないでください**。これにより、コードベースの可読性と保守性が向上します。
+- **テストケースを必ず作成**: 新しい機能や修正を加える際には、必ず対応するユニットテストとプレイモードテストを `Assets/_Project/Tests` に作成してください。これにより、コードの品質と安定性が維持されます。
+- **サードパーティ製アセットの直接編集禁止**: `Assets/Plugins` フォルダ内のアセットは直接編集しないでください。必要な変更は、可能な限り拡張やラッピングを通じて行い、将来のアップデートでの互換性を保つようにしてください。
+- **コアロジックの分離**: ゲームのコアロジックは必ず `Assets/_Project/Core` に配置し、機能コードは `Assets/_Project/Features` に分離してください。これにより、コードベースの可読性と保守性が向上します。
+- **テストコードの専用ディレクトリ**: ユニットテストとプレイモードテストは必ず `Assets/_Project/Tests` に配置し、CoreやFeaturesに混在させないでください。これにより、テストの管理と実行が容易になります。
+- **ドキュメントの専用ディレクトリ**: プロジェクト関連のドキュメントは必ず `Assets/_Project/Docs` に配置してください。これにより、ドキュメントの一元管理が可能になります。
+- **ソースコードファイル(.cs)とアセンブリ定義ファイル(.asmdef)の命名規則**: ソースコードファイルとアセンブリ定義ファイルは、PascalCase（例: `PlayerController.cs`, `GameEvents.asmdef`）を使用してください。これにより、コードベースの一貫性と可読性が向上します。
+- **ソースコードファイル(.cs)とアセンブリ定義ファイル(.asmdef)とmetaファイルの一貫性確保**: ソースコードファイル、アセンブリ定義ファイル、metaファイルの名前は常に一致させてください。これにより、Unityエディタ内での参照の整合性が保たれ、ビルドエラーや参照エラーを防止します。
+- **関連する実装が完了したら、必ずコンパイルエラーを解消してください**: 実装が完了したら、必ずコンパイルエラーを解消してください。コンパイルエラーが存在する場合、Unityエディタの動作が不安定になる可能性があります。
+- **Unity Consoleの警告とエラーの監視**: Unity Consoleに表示される警告とエラーを定期的に確認し、可能な限り早期に対処してください。これにより、潜在的な問題を未然に防ぎ、プロジェクトの品質を維持できます。
+- **SDDドキュメントのバージョン管理**: SDD関連のMarkdownファイル（`SPEC.md`, `REQUIREMENTS.md`, `DESIGN.md`, `TASKS.md`, `TODO.md`）は、`Assets/_Project/Docs/Works/` フォルダ内の日時フォルダにスナップショットを保管し、変更履歴を明確に管理してください。これにより、プロジェクトの進行状況と意思決定の背景を追跡できます。
+- **新しいアセンブリ定義ファイル(.asmdef)を作成する際には、必ず関連するソースコードファイル(.cs)とmetaファイルの名前を一致させてください。これにより、Unityエディタ内での参照の整合性が保たれ、ビルドエラーや参照エラーを防止します。**
+- **実装および修正時には、ソースコードファイル(.cs)とアセンブリ定義ファイル(.asmdef)の命名規則**: ソースコードファイルと.metaファイルの内容の整合性に注意してください。これにより、Unityエディタ内での参照の整合性が保たれ、ビルドエラーや参照エラーを防止します。
+- **ソースコードを修正した後は、構文エラーを必ず解消してください。** 構文エラーが存在する場合、Unityエディタの動作が不安定になる可能性があります。
+- **コルーチンを使用する場合は、UniTaskを優先的に使用してください。** UniTaskは軽量で効率的な非同期プログラミングを可能にし、パフォーマンスの向上とコードの可読性を高めます。
+- **3層アーキテクチャの責務を遵守**:
+    - **ロジックは `Core` / `Feature` 層へ**: 新しいC#スクリプトは、普遍的な仕組みなら`Core`、具体的な機能なら`Feature`に配置してください。
+    - **設定と組み合わせは `Template` 層へ**: シーン、設定済みプレハブ、ゲームバランスを定義するデータアセットは`Template`層に配置してください。`Template`層には原則として新しいロジックを追加しません。
+    - **依存関係は一方向 (`Template` → `Feature` → `Core`)**: `Assembly Definition`で強制されている依存関係ルールを必ず守ってください。
+
+## **制約**
+- **実行する前に、必ずコンパイルエラーを解消してください。** コンパイルエラーが存在する場合、Unityエディタの動作が不安定になる可能性があります。
+- **プレイモードを実行する前に、必ずコンパイルエラーを全て解消してください。** コンパイルエラーが存在する場合、Unityエディタの動作が不安定になる可能性があります。
+
+## **バッチコンパイル自動実行ルール**
+
+Claude Codeは以下の条件に該当する場合、**自動的にバッチモードコンパイルを実行**してください：
+
+### 自動実行条件
+1. **大規模コード変更時**（以下のいずれかに該当）：
+   - 5つ以上のC#スクリプトファイルを変更・作成
+   - アセンブリ定義ファイル（.asmdef）を変更
+   - 名前空間の大規模リファクタリング実施
+   - Core層のアーキテクチャ変更
+
+2. **エラー解消後**：
+   - 複数のコンパイルエラーを修正した後
+   - 循環参照や依存関係エラーを解消した後
+
+3. **システム変更時**：
+   - ServiceLocatorへの新規サービス登録
+   - GameEventの大量追加・変更
+   - パッケージの追加・更新
+
+### 実行方法
+```
+# Unity MCPを使用してバッチコンパイルを実行
+mcp__UnityMCP__manage_menu_item(
+    action="execute",
+    menu_path="Tools/Batch Compile/Save Compile and Restart"
+)
+```
+
+### 実行前の確認事項
+- すべての変更をファイルに保存済み
+- Unity Editorがアイドル状態（実行中の処理がない）
+- 重要な作業はすべて保存済み（シーン、プレハブなど）
+
+### 実行タイミングの判断基準
+- ユーザーが「コンパイルして」「ビルドして」と指示した場合
+- 「コンパイルエラーを確認して」と指示され、エラーが多数ある場合
+- 大規模リファクタリング完了後（ユーザーの承認後）
+
+## 名前空間規約
+
+### 基本規則
+- Root: `asterivo.Unity60`
+- Core機能: `asterivo.Unity60.Core.*`
+- 機能実装: `asterivo.Unity60.Features.*`
+- テンプレート: `asterivo.Unity60.Features.Templates.*`
+    - 例: `asterivo.Unity60.Features.Templates.Stealth`
+- テスト: `asterivo.Unity60.Tests.*`
+
+### 禁止事項
+- Core層からFeatures層およびTemplate層への参照禁止
+- Feature層からTemplate層への参照禁止
+- _Project.* の新規使用禁止（段階的削除）
+
+## **GitHub Actions設定**
+- **使用しない**: GitHub Actionsは使用しません。CI/CDは別の方法で管理します。
+
+## テスト実行とレポート生成方針
+
+**⚠️ Unity 6 重要情報**: Unity 6では `-runTests` と `-quit` フラグを同時に使用できません。詳細は [`Unity6_Test_Execution_Guide.md`](Assets/_Project/Docs/Unity6_Test_Execution_Guide.md) を必ず参照してください。
+
+このプロジェクトでは、機械処理用と人間可読用の2つの形式でテスト結果を出力することを標準とします。
+
+### レポート形式
+- **XML形式**: CI/CD・自動処理用（NUnit標準形式）
+- **Markdown形式**: 人間可読・分析・共有用
+
+### 標準成果物構造
+```
+Tests/Results/
+├── test-results.xml                # NUnit標準形式（機械処理用）
+├── test-verification.md            # 分析レポート（人間可読用）
+├── baseline-test-results.xml       # ベースライン測定（XML）
+├── baseline-test-verification.md   # ベースライン分析（Markdown）
+├── audio-system-test-results.xml   # Audio系テスト（XML）
+├── audio-system-verification.md    # Audio系分析（Markdown）
+├── performance-metrics.xml         # パフォーマンス測定（XML）
+└── coverage-report.md              # カバレッジ分析（Markdown）
+```
+
+### 実行方法
+1. **Unity Test Runner**: 開発中の手動テスト実行
+   - Window > General > Test Runner
+   - EditMode / PlayMode 個別実行可能
+   - 結果は両形式で自動生成
+
+2. **バッチモード**: CI/CD環境での自動実行
+   ```bash
+   # Unity 6 では -quit フラグを使用しないこと！
+   Unity.exe -projectPath . -batchmode -runTests
+   -testResults Tests/Results/test-results.xml
+   -logFile Tests/Results/test-log.txt
+   # 注意: -quit フラグは Unity 6 で -runTests と併用不可
+   ```
+
+3. **レポート生成**: テスト実行後の自動分析・文書化
+   - XML: NUnit標準フォーマットで機械処理対応
+   - Markdown: 分析・推奨事項・次のアクション含む
+
+### 出力内容
+#### XML形式（機械処理用）
+- テスト通過/失敗の詳細結果
+- 実行時間の正確な測定値
+- エラー・例外の構造化情報
+- カバレッジ数値データ
+
+#### Markdown形式（人間可読用）
+- テスト結果の分析・解釈
+- パフォーマンス傾向の評価
+- 改善提案・次のアクション
+- 環境制約・注意事項
+- ステークホルダー向けサマリー
+
+### 使用場面
+- **開発者**: Markdownで状況把握、XMLでツール連携
+- **PM/QA**: Markdownで進捗確認、意思決定支援
+- **CI/CD**: XMLで自動判定、ビルド継続可否決定
+- **ドキュメント**: Markdownでプロジェクト記録保持
+
 

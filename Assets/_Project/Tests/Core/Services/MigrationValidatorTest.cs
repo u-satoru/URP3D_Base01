@@ -1,15 +1,15 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 
 namespace asterivo.Unity60.Tests.Core.Services
 {
     /// <summary>
-    /// MigrationValidatorの包括的テスト
+    /// MigrationValidator縺ｮ蛹・峡逧・ユ繧ｹ繝・
     /// </summary>
     public class MigrationValidatorTest
     {
@@ -19,7 +19,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         [SetUp]
         public void Setup()
         {
-            // テスト用のGameObjectを作成
+            // 繝・せ繝育畑縺ｮGameObject繧剃ｽ懈・
             testObject = new GameObject("MigrationValidatorTest");
             migrationValidator = testObject.AddComponent<MigrationValidator>();
         }
@@ -213,3 +213,5 @@ namespace asterivo.Unity60.Tests.Core.Services
         }
     }
 }
+
+

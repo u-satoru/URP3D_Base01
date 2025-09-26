@@ -1,10 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Debug = UnityEngine.Debug;
 using Unity.Cinemachine;
 using asterivo.Unity60.Core.Events;
 // using asterivo.Unity60.Core.Player; // Player moved to Features
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Helpers;
 using asterivo.Unity60.Core.Debug;
 using System.Collections.Generic;
@@ -16,15 +16,15 @@ using CoreCameraStateEvent = asterivo.Unity60.Core.Events.CameraStateEvent;
 namespace asterivo.Unity60.Features.Camera.Cinemachine
 {
     /// <summary>
-    /// Cinemachine 3.1統合カメラシステム
-    /// Unity 6最適化版 - イベント駆動アーキテクチャ対応
-    /// ServiceLocator移行パターン対応
+    /// Cinemachine 3.1邨ｱ蜷医き繝｡繝ｩ繧ｷ繧ｹ繝・Β
+    /// Unity 6譛驕ｩ蛹也沿 - 繧､繝吶Φ繝磯ｧ・虚繧｢繝ｼ繧ｭ繝・け繝√Ε蟇ｾ蠢・
+    /// ServiceLocator遘ｻ陦後ヱ繧ｿ繝ｼ繝ｳ蟇ｾ蠢・
     /// </summary>
     public class CinemachineIntegration : MonoBehaviour, 
         IGameEventListener<CoreCameraState>, 
         IGameEventListener<Vector2>
     {
-        // ✅ ServiceLocator移行: Legacy Singleton警告システム（後方互換性のため）
+        // 笨・ServiceLocator遘ｻ陦・ Legacy Singleton隴ｦ蜻翫す繧ｹ繝・Β・亥ｾ梧婿莠呈鋤諤ｧ縺ｮ縺溘ａ・・
         
 
         
@@ -71,7 +71,7 @@ namespace asterivo.Unity60.Features.Camera.Cinemachine
         [SerializeField] private bool invertYAxis = false;
         
         [Header("Transition Settings")]
-        // TODO: CinemachineBrain.m_DefaultBlendの設定に使用予定
+        // TODO: CinemachineBrain.m_DefaultBlend縺ｮ險ｭ螳壹↓菴ｿ逕ｨ莠亥ｮ・
 #pragma warning disable CS0414 // Field assigned but never used - planned for camera blend configuration
         [SerializeField] private float defaultBlendTime = 1f;
 #pragma warning restore CS0414
@@ -95,10 +95,10 @@ namespace asterivo.Unity60.Features.Camera.Cinemachine
         #region Unity Lifecycle
         private void Awake()
         {
-            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
+            // 笨・ServiceLocator蟆ら畑螳溯｣・・縺ｿ - Singleton繝代ち繝ｼ繝ｳ螳悟・蜑企勁
             DontDestroyOnLoad(gameObject);
             
-            // ServiceLocatorへの登録
+            // ServiceLocator縺ｸ縺ｮ逋ｻ骭ｲ
             if (FeatureFlags.UseServiceLocator)
             {
                 try
@@ -146,8 +146,8 @@ namespace asterivo.Unity60.Features.Camera.Cinemachine
         
         private void OnDestroy()
         {
-            // ✅ ServiceLocator専用実装のみ - Singletonパターン完全削除
-            // ServiceLocatorからの登録解除
+            // 笨・ServiceLocator蟆ら畑螳溯｣・・縺ｿ - Singleton繝代ち繝ｼ繝ｳ螳悟・蜑企勁
+            // ServiceLocator縺九ｉ縺ｮ逋ｻ骭ｲ隗｣髯､
             if (FeatureFlags.UseServiceLocator)
             {
                 try
@@ -172,17 +172,17 @@ namespace asterivo.Unity60.Features.Camera.Cinemachine
         #region Initialization
         private void InitializeCameraSystem()
         {
-            // Cinemachine Brain コンポーネントを取得または追加
+            // Cinemachine Brain 繧ｳ繝ｳ繝昴・繝阪Φ繝医ｒ蜿門ｾ励∪縺溘・霑ｽ蜉
             cinemachineBrain = UnityEngine.Camera.main.GetComponent<CinemachineBrain>();
             if (cinemachineBrain == null)
             {
                 cinemachineBrain = UnityEngine.Camera.main.gameObject.AddComponent<CinemachineBrain>();
             }
             
-            // カメラ状態の辞書を構築
+            // 繧ｫ繝｡繝ｩ迥ｶ諷九・霎樊嶌繧呈ｧ狗ｯ・
             BuildCameraStateLookup();
             
-            // 初期カメラ状態を設定
+            // 蛻晄悄繧ｫ繝｡繝ｩ迥ｶ諷九ｒ險ｭ螳・
             currentCameraState = defaultCameraState;
         }
         
@@ -238,13 +238,13 @@ namespace asterivo.Unity60.Features.Camera.Cinemachine
         // IGameEventListener<CoreCameraState> implementation
         public void OnEventRaised(CoreCameraState newState)
         {
-            // CoreCameraState を CameraState に変換
+            // CoreCameraState 繧・CameraState 縺ｫ螟画鋤
             CameraState localState = ConvertCoreCameraStateToLocal(newState);
             SwitchToCamera(localState);
         }
 
         /// <summary>
-        /// CoreCameraStateをローカルCameraStateに変換
+        /// CoreCameraState繧偵Ο繝ｼ繧ｫ繝ｫCameraState縺ｫ螟画鋤
         /// </summary>
         private CameraState ConvertCoreCameraStateToLocal(CoreCameraState coreState)
         {
@@ -261,7 +261,7 @@ namespace asterivo.Unity60.Features.Camera.Cinemachine
                 case CoreCameraState.FreeLook:
                     return CameraState.Free;
                 case CoreCameraState.FirstPerson:
-                    return CameraState.Follow; // または適切なマッピング
+                    return CameraState.Follow; // 縺ｾ縺溘・驕ｩ蛻・↑繝槭ャ繝斐Φ繧ｰ
                 case CoreCameraState.ThirdPerson:
                     return CameraState.Follow;
                 default:
@@ -289,7 +289,7 @@ namespace asterivo.Unity60.Features.Camera.Cinemachine
         
         #region Camera Control
         /// <summary>
-        /// 指定されたカメラ状態に切り替え
+        /// 謖・ｮ壹＆繧後◆繧ｫ繝｡繝ｩ迥ｶ諷九↓蛻・ｊ譖ｿ縺・
         /// </summary>
         public void SwitchToCamera(CameraState targetState)
         {
@@ -301,19 +301,19 @@ namespace asterivo.Unity60.Features.Camera.Cinemachine
             
             var targetConfig = cameraStateLookup[targetState];
             
-            // 現在のカメラを非アクティブ化
+            // 迴ｾ蝨ｨ縺ｮ繧ｫ繝｡繝ｩ繧帝撼繧｢繧ｯ繝・ぅ繝門喧
             if (activeCameraConfig != null && activeCameraConfig.virtualCamera != null)
             {
                 activeCameraConfig.virtualCamera.Priority = 0;
                 
-                // 非アクティブ化イベントを発行
+                // 髱槭い繧ｯ繝・ぅ繝門喧繧､繝吶Φ繝医ｒ逋ｺ陦・
                 if (activeCameraConfig.deactivationEvent != null)
                 {
                     activeCameraConfig.deactivationEvent.Raise();
                 }
             }
             
-            // 新しいカメラをアクティブ化
+            // 譁ｰ縺励＞繧ｫ繝｡繝ｩ繧偵い繧ｯ繝・ぅ繝門喧
             activeCameraConfig = targetConfig;
             currentCameraState = targetState;
             
@@ -321,14 +321,14 @@ namespace asterivo.Unity60.Features.Camera.Cinemachine
             {
                 activeCameraConfig.virtualCamera.Priority = activeCameraConfig.defaultPriority;
                 
-                // アクティブ化イベントを発行
+                // 繧｢繧ｯ繝・ぅ繝門喧繧､繝吶Φ繝医ｒ逋ｺ陦・
                 if (activeCameraConfig.activationEvent != null)
                 {
                     activeCameraConfig.activationEvent.Raise();
                 }
             }
             
-            // ブレンド時間を設定
+            // 繝悶Ξ繝ｳ繝画凾髢薙ｒ險ｭ螳・
             if (cinemachineBrain != null)
             {
                 cinemachineBrain.DefaultBlend.Time = activeCameraConfig.blendTime;
@@ -339,7 +339,7 @@ namespace asterivo.Unity60.Features.Camera.Cinemachine
         }
         
         /// <summary>
-        /// ルック入力を適用
+        /// 繝ｫ繝・け蜈･蜉帙ｒ驕ｩ逕ｨ
         /// </summary>
         private void ApplyLookInput()
         {
@@ -353,21 +353,21 @@ namespace asterivo.Unity60.Features.Camera.Cinemachine
                 scaledInput.y = -scaledInput.y;
             }
             
-            // 垂直回転の制限
+            // 蝙ら峩蝗櫁ｻ｢縺ｮ蛻ｶ髯・
             currentVerticalRotation -= scaledInput.y;
             currentVerticalRotation = Mathf.Clamp(currentVerticalRotation, -verticalLookLimit, verticalLookLimit);
             
-            // Cinemachine Virtual Cameraに回転を適用
-            // Cinemachine 3.1では、カメラの回転はTransformで直接制御することが推奨
+            // Cinemachine Virtual Camera縺ｫ蝗櫁ｻ｢繧帝←逕ｨ
+            // Cinemachine 3.1縺ｧ縺ｯ縲√き繝｡繝ｩ縺ｮ蝗櫁ｻ｢縺ｯTransform縺ｧ逶ｴ謗･蛻ｶ蠕｡縺吶ｋ縺薙→縺梧耳螂ｨ
             if (activeCameraConfig?.virtualCamera != null && playerTarget != null)
             {
-                // プレイヤーのローカル回転で縦回転を制御
+                // 繝励Ξ繧､繝､繝ｼ縺ｮ繝ｭ繝ｼ繧ｫ繝ｫ蝗櫁ｻ｢縺ｧ邵ｦ蝗櫁ｻ｢繧貞宛蠕｡
                 var currentRotation = playerTarget.localEulerAngles;
                 currentRotation.x = currentVerticalRotation;
                 playerTarget.localEulerAngles = currentRotation;
             }
             
-            // 横回転はプレイヤーのTransformで処理（PlayerControllerと連携）
+            // 讓ｪ蝗櫁ｻ｢縺ｯ繝励Ξ繧､繝､繝ｼ縺ｮTransform縺ｧ蜃ｦ逅・ｼ・layerController縺ｨ騾｣謳ｺ・・
             if (playerTarget != null)
             {
                 playerTarget.Rotate(Vector3.up * scaledInput.x);
@@ -377,13 +377,13 @@ namespace asterivo.Unity60.Features.Camera.Cinemachine
         
         #region Public API
         /// <summary>
-        /// プレイヤーターゲットを設定
+        /// 繝励Ξ繧､繝､繝ｼ繧ｿ繝ｼ繧ｲ繝・ヨ繧定ｨｭ螳・
         /// </summary>
         public void SetPlayerTarget(Transform target)
         {
             playerTarget = target;
             
-            // 全てのVirtual Cameraのターゲットを更新
+            // 蜈ｨ縺ｦ縺ｮVirtual Camera縺ｮ繧ｿ繝ｼ繧ｲ繝・ヨ繧呈峩譁ｰ
             foreach (var config in cameraConfigs)
             {
                 if (config.virtualCamera != null)
@@ -395,7 +395,7 @@ namespace asterivo.Unity60.Features.Camera.Cinemachine
         }
         
         /// <summary>
-        /// FOVを変更
+        /// FOV繧貞､画峩
         /// </summary>
         public void SetFieldOfView(float fov)
         {
@@ -407,7 +407,7 @@ namespace asterivo.Unity60.Features.Camera.Cinemachine
         }
         
         /// <summary>
-        /// 現在のカメラ状態を取得
+        /// 迴ｾ蝨ｨ縺ｮ繧ｫ繝｡繝ｩ迥ｶ諷九ｒ蜿門ｾ・
         /// </summary>
         public CameraState GetCurrentCameraState()
         {
@@ -416,3 +416,4 @@ namespace asterivo.Unity60.Features.Camera.Cinemachine
         #endregion
     }
 }
+

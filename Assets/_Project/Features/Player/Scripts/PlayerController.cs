@@ -1,73 +1,73 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Debug = UnityEngine.Debug;
 using UnityEngine.InputSystem;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Commands.Definitions;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Debug;
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Features.Player
 {
     /// <summary>
-    /// プレイヤーの入力を処理し、対応するコマンド定義をイベントとして発行します。
-    /// このクラスはUnityのInput Systemと連携し、移動、ジャンプ、スプリントなどのアクションを検知します。
+    /// 繝励Ξ繧､繝､繝ｼ縺ｮ蜈･蜉帙ｒ蜃ｦ逅・＠縲∝ｯｾ蠢懊☆繧九さ繝槭Φ繝牙ｮ夂ｾｩ繧偵う繝吶Φ繝医→縺励※逋ｺ陦後＠縺ｾ縺吶・
+    /// 縺薙・繧ｯ繝ｩ繧ｹ縺ｯUnity縺ｮInput System縺ｨ騾｣謳ｺ縺励∫ｧｻ蜍輔√ず繝｣繝ｳ繝励√せ繝励Μ繝ｳ繝医↑縺ｩ縺ｮ繧｢繧ｯ繧ｷ繝ｧ繝ｳ繧呈､懃衍縺励∪縺吶・
     /// </summary>
     [RequireComponent(typeof(PlayerInput))]
     public class PlayerController : MonoBehaviour
     {
         [TabGroup("Player Control", "Command Output")]
         [LabelText("Command Definition Event")]
-        [Tooltip("プレイヤーのアクションに基づいて発行されるコマンド定義イベント")]
+        [Tooltip("繝励Ξ繧､繝､繝ｼ縺ｮ繧｢繧ｯ繧ｷ繝ｧ繝ｳ縺ｫ蝓ｺ縺･縺・※逋ｺ陦後＆繧後ｋ繧ｳ繝槭Φ繝牙ｮ夂ｾｩ繧､繝吶Φ繝・)]
         [SerializeField] private CommandDefinitionGameEvent onCommandDefinitionIssued;
         
         [TabGroup("Player Control", "Animation")]
         [LabelText("Movement Animator")]
-        [Tooltip("DOTweenアニメーション管理コンポーネント")]
+        [Tooltip("DOTween繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ邂｡逅・さ繝ｳ繝昴・繝阪Φ繝・)]
         [SerializeField] private PlayerMovementAnimator movementAnimator;
         
         [TabGroup("Player Control", "Animation")]
         [LabelText("Animator")]
-        [Tooltip("キャラクターのAnimatorコンポーネント")]
+        [Tooltip("繧ｭ繝｣繝ｩ繧ｯ繧ｿ繝ｼ縺ｮAnimator繧ｳ繝ｳ繝昴・繝阪Φ繝・)]
         [SerializeField] private Animator animator;
         
         [TabGroup("Player Control", "Animation")]
         [LabelText("Use 2D BlendTree")]
-        [Tooltip("2D BlendTree（方向性あり）を使用するかどうか")]
+        [Tooltip("2D BlendTree・域婿蜷第ｧ縺ゅｊ・峨ｒ菴ｿ逕ｨ縺吶ｋ縺九←縺・°")]
         [SerializeField] private bool use2DBlendTree = false;
         
         [TabGroup("Player Control", "Animation")]
         [LabelText("Animation Smooth Time")]
         [PropertyRange(0.05f, 0.5f)]
         [SuffixLabel("s", overlay: true)]
-        [Tooltip("アニメーション遷移のスムージング時間")]
+        [Tooltip("繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ驕ｷ遘ｻ縺ｮ繧ｹ繝繝ｼ繧ｸ繝ｳ繧ｰ譎る俣")]
         [SerializeField] private float animationSmoothTime = 0.1f;
 
         [TabGroup("Player Control", "Movement Events")]
         [LabelText("Freeze Movement Listener")]
-        [Tooltip("プレイヤーの移動を一時的に無効化するイベントリスナー")]
+        [Tooltip("繝励Ξ繧､繝､繝ｼ縺ｮ遘ｻ蜍輔ｒ荳譎ら噪縺ｫ辟｡蜉ｹ蛹悶☆繧九う繝吶Φ繝医Μ繧ｹ繝翫・")]
         [SerializeField] private GameEventListener freezeMovementListener;
         
         [TabGroup("Player Control", "Movement Events")]
         [LabelText("Unfreeze Movement Listener")]
-        [Tooltip("プレイヤーの移動無効化を解除するイベントリスナー")]
+        [Tooltip("繝励Ξ繧､繝､繝ｼ縺ｮ遘ｻ蜍慕┌蜉ｹ蛹悶ｒ隗｣髯､縺吶ｋ繧､繝吶Φ繝医Μ繧ｹ繝翫・")]
         [SerializeField] private GameEventListener unfreezeMovementListener;
 
         [TabGroup("Player Control", "Audio Integration")]
         [Header("Service Dependencies")]
-        [Tooltip("ServiceLocatorを優先的に使用するか")]
+        [Tooltip("ServiceLocator繧貞━蜈育噪縺ｫ菴ｿ逕ｨ縺吶ｋ縺・)]
         [SerializeField] private bool useServiceLocator = true;
-        [Tooltip("ステルスオーディオ機能を有効にするか")]
+        [Tooltip("繧ｹ繝・Ν繧ｹ繧ｪ繝ｼ繝・ぅ繧ｪ讖溯・繧呈怏蜉ｹ縺ｫ縺吶ｋ縺・)]
         [SerializeField] private bool enableStealthAudio = true;
-        [Tooltip("足音再生を有効にするか")]
+        [Tooltip("雜ｳ髻ｳ蜀咲函繧呈怏蜉ｹ縺ｫ縺吶ｋ縺・)]
         [SerializeField] private bool enableFootsteps = true;
 
         private PlayerInput playerInput;
         private InputActionMap playerActionMap;
         
-        // ✅ Task 2: Service References (移行パターン実装)
+        // 笨・Task 2: Service References (遘ｻ陦後ヱ繧ｿ繝ｼ繝ｳ螳溯｣・
         private IAudioService audioService;
         private IStealthAudioService stealthAudioService;
         
@@ -90,16 +90,16 @@ namespace asterivo.Unity60.Features.Player
         private bool isSprintPressed = false;
 
         /// <summary>
-        /// スプリントボタンが現在押されているかどうかを取得します。
+        /// 繧ｹ繝励Μ繝ｳ繝医・繧ｿ繝ｳ縺檎樟蝨ｨ謚ｼ縺輔ｌ縺ｦ縺・ｋ縺九←縺・°繧貞叙蠕励＠縺ｾ縺吶・
         /// </summary>
         public bool IsSprintPressed => isSprintPressed;
 
         /// <summary>
-        /// プレイヤーの移動が現在凍結（無効化）されているかどうかを取得します。
+        /// 繝励Ξ繧､繝､繝ｼ縺ｮ遘ｻ蜍輔′迴ｾ蝨ｨ蜃咲ｵ撰ｼ育┌蜉ｹ蛹厄ｼ峨＆繧後※縺・ｋ縺九←縺・°繧貞叙蠕励＠縺ｾ縺吶・
         /// </summary>
         public bool IsMovementFrozen => movementFrozen;
         
-        // パフォーマンス向上のためパラメータをハッシュ化
+        // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ蜷台ｸ翫・縺溘ａ繝代Λ繝｡繝ｼ繧ｿ繧偵ワ繝・す繝･蛹・
         private static readonly int MoveSpeedHash = Animator.StringToHash("MoveSpeed");
         private static readonly int MoveXHash = Animator.StringToHash("MoveX");
         private static readonly int MoveZHash = Animator.StringToHash("MoveZ");
@@ -110,26 +110,26 @@ namespace asterivo.Unity60.Features.Player
         private static readonly int JumpTriggerHash = Animator.StringToHash("JumpTrigger");
         private static readonly int LandTriggerHash = Animator.StringToHash("LandTrigger");
         
-        // スムーズなアニメーション遷移用
+        // 繧ｹ繝繝ｼ繧ｺ縺ｪ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ驕ｷ遘ｻ逕ｨ
         private Vector2 animationVelocity;
         private Vector2 animationSmoothVelocity;
         
-        // 接地判定用
+        // 謗･蝨ｰ蛻､螳夂畑
         private Rigidbody playerRigidbody;
 
         private void Awake()
         {
             playerInput = GetComponent<PlayerInput>();
             
-            // MovementAnimatorを自動取得していない場合は取得
+            // MovementAnimator繧定・蜍募叙蠕励＠縺ｦ縺・↑縺・ｴ蜷医・蜿門ｾ・
             if (movementAnimator == null)
                 movementAnimator = GetComponent<PlayerMovementAnimator>();
                 
-            // Animator の自動取得
+            // Animator 縺ｮ閾ｪ蜍募叙蠕・
             if (animator == null)
                 animator = GetComponent<Animator>();
                 
-            // Rigidbody の取得
+            // Rigidbody 縺ｮ蜿門ｾ・
             playerRigidbody = GetComponent<Rigidbody>();
                 
             SetupInputCallbacks();
@@ -137,8 +137,8 @@ namespace asterivo.Unity60.Features.Player
         }
 
         /// <summary>
-        /// ✅ Task 2: Step 3.6 移行パターン実装
-        /// オーディオサービスの初期化（ServiceLocator優先、Singleton フォールバック）
+        /// 笨・Task 2: Step 3.6 遘ｻ陦後ヱ繧ｿ繝ｼ繝ｳ螳溯｣・
+        /// 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｵ繝ｼ繝薙せ縺ｮ蛻晄悄蛹厄ｼ・erviceLocator蜆ｪ蜈医ヾingleton 繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ・・
         /// </summary>
         private void Start() 
         {
@@ -154,13 +154,13 @@ namespace asterivo.Unity60.Features.Player
         #region Audio Service Integration (Task 2: Step 3.6)
 
         /// <summary>
-        /// オーディオサービスの初期化（移行パターン実装）
+        /// 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｵ繝ｼ繝薙せ縺ｮ蛻晄悄蛹厄ｼ育ｧｻ陦後ヱ繧ｿ繝ｼ繝ｳ螳溯｣・ｼ・
         /// </summary>
         private void InitializeAudioServices()
         {
             audioServiceStatus = "Initializing...";
             
-            // 新しい方法での取得 (推奨) - ServiceLocator優先
+            // 譁ｰ縺励＞譁ｹ豕輔〒縺ｮ蜿門ｾ・(謗ｨ螂ｨ) - ServiceLocator蜆ｪ蜈・
             if (useServiceLocator && FeatureFlags.UseServiceLocator) 
             {
                 try
@@ -180,7 +180,7 @@ namespace asterivo.Unity60.Features.Player
                         {
                             ServiceLocator.GetService<IEventLogger>()?.Log("[PlayerController] Using ServiceLocator for audio services");
                         }
-                        return; // 正常に取得できたので終了
+                        return; // 豁｣蟶ｸ縺ｫ蜿門ｾ励〒縺阪◆縺ｮ縺ｧ邨ゆｺ・
                     }
                 }
                 catch (System.Exception ex)
@@ -189,7 +189,7 @@ namespace asterivo.Unity60.Features.Player
                 }
             }
             
-            // 従来の方法 (後方互換性) - Singleton フォールバック
+            // 蠕捺擂縺ｮ譁ｹ豕・(蠕梧婿莠呈鋤諤ｧ) - Singleton 繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ
             if (!FeatureFlags.DisableLegacySingletons)
             {
                 try 
@@ -223,7 +223,7 @@ namespace asterivo.Unity60.Features.Player
                 }
             }
             
-            // サービス取得の検証
+            // 繧ｵ繝ｼ繝薙せ蜿門ｾ励・讀懆ｨｼ
             if (audioService == null)
             {
                 audioServiceStatus = "Failed: No Audio Service";
@@ -237,19 +237,19 @@ namespace asterivo.Unity60.Features.Player
         }
         
         /// <summary>
-        /// 足音再生（移行パターン実装例）
+        /// 雜ｳ髻ｳ蜀咲函・育ｧｻ陦後ヱ繧ｿ繝ｼ繝ｳ螳溯｣・ｾ具ｼ・
         /// </summary>
         private void PlayFootstep() 
         {
             if (!enableFootsteps || audioService == null) return;
             
-            // 基本足音再生
+            // 蝓ｺ譛ｬ雜ｳ髻ｳ蜀咲函
             audioService.PlaySound("footstep", transform.position, 0.7f);
             
-            // ステルスオーディオとの連携
+            // 繧ｹ繝・Ν繧ｹ繧ｪ繝ｼ繝・ぅ繧ｪ縺ｨ縺ｮ騾｣謳ｺ
             if (enableStealthAudio && stealthAudioService != null)
             {
-                // 足音の強度を動的に計算（スプリント時は強く）
+                // 雜ｳ髻ｳ縺ｮ蠑ｷ蠎ｦ繧貞虚逧・↓險育ｮ暦ｼ医せ繝励Μ繝ｳ繝域凾縺ｯ蠑ｷ縺擾ｼ・
                 float intensity = isSprintPressed ? 0.8f : 0.4f;
                 
                 stealthAudioService.CreateFootstep(transform.position, intensity, "concrete");
@@ -257,7 +257,7 @@ namespace asterivo.Unity60.Features.Player
         }
         
         /// <summary>
-        /// ランディング音再生
+        /// 繝ｩ繝ｳ繝・ぅ繝ｳ繧ｰ髻ｳ蜀咲函
         /// </summary>
         private void PlayLandingSound()
         {
@@ -267,7 +267,7 @@ namespace asterivo.Unity60.Features.Player
             
             if (enableStealthAudio && stealthAudioService != null)
             {
-                // ランディングは比較的大きな音
+                // 繝ｩ繝ｳ繝・ぅ繝ｳ繧ｰ縺ｯ豈碑ｼ・噪螟ｧ縺阪↑髻ｳ
                 stealthAudioService.CreateFootstep(transform.position, 0.9f, "concrete");
             }
         }
@@ -275,7 +275,7 @@ namespace asterivo.Unity60.Features.Player
         #endregion
 
         /// <summary>
-        /// Input Systemのアクションにコールバックメソッドを登録します。
+        /// Input System縺ｮ繧｢繧ｯ繧ｷ繝ｧ繝ｳ縺ｫ繧ｳ繝ｼ繝ｫ繝舌ャ繧ｯ繝｡繧ｽ繝・ラ繧堤匳骭ｲ縺励∪縺吶・
         /// </summary>
         private void SetupInputCallbacks()
         {
@@ -303,7 +303,7 @@ namespace asterivo.Unity60.Features.Player
         }
 
         /// <summary>
-        /// 登録したInput Systemのコールバックを解除します。
+        /// 逋ｻ骭ｲ縺励◆Input System縺ｮ繧ｳ繝ｼ繝ｫ繝舌ャ繧ｯ繧定ｧ｣髯､縺励∪縺吶・
         /// </summary>
         private void CleanupInputCallbacks()
         {
@@ -329,14 +329,14 @@ namespace asterivo.Unity60.Features.Player
         }
 
         /// <summary>
-        /// 移動入力が検出されたときに呼び出されます。
+        /// 遘ｻ蜍募・蜉帙′讀懷・縺輔ｌ縺溘→縺阪↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・
         /// </summary>
         private void OnMove(InputAction.CallbackContext context)
         {
             if (movementFrozen) return;
             var moveInput = context.ReadValue<Vector2>();
             
-            // スムーズなアニメーション遷移（急激な変化を防ぐ）
+            // 繧ｹ繝繝ｼ繧ｺ縺ｪ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ驕ｷ遘ｻ・域･豼縺ｪ螟牙喧繧帝亟縺撰ｼ・
             animationVelocity = Vector2.SmoothDamp(
                 animationVelocity, 
                 moveInput, 
@@ -344,7 +344,7 @@ namespace asterivo.Unity60.Features.Player
                 animationSmoothTime
             );
             
-            // 1. BlendTree アニメーション更新
+            // 1. BlendTree 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ譖ｴ譁ｰ
             if (use2DBlendTree)
             {
                 Update2DBlendTree(animationVelocity);
@@ -354,19 +354,19 @@ namespace asterivo.Unity60.Features.Player
                 Update1DBlendTree(animationVelocity.magnitude);
             }
             
-            // 2. コマンド発行（既存システム）
+            // 2. 繧ｳ繝槭Φ繝臥匱陦鯉ｼ域里蟄倥す繧ｹ繝・Β・・
             var definition = new MoveCommandDefinition(MoveCommandDefinition.MoveType.Walk, new Vector3(moveInput.x, 0, moveInput.y));
             onCommandDefinitionIssued?.Raise(definition);
         }
 
         /// <summary>
-        /// 移動入力がキャンセルされたときに呼び出されます。
+        /// 遘ｻ蜍募・蜉帙′繧ｭ繝｣繝ｳ繧ｻ繝ｫ縺輔ｌ縺溘→縺阪↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・
         /// </summary>
         private void OnMoveCanceled(InputAction.CallbackContext context)
         {
             if (movementFrozen) return;
             
-            // アニメーション停止のためのスムージング
+            // 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ蛛懈ｭ｢縺ｮ縺溘ａ縺ｮ繧ｹ繝繝ｼ繧ｸ繝ｳ繧ｰ
             animationVelocity = Vector2.SmoothDamp(
                 animationVelocity, 
                 Vector2.zero, 
@@ -374,7 +374,7 @@ namespace asterivo.Unity60.Features.Player
                 animationSmoothTime
             );
             
-            // BlendTree アニメーション更新
+            // BlendTree 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ譖ｴ譁ｰ
             if (use2DBlendTree)
             {
                 Update2DBlendTree(Vector2.zero);
@@ -389,32 +389,32 @@ namespace asterivo.Unity60.Features.Player
         }
 
         /// <summary>
-        /// ジャンプ入力が検出されたときに呼び出されます。
+        /// 繧ｸ繝｣繝ｳ繝怜・蜉帙′讀懷・縺輔ｌ縺溘→縺阪↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・
         /// </summary>
         private void OnJump(InputAction.CallbackContext context)
         {
             if (movementFrozen) return;
             
-            // 1. BlendTreeでキャラクターアニメーション（縦軸の速度制御）
+            // 1. BlendTree縺ｧ繧ｭ繝｣繝ｩ繧ｯ繧ｿ繝ｼ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ・育ｸｦ霆ｸ縺ｮ騾溷ｺｦ蛻ｶ蠕｡・・
             if (animator != null)
             {
                 animator.SetTrigger(JumpTriggerHash);
                 animator.SetBool(IsGroundedHash, false);
             }
             
-            // 2. DOTweenで追加演出（既存システム）
+            // 2. DOTween縺ｧ霑ｽ蜉貍泌・・域里蟄倥す繧ｹ繝・Β・・
             if (movementAnimator != null)
             {
                 movementAnimator.AnimateJump();
             }
             
-            // 3. コマンドパターンでゲームロジック
+            // 3. 繧ｳ繝槭Φ繝峨ヱ繧ｿ繝ｼ繝ｳ縺ｧ繧ｲ繝ｼ繝繝ｭ繧ｸ繝・け
             var definition = new JumpCommandDefinition();
             onCommandDefinitionIssued?.Raise(definition);
         }
         
         /// <summary>
-        /// スプリント入力が開始されたときに呼び出されます。
+        /// 繧ｹ繝励Μ繝ｳ繝亥・蜉帙′髢句ｧ九＆繧後◆縺ｨ縺阪↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・
         /// </summary>
         private void OnSprintStarted(InputAction.CallbackContext context)
         {
@@ -423,7 +423,7 @@ namespace asterivo.Unity60.Features.Player
         }
         
         /// <summary>
-        /// スプリント入力がキャンセルされたときに呼び出されます。
+        /// 繧ｹ繝励Μ繝ｳ繝亥・蜉帙′繧ｭ繝｣繝ｳ繧ｻ繝ｫ縺輔ｌ縺溘→縺阪↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・
         /// </summary>
         private void OnSprintCanceled(InputAction.CallbackContext context)
         {
@@ -431,7 +431,7 @@ namespace asterivo.Unity60.Features.Player
         }
         
         /// <summary>
-        /// 移動凍結を制御するイベントリスナーを設定します。
+        /// 遘ｻ蜍募㍾邨舌ｒ蛻ｶ蠕｡縺吶ｋ繧､繝吶Φ繝医Μ繧ｹ繝翫・繧定ｨｭ螳壹＠縺ｾ縺吶・
         /// </summary>
         private void SetupMovementEventListeners()
         {
@@ -447,7 +447,7 @@ namespace asterivo.Unity60.Features.Player
         }
         
         /// <summary>
-        /// 設定した移動凍結イベントリスナーを解除します。
+        /// 險ｭ螳壹＠縺溽ｧｻ蜍募㍾邨舌う繝吶Φ繝医Μ繧ｹ繝翫・繧定ｧ｣髯､縺励∪縺吶・
         /// </summary>
         private void CleanupMovementEventListeners()
         {
@@ -463,7 +463,7 @@ namespace asterivo.Unity60.Features.Player
         }
         
         /// <summary>
-        /// プレイヤーの移動を凍結（無効化）するイベントハンドラです。
+        /// 繝励Ξ繧､繝､繝ｼ縺ｮ遘ｻ蜍輔ｒ蜃咲ｵ撰ｼ育┌蜉ｹ蛹厄ｼ峨☆繧九う繝吶Φ繝医ワ繝ｳ繝峨Λ縺ｧ縺吶・
         /// </summary>
         private void OnFreezeMovement()
         {
@@ -472,7 +472,7 @@ namespace asterivo.Unity60.Features.Player
         }
         
         /// <summary>
-        /// プレイヤーの移動凍結を解除するイベントハンドラです。
+        /// 繝励Ξ繧､繝､繝ｼ縺ｮ遘ｻ蜍募㍾邨舌ｒ隗｣髯､縺吶ｋ繧､繝吶Φ繝医ワ繝ｳ繝峨Λ縺ｧ縺吶・
         /// </summary>
         private void OnUnfreezeMovement()
         {
@@ -503,7 +503,7 @@ namespace asterivo.Unity60.Features.Player
         #endif
         
         /// <summary>
-        /// Update処理で継続的にアニメーション状態を更新
+        /// Update蜃ｦ逅・〒邯咏ｶ夂噪縺ｫ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ迥ｶ諷九ｒ譖ｴ譁ｰ
         /// </summary>
         private void Update()
         {
@@ -511,58 +511,60 @@ namespace asterivo.Unity60.Features.Player
         }
         
         /// <summary>
-        /// アニメーション状態の更新処理
+        /// 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ迥ｶ諷九・譖ｴ譁ｰ蜃ｦ逅・
         /// </summary>
         private void UpdateAnimationStates()
         {
             if (animator == null || playerRigidbody == null) return;
             
-            // 縦方向速度をジャンプ・落下アニメーションに反映
+            // 邵ｦ譁ｹ蜷鷹溷ｺｦ繧偵ず繝｣繝ｳ繝励・關ｽ荳九い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｫ蜿肴丐
             float verticalVelocity = playerRigidbody.linearVelocity.y;
             animator.SetFloat(VerticalVelocityHash, verticalVelocity);
             
-            // 接地状態の更新
+            // 謗･蝨ｰ迥ｶ諷九・譖ｴ譁ｰ
             bool isGrounded = CheckGroundContact();
             animator.SetBool(IsGroundedHash, isGrounded);
         }
         
         /// <summary>
-        /// 1D BlendTreeの更新処理
+        /// 1D BlendTree縺ｮ譖ｴ譁ｰ蜃ｦ逅・
         /// </summary>
         private void Update1DBlendTree(float speed)
         {
             if (animator == null) return;
             
-            // スプリント状態を考慮した速度計算
+            // 繧ｹ繝励Μ繝ｳ繝育憾諷九ｒ閠・・縺励◆騾溷ｺｦ險育ｮ・
             float finalSpeed = speed;
             if (IsSprintPressed && speed > 0.1f)
             {
-                finalSpeed = Mathf.Lerp(0.7f, 1.0f, speed); // スプリント時は0.7-1.0の範囲
+                finalSpeed = Mathf.Lerp(0.7f, 1.0f, speed); // 繧ｹ繝励Μ繝ｳ繝域凾縺ｯ0.7-1.0縺ｮ遽・峇
             }
             
             animator.SetFloat(MoveSpeedHash, finalSpeed);
         }
         
         /// <summary>
-        /// 2D BlendTreeの更新処理
+        /// 2D BlendTree縺ｮ譖ｴ譁ｰ蜃ｦ逅・
         /// </summary>
         private void Update2DBlendTree(Vector2 velocity)
         {
             if (animator == null) return;
             
-            // 2D方向を考慮したBlendTree制御
+            // 2D譁ｹ蜷代ｒ閠・・縺励◆BlendTree蛻ｶ蠕｡
             animator.SetFloat(MoveXHash, velocity.x);
             animator.SetFloat(MoveZHash, velocity.y);
             animator.SetFloat(MoveSpeedHash, velocity.magnitude);
         }
         
         /// <summary>
-        /// 接地判定の実装
+        /// 謗･蝨ｰ蛻､螳壹・螳溯｣・
         /// </summary>
         private bool CheckGroundContact()
         {
-            // レイキャストによる接地判定（キャラクターの足元から下向きにレイを飛ばす）
+            // 繝ｬ繧､繧ｭ繝｣繧ｹ繝医↓繧医ｋ謗･蝨ｰ蛻､螳夲ｼ医く繝｣繝ｩ繧ｯ繧ｿ繝ｼ縺ｮ雜ｳ蜈・°繧我ｸ句髄縺阪↓繝ｬ繧､繧帝｣帙・縺呻ｼ・
             return Physics.Raycast(transform.position, Vector3.down, 1.1f);
         }
     }
 }
+
+

@@ -1,31 +1,31 @@
-using System;
+﻿using System;
 using UnityEngine;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.Platformer.Services;
 
 namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
 {
     /// <summary>
-    /// Jump Controller：プラットフォーマー跳躍制御システム
-    /// ServiceLocator + Event駆動アーキテクチャによる高度なジャンプメカニクス
-    /// Learn & Grow価値実現：直感的な跳躍感・フレーム完璧な入力応答・高度な跳躍テクニック
+    /// Jump Controller・壹・繝ｩ繝・ヨ繝輔か繝ｼ繝槭・霍ｳ霄榊宛蠕｡繧ｷ繧ｹ繝・Β
+    /// ServiceLocator + Event鬧・虚繧｢繝ｼ繧ｭ繝・け繝√Ε縺ｫ繧医ｋ鬮伜ｺｦ縺ｪ繧ｸ繝｣繝ｳ繝励Γ繧ｫ繝九け繧ｹ
+    /// Learn & Grow萓｡蛟､螳溽樟・夂峩諢溽噪縺ｪ霍ｳ霄肴─繝ｻ繝輔Ξ繝ｼ繝螳檎挑縺ｪ蜈･蜉帛ｿ懃ｭ斐・鬮伜ｺｦ縺ｪ霍ｳ霄阪ユ繧ｯ繝九ャ繧ｯ
     /// </summary>
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Collider2D))]
     public class JumpController : MonoBehaviour
     {
         [Header("Jump Settings")]
-        [SerializeField] private int _maxJumpCount = 2; // ダブルジャンプ対応
-        [SerializeField] private float _coyoteTime = 0.1f; // コヨーテタイム（地面を離れてもジャンプ可能な時間）
-        [SerializeField] private float _jumpBufferTime = 0.1f; // ジャンプバッファ（早押し対応）
-        [SerializeField] private LayerMask _groundLayerMask = 1; // 地面レイヤー
-        [SerializeField] private Transform _groundCheckPoint; // 地面検出ポイント
-        [SerializeField] private float _groundCheckRadius = 0.2f; // 地面検出半径
+        [SerializeField] private int _maxJumpCount = 2; // 繝繝悶Ν繧ｸ繝｣繝ｳ繝怜ｯｾ蠢・
+        [SerializeField] private float _coyoteTime = 0.1f; // 繧ｳ繝ｨ繝ｼ繝・ち繧､繝・亥慍髱｢繧帝屬繧後※繧ゅず繝｣繝ｳ繝怜庄閭ｽ縺ｪ譎る俣・・
+        [SerializeField] private float _jumpBufferTime = 0.1f; // 繧ｸ繝｣繝ｳ繝励ヰ繝・ヵ繧｡・域掠謚ｼ縺怜ｯｾ蠢懶ｼ・
+        [SerializeField] private LayerMask _groundLayerMask = 1; // 蝨ｰ髱｢繝ｬ繧､繝､繝ｼ
+        [SerializeField] private Transform _groundCheckPoint; // 蝨ｰ髱｢讀懷・繝昴う繝ｳ繝・
+        [SerializeField] private float _groundCheckRadius = 0.2f; // 蝨ｰ髱｢讀懷・蜊雁ｾ・
 
         [Header("Variable Jump Settings")]
-        [SerializeField] private float _jumpCutMultiplier = 0.5f; // ジャンプ短縮倍率
-        [SerializeField] private bool _enableVariableJumpHeight = true; // 可変ジャンプ高度
+        [SerializeField] private float _jumpCutMultiplier = 0.5f; // 繧ｸ繝｣繝ｳ繝礼洒邵ｮ蛟咲紫
+        [SerializeField] private bool _enableVariableJumpHeight = true; // 蜿ｯ螟峨ず繝｣繝ｳ繝鈴ｫ伜ｺｦ
 
         [Header("Audio Integration")]
         [SerializeField] private bool _enableJumpSounds = true;
@@ -37,23 +37,23 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         [SerializeField] private bool _showDebugInfo = false;
         [SerializeField] private bool _drawGroundCheck = true;
 
-        // ServiceLocator統合
+        // ServiceLocator邨ｱ蜷・
         private IPlatformerPhysicsService _physicsService;
         private IPlatformerInputService _inputService;
         private IPlatformerAudioService _audioService;
 
-        // コンポーネント参照
+        // 繧ｳ繝ｳ繝昴・繝阪Φ繝亥盾辣ｧ
         private Rigidbody2D _rigidbody;
         private Collider2D _collider;
 
-        // 跳躍状態管理
+        // 霍ｳ霄咲憾諷狗ｮ｡逅・
         private int _currentJumpCount = 0;
         private bool _isGrounded = false;
         private bool _wasGrounded = false;
         private bool _isJumping = false;
         private bool _isFalling = false;
 
-        // タイミング制御
+        // 繧ｿ繧､繝溘Φ繧ｰ蛻ｶ蠕｡
         private float _lastGroundedTime = 0f;
         private float _jumpBufferPressTime = -1f;
         private bool _jumpInputReleased = true;
@@ -62,16 +62,16 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         public event Action OnJumpStarted;
         public event Action OnJumpEnded;
         public event Action OnLanded;
-        public event Action<int> OnDoubleJump; // ジャンプ回数付き
+        public event Action<int> OnDoubleJump; // 繧ｸ繝｣繝ｳ繝怜屓謨ｰ莉倥″
         public event Action<bool> OnGroundedChanged;
 
         private void Awake()
         {
-            // コンポーネント取得
+            // 繧ｳ繝ｳ繝昴・繝阪Φ繝亥叙蠕・
             _rigidbody = GetComponent<Rigidbody2D>();
             _collider = GetComponent<Collider2D>();
 
-            // グラウンドチェックポイント自動設定
+            // 繧ｰ繝ｩ繧ｦ繝ｳ繝峨メ繧ｧ繝・け繝昴う繝ｳ繝郁・蜍戊ｨｭ螳・
             if (_groundCheckPoint == null)
             {
                 var groundCheck = new GameObject("GroundCheckPoint");
@@ -83,7 +83,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
 
         private void Start()
         {
-            // ServiceLocator統合：サービス取得
+            // ServiceLocator邨ｱ蜷茨ｼ壹し繝ｼ繝薙せ蜿門ｾ・
             InitializeServices();
         }
 
@@ -91,18 +91,18 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             try
             {
-                // Physics Service：ジャンプ計算とグラウンド検出
+                // Physics Service・壹ず繝｣繝ｳ繝苓ｨ育ｮ励→繧ｰ繝ｩ繧ｦ繝ｳ繝画､懷・
                 _physicsService = ServiceLocator.GetService<IPlatformerPhysicsService>();
                 if (_physicsService == null)
                 {
                     Debug.LogError("[JumpController] IPlatformerPhysicsService not found in ServiceLocator!");
                 }
 
-                // Input Service：ジャンプ入力処理
+                // Input Service・壹ず繝｣繝ｳ繝怜・蜉帛・逅・
                 _inputService = ServiceLocator.GetService<IPlatformerInputService>();
                 if (_inputService != null)
                 {
-                    // Event駆動：ジャンプ入力イベント購読
+                    // Event鬧・虚・壹ず繝｣繝ｳ繝怜・蜉帙う繝吶Φ繝郁ｳｼ隱ｭ
                     _inputService.OnJumpPressed += OnJumpInputPressed;
                     _inputService.OnJumpReleased += OnJumpInputReleased;
                 }
@@ -111,7 +111,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
                     Debug.LogError("[JumpController] IPlatformerInputService not found in ServiceLocator!");
                 }
 
-                // Audio Service：ジャンプサウンド統合
+                // Audio Service・壹ず繝｣繝ｳ繝励し繧ｦ繝ｳ繝臥ｵｱ蜷・
                 if (_enableJumpSounds)
                 {
                     _audioService = ServiceLocator.GetService<IPlatformerAudioService>();
@@ -134,16 +134,16 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             if (_physicsService == null) return;
 
-            // 地面検出更新
+            // 蝨ｰ髱｢讀懷・譖ｴ譁ｰ
             UpdateGroundDetection();
 
-            // ジャンプバッファ処理
+            // 繧ｸ繝｣繝ｳ繝励ヰ繝・ヵ繧｡蜃ｦ逅・
             ProcessJumpBuffer();
 
-            // 可変ジャンプ高度処理
+            // 蜿ｯ螟峨ず繝｣繝ｳ繝鈴ｫ伜ｺｦ蜃ｦ逅・
             ProcessVariableJumpHeight();
 
-            // 状態更新
+            // 迥ｶ諷区峩譁ｰ
             UpdateJumpState();
         }
 
@@ -151,27 +151,27 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             _wasGrounded = _isGrounded;
 
-            // Physics Service統合：地面検出
+            // Physics Service邨ｱ蜷茨ｼ壼慍髱｢讀懷・
             _isGrounded = _physicsService.CheckGrounded(_groundCheckPoint.position, _groundLayerMask);
 
-            // 地面状態変化イベント
+            // 蝨ｰ髱｢迥ｶ諷句､牙喧繧､繝吶Φ繝・
             if (_isGrounded != _wasGrounded)
             {
                 OnGroundedChanged?.Invoke(_isGrounded);
 
                 if (_isGrounded)
                 {
-                    // 着地処理
+                    // 逹蝨ｰ蜃ｦ逅・
                     HandleLanding();
                 }
                 else
                 {
-                    // 地面離脱処理：コヨーテタイム開始
+                    // 蝨ｰ髱｢髮｢閼ｱ蜃ｦ逅・ｼ壹さ繝ｨ繝ｼ繝・ち繧､繝髢句ｧ・
                     _lastGroundedTime = Time.time;
                 }
             }
 
-            // コヨーテタイム更新
+            // 繧ｳ繝ｨ繝ｼ繝・ち繧､繝譖ｴ譁ｰ
             if (_isGrounded)
             {
                 _lastGroundedTime = Time.time;
@@ -180,13 +180,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
 
         private void ProcessJumpBuffer()
         {
-            // ジャンプバッファ有効期間内のジャンプ処理
+            // 繧ｸ繝｣繝ｳ繝励ヰ繝・ヵ繧｡譛牙柑譛滄俣蜀・・繧ｸ繝｣繝ｳ繝怜・逅・
             if (_jumpBufferPressTime >= 0 && Time.time - _jumpBufferPressTime <= _jumpBufferTime)
             {
                 if (CanPerformJump())
                 {
                     PerformJump();
-                    _jumpBufferPressTime = -1f; // バッファクリア
+                    _jumpBufferPressTime = -1f; // 繝舌ャ繝輔ぃ繧ｯ繝ｪ繧｢
                 }
             }
         }
@@ -195,7 +195,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             if (!_enableVariableJumpHeight || !_isJumping) return;
 
-            // ジャンプボタンが離されたら上昇速度を減少
+            // 繧ｸ繝｣繝ｳ繝励・繧ｿ繝ｳ縺碁屬縺輔ｌ縺溘ｉ荳頑・騾溷ｺｦ繧呈ｸ帛ｰ・
             if (_inputService != null && _inputService.JumpReleased && _jumpInputReleased == false)
             {
                 _jumpInputReleased = true;
@@ -215,14 +215,14 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             var velocity = _rigidbody.linearVelocity;
 
-            // ジャンプ状態判定
+            // 繧ｸ繝｣繝ｳ繝礼憾諷句愛螳・
             bool wasJumping = _isJumping;
             bool wasFalling = _isFalling;
 
             _isJumping = !_isGrounded && velocity.y > 0.1f;
             _isFalling = !_isGrounded && velocity.y < -0.1f;
 
-            // ジャンプ終了イベント
+            // 繧ｸ繝｣繝ｳ繝礼ｵゆｺ・う繝吶Φ繝・
             if (wasJumping && !_isJumping)
             {
                 OnJumpEnded?.Invoke();
@@ -234,14 +234,14 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             LogDebug("Jump input pressed.");
 
-            // ジャンプバッファ設定
+            // 繧ｸ繝｣繝ｳ繝励ヰ繝・ヵ繧｡險ｭ螳・
             _jumpBufferPressTime = Time.time;
 
-            // 即座にジャンプ可能かチェック
+            // 蜊ｳ蠎ｧ縺ｫ繧ｸ繝｣繝ｳ繝怜庄閭ｽ縺九メ繧ｧ繝・け
             if (CanPerformJump())
             {
                 PerformJump();
-                _jumpBufferPressTime = -1f; // バッファクリア
+                _jumpBufferPressTime = -1f; // 繝舌ャ繝輔ぃ繧ｯ繝ｪ繧｢
             }
         }
 
@@ -255,10 +255,10 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             if (_physicsService == null) return false;
 
-            // コヨーテタイム考慮の地面判定
+            // 繧ｳ繝ｨ繝ｼ繝・ち繧､繝閠・・縺ｮ蝨ｰ髱｢蛻､螳・
             bool effectivelyGrounded = _isGrounded || (Time.time - _lastGroundedTime <= _coyoteTime);
 
-            // Physics Service統合：ジャンプ可能性判定
+            // Physics Service邨ｱ蜷茨ｼ壹ず繝｣繝ｳ繝怜庄閭ｽ諤ｧ蛻､螳・
             return _physicsService.CanJump(effectivelyGrounded, _currentJumpCount);
         }
 
@@ -266,25 +266,25 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             if (_physicsService == null) return;
 
-            // コヨーテタイム考慮の地面判定
+            // 繧ｳ繝ｨ繝ｼ繝・ち繧､繝閠・・縺ｮ蝨ｰ髱｢蛻､螳・
             bool effectivelyGrounded = _isGrounded || (Time.time - _lastGroundedTime <= _coyoteTime);
 
-            // Physics Service統合：ジャンプ速度計算
+            // Physics Service邨ｱ蜷茨ｼ壹ず繝｣繝ｳ繝鈴溷ｺｦ險育ｮ・
             Vector2 jumpVelocity = _physicsService.CalculateJumpVelocity(effectivelyGrounded, _currentJumpCount);
 
-            // ジャンプ実行
+            // 繧ｸ繝｣繝ｳ繝怜ｮ溯｡・
             var velocity = _rigidbody.linearVelocity;
             velocity.y = jumpVelocity.y;
             _rigidbody.linearVelocity = velocity;
 
-            // ジャンプ回数更新
+            // 繧ｸ繝｣繝ｳ繝怜屓謨ｰ譖ｴ譁ｰ
             if (!effectivelyGrounded)
             {
                 _currentJumpCount++;
                 OnDoubleJump?.Invoke(_currentJumpCount);
                 LogDebug($"Double jump performed. Jump count: {_currentJumpCount}");
 
-                // ダブルジャンプサウンド再生
+                // 繝繝悶Ν繧ｸ繝｣繝ｳ繝励し繧ｦ繝ｳ繝牙・逕・
                 PlayJumpSound(_doubleJumpSoundEvent);
             }
             else
@@ -292,15 +292,15 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
                 _currentJumpCount = 1;
                 LogDebug("Ground jump performed.");
 
-                // 通常ジャンプサウンド再生
+                // 騾壼ｸｸ繧ｸ繝｣繝ｳ繝励し繧ｦ繝ｳ繝牙・逕・
                 PlayJumpSound(_jumpSoundEvent);
             }
 
-            // 状態リセット
+            // 迥ｶ諷九Μ繧ｻ繝・ヨ
             _jumpInputReleased = false;
-            _lastGroundedTime = -_coyoteTime; // コヨーテタイムリセット
+            _lastGroundedTime = -_coyoteTime; // 繧ｳ繝ｨ繝ｼ繝・ち繧､繝繝ｪ繧ｻ繝・ヨ
 
-            // イベント発行
+            // 繧､繝吶Φ繝育匱陦・
             OnJumpStarted?.Invoke();
 
             LogDebug($"Jump performed. Velocity: {velocity.y:F2}, Jump count: {_currentJumpCount}");
@@ -312,15 +312,15 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
             {
                 LogDebug("Player landed.");
 
-                // ジャンプ回数リセット
+                // 繧ｸ繝｣繝ｳ繝怜屓謨ｰ繝ｪ繧ｻ繝・ヨ
                 _currentJumpCount = 0;
                 _isJumping = false;
                 _isFalling = false;
 
-                // 着地イベント
+                // 逹蝨ｰ繧､繝吶Φ繝・
                 OnLanded?.Invoke();
 
-                // 着地サウンド再生
+                // 逹蝨ｰ繧ｵ繧ｦ繝ｳ繝牙・逕・
                 PlayJumpSound(_landSoundEvent);
             }
         }
@@ -331,8 +331,8 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
             {
                 try
                 {
-                    // Audio Service統合：サウンド再生
-                    // Note: 実際のメソッド名は IPlatformerAudioService の実装によって調整が必要
+                    // Audio Service邨ｱ蜷茨ｼ壹し繧ｦ繝ｳ繝牙・逕・
+                    // Note: 螳滄圀縺ｮ繝｡繧ｽ繝・ラ蜷阪・ IPlatformerAudioService 縺ｮ螳溯｣・↓繧医▲縺ｦ隱ｿ謨ｴ縺悟ｿ・ｦ・
                     // _audioService.PlaySound(soundEvent, transform.position);
                     LogDebug($"Jump sound triggered: {soundEvent}");
                 }
@@ -345,7 +345,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
 
         private void OnDestroy()
         {
-            // Event駆動：イベント購読解除
+            // Event鬧・虚・壹う繝吶Φ繝郁ｳｼ隱ｭ隗｣髯､
             if (_inputService != null)
             {
                 _inputService.OnJumpPressed -= OnJumpInputPressed;
@@ -357,11 +357,11 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         {
             if (!_drawGroundCheck || _groundCheckPoint == null) return;
 
-            // 地面検出範囲の可視化
+            // 蝨ｰ髱｢讀懷・遽・峇縺ｮ蜿ｯ隕門喧
             Gizmos.color = _isGrounded ? Color.green : Color.red;
             Gizmos.DrawWireSphere(_groundCheckPoint.position, _groundCheckRadius);
 
-            // デバッグ情報表示
+            // 繝・ヰ繝・げ諠・ｱ陦ｨ遉ｺ
             if (_showDebugInfo)
             {
                 var labelPos = transform.position + Vector3.up * 2f;
@@ -372,7 +372,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
             }
         }
 
-        // デバッグメソッド
+        // 繝・ヰ繝・げ繝｡繧ｽ繝・ラ
         public void ShowJumpDebugInfo()
         {
             if (!_showDebugInfo) return;
@@ -387,7 +387,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
                      $"Velocity Y: {_rigidbody.linearVelocity.y:F2}");
         }
 
-        // 外部制御API
+        // 螟夜Κ蛻ｶ蠕｡API
         public void ForceJump(float jumpVelocity)
         {
             var velocity = _rigidbody.linearVelocity;
@@ -413,7 +413,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
             LogDebug($"Max jump count set to: {_maxJumpCount}");
         }
 
-        // プロパティ
+        // 繝励Ο繝代ユ繧｣
         public bool IsGrounded => _isGrounded;
         public bool IsJumping => _isJumping;
         public bool IsFalling => _isFalling;
@@ -430,3 +430,5 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Controllers
         }
     }
 }
+
+

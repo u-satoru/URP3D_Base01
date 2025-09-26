@@ -1,9 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Features.Templates.Platformer.Commands;
 using Sirenix.OdinInspector;
@@ -11,16 +11,16 @@ using Sirenix.OdinInspector;
 namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
 {
     /// <summary>
-    /// プラットフォーマー収集アイテム管理システム
-    /// 収集アイテムの生成、管理、効果処理を統合管理
-    /// スコア・進捗システムとの完全統合
+    /// 繝励Λ繝・ヨ繝輔か繝ｼ繝槭・蜿朱寔繧｢繧､繝・Β邂｡逅・す繧ｹ繝・Β
+    /// 蜿朱寔繧｢繧､繝・Β縺ｮ逕滓・縲∫ｮ｡逅・∝柑譫懷・逅・ｒ邨ｱ蜷育ｮ｡逅・
+    /// 繧ｹ繧ｳ繧｢繝ｻ騾ｲ謐励す繧ｹ繝・Β縺ｨ縺ｮ螳悟・邨ｱ蜷・
     /// </summary>
     public class CollectibleManager : MonoBehaviour
     {
         #region Collectible Configuration
 
         [TabGroup("Collectibles", "Basic Settings")]
-        [Title("Collectible Management System", "プラットフォーマー収集アイテム統合管理", TitleAlignments.Centered)]
+        [Title("Collectible Management System", "繝励Λ繝・ヨ繝輔か繝ｼ繝槭・蜿朱寔繧｢繧､繝・Β邨ｱ蜷育ｮ｡逅・, TitleAlignments.Centered)]
         [SerializeField] private bool enableCollectibles = true;
         [SerializeField] private bool debugMode = false;
         [SerializeField] private bool autoRespawn = false;
@@ -130,23 +130,23 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
 
         public enum CollectibleType
         {
-            Coin,           // 基本通貨
-            Gem,            // 高価値アイテム
-            PowerUp,        // パワーアップアイテム
-            Health,         // 体力回復
-            Key,            // 特殊キーアイテム
-            Star,           // 評価用スターアイテム
-            Bonus,          // ボーナスアイテム
-            Special         // 特別アイテム
+            Coin,           // 蝓ｺ譛ｬ騾夊ｲｨ
+            Gem,            // 鬮倅ｾ｡蛟､繧｢繧､繝・Β
+            PowerUp,        // 繝代Ρ繝ｼ繧｢繝・・繧｢繧､繝・Β
+            Health,         // 菴灘鴨蝗槫ｾｩ
+            Key,            // 迚ｹ谿翫く繝ｼ繧｢繧､繝・Β
+            Star,           // 隧穂ｾ｡逕ｨ繧ｹ繧ｿ繝ｼ繧｢繧､繝・Β
+            Bonus,          // 繝懊・繝翫せ繧｢繧､繝・Β
+            Special         // 迚ｹ蛻･繧｢繧､繝・Β
         }
 
         public enum CollectibleRarity
         {
-            Common,         // 一般的
-            Uncommon,       // やや珍しい
-            Rare,           // 珍しい
-            Epic,           // 非常に珍しい
-            Legendary       // 伝説的
+            Common,         // 荳闊ｬ逧・
+            Uncommon,       // 繧・ｄ迴阪＠縺・
+            Rare,           // 迴阪＠縺・
+            Epic,           // 髱槫ｸｸ縺ｫ迴阪＠縺・
+            Legendary       // 莨晁ｪｬ逧・
         }
 
         #endregion
@@ -186,7 +186,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         #region Initialization
 
         /// <summary>
-        /// 収集アイテム管理システムの初期化
+        /// 蜿朱寔繧｢繧､繝・Β邂｡逅・す繧ｹ繝・Β縺ｮ蛻晄悄蛹・
         /// </summary>
         private void InitializeCollectibleManager()
         {
@@ -194,31 +194,31 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
 
             try
             {
-                // サービス参照の取得
+                // 繧ｵ繝ｼ繝薙せ蜿ら・縺ｮ蜿門ｾ・
                 commandInvoker = ServiceLocator.GetService<ICommandInvoker>();
 
-                // コレクション統計の初期化
+                // 繧ｳ繝ｬ繧ｯ繧ｷ繝ｧ繝ｳ邨ｱ險医・蛻晄悄蛹・
                 InitializeCollectionStats();
 
-                // スポーンポイントの検証
+                // 繧ｹ繝昴・繝ｳ繝昴う繝ｳ繝医・讀懆ｨｼ
                 ValidateSpawnPoints();
 
-                // 収集タイプの設定確認
+                // 蜿朱寔繧ｿ繧､繝励・險ｭ螳夂｢ｺ隱・
                 ValidateCollectibleTypes();
 
                 collectionStartTime = Time.time;
                 isInitialized = true;
 
-                LogDebug("[CollectibleManager] ✅ Collectible Manager initialization completed successfully");
+                LogDebug("[CollectibleManager] 笨・Collectible Manager initialization completed successfully");
             }
             catch (System.Exception ex)
             {
-                LogError($"[CollectibleManager] ❌ Collectible Manager initialization failed: {ex.Message}");
+                LogError($"[CollectibleManager] 笶・Collectible Manager initialization failed: {ex.Message}");
             }
         }
 
         /// <summary>
-        /// コレクション統計の初期化
+        /// 繧ｳ繝ｬ繧ｯ繧ｷ繝ｧ繝ｳ邨ｱ險医・蛻晄悄蛹・
         /// </summary>
         private void InitializeCollectionStats()
         {
@@ -230,7 +230,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         }
 
         /// <summary>
-        /// スポーンポイントの検証
+        /// 繧ｹ繝昴・繝ｳ繝昴う繝ｳ繝医・讀懆ｨｼ
         /// </summary>
         private void ValidateSpawnPoints()
         {
@@ -252,7 +252,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         }
 
         /// <summary>
-        /// 収集アイテムタイプの検証
+        /// 蜿朱寔繧｢繧､繝・Β繧ｿ繧､繝励・讀懆ｨｼ
         /// </summary>
         private void ValidateCollectibleTypes()
         {
@@ -274,26 +274,26 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         #region System Setup
 
         /// <summary>
-        /// 収集アイテムシステムのセットアップ
+        /// 蜿朱寔繧｢繧､繝・Β繧ｷ繧ｹ繝・Β縺ｮ繧ｻ繝・ヨ繧｢繝・・
         /// </summary>
         private void SetupCollectibleSystem()
         {
             LogDebug("[CollectibleManager] Setting up Collectible System...");
 
-            // 初期アイテム配置
+            // 蛻晄悄繧｢繧､繝・Β驟咲ｽｮ
             SpawnInitialCollectibles();
 
-            // イベントリスナーの登録
+            // 繧､繝吶Φ繝医Μ繧ｹ繝翫・縺ｮ逋ｻ骭ｲ
             RegisterEventListeners();
 
-            // UI更新
+            // UI譖ｴ譁ｰ
             UpdateUI();
 
-            LogDebug("[CollectibleManager] ✅ Collectible System setup completed");
+            LogDebug("[CollectibleManager] 笨・Collectible System setup completed");
         }
 
         /// <summary>
-        /// 初期収集アイテムの配置
+        /// 蛻晄悄蜿朱寔繧｢繧､繝・Β縺ｮ驟咲ｽｮ
         /// </summary>
         private void SpawnInitialCollectibles()
         {
@@ -317,12 +317,12 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         }
 
         /// <summary>
-        /// イベントリスナーの登録
+        /// 繧､繝吶Φ繝医Μ繧ｹ繝翫・縺ｮ逋ｻ骭ｲ
         /// </summary>
         private void RegisterEventListeners()
         {
-            // プレイヤーイベントのリスナー登録
-            // 例: プレイヤー位置更新、プレイヤー死亡等
+            // 繝励Ξ繧､繝､繝ｼ繧､繝吶Φ繝医・繝ｪ繧ｹ繝翫・逋ｻ骭ｲ
+            // 萓・ 繝励Ξ繧､繝､繝ｼ菴咲ｽｮ譖ｴ譁ｰ縲√・繝ｬ繧､繝､繝ｼ豁ｻ莠｡遲・
         }
 
         #endregion
@@ -330,31 +330,31 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         #region Update System
 
         /// <summary>
-        /// 収集アイテムシステムの更新
+        /// 蜿朱寔繧｢繧､繝・Β繧ｷ繧ｹ繝・Β縺ｮ譖ｴ譁ｰ
         /// </summary>
         private void UpdateCollectibleSystem()
         {
-            // コンボタイマーの更新
+            // 繧ｳ繝ｳ繝懊ち繧､繝槭・縺ｮ譖ｴ譁ｰ
             UpdateComboTimer();
 
-            // リスポーン処理
+            // 繝ｪ繧ｹ繝昴・繝ｳ蜃ｦ逅・
             if (autoRespawn)
             {
                 UpdateRespawnSystem();
             }
 
-            // アクティブアイテムの更新
+            // 繧｢繧ｯ繝・ぅ繝悶い繧､繝・Β縺ｮ譖ｴ譁ｰ
             UpdateActiveCollectibles();
 
-            // 統計情報の更新
+            // 邨ｱ險域ュ蝣ｱ縺ｮ譖ｴ譁ｰ
             UpdateStatistics();
 
-            // UI更新
+            // UI譖ｴ譁ｰ
             UpdateUI();
         }
 
         /// <summary>
-        /// コンボタイマーの更新
+        /// 繧ｳ繝ｳ繝懊ち繧､繝槭・縺ｮ譖ｴ譁ｰ
         /// </summary>
         private void UpdateComboTimer()
         {
@@ -364,14 +364,14 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
 
                 if (comboTimer <= 0f)
                 {
-                    // コンボリセット
+                    // 繧ｳ繝ｳ繝懊Μ繧ｻ繝・ヨ
                     ResetCombo();
                 }
             }
         }
 
         /// <summary>
-        /// リスポーンシステムの更新
+        /// 繝ｪ繧ｹ繝昴・繝ｳ繧ｷ繧ｹ繝・Β縺ｮ譖ｴ譁ｰ
         /// </summary>
         private void UpdateRespawnSystem()
         {
@@ -395,7 +395,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         }
 
         /// <summary>
-        /// アクティブ収集アイテムの更新
+        /// 繧｢繧ｯ繝・ぅ繝門庶髮・い繧､繝・Β縺ｮ譖ｴ譁ｰ
         /// </summary>
         private void UpdateActiveCollectibles()
         {
@@ -408,16 +408,16 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
                     continue;
                 }
 
-                // アニメーション更新
+                // 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ譖ｴ譁ｰ
                 UpdateCollectibleAnimation(collectible);
 
-                // 自動収集チェック
+                // 閾ｪ蜍募庶髮・メ繧ｧ繝・け
                 CheckAutoCollection(collectible);
             }
         }
 
         /// <summary>
-        /// 収集アイテムのアニメーション更新
+        /// 蜿朱寔繧｢繧､繝・Β縺ｮ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ譖ｴ譁ｰ
         /// </summary>
         private void UpdateCollectibleAnimation(Collectible collectible)
         {
@@ -435,13 +435,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         }
 
         /// <summary>
-        /// 自動収集のチェック
+        /// 閾ｪ蜍募庶髮・・繝√ぉ繝・け
         /// </summary>
         private void CheckAutoCollection(Collectible collectible)
         {
             if (!collectible.Config.autoCollect) return;
 
-            // プレイヤーとの距離チェック
+            // 繝励Ξ繧､繝､繝ｼ縺ｨ縺ｮ霍晞屬繝√ぉ繝・け
             GameObject player = GameObject.FindWithTag("Player");
             if (player != null)
             {
@@ -454,7 +454,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         }
 
         /// <summary>
-        /// 統計情報の更新
+        /// 邨ｱ險域ュ蝣ｱ縺ｮ譖ｴ譁ｰ
         /// </summary>
         private void UpdateStatistics()
         {
@@ -472,7 +472,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         #region Collection System
 
         /// <summary>
-        /// アイテムの収集処理
+        /// 繧｢繧､繝・Β縺ｮ蜿朱寔蜃ｦ逅・
         /// </summary>
         public bool CollectItem(Collectible collectible)
         {
@@ -480,53 +480,53 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
 
             LogDebug($"[CollectibleManager] Collecting item: {collectible.Config.displayName}");
 
-            // 収集処理
+            // 蜿朱寔蜃ｦ逅・
             collectible.IsCollected = true;
             collectedCount++;
             collectionStats[collectible.Config.type]++;
 
-            // スコア処理
+            // 繧ｹ繧ｳ繧｢蜃ｦ逅・
             if (enableScoring)
             {
                 ProcessScoring(collectible);
             }
 
-            // エフェクト再生
+            // 繧ｨ繝輔ぉ繧ｯ繝亥・逕・
             PlayCollectionEffects(collectible);
 
-            // コマンドパターンでの処理
+            // 繧ｳ繝槭Φ繝峨ヱ繧ｿ繝ｼ繝ｳ縺ｧ縺ｮ蜃ｦ逅・
             if (commandInvoker != null)
             {
                 var collectCommand = new CollectItemCommand(collectible, this);
                 commandInvoker.ExecuteCommand(collectCommand);
             }
 
-            // アクティブリストから削除
+            // 繧｢繧ｯ繝・ぅ繝悶Μ繧ｹ繝医°繧牙炎髯､
             activeCollectibles.Remove(collectible);
             collectedItems.Add(collectible);
 
-            // スポーンポイント更新
+            // 繧ｹ繝昴・繝ｳ繝昴う繝ｳ繝域峩譁ｰ
             UpdateSpawnPointStatus(collectible);
 
-            // アイテム非表示/削除
+            // 繧｢繧､繝・Β髱櫁｡ｨ遉ｺ/蜑企勁
             collectible.gameObject.SetActive(false);
 
-            // イベント発行
+            // 繧､繝吶Φ繝育匱陦・
             OnItemCollected(collectible);
 
-            LogDebug($"[CollectibleManager] ✅ Item collected: {collectible.Config.displayName}, Score: +{GetItemScore(collectible)}");
+            LogDebug($"[CollectibleManager] 笨・Item collected: {collectible.Config.displayName}, Score: +{GetItemScore(collectible)}");
 
             return true;
         }
 
         /// <summary>
-        /// スコア処理
+        /// 繧ｹ繧ｳ繧｢蜃ｦ逅・
         /// </summary>
         private void ProcessScoring(Collectible collectible)
         {
             int itemScore = GetItemScore(collectible);
 
-            // コンボ処理
+            // 繧ｳ繝ｳ繝懷・逅・
             if (comboTimer > 0f)
             {
                 currentCombo++;
@@ -541,21 +541,21 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
                 totalComboMultiplier = 1f;
             }
 
-            // 最終スコア計算
+            // 譛邨ゅせ繧ｳ繧｢險育ｮ・
             int finalScore = Mathf.RoundToInt(itemScore * totalComboMultiplier);
             currentScore += finalScore;
 
-            LogDebug($"[CollectibleManager] Score: {itemScore} × {totalComboMultiplier:F1} = {finalScore} (Total: {currentScore})");
+            LogDebug($"[CollectibleManager] Score: {itemScore} ﾃ・{totalComboMultiplier:F1} = {finalScore} (Total: {currentScore})");
         }
 
         /// <summary>
-        /// アイテムスコアの取得
+        /// 繧｢繧､繝・Β繧ｹ繧ｳ繧｢縺ｮ蜿門ｾ・
         /// </summary>
         private int GetItemScore(Collectible collectible)
         {
             int baseScore = collectible.Config.scoreValue;
 
-            // レアリティボーナス
+            // 繝ｬ繧｢繝ｪ繝・ぅ繝懊・繝翫せ
             float rarityMultiplier = collectible.Config.rarity switch
             {
                 CollectibleRarity.Common => 1f,
@@ -570,34 +570,34 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         }
 
         /// <summary>
-        /// 収集エフェクトの再生
+        /// 蜿朱寔繧ｨ繝輔ぉ繧ｯ繝医・蜀咲函
         /// </summary>
         private void PlayCollectionEffects(Collectible collectible)
         {
             Vector3 effectPosition = collectible.transform.position;
 
-            // パーティクルエフェクト
+            // 繝代・繝・ぅ繧ｯ繝ｫ繧ｨ繝輔ぉ繧ｯ繝・
             if (enableParticleEffects && collectible.Config.collectionEffect != null)
             {
                 var effect = Instantiate(collectible.Config.collectionEffect, effectPosition, Quaternion.identity);
                 Destroy(effect.gameObject, effectDuration);
             }
 
-            // 音響エフェクト
+            // 髻ｳ髻ｿ繧ｨ繝輔ぉ繧ｯ繝・
             if (enableSoundEffects && collectible.Config.collectionSound != null)
             {
                 AudioSource.PlayClipAtPoint(collectible.Config.collectionSound, effectPosition);
             }
 
-            // スクリーンエフェクト（UI更新等）
+            // 繧ｹ繧ｯ繝ｪ繝ｼ繝ｳ繧ｨ繝輔ぉ繧ｯ繝茨ｼ・I譖ｴ譁ｰ遲会ｼ・
             if (enableScreenEffects)
             {
-                // スコア表示等のUI更新
+                // 繧ｹ繧ｳ繧｢陦ｨ遉ｺ遲峨・UI譖ｴ譁ｰ
             }
         }
 
         /// <summary>
-        /// スポーンポイント状態の更新
+        /// 繧ｹ繝昴・繝ｳ繝昴う繝ｳ繝育憾諷九・譖ｴ譁ｰ
         /// </summary>
         private void UpdateSpawnPointStatus(Collectible collectible)
         {
@@ -612,7 +612,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         }
 
         /// <summary>
-        /// コンボのリセット
+        /// 繧ｳ繝ｳ繝懊・繝ｪ繧ｻ繝・ヨ
         /// </summary>
         private void ResetCombo()
         {
@@ -627,13 +627,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         }
 
         /// <summary>
-        /// アイテム収集イベント
+        /// 繧｢繧､繝・Β蜿朱寔繧､繝吶Φ繝・
         /// </summary>
         private void OnItemCollected(Collectible collectible)
         {
-            // GameEventの発行
-            // UI更新イベント
-            // プレイヤー通知イベント
+            // GameEvent縺ｮ逋ｺ陦・
+            // UI譖ｴ譁ｰ繧､繝吶Φ繝・
+            // 繝励Ξ繧､繝､繝ｼ騾夂衍繧､繝吶Φ繝・
         }
 
         #endregion
@@ -641,20 +641,20 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         #region Spawn System
 
         /// <summary>
-        /// 指定位置にアイテムを生成
+        /// 謖・ｮ壻ｽ咲ｽｮ縺ｫ繧｢繧､繝・Β繧堤函謌・
         /// </summary>
         public bool SpawnCollectibleAtPoint(CollectibleSpawnPoint spawnPoint)
         {
             if (spawnPoint.spawnTransform == null) return false;
 
-            // タイプ設定の取得
+            // 繧ｿ繧､繝苓ｨｭ螳壹・蜿門ｾ・
             var typeConfig = GetCollectibleConfig(spawnPoint.preferredType);
             if (typeConfig == null || typeConfig.prefab == null) return false;
 
-            // 生成条件のチェック
+            // 逕滓・譚｡莉ｶ縺ｮ繝√ぉ繝・け
             if (!CanSpawnAtPoint(spawnPoint)) return false;
 
-            // アイテム生成
+            // 繧｢繧､繝・Β逕滓・
             GameObject itemObject = Instantiate(typeConfig.prefab,
                 spawnPoint.spawnTransform.position,
                 spawnPoint.spawnTransform.rotation);
@@ -665,10 +665,10 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
                 collectible = itemObject.AddComponent<Collectible>();
             }
 
-            // 設定適用
+            // 險ｭ螳夐←逕ｨ
             collectible.Initialize(typeConfig, spawnPoint.spawnTransform.position);
 
-            // アクティブリストに追加
+            // 繧｢繧ｯ繝・ぅ繝悶Μ繧ｹ繝医↓霑ｽ蜉
             activeCollectibles.Add(collectible);
 
             LogDebug($"[CollectibleManager] Spawned {typeConfig.displayName} at {spawnPoint.spawnTransform.position}");
@@ -677,13 +677,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         }
 
         /// <summary>
-        /// 生成可能かチェック
+        /// 逕滓・蜿ｯ閭ｽ縺九メ繧ｧ繝・け
         /// </summary>
         private bool CanSpawnAtPoint(CollectibleSpawnPoint spawnPoint)
         {
             if (!spawnPoint.isActive) return false;
 
-            // プレイヤー距離チェック
+            // 繝励Ξ繧､繝､繝ｼ霍晞屬繝√ぉ繝・け
             if (spawnPoint.requirePlayerDistance)
             {
                 GameObject player = GameObject.FindWithTag("Player");
@@ -697,7 +697,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
                 }
             }
 
-            // 時間ベース生成チェック
+            // 譎る俣繝吶・繧ｹ逕滓・繝√ぉ繝・け
             if (spawnPoint.timeBasedSpawn)
             {
                 if (Time.time - collectionStartTime < spawnPoint.spawnInterval)
@@ -710,7 +710,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         }
 
         /// <summary>
-        /// 収集アイテム設定の取得
+        /// 蜿朱寔繧｢繧､繝・Β險ｭ螳壹・蜿門ｾ・
         /// </summary>
         private CollectibleTypeConfig GetCollectibleConfig(CollectibleType type)
         {
@@ -718,7 +718,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         }
 
         /// <summary>
-        /// ランダムな場所にアイテムを生成
+        /// 繝ｩ繝ｳ繝繝縺ｪ蝣ｴ謇縺ｫ繧｢繧､繝・Β繧堤函謌・
         /// </summary>
         public bool SpawnRandomCollectible()
         {
@@ -736,7 +736,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         #region Public API
 
         /// <summary>
-        /// 収集統計の取得
+        /// 蜿朱寔邨ｱ險医・蜿門ｾ・
         /// </summary>
         public Dictionary<CollectibleType, int> GetCollectionStats()
         {
@@ -744,7 +744,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         }
 
         /// <summary>
-        /// 現在のスコアを取得
+        /// 迴ｾ蝨ｨ縺ｮ繧ｹ繧ｳ繧｢繧貞叙蠕・
         /// </summary>
         public int GetCurrentScore()
         {
@@ -752,7 +752,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         }
 
         /// <summary>
-        /// 収集完了率を取得
+        /// 蜿朱寔螳御ｺ・紫繧貞叙蠕・
         /// </summary>
         public float GetCompletionPercentage()
         {
@@ -760,11 +760,11 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         }
 
         /// <summary>
-        /// 全アイテムの収集をリセット
+        /// 蜈ｨ繧｢繧､繝・Β縺ｮ蜿朱寔繧偵Μ繧ｻ繝・ヨ
         /// </summary>
         public void ResetAllCollectibles()
         {
-            // 収集済みアイテムの復活
+            // 蜿朱寔貂医∩繧｢繧､繝・Β縺ｮ蠕ｩ豢ｻ
             foreach (var collectible in collectedItems)
             {
                 if (collectible != null)
@@ -775,14 +775,14 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
                 }
             }
 
-            // 統計リセット
+            // 邨ｱ險医Μ繧ｻ繝・ヨ
             collectedCount = 0;
             currentScore = 0;
             ResetCombo();
             InitializeCollectionStats();
             collectedItems.Clear();
 
-            // スポーンポイントリセット
+            // 繧ｹ繝昴・繝ｳ繝昴う繝ｳ繝医Μ繧ｻ繝・ヨ
             foreach (var spawnPoint in spawnPoints)
             {
                 spawnPoint.hasSpawned = true;
@@ -793,29 +793,29 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         }
 
         /// <summary>
-        /// UI更新
+        /// UI譖ｴ譁ｰ
         /// </summary>
         public void UpdateUI()
         {
-            // UI更新処理
-            // スコア表示、残り個数表示等
+            // UI譖ｴ譁ｰ蜃ｦ逅・
+            // 繧ｹ繧ｳ繧｢陦ｨ遉ｺ縲∵ｮ九ｊ蛟区焚陦ｨ遉ｺ遲・
         }
 
         /// <summary>
-        /// 目標スコアを設定
-        /// PlatformerTemplateManagerから呼び出される
+        /// 逶ｮ讓吶せ繧ｳ繧｢繧定ｨｭ螳・
+        /// PlatformerTemplateManager縺九ｉ蜻ｼ縺ｳ蜃ｺ縺輔ｌ繧・
         /// </summary>
-        /// <param name="targetScore">設定する目標スコア</param>
+        /// <param name="targetScore">險ｭ螳壹☆繧狗岼讓吶せ繧ｳ繧｢</param>
         public void SetTargetScore(int targetScore)
         {
             if (targetScore < 0)
             {
-                LogDebug("[CollectibleManager] ⚠️ Target score cannot be negative, setting to 0");
+                LogDebug("[CollectibleManager] 笞・・Target score cannot be negative, setting to 0");
                 targetScore = 0;
             }
 
-            // 内部的に目標スコアを保存（将来の拡張用）
-            // 現在のバージョンでは設定を記録するのみ
+            // 蜀・Κ逧・↓逶ｮ讓吶せ繧ｳ繧｢繧剃ｿ晏ｭ假ｼ亥ｰ・擂縺ｮ諡｡蠑ｵ逕ｨ・・
+            // 迴ｾ蝨ｨ縺ｮ繝舌・繧ｸ繝ｧ繝ｳ縺ｧ縺ｯ險ｭ螳壹ｒ險倬鹸縺吶ｋ縺ｮ縺ｿ
             LogDebug($"[CollectibleManager] Target score set to: {targetScore}");
         }
 
@@ -889,7 +889,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         {
             if (!enableCollectibles) return;
 
-            // スポーンポイントの可視化
+            // 繧ｹ繝昴・繝ｳ繝昴う繝ｳ繝医・蜿ｯ隕門喧
             foreach (var spawnPoint in spawnPoints)
             {
                 if (spawnPoint.spawnTransform == null || !spawnPoint.showGizmos) continue;
@@ -897,7 +897,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
                 Gizmos.color = spawnPoint.isActive ? spawnPoint.gizmosColor : Color.gray;
                 Gizmos.DrawWireSphere(spawnPoint.spawnTransform.position, 0.5f);
 
-                // 自動収集範囲の可視化
+                // 閾ｪ蜍募庶髮・ｯ・峇縺ｮ蜿ｯ隕門喧
                 var config = GetCollectibleConfig(spawnPoint.preferredType);
                 if (config != null && config.autoCollect)
                 {
@@ -907,7 +907,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
                 }
             }
 
-            // アクティブアイテムの可視化
+            // 繧｢繧ｯ繝・ぅ繝悶い繧､繝・Β縺ｮ蜿ｯ隕門喧
             Gizmos.color = Color.green;
             foreach (var collectible in activeCollectibles)
             {
@@ -923,7 +923,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         {
             spawnPoints.Clear();
 
-            // シーン内の "CollectibleSpawn" タグが付いたオブジェクトを検索
+            // 繧ｷ繝ｼ繝ｳ蜀・・ "CollectibleSpawn" 繧ｿ繧ｰ縺御ｻ倥＞縺溘が繝悶ず繧ｧ繧ｯ繝医ｒ讀懃ｴ｢
             GameObject[] spawnObjects = GameObject.FindGameObjectsWithTag("CollectibleSpawn");
 
             foreach (var obj in spawnObjects)
@@ -944,3 +944,5 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Collectibles
         #endregion
     }
 }
+
+

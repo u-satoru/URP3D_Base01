@@ -1,18 +1,18 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using System.Collections;
 using asterivo.Unity60.Tests.Helpers;
 using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 
 namespace asterivo.Unity60.Tests.Core.Audio
 {
     /// <summary>
-    /// SpatialAudioManagerの単体テスト
-    /// 3D空間オーディオシステムのテスト
+    /// SpatialAudioManager縺ｮ蜊倅ｽ薙ユ繧ｹ繝・
+    /// 3D遨ｺ髢薙が繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β縺ｮ繝・せ繝・
     /// </summary>
     [TestFixture]
     public class SpatialAudioManagerTests
@@ -31,14 +31,14 @@ namespace asterivo.Unity60.Tests.Core.Audio
             TestHelpers.ResetFeatureFlagsForTest();
             TestHelpers.SetupTestScene();
             
-            // ServiceLocatorのセットアップ
+            // ServiceLocator縺ｮ繧ｻ繝・ヨ繧｢繝・・
             TestHelpers.SetupTestServiceLocator();
             
-            // SpatialAudioManagerオブジェクトの作成
+            // SpatialAudioManager繧ｪ繝悶ず繧ｧ繧ｯ繝医・菴懈・
             spatialAudioManagerObject = TestHelpers.CreateTestGameObject("SpatialAudioManager");
             spatialAudioManager = spatialAudioManagerObject.AddComponent<SpatialAudioManager>();
             
-            // AudioListenerコンポーネントの追加（空間オーディオに必要）
+            // AudioListener繧ｳ繝ｳ繝昴・繝阪Φ繝医・霑ｽ蜉・育ｩｺ髢薙が繝ｼ繝・ぅ繧ｪ縺ｫ蠢・ｦ・ｼ・
             testCamera = UnityEngine.Camera.main;
             if (testCamera != null && testCamera.GetComponent<AudioListener>() == null)
             {
@@ -58,7 +58,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Basic Functionality Tests
 
         /// <summary>
-        /// SpatialAudioManagerが正常に初期化されることをテスト
+        /// SpatialAudioManager縺梧ｭ｣蟶ｸ縺ｫ蛻晄悄蛹悶＆繧後ｋ縺薙→繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void SpatialAudioManager_ShouldInitialize_Properly()
@@ -68,7 +68,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// SpatialAudioManagerがSingletonパターンで動作することをテスト
+        /// SpatialAudioManager縺郡ingleton繝代ち繝ｼ繝ｳ縺ｧ蜍穂ｽ懊☆繧九％縺ｨ繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void SpatialAudioManager_ShouldImplement_SingletonPattern()
@@ -87,7 +87,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Spatial Audio Tests
 
         /// <summary>
-        /// 3D位置での音声再生をテスト
+        /// 3D菴咲ｽｮ縺ｧ縺ｮ髻ｳ螢ｰ蜀咲函繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void Play3DSound_ShouldExecute_WithoutErrors()
@@ -102,7 +102,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// リスナー位置の設定をテスト
+        /// 繝ｪ繧ｹ繝翫・菴咲ｽｮ縺ｮ險ｭ螳壹ｒ繝・せ繝・
         /// </summary>
         [Test]
         public void UpdateListenerPosition_ShouldUpdate_AudioListenerPosition()
@@ -122,7 +122,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// 空間オーディオの距離減衰をテスト
+        /// 遨ｺ髢薙が繝ｼ繝・ぅ繧ｪ縺ｮ霍晞屬貂幄｡ｰ繧偵ユ繧ｹ繝・
         /// </summary>
         [TestCase(1.0f, ExpectedResult = true)]
         [TestCase(50.0f, ExpectedResult = true)]
@@ -146,7 +146,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// 複数の空間音源の同時再生をテスト
+        /// 隍・焚縺ｮ遨ｺ髢馴浹貅舌・蜷梧凾蜀咲函繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void MultipleSpatialSounds_ShouldPlay_Simultaneously()
@@ -175,7 +175,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region ServiceHelper Integration Tests
 
         /// <summary>
-        /// ServiceHelper経由でSpatialAudioManagerが取得できることをテスト
+        /// ServiceHelper邨檎罰縺ｧSpatialAudioManager縺悟叙蠕励〒縺阪ｋ縺薙→繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void ServiceHelper_ShouldRetrieve_SpatialAudioManager()
@@ -195,7 +195,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Performance Tests
 
         /// <summary>
-        /// 空間音声再生のパフォーマンステスト
+        /// 遨ｺ髢馴浹螢ｰ蜀咲函縺ｮ繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ繝・せ繝・
         /// </summary>
         [Test]
         public void Play3DSound_ShouldComplete_WithinPerformanceThreshold()
@@ -203,7 +203,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
             // Arrange
             string testSoundName = "performance-spatial-sound";
             Vector3 testPosition = new Vector3(10, 0, 10);
-            float maxExecutionTime = 0.002f; // 2ms以内
+            float maxExecutionTime = 0.002f; // 2ms莉･蜀・
 
             // Act & Assert
             TestHelpers.AssertExecutionTime(
@@ -214,14 +214,14 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// 大量の空間音源のパフォーマンステスト
+        /// 螟ｧ驥上・遨ｺ髢馴浹貅舌・繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ繝・せ繝・
         /// </summary>
         [Test]
         public void MassiveSpatialSounds_ShouldMaintain_Performance()
         {
             // Arrange
             int soundCount = 50;
-            float maxExecutionTime = 0.05f; // 50ms以内
+            float maxExecutionTime = 0.05f; // 50ms莉･蜀・
 
             // Act & Assert
             TestHelpers.AssertExecutionTime(
@@ -247,7 +247,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Error Handling Tests
 
         /// <summary>
-        /// 無効な位置での音声再生をテスト
+        /// 辟｡蜉ｹ縺ｪ菴咲ｽｮ縺ｧ縺ｮ髻ｳ螢ｰ蜀咲函繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void PlaySoundAtPosition_ShouldHandle_InvalidPositions()
@@ -271,7 +271,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// null音声名の処理をテスト
+        /// null髻ｳ螢ｰ蜷阪・蜃ｦ逅・ｒ繝・せ繝・
         /// </summary>
         [Test]
         public void PlaySoundAtPosition_ShouldHandle_NullSoundName()
@@ -289,14 +289,14 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Spatial Calculation Tests
 
         /// <summary>
-        /// 音源とリスナーの距離計算をテスト
+        /// 髻ｳ貅舌→繝ｪ繧ｹ繝翫・縺ｮ霍晞屬險育ｮ励ｒ繝・せ繝・
         /// </summary>
         [Test]
         public void SpatialAudio_ShouldCalculate_CorrectDistance()
         {
             // Arrange
             Vector3 listenerPosition = Vector3.zero;
-            Vector3 soundPosition = new Vector3(3, 4, 0); // 距離5の位置
+            Vector3 soundPosition = new Vector3(3, 4, 0); // 霍晞屬5縺ｮ菴咲ｽｮ
             float expectedDistance = 5.0f;
             
             // Act
@@ -310,7 +310,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// 左右のパンニング計算をテスト
+        /// 蟾ｦ蜿ｳ縺ｮ繝代Φ繝九Φ繧ｰ險育ｮ励ｒ繝・せ繝・
         /// </summary>
         [Test]
         public void SpatialAudio_ShouldHandle_LeftRightPanning()
@@ -332,7 +332,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Integration Tests
 
         /// <summary>
-        /// AudioManagerとの統合テスト
+        /// AudioManager縺ｨ縺ｮ邨ｱ蜷医ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void SpatialAudioManager_ShouldIntegrate_WithAudioManager()
@@ -347,16 +347,16 @@ namespace asterivo.Unity60.Tests.Core.Audio
             // Act & Assert
             Assert.DoesNotThrow(() =>
             {
-                // 通常の音声再生
+                // 騾壼ｸｸ縺ｮ髻ｳ螢ｰ蜀咲函
                 audioManager.PlaySound("normal-sound");
                 
-                // 空間音声再生
+                // 遨ｺ髢馴浹螢ｰ蜀咲函
                 spatialAudioManager.Play3DSound("spatial-sound", Vector3.forward * 5);
             }, "SpatialAudioManager should integrate with AudioManager");
         }
 
         /// <summary>
-        /// FeatureFlagsとの統合テスト
+        /// FeatureFlags縺ｨ縺ｮ邨ｱ蜷医ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void SpatialAudioManager_ShouldRespect_FeatureFlags()
@@ -380,7 +380,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Helper Methods
 
         /// <summary>
-        /// AudioListenerの存在を確認
+        /// AudioListener縺ｮ蟄伜惠繧堤｢ｺ隱・
         /// </summary>
         private void AssertAudioListenerExists()
         {
@@ -389,7 +389,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// ランダムな3D位置を生成
+        /// 繝ｩ繝ｳ繝繝縺ｪ3D菴咲ｽｮ繧堤函謌・
         /// </summary>
         private Vector3 GenerateRandomPosition(float range = 20f)
         {
@@ -403,3 +403,5 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #endregion
     }
 }
+
+

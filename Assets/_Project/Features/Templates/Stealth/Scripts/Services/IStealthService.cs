@@ -1,125 +1,127 @@
-using UnityEngine;
-using asterivo.Unity60.Core.Services;
+﻿using UnityEngine;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.Stealth.Environment;
 using asterivo.Unity60.Features.Templates.Stealth.Events;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Services
 {
     /// <summary>
-    /// ステルスシステムの中央制御サービスインターフェース
-    /// プレイヤーの隠蔽状態、環境との相互作用、AI検出システムとの統合を管理
+    /// 繧ｹ繝・Ν繧ｹ繧ｷ繧ｹ繝・Β縺ｮ荳ｭ螟ｮ蛻ｶ蠕｡繧ｵ繝ｼ繝薙せ繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ
+    /// 繝励Ξ繧､繝､繝ｼ縺ｮ髫阡ｽ迥ｶ諷九∫腸蠅・→縺ｮ逶ｸ莠剃ｽ懃畑縲、I讀懷・繧ｷ繧ｹ繝・Β縺ｨ縺ｮ邨ｱ蜷医ｒ邂｡逅・
     /// </summary>
     public interface IStealthService : IService
     {
         #region Visibility Management
         /// <summary>
-        /// プレイヤーの現在の視認性係数を取得 (0.0 = 完全に隠れている, 1.0 = 完全に見える)
+        /// 繝励Ξ繧､繝､繝ｼ縺ｮ迴ｾ蝨ｨ縺ｮ隕冶ｪ肴ｧ菫よ焚繧貞叙蠕・(0.0 = 螳悟・縺ｫ髫繧後※縺・ｋ, 1.0 = 螳悟・縺ｫ隕九∴繧・
         /// </summary>
         float PlayerVisibilityFactor { get; }
 
         /// <summary>
-        /// プレイヤーの現在の音響レベルを取得 (0.0 = 無音, 1.0 = 最大音量)
+        /// 繝励Ξ繧､繝､繝ｼ縺ｮ迴ｾ蝨ｨ縺ｮ髻ｳ髻ｿ繝ｬ繝吶Ν繧貞叙蠕・(0.0 = 辟｡髻ｳ, 1.0 = 譛螟ｧ髻ｳ驥・
         /// </summary>
         float PlayerNoiseLevel { get; }
 
         /// <summary>
-        /// 指定位置での光量レベルを計算
+        /// 謖・ｮ壻ｽ咲ｽｮ縺ｧ縺ｮ蜈蛾㍼繝ｬ繝吶Ν繧定ｨ育ｮ・
         /// </summary>
-        /// <param name="position">計算対象の位置</param>
-        /// <returns>光量レベル (0.0 = 完全な闇, 1.0 = 完全な光)</returns>
+        /// <param name="position">險育ｮ怜ｯｾ雎｡縺ｮ菴咲ｽｮ</param>
+        /// <returns>蜈蛾㍼繝ｬ繝吶Ν (0.0 = 螳悟・縺ｪ髣・ 1.0 = 螳悟・縺ｪ蜈・</returns>
         float CalculateLightLevel(Vector3 position);
 
         /// <summary>
-        /// プレイヤーの視認性係数を更新
+        /// 繝励Ξ繧､繝､繝ｼ縺ｮ隕冶ｪ肴ｧ菫よ焚繧呈峩譁ｰ
         /// </summary>
-        /// <param name="visibilityFactor">新しい視認性係数</param>
+        /// <param name="visibilityFactor">譁ｰ縺励＞隕冶ｪ肴ｧ菫よ焚</param>
         void UpdatePlayerVisibility(float visibilityFactor);
 
         /// <summary>
-        /// プレイヤーの音響レベルを更新
+        /// 繝励Ξ繧､繝､繝ｼ縺ｮ髻ｳ髻ｿ繝ｬ繝吶Ν繧呈峩譁ｰ
         /// </summary>
-        /// <param name="noiseLevel">新しい音響レベル</param>
+        /// <param name="noiseLevel">譁ｰ縺励＞髻ｳ髻ｿ繝ｬ繝吶Ν</param>
         void UpdatePlayerNoiseLevel(float noiseLevel);
         #endregion
 
         #region Concealment System
         /// <summary>
-        /// 隠蔽ゾーンにプレイヤーが入ったことを通知
+        /// 髫阡ｽ繧ｾ繝ｼ繝ｳ縺ｫ繝励Ξ繧､繝､繝ｼ縺悟・縺｣縺溘％縺ｨ繧帝夂衍
         /// </summary>
-        /// <param name="concealmentZone">隠蔽ゾーンのコンポーネント</param>
+        /// <param name="concealmentZone">髫阡ｽ繧ｾ繝ｼ繝ｳ縺ｮ繧ｳ繝ｳ繝昴・繝阪Φ繝・/param>
         void EnterConcealmentZone(IConcealmentZone concealmentZone);
 
         /// <summary>
-        /// 隠蔽ゾーンからプレイヤーが出たことを通知
+        /// 髫阡ｽ繧ｾ繝ｼ繝ｳ縺九ｉ繝励Ξ繧､繝､繝ｼ縺悟・縺溘％縺ｨ繧帝夂衍
         /// </summary>
-        /// <param name="concealmentZone">隠蔽ゾーンのコンポーネント</param>
+        /// <param name="concealmentZone">髫阡ｽ繧ｾ繝ｼ繝ｳ縺ｮ繧ｳ繝ｳ繝昴・繝阪Φ繝・/param>
         void ExitConcealmentZone(IConcealmentZone concealmentZone);
 
         /// <summary>
-        /// プレイヤーが現在隠蔽ゾーン内にいるかどうか
+        /// 繝励Ξ繧､繝､繝ｼ縺檎樟蝨ｨ髫阡ｽ繧ｾ繝ｼ繝ｳ蜀・↓縺・ｋ縺九←縺・°
         /// </summary>
         bool IsPlayerConcealed { get; }
 
         /// <summary>
-        /// 現在のアクティブな隠蔽ゾーン
+        /// 迴ｾ蝨ｨ縺ｮ繧｢繧ｯ繝・ぅ繝悶↑髫阡ｽ繧ｾ繝ｼ繝ｳ
         /// </summary>
         IConcealmentZone CurrentConcealmentZone { get; }
         #endregion
 
         #region Environmental Interaction
         /// <summary>
-        /// 環境オブジェクトとの相互作用を実行
+        /// 迺ｰ蠅・が繝悶ず繧ｧ繧ｯ繝医→縺ｮ逶ｸ莠剃ｽ懃畑繧貞ｮ溯｡・
         /// </summary>
-        /// <param name="interactableObject">相互作用対象オブジェクト</param>
-        /// <param name="interactionType">相互作用の種類</param>
-        /// <returns>相互作用が成功したかどうか</returns>
+        /// <param name="interactableObject">逶ｸ莠剃ｽ懃畑蟇ｾ雎｡繧ｪ繝悶ず繧ｧ繧ｯ繝・/param>
+        /// <param name="interactionType">逶ｸ莠剃ｽ懃畑縺ｮ遞ｮ鬘・/param>
+        /// <returns>逶ｸ莠剃ｽ懃畑縺梧・蜉溘＠縺溘°縺ｩ縺・°</returns>
         bool InteractWithEnvironment(GameObject interactableObject, StealthInteractionType interactionType);
 
         /// <summary>
-        /// 指定位置に陽動用の音を発生
+        /// 謖・ｮ壻ｽ咲ｽｮ縺ｫ髯ｽ蜍慕畑縺ｮ髻ｳ繧堤匱逕・
         /// </summary>
-        /// <param name="position">音の発生位置</param>
-        /// <param name="noiseLevel">音の大きさ (0.0 - 1.0)</param>
+        /// <param name="position">髻ｳ縺ｮ逋ｺ逕滉ｽ咲ｽｮ</param>
+        /// <param name="noiseLevel">髻ｳ縺ｮ螟ｧ縺阪＆ (0.0 - 1.0)</param>
         void CreateDistraction(Vector3 position, float noiseLevel);
         #endregion
 
         #region Detection Integration
         /// <summary>
-        /// AI検出システムからの疑心レベル更新を受信
+        /// AI讀懷・繧ｷ繧ｹ繝・Β縺九ｉ縺ｮ逍大ｿ・Ξ繝吶Ν譖ｴ譁ｰ繧貞女菫｡
         /// </summary>
-        /// <param name="detector">検出を行ったAI</param>
-        /// <param name="suspicionLevel">疑心レベル (0.0 - 1.0)</param>
+        /// <param name="detector">讀懷・繧定｡後▲縺蘗I</param>
+        /// <param name="suspicionLevel">逍大ｿ・Ξ繝吶Ν (0.0 - 1.0)</param>
         void OnAISuspicionChanged(GameObject detector, float suspicionLevel);
 
         /// <summary>
-        /// プレイヤーが発見された時の処理
+        /// 繝励Ξ繧､繝､繝ｼ縺檎匱隕九＆繧後◆譎ゅ・蜃ｦ逅・
         /// </summary>
-        /// <param name="detector">発見したAI</param>
+        /// <param name="detector">逋ｺ隕九＠縺蘗I</param>
         void OnPlayerSpotted(GameObject detector);
 
         /// <summary>
-        /// プレイヤーが視界から外れた時の処理
+        /// 繝励Ξ繧､繝､繝ｼ縺瑚ｦ也阜縺九ｉ螟悶ｌ縺滓凾縺ｮ蜃ｦ逅・
         /// </summary>
-        /// <param name="detector">見失ったAI</param>
+        /// <param name="detector">隕句､ｱ縺｣縺蘗I</param>
         void OnPlayerLost(GameObject detector);
         #endregion
 
         #region State Management
         /// <summary>
-        /// ステルスモードの有効/無効を切り替え
+        /// 繧ｹ繝・Ν繧ｹ繝｢繝ｼ繝峨・譛牙柑/辟｡蜉ｹ繧貞・繧頑崛縺・
         /// </summary>
-        /// <param name="enabled">有効にするかどうか</param>
+        /// <param name="enabled">譛牙柑縺ｫ縺吶ｋ縺九←縺・°</param>
         void SetStealthMode(bool enabled);
 
         /// <summary>
-        /// 現在ステルスモードが有効かどうか
+        /// 迴ｾ蝨ｨ繧ｹ繝・Ν繧ｹ繝｢繝ｼ繝峨′譛牙柑縺九←縺・°
         /// </summary>
         bool IsStealthModeActive { get; }
 
         /// <summary>
-        /// ステルス統計情報を取得
+        /// 繧ｹ繝・Ν繧ｹ邨ｱ險域ュ蝣ｱ繧貞叙蠕・
         /// </summary>
         StealthStatistics GetStealthStatistics();
         #endregion
     }
 }
+
+

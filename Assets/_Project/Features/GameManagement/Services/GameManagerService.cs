@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using asterivo.Unity60.Core.Services;
-using asterivo.Unity60.Core.Services.Interfaces;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Types;
 using asterivo.Unity60.Features.GameManagement.Interfaces;
@@ -11,33 +11,33 @@ using asterivo.Unity60.Features.GameManagement.Events;
 namespace asterivo.Unity60.Features.GameManagement.Services
 {
     /// <summary>
-    /// ゲーム管理機能のサービス実装
-    /// ServiceLocatorパターンに基づき、イベント駆動で動作
+    /// 繧ｲ繝ｼ繝邂｡逅・ｩ溯・縺ｮ繧ｵ繝ｼ繝薙せ螳溯｣・
+    /// ServiceLocator繝代ち繝ｼ繝ｳ縺ｫ蝓ｺ縺･縺阪√う繝吶Φ繝磯ｧ・虚縺ｧ蜍穂ｽ・
     /// </summary>
     public class GameManagerService : IGameManager
     {
-        // サービス基本情報
+        // 繧ｵ繝ｼ繝薙せ蝓ｺ譛ｬ諠・ｱ
         public string ServiceName => "GameManagerService";
         public bool IsServiceActive { get; private set; }
 
-        // ゲーム状態管理
+        // 繧ｲ繝ｼ繝迥ｶ諷狗ｮ｡逅・
         private GameState _currentGameState = GameState.MainMenu;
         private GameState _previousGameState = GameState.MainMenu;
         private float _gameTime = 0f;
         private bool _isPaused = false;
         private bool _isGameOver = false;
 
-        // コマンド管理
+        // 繧ｳ繝槭Φ繝臥ｮ｡逅・
         private readonly Stack<ICommand> _undoStack = new Stack<ICommand>();
         private readonly Stack<ICommand> _redoStack = new Stack<ICommand>();
         private const int MaxCommandHistory = 100;
 
-        // 依存サービス参照
+        // 萓晏ｭ倥し繝ｼ繝薙せ蜿ら・
         private IEventManager _eventManager;
         private ISceneLoadingService _sceneLoader;
         private IPauseService _pauseService;
 
-        // プロパティ
+        // 繝励Ο繝代ユ繧｣
         public GameState CurrentGameState => _currentGameState;
         public GameState PreviousGameState => _previousGameState;
         public float GameTime => _gameTime;
@@ -45,19 +45,19 @@ namespace asterivo.Unity60.Features.GameManagement.Services
         public bool IsGameOver => _isGameOver;
 
         /// <summary>
-        /// サービスの初期化
+        /// 繧ｵ繝ｼ繝薙せ縺ｮ蛻晄悄蛹・
         /// </summary>
         public void OnServiceRegistered()
         {
-            // 依存サービスの取得
+            // 萓晏ｭ倥し繝ｼ繝薙せ縺ｮ蜿門ｾ・
             ServiceLocator.TryGet<IEventManager>(out _eventManager);
             ServiceLocator.TryGet<ISceneLoadingService>(out _sceneLoader);
             ServiceLocator.TryGet<IPauseService>(out _pauseService);
 
-            // イベント購読
+            // 繧､繝吶Φ繝郁ｳｼ隱ｭ
             SubscribeToEvents();
 
-            // 初期状態設定
+            // 蛻晄悄迥ｶ諷玖ｨｭ螳・
             _currentGameState = GameState.MainMenu;
             _previousGameState = GameState.MainMenu;
             _gameTime = 0f;
@@ -66,51 +66,51 @@ namespace asterivo.Unity60.Features.GameManagement.Services
 
             IsServiceActive = true;
 
-            // 初期化完了イベント
+            // 蛻晄悄蛹門ｮ御ｺ・う繝吶Φ繝・
             _eventManager?.RaiseEvent(GameManagementEventNames.OnGameManagerInitialized, this);
 
             Debug.Log($"[{ServiceName}] Initialized successfully");
         }
 
         /// <summary>
-        /// サービスのシャットダウン
+        /// 繧ｵ繝ｼ繝薙せ縺ｮ繧ｷ繝｣繝・ヨ繝繧ｦ繝ｳ
         /// </summary>
         public void OnServiceUnregistered()
         {
-            // イベント購読解除
+            // 繧､繝吶Φ繝郁ｳｼ隱ｭ隗｣髯､
             UnsubscribeFromEvents();
 
-            // コマンド履歴クリア
+            // 繧ｳ繝槭Φ繝牙ｱ･豁ｴ繧ｯ繝ｪ繧｢
             _undoStack.Clear();
             _redoStack.Clear();
 
             IsServiceActive = false;
 
-            // シャットダウン完了イベント
+            // 繧ｷ繝｣繝・ヨ繝繧ｦ繝ｳ螳御ｺ・う繝吶Φ繝・
             _eventManager?.RaiseEvent(GameManagementEventNames.OnGameManagerShutdown, this);
 
             Debug.Log($"[{ServiceName}] Shutdown complete");
         }
 
         /// <summary>
-        /// ゲーム状態の変更
+        /// 繧ｲ繝ｼ繝迥ｶ諷九・螟画峩
         /// </summary>
         public void ChangeGameState(GameState newState)
         {
             if (_currentGameState == newState)
                 return;
 
-            // 状態変更前イベント
+            // 迥ｶ諷句､画峩蜑阪う繝吶Φ繝・
             _eventManager?.RaiseEvent(GameManagementEventNames.OnGameStateChanging,
                 new GameStateChangeData(_currentGameState, newState));
 
             _previousGameState = _currentGameState;
             _currentGameState = newState;
 
-            // 状態別処理
+            // 迥ｶ諷句挨蜃ｦ逅・
             HandleStateTransition(newState);
 
-            // 状態変更後イベント
+            // 迥ｶ諷句､画峩蠕後う繝吶Φ繝・
             _eventManager?.RaiseEvent(GameManagementEventNames.OnGameStateChanged,
                 new GameStateChangeData(_previousGameState, _currentGameState));
 
@@ -118,7 +118,7 @@ namespace asterivo.Unity60.Features.GameManagement.Services
         }
 
         /// <summary>
-        /// ゲームの開始
+        /// 繧ｲ繝ｼ繝縺ｮ髢句ｧ・
         /// </summary>
         public void StartGame()
         {
@@ -126,7 +126,7 @@ namespace asterivo.Unity60.Features.GameManagement.Services
             {
                 ChangeGameState(GameState.Loading);
 
-                // シーンローディングサービスに委譲
+                // 繧ｷ繝ｼ繝ｳ繝ｭ繝ｼ繝・ぅ繝ｳ繧ｰ繧ｵ繝ｼ繝薙せ縺ｫ蟋碑ｭｲ
                 if (_sceneLoader != null)
                 {
                     _sceneLoader.LoadGameplaySceneWithMinTime();
@@ -145,7 +145,7 @@ namespace asterivo.Unity60.Features.GameManagement.Services
         }
 
         /// <summary>
-        /// ゲームの一時停止
+        /// 繧ｲ繝ｼ繝縺ｮ荳譎ょ●豁｢
         /// </summary>
         public void PauseGame()
         {
@@ -154,7 +154,7 @@ namespace asterivo.Unity60.Features.GameManagement.Services
                 ChangeGameState(GameState.Paused);
                 _isPaused = true;
 
-                // PauseServiceとの連携
+                // PauseService縺ｨ縺ｮ騾｣謳ｺ
                 _pauseService?.SetPaused(true);
 
                 _eventManager?.RaiseEvent(GameManagementEventNames.OnGamePaused, null);
@@ -162,7 +162,7 @@ namespace asterivo.Unity60.Features.GameManagement.Services
         }
 
         /// <summary>
-        /// ゲームの再開
+        /// 繧ｲ繝ｼ繝縺ｮ蜀埼幕
         /// </summary>
         public void ResumeGame()
         {
@@ -171,7 +171,7 @@ namespace asterivo.Unity60.Features.GameManagement.Services
                 ChangeGameState(GameState.Playing);
                 _isPaused = false;
 
-                // PauseServiceとの連携
+                // PauseService縺ｨ縺ｮ騾｣謳ｺ
                 _pauseService?.SetPaused(false);
 
                 _eventManager?.RaiseEvent(GameManagementEventNames.OnGameResumed, null);
@@ -179,7 +179,7 @@ namespace asterivo.Unity60.Features.GameManagement.Services
         }
 
         /// <summary>
-        /// ゲームのリスタート
+        /// 繧ｲ繝ｼ繝縺ｮ繝ｪ繧ｹ繧ｿ繝ｼ繝・
         /// </summary>
         public void RestartGame()
         {
@@ -204,7 +204,7 @@ namespace asterivo.Unity60.Features.GameManagement.Services
         }
 
         /// <summary>
-        /// ゲームの終了
+        /// 繧ｲ繝ｼ繝縺ｮ邨ゆｺ・
         /// </summary>
         public void QuitGame()
         {
@@ -216,7 +216,7 @@ namespace asterivo.Unity60.Features.GameManagement.Services
         }
 
         /// <summary>
-        /// メインメニューに戻る
+        /// 繝｡繧､繝ｳ繝｡繝九Η繝ｼ縺ｫ謌ｻ繧・
         /// </summary>
         public void ReturnToMenu()
         {
@@ -241,7 +241,7 @@ namespace asterivo.Unity60.Features.GameManagement.Services
         }
 
         /// <summary>
-        /// ゲームオーバー処理
+        /// 繧ｲ繝ｼ繝繧ｪ繝ｼ繝舌・蜃ｦ逅・
         /// </summary>
         public void TriggerGameOver()
         {
@@ -255,7 +255,7 @@ namespace asterivo.Unity60.Features.GameManagement.Services
         }
 
         /// <summary>
-        /// 勝利処理
+        /// 蜍晏茜蜃ｦ逅・
         /// </summary>
         public void TriggerVictory()
         {
@@ -268,7 +268,7 @@ namespace asterivo.Unity60.Features.GameManagement.Services
         }
 
         /// <summary>
-        /// コマンドの実行
+        /// 繧ｳ繝槭Φ繝峨・螳溯｡・
         /// </summary>
         public void ExecuteCommand(ICommand command)
         {
@@ -277,13 +277,13 @@ namespace asterivo.Unity60.Features.GameManagement.Services
 
             command.Execute();
 
-            // Undoスタックに追加
+            // Undo繧ｹ繧ｿ繝・け縺ｫ霑ｽ蜉
             if (command is IUndoableCommand)
             {
                 _undoStack.Push(command);
                 _redoStack.Clear();
 
-                // 履歴制限
+                // 螻･豁ｴ蛻ｶ髯・
                 while (_undoStack.Count > MaxCommandHistory)
                 {
                     var oldCommand = _undoStack.ToArray()[_undoStack.Count - 1];
@@ -305,7 +305,7 @@ namespace asterivo.Unity60.Features.GameManagement.Services
         }
 
         /// <summary>
-        /// 最後のコマンドを取り消し
+        /// 譛蠕後・繧ｳ繝槭Φ繝峨ｒ蜿悶ｊ豸医＠
         /// </summary>
         public void UndoLastCommand()
         {
@@ -326,7 +326,7 @@ namespace asterivo.Unity60.Features.GameManagement.Services
         }
 
         /// <summary>
-        /// 最後に取り消したコマンドをやり直し
+        /// 譛蠕後↓蜿悶ｊ豸医＠縺溘さ繝槭Φ繝峨ｒ繧・ｊ逶ｴ縺・
         /// </summary>
         public void RedoLastCommand()
         {
@@ -347,7 +347,7 @@ namespace asterivo.Unity60.Features.GameManagement.Services
         }
 
         /// <summary>
-        /// ポーズ状態を切り替え
+        /// 繝昴・繧ｺ迥ｶ諷九ｒ蛻・ｊ譖ｿ縺・
         /// </summary>
         public void TogglePause()
         {
@@ -362,7 +362,7 @@ namespace asterivo.Unity60.Features.GameManagement.Services
         }
 
         /// <summary>
-        /// ゲーム時間を更新
+        /// 繧ｲ繝ｼ繝譎る俣繧呈峩譁ｰ
         /// </summary>
         public void UpdateGameTime(float deltaTime)
         {
@@ -370,7 +370,7 @@ namespace asterivo.Unity60.Features.GameManagement.Services
             {
                 _gameTime += deltaTime;
 
-                // 定期的に時間更新イベントを発行
+                // 螳壽悄逧・↓譎る俣譖ｴ譁ｰ繧､繝吶Φ繝医ｒ逋ｺ陦・
                 if (Mathf.FloorToInt(_gameTime) != Mathf.FloorToInt(_gameTime - deltaTime))
                 {
                     _eventManager?.RaiseEvent(GameManagementEventNames.OnGameTimeUpdated, _gameTime);
@@ -379,7 +379,7 @@ namespace asterivo.Unity60.Features.GameManagement.Services
         }
 
         /// <summary>
-        /// 状態遷移時の処理
+        /// 迥ｶ諷矩・遘ｻ譎ゅ・蜃ｦ逅・
         /// </summary>
         private void HandleStateTransition(GameState newState)
         {
@@ -409,25 +409,25 @@ namespace asterivo.Unity60.Features.GameManagement.Services
         }
 
         /// <summary>
-        /// イベント購読
+        /// 繧､繝吶Φ繝郁ｳｼ隱ｭ
         /// </summary>
         private void SubscribeToEvents()
         {
-            // ここでは他のサービスからのイベントを購読
-            // 例: "PlayerDeath" イベントを受けてゲームオーバー処理
+            // 縺薙％縺ｧ縺ｯ莉悶・繧ｵ繝ｼ繝薙せ縺九ｉ縺ｮ繧､繝吶Φ繝医ｒ雉ｼ隱ｭ
+            // 萓・ "PlayerDeath" 繧､繝吶Φ繝医ｒ蜿励￠縺ｦ繧ｲ繝ｼ繝繧ｪ繝ｼ繝舌・蜃ｦ逅・
         }
 
         /// <summary>
-        /// イベント購読解除
+        /// 繧､繝吶Φ繝郁ｳｼ隱ｭ隗｣髯､
         /// </summary>
         private void UnsubscribeFromEvents()
         {
-            // イベント購読の解除処理
+            // 繧､繝吶Φ繝郁ｳｼ隱ｭ縺ｮ隗｣髯､蜃ｦ逅・
         }
     }
 
     /// <summary>
-    /// ゲーム状態変更データ
+    /// 繧ｲ繝ｼ繝迥ｶ諷句､画峩繝・・繧ｿ
     /// </summary>
     public struct GameStateChangeData
     {
@@ -441,3 +441,5 @@ namespace asterivo.Unity60.Features.GameManagement.Services
         }
     }
 }
+
+

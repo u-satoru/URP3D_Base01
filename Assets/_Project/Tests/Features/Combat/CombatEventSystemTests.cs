@@ -1,9 +1,9 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using System.Collections;
 using System.Collections.Generic;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Combat.Services;
 using asterivo.Unity60.Features.Combat.Interfaces;
 using asterivo.Unity60.Features.Combat.Components;
@@ -13,8 +13,8 @@ using asterivo.Unity60.Features.Combat;
 namespace asterivo.Unity60.Tests.Features.Combat
 {
     /// <summary>
-    /// 戦闘イベントシステムの動作テスト
-    /// EventManagerとCombatServiceの連携を検証
+    /// 謌ｦ髣倥う繝吶Φ繝医す繧ｹ繝・Β縺ｮ蜍穂ｽ懊ユ繧ｹ繝・
+    /// EventManager縺ｨCombatService縺ｮ騾｣謳ｺ繧呈､懆ｨｼ
     /// </summary>
     [TestFixture]
     public class CombatEventSystemTests
@@ -27,18 +27,18 @@ namespace asterivo.Unity60.Tests.Features.Combat
         [SetUp]
         public void Setup()
         {
-            // ServiceLocatorをクリア
+            // ServiceLocator繧偵け繝ｪ繧｢
             ServiceLocator.Clear();
 
-            // EventManagerを登録
+            // EventManager繧堤匳骭ｲ
             eventManager = new EventManager();
             ServiceLocator.Register<IEventManager>(eventManager);
 
-            // CombatServiceを登録
+            // CombatService繧堤匳骭ｲ
             combatService = new CombatService();
             ServiceLocator.Register<ICombatService>(combatService);
 
-            // イベントレシーバー初期化
+            // 繧､繝吶Φ繝医Ξ繧ｷ繝ｼ繝舌・蛻晄悄蛹・
             receivedEvents = new List<object>();
             eventCount = 0;
         }
@@ -46,7 +46,7 @@ namespace asterivo.Unity60.Tests.Features.Combat
         [TearDown]
         public void TearDown()
         {
-            // イベントの購読解除
+            // 繧､繝吶Φ繝医・雉ｼ隱ｭ隗｣髯､
             eventManager.Clear();
             ServiceLocator.Clear();
         }
@@ -323,3 +323,5 @@ namespace asterivo.Unity60.Tests.Features.Combat
         }
     }
 }
+
+

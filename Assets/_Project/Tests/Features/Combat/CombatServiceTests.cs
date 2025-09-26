@@ -1,8 +1,8 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using System.Collections;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Combat.Services;
 using asterivo.Unity60.Features.Combat.Interfaces;
 using asterivo.Unity60.Features.Combat;
@@ -11,8 +11,8 @@ using asterivo.Unity60.Features.Combat.Events;
 namespace asterivo.Unity60.Tests.Features.Combat
 {
     /// <summary>
-    /// CombatServiceのユニットテスト
-    /// ServiceLocatorパターンと戦闘機能の動作検証
+    /// CombatService縺ｮ繝ｦ繝九ャ繝医ユ繧ｹ繝・
+    /// ServiceLocator繝代ち繝ｼ繝ｳ縺ｨ謌ｦ髣俶ｩ溯・縺ｮ蜍穂ｽ懈､懆ｨｼ
     /// </summary>
     [TestFixture]
     public class CombatServiceTests
@@ -23,14 +23,14 @@ namespace asterivo.Unity60.Tests.Features.Combat
         [SetUp]
         public void Setup()
         {
-            // ServiceLocatorをクリア
+            // ServiceLocator繧偵け繝ｪ繧｢
             ServiceLocator.Clear();
 
-            // EventManagerを登録
+            // EventManager繧堤匳骭ｲ
             eventManager = new EventManager();
             ServiceLocator.Register<IEventManager>(eventManager);
 
-            // CombatServiceを作成して登録
+            // CombatService繧剃ｽ懈・縺励※逋ｻ骭ｲ
             combatService = new CombatService();
             ServiceLocator.Register<ICombatService>(combatService);
         }
@@ -234,7 +234,7 @@ namespace asterivo.Unity60.Tests.Features.Combat
     }
 
     /// <summary>
-    /// テスト用のモックHealthクラス
+    /// 繝・せ繝育畑縺ｮ繝｢繝・けHealth繧ｯ繝ｩ繧ｹ
     /// </summary>
     public class MockHealth : MonoBehaviour, IHealth
     {
@@ -257,3 +257,5 @@ namespace asterivo.Unity60.Tests.Features.Combat
         public void Kill() { }
     }
 }
+
+

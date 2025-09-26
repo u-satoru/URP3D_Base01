@@ -1,15 +1,15 @@
-using UnityEngine;
+﻿using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core.Debug;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 
 namespace asterivo.Unity60.Tests.Core.Services
 {
     /// <summary>
-    /// Audio系Singleton段階的無効化の手動テスト実行スクリプト
-    /// FeatureFlags メソッドを使用した段階的ロールアウトテスト
+    /// Audio邉ｻSingleton谿ｵ髫守噪辟｡蜉ｹ蛹悶・謇句虚繝・せ繝亥ｮ溯｡後せ繧ｯ繝ｪ繝励ヨ
+    /// FeatureFlags 繝｡繧ｽ繝・ラ繧剃ｽｿ逕ｨ縺励◆谿ｵ髫守噪繝ｭ繝ｼ繝ｫ繧｢繧ｦ繝医ユ繧ｹ繝・
     /// </summary>
     public class AudioSingletonGradualDisablingScript : MonoBehaviour
     {
@@ -37,7 +37,7 @@ namespace asterivo.Unity60.Tests.Core.Services
 
         void Update()
         {
-            // リアルタイム状態更新
+            // 繝ｪ繧｢繝ｫ繧ｿ繧､繝迥ｶ諷区峩譁ｰ
             UpdateCurrentStatus();
         }
 
@@ -54,16 +54,16 @@ namespace asterivo.Unity60.Tests.Core.Services
             testResults = "";
             LogResult("=== Audio System Singleton Gradual Disabling Test ===");
             
-            // Phase 1: 開発環境テスト
+            // Phase 1: 髢狗匱迺ｰ蠅・ユ繧ｹ繝・
             ExecuteDevelopmentPhaseTest();
             
-            // Phase 2: ステージング環境テスト  
+            // Phase 2: 繧ｹ繝・・繧ｸ繝ｳ繧ｰ迺ｰ蠅・ユ繧ｹ繝・ 
             ExecuteStagingPhaseTest();
             
-            // Phase 3: 本番環境テスト
+            // Phase 3: 譛ｬ逡ｪ迺ｰ蠅・ユ繧ｹ繝・
             ExecuteProductionPhaseTest();
             
-            // Phase 4: 緊急ロールバックテスト
+            // Phase 4: 邱頑･繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ繝・せ繝・
             ExecuteEmergencyRollbackTest();
             
             LogResult("\n=== Test Completed Successfully ===");
@@ -73,13 +73,13 @@ namespace asterivo.Unity60.Tests.Core.Services
         {
             LogResult("\n--- Phase 1: Development Environment ---");
             
-            // Day 1: 警告システム有効化
+            // Day 1: 隴ｦ蜻翫す繧ｹ繝・Β譛牙柑蛹・
             FeatureFlags.EnableDay1TestWarnings();
             LogResult($"EnableDay1TestWarnings executed");
             LogResult($"DisableLegacySingletons: {FeatureFlags.DisableLegacySingletons}");
             LogResult($"EnableMigrationWarnings: {FeatureFlags.EnableMigrationWarnings}");
             
-            // Singleton アクセステスト (警告は出るが動作する)
+            // Singleton 繧｢繧ｯ繧ｻ繧ｹ繝・せ繝・(隴ｦ蜻翫・蜃ｺ繧九′蜍穂ｽ懊☆繧・
             TestSingletonAccess("Development Phase", expectNull: false);
         }
 
@@ -87,19 +87,19 @@ namespace asterivo.Unity60.Tests.Core.Services
         {
             LogResult("\n--- Phase 2: Staging Environment ---");
             
-            // Day 2: ステージング環境で段階的無効化開始
-            // 手動でステージング環境設定を実行
+            // Day 2: 繧ｹ繝・・繧ｸ繝ｳ繧ｰ迺ｰ蠅・〒谿ｵ髫守噪辟｡蜉ｹ蛹夜幕蟋・
+            // 謇句虚縺ｧ繧ｹ繝・・繧ｸ繝ｳ繧ｰ迺ｰ蠅・ｨｭ螳壹ｒ螳溯｡・
             FeatureFlags.EnableMigrationWarnings = true;
             FeatureFlags.EnableMigrationMonitoring = true;
             FeatureFlags.UseServiceLocator = true;
-            FeatureFlags.DisableLegacySingletons = false; // ステージングではまだ false
+            FeatureFlags.DisableLegacySingletons = false; // 繧ｹ繝・・繧ｸ繝ｳ繧ｰ縺ｧ縺ｯ縺ｾ縺 false
             
             LogResult($"Staging environment settings applied");
             LogResult($"DisableLegacySingletons: {FeatureFlags.DisableLegacySingletons}");
             LogResult($"UseServiceLocator: {FeatureFlags.UseServiceLocator}");
             LogResult($"EnableMigrationWarnings: {FeatureFlags.EnableMigrationWarnings}");
             
-            // Singleton アクセステスト (ステージング段階では警告付きでアクセス可能)
+            // Singleton 繧｢繧ｯ繧ｻ繧ｹ繝・せ繝・(繧ｹ繝・・繧ｸ繝ｳ繧ｰ谿ｵ髫弱〒縺ｯ隴ｦ蜻贋ｻ倥″縺ｧ繧｢繧ｯ繧ｻ繧ｹ蜿ｯ閭ｽ)
             TestSingletonAccess("Staging Phase", expectNull: false);
         }
 
@@ -107,10 +107,10 @@ namespace asterivo.Unity60.Tests.Core.Services
         {
             LogResult("\n--- Phase 3: Production Environment ---");
             
-            // Day 4: 本番環境で完全無効化
+            // Day 4: 譛ｬ逡ｪ迺ｰ蠅・〒螳悟・辟｡蜉ｹ蛹・
             FeatureFlags.EnableDay4SingletonDisabling();
             
-            // 本番環境で必要な追加設定
+            // 譛ｬ逡ｪ迺ｰ蠅・〒蠢・ｦ√↑霑ｽ蜉險ｭ螳・
             FeatureFlags.UseServiceLocator = true;
             FeatureFlags.UseNewAudioService = true;
             FeatureFlags.UseNewSpatialService = true;
@@ -121,10 +121,10 @@ namespace asterivo.Unity60.Tests.Core.Services
             LogResult($"UseNewAudioService: {FeatureFlags.UseNewAudioService}");
             LogResult($"UseNewSpatialService: {FeatureFlags.UseNewSpatialService}");
             
-            // Singleton 完全無効化テスト
+            // Singleton 螳悟・辟｡蜉ｹ蛹悶ユ繧ｹ繝・
             TestSingletonAccess("Production Phase", expectNull: true);
             
-            // ServiceLocator 代替アクセステスト
+            // ServiceLocator 莉｣譖ｿ繧｢繧ｯ繧ｻ繧ｹ繝・せ繝・
             TestServiceLocatorAccess();
         }
 
@@ -132,10 +132,10 @@ namespace asterivo.Unity60.Tests.Core.Services
         {
             LogResult("\n--- Phase 4: Emergency Rollback ---");
             
-            // 緊急時のロールバック実行
+            // 邱頑･譎ゅ・繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ螳溯｡・
             LogResult("Executing emergency rollback...");
             
-            // FeatureFlagsを緊急時設定に戻す
+            // FeatureFlags繧堤ｷ頑･譎りｨｭ螳壹↓謌ｻ縺・
             FeatureFlags.DisableLegacySingletons = false;
             FeatureFlags.EnableMigrationWarnings = false;
             FeatureFlags.UseServiceLocator = false;
@@ -144,7 +144,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             LogResult($"DisableLegacySingletons: {FeatureFlags.DisableLegacySingletons}");
             LogResult($"UseServiceLocator: {FeatureFlags.UseServiceLocator}");
             
-            // ロールバック後のSingletonアクセステスト
+            // 繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ蠕後・Singleton繧｢繧ｯ繧ｻ繧ｹ繝・せ繝・
             TestSingletonAccess("Emergency Rollback", expectNull: false);
         }
 
@@ -154,50 +154,50 @@ namespace asterivo.Unity60.Tests.Core.Services
             
             try
             {
-                // AudioManager ServiceLocator テスト (Phase 2 移行後)
+                // AudioManager ServiceLocator 繝・せ繝・(Phase 2 遘ｻ陦悟ｾ・
                 var audioInstance = ServiceLocator.GetService<IAudioService>();
                 LogResult($"AudioManager.Instance: {(audioInstance == null ? "NULL" : "VALID")}");
                 
                 if (expectNull && audioInstance != null)
                 {
-                    LogResult("❌ UNEXPECTED: AudioManager.Instance should be null but got valid instance");
+                    LogResult("笶・UNEXPECTED: AudioManager.Instance should be null but got valid instance");
                 }
                 else if (!expectNull && audioInstance == null)
                 {
-                    LogResult("❌ UNEXPECTED: AudioManager.Instance should be valid but got null");
+                    LogResult("笶・UNEXPECTED: AudioManager.Instance should be valid but got null");
                 }
                 else
                 {
-                    LogResult($"✅ Expected behavior: AudioManager.Instance = {(audioInstance == null ? "NULL" : "VALID")}");
+                    LogResult($"笨・Expected behavior: AudioManager.Instance = {(audioInstance == null ? "NULL" : "VALID")}");
                 }
             }
             catch (System.Exception ex)
             {
-                LogResult($"❌ AudioManager.Instance access failed: {ex.Message}");
+                LogResult($"笶・AudioManager.Instance access failed: {ex.Message}");
             }
             
             try
             {
-                // SpatialAudioManager ServiceLocator テスト (Phase 2 移行後)
+                // SpatialAudioManager ServiceLocator 繝・せ繝・(Phase 2 遘ｻ陦悟ｾ・
                 var spatialInstance = ServiceLocator.GetService<ISpatialAudioService>();
                 LogResult($"SpatialAudioManager.Instance: {(spatialInstance == null ? "NULL" : "VALID")}");
                 
                 if (expectNull && spatialInstance != null)
                 {
-                    LogResult("❌ UNEXPECTED: SpatialAudioManager.Instance should be null but got valid instance");
+                    LogResult("笶・UNEXPECTED: SpatialAudioManager.Instance should be null but got valid instance");
                 }
                 else if (!expectNull && spatialInstance == null)
                 {
-                    LogResult("❌ UNEXPECTED: SpatialAudioManager.Instance should be valid but got null");
+                    LogResult("笶・UNEXPECTED: SpatialAudioManager.Instance should be valid but got null");
                 }
                 else
                 {
-                    LogResult($"✅ Expected behavior: SpatialAudioManager.Instance = {(spatialInstance == null ? "NULL" : "VALID")}");
+                    LogResult($"笨・Expected behavior: SpatialAudioManager.Instance = {(spatialInstance == null ? "NULL" : "VALID")}");
                 }
             }
             catch (System.Exception ex)
             {
-                LogResult($"❌ SpatialAudioManager.Instance access failed: {ex.Message}");
+                LogResult($"笶・SpatialAudioManager.Instance access failed: {ex.Message}");
             }
         }
 
@@ -207,18 +207,18 @@ namespace asterivo.Unity60.Tests.Core.Services
             
             try
             {
-                // ServiceLocator 経由でのアクセステスト
+                // ServiceLocator 邨檎罰縺ｧ縺ｮ繧｢繧ｯ繧ｻ繧ｹ繝・せ繝・
                 var audioService = ServiceLocator.GetService<asterivo.Unity60.Core.Audio.Interfaces.IAudioService>();
                 LogResult($"ServiceLocator.GetService<IAudioService>(): {(audioService == null ? "NULL" : "VALID")}");
                 
                 var spatialService = ServiceLocator.GetService<asterivo.Unity60.Core.Audio.Interfaces.ISpatialAudioService>();
                 LogResult($"ServiceLocator.GetService<ISpatialAudioService>(): {(spatialService == null ? "NULL" : "VALID")}");
                 
-                LogResult("✅ ServiceLocator access test completed");
+                LogResult("笨・ServiceLocator access test completed");
             }
             catch (System.Exception ex)
             {
-                LogResult($"❌ ServiceLocator access failed: {ex.Message}");
+                LogResult($"笶・ServiceLocator access failed: {ex.Message}");
             }
         }
 
@@ -260,3 +260,5 @@ namespace asterivo.Unity60.Tests.Core.Services
         }
     }
 }
+
+

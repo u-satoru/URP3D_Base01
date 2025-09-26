@@ -1,4 +1,4 @@
-﻿# TASKS.md - Unity 6 3Dゲーム基盤プロジェクト 実装タスクリスト
+# TASKS.md - Unity 6 3Dゲーム基盤プロジェクト 実装タスクリスト
 
 ## アーキテクチャとデザインパターン
 - **ServiceLocator + Event駆駆動のハイブリッドアーキテクチャ(最重要)**:グローバルサービスへのアクセスとイベントベースの通信を組み合わせたハイブリッドアプローチ。
@@ -74,10 +74,50 @@
 
 # 🏗️ PHASE 1 & 2: 基盤構築とセットアップ ✅ 完了済み
 
-- **TASK-001**: NPCVisualSensor System ✅
-- **TASK-002**: PlayerStateMachine System ✅
-- **TASK-005**: Visual-Auditory Detection統合システム ✅
-- **TASK-003**: Interactive Setup Wizard System ✅
+### **Phase 1: アーキテクチャ基盤構築とリスク検証 (Week 1)**
+*   **戦略目標**: ドキュメント駆動で厳格なアーキテクチャ基盤を構築し、プロジェクト最大のリスク（AIパフォーマンス）を早期に検証する。
+
+*   **[復元] TASK-P1-CORE: Core Architecture Foundation** ✅
+    *   **内容**: 3層アーキテクチャのディレクトリ構造を整備し、`Core`層の根幹となる汎用パターン（イベントシステム、コマンドパターン、ObjectPool）を先行実装。
+    *   **証拠(git)**: `e4c981a`, `3991265`
+    *   **証拠(Docs)**: `Architecture_Guidelines.md`, `ObjectPool_ComprehensiveGuide.md`
+
+*   **[復元] TASK-P1-AUDIO: Stealth Audio System** ✅
+    *   **内容**: ステルスゲームの没入感を高めるための3Dサウンドシステムと、NPCの聴覚検知の基盤となる`NPCAuditorySensor`を実装。
+    *   **証拠(git)**: `b8ca1cc`
+    *   **証拠(Docs)**: `StealthAudioSystem.md`
+
+*   **TASK-001**: **NPCVisualSensor System** ✅
+    *   **内容**: NPCの視覚検知機能を、パフォーマンス要件（50体/0.1ms）を満たす形で実装。
+    *   **証拠(git)**: `976203f`
+    *   **証拠(Docs)**: `NPCVisualSensor_Design.md`
+
+*   **TASK-005**: **Visual-Auditory Detection統合システム** ✅
+    *   **内容**: 視覚と聴覚センサーからの情報を統合し、NPCの総合的な警戒レベルを決定する`SensorFusionSystem`を実装。
+    *   **証拠(git)**: `976203f`, `480f3c1`
+
+*   **TASK-002**: **PlayerStateMachine System** ✅
+    *   **内容**: `Core`層のHSM基盤を利用し、プレイヤーの8つの状態を管理。イベント駆動で他システム（Camera/Audio）と連携。
+    *   **証拠(git)**: `ff54779` (リファクタリング), `f1e290b`
+    *   **証拠(Docs)**: `StatePattern_Migration_Guide.md`
+
+### **Phase 2: 開発者体験確立と技術的負債返済 (Week 2)**
+*   **戦略目標**: "Clone & Create"価値を実現し、将来の拡張性を阻害する技術的負債（Singleton）を計画的に排除する。
+
+*   **TASK-003**: **Interactive Setup Wizard System** ✅
+    *   **内容**: 1分でのプロジェクトセットアップを可能にする対話型ウィザードを、3層アーキテクチャ規約に準拠して実装。
+    *   **証拠(git)**: `526ef4b`, `e299681`, `141141b`
+    *   **証拠(Docs)**: `Setup-Wizard-3Layer-Architecture.md`
+
+*   **[復元] TASK-P2-REFACTOR: Singleton Pattern Migration** ✅
+    *   **内容**: プロジェクト全体に存在したSingletonパターンをServiceLocatorに置き換える大規模リファクタリングを実施。コードの再利用性とテスト容易性を根本的に改善。
+    *   **証拠(git)**: `7b0fe02`, `f67e984`, `4fe9ca2`, `a99be46`
+    *   **証拠(Docs)**: `SINGLETON_COMPLETE_REMOVAL_GUIDE.md`, `Singleton_Migration_Phase3_Plan.md`
+
+*   **[復元] TASK-P2-QUALITY: Comprehensive Quality Assurance** ✅
+    *   **内容**: Phase 2完了に伴い、Unity Consoleの全警告・エラーを解消し、アーキテクチャの準拠性を検証。品質レポートを作成し、「Enterprise Grade品質」を認定。
+    *   **証拠(git)**: `c25c4b1` (後にRevertされるが作業の事実は確認), `1160bdf`, `3f92a78`
+    *   **証拠(Docs)**: `Architecture_Compliance_Verification_Report.md`, `Phase2_Final_Completion_Report.md`
 
 ---
 

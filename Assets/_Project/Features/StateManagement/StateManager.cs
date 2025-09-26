@@ -1,5 +1,5 @@
-using System.Collections.Generic;
-using asterivo.Unity60.Core.Services;
+﻿using System.Collections.Generic;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Patterns;
 using asterivo.Unity60.Features.Player;
 using UnityEngine;
@@ -7,8 +7,8 @@ using UnityEngine;
 namespace asterivo.Unity60.Features.StateManagement
 {
     /// <summary>
-    /// StateManagement機能のヘルパークラス
-    /// 状態遷移の管理と実行を簡単に行うための便利クラス
+    /// StateManagement讖溯・縺ｮ繝倥Ν繝代・繧ｯ繝ｩ繧ｹ
+    /// 迥ｶ諷矩・遘ｻ縺ｮ邂｡逅・→螳溯｡後ｒ邁｡蜊倥↓陦後≧縺溘ａ縺ｮ萓ｿ蛻ｩ繧ｯ繝ｩ繧ｹ
     /// </summary>
     public class StateManager : MonoBehaviour, IStateContext
     {
@@ -20,23 +20,23 @@ namespace asterivo.Unity60.Features.StateManagement
         private readonly List<PlayerState> stateHistory = new List<PlayerState>();
 
         /// <summary>
-        /// デバッグログが有効かどうか
+        /// 繝・ヰ繝・げ繝ｭ繧ｰ縺梧怏蜉ｹ縺九←縺・°
         /// </summary>
         public bool IsDebugEnabled => isDebugEnabled;
 
         /// <summary>
-        /// 現在の状態
+        /// 迴ｾ蝨ｨ縺ｮ迥ｶ諷・
         /// </summary>
         public PlayerState CurrentState => currentState;
 
         /// <summary>
-        /// 状態履歴
+        /// 迥ｶ諷句ｱ･豁ｴ
         /// </summary>
         public IReadOnlyList<PlayerState> StateHistory => stateHistory;
 
         void Awake()
         {
-            // StateServiceを取得またはBootstrapperで初期化
+            // StateService繧貞叙蠕励∪縺溘・Bootstrapper縺ｧ蛻晄悄蛹・
             if (!ServiceLocator.TryGet<IStateService>(out stateService))
             {
                 Debug.LogWarning("[StateManager] StateService not found. Initializing StateManagement...");
@@ -47,14 +47,14 @@ namespace asterivo.Unity60.Features.StateManagement
 
         void Start()
         {
-            // 初期状態の設定
+            // 蛻晄悄迥ｶ諷九・險ｭ螳・
             ChangeState(PlayerState.Idle);
         }
 
         /// <summary>
-        /// 状態を変更する
+        /// 迥ｶ諷九ｒ螟画峩縺吶ｋ
         /// </summary>
-        /// <param name="newState">新しい状態</param>
+        /// <param name="newState">譁ｰ縺励＞迥ｶ諷・/param>
         public void ChangeState(PlayerState newState)
         {
             if (currentState == newState)
@@ -63,21 +63,21 @@ namespace asterivo.Unity60.Features.StateManagement
                 return;
             }
 
-            // 現在の状態から退出
+            // 迴ｾ蝨ｨ縺ｮ迥ｶ諷九°繧蛾蜃ｺ
             if (currentHandler != null)
             {
                 currentHandler.OnExit(this);
                 currentHandler = null;
             }
 
-            // 履歴に追加
+            // 螻･豁ｴ縺ｫ霑ｽ蜉
             stateHistory.Add(currentState);
-            if (stateHistory.Count > 10) // 最新10件のみ保持
+            if (stateHistory.Count > 10) // 譛譁ｰ10莉ｶ縺ｮ縺ｿ菫晄戟
             {
                 stateHistory.RemoveAt(0);
             }
 
-            // 新しい状態に遷移
+            // 譁ｰ縺励＞迥ｶ諷九↓驕ｷ遘ｻ
             currentState = newState;
             currentHandler = stateService.GetHandler((int)newState);
 
@@ -92,9 +92,9 @@ namespace asterivo.Unity60.Features.StateManagement
         }
 
         /// <summary>
-        /// ログメッセージを出力
+        /// 繝ｭ繧ｰ繝｡繝・そ繝ｼ繧ｸ繧貞・蜉・
         /// </summary>
-        /// <param name="message">ログメッセージ</param>
+        /// <param name="message">繝ｭ繧ｰ繝｡繝・そ繝ｼ繧ｸ</param>
         public void Log(string message)
         {
             if (isDebugEnabled)
@@ -104,17 +104,17 @@ namespace asterivo.Unity60.Features.StateManagement
         }
 
         /// <summary>
-        /// 指定した状態に遷移可能かチェック
+        /// 謖・ｮ壹＠縺溽憾諷九↓驕ｷ遘ｻ蜿ｯ閭ｽ縺九メ繧ｧ繝・け
         /// </summary>
-        /// <param name="targetState">チェックする状態</param>
-        /// <returns>遷移可能な場合はtrue</returns>
+        /// <param name="targetState">繝√ぉ繝・け縺吶ｋ迥ｶ諷・/param>
+        /// <returns>驕ｷ遘ｻ蜿ｯ閭ｽ縺ｪ蝣ｴ蜷医・true</returns>
         public bool CanTransitionTo(PlayerState targetState)
         {
             return stateService.HasHandler((int)targetState);
         }
 
         /// <summary>
-        /// 前の状態に戻る
+        /// 蜑阪・迥ｶ諷九↓謌ｻ繧・
         /// </summary>
         public void RevertToPreviousState()
         {
@@ -132,7 +132,7 @@ namespace asterivo.Unity60.Features.StateManagement
 
         void OnDestroy()
         {
-            // 状態から退出
+            // 迥ｶ諷九°繧蛾蜃ｺ
             if (currentHandler != null)
             {
                 currentHandler.OnExit(this);
@@ -141,3 +141,5 @@ namespace asterivo.Unity60.Features.StateManagement
         }
     }
 }
+
+

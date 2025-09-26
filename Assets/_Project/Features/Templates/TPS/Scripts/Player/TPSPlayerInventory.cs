@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.TPS.Combat.Data;
 
 namespace asterivo.Unity60.Features.Templates.TPS.Player
@@ -167,3 +167,5 @@ namespace asterivo.Unity60.Features.Templates.TPS.Player
         }
     }
 }
+
+

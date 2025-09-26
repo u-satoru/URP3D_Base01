@@ -1,34 +1,34 @@
-using UnityEngine;
+﻿using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Commands;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.Stealth.Services;
 using asterivo.Unity60.Features.Player.States;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 {
     /// <summary>
-    /// ステルス移動コマンドシステム
-    /// プレイヤーのステルス移動アクションをカプセル化
-    /// ServiceLocator統合による中央制御とObjectPool最適化対応
+    /// 繧ｹ繝・Ν繧ｹ遘ｻ蜍輔さ繝槭Φ繝峨す繧ｹ繝・Β
+    /// 繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・Ν繧ｹ遘ｻ蜍輔い繧ｯ繧ｷ繝ｧ繝ｳ繧偵き繝励そ繝ｫ蛹・
+    /// ServiceLocator邨ｱ蜷医↓繧医ｋ荳ｭ螟ｮ蛻ｶ蠕｡縺ｨObjectPool譛驕ｩ蛹門ｯｾ蠢・
     /// </summary>
     public class StealthMovementCommand : IResettableCommand
     {
         /// <summary>
-        /// ステルス移動の種類
+        /// 繧ｹ繝・Ν繧ｹ遘ｻ蜍輔・遞ｮ鬘・
         /// </summary>
         public enum StealthMovementType
         {
-            SneakMode,          // 忍び足モード開始
-            CrouchWalk,         // しゃがみ歩き
-            ProneMovement,      // 匍匐移動
-            QuickHide,          // 緊急隠蔽
-            SilentSprint,       // 無音疾走
-            WallHug,            // 壁沿い移動
-            CoverTocover,       // カバー間移動
-            StealthClimb,       // ステルス登攀
-            ShadowMove,         // 影移動
-            DistractionMove     // 陽動移動
+            SneakMode,          // 蠢阪・雜ｳ繝｢繝ｼ繝蛾幕蟋・
+            CrouchWalk,         // 縺励ｃ縺後∩豁ｩ縺・
+            ProneMovement,      // 蛹榊倹遘ｻ蜍・
+            QuickHide,          // 邱頑･髫阡ｽ
+            SilentSprint,       // 辟｡髻ｳ逍ｾ襍ｰ
+            WallHug,            // 螢∵ｲｿ縺・ｧｻ蜍・
+            CoverTocover,       // 繧ｫ繝舌・髢鍋ｧｻ蜍・
+            StealthClimb,       // 繧ｹ繝・Ν繧ｹ逋ｻ謾
+            ShadowMove,         // 蠖ｱ遘ｻ蜍・
+            DistractionMove     // 髯ｽ蜍慕ｧｻ蜍・
         }
 
         private StealthMovementType _movementType;
@@ -37,18 +37,18 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         private float _speedMultiplier;
         private bool _maintainStealth;
 
-        // 前回の状態（Undo用）
+        // 蜑榊屓縺ｮ迥ｶ諷具ｼ・ndo逕ｨ・・
         private Vector3 _previousPosition;
         private PlayerStateType _previousPlayerState;
         private float _previousVisibility;
         private float _previousNoiseLevel;
 
-        // サービス参照
+        // 繧ｵ繝ｼ繝薙せ蜿ら・
         private IStealthService _stealthService;
         private DetailedPlayerStateMachine _playerStateMachine;
         private Transform _playerTransform;
 
-        // 実行結果
+        // 螳溯｡檎ｵ先棡
         private bool _wasExecuted;
         private bool _stealthMaintained;
 
@@ -58,7 +58,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         {
             if (_wasExecuted) return;
 
-            // ServiceLocator経由でサービス取得
+            // ServiceLocator邨檎罰縺ｧ繧ｵ繝ｼ繝薙せ蜿門ｾ・
             _stealthService = ServiceLocator.GetService<IStealthService>();
             _playerStateMachine = Object.FindObjectOfType<DetailedPlayerStateMachine>();
 
@@ -73,13 +73,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
                 return;
             }
 
-            // 現在の状態を保存（Undo用）
+            // 迴ｾ蝨ｨ縺ｮ迥ｶ諷九ｒ菫晏ｭ假ｼ・ndo逕ｨ・・
             _previousPosition = _playerTransform.position;
             _previousPlayerState = _playerStateMachine.GetCurrentStateType();
             _previousVisibility = _stealthService.PlayerVisibilityFactor;
             _previousNoiseLevel = _stealthService.PlayerNoiseLevel;
 
-            // ステルス移動実行
+            // 繧ｹ繝・Ν繧ｹ遘ｻ蜍募ｮ溯｡・
             ExecuteStealthMovement();
             _wasExecuted = true;
 
@@ -90,19 +90,19 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         {
             if (!_wasExecuted || !CanUndo) return;
 
-            // 位置復元
+            // 菴咲ｽｮ蠕ｩ蜈・
             if (_playerTransform != null)
             {
                 _playerTransform.position = _previousPosition;
             }
 
-            // プレイヤー状態復元
+            // 繝励Ξ繧､繝､繝ｼ迥ｶ諷句ｾｩ蜈・
             if (_playerStateMachine != null)
             {
                 _playerStateMachine.TransitionToState(_previousPlayerState);
             }
 
-            // ステルス状態復元
+            // 繧ｹ繝・Ν繧ｹ迥ｶ諷句ｾｩ蜈・
             if (_stealthService != null)
             {
                 _stealthService.UpdatePlayerVisibility(_previousVisibility);
@@ -151,14 +151,14 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
             _movementType = (StealthMovementType)parameters[0];
             _targetPosition = (Vector3)parameters[1];
 
-            // オプションパラメータ
+            // 繧ｪ繝励す繝ｧ繝ｳ繝代Λ繝｡繝ｼ繧ｿ
             _duration = parameters.Length > 2 ? (float)parameters[2] : 1.0f;
             _speedMultiplier = parameters.Length > 3 ? (float)parameters[3] : 1.0f;
             _maintainStealth = parameters.Length > 4 ? (bool)parameters[4] : true;
         }
 
         /// <summary>
-        /// 型安全な初期化メソッド
+        /// 蝙句ｮ牙・縺ｪ蛻晄悄蛹悶Γ繧ｽ繝・ラ
         /// </summary>
         public void Initialize(StealthMovementType movementType, Vector3 targetPosition,
                               float duration = 1.0f, float speedMultiplier = 1.0f, bool maintainStealth = true)
@@ -175,7 +175,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         #region Private Methods
 
         /// <summary>
-        /// ステルス移動の具体的実行
+        /// 繧ｹ繝・Ν繧ｹ遘ｻ蜍輔・蜈ｷ菴鍋噪螳溯｡・
         /// </summary>
         private void ExecuteStealthMovement()
         {
@@ -225,66 +225,66 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private void ExecuteSneakMode()
         {
-            // 忍び足モード：視認性30%削減、移動速度70%削減
+            // 蠢阪・雜ｳ繝｢繝ｼ繝会ｼ夊ｦ冶ｪ肴ｧ30%蜑頑ｸ帙∫ｧｻ蜍暮溷ｺｦ70%蜑頑ｸ・
             _playerStateMachine.TransitionToState(PlayerStateType.Walking);
             _stealthService.UpdatePlayerVisibility(_previousVisibility * 0.7f);
             _stealthService.UpdatePlayerNoiseLevel(_previousNoiseLevel * 0.3f);
 
-            MoveToTarget(0.3f); // 30%速度
+            MoveToTarget(0.3f); // 30%騾溷ｺｦ
             _stealthMaintained = true;
         }
 
         private void ExecuteCrouchWalk()
         {
-            // しゃがみ歩き：視認性50%削減、移動速度50%削減
+            // 縺励ｃ縺後∩豁ｩ縺搾ｼ夊ｦ冶ｪ肴ｧ50%蜑頑ｸ帙∫ｧｻ蜍暮溷ｺｦ50%蜑頑ｸ・
             _playerStateMachine.TransitionToState(PlayerStateType.Crouching);
             _stealthService.UpdatePlayerVisibility(_previousVisibility * 0.5f);
             _stealthService.UpdatePlayerNoiseLevel(_previousNoiseLevel * 0.2f);
 
-            MoveToTarget(0.5f); // 50%速度
+            MoveToTarget(0.5f); // 50%騾溷ｺｦ
             _stealthMaintained = true;
         }
 
         private void ExecuteProneMovement()
         {
-            // 匍匐移動：視認性80%削減、移動速度90%削減
+            // 蛹榊倹遘ｻ蜍包ｼ夊ｦ冶ｪ肴ｧ80%蜑頑ｸ帙∫ｧｻ蜍暮溷ｺｦ90%蜑頑ｸ・
             _playerStateMachine.TransitionToState(PlayerStateType.Prone);
             _stealthService.UpdatePlayerVisibility(_previousVisibility * 0.2f);
             _stealthService.UpdatePlayerNoiseLevel(_previousNoiseLevel * 0.1f);
 
-            MoveToTarget(0.1f); // 10%速度
+            MoveToTarget(0.1f); // 10%騾溷ｺｦ
             _stealthMaintained = true;
         }
 
         private void ExecuteQuickHide()
         {
-            // 緊急隠蔽：最寄りの隠蔽ポイントへ移動
+            // 邱頑･髫阡ｽ・壽怙蟇・ｊ縺ｮ髫阡ｽ繝昴う繝ｳ繝医∈遘ｻ蜍・
             Vector3 hidePosition = FindNearestHidingSpot();
             if (hidePosition != Vector3.zero)
             {
                 _targetPosition = hidePosition;
                 _playerStateMachine.TransitionToState(PlayerStateType.Crouching);
-                _stealthService.UpdatePlayerVisibility(0.1f); // 90%視認性削減
+                _stealthService.UpdatePlayerVisibility(0.1f); // 90%隕冶ｪ肴ｧ蜑頑ｸ・
 
-                MoveToTarget(1.5f); // 150%速度（緊急）
+                MoveToTarget(1.5f); // 150%騾溷ｺｦ・育ｷ頑･・・
                 _stealthMaintained = true;
             }
         }
 
         private void ExecuteSilentSprint()
         {
-            // 無音疾走：高速移動だが音響制御
+            // 辟｡髻ｳ逍ｾ襍ｰ・夐ｫ倬溽ｧｻ蜍輔□縺碁浹髻ｿ蛻ｶ蠕｡
             _playerStateMachine.TransitionToState(PlayerStateType.Running);
-            _stealthService.UpdatePlayerVisibility(_previousVisibility * 1.2f); // 20%視認性増加
-            _stealthService.UpdatePlayerNoiseLevel(_previousNoiseLevel * 0.4f); // 60%騒音削減
+            _stealthService.UpdatePlayerVisibility(_previousVisibility * 1.2f); // 20%隕冶ｪ肴ｧ蠅怜刈
+            _stealthService.UpdatePlayerNoiseLevel(_previousNoiseLevel * 0.4f); // 60%鬨帝浹蜑頑ｸ・
 
-            MoveToTarget(2.0f); // 200%速度
+            MoveToTarget(2.0f); // 200%騾溷ｺｦ
             _stealthMaintained = _maintainStealth;
         }
 
         private void ExecuteWallHug()
         {
-            // 壁沿い移動：壁に沿った安全な移動
+            // 螢∵ｲｿ縺・ｧｻ蜍包ｼ壼｣√↓豐ｿ縺｣縺溷ｮ牙・縺ｪ遘ｻ蜍・
             Vector3 wallDirection = FindWallDirection();
             if (wallDirection != Vector3.zero)
             {
@@ -299,7 +299,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private void ExecuteCoverTocover()
         {
-            // カバー間移動：遮蔽物間の戦術的移動
+            // 繧ｫ繝舌・髢鍋ｧｻ蜍包ｼ夐・阡ｽ迚ｩ髢薙・謌ｦ陦鍋噪遘ｻ蜍・
             if (ValidateCoverPath())
             {
                 _playerStateMachine.TransitionToState(PlayerStateType.InCover);
@@ -313,7 +313,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private void ExecuteStealthClimb()
         {
-            // ステルス登攀：静かな登攀移動
+            // 繧ｹ繝・Ν繧ｹ逋ｻ謾・夐撕縺九↑逋ｻ謾遘ｻ蜍・
             _stealthService.UpdatePlayerVisibility(_previousVisibility * 0.8f);
             _stealthService.UpdatePlayerNoiseLevel(_previousNoiseLevel * 0.5f);
 
@@ -323,11 +323,11 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private void ExecuteShadowMove()
         {
-            // 影移動：影を利用した移動
+            // 蠖ｱ遘ｻ蜍包ｼ壼ｽｱ繧貞茜逕ｨ縺励◆遘ｻ蜍・
             if (IsInShadow(_targetPosition))
             {
                 _playerStateMachine.TransitionToState(PlayerStateType.Crouching);
-                _stealthService.UpdatePlayerVisibility(_previousVisibility * 0.3f); // 70%視認性削減
+                _stealthService.UpdatePlayerVisibility(_previousVisibility * 0.3f); // 70%隕冶ｪ肴ｧ蜑頑ｸ・
                 _stealthService.UpdatePlayerNoiseLevel(_previousNoiseLevel * 0.2f);
 
                 MoveToTarget(0.8f);
@@ -337,7 +337,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private void ExecuteDistractionMove()
         {
-            // 陽動移動：注意を逸らしながらの移動
+            // 髯ｽ蜍慕ｧｻ蜍包ｼ壽ｳｨ諢上ｒ騾ｸ繧峨＠縺ｪ縺後ｉ縺ｮ遘ｻ蜍・
             CreateDistraction();
             _playerStateMachine.TransitionToState(PlayerStateType.Crouching);
             _stealthService.UpdatePlayerVisibility(_previousVisibility * 0.9f);
@@ -357,7 +357,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
             float adjustedSpeed = _speedMultiplier * speedModifier;
             Vector3 direction = (_targetPosition - _playerTransform.position).normalized;
 
-            // 簡易移動実装（実際にはCharacterControllerやNavMeshAgentを使用）
+            // 邁｡譏鍋ｧｻ蜍募ｮ溯｣・ｼ亥ｮ滄圀縺ｫ縺ｯCharacterController繧НavMeshAgent繧剃ｽｿ逕ｨ・・
             _playerTransform.position = Vector3.MoveTowards(
                 _playerTransform.position,
                 _targetPosition,
@@ -367,7 +367,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private Vector3 FindNearestHidingSpot()
         {
-            // 最寄りの隠蔽ポイントを探索
+            // 譛蟇・ｊ縺ｮ髫阡ｽ繝昴う繝ｳ繝医ｒ謗｢邏｢
             GameObject[] hidingSpots = GameObject.FindGameObjectsWithTag("HidingSpot");
             Vector3 nearestSpot = Vector3.zero;
             float nearestDistance = float.MaxValue;
@@ -387,7 +387,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private Vector3 FindWallDirection()
         {
-            // 壁方向の検出（レイキャストによる簡易実装）
+            // 螢∵婿蜷代・讀懷・・医Ξ繧､繧ｭ繝｣繧ｹ繝医↓繧医ｋ邁｡譏灘ｮ溯｣・ｼ・
             RaycastHit hit;
             Vector3[] directions = { Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
 
@@ -413,7 +413,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private bool ValidateCoverPath()
         {
-            // カバー間の経路検証
+            // 繧ｫ繝舌・髢薙・邨瑚ｷｯ讀懆ｨｼ
             RaycastHit hit;
             Vector3 direction = (_targetPosition - _playerTransform.position).normalized;
             float distance = Vector3.Distance(_playerTransform.position, _targetPosition);
@@ -423,7 +423,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private void ClimbToTarget()
         {
-            // 登攀移動の実装
+            // 逋ｻ謾遘ｻ蜍輔・螳溯｣・
             Vector3 climbDirection = Vector3.up + (_targetPosition - _playerTransform.position).normalized;
             _playerTransform.position = Vector3.MoveTowards(
                 _playerTransform.position,
@@ -434,13 +434,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 
         private bool IsInShadow(Vector3 position)
         {
-            // 影にいるかどうかの判定（簡易実装）
+            // 蠖ｱ縺ｫ縺・ｋ縺九←縺・°縺ｮ蛻､螳夲ｼ育ｰ｡譏灘ｮ溯｣・ｼ・
             return _stealthService?.IsPlayerConcealed ?? false;
         }
 
         private void CreateDistraction()
         {
-            // 陽動音の作成
+            // 髯ｽ蜍暮浹縺ｮ菴懈・
             Vector3 distractionPoint = _playerTransform.position + Vector3.right * 5.0f;
             _stealthService?.CreateDistraction(distractionPoint, 0.6f);
         }
@@ -450,25 +450,27 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         #region Public Properties
 
         /// <summary>
-        /// 移動タイプ
+        /// 遘ｻ蜍輔ち繧､繝・
         /// </summary>
         public StealthMovementType MovementType => _movementType;
 
         /// <summary>
-        /// 目標位置
+        /// 逶ｮ讓吩ｽ咲ｽｮ
         /// </summary>
         public Vector3 TargetPosition => _targetPosition;
 
         /// <summary>
-        /// ステルスが維持されたかどうか
+        /// 繧ｹ繝・Ν繧ｹ縺檎ｶｭ謖√＆繧後◆縺九←縺・°
         /// </summary>
         public bool StealthMaintained => _stealthMaintained;
 
         /// <summary>
-        /// 実行済みかどうか
+        /// 螳溯｡梧ｸ医∩縺九←縺・°
         /// </summary>
         public bool WasExecuted => _wasExecuted;
 
         #endregion
     }
 }
+
+

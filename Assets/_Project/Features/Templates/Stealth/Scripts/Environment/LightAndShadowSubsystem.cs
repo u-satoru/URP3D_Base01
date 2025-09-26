@@ -1,16 +1,16 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.Stealth.Services;
 using asterivo.Unity60.Features.Templates.Stealth.Events;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Environment
 {
     /// <summary>
-    /// 光と影のサブシステム
-    /// プレイヤーの位置と周囲の光源を基に視認性係数を算出
-    /// 詳細設計書のLightAndShadowSubsystem実装
+    /// 蜈峨→蠖ｱ縺ｮ繧ｵ繝悶す繧ｹ繝・Β
+    /// 繝励Ξ繧､繝､繝ｼ縺ｮ菴咲ｽｮ縺ｨ蜻ｨ蝗ｲ縺ｮ蜈画ｺ舌ｒ蝓ｺ縺ｫ隕冶ｪ肴ｧ菫よ焚繧堤ｮ怜・
+    /// 隧ｳ邏ｰ險ｭ險域嶌縺ｮLightAndShadowSubsystem螳溯｣・
     /// </summary>
     public class LightAndShadowSubsystem : MonoBehaviour
     {
@@ -35,17 +35,17 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         private float _shadowRaycastDistance = 50.0f;
 
         [SerializeField]
-        private int _shadowRaycastSamples = 8; // 複数方向からの光線チェック
+        private int _shadowRaycastSamples = 8; // 隍・焚譁ｹ蜷代°繧峨・蜈臥ｷ壹メ繧ｧ繝・け
 
         [Header("Performance")]
         [SerializeField]
-        private float _updateInterval = 0.1f; // 10Hz更新
+        private float _updateInterval = 0.1f; // 10Hz譖ｴ譁ｰ
 
         [SerializeField]
-        private int _maxLightSources = 20; // パフォーマンス制限
+        private int _maxLightSources = 20; // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ蛻ｶ髯・
 
         [SerializeField]
-        private float _lightInfluenceThreshold = 0.01f; // 影響が小さい光源を無視
+        private float _lightInfluenceThreshold = 0.01f; // 蠖ｱ髻ｿ縺悟ｰ上＆縺・・貅舌ｒ辟｡隕・
 
         [Header("Debug")]
         [SerializeField]
@@ -112,17 +112,17 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         #region Initialization
         private void InitializeSubsystem()
         {
-            // ServiceLocatorからStealthServiceを取得
+            // ServiceLocator縺九ｉStealthService繧貞叙蠕・
             _stealthService = ServiceLocator.GetService<IStealthService>();
             if (_stealthService == null)
             {
                 Debug.LogWarning($"[{gameObject.name}] StealthService not found in ServiceLocator");
             }
 
-            // プレイヤーの取得
+            // 繝励Ξ繧､繝､繝ｼ縺ｮ蜿門ｾ・
             FindPlayerTransform();
 
-            // 光源の初期検索
+            // 蜈画ｺ舌・蛻晄悄讀懃ｴ｢
             RefreshLightSources();
 
             if (_enableDebugLogs)
@@ -147,7 +147,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
             _activeLightSources.Clear();
             _lightDataCache.Clear();
 
-            // シーン内の全光源を取得
+            // 繧ｷ繝ｼ繝ｳ蜀・・蜈ｨ蜈画ｺ舌ｒ蜿門ｾ・
             Light[] allLights = FindObjectsOfType<Light>();
 
             foreach (var light in allLights)
@@ -159,12 +159,12 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
                 }
             }
 
-            // ReflectionProbeも取得（間接光の計算用）
+            // ReflectionProbe繧ょ叙蠕暦ｼ磯俣謗･蜈峨・險育ｮ礼畑・・
             _reflectionProbes.Clear();
             ReflectionProbe[] allProbes = FindObjectsOfType<ReflectionProbe>();
             _reflectionProbes.AddRange(allProbes);
 
-            // パフォーマンス制限の適用
+            // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ蛻ｶ髯舌・驕ｩ逕ｨ
             if (_activeLightSources.Count > _maxLightSources)
             {
                 SortLightsByImportance();
@@ -205,7 +205,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
                 float distanceA = Vector3.Distance(playerPos, a.transform.position);
                 float distanceB = Vector3.Distance(playerPos, b.transform.position);
 
-                // 距離と強度を考慮した重要度計算
+                // 霍晞屬縺ｨ蠑ｷ蠎ｦ繧定・・縺励◆驥崎ｦ∝ｺｦ險育ｮ・
                 float importanceA = (a.intensity / Mathf.Max(1.0f, distanceA));
                 float importanceB = (b.intensity / Mathf.Max(1.0f, distanceB));
 
@@ -221,17 +221,17 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
 
             Vector3 currentPosition = _playerTransform.position;
 
-            // 位置が大きく変わった場合は光源リストを更新
+            // 菴咲ｽｮ縺悟､ｧ縺阪￥螟峨ｏ縺｣縺溷ｴ蜷医・蜈画ｺ舌Μ繧ｹ繝医ｒ譖ｴ譁ｰ
             if (Vector3.Distance(currentPosition, _lastPlayerPosition) > 10.0f)
             {
                 RefreshLightSources();
                 _lastPlayerPosition = currentPosition;
             }
 
-            // 光量の計算
+            // 蜈蛾㍼縺ｮ險育ｮ・
             float newLightLevel = CalculateLightLevelAtPosition(currentPosition);
 
-            // 有意な変化があった場合のみ更新
+            // 譛画э縺ｪ螟牙喧縺後≠縺｣縺溷ｴ蜷医・縺ｿ譖ｴ譁ｰ
             if (Mathf.Abs(newLightLevel - _currentLightLevel) > 0.01f)
             {
                 _currentLightLevel = newLightLevel;
@@ -240,7 +240,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         }
 
         /// <summary>
-        /// 指定位置での光量レベルを計算（0.0 = 完全な闇, 1.0 = 完全な光）
+        /// 謖・ｮ壻ｽ咲ｽｮ縺ｧ縺ｮ蜈蛾㍼繝ｬ繝吶Ν繧定ｨ育ｮ暦ｼ・.0 = 螳悟・縺ｪ髣・ 1.0 = 螳悟・縺ｪ蜈会ｼ・
         /// </summary>
         public float CalculateLightLevelAtPosition(Vector3 position)
         {
@@ -258,7 +258,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
                 }
             }
 
-            // 間接光の計算（ReflectionProbeベース）
+            // 髢捺磁蜈峨・險育ｮ暦ｼ・eflectionProbe繝吶・繧ｹ・・
             if (_reflectionProbes.Count > 0)
             {
                 totalLight += CalculateIndirectLight(position);
@@ -278,7 +278,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
             Vector3 lightPosition = lightData.Position;
             float distance = Vector3.Distance(position, lightPosition);
 
-            // 範囲外チェック
+            // 遽・峇螟悶メ繧ｧ繝・け
             if (distance > lightData.Range) return 0.0f;
 
             float lightContribution = 0.0f;
@@ -298,7 +298,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
                     break;
             }
 
-            // 影の計算
+            // 蠖ｱ縺ｮ險育ｮ・
             if (_enableShadowDetection && lightContribution > 0.0f)
             {
                 float shadowFactor = CalculateShadowFactor(lightPosition, position);
@@ -310,7 +310,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
 
         private float CalculatePointLightContribution(LightData lightData, Vector3 position, float distance)
         {
-            // 線形減衰 + 二次減衰のブレンド
+            // 邱壼ｽ｢貂幄｡ｰ + 莠梧ｬ｡貂幄｡ｰ縺ｮ繝悶Ξ繝ｳ繝・
             float linearFalloff = Mathf.Clamp01(1.0f - (distance / lightData.Range));
             float quadraticFalloff = 1.0f / (1.0f + distance * distance * 0.1f);
 
@@ -324,22 +324,22 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
             Vector3 directionToPosition = (position - lightData.Position).normalized;
             float angle = Vector3.Angle(lightData.Direction, directionToPosition);
 
-            // スポット角度外の場合
+            // 繧ｹ繝昴ャ繝郁ｧ貞ｺｦ螟悶・蝣ｴ蜷・
             if (angle > lightData.SpotAngle * 0.5f) return 0.0f;
 
-            // 距離減衰
+            // 霍晞屬貂幄｡ｰ
             float distanceFalloff = Mathf.Clamp01(1.0f - (distance / lightData.Range));
 
-            // 角度減衰
+            // 隗貞ｺｦ貂幄｡ｰ
             float angleFalloff = Mathf.Clamp01(1.0f - (angle / (lightData.SpotAngle * 0.5f)));
-            angleFalloff = Mathf.Pow(angleFalloff, 2.0f); // より滑らかな減衰
+            angleFalloff = Mathf.Pow(angleFalloff, 2.0f); // 繧医ｊ貊代ｉ縺九↑貂幄｡ｰ
 
             return lightData.Intensity * distanceFalloff * angleFalloff;
         }
 
         private float CalculateDirectionalLightContribution(LightData lightData, Vector3 position)
         {
-            // 平行光源は距離に関係なく一定の強度
+            // 蟷ｳ陦悟・貅舌・霍晞屬縺ｫ髢｢菫ゅ↑縺丈ｸ螳壹・蠑ｷ蠎ｦ
             return lightData.Intensity;
         }
 
@@ -356,9 +356,9 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
 
                 if (distance <= probe.size.magnitude)
                 {
-                    // 簡易的な間接光計算
+                    // 邁｡譏鍋噪縺ｪ髢捺磁蜈芽ｨ育ｮ・
                     float influence = 1.0f - (distance / probe.size.magnitude);
-                    indirectLight += probe.intensity * influence * 0.2f; // 間接光は直接光より弱い
+                    indirectLight += probe.intensity * influence * 0.2f; // 髢捺磁蜈峨・逶ｴ謗･蜈峨ｈ繧雁ｼｱ縺・
                 }
             }
 
@@ -373,12 +373,12 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
             float shadowFactor = 1.0f;
             int hitCount = 0;
 
-            // 複数のレイキャストでソフトシャドウを近似
+            // 隍・焚縺ｮ繝ｬ繧､繧ｭ繝｣繧ｹ繝医〒繧ｽ繝輔ヨ繧ｷ繝｣繝峨え繧定ｿ台ｼｼ
             for (int i = 0; i < _shadowRaycastSamples; i++)
             {
                 Vector3 sampleDirection = direction;
 
-                // 微小なランダムオフセットを追加してソフトシャドウ効果
+                // 蠕ｮ蟆上↑繝ｩ繝ｳ繝繝繧ｪ繝輔そ繝・ヨ繧定ｿｽ蜉縺励※繧ｽ繝輔ヨ繧ｷ繝｣繝峨え蜉ｹ譫・
                 if (i > 0)
                 {
                     Vector3 randomOffset = Random.insideUnitSphere * 0.1f;
@@ -390,7 +390,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
                     hitCount++;
                 }
 
-                // デバッグレイの描画
+                // 繝・ヰ繝・げ繝ｬ繧､縺ｮ謠冗判
                 if (_showDebugRays)
                 {
                     Color rayColor = Physics.Raycast(lightPosition, sampleDirection, distance, _shadowCasterLayers)
@@ -399,7 +399,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
                 }
             }
 
-            // 影の強度を計算
+            // 蠖ｱ縺ｮ蠑ｷ蠎ｦ繧定ｨ育ｮ・
             float shadowIntensity = (float)hitCount / _shadowRaycastSamples;
             shadowFactor = 1.0f - shadowIntensity;
 
@@ -417,7 +417,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         }
 
         /// <summary>
-        /// StealthServiceから呼び出される光量計算
+        /// StealthService縺九ｉ蜻ｼ縺ｳ蜃ｺ縺輔ｌ繧句・驥剰ｨ育ｮ・
         /// </summary>
         public float GetCurrentLightLevel()
         {
@@ -425,7 +425,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         }
 
         /// <summary>
-        /// 特定位置での光量を即座に計算
+        /// 迚ｹ螳壻ｽ咲ｽｮ縺ｧ縺ｮ蜈蛾㍼繧貞叉蠎ｧ縺ｫ險育ｮ・
         /// </summary>
         public float GetLightLevelAtPosition(Vector3 position)
         {
@@ -435,7 +435,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
 
         #region Public Interface
         /// <summary>
-        /// 光源リストを手動で更新
+        /// 蜈画ｺ舌Μ繧ｹ繝医ｒ謇句虚縺ｧ譖ｴ譁ｰ
         /// </summary>
         public void ForceRefreshLightSources()
         {
@@ -443,7 +443,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         }
 
         /// <summary>
-        /// アンビエント光レベルを設定
+        /// 繧｢繝ｳ繝薙お繝ｳ繝亥・繝ｬ繝吶Ν繧定ｨｭ螳・
         /// </summary>
         public void SetAmbientLightLevel(float level)
         {
@@ -451,15 +451,15 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         }
 
         /// <summary>
-        /// 更新間隔を変更
+        /// 譖ｴ譁ｰ髢馴囈繧貞､画峩
         /// </summary>
         public void SetUpdateInterval(float interval)
         {
-            _updateInterval = Mathf.Max(0.016f, interval); // 最低60FPS
+            _updateInterval = Mathf.Max(0.016f, interval); // 譛菴・0FPS
         }
 
         /// <summary>
-        /// 現在アクティブな光源の数
+        /// 迴ｾ蝨ｨ繧｢繧ｯ繝・ぅ繝悶↑蜈画ｺ舌・謨ｰ
         /// </summary>
         public int ActiveLightSourceCount => _activeLightSources.Count;
         #endregion
@@ -471,7 +471,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
 
             Vector3 playerPos = _playerTransform.position;
 
-            // 光源の影響範囲を表示
+            // 蜈画ｺ舌・蠖ｱ髻ｿ遽・峇繧定｡ｨ遉ｺ
             if (_showLightInfluence)
             {
                 foreach (var light in _activeLightSources)
@@ -486,12 +486,12 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
                     }
                     else if (light.type == LightType.Spot)
                     {
-                        // スポットライトの円錐を描画
+                        // 繧ｹ繝昴ャ繝医Λ繧､繝医・蜀・倹繧呈緒逕ｻ
                         DrawSpotLightGizmo(light);
                     }
                 }
 
-                // プレイヤー位置での光量レベルを表示
+                // 繝励Ξ繧､繝､繝ｼ菴咲ｽｮ縺ｧ縺ｮ蜈蛾㍼繝ｬ繝吶Ν繧定｡ｨ遉ｺ
                 Gizmos.color = Color.Lerp(Color.black, Color.white, _currentLightLevel);
                 Gizmos.DrawSphere(playerPos, 0.5f);
             }
@@ -504,13 +504,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
             float range = spotLight.range;
             float angle = spotLight.spotAngle;
 
-            // 円錐の描画
+            // 蜀・倹縺ｮ謠冗判
             float radius = range * Mathf.Tan(angle * 0.5f * Mathf.Deg2Rad);
             Vector3 endPos = position + direction * range;
 
             Gizmos.DrawLine(position, endPos);
 
-            // 円錐の境界線
+            // 蜀・倹縺ｮ蠅・阜邱・
             Vector3 up = spotLight.transform.up * radius;
             Vector3 right = spotLight.transform.right * radius;
 
@@ -522,3 +522,5 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         #endregion
     }
 }
+
+

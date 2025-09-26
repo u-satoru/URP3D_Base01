@@ -1,38 +1,38 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Features.Templates.Platformer.Settings;
 
 namespace asterivo.Unity60.Features.Templates.Platformer.Services
 {
     /// <summary>
-    /// Collection Service：プラットフォーマー収集アイテム管理システム
-    /// ServiceLocator統合：アイテム収集・スコア管理・進捗追跡・Learn & Grow価値実現
-    /// Event駆動通信：レベル完了・アイテム収集・スコア更新の疎結合通知
+    /// Collection Service・壹・繝ｩ繝・ヨ繝輔か繝ｼ繝槭・蜿朱寔繧｢繧､繝・Β邂｡逅・す繧ｹ繝・Β
+    /// ServiceLocator邨ｱ蜷茨ｼ壹い繧､繝・Β蜿朱寔繝ｻ繧ｹ繧ｳ繧｢邂｡逅・・騾ｲ謐苓ｿｽ霍｡繝ｻLearn & Grow萓｡蛟､螳溽樟
+    /// Event鬧・虚騾壻ｿ｡・壹Ξ繝吶Ν螳御ｺ・・繧｢繧､繝・Β蜿朱寔繝ｻ繧ｹ繧ｳ繧｢譖ｴ譁ｰ縺ｮ逍守ｵ仙粋騾夂衍
     /// </summary>
     public class CollectionService : ICollectionService
     {
-        // 設定データ
+        // 險ｭ螳壹ョ繝ｼ繧ｿ
         private PlatformerCollectionSettings _settings;
 
-        // アイテム管理データ
+        // 繧｢繧､繝・Β邂｡逅・ョ繝ｼ繧ｿ
         private readonly HashSet<int> _collectedItems = new HashSet<int>();
         private readonly Dictionary<int, CollectibleItemData> _levelItems = new Dictionary<int, CollectibleItemData>();
 
-        // 統計情報
+        // 邨ｱ險域ュ蝣ｱ
         private int _currentScore = 0;
         private int _totalItemsInCurrentLevel = 0;
         private bool _isLevelCompleted = false;
 
-        // Event駆動通信（疎結合）
+        // Event鬧・虚騾壻ｿ｡・育鮪邨仙粋・・
         private GameEvent<CollectionEventData> _onItemCollected;
         private GameEvent<LevelCompletionEventData> _onLevelCompleted;
         private GameEvent<int> _onScoreChanged;
 
-        // ServiceLocator連携フラグ
+        // ServiceLocator騾｣謳ｺ繝輔Λ繧ｰ
         private bool _isInitialized = false;
 
         public int CollectedItemsCount => _collectedItems.Count;
@@ -42,20 +42,20 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         public bool IsLevelCompleted => _isLevelCompleted;
 
         /// <summary>
-        /// コンストラクタ：設定ベース初期化
+        /// 繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ・夊ｨｭ螳壹・繝ｼ繧ｹ蛻晄悄蛹・
         /// </summary>
         public CollectionService(PlatformerCollectionSettings settings)
         {
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            // Event駆動通信の初期化
+            // Event鬧・虚騾壻ｿ｡縺ｮ蛻晄悄蛹・
             InitializeEventChannels();
 
             Debug.Log("[CollectionService] Initialized with ServiceLocator + Event-driven architecture.");
         }
 
         /// <summary>
-        /// アイテム収集：Event駆動通知 + ServiceLocator連携
+        /// 繧｢繧､繝・Β蜿朱寔・哘vent鬧・虚騾夂衍 + ServiceLocator騾｣謳ｺ
         /// </summary>
         public void CollectItem(int itemId, int score)
         {
@@ -65,18 +65,18 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
                 return;
             }
 
-            // アイテム収集処理
+            // 繧｢繧､繝・Β蜿朱寔蜃ｦ逅・
             _collectedItems.Add(itemId);
             _currentScore += score;
 
-            // ServiceLocator経由でゲームマネージャーに通知
+            // ServiceLocator邨檎罰縺ｧ繧ｲ繝ｼ繝繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｫ騾夂衍
             var gameManager = ServiceLocator.GetService<IPlatformerGameManager>();
             if (gameManager != null)
             {
                 gameManager.AddScore(score);
             }
 
-            // Event駆動通信：アイテム収集通知
+            // Event鬧・虚騾壻ｿ｡・壹い繧､繝・Β蜿朱寔騾夂衍
             var eventData = new CollectionEventData
             {
                 ItemId = itemId,
@@ -89,18 +89,18 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
             _onItemCollected?.Raise(eventData);
             _onScoreChanged?.Raise(_currentScore);
 
-            // UnityEvent発行（インターフェース準拠）
+            // UnityEvent逋ｺ陦鯉ｼ医う繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ貅匁侠・・
             OnItemCollected?.Invoke($"Item_{itemId}", score);
             OnScoreChanged?.Invoke(_currentScore);
 
             Debug.Log($"[CollectionService] Item {itemId} collected. Score: +{score}, Total: {_currentScore}");
 
-            // レベル完了チェック
+            // 繝ｬ繝吶Ν螳御ｺ・メ繧ｧ繝・け
             CheckLevelCompletion();
         }
 
         /// <summary>
-        /// レベル初期化：アイテム配置情報の設定
+        /// 繝ｬ繝吶Ν蛻晄悄蛹厄ｼ壹い繧､繝・Β驟咲ｽｮ諠・ｱ縺ｮ險ｭ螳・
         /// </summary>
         public void InitializeLevel(CollectibleItemData[] levelItems)
         {
@@ -119,11 +119,11 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// レベル完了判定：Event駆動通知
+        /// 繝ｬ繝吶Ν螳御ｺ・愛螳夲ｼ哘vent鬧・虚騾夂衍
         /// </summary>
         private void CheckLevelCompletion()
         {
-            // 必須アイテム収集チェック
+            // 蠢・医い繧､繝・Β蜿朱寔繝√ぉ繝・け
             bool allRequiredCollected = true;
             int requiredItemsCount = 0;
 
@@ -139,7 +139,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
                 }
             }
 
-            // 完了条件チェック
+            // 螳御ｺ・擅莉ｶ繝√ぉ繝・け
             bool completionByPercentage = CompletionPercentage >= _settings.LevelCompletionThreshold;
             bool completionByRequired = requiredItemsCount > 0 ? allRequiredCollected : false;
 
@@ -148,7 +148,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
             if (_isLevelCompleted)
             {
-                // Event駆動通信：レベル完了通知
+                // Event鬧・虚騾壻ｿ｡・壹Ξ繝吶Ν螳御ｺ・夂衍
                 var completionData = new LevelCompletionEventData
                 {
                     CompletionPercentage = CompletionPercentage,
@@ -161,7 +161,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
                 _onLevelCompleted?.Raise(completionData);
 
-                // ServiceLocator経由でゲームマネージャーに通知
+                // ServiceLocator邨檎罰縺ｧ繧ｲ繝ｼ繝繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｫ騾夂衍
                 var gameManager = ServiceLocator.GetService<IPlatformerGameManager>();
                 gameManager?.CompleteLevel();
 
@@ -170,7 +170,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// レベルリセット：状態初期化
+        /// 繝ｬ繝吶Ν繝ｪ繧ｻ繝・ヨ・夂憾諷句・譛溷喧
         /// </summary>
         public void ResetLevel()
         {
@@ -180,14 +180,14 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
             _totalItemsInCurrentLevel = 0;
             _isLevelCompleted = false;
 
-            // Event駆動通信：リセット通知
+            // Event鬧・虚騾壻ｿ｡・壹Μ繧ｻ繝・ヨ騾夂衍
             _onScoreChanged?.Raise(0);
 
             Debug.Log("[CollectionService] Level reset completed.");
         }
 
         /// <summary>
-        /// 特定アイテム収集状況確認
+        /// 迚ｹ螳壹い繧､繝・Β蜿朱寔迥ｶ豕∫｢ｺ隱・
         /// </summary>
         public bool IsItemCollected(int itemId)
         {
@@ -195,7 +195,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// アイテム情報取得
+        /// 繧｢繧､繝・Β諠・ｱ蜿門ｾ・
         /// </summary>
         public CollectibleItemData GetItemData(int itemId)
         {
@@ -204,7 +204,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 収集済みアイテムリスト取得
+        /// 蜿朱寔貂医∩繧｢繧､繝・Β繝ｪ繧ｹ繝亥叙蠕・
         /// </summary>
         public IReadOnlyCollection<int> GetCollectedItems()
         {
@@ -212,7 +212,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 設定更新：ランタイム設定変更対応
+        /// 險ｭ螳壽峩譁ｰ・壹Λ繝ｳ繧ｿ繧､繝險ｭ螳壼､画峩蟇ｾ蠢・
         /// </summary>
         public void UpdateSettings(PlatformerCollectionSettings newSettings)
         {
@@ -221,13 +221,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// Event駆動通信チャネル初期化
+        /// Event鬧・虚騾壻ｿ｡繝√Ε繝阪Ν蛻晄悄蛹・
         /// </summary>
         private void InitializeEventChannels()
         {
-            // NOTE: 実際の実装では、これらのEventChannelはScriptableObjectとして
-            // プロジェクト内で作成・管理される
-            // ここでは構造を示すためのプレースホルダー
+            // NOTE: 螳滄圀縺ｮ螳溯｣・〒縺ｯ縲√％繧後ｉ縺ｮEventChannel縺ｯScriptableObject縺ｨ縺励※
+            // 繝励Ο繧ｸ繧ｧ繧ｯ繝亥・縺ｧ菴懈・繝ｻ邂｡逅・＆繧後ｋ
+            // 縺薙％縺ｧ縺ｯ讒矩繧堤､ｺ縺吶◆繧√・繝励Ξ繝ｼ繧ｹ繝帙Ν繝繝ｼ
 
             // _onItemCollected = Resources.Load<GameEvent<CollectionEventData>>("Events/OnItemCollected");
             // _onLevelCompleted = Resources.Load<GameEvent<LevelCompletionEventData>>("Events/OnLevelCompleted");
@@ -237,7 +237,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// ServiceLocator統合検証
+        /// ServiceLocator邨ｱ蜷域､懆ｨｼ
         /// </summary>
         public bool VerifyServiceLocatorIntegration()
         {
@@ -258,10 +258,10 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         // ==================================================
-        // IPlatformerService 基底インターフェース実装
+        // IPlatformerService 蝓ｺ蠎輔う繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ螳溯｣・
         // ==================================================
 
-        // IPlatformerServiceで必要なプロパティ
+        // IPlatformerService縺ｧ蠢・ｦ√↑繝励Ο繝代ユ繧｣
         public bool IsInitialized { get; private set; } = false;
         public bool IsEnabled { get; private set; } = false;
 
@@ -301,14 +301,14 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         public void UpdateService(float deltaTime)
         {
             if (!IsEnabled) return;
-            // サービス更新処理（必要に応じて実装）
+            // 繧ｵ繝ｼ繝薙せ譖ｴ譁ｰ蜃ｦ逅・ｼ亥ｿ・ｦ√↓蠢懊§縺ｦ螳溯｣・ｼ・
         }
 
         // ==================================================
-        // ICollectionService 追加メソッド実装
+        // ICollectionService 霑ｽ蜉繝｡繧ｽ繝・ラ螳溯｣・
         // ==================================================
 
-        // UnityEventプロパティ（エラー解決用）
+        // UnityEvent繝励Ο繝代ユ繧｣・医お繝ｩ繝ｼ隗｣豎ｺ逕ｨ・・
         private UnityEngine.Events.UnityEvent<string, int> _onItemCollectedEvent = new UnityEngine.Events.UnityEvent<string, int>();
         private UnityEngine.Events.UnityEvent<int> _onScoreChangedEvent = new UnityEngine.Events.UnityEvent<int>();
 
@@ -340,7 +340,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
             Debug.Log($"[CollectionService] Level initialized with {totalItemsCount} items.");
         }
 
-        // スコア管理拡張
+        // 繧ｹ繧ｳ繧｢邂｡逅・僑蠑ｵ
         public int CurrentScore => _currentScore;
         public int HighScore { get; private set; } = 0;
 
@@ -352,21 +352,21 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
                 HighScore = _currentScore;
             }
 
-            // イベント発行
+            // 繧､繝吶Φ繝育匱陦・
             OnScoreChanged?.Invoke(_currentScore);
             _onScoreChanged?.Raise(_currentScore);
             Debug.Log($"[CollectionService] Score added: +{points}, Total: {_currentScore}");
         }
 
         /// <summary>
-        /// リソース解放：IDisposable実装
+        /// 繝ｪ繧ｽ繝ｼ繧ｹ隗｣謾ｾ・唔Disposable螳溯｣・
         /// </summary>
         public void Dispose()
         {
             _collectedItems.Clear();
             _levelItems.Clear();
 
-            // Event購読解除（実装時に必要）
+            // Event雉ｼ隱ｭ隗｣髯､・亥ｮ溯｣・凾縺ｫ蠢・ｦ・ｼ・
             // if (_onItemCollected != null) _onItemCollected.RemoveAllListeners();
 
             Debug.Log("[CollectionService] Disposed successfully.");
@@ -374,7 +374,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
 #if UNITY_EDITOR
         /// <summary>
-        /// エディタ用診断情報：開発支援機能
+        /// 繧ｨ繝・ぅ繧ｿ逕ｨ險ｺ譁ｭ諠・ｱ・夐幕逋ｺ謾ｯ謠ｴ讖溯・
         /// </summary>
         [ContextMenu("Show Collection Debug Info")]
         public void ShowCollectionDebugInfo()
@@ -396,7 +396,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
     }
 
     /// <summary>
-    /// アイテム収集イベントデータ構造
+    /// 繧｢繧､繝・Β蜿朱寔繧､繝吶Φ繝医ョ繝ｼ繧ｿ讒矩
     /// </summary>
     [System.Serializable]
     public struct CollectionEventData
@@ -409,7 +409,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
     }
 
     /// <summary>
-    /// レベル完了イベントデータ構造
+    /// 繝ｬ繝吶Ν螳御ｺ・う繝吶Φ繝医ョ繝ｼ繧ｿ讒矩
     /// </summary>
     [System.Serializable]
     public struct LevelCompletionEventData
@@ -423,7 +423,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
     }
 
     /// <summary>
-    /// 収集アイテムデータ構造
+    /// 蜿朱寔繧｢繧､繝・Β繝・・繧ｿ讒矩
     /// </summary>
     [System.Serializable]
     public struct CollectibleItemData
@@ -436,3 +436,5 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         public string Description;
     }
 }
+
+

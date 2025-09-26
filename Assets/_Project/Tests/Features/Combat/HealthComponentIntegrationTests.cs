@@ -1,9 +1,9 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using System.Collections;
 using System.Collections.Generic;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Combat.Services;
 using asterivo.Unity60.Features.Combat.Interfaces;
 using asterivo.Unity60.Features.Combat.Components;
@@ -13,8 +13,8 @@ using asterivo.Unity60.Features.Combat.Events;
 namespace asterivo.Unity60.Tests.Features.Combat
 {
     /// <summary>
-    /// HealthComponentの統合テスト
-    /// CombatService、EventManagerとの連携を検証
+    /// HealthComponent縺ｮ邨ｱ蜷医ユ繧ｹ繝・
+    /// CombatService縲・ventManager縺ｨ縺ｮ騾｣謳ｺ繧呈､懆ｨｼ
     /// </summary>
     [TestFixture]
     public class HealthComponentIntegrationTests
@@ -27,18 +27,18 @@ namespace asterivo.Unity60.Tests.Features.Combat
         [SetUp]
         public void Setup()
         {
-            // ServiceLocatorをクリア
+            // ServiceLocator繧偵け繝ｪ繧｢
             ServiceLocator.Clear();
 
-            // EventManagerを登録
+            // EventManager繧堤匳骭ｲ
             eventManager = new EventManager();
             ServiceLocator.Register<IEventManager>(eventManager);
 
-            // CombatServiceを登録
+            // CombatService繧堤匳骭ｲ
             combatService = new CombatService();
             ServiceLocator.Register<ICombatService>(combatService);
 
-            // テスト用GameObjectを作成
+            // 繝・せ繝育畑GameObject繧剃ｽ懈・
             testObject = new GameObject("TestHealthObject");
             healthComponent = testObject.AddComponent<HealthComponent>();
         }
@@ -271,3 +271,5 @@ namespace asterivo.Unity60.Tests.Features.Combat
         }
     }
 }
+
+

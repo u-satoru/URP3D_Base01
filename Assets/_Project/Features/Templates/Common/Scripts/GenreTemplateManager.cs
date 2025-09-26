@@ -1,44 +1,44 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 
 namespace asterivo.Unity60.Features.Templates.Common
 {
     /// <summary>
-    /// 実行時ジャンル管理システム（Dynamic Genre Switching）
-    /// TASK-004.1: Dynamic Genre Switching実装
-    /// DESIGN.md Layer 2: Runtime Template Management準拠
+    /// 螳溯｡梧凾繧ｸ繝｣繝ｳ繝ｫ邂｡逅・す繧ｹ繝・Β・・ynamic Genre Switching・・
+    /// TASK-004.1: Dynamic Genre Switching螳溯｣・
+    /// DESIGN.md Layer 2: Runtime Template Management貅匁侠
     /// </summary>
     public class GenreTemplateManager : MonoBehaviour
     {
-        [Header("現在の状態")]
+        [Header("迴ｾ蝨ｨ縺ｮ迥ｶ諷・)]
         [SerializeField] private GenreType _currentGenre = GenreType.Stealth;
         [SerializeField] private GenreTemplateConfig _currentTemplate;
         [SerializeField] private bool _isTransitioning = false;
         
-        [Header("シーン遷移設定")]
+        [Header("繧ｷ繝ｼ繝ｳ驕ｷ遘ｻ險ｭ螳・)]
         [SerializeField] private bool _enableSceneTransition = true;
         [SerializeField] private float _transitionDuration = 2.0f;
         [SerializeField] private bool _preserveProgressDuringTransition = true;
         
-        [Header("データ同期設定")]
+        [Header("繝・・繧ｿ蜷梧悄險ｭ螳・)]
         [SerializeField] private bool _enableAutoSynchronization = true;
         [SerializeField] private float _synchronizationInterval = 0.5f;
         
-        [Header("デバッグ設定")]
+        [Header("繝・ヰ繝・げ險ｭ螳・)]
         [SerializeField] private bool _enableDebugLogging = false;
         
-        // Events（Event駆動アーキテクチャ準拠）
-        [Header("イベントチャネル")]
+        // Events・・vent鬧・虚繧｢繝ｼ繧ｭ繝・け繝√Ε貅匁侠・・
+        [Header("繧､繝吶Φ繝医メ繝｣繝阪Ν")]
         [SerializeField] private GenreTypeGameEvent _onGenreChangeRequested;
         [SerializeField] private GenreTypeGameEvent _onGenreChangeStarted;
         [SerializeField] private GenreTypeGameEvent _onGenreChangeCompleted;
         [SerializeField] private GameEvent _onGenreChangeFailed;
         [SerializeField] private GameEvent _onConfigurationSynchronized;
         
-        // Singleton管理
+        // Singleton邂｡逅・
         private static GenreTemplateManager _instance;
         public static GenreTemplateManager Instance
         {
@@ -73,7 +73,7 @@ namespace asterivo.Unity60.Features.Templates.Common
         
         private void Awake()
         {
-            // Singleton設定
+            // Singleton險ｭ螳・
             if (_instance != null && _instance != this)
             {
                 Destroy(gameObject);
@@ -83,7 +83,7 @@ namespace asterivo.Unity60.Features.Templates.Common
             _instance = this;
             DontDestroyOnLoad(gameObject);
             
-            // 初期化
+            // 蛻晄悄蛹・
             _templateRegistry = GenreTemplateRegistry.Instance;
             _transitionState = new TransitionState();
             
@@ -92,10 +92,10 @@ namespace asterivo.Unity60.Features.Templates.Common
         
         private void Start()
         {
-            // 初期ジャンル設定
+            // 蛻晄悄繧ｸ繝｣繝ｳ繝ｫ險ｭ螳・
             InitializeCurrentGenre();
             
-            // 自動同期開始
+            // 閾ｪ蜍募酔譛滄幕蟋・
             if (_enableAutoSynchronization)
             {
                 StartAutoSynchronization();
@@ -104,7 +104,7 @@ namespace asterivo.Unity60.Features.Templates.Common
         
         private void OnDestroy()
         {
-            // 自動同期停止
+            // 閾ｪ蜍募酔譛溷●豁｢
             StopAutoSynchronization();
         }
         
@@ -113,7 +113,7 @@ namespace asterivo.Unity60.Features.Templates.Common
         #region Genre Management
         
         /// <summary>
-        /// 現在のジャンルを初期化
+        /// 迴ｾ蝨ｨ縺ｮ繧ｸ繝｣繝ｳ繝ｫ繧貞・譛溷喧
         /// </summary>
         private void InitializeCurrentGenre()
         {
@@ -128,19 +128,19 @@ namespace asterivo.Unity60.Features.Templates.Common
             
             LogDebug($"Initialized with genre: {_currentGenre}");
             
-            // Configuration同期
+            // Configuration蜷梧悄
             SynchronizeConfiguration();
             
-            // イベント発行
+            // 繧､繝吶Φ繝育匱陦・
             _onGenreChangeCompleted?.Raise(_currentGenre);
         }
         
         /// <summary>
-        /// ジャンルを切り替え
+        /// 繧ｸ繝｣繝ｳ繝ｫ繧貞・繧頑崛縺・
         /// </summary>
-        /// <param name="newGenre">新しいジャンル</param>
-        /// <param name="preserveProgress">進捗を保持するか</param>
-        /// <returns>切り替えが開始された場合true</returns>
+        /// <param name="newGenre">譁ｰ縺励＞繧ｸ繝｣繝ｳ繝ｫ</param>
+        /// <param name="preserveProgress">騾ｲ謐励ｒ菫晄戟縺吶ｋ縺・/param>
+        /// <returns>蛻・ｊ譖ｿ縺医′髢句ｧ九＆繧後◆蝣ｴ蜷・rue</returns>
         public bool ChangeGenre(GenreType newGenre, bool preserveProgress = true)
         {
             if (_isTransitioning)
@@ -165,27 +165,27 @@ namespace asterivo.Unity60.Features.Templates.Common
             
             LogDebug($"Starting genre change: {_currentGenre} -> {newGenre}");
             
-            // イベント発行
+            // 繧､繝吶Φ繝育匱陦・
             _onGenreChangeRequested?.Raise(newGenre);
             
-            // 遷移開始
+            // 驕ｷ遘ｻ髢句ｧ・
             StartCoroutine(PerformGenreTransition(newGenre, preserveProgress));
             
             return true;
         }
         
         /// <summary>
-        /// ジャンル遷移を実行
+        /// 繧ｸ繝｣繝ｳ繝ｫ驕ｷ遘ｻ繧貞ｮ溯｡・
         /// </summary>
-        /// <param name="newGenre">新しいジャンル</param>
-        /// <param name="preserveProgress">進捗を保持するか</param>
+        /// <param name="newGenre">譁ｰ縺励＞繧ｸ繝｣繝ｳ繝ｫ</param>
+        /// <param name="preserveProgress">騾ｲ謐励ｒ菫晄戟縺吶ｋ縺・/param>
         private IEnumerator PerformGenreTransition(GenreType newGenre, bool preserveProgress)
         {
             _isTransitioning = true;
             var previousGenre = _currentGenre;
             var newTemplate = _templateRegistry.GetTemplate(newGenre);
             
-            // 遷移状態初期化
+            // 驕ｷ遘ｻ迥ｶ諷句・譛溷喧
             _transitionState.Reset();
             _transitionState.FromGenre = previousGenre;
             _transitionState.ToGenre = newGenre;
@@ -194,13 +194,13 @@ namespace asterivo.Unity60.Features.Templates.Common
             
             LogDebug($"Genre transition started: {previousGenre} -> {newGenre}");
             
-            // イベント発行
+            // 繧､繝吶Φ繝育匱陦・
             _onGenreChangeStarted?.Raise(newGenre);
             
             // Execute transition phases with error handling
             bool transitionSuccessful = true;
 
-            // Phase 1: データ保存（進捗保持の場合）
+            // Phase 1: 繝・・繧ｿ菫晏ｭ假ｼ磯ｲ謐嶺ｿ晄戟縺ｮ蝣ｴ蜷茨ｼ・
             if (preserveProgress && _preserveProgressDuringTransition)
             {
                 yield return StartCoroutine(SaveCurrentProgress());
@@ -208,7 +208,7 @@ namespace asterivo.Unity60.Features.Templates.Common
                 LogDebug("Progress saved successfully");
             }
             
-            // Phase 2: 現在のテンプレート無効化
+            // Phase 2: 迴ｾ蝨ｨ縺ｮ繝・Φ繝励Ξ繝ｼ繝育┌蜉ｹ蛹・
             if (transitionSuccessful)
             {
                 yield return StartCoroutine(DeactivateCurrentTemplate());
@@ -216,7 +216,7 @@ namespace asterivo.Unity60.Features.Templates.Common
                 LogDebug("Previous template deactivated successfully");
             }
             
-            // Phase 3: 新しいテンプレート適用
+            // Phase 3: 譁ｰ縺励＞繝・Φ繝励Ξ繝ｼ繝磯←逕ｨ
             if (transitionSuccessful)
             {
                 _currentGenre = newGenre;
@@ -226,7 +226,7 @@ namespace asterivo.Unity60.Features.Templates.Common
                 LogDebug("New template activated successfully");
             }
             
-            // Phase 4: シーン遷移（必要な場合）
+            // Phase 4: 繧ｷ繝ｼ繝ｳ驕ｷ遘ｻ・亥ｿ・ｦ√↑蝣ｴ蜷茨ｼ・
             if (transitionSuccessful && _enableSceneTransition && ShouldTransitionScene(previousGenre, newGenre))
             {
                 yield return StartCoroutine(PerformSceneTransition());
@@ -234,7 +234,7 @@ namespace asterivo.Unity60.Features.Templates.Common
                 LogDebug("Scene transition completed successfully");
             }
             
-            // Phase 5: Configuration同期
+            // Phase 5: Configuration蜷梧悄
             if (transitionSuccessful)
             {
                 SynchronizeConfiguration();
@@ -242,7 +242,7 @@ namespace asterivo.Unity60.Features.Templates.Common
                 LogDebug("Configuration synchronized successfully");
             }
 
-            // Phase 6: データ復元（進捗保持の場合）
+            // Phase 6: 繝・・繧ｿ蠕ｩ蜈・ｼ磯ｲ謐嶺ｿ晄戟縺ｮ蝣ｴ蜷茨ｼ・
             if (transitionSuccessful && preserveProgress && _preserveProgressDuringTransition)
             {
                 yield return StartCoroutine(RestoreProgress());
@@ -258,20 +258,20 @@ namespace asterivo.Unity60.Features.Templates.Common
                 
                 LogDebug($"Genre transition completed: {previousGenre} -> {newGenre} ({_transitionState.Duration:F2}s)");
                 
-                // イベント発行
+                // 繧､繝吶Φ繝育匱陦・
                 _onGenreChangeCompleted?.Raise(newGenre);
             }
             else
             {
                 LogError("Genre transition failed during execution");
 
-                // ロールバック処理
+                // 繝ｭ繝ｼ繝ｫ繝舌ャ繧ｯ蜃ｦ逅・
                 StartCoroutine(RollbackTransition(previousGenre));
 
                 _transitionState.Success = false;
                 _transitionState.ErrorMessage = "Genre transition failed during execution";
 
-                // イベント発行
+                // 繧､繝吶Φ繝育匱陦・
                 _onGenreChangeFailed?.Raise();
             }
             
@@ -285,26 +285,26 @@ namespace asterivo.Unity60.Features.Templates.Common
         #region Template Management
         
         /// <summary>
-        /// 現在のテンプレートを無効化
+        /// 迴ｾ蝨ｨ縺ｮ繝・Φ繝励Ξ繝ｼ繝医ｒ辟｡蜉ｹ蛹・
         /// </summary>
         private IEnumerator DeactivateCurrentTemplate()
         {
             LogDebug($"Deactivating template: {_currentGenre}");
             
-            // カメラシステム停止
+            // 繧ｫ繝｡繝ｩ繧ｷ繧ｹ繝・Β蛛懈ｭ｢
             // TODO: CameraStateMachine integration
             
-            // AIシステム停止
+            // AI繧ｷ繧ｹ繝・Β蛛懈ｭ｢
             // TODO: AI system integration
             
-            // オーディオシステム停止
+            // 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β蛛懈ｭ｢
             // TODO: Audio system integration
             
             yield return new WaitForSeconds(0.1f); // Minimal delay
         }
         
         /// <summary>
-        /// 新しいテンプレートを有効化
+        /// 譁ｰ縺励＞繝・Φ繝励Ξ繝ｼ繝医ｒ譛牙柑蛹・
         /// </summary>
         private IEnumerator ActivateNewTemplate()
         {
@@ -315,28 +315,28 @@ namespace asterivo.Unity60.Features.Templates.Common
                 throw new System.Exception("Current template is null");
             }
             
-            // カメラシステム設定
+            // 繧ｫ繝｡繝ｩ繧ｷ繧ｹ繝・Β險ｭ螳・
             if (!string.IsNullOrEmpty(_currentTemplate.CameraProfilePath))
             {
                 // TODO: CameraStateMachine integration
                 LogDebug($"Applying camera profile: {_currentTemplate.CameraProfilePath}");
             }
             
-            // Input System設定
+            // Input System險ｭ螳・
             if (!string.IsNullOrEmpty(_currentTemplate.InputActionAssetPath))
             {
                 // TODO: Input system integration
                 LogDebug($"Applying input actions: {_currentTemplate.InputActionAssetPath}");
             }
             
-            // AIシステム設定
+            // AI繧ｷ繧ｹ繝・Β險ｭ螳・
             if (_currentTemplate.RequiresAI())
             {
                 // TODO: AI system integration
                 LogDebug($"Configuring AI systems for: {_currentGenre}");
             }
             
-            // オーディオシステム設定
+            // 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β險ｭ螳・
             if (_currentTemplate.UseStealthAudio)
             {
                 // TODO: Audio system integration
@@ -347,7 +347,7 @@ namespace asterivo.Unity60.Features.Templates.Common
         }
         
         /// <summary>
-        /// シーン遷移が必要かチェック
+        /// 繧ｷ繝ｼ繝ｳ驕ｷ遘ｻ縺悟ｿ・ｦ√°繝√ぉ繝・け
         /// </summary>
         private bool ShouldTransitionScene(GenreType from, GenreType to)
         {
@@ -361,7 +361,7 @@ namespace asterivo.Unity60.Features.Templates.Common
         }
         
         /// <summary>
-        /// シーン遷移を実行
+        /// 繧ｷ繝ｼ繝ｳ驕ｷ遘ｻ繧貞ｮ溯｡・
         /// </summary>
         private IEnumerator PerformSceneTransition()
         {
@@ -388,7 +388,7 @@ namespace asterivo.Unity60.Features.Templates.Common
         #region Data Management
         
         /// <summary>
-        /// 現在の進捗を保存
+        /// 迴ｾ蝨ｨ縺ｮ騾ｲ謐励ｒ菫晏ｭ・
         /// </summary>
         private IEnumerator SaveCurrentProgress()
         {
@@ -406,7 +406,7 @@ namespace asterivo.Unity60.Features.Templates.Common
         }
         
         /// <summary>
-        /// 進捗を復元
+        /// 騾ｲ謐励ｒ蠕ｩ蜈・
         /// </summary>
         private IEnumerator RestoreProgress()
         {
@@ -423,7 +423,7 @@ namespace asterivo.Unity60.Features.Templates.Common
         }
         
         /// <summary>
-        /// 遷移をロールバック
+        /// 驕ｷ遘ｻ繧偵Ο繝ｼ繝ｫ繝舌ャ繧ｯ
         /// </summary>
         private IEnumerator RollbackTransition(GenreType previousGenre)
         {
@@ -432,7 +432,7 @@ namespace asterivo.Unity60.Features.Templates.Common
             _currentGenre = previousGenre;
             _currentTemplate = _templateRegistry.GetTemplate(previousGenre);
             
-            // 基本的な復元のみ実行
+            // 蝓ｺ譛ｬ逧・↑蠕ｩ蜈・・縺ｿ螳溯｡・
             yield return StartCoroutine(ActivateNewTemplate());
             
             LogDebug("Rollback completed");
@@ -443,7 +443,7 @@ namespace asterivo.Unity60.Features.Templates.Common
         #region Configuration Management
         
         /// <summary>
-        /// Configuration同期
+        /// Configuration蜷梧悄
         /// </summary>
         private void SynchronizeConfiguration()
         {
@@ -452,21 +452,21 @@ namespace asterivo.Unity60.Features.Templates.Common
                 
             LogDebug("Synchronizing configuration...");
             
-            // カメラ設定同期
+            // 繧ｫ繝｡繝ｩ險ｭ螳壼酔譛・
             SynchronizeCameraConfiguration();
             
-            // 入力設定同期
+            // 蜈･蜉幄ｨｭ螳壼酔譛・
             SynchronizeInputConfiguration();
             
-            // AI設定同期
+            // AI險ｭ螳壼酔譛・
             SynchronizeAIConfiguration();
             
-            // オーディオ設定同期
+            // 繧ｪ繝ｼ繝・ぅ繧ｪ險ｭ螳壼酔譛・
             SynchronizeAudioConfiguration();
             
             LogDebug("Configuration synchronized");
             
-            // イベント発行
+            // 繧､繝吶Φ繝育匱陦・
             _onConfigurationSynchronized?.Raise();
         }
         
@@ -491,7 +491,7 @@ namespace asterivo.Unity60.Features.Templates.Common
         }
         
         /// <summary>
-        /// 自動同期開始
+        /// 閾ｪ蜍募酔譛滄幕蟋・
         /// </summary>
         private void StartAutoSynchronization()
         {
@@ -502,7 +502,7 @@ namespace asterivo.Unity60.Features.Templates.Common
         }
         
         /// <summary>
-        /// 自動同期停止
+        /// 閾ｪ蜍募酔譛溷●豁｢
         /// </summary>
         private void StopAutoSynchronization()
         {
@@ -514,7 +514,7 @@ namespace asterivo.Unity60.Features.Templates.Common
         }
         
         /// <summary>
-        /// 自動同期ループ
+        /// 閾ｪ蜍募酔譛溘Ν繝ｼ繝・
         /// </summary>
         private IEnumerator AutoSynchronizationLoop()
         {
@@ -552,7 +552,7 @@ namespace asterivo.Unity60.Features.Templates.Common
         }
         
         /// <summary>
-        /// 現在の状態をコンソールに出力（デバッグ用）
+        /// 迴ｾ蝨ｨ縺ｮ迥ｶ諷九ｒ繧ｳ繝ｳ繧ｽ繝ｼ繝ｫ縺ｫ蜃ｺ蜉幢ｼ医ョ繝舌ャ繧ｰ逕ｨ・・
         /// </summary>
         [ContextMenu("Print Current State")]
         public void PrintCurrentState()
@@ -572,7 +572,7 @@ namespace asterivo.Unity60.Features.Templates.Common
     }
     
     /// <summary>
-    /// ジャンル遷移状態管理
+    /// 繧ｸ繝｣繝ｳ繝ｫ驕ｷ遘ｻ迥ｶ諷狗ｮ｡逅・
     /// </summary>
     [System.Serializable]
     public class TransitionState
@@ -619,3 +619,5 @@ namespace asterivo.Unity60.Features.Templates.Common
         }
     }
 }
+
+

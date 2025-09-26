@@ -1,6 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Features.Templates.Platformer.Services;
 using asterivo.Unity60.Features.Templates.Platformer.Data;
@@ -8,9 +8,9 @@ using asterivo.Unity60.Features.Templates.Platformer.Data;
 namespace asterivo.Unity60.Features.Templates.Platformer.Core
 {
     /// <summary>
-    /// ServiceLocator基盤によるPlatformerテンプレートサービス初期化システム
-    /// Learn & Grow価値実現：70%学習コスト削減（40時間→12時間）
-    /// ServiceLocator + Event駆動ハイブリッドアーキテクチャの実装
+    /// ServiceLocator蝓ｺ逶､縺ｫ繧医ｋPlatformer繝・Φ繝励Ξ繝ｼ繝医し繝ｼ繝薙せ蛻晄悄蛹悶す繧ｹ繝・Β
+    /// Learn & Grow萓｡蛟､螳溽樟・・0%蟄ｦ鄙偵さ繧ｹ繝亥炎貂幢ｼ・0譎る俣竊・2譎る俣・・
+    /// ServiceLocator + Event鬧・虚繝上う繝悶Μ繝・ラ繧｢繝ｼ繧ｭ繝・け繝√Ε縺ｮ螳溯｣・
     /// </summary>
     public class PlatformerServiceInitializer : MonoBehaviour
     {
@@ -21,7 +21,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Core
         [SerializeField] private bool _initializeOnAwake = true;
         [SerializeField] private bool _enableDebugLogging = true;
 
-        // ServiceLocator積極活用：全8サービスの中央管理
+        // ServiceLocator遨肴･ｵ豢ｻ逕ｨ・壼・8繧ｵ繝ｼ繝薙せ縺ｮ荳ｭ螟ｮ邂｡逅・
         private PlatformerGameManager _gameManager;
         private PlatformerPhysicsService _physicsService;
         private CollectionService _collectionService;
@@ -32,7 +32,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Core
         private PlatformerInputService _inputService;
         private PlatformerUIService _uiService;
 
-        // Event駆動通信：サービス間疎結合
+        // Event鬧・虚騾壻ｿ｡・壹し繝ｼ繝薙せ髢鍋鮪邨仙粋
         [Header("Event Channels")]
         [SerializeField] private GameEvent _onServicesInitialized;
         [SerializeField] private GameEvent _onServicesShutdown;
@@ -49,8 +49,8 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Core
         }
 
         /// <summary>
-        /// ServiceLocator + Event駆動アーキテクチャによる段階的サービス初期化
-        /// 設計原則：依存関係順序での初期化保証
+        /// ServiceLocator + Event鬧・虚繧｢繝ｼ繧ｭ繝・け繝√Ε縺ｫ繧医ｋ谿ｵ髫守噪繧ｵ繝ｼ繝薙せ蛻晄悄蛹・
+        /// 險ｭ險亥次蜑・ｼ壻ｾ晏ｭ倬未菫る・ｺ上〒縺ｮ蛻晄悄蛹紋ｿ晁ｨｼ
         /// </summary>
         public void InitializeServices()
         {
@@ -64,16 +64,16 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Core
 
             try
             {
-                // Phase 1: Core Infrastructure Services（基盤サービス）
+                // Phase 1: Core Infrastructure Services・亥渕逶､繧ｵ繝ｼ繝薙せ・・
                 InitializeCoreServices();
 
-                // Phase 2: Gameplay Services（ゲームプレイサービス）
+                // Phase 2: Gameplay Services・医ご繝ｼ繝繝励Ξ繧､繧ｵ繝ｼ繝薙せ・・
                 InitializeGameplayServices();
 
-                // Phase 3: UI & Interaction Services（UI・相互作用サービス）
+                // Phase 3: UI & Interaction Services・・I繝ｻ逶ｸ莠剃ｽ懃畑繧ｵ繝ｼ繝薙せ・・
                 InitializeUIServices();
 
-                // Phase 4: Event Notification（イベント通知）
+                // Phase 4: Event Notification・医う繝吶Φ繝磯夂衍・・
                 NotifyServicesInitialized();
 
                 _isInitialized = true;
@@ -87,22 +87,22 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Core
         }
 
         /// <summary>
-        /// Phase 1: 基盤サービス初期化（Physics, Audio, Input）
-        /// ServiceLocator積極活用：依存関係のない基盤サービスから初期化
+        /// Phase 1: 蝓ｺ逶､繧ｵ繝ｼ繝薙せ蛻晄悄蛹厄ｼ・hysics, Audio, Input・・
+        /// ServiceLocator遨肴･ｵ豢ｻ逕ｨ・壻ｾ晏ｭ倬未菫ゅ・縺ｪ縺・渕逶､繧ｵ繝ｼ繝薙せ縺九ｉ蛻晄悄蛹・
         /// </summary>
         private void InitializeCoreServices()
         {
-            // Physics Service：物理演算・重力・跳躍基盤
+            // Physics Service・夂黄逅・ｼ皮ｮ励・驥榊鴨繝ｻ霍ｳ霄榊渕逶､
             _physicsService = new PlatformerPhysicsService(_configurationData.PhysicsSettings);
             ServiceLocator.RegisterService<IPlatformerPhysicsService>(_physicsService);
             RegisterServiceEvent("PlatformerPhysicsService");
 
-            // Audio Service：音響システム・効果音・BGM管理
+            // Audio Service・夐浹髻ｿ繧ｷ繧ｹ繝・Β繝ｻ蜉ｹ譫憺浹繝ｻBGM邂｡逅・
             _audioService = new PlatformerAudioService(_configurationData.AudioSettings);
             ServiceLocator.RegisterService<IPlatformerAudioService>(_audioService);
             RegisterServiceEvent("PlatformerAudioService");
 
-            // Input Service：入力処理・マッピング・コントローラー対応
+            // Input Service・壼・蜉帛・逅・・繝槭ャ繝斐Φ繧ｰ繝ｻ繧ｳ繝ｳ繝医Ο繝ｼ繝ｩ繝ｼ蟇ｾ蠢・
             _inputService = new PlatformerInputService(_configurationData.InputSettings);
             ServiceLocator.RegisterService<IPlatformerInputService>(_inputService);
             RegisterServiceEvent("PlatformerInputService");
@@ -111,27 +111,27 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Core
         }
 
         /// <summary>
-        /// Phase 2: ゲームプレイサービス初期化（GameManager, Collection, Level, Checkpoint）
-        /// 依存関係：Phase 1サービス群に依存
+        /// Phase 2: 繧ｲ繝ｼ繝繝励Ξ繧､繧ｵ繝ｼ繝薙せ蛻晄悄蛹厄ｼ・ameManager, Collection, Level, Checkpoint・・
+        /// 萓晏ｭ倬未菫ゑｼ啀hase 1繧ｵ繝ｼ繝薙せ鄒､縺ｫ萓晏ｭ・
         /// </summary>
         private void InitializeGameplayServices()
         {
-            // Game Manager：中央ゲーム状態管理・プレイヤー制御
+            // Game Manager・壻ｸｭ螟ｮ繧ｲ繝ｼ繝迥ｶ諷狗ｮ｡逅・・繝励Ξ繧､繝､繝ｼ蛻ｶ蠕｡
             _gameManager = new PlatformerGameManager(_configurationData.GameplaySettings);
             ServiceLocator.RegisterService<IPlatformerGameManager>(_gameManager);
             RegisterServiceEvent("PlatformerGameManager");
 
-            // Collection Service：アイテム収集・スコア管理・進捗追跡
+            // Collection Service・壹い繧､繝・Β蜿朱寔繝ｻ繧ｹ繧ｳ繧｢邂｡逅・・騾ｲ謐苓ｿｽ霍｡
             _collectionService = new CollectionService(_configurationData.CollectionSettings);
             ServiceLocator.RegisterService<ICollectionService>(_collectionService);
             RegisterServiceEvent("CollectionService");
 
-            // Level Generation Service：レベル生成・配置・動的調整
+            // Level Generation Service・壹Ξ繝吶Ν逕滓・繝ｻ驟咲ｽｮ繝ｻ蜍慕噪隱ｿ謨ｴ
             _levelGenerationService = new LevelGenerationService(_configurationData.LevelSettings);
             ServiceLocator.RegisterService<ILevelGenerationService>(_levelGenerationService);
             RegisterServiceEvent("LevelGenerationService");
 
-            // Checkpoint Service：セーブ・ロード・リスポーン管理
+            // Checkpoint Service・壹そ繝ｼ繝悶・繝ｭ繝ｼ繝峨・繝ｪ繧ｹ繝昴・繝ｳ邂｡逅・
             _checkpointService = new CheckpointService(_configurationData.CheckpointSettings);
             ServiceLocator.RegisterService<ICheckpointService>(_checkpointService);
             RegisterServiceEvent("CheckpointService");
@@ -140,12 +140,12 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Core
         }
 
         /// <summary>
-        /// Phase 3: UI・相互作用サービス初期化（UI管理）
-        /// 依存関係：全Phase 1-2サービス群に依存
+        /// Phase 3: UI繝ｻ逶ｸ莠剃ｽ懃畑繧ｵ繝ｼ繝薙せ蛻晄悄蛹厄ｼ・I邂｡逅・ｼ・
+        /// 萓晏ｭ倬未菫ゑｼ壼・Phase 1-2繧ｵ繝ｼ繝薙せ鄒､縺ｫ萓晏ｭ・
         /// </summary>
         private void InitializeUIServices()
         {
-            // UI Service：ユーザーインターフェース・メニュー・HUD管理
+            // UI Service・壹Θ繝ｼ繧ｶ繝ｼ繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ繝ｻ繝｡繝九Η繝ｼ繝ｻHUD邂｡逅・
             _uiService = new PlatformerUIService(_configurationData.UISettings);
             ServiceLocator.RegisterService<IPlatformerUIService>(_uiService);
             RegisterServiceEvent("PlatformerUIService");
@@ -154,7 +154,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Core
         }
 
         /// <summary>
-        /// ServiceLocator登録イベント通知：Event駆動アーキテクチャ統合
+        /// ServiceLocator逋ｻ骭ｲ繧､繝吶Φ繝磯夂衍・哘vent鬧・虚繧｢繝ｼ繧ｭ繝・け繝√Ε邨ｱ蜷・
         /// </summary>
         private void RegisterServiceEvent(string serviceName)
         {
@@ -163,7 +163,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Core
         }
 
         /// <summary>
-        /// サービス初期化完了通知：他システムへの統合通知
+        /// 繧ｵ繝ｼ繝薙せ蛻晄悄蛹門ｮ御ｺ・夂衍・壻ｻ悶す繧ｹ繝・Β縺ｸ縺ｮ邨ｱ蜷磯夂衍
         /// </summary>
         private void NotifyServicesInitialized()
         {
@@ -172,7 +172,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Core
         }
 
         /// <summary>
-        /// サービス終了処理：ServiceLocator解除・リソース開放
+        /// 繧ｵ繝ｼ繝薙せ邨ゆｺ・・逅・ｼ售erviceLocator隗｣髯､繝ｻ繝ｪ繧ｽ繝ｼ繧ｹ髢区叛
         /// </summary>
         public void ShutdownServices()
         {
@@ -186,7 +186,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Core
 
             try
             {
-                // UI Services shutdown first（依存関係逆順）
+                // UI Services shutdown first・井ｾ晏ｭ倬未菫る・・ｼ・
                 if (_uiService != null)
                 {
                     ServiceLocator.UnregisterService<IPlatformerUIService>();
@@ -294,7 +294,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Core
         }
 
         /// <summary>
-        /// デバッグログ出力：開発効率向上
+        /// 繝・ヰ繝・げ繝ｭ繧ｰ蜃ｺ蜉幢ｼ夐幕逋ｺ蜉ｹ邇・髄荳・
         /// </summary>
         private void LogDebug(string message)
         {
@@ -305,12 +305,12 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Core
         }
 
         /// <summary>
-        /// サービス初期化状態確認：外部システム連携用
+        /// 繧ｵ繝ｼ繝薙せ蛻晄悄蛹也憾諷狗｢ｺ隱搾ｼ壼､夜Κ繧ｷ繧ｹ繝・Β騾｣謳ｺ逕ｨ
         /// </summary>
         public bool IsInitialized => _isInitialized;
 
         /// <summary>
-        /// 特定サービス取得：ServiceLocator経由アクセスのヘルパー
+        /// 迚ｹ螳壹し繝ｼ繝薙せ蜿門ｾ暦ｼ售erviceLocator邨檎罰繧｢繧ｯ繧ｻ繧ｹ縺ｮ繝倥Ν繝代・
         /// </summary>
         public T GetService<T>() where T : class
         {
@@ -318,7 +318,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Core
         }
 
         /// <summary>
-        /// 設定データ更新：ランタイム設定変更対応
+        /// 險ｭ螳壹ョ繝ｼ繧ｿ譖ｴ譁ｰ・壹Λ繝ｳ繧ｿ繧､繝險ｭ螳壼､画峩蟇ｾ蠢・
         /// </summary>
         public void UpdateConfiguration(PlatformerConfigurationData newConfig)
         {
@@ -334,7 +334,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Core
 
 #if UNITY_EDITOR
         /// <summary>
-        /// エディタ用診断情報：開発支援機能
+        /// 繧ｨ繝・ぅ繧ｿ逕ｨ險ｺ譁ｭ諠・ｱ・夐幕逋ｺ謾ｯ謠ｴ讖溯・
         /// </summary>
         [ContextMenu("Diagnostic Info")]
         private void ShowDiagnosticInfo()
@@ -346,16 +346,18 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Core
             if (_isInitialized)
             {
                 Debug.Log("Registered Services:");
-                Debug.Log($"- GameManager: {(ServiceLocator.IsServiceRegistered<IPlatformerGameManager>() ? "✓" : "✗")}");
-                Debug.Log($"- PhysicsService: {(ServiceLocator.IsServiceRegistered<IPlatformerPhysicsService>() ? "✓" : "✗")}");
-                Debug.Log($"- CollectionService: {(ServiceLocator.IsServiceRegistered<ICollectionService>() ? "✓" : "✗")}");
-                Debug.Log($"- LevelGenerationService: {(ServiceLocator.IsServiceRegistered<ILevelGenerationService>() ? "✓" : "✗")}");
-                Debug.Log($"- CheckpointService: {(ServiceLocator.IsServiceRegistered<ICheckpointService>() ? "✓" : "✗")}");
-                Debug.Log($"- AudioService: {(ServiceLocator.IsServiceRegistered<IPlatformerAudioService>() ? "✓" : "✗")}");
-                Debug.Log($"- InputService: {(ServiceLocator.IsServiceRegistered<IPlatformerInputService>() ? "✓" : "✗")}");
-                Debug.Log($"- UIService: {(ServiceLocator.IsServiceRegistered<IPlatformerUIService>() ? "✓" : "✗")}");
+                Debug.Log($"- GameManager: {(ServiceLocator.IsServiceRegistered<IPlatformerGameManager>() ? "笨・ : "笨・)}");
+                Debug.Log($"- PhysicsService: {(ServiceLocator.IsServiceRegistered<IPlatformerPhysicsService>() ? "笨・ : "笨・)}");
+                Debug.Log($"- CollectionService: {(ServiceLocator.IsServiceRegistered<ICollectionService>() ? "笨・ : "笨・)}");
+                Debug.Log($"- LevelGenerationService: {(ServiceLocator.IsServiceRegistered<ILevelGenerationService>() ? "笨・ : "笨・)}");
+                Debug.Log($"- CheckpointService: {(ServiceLocator.IsServiceRegistered<ICheckpointService>() ? "笨・ : "笨・)}");
+                Debug.Log($"- AudioService: {(ServiceLocator.IsServiceRegistered<IPlatformerAudioService>() ? "笨・ : "笨・)}");
+                Debug.Log($"- InputService: {(ServiceLocator.IsServiceRegistered<IPlatformerInputService>() ? "笨・ : "笨・)}");
+                Debug.Log($"- UIService: {(ServiceLocator.IsServiceRegistered<IPlatformerUIService>() ? "笨・ : "笨・)}");
             }
         }
 #endif
     }
 }
+
+

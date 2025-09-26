@@ -1,9 +1,9 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using System.Collections;
-using asterivo.Unity60.Core.Services;
-using asterivo.Unity60.Core.Services.Interfaces;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Types;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Features.GameManagement.Services;
@@ -13,8 +13,8 @@ using asterivo.Unity60.Features.GameManagement.Events;
 namespace asterivo.Unity60.Tests.Features.GameManagement
 {
     /// <summary>
-    /// GameManagerServiceの単体テスト
-    /// ServiceLocatorパターンとイベント駆動の動作を検証
+    /// GameManagerService縺ｮ蜊倅ｽ薙ユ繧ｹ繝・
+    /// ServiceLocator繝代ち繝ｼ繝ｳ縺ｨ繧､繝吶Φ繝磯ｧ・虚縺ｮ蜍穂ｽ懊ｒ讀懆ｨｼ
     /// </summary>
     [TestFixture]
     public class GameManagerServiceTests
@@ -25,14 +25,14 @@ namespace asterivo.Unity60.Tests.Features.GameManagement
         [SetUp]
         public void Setup()
         {
-            // ServiceLocatorをクリア
+            // ServiceLocator繧偵け繝ｪ繧｢
             ServiceLocator.Clear();
 
-            // MockEventManagerを登録
+            // MockEventManager繧堤匳骭ｲ
             _mockEventManager = new MockEventManager();
             ServiceLocator.Register<IEventManager>(_mockEventManager);
 
-            // GameManagerServiceを作成して登録
+            // GameManagerService繧剃ｽ懈・縺励※逋ｻ骭ｲ
             _gameManagerService = new GameManagerService();
             ServiceLocator.Register<IGameManager>(_gameManagerService);
         }
@@ -295,7 +295,7 @@ namespace asterivo.Unity60.Tests.Features.GameManagement
             _gameManagerService.RedoLastCommand();
 
             // Assert
-            Assert.AreEqual(2, mockCommand.ExecuteCount); // 初回実行 + Redo
+            Assert.AreEqual(2, mockCommand.ExecuteCount); // 蛻晏屓螳溯｡・+ Redo
             Assert.IsTrue(_mockEventManager.WasEventRaised(GameManagementEventNames.OnCommandRedone));
         }
 
@@ -338,7 +338,7 @@ namespace asterivo.Unity60.Tests.Features.GameManagement
 
             // Act
             _gameManagerService.UpdateGameTime(0.5f);
-            _gameManagerService.UpdateGameTime(0.6f); // 総計1.1秒
+            _gameManagerService.UpdateGameTime(0.6f); // 邱剰ｨ・.1遘・
 
             // Assert
             Assert.IsTrue(_mockEventManager.WasEventRaised(GameManagementEventNames.OnGameTimeUpdated));
@@ -446,3 +446,5 @@ namespace asterivo.Unity60.Tests.Features.GameManagement
 
     #endregion
 }
+
+

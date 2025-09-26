@@ -1,5 +1,5 @@
 using UnityEngine;
-using asterivo.Unity60.Core.Services.Interfaces;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
 // using asterivo.Unity60.Features.Combat.Services;
 // using asterivo.Unity60.Features.Combat.Interfaces;

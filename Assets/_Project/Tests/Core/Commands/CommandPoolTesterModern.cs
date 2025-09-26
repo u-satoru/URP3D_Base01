@@ -1,33 +1,33 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using asterivo.Unity60.Core.Components;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using Debug = UnityEngine.Debug;
 
 namespace asterivo.Unity60.Core.Commands
 {
     /// <summary>
-    /// 新しいCommandPoolManagerとCommandPoolServiceの動作をテストするためのスクリプト
-    /// 旧CommandPoolTesterを新しいデザインパターンに対応させた版
+    /// 譁ｰ縺励＞CommandPoolManager縺ｨCommandPoolService縺ｮ蜍穂ｽ懊ｒ繝・せ繝医☆繧九◆繧√・繧ｹ繧ｯ繝ｪ繝励ヨ
+    /// 譌ｧCommandPoolTester繧呈眠縺励＞繝・じ繧､繝ｳ繝代ち繝ｼ繝ｳ縺ｫ蟇ｾ蠢懊＆縺帙◆迚・
     /// </summary>
     public class CommandPoolTesterModern : MonoBehaviour
     {
         [Header("Modern Pool Test Settings")]
-        [Tooltip("テストで作成するコマンドの数")]
+        [Tooltip("繝・せ繝医〒菴懈・縺吶ｋ繧ｳ繝槭Φ繝峨・謨ｰ")]
         [SerializeField] private int testCommandCount = 100;
         
-        [Tooltip("コマンド実行間隔（秒）")]
+        [Tooltip("繧ｳ繝槭Φ繝牙ｮ溯｡碁俣髫費ｼ育ｧ抵ｼ・)]
         [SerializeField] private float commandInterval = 0.1f;
         
         [Header("Test Controls")]
-        [Tooltip("自動テストを開始する")]
+        [Tooltip("閾ｪ蜍輔ユ繧ｹ繝医ｒ髢句ｧ九☆繧・)]
         [SerializeField] private bool autoStartTest = false;
         
-        [Tooltip("詳細な統計を表示する")]
+        [Tooltip("隧ｳ邏ｰ縺ｪ邨ｱ險医ｒ陦ｨ遉ｺ縺吶ｋ")]
         [SerializeField] private bool showDetailedStats = true;
         
         [Header("Modern Pool System")]
-        [Tooltip("CommandPoolServiceを自動で作成する")]
+        [Tooltip("CommandPoolService繧定・蜍輔〒菴懈・縺吶ｋ")]
         [SerializeField] private bool createPoolService = true;
         
         private IHealthTarget healthTarget;
@@ -38,11 +38,11 @@ namespace asterivo.Unity60.Core.Commands
         
         private void Start()
         {
-            // ダミーHealthTargetを作成
+            // 繝繝溘・HealthTarget繧剃ｽ懈・
             var dummyHealth = gameObject.AddComponent<DummyHealthTarget>();
             healthTarget = dummyHealth;
             
-            // CommandPoolServiceの初期化
+            // CommandPoolService縺ｮ蛻晄悄蛹・
             if (createPoolService && ServiceLocator.GetService<ICommandPoolService>() == null)
             {
                 var poolServiceGO = new GameObject("CommandPoolService");
@@ -94,7 +94,7 @@ namespace asterivo.Unity60.Core.Commands
             
             for (int i = 0; i < testCommandCount; i++)
             {
-                // DamageCommandとHealCommandを交互にテスト
+                // DamageCommand縺ｨHealCommand繧剃ｺ､莠偵↓繝・せ繝・
                 if (i % 2 == 0)
                 {
                     TestDamageCommand(service);
@@ -106,7 +106,7 @@ namespace asterivo.Unity60.Core.Commands
                 
                 commandsExecuted++;
                 
-                // 統計を定期的に表示
+                // 邨ｱ險医ｒ螳壽悄逧・↓陦ｨ遉ｺ
                 if (showDetailedStats && commandsExecuted % 20 == 0)
                 {
                     LogCurrentStats(service);
@@ -115,34 +115,34 @@ namespace asterivo.Unity60.Core.Commands
                 yield return new WaitForSeconds(commandInterval);
             }
             
-            // 最終統計を表示
+            // 譛邨らｵｱ險医ｒ陦ｨ遉ｺ
             LogFinalStats(service);
             testInProgress = false;
         }
         
         private void TestDamageCommand(ICommandPoolService service)
         {
-            // 新しいAPI使用: CommandPoolServiceから取得
+            // 譁ｰ縺励＞API菴ｿ逕ｨ: CommandPoolService縺九ｉ蜿門ｾ・
             var command = service.GetCommand<DamageCommand>();
             command.Initialize(healthTarget, 10, "physical");
             
-            // コマンド実行
+            // 繧ｳ繝槭Φ繝牙ｮ溯｡・
             command.Execute();
             
-            // プールに返却
+            // 繝励・繝ｫ縺ｫ霑泌唆
             service.ReturnCommand(command);
         }
         
         private void TestHealCommand(ICommandPoolService service)
         {
-            // 新しいAPI使用: CommandPoolServiceから取得
+            // 譁ｰ縺励＞API菴ｿ逕ｨ: CommandPoolService縺九ｉ蜿門ｾ・
             var command = service.GetCommand<HealCommand>();
             command.Initialize(healthTarget, 5);
             
-            // コマンド実行
+            // 繧ｳ繝槭Φ繝牙ｮ溯｡・
             command.Execute();
             
-            // プールに返却
+            // 繝励・繝ｫ縺ｫ霑泌唆
             service.ReturnCommand(command);
         }
         
@@ -164,10 +164,10 @@ namespace asterivo.Unity60.Core.Commands
             UnityEngine.Debug.Log($"Executed {commandsExecuted} commands in {testDuration:F2} seconds");
             UnityEngine.Debug.Log($"Average: {commandsExecuted / testDuration:F1} commands/sec");
             
-            // 詳細統計をCommandPoolManagerから取得
+            // 隧ｳ邏ｰ邨ｱ險医ｒCommandPoolManager縺九ｉ蜿門ｾ・
             service.LogDebugInfo();
             
-            // パフォーマンス比較メトリクス
+            // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ豈碑ｼ・Γ繝医Μ繧ｯ繧ｹ
             var damageStats = service.GetStatistics<DamageCommand>();
             var healStats = service.GetStatistics<HealCommand>();
             
@@ -213,7 +213,7 @@ namespace asterivo.Unity60.Core.Commands
     }
     
     /// <summary>
-    /// テスト用のダミーヘルスターゲット
+    /// 繝・せ繝育畑縺ｮ繝繝溘・繝倥Ν繧ｹ繧ｿ繝ｼ繧ｲ繝・ヨ
     /// </summary>
     public class DummyHealthTargetModern : MonoBehaviour, IHealthTarget
     {
@@ -245,3 +245,5 @@ namespace asterivo.Unity60.Core.Commands
         [SerializeField] private bool showDetailedLogs = false;
     }
 }
+
+

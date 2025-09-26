@@ -1,17 +1,17 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.Stealth.Environment;
 using asterivo.Unity60.Features.Templates.Stealth.Events;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Services
 {
     /// <summary>
-    /// 隠蔽システム中央管理
-    /// ServiceLocator統合による隠蔽ゾーンの一元管理
-    /// プレイヤーの隠蔽状態と効果の動的計算・適用
+    /// 髫阡ｽ繧ｷ繧ｹ繝・Β荳ｭ螟ｮ邂｡逅・
+    /// ServiceLocator邨ｱ蜷医↓繧医ｋ髫阡ｽ繧ｾ繝ｼ繝ｳ縺ｮ荳蜈・ｮ｡逅・
+    /// 繝励Ξ繧､繝､繝ｼ縺ｮ髫阡ｽ迥ｶ諷九→蜉ｹ譫懊・蜍慕噪險育ｮ励・驕ｩ逕ｨ
     /// </summary>
     public class ConcealmentManager : MonoBehaviour
     {
@@ -24,25 +24,25 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
         [SerializeField] private bool _enableDebugLogs = true;
         [SerializeField] private bool _showConcealmentGizmos = true;
 
-        // 隠蔽ゾーン管理
+        // 髫阡ｽ繧ｾ繝ｼ繝ｳ邂｡逅・
         private readonly HashSet<IConcealmentZone> _activeZones = new();
         private readonly Dictionary<ConcealmentType, List<IConcealmentZone>> _zonesByType = new();
 
-        // プレイヤー状態
+        // 繝励Ξ繧､繝､繝ｼ迥ｶ諷・
         private Transform _playerTransform;
         private IStealthService _stealthService;
 
-        // 現在の隠蔽状態
+        // 迴ｾ蝨ｨ縺ｮ髫阡ｽ迥ｶ諷・
         private IConcealmentZone _currentZone;
         private ConcealmentEffect _currentEffect;
         private ConcealmentEffect _targetEffect;
         private float _transitionProgress;
 
-        // 更新制御
+        // 譖ｴ譁ｰ蛻ｶ蠕｡
         private float _lastUpdateTime;
         private bool _isInConcealmentTransition;
 
-        // 統計情報
+        // 邨ｱ險域ュ蝣ｱ
         private int _totalZonesRegistered;
         private int _concealmentEnterEvents;
         private int _concealmentExitEvents;
@@ -80,7 +80,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
 
         private void InitializeService()
         {
-            // ServiceLocator経由でStealthServiceを取得
+            // ServiceLocator邨檎罰縺ｧStealthService繧貞叙蠕・
             _stealthService = ServiceLocator.GetService<IStealthService>();
 
             if (_stealthService == null)
@@ -88,7 +88,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
                 Debug.LogWarning("[ConcealmentManager] StealthService not found in ServiceLocator");
             }
 
-            // プレイヤー参照を取得
+            // 繝励Ξ繧､繝､繝ｼ蜿ら・繧貞叙蠕・
             var player = GameObject.FindGameObjectWithTag("Player");
             if (player != null)
             {
@@ -99,7 +99,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
                 Debug.LogError("[ConcealmentManager] Player GameObject not found");
             }
 
-            // 初期隠蔽効果を設定
+            // 蛻晄悄髫阡ｽ蜉ｹ譫懊ｒ險ｭ螳・
             _currentEffect = ConcealmentEffect.Default;
             _targetEffect = ConcealmentEffect.Default;
 
@@ -109,7 +109,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
 
         private void RegisterWithServiceLocator()
         {
-            // ServiceLocatorに自分自身を登録
+            // ServiceLocator縺ｫ閾ｪ蛻・・霄ｫ繧堤匳骭ｲ
             ServiceLocator.RegisterService<ConcealmentManager>(this);
 
             if (_enableDebugLogs)
@@ -118,7 +118,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
 
         private void FindExistingConcealmentZones()
         {
-            // シーン内の既存隠蔽ゾーンを検索・登録
+            // 繧ｷ繝ｼ繝ｳ蜀・・譌｢蟄倬國阡ｽ繧ｾ繝ｼ繝ｳ繧呈､懃ｴ｢繝ｻ逋ｻ骭ｲ
             var existingZones = FindObjectsOfType<EnvironmentConcealmentZone>();
 
             foreach (var zone in existingZones)
@@ -135,7 +135,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
         #region Concealment Zone Management
 
         /// <summary>
-        /// 隠蔽ゾーンの登録
+        /// 髫阡ｽ繧ｾ繝ｼ繝ｳ縺ｮ逋ｻ骭ｲ
         /// </summary>
         public void RegisterConcealmentZone(IConcealmentZone zone)
         {
@@ -143,7 +143,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
 
             _activeZones.Add(zone);
 
-            // タイプ別辞書に追加
+            // 繧ｿ繧､繝怜挨霎樊嶌縺ｫ霑ｽ蜉
             if (!_zonesByType.ContainsKey(zone.ZoneType))
             {
                 _zonesByType[zone.ZoneType] = new List<IConcealmentZone>();
@@ -157,7 +157,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
         }
 
         /// <summary>
-        /// 隠蔽ゾーンの登録解除
+        /// 髫阡ｽ繧ｾ繝ｼ繝ｳ縺ｮ逋ｻ骭ｲ隗｣髯､
         /// </summary>
         public void UnregisterConcealmentZone(IConcealmentZone zone)
         {
@@ -169,14 +169,14 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
             {
                 _zonesByType[zone.ZoneType].Remove(zone);
 
-                // リストが空になったら削除
+                // 繝ｪ繧ｹ繝医′遨ｺ縺ｫ縺ｪ縺｣縺溘ｉ蜑企勁
                 if (_zonesByType[zone.ZoneType].Count == 0)
                 {
                     _zonesByType.Remove(zone.ZoneType);
                 }
             }
 
-            // 現在のゾーンが解除された場合
+            // 迴ｾ蝨ｨ縺ｮ繧ｾ繝ｼ繝ｳ縺瑚ｧ｣髯､縺輔ｌ縺溷ｴ蜷・
             if (_currentZone == zone)
             {
                 ExitConcealment();
@@ -187,7 +187,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
         }
 
         /// <summary>
-        /// 指定タイプの隠蔽ゾーンを取得
+        /// 謖・ｮ壹ち繧､繝励・髫阡ｽ繧ｾ繝ｼ繝ｳ繧貞叙蠕・
         /// </summary>
         public List<IConcealmentZone> GetZonesByType(ConcealmentType type)
         {
@@ -232,7 +232,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
             {
                 if (!zone.IsActive) continue;
 
-                // ゾーンとの距離・重複チェック
+                // 繧ｾ繝ｼ繝ｳ縺ｨ縺ｮ霍晞屬繝ｻ驥崎､・メ繧ｧ繝・け
                 if (IsPlayerInZone(zone))
                 {
                     if (zone.ConcealmentStrength > bestConcealmentStrength)
@@ -248,7 +248,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
 
         private bool IsPlayerInZone(IConcealmentZone zone)
         {
-            // EnvironmentConcealmentZoneの場合は、Colliderベースの判定
+            // EnvironmentConcealmentZone縺ｮ蝣ｴ蜷医・縲，ollider繝吶・繧ｹ縺ｮ蛻､螳・
             if (zone is EnvironmentConcealmentZone envZone)
             {
                 var collider = envZone.GetComponent<Collider>();
@@ -258,11 +258,11 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
                 }
             }
 
-            // フォールバック: 距離ベースの判定
+            // 繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ: 霍晞屬繝吶・繧ｹ縺ｮ蛻､螳・
             if (zone is MonoBehaviour zoneBehaviour)
             {
                 float distance = Vector3.Distance(_playerTransform.position, zoneBehaviour.transform.position);
-                return distance <= 2.0f; // デフォルト半径
+                return distance <= 2.0f; // 繝・ヵ繧ｩ繝ｫ繝亥濠蠕・
             }
 
             return false;
@@ -273,13 +273,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
             _currentZone = zone;
             _targetEffect = ConcealmentUtility.GetDefaultEffectForType(zone.ZoneType);
 
-            // 隠蔽強度を適用
+            // 髫阡ｽ蠑ｷ蠎ｦ繧帝←逕ｨ
             _targetEffect.VisibilityReduction *= zone.ConcealmentStrength;
             _targetEffect.NoiseDampening *= zone.ConcealmentStrength;
 
             StartConcealmentTransition();
 
-            // イベント発行
+            // 繧､繝吶Φ繝育匱陦・
             var eventData = new StealthConcealmentEventData
             {
                 ConcealmentType = zone.ZoneType,
@@ -305,7 +305,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
 
             StartConcealmentTransition();
 
-            // イベント発行
+            // 繧､繝吶Φ繝育匱陦・
             var eventData = new StealthConcealmentEventData
             {
                 ConcealmentType = previousZone.ZoneType,
@@ -341,7 +341,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
                 _isInConcealmentTransition = false;
             }
 
-            // 隠蔽効果を補間
+            // 髫阡ｽ蜉ｹ譫懊ｒ陬憺俣
             var blendedEffect = BlendConcealmentEffects(_currentEffect, _targetEffect, _transitionProgress);
             ApplyConcealmentEffect(blendedEffect);
 
@@ -356,7 +356,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
                 NoiseDampening = Mathf.Lerp(from.NoiseDampening, to.NoiseDampening, t),
                 MovementSpeedMultiplier = Mathf.Lerp(from.MovementSpeedMultiplier, to.MovementSpeedMultiplier, t),
 
-                // Boolean値は50%を境に切り替え
+                // Boolean蛟､縺ｯ50%繧貞｢・↓蛻・ｊ譖ｿ縺・
                 ImmuneToVisualDetection = t > 0.5f ? to.ImmuneToVisualDetection : from.ImmuneToVisualDetection,
                 ImmuneToAudioDetection = t > 0.5f ? to.ImmuneToAudioDetection : from.ImmuneToAudioDetection,
                 ImmuneToThermalDetection = t > 0.5f ? to.ImmuneToThermalDetection : from.ImmuneToThermalDetection,
@@ -372,7 +372,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
         {
             if (_stealthService == null) return;
 
-            // StealthServiceに隠蔽効果を適用
+            // StealthService縺ｫ髫阡ｽ蜉ｹ譫懊ｒ驕ｩ逕ｨ
             float baseVisibility = _stealthService.PlayerVisibilityFactor;
             float modifiedVisibility = baseVisibility * (1f - effect.VisibilityReduction);
             _stealthService.UpdatePlayerVisibility(modifiedVisibility);
@@ -381,8 +381,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
             float modifiedNoise = baseNoise * (1f - effect.NoiseDampening);
             _stealthService.UpdatePlayerNoiseLevel(modifiedNoise);
 
-            // 移動速度の調整（PlayerStateMachineとの連動が必要な場合）
-            // TODO: PlayerStateMachineとの統合実装
+            // 遘ｻ蜍暮溷ｺｦ縺ｮ隱ｿ謨ｴ・・layerStateMachine縺ｨ縺ｮ騾｣蜍輔′蠢・ｦ√↑蝣ｴ蜷茨ｼ・
+            // TODO: PlayerStateMachine縺ｨ縺ｮ邨ｱ蜷亥ｮ溯｣・
         }
 
         #endregion
@@ -390,27 +390,27 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
         #region Public Interface
 
         /// <summary>
-        /// 現在の隠蔽状態を取得
+        /// 迴ｾ蝨ｨ縺ｮ髫阡ｽ迥ｶ諷九ｒ蜿門ｾ・
         /// </summary>
         public bool IsPlayerConcealed => _currentZone != null;
 
         /// <summary>
-        /// 現在の隠蔽強度を取得
+        /// 迴ｾ蝨ｨ縺ｮ髫阡ｽ蠑ｷ蠎ｦ繧貞叙蠕・
         /// </summary>
         public float CurrentConcealmentStrength => _currentZone?.ConcealmentStrength ?? 0f;
 
         /// <summary>
-        /// 現在の隠蔽タイプを取得
+        /// 迴ｾ蝨ｨ縺ｮ髫阡ｽ繧ｿ繧､繝励ｒ蜿門ｾ・
         /// </summary>
         public ConcealmentType? CurrentConcealmentType => _currentZone?.ZoneType;
 
         /// <summary>
-        /// 現在の隠蔽効果を取得
+        /// 迴ｾ蝨ｨ縺ｮ髫阡ｽ蜉ｹ譫懊ｒ蜿門ｾ・
         /// </summary>
         public ConcealmentEffect CurrentConcealmentEffect => _currentEffect;
 
         /// <summary>
-        /// 指定位置での隠蔽評価
+        /// 謖・ｮ壻ｽ咲ｽｮ縺ｧ縺ｮ髫阡ｽ隧穂ｾ｡
         /// </summary>
         public ConcealmentQuality EvaluateConcealmentAtPosition(Vector3 position)
         {
@@ -427,7 +427,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
         }
 
         /// <summary>
-        /// 隠蔽統計情報を取得
+        /// 髫阡ｽ邨ｱ險域ュ蝣ｱ繧貞叙蠕・
         /// </summary>
         public ConcealmentStatistics GetStatistics()
         {
@@ -454,7 +454,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
             {
                 if (zone is MonoBehaviour zoneBehaviour)
                 {
-                    // 隠蔽ゾーンの可視化
+                    // 髫阡ｽ繧ｾ繝ｼ繝ｳ縺ｮ蜿ｯ隕門喧
                     Gizmos.color = zone == _currentZone ? Color.green : Color.yellow;
                     Gizmos.color = new Color(Gizmos.color.r, Gizmos.color.g, Gizmos.color.b, 0.3f);
 
@@ -470,7 +470,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
                 }
             }
 
-            // プレイヤーの隠蔽状態可視化
+            // 繝励Ξ繧､繝､繝ｼ縺ｮ髫阡ｽ迥ｶ諷句庄隕門喧
             if (_playerTransform != null && IsPlayerConcealed)
             {
                 Gizmos.color = Color.cyan;
@@ -499,7 +499,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
     }
 
     /// <summary>
-    /// 隠蔽システム統計情報
+    /// 髫阡ｽ繧ｷ繧ｹ繝・Β邨ｱ險域ュ蝣ｱ
     /// </summary>
     [System.Serializable]
     public struct ConcealmentStatistics
@@ -512,3 +512,5 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
         public bool IsCurrentlyConcealed;
     }
 }
+
+

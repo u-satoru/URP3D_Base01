@@ -1,23 +1,23 @@
-using UnityEngine;
+﻿using UnityEngine;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.Stealth.Services;
 using asterivo.Unity60.Features.Player.States;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
 {
     /// <summary>
-    /// ステルス特化のカバー状態
-    /// 遮蔽物を利用した戦術的隠蔽とピーキング機能
-    /// 動的な視界制御と敵位置の偵察能力を提供
+    /// 繧ｹ繝・Ν繧ｹ迚ｹ蛹悶・繧ｫ繝舌・迥ｶ諷・
+    /// 驕ｮ阡ｽ迚ｩ繧貞茜逕ｨ縺励◆謌ｦ陦鍋噪髫阡ｽ縺ｨ繝斐・繧ｭ繝ｳ繧ｰ讖溯・
+    /// 蜍慕噪縺ｪ隕也阜蛻ｶ蠕｡縺ｨ謨ｵ菴咲ｽｮ縺ｮ蛛ｵ蟇溯・蜉帙ｒ謠蝉ｾ・
     /// </summary>
     public class StealthInCoverState : IPlayerState
     {
         [Header("Stealth Cover Configuration")]
-        [SerializeField] private float coverMoveSpeed = 1.0f; // カバー間移動速度
-        [SerializeField] private float coverVisibilityReduction = 0.8f; // 80%視認性削減
-        [SerializeField] private float peekVisibilityIncrease = 0.4f; // ピーク時40%視認性増加
-        [SerializeField] private float coverNoiseReduction = 0.8f; // 80%騒音削減
+        [SerializeField] private float coverMoveSpeed = 1.0f; // 繧ｫ繝舌・髢鍋ｧｻ蜍暮溷ｺｦ
+        [SerializeField] private float coverVisibilityReduction = 0.8f; // 80%隕冶ｪ肴ｧ蜑頑ｸ・
+        [SerializeField] private float peekVisibilityIncrease = 0.4f; // 繝斐・繧ｯ譎・0%隕冶ｪ肴ｧ蠅怜刈
+        [SerializeField] private float coverNoiseReduction = 0.8f; // 80%鬨帝浹蜑頑ｸ・
 
         private Vector2 _moveInput;
         private IStealthService _stealthService;
@@ -30,15 +30,15 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         private UnityEngine.Camera _playerCamera;
 
         /// <summary>
-        /// ステルスカバー状態開始
-        /// 遮蔽物との位置関係を確立し、最適な隠蔽姿勢を設定
+        /// 繧ｹ繝・Ν繧ｹ繧ｫ繝舌・迥ｶ諷矩幕蟋・
+        /// 驕ｮ阡ｽ迚ｩ縺ｨ縺ｮ菴咲ｽｮ髢｢菫ゅｒ遒ｺ遶九＠縲∵怙驕ｩ縺ｪ髫阡ｽ蟋ｿ蜍｢繧定ｨｭ螳・
         /// </summary>
         public void Enter(DetailedPlayerStateMachine stateMachine)
         {
-            // ServiceLocator経由でStealthServiceを取得
+            // ServiceLocator邨檎罰縺ｧStealthService繧貞叙蠕・
             _stealthService = ServiceLocator.GetService<IStealthService>();
 
-            // カバーオブジェクトを特定
+            // 繧ｫ繝舌・繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ迚ｹ螳・
             _currentCover = FindOptimalCoverPosition(stateMachine);
             if (_currentCover != null)
             {
@@ -46,7 +46,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
                 AlignTocover(stateMachine, _currentCover);
             }
 
-            // ステルスモード確認・開始
+            // 繧ｹ繝・Ν繧ｹ繝｢繝ｼ繝臥｢ｺ隱阪・髢句ｧ・
             if (_stealthService != null)
             {
                 _wasInStealthMode = _stealthService.IsStealthModeActive;
@@ -55,21 +55,21 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
                     _stealthService.SetStealthMode(true);
                 }
 
-                // カバー状態での視認性削減
+                // 繧ｫ繝舌・迥ｶ諷九〒縺ｮ隕冶ｪ肴ｧ蜑頑ｸ・
                 _stealthService.UpdatePlayerVisibility(coverVisibilityReduction);
-                _stealthService.UpdatePlayerNoiseLevel(0.0f); // カバー中は静音
+                _stealthService.UpdatePlayerNoiseLevel(0.0f); // 繧ｫ繝舌・荳ｭ縺ｯ髱咎浹
             }
 
-            // 既存StealthMovement統合
+            // 譌｢蟄牢tealthMovement邨ｱ蜷・
             if (stateMachine.StealthMovement != null)
             {
                 stateMachine.StealthMovement.SetStance(Core.Data.MovementStance.Crouching);
             }
 
-            // ピーキング可能性判定
+            // 繝斐・繧ｭ繝ｳ繧ｰ蜿ｯ閭ｽ諤ｧ蛻､螳・
             EvaluatePeekingOptions(stateMachine);
 
-            // カメラ参照取得
+            // 繧ｫ繝｡繝ｩ蜿ら・蜿門ｾ・
             _playerCamera = UnityEngine.Camera.main ?? Object.FindFirstObjectByType<UnityEngine.Camera>();
 
             _isPeeking = false;
@@ -78,17 +78,17 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
 
         /// <summary>
-        /// ステルスカバー状態終了
+        /// 繧ｹ繝・Ν繧ｹ繧ｫ繝舌・迥ｶ諷狗ｵゆｺ・
         /// </summary>
         public void Exit(DetailedPlayerStateMachine stateMachine)
         {
-            // ピーキング状態解除
+            // 繝斐・繧ｭ繝ｳ繧ｰ迥ｶ諷玖ｧ｣髯､
             if (_isPeeking)
             {
                 StopPeeking(stateMachine);
             }
 
-            // ステルス設定復元
+            // 繧ｹ繝・Ν繧ｹ險ｭ螳壼ｾｩ蜈・
             if (_stealthService != null)
             {
                 if (!_wasInStealthMode)
@@ -96,7 +96,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
                     _stealthService.SetStealthMode(false);
                 }
 
-                // 通常視認性に戻す
+                // 騾壼ｸｸ隕冶ｪ肴ｧ縺ｫ謌ｻ縺・
                 _stealthService.UpdatePlayerVisibility(1.0f);
             }
 
@@ -106,20 +106,20 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
 
         /// <summary>
-        /// フレーム更新
-        /// カバー状態の維持と環境監視
+        /// 繝輔Ξ繝ｼ繝譖ｴ譁ｰ
+        /// 繧ｫ繝舌・迥ｶ諷九・邯ｭ謖√→迺ｰ蠅・屮隕・
         /// </summary>
         public void Update(DetailedPlayerStateMachine stateMachine)
         {
             if (_stealthService == null) return;
 
-            // カバーオブジェクトとの距離監視
+            // 繧ｫ繝舌・繧ｪ繝悶ず繧ｧ繧ｯ繝医→縺ｮ霍晞屬逶｣隕・
             if (_currentCover != null)
             {
                 float distanceToCover = Vector3.Distance(
                     stateMachine.transform.position, _currentCover.position);
 
-                // カバーから離れすぎた場合
+                // 繧ｫ繝舌・縺九ｉ髮｢繧後☆縺弱◆蝣ｴ蜷・
                 if (distanceToCover > 2.0f)
                 {
                     Debug.Log("[StealthInCoverState] Too far from cover - transitioning out");
@@ -128,7 +128,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
                 }
             }
 
-            // ピーキング状態の視認性管理
+            // 繝斐・繧ｭ繝ｳ繧ｰ迥ｶ諷九・隕冶ｪ肴ｧ邂｡逅・
             if (_isPeeking && _stealthService != null)
             {
                 float peekingVisibility = coverVisibilityReduction + peekVisibilityIncrease;
@@ -137,8 +137,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
 
         /// <summary>
-        /// 物理更新
-        /// カバー間の慎重な移動
+        /// 迚ｩ逅・峩譁ｰ
+        /// 繧ｫ繝舌・髢薙・諷朱㍾縺ｪ遘ｻ蜍・
         /// </summary>
         public void FixedUpdate(DetailedPlayerStateMachine stateMachine)
         {
@@ -147,7 +147,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
             Transform transform = stateMachine.transform;
             Vector3 moveDirection = Vector3.zero;
 
-            // カバー沿いの移動のみ許可
+            // 繧ｫ繝舌・豐ｿ縺・・遘ｻ蜍輔・縺ｿ險ｱ蜿ｯ
             if (_currentCover != null)
             {
                 Vector3 coverDirection = (_currentCover.position - transform.position).normalized;
@@ -156,25 +156,25 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
                 moveDirection = coverRight * _moveInput.x;
             }
 
-            // 重力処理
+            // 驥榊鴨蜃ｦ逅・
             if (!stateMachine.CharacterController.isGrounded)
             {
                 moveDirection.y += Physics.gravity.y * Time.fixedDeltaTime;
             }
 
-            // カバー移動
+            // 繧ｫ繝舌・遘ｻ蜍・
             stateMachine.CharacterController.Move(moveDirection * coverMoveSpeed * Time.fixedDeltaTime);
         }
 
         /// <summary>
-        /// 入力処理
-        /// カバー状態での特殊操作
+        /// 蜈･蜉帛・逅・
+        /// 繧ｫ繝舌・迥ｶ諷九〒縺ｮ迚ｹ谿頑桃菴・
         /// </summary>
         public void HandleInput(DetailedPlayerStateMachine stateMachine, Vector2 moveInput, bool jumpInput)
         {
             _moveInput = moveInput;
 
-            // ジャンプ入力でカバー離脱
+            // 繧ｸ繝｣繝ｳ繝怜・蜉帙〒繧ｫ繝舌・髮｢閼ｱ
             if (jumpInput)
             {
                 if (IsSafeToLeaveCover(stateMachine))
@@ -188,7 +188,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
                 }
             }
 
-            // ピーキング操作
+            // 繝斐・繧ｭ繝ｳ繧ｰ謫堺ｽ・
             if (Input.GetKeyDown(KeyCode.Q) && _canPeekLeft)
             {
                 TogglePeeking(stateMachine, PeekDirection.Left);
@@ -198,7 +198,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
                 TogglePeeking(stateMachine, PeekDirection.Right);
             }
 
-            // ピーキング終了
+            // 繝斐・繧ｭ繝ｳ繧ｰ邨ゆｺ・
             if (Input.GetKeyUp(KeyCode.Q) || Input.GetKeyUp(KeyCode.E))
             {
                 if (_isPeeking)
@@ -207,7 +207,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
                 }
             }
 
-            // 他のカバーへの移動
+            // 莉悶・繧ｫ繝舌・縺ｸ縺ｮ遘ｻ蜍・
             if (Input.GetKeyDown(KeyCode.F))
             {
                 Transform nextCover = FindNearestAlternateCover(stateMachine);
@@ -217,7 +217,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
                 }
             }
 
-            // カバーからの環境相互作用
+            // 繧ｫ繝舌・縺九ｉ縺ｮ迺ｰ蠅・嶌莠剃ｽ懃畑
             if (Input.GetKeyDown(KeyCode.R))
             {
                 PerformCoverAction(stateMachine);
@@ -225,7 +225,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
 
         /// <summary>
-        /// 最適なカバー位置を特定
+        /// 譛驕ｩ縺ｪ繧ｫ繝舌・菴咲ｽｮ繧堤音螳・
         /// </summary>
         private Transform FindOptimalCoverPosition(DetailedPlayerStateMachine stateMachine)
         {
@@ -247,19 +247,19 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
 
         /// <summary>
-        /// カバーオブジェクトに整列
+        /// 繧ｫ繝舌・繧ｪ繝悶ず繧ｧ繧ｯ繝医↓謨ｴ蛻・
         /// </summary>
         private void AlignTocover(DetailedPlayerStateMachine stateMachine, Transform cover)
         {
             Vector3 directionToCover = (cover.position - stateMachine.transform.position).normalized;
-            Vector3 alignPosition = cover.position - directionToCover * 1.2f; // カバーから1.2m距離
+            Vector3 alignPosition = cover.position - directionToCover * 1.2f; // 繧ｫ繝舌・縺九ｉ1.2m霍晞屬
 
             stateMachine.transform.position = alignPosition;
             stateMachine.transform.LookAt(cover.position);
         }
 
         /// <summary>
-        /// ピーキング可能性評価
+        /// 繝斐・繧ｭ繝ｳ繧ｰ蜿ｯ閭ｽ諤ｧ隧穂ｾ｡
         /// </summary>
         private void EvaluatePeekingOptions(DetailedPlayerStateMachine stateMachine)
         {
@@ -268,7 +268,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
             Vector3 playerPos = stateMachine.transform.position;
             Vector3 coverPos = _currentCover.position;
 
-            // 左右のピーキング可能性をレイキャストで確認
+            // 蟾ｦ蜿ｳ縺ｮ繝斐・繧ｭ繝ｳ繧ｰ蜿ｯ閭ｽ諤ｧ繧偵Ξ繧､繧ｭ繝｣繧ｹ繝医〒遒ｺ隱・
             Vector3 rightDirection = stateMachine.transform.right;
             Vector3 leftDirection = -stateMachine.transform.right;
 
@@ -277,7 +277,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
 
         /// <summary>
-        /// ピーキング切り替え
+        /// 繝斐・繧ｭ繝ｳ繧ｰ蛻・ｊ譖ｿ縺・
         /// </summary>
         private void TogglePeeking(DetailedPlayerStateMachine stateMachine, PeekDirection direction)
         {
@@ -292,13 +292,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
 
         /// <summary>
-        /// ピーキング開始
+        /// 繝斐・繧ｭ繝ｳ繧ｰ髢句ｧ・
         /// </summary>
         private void StartPeeking(DetailedPlayerStateMachine stateMachine, PeekDirection direction)
         {
             _isPeeking = true;
 
-            // カメラオフセット適用（簡易実装）
+            // 繧ｫ繝｡繝ｩ繧ｪ繝輔そ繝・ヨ驕ｩ逕ｨ・育ｰ｡譏灘ｮ溯｣・ｼ・
             if (_playerCamera != null)
             {
                 Vector3 peekOffset = direction == PeekDirection.Left ?
@@ -308,7 +308,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
                 _playerCamera.transform.position += peekOffset;
             }
 
-            // 視認性増加（ピーキングリスク）
+            // 隕冶ｪ肴ｧ蠅怜刈・医ヴ繝ｼ繧ｭ繝ｳ繧ｰ繝ｪ繧ｹ繧ｯ・・
             if (_stealthService != null)
             {
                 float peekingVisibility = coverVisibilityReduction + peekVisibilityIncrease;
@@ -319,21 +319,21 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
 
         /// <summary>
-        /// ピーキング終了
+        /// 繝斐・繧ｭ繝ｳ繧ｰ邨ゆｺ・
         /// </summary>
         private void StopPeeking(DetailedPlayerStateMachine stateMachine)
         {
             _isPeeking = false;
 
-            // カメラ位置復元（簡易実装）
+            // 繧ｫ繝｡繝ｩ菴咲ｽｮ蠕ｩ蜈・ｼ育ｰ｡譏灘ｮ溯｣・ｼ・
             if (_playerCamera != null)
             {
-                // 本来はカメラの元位置を保存しておくべき
+                // 譛ｬ譚･縺ｯ繧ｫ繝｡繝ｩ縺ｮ蜈・ｽ咲ｽｮ繧剃ｿ晏ｭ倥＠縺ｦ縺翫￥縺ｹ縺・
                 Vector3 playerPos = stateMachine.transform.position;
                 _playerCamera.transform.position = playerPos + Vector3.up * 1.7f;
             }
 
-            // 視認性をカバー状態に戻す
+            // 隕冶ｪ肴ｧ繧偵き繝舌・迥ｶ諷九↓謌ｻ縺・
             if (_stealthService != null)
             {
                 _stealthService.UpdatePlayerVisibility(coverVisibilityReduction);
@@ -343,13 +343,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
 
         /// <summary>
-        /// 安全なカバー離脱判定
+        /// 螳牙・縺ｪ繧ｫ繝舌・髮｢閼ｱ蛻､螳・
         /// </summary>
         private bool IsSafeToLeaveCover(DetailedPlayerStateMachine stateMachine)
         {
             if (_stealthService == null) return true;
 
-            // 現在の視認性と隠蔽状態を評価
+            // 迴ｾ蝨ｨ縺ｮ隕冶ｪ肴ｧ縺ｨ髫阡ｽ迥ｶ諷九ｒ隧穂ｾ｡
             bool lowVisibility = _stealthService.PlayerVisibilityFactor < 0.5f;
             bool isConcealed = _stealthService.IsPlayerConcealed;
 
@@ -357,7 +357,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
 
         /// <summary>
-        /// 代替カバー探索
+        /// 莉｣譖ｿ繧ｫ繝舌・謗｢邏｢
         /// </summary>
         private Transform FindNearestAlternateCover(DetailedPlayerStateMachine stateMachine)
         {
@@ -367,7 +367,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
 
             foreach (GameObject cover in coverObjects)
             {
-                if (cover.transform == _currentCover) continue; // 現在のカバーは除外
+                if (cover.transform == _currentCover) continue; // 迴ｾ蝨ｨ縺ｮ繧ｫ繝舌・縺ｯ髯､螟・
 
                 float distance = Vector3.Distance(stateMachine.transform.position, cover.transform.position);
                 if (distance < nearestDistance && distance <= 5.0f)
@@ -381,7 +381,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
 
         /// <summary>
-        /// 別カバーへの移動
+        /// 蛻･繧ｫ繝舌・縺ｸ縺ｮ遘ｻ蜍・
         /// </summary>
         private void MoveToCover(DetailedPlayerStateMachine stateMachine, Transform newCover)
         {
@@ -393,13 +393,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
 
         /// <summary>
-        /// カバーからの環境相互作用
+        /// 繧ｫ繝舌・縺九ｉ縺ｮ迺ｰ蠅・嶌莠剃ｽ懃畑
         /// </summary>
         private void PerformCoverAction(DetailedPlayerStateMachine stateMachine)
         {
             if (_stealthService == null) return;
 
-            // カバー位置からの相互作用範囲拡張
+            // 繧ｫ繝舌・菴咲ｽｮ縺九ｉ縺ｮ逶ｸ莠剃ｽ懃畑遽・峇諡｡蠑ｵ
             Collider[] interactables = Physics.OverlapSphere(
                 stateMachine.transform.position, 3.0f,
                 LayerMask.GetMask("Interactable"));
@@ -414,7 +414,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
                 }
                 else if (collider.CompareTag("Guard"))
                 {
-                    // 陽動音の作成
+                    // 髯ｽ蜍暮浹縺ｮ菴懈・
                     Vector3 distractionPos = collider.transform.position + Vector3.right * 5f;
                     _stealthService.CreateDistraction(distractionPos, 0.8f);
                     Debug.Log("[StealthInCoverState] Created distraction from cover");
@@ -424,7 +424,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
 
         /// <summary>
-        /// ピーキング方向
+        /// 繝斐・繧ｭ繝ｳ繧ｰ譁ｹ蜷・
         /// </summary>
         private enum PeekDirection
         {
@@ -433,3 +433,5 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Player.States
         }
     }
 }
+
+

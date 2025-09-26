@@ -1,6 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Features.Combat.Interfaces;
 using asterivo.Unity60.Features.Combat.Events;
@@ -8,8 +8,8 @@ using asterivo.Unity60.Features.Combat.Events;
 namespace asterivo.Unity60.Features.Combat.Components
 {
     /// <summary>
-    /// 汎用ヘルスコンポーネント
-    /// IHealthとIDamageableの両方を実装
+    /// 豎守畑繝倥Ν繧ｹ繧ｳ繝ｳ繝昴・繝阪Φ繝・
+    /// IHealth縺ｨIDamageable縺ｮ荳｡譁ｹ繧貞ｮ溯｣・
     /// </summary>
     public class HealthComponent : MonoBehaviour, IHealth, IDamageable
     {
@@ -58,14 +58,14 @@ namespace asterivo.Unity60.Features.Combat.Components
             currentHealth = Mathf.Max(0, currentHealth - actualDamage);
             float damageTaken = previousHealth - currentHealth;
 
-            // 健康値変更通知
+            // 蛛･蠎ｷ蛟､螟画峩騾夂衍
             onHealthChanged?.Invoke(currentHealth);
             onDamaged?.Invoke(damageInfo);
 
-            // GameEvent経由での通知
+            // GameEvent邨檎罰縺ｧ縺ｮ騾夂衍
             RaiseDamageEvent(damageInfo, damageTaken);
 
-            // 死亡処理
+            // 豁ｻ莠｡蜃ｦ逅・
             if (currentHealth <= 0 && !isDead)
             {
                 Die(damageInfo);
@@ -84,11 +84,11 @@ namespace asterivo.Unity60.Features.Combat.Components
             currentHealth = Mathf.Min(maxHealth, currentHealth + actualHeal);
             float healAmount = currentHealth - previousHealth;
 
-            // 健康値変更通知
+            // 蛛･蠎ｷ蛟､螟画峩騾夂衍
             onHealthChanged?.Invoke(currentHealth);
             onHealed?.Invoke(healAmount);
 
-            // GameEvent経由での通知
+            // GameEvent邨檎罰縺ｧ縺ｮ騾夂衍
             RaiseHealEvent(healAmount);
 
             return healAmount;
@@ -134,19 +134,19 @@ namespace asterivo.Unity60.Features.Combat.Components
 
         void Start()
         {
-            // CombatServiceに登録
+            // CombatService縺ｫ逋ｻ骭ｲ
             if (ServiceLocator.TryGet<ICombatService>(out var combatService))
             {
                 combatService.RegisterHealth(this);
             }
 
-            // 初期健康値を通知
+            // 蛻晄悄蛛･蠎ｷ蛟､繧帝夂衍
             onHealthChanged?.Invoke(currentHealth);
         }
 
         void OnDestroy()
         {
-            // CombatServiceから登録解除
+            // CombatService縺九ｉ逋ｻ骭ｲ隗｣髯､
             if (ServiceLocator.TryGet<ICombatService>(out var combatService))
             {
                 combatService.UnregisterHealth(this);
@@ -160,7 +160,7 @@ namespace asterivo.Unity60.Features.Combat.Components
             isDead = true;
             onDeath?.Invoke();
 
-            // GameEvent経由での死亡通知
+            // GameEvent邨檎罰縺ｧ縺ｮ豁ｻ莠｡騾夂衍
             RaiseDeathEvent(lastDamageInfo);
         }
 
@@ -247,3 +247,5 @@ namespace asterivo.Unity60.Features.Combat.Components
         #endregion
     }
 }
+
+

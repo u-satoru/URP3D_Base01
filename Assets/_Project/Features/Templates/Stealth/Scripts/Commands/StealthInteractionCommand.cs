@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Commands;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.Stealth.Services;
 using asterivo.Unity60.Features.Templates.Stealth.Events;
 using StealthInteractionType = asterivo.Unity60.Features.Templates.Stealth.Services.StealthInteractionType;
@@ -9,10 +9,10 @@ using StealthInteractionType = asterivo.Unity60.Features.Templates.Stealth.Servi
 namespace asterivo.Unity60.Features.Templates.Stealth.Commands
 {
     /// <summary>
-    /// ステルス環境相互作用コマンド
-    /// ステルスゲームに特化した環境オブジェクトとの相互作用を管理
-    /// ServiceLocator統合によるStealthServiceとの連携
-    /// ObjectPool最適化対応
+    /// 繧ｹ繝・Ν繧ｹ迺ｰ蠅・嶌莠剃ｽ懃畑繧ｳ繝槭Φ繝・
+    /// 繧ｹ繝・Ν繧ｹ繧ｲ繝ｼ繝縺ｫ迚ｹ蛹悶＠縺溽腸蠅・が繝悶ず繧ｧ繧ｯ繝医→縺ｮ逶ｸ莠剃ｽ懃畑繧堤ｮ｡逅・
+    /// ServiceLocator邨ｱ蜷医↓繧医ｋStealthService縺ｨ縺ｮ騾｣謳ｺ
+    /// ObjectPool譛驕ｩ蛹門ｯｾ蠢・
     /// </summary>
     public class StealthInteractionCommand : IResettableCommand
     {
@@ -35,26 +35,26 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         private EnvironmentalInteractionData _interactionData;
 
         /// <summary>
-        /// Undo操作サポート状況
-        /// ステルス相互作用は基本的にUndoをサポート
+        /// Undo謫堺ｽ懊し繝昴・繝育憾豕・
+        /// 繧ｹ繝・Ν繧ｹ逶ｸ莠剃ｽ懃畑縺ｯ蝓ｺ譛ｬ逧・↓Undo繧偵し繝昴・繝・
         /// </summary>
         public bool CanUndo => _isExecuted && _interactionType != StealthInteractionType.HideBody;
 
         /// <summary>
-        /// デフォルトコンストラクタ（ObjectPool対応）
+        /// 繝・ヵ繧ｩ繝ｫ繝医さ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ・・bjectPool蟇ｾ蠢懶ｼ・
         /// </summary>
         public StealthInteractionCommand()
         {
-            // プール化対応のため空のコンストラクタ
+            // 繝励・繝ｫ蛹門ｯｾ蠢懊・縺溘ａ遨ｺ縺ｮ繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
         }
 
         /// <summary>
-        /// パラメータ付きコンストラクタ
+        /// 繝代Λ繝｡繝ｼ繧ｿ莉倥″繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
         /// </summary>
-        /// <param name="interactionType">相互作用の種類</param>
-        /// <param name="targetObject">対象オブジェクト</param>
-        /// <param name="duration">実行時間</param>
-        /// <param name="requiresStealth">ステルス状態要求</param>
+        /// <param name="interactionType">逶ｸ莠剃ｽ懃畑縺ｮ遞ｮ鬘・/param>
+        /// <param name="targetObject">蟇ｾ雎｡繧ｪ繝悶ず繧ｧ繧ｯ繝・/param>
+        /// <param name="duration">螳溯｡梧凾髢・/param>
+        /// <param name="requiresStealth">繧ｹ繝・Ν繧ｹ迥ｶ諷玖ｦ∵ｱ・/param>
         public StealthInteractionCommand(StealthInteractionType interactionType, GameObject targetObject,
             float duration = 1.0f, bool requiresStealth = true)
         {
@@ -67,8 +67,8 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// コマンド実行
-        /// StealthServiceと連携してステルス相互作用を実行
+        /// 繧ｳ繝槭Φ繝牙ｮ溯｡・
+        /// StealthService縺ｨ騾｣謳ｺ縺励※繧ｹ繝・Ν繧ｹ逶ｸ莠剃ｽ懃畑繧貞ｮ溯｡・
         /// </summary>
         public void Execute()
         {
@@ -80,7 +80,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
                 return;
             }
 
-            // ServiceLocator経由でStealthServiceを取得
+            // ServiceLocator邨檎罰縺ｧStealthService繧貞叙蠕・
             _stealthService = ServiceLocator.GetService<IStealthService>();
             if (_stealthService == null)
             {
@@ -90,7 +90,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
                 return;
             }
 
-            // ステルス状態の事前チェック
+            // 繧ｹ繝・Ν繧ｹ迥ｶ諷九・莠句燕繝√ぉ繝・け
             if (_requiresStealth && !ValidateStealthState())
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -99,25 +99,25 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
                 return;
             }
 
-            // 実行前の状態を保存
+            // 螳溯｡悟燕縺ｮ迥ｶ諷九ｒ菫晏ｭ・
             _wasPlayerConcealed = _stealthService.IsPlayerConcealed;
             _originalVisibility = _stealthService.PlayerVisibilityFactor;
 
-            // 相互作用データの準備
+            // 逶ｸ莠剃ｽ懃畑繝・・繧ｿ縺ｮ貅門ｙ
             _interactionData = new EnvironmentalInteractionData
             {
                 TargetObject = _targetObject,
                 InteractionType = _interactionType,
-                Success = false, // 実行後にtrueに設定
+                Success = false, // 螳溯｡悟ｾ後↓true縺ｫ險ｭ螳・
                 Position = _targetPosition,
-                GeneratedNoiseLevel = 0.0f, // 相互作用の種類に応じて設定
+                GeneratedNoiseLevel = 0.0f, // 逶ｸ莠剃ｽ懃畑縺ｮ遞ｮ鬘槭↓蠢懊§縺ｦ險ｭ螳・
                 Timestamp = Time.time
             };
 
-            // 相互作用の種類に応じた実行
+            // 逶ｸ莠剃ｽ懃畑縺ｮ遞ｮ鬘槭↓蠢懊§縺溷ｮ溯｡・
             ExecuteSpecificInteraction();
 
-            // 実行完了後の状態更新
+            // 螳溯｡悟ｮ御ｺ・ｾ後・迥ｶ諷区峩譁ｰ
             _interactionData.Success = true;
             _interactionData.GeneratedNoiseLevel = GetNoiseLevel(_interactionType);
 
@@ -129,35 +129,35 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// ステルス状態の検証
+        /// 繧ｹ繝・Ν繧ｹ迥ｶ諷九・讀懆ｨｼ
         /// </summary>
         private bool ValidateStealthState()
         {
             if (_stealthService == null) return false;
 
-            // 基本的なステルス要件チェック
+            // 蝓ｺ譛ｬ逧・↑繧ｹ繝・Ν繧ｹ隕∽ｻｶ繝√ぉ繝・け
             if (_requiresStealth && !_stealthService.IsStealthModeActive)
                 return false;
 
-            // 相互作用タイプ別の特殊要件
+            // 逶ｸ莠剃ｽ懃畑繧ｿ繧､繝怜挨縺ｮ迚ｹ谿願ｦ∽ｻｶ
             switch (_interactionType)
             {
                 case StealthInteractionType.HideBody:
-                    // 死体隠匿は完全に隠蔽されている必要がある
+                    // 豁ｻ菴馴國蛹ｿ縺ｯ螳悟・縺ｫ髫阡ｽ縺輔ｌ縺ｦ縺・ｋ蠢・ｦ√′縺ゅｋ
                     return _stealthService.IsPlayerConcealed && _stealthService.PlayerVisibilityFactor < 0.3f;
 
                 case StealthInteractionType.OperateDoor:
                 case StealthInteractionType.OperateSwitch:
-                    // 操作は中程度の隠蔽で十分
+                    // 謫堺ｽ懊・荳ｭ遞句ｺｦ縺ｮ髫阡ｽ縺ｧ蜊∝・
                     return _stealthService.PlayerVisibilityFactor < 0.7f;
 
                 case StealthInteractionType.DisableCamera:
                 case StealthInteractionType.SabotageLight:
-                    // 設備破壊は比較的寛容
+                    // 險ｭ蛯咏ｴ螢翫・豈碑ｼ・噪蟇帛ｮｹ
                     return _stealthService.PlayerVisibilityFactor < 0.8f;
 
                 case StealthInteractionType.ThrowObject:
-                    // 陽動は特別な要件なし
+                    // 髯ｽ蜍輔・迚ｹ蛻･縺ｪ隕∽ｻｶ縺ｪ縺・
                     return true;
 
                 default:
@@ -166,7 +166,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// 相互作用タイプ別の具体的実行処理
+        /// 逶ｸ莠剃ｽ懃畑繧ｿ繧､繝怜挨縺ｮ蜈ｷ菴鍋噪螳溯｡悟・逅・
         /// </summary>
         private void ExecuteSpecificInteraction()
         {
@@ -201,134 +201,134 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
                     break;
             }
 
-            // StealthServiceを通じてイベント発行
+            // StealthService繧帝壹§縺ｦ繧､繝吶Φ繝育匱陦・
             _stealthService?.InteractWithEnvironment(_targetObject, _interactionType);
         }
 
         /// <summary>
-        /// 監視カメラ無効化実行
+        /// 逶｣隕悶き繝｡繝ｩ辟｡蜉ｹ蛹門ｮ溯｡・
         /// </summary>
         private void ExecuteDisableCamera()
         {
             if (_targetObject == null) return;
 
-            // カメラコンポーネントの無効化
+            // 繧ｫ繝｡繝ｩ繧ｳ繝ｳ繝昴・繝阪Φ繝医・辟｡蜉ｹ蛹・
             var camera = _targetObject.GetComponent<UnityEngine.Camera>();
             if (camera != null)
             {
                 camera.enabled = false;
             }
 
-            // ステルス検知システムの無効化
+            // 繧ｹ繝・Ν繧ｹ讀懃衍繧ｷ繧ｹ繝・Β縺ｮ辟｡蜉ｹ蛹・
             var detectionSensor = _targetObject.GetComponent<MonoBehaviour>();
             if (detectionSensor != null)
             {
                 detectionSensor.enabled = false;
             }
 
-            // 一時的な視認性向上（作業中のリスク）
+            // 荳譎ら噪縺ｪ隕冶ｪ肴ｧ蜷台ｸ奇ｼ井ｽ懈･ｭ荳ｭ縺ｮ繝ｪ繧ｹ繧ｯ・・
             _stealthService?.UpdatePlayerVisibility(_originalVisibility + 0.3f);
 
-            // エフェクト・サウンド再生
+            // 繧ｨ繝輔ぉ繧ｯ繝医・繧ｵ繧ｦ繝ｳ繝牙・逕・
             PlayInteractionEffects("camera_disable");
         }
 
         /// <summary>
-        /// 照明無効化実行
+        /// 辣ｧ譏守┌蜉ｹ蛹門ｮ溯｡・
         /// </summary>
         private void ExecuteDisableLight()
         {
             if (_targetObject == null) return;
 
-            // ライトコンポーネントの無効化
+            // 繝ｩ繧､繝医さ繝ｳ繝昴・繝阪Φ繝医・辟｡蜉ｹ蛹・
             var light = _targetObject.GetComponent<Light>();
             if (light != null)
             {
                 light.enabled = false;
             }
 
-            // 周囲の暗闇化による隠蔽性向上
+            // 蜻ｨ蝗ｲ縺ｮ證鈴裸蛹悶↓繧医ｋ髫阡ｽ諤ｧ蜷台ｸ・
             _stealthService?.UpdatePlayerVisibility(_originalVisibility * 0.7f);
 
             PlayInteractionEffects("light_disable");
         }
 
         /// <summary>
-        /// 陽動作成実行
+        /// 髯ｽ蜍穂ｽ懈・螳溯｡・
         /// </summary>
         private void ExecuteCreateDistraction()
         {
-            // 陽動音の作成
+            // 髯ｽ蜍暮浹縺ｮ菴懈・
             _stealthService?.CreateDistraction(_targetPosition, 0.8f);
 
-            // プレイヤーの一時的隠蔽性向上（注意がそれるため）
+            // 繝励Ξ繧､繝､繝ｼ縺ｮ荳譎ら噪髫阡ｽ諤ｧ蜷台ｸ奇ｼ域ｳｨ諢上′縺昴ｌ繧九◆繧・ｼ・
             _stealthService?.UpdatePlayerVisibility(_originalVisibility * 0.8f);
 
             PlayInteractionEffects("distraction_create");
         }
 
         /// <summary>
-        /// 鍵開け実行
+        /// 骰ｵ髢九￠螳溯｡・
         /// </summary>
         private void ExecuteLockPicking()
         {
             if (_targetObject == null) return;
 
-            // ドアの解錠状態変更
+            // 繝峨い縺ｮ隗｣骭迥ｶ諷句､画峩
             var lockable = _targetObject.GetComponent<ILockable>();
             lockable?.Unlock();
 
-            // 集中による一時的視認性増加
+            // 髮・ｸｭ縺ｫ繧医ｋ荳譎ら噪隕冶ｪ肴ｧ蠅怜刈
             _stealthService?.UpdatePlayerVisibility(_originalVisibility + 0.2f);
 
             PlayInteractionEffects("lock_picking");
         }
 
         /// <summary>
-        /// 無音制圧実行
+        /// 辟｡髻ｳ蛻ｶ蝨ｧ螳溯｡・
         /// </summary>
         private void ExecuteSilentTakedown()
         {
             if (_targetObject == null) return;
 
-            // 対象NPCの無力化
+            // 蟇ｾ雎｡NPC縺ｮ辟｡蜉帛喧
             var npcHealth = _targetObject.GetComponent<MonoBehaviour>();
             if (npcHealth != null)
             {
-                // NPCの状態を無力化に変更
+                // NPC縺ｮ迥ｶ諷九ｒ辟｡蜉帛喧縺ｫ螟画峩
                 npcHealth.enabled = false;
             }
 
-            // 制圧後の隠蔽性向上
+            // 蛻ｶ蝨ｧ蠕後・髫阡ｽ諤ｧ蜷台ｸ・
             _stealthService?.UpdatePlayerVisibility(_originalVisibility * 0.5f);
 
             PlayInteractionEffects("silent_takedown");
         }
 
         /// <summary>
-        /// 死体隠匿実行
+        /// 豁ｻ菴馴國蛹ｿ螳溯｡・
         /// </summary>
         private void ExecuteHideBody()
         {
             if (_targetObject == null) return;
 
-            // 死体オブジェクトの非表示化
+            // 豁ｻ菴薙が繝悶ず繧ｧ繧ｯ繝医・髱櫁｡ｨ遉ｺ蛹・
             _targetObject.SetActive(false);
 
-            // 証拠隠滅による隠蔽性向上
+            // 險ｼ諡髫貊・↓繧医ｋ髫阡ｽ諤ｧ蜷台ｸ・
             _stealthService?.UpdatePlayerVisibility(_originalVisibility * 0.9f);
 
             PlayInteractionEffects("hide_body");
         }
 
         /// <summary>
-        /// 警報装置破壊実行
+        /// 隴ｦ蝣ｱ陬・ｽｮ遐ｴ螢雁ｮ溯｡・
         /// </summary>
         private void ExecuteSabotageAlarm()
         {
             if (_targetObject == null) return;
 
-            // 警報システムの無効化
+            // 隴ｦ蝣ｱ繧ｷ繧ｹ繝・Β縺ｮ辟｡蜉ｹ蛹・
             var alarmSystem = _targetObject.GetComponent<MonoBehaviour>();
             if (alarmSystem != null)
             {
@@ -339,58 +339,58 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// 端末アクセス実行
+        /// 遶ｯ譛ｫ繧｢繧ｯ繧ｻ繧ｹ螳溯｡・
         /// </summary>
         private void ExecuteAccessTerminal()
         {
             if (_targetObject == null) return;
 
-            // 端末インターフェースのアクティベート
+            // 遶ｯ譛ｫ繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ縺ｮ繧｢繧ｯ繝・ぅ繝吶・繝・
             var terminal = _targetObject.GetComponent<IAccessible>();
             terminal?.Access();
 
-            // 集中による視認性増加
+            // 髮・ｸｭ縺ｫ繧医ｋ隕冶ｪ肴ｧ蠅怜刈
             _stealthService?.UpdatePlayerVisibility(_originalVisibility + 0.4f);
 
             PlayInteractionEffects("terminal_access");
         }
 
         /// <summary>
-        /// 環境隠蔽利用実行
+        /// 迺ｰ蠅・國阡ｽ蛻ｩ逕ｨ螳溯｡・
         /// </summary>
         private void ExecuteEnvironmentalHide()
         {
-            // 環境隠蔽ゾーンへの移動・利用
+            // 迺ｰ蠅・國阡ｽ繧ｾ繝ｼ繝ｳ縺ｸ縺ｮ遘ｻ蜍輔・蛻ｩ逕ｨ
             _stealthService?.UpdatePlayerVisibility(_originalVisibility * 0.3f);
 
             PlayInteractionEffects("environmental_hide");
         }
 
         /// <summary>
-        /// 情報収集実行
+        /// 諠・ｱ蜿朱寔螳溯｡・
         /// </summary>
         private void ExecutePickupIntel()
         {
             if (_targetObject == null) return;
 
-            // 情報アイテムの収集
+            // 諠・ｱ繧｢繧､繝・Β縺ｮ蜿朱寔
             var collectible = _targetObject.GetComponent<ICollectible>();
             collectible?.Collect();
 
-            // 情報収集完了後のオブジェクト除去
+            // 諠・ｱ蜿朱寔螳御ｺ・ｾ後・繧ｪ繝悶ず繧ｧ繧ｯ繝磯勁蜴ｻ
             _targetObject.SetActive(false);
 
             PlayInteractionEffects("pickup_intel");
         }
 
         /// <summary>
-        /// 相互作用エフェクト・サウンド再生
+        /// 逶ｸ莠剃ｽ懃畑繧ｨ繝輔ぉ繧ｯ繝医・繧ｵ繧ｦ繝ｳ繝牙・逕・
         /// </summary>
         private void PlayInteractionEffects(string effectType)
         {
-            // パーティクルエフェクト再生
-            // サウンドエフェクト再生（StealthServiceの音響システム連動）
-            // UIフィードバック表示
+            // 繝代・繝・ぅ繧ｯ繝ｫ繧ｨ繝輔ぉ繧ｯ繝亥・逕・
+            // 繧ｵ繧ｦ繝ｳ繝峨お繝輔ぉ繧ｯ繝亥・逕滂ｼ・tealthService縺ｮ髻ｳ髻ｿ繧ｷ繧ｹ繝・Β騾｣蜍包ｼ・
+            // UI繝輔ぅ繝ｼ繝峨ヰ繝・け陦ｨ遉ｺ
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[StealthInteractionCommand] Playing effects: {effectType}");
@@ -398,7 +398,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// コマンドの取り消し（Undo）
+        /// 繧ｳ繝槭Φ繝峨・蜿悶ｊ豸医＠・・ndo・・
         /// </summary>
         public void Undo()
         {
@@ -410,10 +410,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
                 return;
             }
 
-            // 相互作用の逆処理実行
+            // 逶ｸ莠剃ｽ懃畑縺ｮ騾・・逅・ｮ溯｡・
             UndoSpecificInteraction();
 
-            // 状態復元
+            // 迥ｶ諷句ｾｩ蜈・
             _stealthService?.UpdatePlayerVisibility(_originalVisibility);
 
             _isExecuted = false;
@@ -424,14 +424,14 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// 相互作用タイプ別のUndo処理
+        /// 逶ｸ莠剃ｽ懃畑繧ｿ繧､繝怜挨縺ｮUndo蜃ｦ逅・
         /// </summary>
         private void UndoSpecificInteraction()
         {
             switch (_interactionType)
             {
                 case StealthInteractionType.DisableCamera:
-                    // カメラの再有効化
+                    // 繧ｫ繝｡繝ｩ縺ｮ蜀肴怏蜉ｹ蛹・
                     if (_targetObject != null)
                     {
                         var camera = _targetObject.GetComponent<UnityEngine.Camera>();
@@ -443,7 +443,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
                     break;
 
                 case StealthInteractionType.SabotageLight:
-                    // ライトの再有効化
+                    // 繝ｩ繧､繝医・蜀肴怏蜉ｹ蛹・
                     if (_targetObject != null)
                     {
                         var light = _targetObject.GetComponent<Light>();
@@ -452,7 +452,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
                     break;
 
                 case StealthInteractionType.OperateDoor:
-                    // ドアの再施錠
+                    // 繝峨い縺ｮ蜀肴命骭
                     if (_targetObject != null)
                     {
                         var lockable = _targetObject.GetComponent<ILockable>();
@@ -461,7 +461,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
                     break;
 
                 case StealthInteractionType.HideBody:
-                    // 死体の再表示
+                    // 豁ｻ菴薙・蜀崎｡ｨ遉ｺ
                     if (_targetObject != null)
                     {
                         _targetObject.SetActive(true);
@@ -469,7 +469,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
                     break;
 
                 case StealthInteractionType.ThrowObject:
-                    // 投擲オブジェクトの復元
+                    // 謚墓憧繧ｪ繝悶ず繧ｧ繧ｯ繝医・蠕ｩ蜈・
                     if (_targetObject != null)
                     {
                         _targetObject.SetActive(true);
@@ -477,7 +477,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
                     break;
 
                 case StealthInteractionType.OperateSwitch:
-                    // スイッチの復元
+                    // 繧ｹ繧､繝・メ縺ｮ蠕ｩ蜈・
                     if (_targetObject != null)
                     {
                         var switchComponent = _targetObject.GetComponent<Animator>();
@@ -489,13 +489,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
                     break;
 
                 default:
-                    // その他の相互作用の基本的な復元処理
+                    // 縺昴・莉悶・逶ｸ莠剃ｽ懃畑縺ｮ蝓ｺ譛ｬ逧・↑蠕ｩ蜈・・逅・
                     break;
             }
         }
 
         /// <summary>
-        /// ObjectPool用状態リセット
+        /// ObjectPool逕ｨ迥ｶ諷九Μ繧ｻ繝・ヨ
         /// </summary>
         public void Reset()
         {
@@ -514,7 +514,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// ObjectPool用初期化
+        /// ObjectPool逕ｨ蛻晄悄蛹・
         /// </summary>
         public void Initialize(params object[] parameters)
         {
@@ -571,7 +571,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// 型安全な初期化メソッド
+        /// 蝙句ｮ牙・縺ｪ蛻晄悄蛹悶Γ繧ｽ繝・ラ
         /// </summary>
         public void Initialize(StealthInteractionType interactionType, GameObject targetObject,
             float duration = 1.0f, bool requiresStealth = true)
@@ -585,7 +585,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// 位置ベース初期化メソッド
+        /// 菴咲ｽｮ繝吶・繧ｹ蛻晄悄蛹悶Γ繧ｽ繝・ラ
         /// </summary>
         public void Initialize(StealthInteractionType interactionType, Vector3 targetPosition,
             float duration = 1.0f, bool requiresStealth = true)
@@ -599,7 +599,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// 相互作用の種類に応じた騒音レベルを取得
+        /// 逶ｸ莠剃ｽ懃畑縺ｮ遞ｮ鬘槭↓蠢懊§縺滄ｨ帝浹繝ｬ繝吶Ν繧貞叙蠕・
         /// </summary>
         private float GetNoiseLevel(StealthInteractionType interactionType)
         {
@@ -616,7 +616,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// ドアの開閉操作実行
+        /// 繝峨い縺ｮ髢矩哩謫堺ｽ懷ｮ溯｡・
         /// </summary>
         private void ExecuteOperateDoor()
         {
@@ -626,13 +626,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
                 return;
             }
 
-            // ドア操作のログ
+            // 繝峨い謫堺ｽ懊・繝ｭ繧ｰ
             Debug.Log($"[StealthInteractionCommand] Operating door: {_targetObject.name}");
 
-            // ドア操作の音を生成
+            // 繝峨い謫堺ｽ懊・髻ｳ繧堤函謌・
             _interactionData.GeneratedNoiseLevel = GetNoiseLevel(StealthInteractionType.OperateDoor);
 
-            // ドアコンポーネントがある場合は操作
+            // 繝峨い繧ｳ繝ｳ繝昴・繝阪Φ繝医′縺ゅｋ蝣ｴ蜷医・謫堺ｽ・
             var doorComponent = _targetObject.GetComponent<Animator>();
             if (doorComponent != null)
             {
@@ -643,7 +643,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
 
         /// <summary>
-        /// スイッチ操作実行
+        /// 繧ｹ繧､繝・メ謫堺ｽ懷ｮ溯｡・
         /// </summary>
         private void ExecuteOperateSwitch()
         {
@@ -653,13 +653,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
                 return;
             }
 
-            // スイッチ操作のログ
+            // 繧ｹ繧､繝・メ謫堺ｽ懊・繝ｭ繧ｰ
             Debug.Log($"[StealthInteractionCommand] Operating switch: {_targetObject.name}");
 
-            // スイッチ操作の音を生成
+            // 繧ｹ繧､繝・メ謫堺ｽ懊・髻ｳ繧堤函謌・
             _interactionData.GeneratedNoiseLevel = GetNoiseLevel(StealthInteractionType.OperateSwitch);
 
-            // スイッチコンポーネントがある場合は操作
+            // 繧ｹ繧､繝・メ繧ｳ繝ｳ繝昴・繝阪Φ繝医′縺ゅｋ蝣ｴ蜷医・謫堺ｽ・
             var switchComponent = _targetObject.GetComponent<Animator>();
             if (switchComponent != null)
             {
@@ -670,7 +670,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         }
     }
 
-    // 相互作用可能オブジェクトのインターフェース定義
+    // 逶ｸ莠剃ｽ懃畑蜿ｯ閭ｽ繧ｪ繝悶ず繧ｧ繧ｯ繝医・繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ螳夂ｾｩ
     public interface ILockable
     {
         void Lock();
@@ -690,3 +690,5 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Commands
         bool IsCollected { get; }
     }
 }
+
+

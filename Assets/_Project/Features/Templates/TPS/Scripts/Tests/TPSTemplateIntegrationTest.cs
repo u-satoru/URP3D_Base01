@@ -1,8 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.TPS;
 using asterivo.Unity60.Features.Templates.TPS.Player;
 using asterivo.Unity60.Features.Templates.TPS.Cover;
@@ -499,18 +499,18 @@ namespace asterivo.Unity60.Features.Templates.TPS.Tests
                 if (result)
                 {
                     _testsPassed++;
-                    LogTest($"✓ PASS: {testName}");
+                    LogTest($"笨・PASS: {testName}");
                 }
                 else
                 {
                     _testsFailed++;
-                    LogTest($"✗ FAIL: {testName}");
+                    LogTest($"笨・FAIL: {testName}");
                 }
             }
             catch (System.Exception e)
             {
                 _testsFailed++;
-                LogTest($"✗ ERROR: {testName} - {e.Message}");
+                LogTest($"笨・ERROR: {testName} - {e.Message}");
             }
         }
 
@@ -598,3 +598,5 @@ namespace asterivo.Unity60.Features.Templates.TPS.Tests
         }
     }
 }
+
+

@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Audio.Interfaces;
@@ -12,8 +12,8 @@ using Sirenix.OdinInspector;
 namespace asterivo.Unity60.Features.Templates.Stealth.Interaction
 {
     /// <summary>
-    /// 環境相互作用システム
-    /// ステルスゲームにおける環境オブジェクトとのインタラクションを管理
+    /// 迺ｰ蠅・嶌莠剃ｽ懃畑繧ｷ繧ｹ繝・Β
+    /// 繧ｹ繝・Ν繧ｹ繧ｲ繝ｼ繝縺ｫ縺翫￠繧狗腸蠅・が繝悶ず繧ｧ繧ｯ繝医→縺ｮ繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ繧堤ｮ｡逅・
     /// </summary>
     public class EnvironmentalInteraction : MonoBehaviour
     {
@@ -367,7 +367,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Interaction
         #region Interaction Command
         
         /// <summary>
-        /// コマンドパターンを使用したインタラクション
+        /// 繧ｳ繝槭Φ繝峨ヱ繧ｿ繝ｼ繝ｳ繧剃ｽｿ逕ｨ縺励◆繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ
         /// </summary>
         private class InteractionCommand : ICommand
         {
@@ -408,7 +408,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Interaction
         #region Stealth Interactables
         
         /// <summary>
-        /// ドアインタラクション
+        /// 繝峨い繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ
         /// </summary>
         [System.Serializable]
         public class StealthDoor : MonoBehaviour, IStealthInteractable
@@ -481,7 +481,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Interaction
         }
         
         /// <summary>
-        /// ディストラクションアイテム
+        /// 繝・ぅ繧ｹ繝医Λ繧ｯ繧ｷ繝ｧ繝ｳ繧｢繧､繝・Β
         /// </summary>
         [System.Serializable]
         public class DistractionItem : MonoBehaviour, IStealthInteractable
@@ -523,7 +523,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Interaction
         }
         
         /// <summary>
-        /// 隠れ場所
+        /// 髫繧悟ｴ謇
         /// </summary>
         [System.Serializable]
         public class HidingSpot : MonoBehaviour, IStealthInteractable
@@ -605,7 +605,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Interaction
         #region Public API
         
         /// <summary>
-        /// 現在インタラクト可能なオブジェクトを取得
+        /// 迴ｾ蝨ｨ繧､繝ｳ繧ｿ繝ｩ繧ｯ繝亥庄閭ｽ縺ｪ繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ蜿門ｾ・
         /// </summary>
         public GameObject GetCurrentInteractable()
         {
@@ -613,7 +613,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Interaction
         }
         
         /// <summary>
-        /// 近くのインタラクト可能オブジェクトのリストを取得
+        /// 霑代￥縺ｮ繧､繝ｳ繧ｿ繝ｩ繧ｯ繝亥庄閭ｽ繧ｪ繝悶ず繧ｧ繧ｯ繝医・繝ｪ繧ｹ繝医ｒ蜿門ｾ・
         /// </summary>
         public List<IStealthInteractable> GetNearbyInteractables()
         {
@@ -621,7 +621,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Interaction
         }
         
         /// <summary>
-        /// インタラクション中かどうか
+        /// 繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ荳ｭ縺九←縺・°
         /// </summary>
         public bool IsInteracting()
         {
@@ -629,7 +629,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Interaction
         }
         
         /// <summary>
-        /// 強制的にインタラクションを実行
+        /// 蠑ｷ蛻ｶ逧・↓繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ繧貞ｮ溯｡・
         /// </summary>
         public void ForceInteraction(GameObject target)
         {
@@ -706,4 +706,6 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Interaction
         #endregion
     }
 }
+
+
 

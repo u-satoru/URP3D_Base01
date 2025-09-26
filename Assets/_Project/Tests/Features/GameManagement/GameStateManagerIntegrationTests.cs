@@ -1,9 +1,9 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using System.Collections;
-using asterivo.Unity60.Core.Services;
-using asterivo.Unity60.Core.Services.Interfaces;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Services.Implementations;
 using asterivo.Unity60.Core.Types;
 using asterivo.Unity60.Core.Events;
@@ -11,8 +11,8 @@ using asterivo.Unity60.Core.Events;
 namespace asterivo.Unity60.Tests.Features.GameManagement
 {
     /// <summary>
-    /// GameStateManagerServiceの統合テスト
-    /// MonoBehaviourとしての動作とServiceLocator統合を検証
+    /// GameStateManagerService縺ｮ邨ｱ蜷医ユ繧ｹ繝・
+    /// MonoBehaviour縺ｨ縺励※縺ｮ蜍穂ｽ懊→ServiceLocator邨ｱ蜷医ｒ讀懆ｨｼ
     /// </summary>
     [TestFixture]
     public class GameStateManagerIntegrationTests
@@ -24,14 +24,14 @@ namespace asterivo.Unity60.Tests.Features.GameManagement
         [SetUp]
         public void Setup()
         {
-            // ServiceLocatorをクリア
+            // ServiceLocator繧偵け繝ｪ繧｢
             ServiceLocator.Clear();
 
-            // EventManagerを登録
+            // EventManager繧堤匳骭ｲ
             _eventManager = new TestEventManager();
             ServiceLocator.Register<IEventManager>(_eventManager);
 
-            // GameStateManagerServiceを持つGameObjectを作成
+            // GameStateManagerService繧呈戟縺､GameObject繧剃ｽ懈・
             _testObject = new GameObject("TestStateManager");
             _stateManager = _testObject.AddComponent<GameStateManagerService>();
         }
@@ -167,7 +167,7 @@ namespace asterivo.Unity60.Tests.Features.GameManagement
             var eventReceived = false;
             GameState receivedState = GameState.MainMenu;
 
-            // リフレクションでprivateフィールドを設定
+            // 繝ｪ繝輔Ξ繧ｯ繧ｷ繝ｧ繝ｳ縺ｧprivate繝輔ぅ繝ｼ繝ｫ繝峨ｒ險ｭ螳・
             var fieldInfo = typeof(GameStateManagerService).GetField("gameStateChangedEvent",
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             if (fieldInfo != null)
@@ -175,7 +175,7 @@ namespace asterivo.Unity60.Tests.Features.GameManagement
                 fieldInfo.SetValue(_stateManager, scriptableEvent);
             }
 
-            // イベントリスナーを設定
+            // 繧､繝吶Φ繝医Μ繧ｹ繝翫・繧定ｨｭ螳・
             var listener = new TestGameStateListener();
             listener.OnEventRaised = (state) =>
             {
@@ -206,14 +206,14 @@ namespace asterivo.Unity60.Tests.Features.GameManagement
         [Test]
         public void IsGameOver_AlwaysReturnsFalse()
         {
-            // GameStateManagerServiceはゲームオーバー判定をScoreServiceに委譲
+            // GameStateManagerService縺ｯ繧ｲ繝ｼ繝繧ｪ繝ｼ繝舌・蛻､螳壹ｒScoreService縺ｫ蟋碑ｭｲ
             Assert.IsFalse(_stateManager.IsGameOver);
         }
 
         [Test]
         public void Priority_ReturnsCorrectValue()
         {
-            // デフォルト値を確認
+            // 繝・ヵ繧ｩ繝ｫ繝亥､繧堤｢ｺ隱・
             Assert.AreEqual(50, _stateManager.Priority);
         }
 
@@ -320,3 +320,5 @@ namespace asterivo.Unity60.Tests.Features.GameManagement
 
     #endregion
 }
+
+

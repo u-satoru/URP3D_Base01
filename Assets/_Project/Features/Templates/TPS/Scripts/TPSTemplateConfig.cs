@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.TPS.Data;
 
 namespace asterivo.Unity60.Features.Templates.TPS
@@ -295,3 +295,5 @@ namespace asterivo.Unity60.Features.Templates.TPS
         }
     }
 }
+
+

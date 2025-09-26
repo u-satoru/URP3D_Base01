@@ -1,21 +1,21 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.Platformer.Settings;
 
 namespace asterivo.Unity60.Features.Templates.Platformer.Services
 {
     /// <summary>
-    /// CheckpointService：ServiceLocator + Event駆動ハイブリッドアーキテクチャによるセーブ・リスポーンシステム
-    /// Learn & Grow価値実現：安全な進捗保存によりプレイヤーの学習体験を向上
+    /// CheckpointService・售erviceLocator + Event鬧・虚繝上う繝悶Μ繝・ラ繧｢繝ｼ繧ｭ繝・け繝√Ε縺ｫ繧医ｋ繧ｻ繝ｼ繝悶・繝ｪ繧ｹ繝昴・繝ｳ繧ｷ繧ｹ繝・Β
+    /// Learn & Grow萓｡蛟､螳溽樟・壼ｮ牙・縺ｪ騾ｲ謐嶺ｿ晏ｭ倥↓繧医ｊ繝励Ξ繧､繝､繝ｼ縺ｮ蟄ｦ鄙剃ｽ馴ｨ薙ｒ蜷台ｸ・
     /// </summary>
     public class CheckpointService : ICheckpointService
     {
-        // セーブデータ構造
+        // 繧ｻ繝ｼ繝悶ョ繝ｼ繧ｿ讒矩
         [System.Serializable]
         public class SaveData
         {
@@ -31,31 +31,31 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
             public float playTime;
         }
 
-        // チェックポイント管理
+        // 繝√ぉ繝・け繝昴う繝ｳ繝育ｮ｡逅・
         private Dictionary<int, Vector3> _checkpoints = new Dictionary<int, Vector3>();
         private Vector3 _lastCheckpointPosition = Vector3.zero;
         private int _currentCheckpointIndex = -1;
         private bool _hasActiveCheckpoint = false;
 
-        // セーブスロット管理
+        // 繧ｻ繝ｼ繝悶せ繝ｭ繝・ヨ邂｡逅・
         private Dictionary<int, SaveData> _saveSlots = new Dictionary<int, SaveData>();
         private SaveData _currentSaveData = new SaveData();
 
-        // 設定とタイマー
+        // 險ｭ螳壹→繧ｿ繧､繝槭・
         private PlatformerCheckpointSettings _settings;
         private float _autoSaveTimer = 0f;
         private bool _autoSaveEnabled = true;
 
-        // ServiceLocator統合とEvent駆動通信
+        // ServiceLocator邨ｱ蜷医→Event鬧・虚騾壻ｿ｡
         private IPlatformerGameManager _gameManager;
         private ICollectionService _collectionService;
 
-        // プロパティ公開
+        // 繝励Ο繝代ユ繧｣蜈ｬ髢・
         public Vector3 LastCheckpointPosition => _lastCheckpointPosition;
         public bool HasActiveCheckpoint => _hasActiveCheckpoint;
-        public bool HasCheckpoint => _hasActiveCheckpoint; // ICheckpointService準拠
+        public bool HasCheckpoint => _hasActiveCheckpoint; // ICheckpointService貅匁侠
 
-        // エラー解決用：メソッド形式でのアクセス
+        // 繧ｨ繝ｩ繝ｼ隗｣豎ｺ逕ｨ・壹Γ繧ｽ繝・ラ蠖｢蠑上〒縺ｮ繧｢繧ｯ繧ｻ繧ｹ
         public Vector3 GetLastCheckpointPosition()
         {
             return _lastCheckpointPosition;
@@ -63,11 +63,11 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         public int CurrentCheckpointIndex => _currentCheckpointIndex;
         public bool IsAutoSaveEnabled => _autoSaveEnabled;
 
-        // IPlatformerService基底インターフェース実装
+        // IPlatformerService蝓ｺ蠎輔う繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ螳溯｣・
         public bool IsInitialized { get; private set; } = false;
         public bool IsEnabled { get; private set; } = true;
 
-        // Event駆動アーキテクチャ：他システムとの疎結合通信
+        // Event鬧・虚繧｢繝ｼ繧ｭ繝・け繝√Ε・壻ｻ悶す繧ｹ繝・Β縺ｨ縺ｮ逍守ｵ仙粋騾壻ｿ｡
         public event Action<Vector3> OnCheckpointActivated;
         public event Action<int> OnProgressSaved;
         public event Action OnProgressLoaded;
@@ -75,7 +75,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         public event Action<Vector3> OnPlayerRespawned;
 
         /// <summary>
-        /// コンストラクタ：設定ベース初期化
+        /// 繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ・夊ｨｭ螳壹・繝ｼ繧ｹ蛻晄悄蛹・
         /// </summary>
         public CheckpointService(PlatformerCheckpointSettings settings)
         {
@@ -84,7 +84,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// IPlatformerService.Initialize実装：設定ベース初期化
+        /// IPlatformerService.Initialize螳溯｣・ｼ夊ｨｭ螳壹・繝ｼ繧ｹ蛻晄悄蛹・
         /// </summary>
         public void Initialize()
         {
@@ -92,7 +92,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
             InitializeFromSettings();
 
-            // ServiceLocator経由で他サービスへの参照取得
+            // ServiceLocator邨檎罰縺ｧ莉悶し繝ｼ繝薙せ縺ｸ縺ｮ蜿ら・蜿門ｾ・
             InitializeServiceReferences();
 
             IsInitialized = true;
@@ -100,14 +100,14 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 設定からの初期化：ScriptableObjectベースのデータ管理
+        /// 險ｭ螳壹°繧峨・蛻晄悄蛹厄ｼ售criptableObject繝吶・繧ｹ縺ｮ繝・・繧ｿ邂｡逅・
         /// </summary>
         private void InitializeFromSettings()
         {
             _autoSaveEnabled = _settings.EnableAutoSave;
             _autoSaveTimer = 0f;
 
-            // セーブスロット初期化
+            // 繧ｻ繝ｼ繝悶せ繝ｭ繝・ヨ蛻晄悄蛹・
             for (int i = 0; i < _settings.MaxSaveSlots; i++)
             {
                 _saveSlots[i] = null;
@@ -117,11 +117,11 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// ServiceLocator統合：他サービスとの連携初期化
+        /// ServiceLocator邨ｱ蜷茨ｼ壻ｻ悶し繝ｼ繝薙せ縺ｨ縺ｮ騾｣謳ｺ蛻晄悄蛹・
         /// </summary>
         private void InitializeServiceReferences()
         {
-            // ServiceLocator経由で他サービスへの参照を取得
+            // ServiceLocator邨檎罰縺ｧ莉悶し繝ｼ繝薙せ縺ｸ縺ｮ蜿ら・繧貞叙蠕・
             _gameManager = ServiceLocator.GetService<IPlatformerGameManager>();
             _collectionService = ServiceLocator.GetService<ICollectionService>();
 
@@ -137,7 +137,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 進捗保存：中央データ管理
+        /// 騾ｲ謐嶺ｿ晏ｭ假ｼ壻ｸｭ螟ｮ繝・・繧ｿ邂｡逅・
         /// </summary>
         public void SaveProgress(int level, int score, int lives)
         {
@@ -148,14 +148,14 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
                 _currentSaveData.playerLives = lives;
                 _currentSaveData.saveTime = DateTime.Now;
 
-                // ServiceLocator経由でGameManagerから体力取得
+                // ServiceLocator邨檎罰縺ｧGameManager縺九ｉ菴灘鴨蜿門ｾ・
                 if (_gameManager != null)
                 {
                     _currentSaveData.playerHealth = _gameManager.PlayerHealth;
                     _currentSaveData.playTime = _gameManager.GameTime;
                 }
 
-                // ServiceLocator経由でCollectionServiceから収集データ取得
+                // ServiceLocator邨檎罰縺ｧCollectionService縺九ｉ蜿朱寔繝・・繧ｿ蜿門ｾ・
                 if (_collectionService != null)
                 {
                     _currentSaveData.collectedItems = _collectionService.GetCollectedItemIds().ToList();
@@ -164,7 +164,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
                 _currentSaveData.playerPosition = _lastCheckpointPosition;
                 _currentSaveData.activatedCheckpoints = new List<int>(_checkpoints.Keys);
 
-                // 非同期保存処理
+                // 髱槫酔譛滉ｿ晏ｭ伜・逅・
                 if (_settings.Performance.EnableAsyncSaving)
                 {
                     SaveDataAsync(_currentSaveData);
@@ -184,7 +184,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 進捗ロード：データ復元と状態同期
+        /// 騾ｲ謐励Ο繝ｼ繝会ｼ壹ョ繝ｼ繧ｿ蠕ｩ蜈・→迥ｶ諷句酔譛・
         /// </summary>
         public void LoadProgress()
         {
@@ -195,26 +195,26 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
                 {
                     _currentSaveData = saveData;
 
-                    // ServiceLocator経由でGameManagerに状態復元
+                    // ServiceLocator邨檎罰縺ｧGameManager縺ｫ迥ｶ諷句ｾｩ蜈・
                     if (_gameManager != null)
                     {
                         _gameManager.SetPlayerHealth(saveData.playerHealth);
-                        // TODO: レベル・スコア・ライフの復元（GameManagerのメソッド拡張が必要）
+                        // TODO: 繝ｬ繝吶Ν繝ｻ繧ｹ繧ｳ繧｢繝ｻ繝ｩ繧､繝輔・蠕ｩ蜈・ｼ・ameManager縺ｮ繝｡繧ｽ繝・ラ諡｡蠑ｵ縺悟ｿ・ｦ・ｼ・
                     }
 
-                    // ServiceLocator経由でCollectionServiceに収集データ復元
+                    // ServiceLocator邨檎罰縺ｧCollectionService縺ｫ蜿朱寔繝・・繧ｿ蠕ｩ蜈・
                     if (_collectionService != null)
                     {
                         _collectionService.RestoreCollectedItems(saveData.collectedItems);
                     }
 
-                    // チェックポイント状態復元
+                    // 繝√ぉ繝・け繝昴う繝ｳ繝育憾諷句ｾｩ蜈・
                     _lastCheckpointPosition = saveData.playerPosition;
                     if (saveData.activatedCheckpoints != null)
                     {
                         foreach (int checkpointId in saveData.activatedCheckpoints)
                         {
-                            // チェックポイント復元処理
+                            // 繝√ぉ繝・け繝昴う繝ｳ繝亥ｾｩ蜈・・逅・
                             if (_checkpoints.ContainsKey(checkpointId))
                             {
                                 _currentCheckpointIndex = checkpointId;
@@ -234,17 +234,17 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// チェックポイントからロード：迅速復帰
+        /// 繝√ぉ繝・け繝昴う繝ｳ繝医°繧峨Ο繝ｼ繝会ｼ夊ｿ・溷ｾｩ蟶ｰ
         /// </summary>
         public void LoadFromCheckpoint()
         {
             if (_hasActiveCheckpoint)
             {
-                // ServiceLocator経由でGameManagerでプレイヤー位置復元
+                // ServiceLocator邨檎罰縺ｧGameManager縺ｧ繝励Ξ繧､繝､繝ｼ菴咲ｽｮ蠕ｩ蜈・
                 if (_gameManager != null)
                 {
-                    // プレイヤーをチェックポイント位置に移動
-                    // TODO: GameManagerにプレイヤー位置設定メソッドが必要
+                    // 繝励Ξ繧､繝､繝ｼ繧偵メ繧ｧ繝・け繝昴う繝ｳ繝井ｽ咲ｽｮ縺ｫ遘ｻ蜍・
+                    // TODO: GameManager縺ｫ繝励Ξ繧､繝､繝ｼ菴咲ｽｮ險ｭ螳壹Γ繧ｽ繝・ラ縺悟ｿ・ｦ・
                 }
 
                 Debug.Log($"Loaded from checkpoint at position: {_lastCheckpointPosition}");
@@ -256,14 +256,14 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// ICheckpointService.SetCheckpoint実装：チェックポイント設定
+        /// ICheckpointService.SetCheckpoint螳溯｣・ｼ壹メ繧ｧ繝・け繝昴う繝ｳ繝郁ｨｭ螳・
         /// </summary>
         public void SetCheckpoint(Vector3 position)
         {
             _lastCheckpointPosition = position;
             _hasActiveCheckpoint = true;
 
-            // 自動保存が有効な場合は即座保存
+            // 閾ｪ蜍穂ｿ晏ｭ倥′譛牙柑縺ｪ蝣ｴ蜷医・蜊ｳ蠎ｧ菫晏ｭ・
             if (_autoSaveEnabled)
             {
                 SaveCurrentState();
@@ -274,7 +274,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 現在状態保存：即座保存
+        /// 迴ｾ蝨ｨ迥ｶ諷倶ｿ晏ｭ假ｼ壼叉蠎ｧ菫晏ｭ・
         /// </summary>
         public void SaveCurrentState()
         {
@@ -289,7 +289,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// チェックポイント登録：配置管理
+        /// 繝√ぉ繝・け繝昴う繝ｳ繝育匳骭ｲ・夐・鄂ｮ邂｡逅・
         /// </summary>
         public void RegisterCheckpoint(Vector3 position, int checkpointId)
         {
@@ -298,7 +298,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// チェックポイント有効化：状態更新とイベント通知
+        /// 繝√ぉ繝・け繝昴う繝ｳ繝域怏蜉ｹ蛹厄ｼ夂憾諷区峩譁ｰ縺ｨ繧､繝吶Φ繝磯夂衍
         /// </summary>
         public void ActivateCheckpoint(int checkpointId)
         {
@@ -308,7 +308,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
                 _lastCheckpointPosition = _checkpoints[checkpointId];
                 _hasActiveCheckpoint = true;
 
-                // 自動保存が有効な場合は即座保存
+                // 閾ｪ蜍穂ｿ晏ｭ倥′譛牙柑縺ｪ蝣ｴ蜷医・蜊ｳ蠎ｧ菫晏ｭ・
                 if (_autoSaveEnabled)
                 {
                     SaveCurrentState();
@@ -324,7 +324,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// リスポーンポイント設定：柔軟な位置管理
+        /// 繝ｪ繧ｹ繝昴・繝ｳ繝昴う繝ｳ繝郁ｨｭ螳夲ｼ壽沐霆溘↑菴咲ｽｮ邂｡逅・
         /// </summary>
         public void SetRespawnPoint(Vector3 position)
         {
@@ -334,7 +334,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// リスポーン位置取得：安全な位置提供
+        /// 繝ｪ繧ｹ繝昴・繝ｳ菴咲ｽｮ蜿門ｾ暦ｼ壼ｮ牙・縺ｪ菴咲ｽｮ謠蝉ｾ・
         /// </summary>
         public Vector3 GetRespawnPosition()
         {
@@ -342,16 +342,16 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// プレイヤーリスポーン：即座復帰処理
+        /// 繝励Ξ繧､繝､繝ｼ繝ｪ繧ｹ繝昴・繝ｳ・壼叉蠎ｧ蠕ｩ蟶ｰ蜃ｦ逅・
         /// </summary>
         public void RespawnPlayer()
         {
             if (_hasActiveCheckpoint)
             {
-                // ServiceLocator経由でGameManagerで復帰処理
+                // ServiceLocator邨檎罰縺ｧGameManager縺ｧ蠕ｩ蟶ｰ蜃ｦ逅・
                 if (_gameManager != null)
                 {
-                    // 体力回復設定に応じた処理
+                    // 菴灘鴨蝗槫ｾｩ險ｭ螳壹↓蠢懊§縺溷・逅・
                     if (_settings.RespawnConfiguration.RestoreHealthOnRespawn)
                     {
                         int restoreAmount = Mathf.RoundToInt(
@@ -371,7 +371,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// リスポーン要求：遅延処理対応
+        /// 繝ｪ繧ｹ繝昴・繝ｳ隕∵ｱゑｼ夐≦蟒ｶ蜃ｦ逅・ｯｾ蠢・
         /// </summary>
         public void RequestRespawn(float delay = 0f)
         {
@@ -379,7 +379,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
             if (delay > 0f)
             {
-                // TODO: 実際のゲームではCoroutineやTimerを使用
+                // TODO: 螳滄圀縺ｮ繧ｲ繝ｼ繝縺ｧ縺ｯCoroutine繧Уimer繧剃ｽｿ逕ｨ
                 Debug.Log($"Respawn requested with {delay}s delay");
             }
             else
@@ -389,7 +389,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// セーブスロット保存：マルチスロット対応
+        /// 繧ｻ繝ｼ繝悶せ繝ｭ繝・ヨ菫晏ｭ假ｼ壹・繝ｫ繝√せ繝ｭ繝・ヨ蟇ｾ蠢・
         /// </summary>
         public void SaveToSlot(int slotIndex)
         {
@@ -405,7 +405,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// セーブスロットロード：選択的復元
+        /// 繧ｻ繝ｼ繝悶せ繝ｭ繝・ヨ繝ｭ繝ｼ繝会ｼ夐∈謚樒噪蠕ｩ蜈・
         /// </summary>
         public void LoadFromSlot(int slotIndex)
         {
@@ -422,7 +422,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// スロット空確認：UI支援
+        /// 繧ｹ繝ｭ繝・ヨ遨ｺ遒ｺ隱搾ｼ啅I謾ｯ謠ｴ
         /// </summary>
         public bool IsSlotEmpty(int slotIndex)
         {
@@ -430,7 +430,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// スロット削除：データ管理
+        /// 繧ｹ繝ｭ繝・ヨ蜑企勁・壹ョ繝ｼ繧ｿ邂｡逅・
         /// </summary>
         public void DeleteSlot(int slotIndex)
         {
@@ -442,7 +442,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 設定更新：ランタイム設定変更対応
+        /// 險ｭ螳壽峩譁ｰ・壹Λ繝ｳ繧ｿ繧､繝險ｭ螳壼､画峩蟇ｾ蠢・
         /// </summary>
         public void UpdateSettings(object settings)
         {
@@ -455,7 +455,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 自動保存制御：柔軟な保存管理
+        /// 閾ｪ蜍穂ｿ晏ｭ伜宛蠕｡・壽沐霆溘↑菫晏ｭ倡ｮ｡逅・
         /// </summary>
         public void SetAutoSave(bool enabled)
         {
@@ -464,7 +464,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 同期セーブ処理
+        /// 蜷梧悄繧ｻ繝ｼ繝門・逅・
         /// </summary>
         private void SaveDataSync(SaveData data)
         {
@@ -474,7 +474,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
                 if (_settings.SaveDataConfiguration.EnableEncryption)
                 {
-                    // TODO: 暗号化処理の実装
+                    // TODO: 證怜捷蛹門・逅・・螳溯｣・
                     json = EncryptData(json);
                 }
 
@@ -495,13 +495,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 非同期セーブ処理
+        /// 髱槫酔譛溘そ繝ｼ繝門・逅・
         /// </summary>
         private async void SaveDataAsync(SaveData data)
         {
             try
             {
-                // TODO: UniTaskを使用した真の非同期処理
+                // TODO: UniTask繧剃ｽｿ逕ｨ縺励◆逵溘・髱槫酔譛溷・逅・
                 SaveDataSync(data);
                 Debug.Log("Async save completed");
             }
@@ -512,7 +512,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 同期ロード処理
+        /// 蜷梧悄繝ｭ繝ｼ繝牙・逅・
         /// </summary>
         private SaveData LoadDataSync()
         {
@@ -552,7 +552,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// チェックポイント情報表示：デバッグ支援
+        /// 繝√ぉ繝・け繝昴う繝ｳ繝域ュ蝣ｱ陦ｨ遉ｺ・壹ョ繝舌ャ繧ｰ謾ｯ謠ｴ
         /// </summary>
         public void ShowCheckpointInfo()
         {
@@ -565,7 +565,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// チェックポイント検証：整合性確認
+        /// 繝√ぉ繝・け繝昴う繝ｳ繝域､懆ｨｼ・壽紛蜷域ｧ遒ｺ隱・
         /// </summary>
         public void ValidateCheckpoints()
         {
@@ -576,7 +576,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
             }
         }
 
-        // ヘルパーメソッド
+        // 繝倥Ν繝代・繝｡繧ｽ繝・ラ
         private string GetSaveFilePath()
         {
             return Path.Combine(Application.persistentDataPath, "platformer_save.json");
@@ -584,19 +584,19 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
         private string EncryptData(string data)
         {
-            // TODO: AES暗号化の実装
-            return data; // 一時的にそのまま返す
+            // TODO: AES證怜捷蛹悶・螳溯｣・
+            return data; // 荳譎ら噪縺ｫ縺昴・縺ｾ縺ｾ霑斐☆
         }
 
         private string DecryptData(string encryptedData)
         {
-            // TODO: AES復号化の実装
-            return encryptedData; // 一時的にそのまま返す
+            // TODO: AES蠕ｩ蜿ｷ蛹悶・螳溯｣・
+            return encryptedData; // 荳譎ら噪縺ｫ縺昴・縺ｾ縺ｾ霑斐☆
         }
 
         private bool ValidateDataIntegrity(SaveData data)
         {
-            // TODO: データ整合性チェックの実装
+            // TODO: 繝・・繧ｿ謨ｴ蜷域ｧ繝√ぉ繝・け縺ｮ螳溯｣・
             return data != null && !string.IsNullOrEmpty(data.levelName);
         }
 
@@ -634,7 +634,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// IPlatformerService.Enable実装：サービス有効化
+        /// IPlatformerService.Enable螳溯｣・ｼ壹し繝ｼ繝薙せ譛牙柑蛹・
         /// </summary>
         public void Enable()
         {
@@ -643,7 +643,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// IPlatformerService.Disable実装：サービス無効化
+        /// IPlatformerService.Disable螳溯｣・ｼ壹し繝ｼ繝薙せ辟｡蜉ｹ蛹・
         /// </summary>
         public void Disable()
         {
@@ -652,7 +652,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// IPlatformerService.Reset実装：サービス状態リセット
+        /// IPlatformerService.Reset螳溯｣・ｼ壹し繝ｼ繝薙せ迥ｶ諷九Μ繧ｻ繝・ヨ
         /// </summary>
         public void Reset()
         {
@@ -668,7 +668,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// IPlatformerService.VerifyServiceLocatorIntegration実装
+        /// IPlatformerService.VerifyServiceLocatorIntegration螳溯｣・
         /// </summary>
         public bool VerifyServiceLocatorIntegration()
         {
@@ -689,7 +689,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// IPlatformerService.UpdateService実装：自動保存とタイマー管理
+        /// IPlatformerService.UpdateService螳溯｣・ｼ夊・蜍穂ｿ晏ｭ倥→繧ｿ繧､繝槭・邂｡逅・
         /// </summary>
         public void UpdateService(float deltaTime)
         {
@@ -707,7 +707,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 更新処理：自動保存とタイマー管理（レガシー互換）
+        /// 譖ｴ譁ｰ蜃ｦ逅・ｼ夊・蜍穂ｿ晏ｭ倥→繧ｿ繧､繝槭・邂｡逅・ｼ医Ξ繧ｬ繧ｷ繝ｼ莠呈鋤・・
         /// </summary>
         public void Update(float deltaTime)
         {
@@ -715,18 +715,18 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// リソース解放：IDisposable実装
+        /// 繝ｪ繧ｽ繝ｼ繧ｹ隗｣謾ｾ・唔Disposable螳溯｣・
         /// </summary>
         public void Dispose()
         {
-            // イベント解除
+            // 繧､繝吶Φ繝郁ｧ｣髯､
             OnCheckpointActivated = null;
             OnProgressSaved = null;
             OnProgressLoaded = null;
             OnRespawnRequested = null;
             OnPlayerRespawned = null;
 
-            // データクリア
+            // 繝・・繧ｿ繧ｯ繝ｪ繧｢
             _checkpoints.Clear();
             _saveSlots.Clear();
 
@@ -735,7 +735,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
 #if UNITY_EDITOR
         /// <summary>
-        /// エディタ用デバッグ情報
+        /// 繧ｨ繝・ぅ繧ｿ逕ｨ繝・ヰ繝・げ諠・ｱ
         /// </summary>
         public void ShowDebugInfo()
         {
@@ -751,3 +751,5 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 #endif
     }
 }
+
+

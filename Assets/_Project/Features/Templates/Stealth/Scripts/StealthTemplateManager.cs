@@ -1,8 +1,8 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Data;
 using asterivo.Unity60.Features.Templates.Stealth.Configuration;
 using asterivo.Unity60.Features.Templates.Stealth.Mechanics;
@@ -14,10 +14,10 @@ using asterivo.Unity60.Features.Templates.Stealth.Events;
 namespace asterivo.Unity60.Features.Templates.Stealth
 {
     /// <summary>
-    /// Layer 2: Runtime Management（実行時管理層）
-    /// ステルステンプレートのメインコントローラー
-    /// ServiceLocator + Event駆動のハイブリッドアーキテクチャ実装
-    /// Learn & Grow価値実現の中央制御システム
+    /// Layer 2: Runtime Management・亥ｮ溯｡梧凾邂｡逅・ｱ､・・
+    /// 繧ｹ繝・Ν繧ｹ繝・Φ繝励Ξ繝ｼ繝医・繝｡繧､繝ｳ繧ｳ繝ｳ繝医Ο繝ｼ繝ｩ繝ｼ
+    /// ServiceLocator + Event鬧・虚縺ｮ繝上う繝悶Μ繝・ラ繧｢繝ｼ繧ｭ繝・け繝√Ε螳溯｣・
+    /// Learn & Grow萓｡蛟､螳溽樟縺ｮ荳ｭ螟ｮ蛻ｶ蠕｡繧ｷ繧ｹ繝・Β
     /// </summary>
     public class StealthTemplateManager : MonoBehaviour
     {
@@ -31,13 +31,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         public StealthTemplateConfig Config => _config;
         #endregion
 
-        #region Core System References（ServiceLocator統合）
+        #region Core System References・・erviceLocator邨ｱ蜷茨ｼ・
         private StealthMechanicsController _mechanicsController;
         private StealthAICoordinator _aiCoordinator;
         private StealthEnvironmentManager _environmentManager;
         private StealthUIManager _uiManager;
 
-        // 既存オーディオシステム統合（StealthAudioCoordinator）
+        // 譌｢蟄倥が繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β邨ｱ蜷茨ｼ・tealthAudioCoordinator・・
         private asterivo.Unity60.Core.Audio.StealthAudioCoordinator _audioCoordinator;
 
         // Event System Integration
@@ -82,9 +82,9 @@ namespace asterivo.Unity60.Features.Templates.Stealth
 
         private void Update()
         {
-            // パフォーマンス監視（最適化のため低頻度実行）
+            // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ逶｣隕厄ｼ域怙驕ｩ蛹悶・縺溘ａ菴朱ｻ蠎ｦ螳溯｡鯉ｼ・
             // TODO: Implement performance monitoring when StealthPerformanceMonitor is available
-            // if (Time.frameCount % 60 == 0) // 60フレームごと
+            // if (Time.frameCount % 60 == 0) // 60繝輔Ξ繝ｼ繝縺斐→
             // {
             //     _performanceMonitor?.UpdatePerformanceMetrics();
             // }
@@ -122,14 +122,14 @@ namespace asterivo.Unity60.Features.Templates.Stealth
             _environmentManager = GetOrCreateSubsystem<StealthEnvironmentManager>();
             _uiManager = GetOrCreateSubsystem<StealthUIManager>();
 
-            // 既存オーディオシステム統合
+            // 譌｢蟄倥が繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β邨ｱ蜷・
             _audioCoordinator = FindFirstObjectByType<asterivo.Unity60.Core.Audio.StealthAudioCoordinator>();
             if (_audioCoordinator == null)
             {
                 Debug.LogWarning("StealthTemplateManager: StealthAudioCoordinator not found. Audio integration may not work properly.");
             }
 
-            // ServiceLocator統合: StealthMechanics → IStealthMechanicsService登録
+            // ServiceLocator邨ｱ蜷・ StealthMechanics 竊・IStealthMechanicsService逋ｻ骭ｲ
             RegisterStealthMechanicsService();
 
             // Performance monitoring
@@ -146,13 +146,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
-        /// ServiceLocator統合: StealthMechanics → IStealthMechanicsService登録
-        /// Phase 1: Core Service Integration の核心実装
-        /// Learn & Grow価値実現のための統一API提供
+        /// ServiceLocator邨ｱ蜷・ StealthMechanics 竊・IStealthMechanicsService逋ｻ骭ｲ
+        /// Phase 1: Core Service Integration 縺ｮ譬ｸ蠢・ｮ溯｣・
+        /// Learn & Grow萓｡蛟､螳溽樟縺ｮ縺溘ａ縺ｮ邨ｱ荳API謠蝉ｾ・
         /// </summary>
         private void RegisterStealthMechanicsService()
         {
-            // StealthMechanicsコンポーネントを検索
+            // StealthMechanics繧ｳ繝ｳ繝昴・繝阪Φ繝医ｒ讀懃ｴ｢
             var stealthMechanics = FindFirstObjectByType<StealthMechanics>();
 
             if (stealthMechanics == null)
@@ -161,12 +161,12 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                 return;
             }
 
-            // ServiceLocatorにStealthMechanicsとして登録
+            // ServiceLocator縺ｫStealthMechanics縺ｨ縺励※逋ｻ骭ｲ
             try
             {
                 ServiceLocator.RegisterService<StealthMechanics>(stealthMechanics);
 
-                // サービス登録通知
+                // 繧ｵ繝ｼ繝薙せ逋ｻ骭ｲ騾夂衍
                 stealthMechanics.OnServiceRegistered();
 
                 Debug.Log("StealthTemplateManager: StealthMechanics successfully registered as IStealthMechanicsService in ServiceLocator.");
@@ -180,7 +180,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
 
         private T GetOrCreateSubsystem<T>() where T : Component
         {
-            // まず子オブジェクトから検索
+            // 縺ｾ縺壼ｭ舌が繝悶ず繧ｧ繧ｯ繝医°繧画､懃ｴ｢
             T component = GetComponentInChildren<T>();
             if (component != null)
             {
@@ -188,7 +188,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                 return component;
             }
 
-            // シーン全体から検索
+            // 繧ｷ繝ｼ繝ｳ蜈ｨ菴薙°繧画､懃ｴ｢
             component = FindFirstObjectByType<T>();
             if (component != null)
             {
@@ -196,7 +196,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                 return component;
             }
 
-            // 新規作成
+            // 譁ｰ隕丈ｽ懈・
             GameObject subsystemObject = new GameObject(typeof(T).Name);
             subsystemObject.transform.SetParent(transform);
             component = subsystemObject.AddComponent<T>();
@@ -246,10 +246,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth
 
             Debug.Log("StealthTemplateManager: Applying configuration...");
 
-            // 各サブシステムに設定を適用
+            // 蜷・し繝悶す繧ｹ繝・Β縺ｫ險ｭ螳壹ｒ驕ｩ逕ｨ
             ApplyConfigurationToSubsystems();
 
-            // Event駆動による設定変更通知
+            // Event鬧・虚縺ｫ繧医ｋ險ｭ螳壼､画峩騾夂衍
             RaiseStealthConfigurationChangedEvent(config);
 
             Debug.Log("StealthTemplateManager: Configuration applied successfully.");
@@ -281,15 +281,15 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                 _uiManager.ApplyConfiguration(_config.UISettings);
             }
 
-            // Audio Coordinator（既存システム統合）
+            // Audio Coordinator・域里蟄倥す繧ｹ繝・Β邨ｱ蜷茨ｼ・
             if (_audioCoordinator != null)
             {
-                // 既存のStealthAudioCoordinatorに設定を適用
-                // 具体的な適用方法は既存の実装に依存
+                // 譌｢蟄倥・StealthAudioCoordinator縺ｫ險ｭ螳壹ｒ驕ｩ逕ｨ
+                // 蜈ｷ菴鍋噪縺ｪ驕ｩ逕ｨ譁ｹ豕輔・譌｢蟄倥・螳溯｣・↓萓晏ｭ・
                 Debug.Log("StealthTemplateManager: Audio configuration applied via StealthAudioCoordinator");
             }
 
-            // Tutorial System（Learn & Grow価値実現）
+            // Tutorial System・・earn & Grow萓｡蛟､螳溽樟・・
             if (_tutorialSystem != null)
             {
                 // TODO: Implement StealthTutorialSystem.ApplyConfiguration when system is ready
@@ -297,7 +297,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
                 Debug.Log("StealthTemplateManager: Tutorial system configuration would be applied here");
             }
 
-            // Progression Tracker（Learn & Grow価値実現）
+            // Progression Tracker・・earn & Grow萓｡蛟､螳溽樟・・
             if (_progressionTracker != null)
             {
                 // TODO: Implement StealthProgressionTracker.ApplyConfiguration when system is ready
@@ -315,7 +315,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth
 
         private void LoadDefaultConfiguration()
         {
-            // デフォルト設定の作成
+            // 繝・ヵ繧ｩ繝ｫ繝郁ｨｭ螳壹・菴懈・
             var defaultConfig = ScriptableObject.CreateInstance<StealthTemplateConfig>();
             defaultConfig.ResetConfiguration();
             
@@ -326,14 +326,14 @@ namespace asterivo.Unity60.Features.Templates.Stealth
 
         private void RaiseStealthConfigurationChangedEvent(StealthTemplateConfig config)
         {
-            // カスタムイベントデータの作成とEvent発行
+            // 繧ｫ繧ｹ繧ｿ繝繧､繝吶Φ繝医ョ繝ｼ繧ｿ縺ｮ菴懈・縺ｨEvent逋ｺ陦・
             var configData = new StealthConfigurationEventData
             {
                 Config = config,
                 Timestamp = Time.time
             };
 
-            // 設定変更イベントの発行
+            // 險ｭ螳壼､画峩繧､繝吶Φ繝医・逋ｺ陦・
             if (_eventChannels.TryGetValue("StealthStateChanged", out GameEvent stealthEvent))
             {
                 stealthEvent.Raise();
@@ -488,10 +488,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
-        /// 検出イベントハンドラー
-        /// StealthDetectionEventから呼び出される
+        /// 讀懷・繧､繝吶Φ繝医ワ繝ｳ繝峨Λ繝ｼ
+        /// StealthDetectionEvent縺九ｉ蜻ｼ縺ｳ蜃ｺ縺輔ｌ繧・
         /// </summary>
-        /// <param name="detectionEvent">検出イベント</param>
+        /// <param name="detectionEvent">讀懷・繧､繝吶Φ繝・/param>
         public void HandleDetectionEvent(StealthDetectionEvent detectionEvent)
         {
             if (detectionEvent == null)
@@ -502,22 +502,22 @@ namespace asterivo.Unity60.Features.Templates.Stealth
 
             Debug.Log($"StealthTemplateManager: Handling detection event - SuspicionLevel: {detectionEvent.SuspicionLevel}, Position: {detectionEvent.DetectionPosition}");
 
-            // AI Coordinator에 검출 이벤트 전달
+            // AI Coordinator・・・・・・ｴ・､孖ｸ ・・峡
             if (_aiCoordinator != null)
             {
                 _aiCoordinator.OnDetectionEvent(detectionEvent);
             }
 
-            // UI Manager에 검출 이벤트 전달
+            // UI Manager・・・・・・ｴ・､孖ｸ ・・峡
             if (_uiManager != null)
             {
                 _uiManager.OnDetectionLevelChanged(detectionEvent.SuspicionLevel);
             }
 
-            // Audio Coordinator에 검출 이벤트 전달
+            // Audio Coordinator・・・・・・ｴ・､孖ｸ ・・峡
             if (_audioCoordinator != null)
             {
-                // 疑心レベルに基づいて適切なメソッドを呼び出し
+                // 逍大ｿ・Ξ繝吶Ν縺ｫ蝓ｺ縺･縺・※驕ｩ蛻・↑繝｡繧ｽ繝・ラ繧貞他縺ｳ蜃ｺ縺・
                 if (detectionEvent.SuspicionLevel > 0.5f)
                 {
                     _audioCoordinator.OnPlayerExposed();
@@ -530,10 +530,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         }
 
         /// <summary>
-        /// 검출 이벤트 실행 취소 핸들러
-        /// StealthDetectionEventから呼び出される
+        /// ・・・・ｴ・､孖ｸ ・､嵂・・ｨ・・﨑ｸ・､・ｬ
+        /// StealthDetectionEvent縺九ｉ蜻ｼ縺ｳ蜃ｺ縺輔ｌ繧・
         /// </summary>
-        /// <param name="detectionEvent">검출 이벤트</param>
+        /// <param name="detectionEvent">・・・・ｴ・､孖ｸ</param>
         public void HandleDetectionEventUndo(StealthDetectionEvent detectionEvent)
         {
             if (detectionEvent == null)
@@ -544,27 +544,27 @@ namespace asterivo.Unity60.Features.Templates.Stealth
 
             Debug.Log($"StealthTemplateManager: Undoing detection event - SuspicionLevel: {detectionEvent.SuspicionLevel}");
 
-            // 각 시스템에 실행 취소 통지 - 隠蔽状態復元
+            // ・・・懍侃奛懍乱 ・､嵂・・ｨ・・奝ｵ・ - 髫阡ｽ迥ｶ諷句ｾｩ蜈・
             if (_uiManager != null)
             {
-                // 検知レベルを0に戻してUI更新
+                // 讀懃衍繝ｬ繝吶Ν繧・縺ｫ謌ｻ縺励※UI譖ｴ譁ｰ
                 _uiManager.OnDetectionLevelChanged(0.0f);
             }
 
             if (_audioCoordinator != null)
             {
-                // プレイヤーを隠蔽状態に戻す
+                // 繝励Ξ繧､繝､繝ｼ繧帝國阡ｽ迥ｶ諷九↓謌ｻ縺・
                 _audioCoordinator.OnPlayerConcealed(1.0f);
             }
 
-            // AI Coordinatorは既存メソッドで警戒レベルリセット処理
+            // AI Coordinator縺ｯ譌｢蟄倥Γ繧ｽ繝・ラ縺ｧ隴ｦ謌偵Ξ繝吶Ν繝ｪ繧ｻ繝・ヨ蜃ｦ逅・
             Debug.Log("Detection event undo completed - all systems restored to concealed state");
         }
         #endregion
     }
 
     /// <summary>
-    /// ステルス設定変更イベント用データ構造
+    /// 繧ｹ繝・Ν繧ｹ險ｭ螳壼､画峩繧､繝吶Φ繝育畑繝・・繧ｿ讒矩
     /// </summary>
     [System.Serializable]
     public class StealthConfigurationEventData
@@ -573,3 +573,5 @@ namespace asterivo.Unity60.Features.Templates.Stealth
         public float Timestamp;
     }
 }
+
+

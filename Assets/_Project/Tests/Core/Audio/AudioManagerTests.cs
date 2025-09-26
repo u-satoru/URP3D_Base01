@@ -1,18 +1,18 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using System.Collections;
 using asterivo.Unity60.Tests.Helpers;
 using asterivo.Unity60.Core.Audio;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio.Interfaces;
 
 namespace asterivo.Unity60.Tests.Core.Audio
 {
     /// <summary>
-    /// AudioManagerの単体テスト
-    /// Week 2 テストインフラ構築の一環として作成
+    /// AudioManager縺ｮ蜊倅ｽ薙ユ繧ｹ繝・
+    /// Week 2 繝・せ繝医う繝ｳ繝輔Λ讒狗ｯ峨・荳迺ｰ縺ｨ縺励※菴懈・
     /// </summary>
     [TestFixture]
     public class AudioManagerTests
@@ -27,14 +27,14 @@ namespace asterivo.Unity60.Tests.Core.Audio
         {
             TestHelpers.ResetFeatureFlagsForTest();
             
-            // ServiceLocatorのセットアップ
+            // ServiceLocator縺ｮ繧ｻ繝・ヨ繧｢繝・・
             TestHelpers.SetupTestServiceLocator();
             
-            // AudioManagerオブジェクトの作成
+            // AudioManager繧ｪ繝悶ず繧ｧ繧ｯ繝医・菴懈・
             audioManagerObject = TestHelpers.CreateTestGameObject("AudioManager");
             audioManager = audioManagerObject.AddComponent<AudioManager>();
             
-            // AudioSourceコンポーネントの追加
+            // AudioSource繧ｳ繝ｳ繝昴・繝阪Φ繝医・霑ｽ蜉
             audioManagerObject.AddComponent<AudioSource>();
         }
 
@@ -50,7 +50,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Basic Functionality Tests
 
         /// <summary>
-        /// AudioManagerが正常に初期化されることをテスト
+        /// AudioManager縺梧ｭ｣蟶ｸ縺ｫ蛻晄悄蛹悶＆繧後ｋ縺薙→繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void AudioManager_ShouldInitialize_Properly()
@@ -61,7 +61,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// AudioManagerがSingletonパターンで動作することをテスト
+        /// AudioManager縺郡ingleton繝代ち繝ｼ繝ｳ縺ｧ蜍穂ｽ懊☆繧九％縺ｨ繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void AudioManager_ShouldImplement_SingletonPattern()
@@ -76,7 +76,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// ServiceLocator経由でAudioManagerが取得できることをテスト
+        /// ServiceLocator邨檎罰縺ｧAudioManager縺悟叙蠕励〒縺阪ｋ縺薙→繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void AudioManager_ShouldBeAccessible_ViaServiceLocator()
@@ -97,7 +97,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Audio Playback Tests
 
         /// <summary>
-        /// 音声再生の基本機能をテスト
+        /// 髻ｳ螢ｰ蜀咲函縺ｮ蝓ｺ譛ｬ讖溯・繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void PlaySound_ShouldExecute_WithoutErrors()
@@ -111,7 +111,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// 音声停止機能をテスト
+        /// 髻ｳ螢ｰ蛛懈ｭ｢讖溯・繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void StopSound_ShouldExecute_WithoutErrors()
@@ -125,7 +125,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// 音量設定機能をテスト
+        /// 髻ｳ驥剰ｨｭ螳壽ｩ溯・繧偵ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void SetMasterVolume_ShouldUpdate_AudioSourceVolume()
@@ -143,7 +143,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// 音量の境界値テスト
+        /// 髻ｳ驥上・蠅・阜蛟､繝・せ繝・
         /// </summary>
         [TestCase(0.0f)]
         [TestCase(1.0f)]
@@ -160,7 +160,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// 無効な音量値の処理をテスト
+        /// 辟｡蜉ｹ縺ｪ髻ｳ驥丞､縺ｮ蜃ｦ逅・ｒ繝・せ繝・
         /// </summary>
         [TestCase(-0.1f)]
         [TestCase(1.1f)]
@@ -181,7 +181,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region ServiceHelper Integration Tests
 
         /// <summary>
-        /// ServiceHelperとの統合をテスト
+        /// ServiceHelper縺ｨ縺ｮ邨ｱ蜷医ｒ繝・せ繝・
         /// </summary>
         [Test]
         public void ServiceHelper_ShouldRetrieve_AudioManager()
@@ -197,7 +197,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// ServiceLocator無効時のフォールバック動作をテスト
+        /// ServiceLocator辟｡蜉ｹ譎ゅ・繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ蜍穂ｽ懊ｒ繝・せ繝・
         /// </summary>
         [Test]
         public void ServiceHelper_ShouldFallback_WhenServiceLocatorDisabled()
@@ -209,7 +209,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
             var retrievedManager = asterivo.Unity60.Core.Helpers.ServiceHelper.GetServiceWithFallback<AudioManager>();
             
             // Assert
-            // FindFirstObjectByTypeでAudioManagerが見つかることを確認
+            // FindFirstObjectByType縺ｧAudioManager縺瑚ｦ九▽縺九ｋ縺薙→繧堤｢ｺ隱・
             Assert.IsNotNull(retrievedManager, "ServiceHelper should fallback to FindFirstObjectByType");
         }
 
@@ -218,14 +218,14 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Performance Tests
 
         /// <summary>
-        /// 音声再生のパフォーマンステスト
+        /// 髻ｳ螢ｰ蜀咲函縺ｮ繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ繝・せ繝・
         /// </summary>
         [Test]
         public void PlaySound_ShouldComplete_WithinPerformanceThreshold()
         {
             // Arrange
             string testSoundName = "performance-test-sound";
-            float maxExecutionTime = 0.001f; // 1ms以内
+            float maxExecutionTime = 0.001f; // 1ms莉･蜀・
 
             // Act & Assert
             TestHelpers.AssertExecutionTime(
@@ -236,14 +236,14 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// 複数音声の同時再生パフォーマンステスト
+        /// 隍・焚髻ｳ螢ｰ縺ｮ蜷梧凾蜀咲函繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ繝・せ繝・
         /// </summary>
         [Test]
         public void MultipleSounds_ShouldPlay_WithinPerformanceThreshold()
         {
             // Arrange
             string[] soundNames = { "sound1", "sound2", "sound3", "sound4", "sound5" };
-            float maxExecutionTime = 0.005f; // 5ms以内
+            float maxExecutionTime = 0.005f; // 5ms莉･蜀・
 
             // Act & Assert
             TestHelpers.AssertExecutionTime(
@@ -264,7 +264,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Error Handling Tests
 
         /// <summary>
-        /// null引数の処理をテスト
+        /// null蠑墓焚縺ｮ蜃ｦ逅・ｒ繝・せ繝・
         /// </summary>
         [Test]
         public void PlaySound_ShouldHandle_NullInput()
@@ -275,7 +275,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// 空文字列引数の処理をテスト
+        /// 遨ｺ譁・ｭ怜・蠑墓焚縺ｮ蜃ｦ逅・ｒ繝・せ繝・
         /// </summary>
         [Test]
         public void PlaySound_ShouldHandle_EmptyString()
@@ -286,7 +286,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// 存在しない音声ファイルの処理をテスト
+        /// 蟄伜惠縺励↑縺・浹螢ｰ繝輔ぃ繧､繝ｫ縺ｮ蜃ｦ逅・ｒ繝・せ繝・
         /// </summary>
         [Test]
         public void PlaySound_ShouldHandle_NonexistentSound()
@@ -304,7 +304,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Integration Tests
 
         /// <summary>
-        /// AudioManagerとFeatureFlagsの統合テスト
+        /// AudioManager縺ｨFeatureFlags縺ｮ邨ｱ蜷医ユ繧ｹ繝・
         /// </summary>
         [Test]
         public void AudioManager_ShouldRespect_FeatureFlags()
@@ -327,7 +327,7 @@ namespace asterivo.Unity60.Tests.Core.Audio
         #region Helper Methods
 
         /// <summary>
-        /// AudioManagerの基本設定を検証
+        /// AudioManager縺ｮ蝓ｺ譛ｬ險ｭ螳壹ｒ讀懆ｨｼ
         /// </summary>
         private void AssertAudioManagerBasicSetup()
         {
@@ -336,14 +336,16 @@ namespace asterivo.Unity60.Tests.Core.Audio
         }
 
         /// <summary>
-        /// テスト用AudioClipを作成
+        /// 繝・せ繝育畑AudioClip繧剃ｽ懈・
         /// </summary>
         private AudioClip CreateTestAudioClip()
         {
-            // テスト用の空のAudioClipを作成
+            // 繝・せ繝育畑縺ｮ遨ｺ縺ｮAudioClip繧剃ｽ懈・
             return AudioClip.Create("TestClip", 44100, 1, 44100, false);
         }
 
         #endregion
     }
 }
+
+

@@ -1,12 +1,12 @@
-using UnityEngine;
-using asterivo.Unity60.Core.Services;
+﻿using UnityEngine;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.ActionRPG.Services;
 
 namespace asterivo.Unity60.Features.ActionRPG
 {
     /// <summary>
-    /// ActionRPG機能のブートストラッパー
-    /// ServiceLocatorへのサービス登録と初期化を担当
+    /// ActionRPG讖溯・縺ｮ繝悶・繝医せ繝医Λ繝・ヱ繝ｼ
+    /// ServiceLocator縺ｸ縺ｮ繧ｵ繝ｼ繝薙せ逋ｻ骭ｲ縺ｨ蛻晄悄蛹悶ｒ諡・ｽ・
     /// </summary>
     public static class ActionRPGBootstrapper
     {
@@ -14,54 +14,54 @@ namespace asterivo.Unity60.Features.ActionRPG
         private static ActionRPGServiceRegistry _serviceRegistry;
 
         /// <summary>
-        /// ActionRPG機能を初期化
+        /// ActionRPG讖溯・繧貞・譛溷喧
         /// </summary>
         public static void Initialize()
         {
             if (_isInitialized)
             {
-                Debug.LogWarning("ActionRPGBootstrapper: 既に初期化されています");
+                Debug.LogWarning("ActionRPGBootstrapper: 譌｢縺ｫ蛻晄悄蛹悶＆繧後※縺・∪縺・);
                 return;
             }
 
-            Debug.Log("ActionRPGBootstrapper: 初期化開始");
+            Debug.Log("ActionRPGBootstrapper: 蛻晄悄蛹夜幕蟋・);
 
-            // サービスを作成して登録
+            // 繧ｵ繝ｼ繝薙せ繧剃ｽ懈・縺励※逋ｻ骭ｲ
             _serviceRegistry = new ActionRPGServiceRegistry();
             ServiceLocator.Register<IActionRPGService>(_serviceRegistry);
 
             _isInitialized = true;
-            Debug.Log("ActionRPGBootstrapper: 初期化完了 - ActionRPGサービスがServiceLocatorに登録されました");
+            Debug.Log("ActionRPGBootstrapper: 蛻晄悄蛹門ｮ御ｺ・- ActionRPG繧ｵ繝ｼ繝薙せ縺郡erviceLocator縺ｫ逋ｻ骭ｲ縺輔ｌ縺ｾ縺励◆");
         }
 
         /// <summary>
-        /// ActionRPG機能をシャットダウン
+        /// ActionRPG讖溯・繧偵す繝｣繝・ヨ繝繧ｦ繝ｳ
         /// </summary>
         public static void Shutdown()
         {
             if (!_isInitialized)
             {
-                Debug.LogWarning("ActionRPGBootstrapper: 初期化されていません");
+                Debug.LogWarning("ActionRPGBootstrapper: 蛻晄悄蛹悶＆繧後※縺・∪縺帙ｓ");
                 return;
             }
 
-            Debug.Log("ActionRPGBootstrapper: シャットダウン開始");
+            Debug.Log("ActionRPGBootstrapper: 繧ｷ繝｣繝・ヨ繝繧ｦ繝ｳ髢句ｧ・);
 
-            // ServiceLocatorから解除
+            // ServiceLocator縺九ｉ隗｣髯､
             if (ServiceLocator.TryGet<IActionRPGService>(out var service))
             {
                 service.Shutdown();
-                // ServiceLocatorに解除メソッドがあれば呼び出す
+                // ServiceLocator縺ｫ隗｣髯､繝｡繧ｽ繝・ラ縺後≠繧後・蜻ｼ縺ｳ蜃ｺ縺・
                 // ServiceLocator.Unregister<IActionRPGService>();
             }
 
             _serviceRegistry = null;
             _isInitialized = false;
-            Debug.Log("ActionRPGBootstrapper: シャットダウン完了");
+            Debug.Log("ActionRPGBootstrapper: 繧ｷ繝｣繝・ヨ繝繧ｦ繝ｳ螳御ｺ・);
         }
 
         /// <summary>
-        /// 現在のサービスインスタンスを取得
+        /// 迴ｾ蝨ｨ縺ｮ繧ｵ繝ｼ繝薙せ繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ繧貞叙蠕・
         /// </summary>
         public static ActionRPGServiceRegistry GetServiceRegistry()
         {
@@ -69,8 +69,10 @@ namespace asterivo.Unity60.Features.ActionRPG
         }
 
         /// <summary>
-        /// 初期化状態を取得
+        /// 蛻晄悄蛹也憾諷九ｒ蜿門ｾ・
         /// </summary>
         public static bool IsInitialized => _isInitialized;
     }
 }
+
+

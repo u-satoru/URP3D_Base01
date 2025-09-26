@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using NUnit.Framework;
 using UnityEngine;
@@ -11,13 +11,13 @@ using asterivo.Unity60.Core.Audio.Services;
 using asterivo.Unity60.Core.Audio.Interfaces;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Debug;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 
 namespace asterivo.Unity60.Tests.Core.Services
 {
     /// <summary>
-    /// 移行システムの統合・リアルタイム監視テストスイート
-    /// Phase 3移行計画 Step 3.3の最終統合検証
+    /// 遘ｻ陦後す繧ｹ繝・Β縺ｮ邨ｱ蜷医・繝ｪ繧｢繝ｫ繧ｿ繧､繝逶｣隕悶ユ繧ｹ繝医せ繧､繝ｼ繝・
+    /// Phase 3遘ｻ陦瑚ｨ育判 Step 3.3縺ｮ譛邨らｵｱ蜷域､懆ｨｼ
     /// </summary>
     [TestFixture]
     public class MigrationIntegrationTests 
@@ -610,7 +610,7 @@ namespace asterivo.Unity60.Tests.Core.Services
                 }
             };
             
-            // ServiceLocator経由でのアクセス (Phase 2 移行後)
+            // ServiceLocator邨檎罰縺ｧ縺ｮ繧｢繧ｯ繧ｻ繧ｹ (Phase 2 遘ｻ陦悟ｾ・
             var instance = ServiceLocator.GetService<ICommandPoolService>();
             
             Application.logMessageReceived -= (condition, stackTrace, type) => { };
@@ -640,7 +640,7 @@ namespace asterivo.Unity60.Tests.Core.Services
                 }
             };
             
-            // ServiceLocator経由でのアクセス (Phase 2 移行後)
+            // ServiceLocator邨檎罰縺ｧ縺ｮ繧｢繧ｯ繧ｻ繧ｹ (Phase 2 遘ｻ陦悟ｾ・
             var instance = ServiceLocator.GetService<ICommandPoolService>();
             
             Application.logMessageReceived -= (condition, stackTrace, type) => { };
@@ -851,3 +851,5 @@ namespace asterivo.Unity60.Tests.Core.Services
         #endregion
     }
 }
+
+

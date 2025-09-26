@@ -1,8 +1,8 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
-using asterivo.Unity60.Core.Services;
-using asterivo.Unity60.Core.Services.Interfaces;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Types;
 using asterivo.Unity60.Features.GameManagement.Services;
 using asterivo.Unity60.Features.GameManagement.Interfaces;
@@ -11,8 +11,8 @@ using asterivo.Unity60.Features.GameManagement.Events;
 namespace asterivo.Unity60.Tests.Features.GameManagement
 {
     /// <summary>
-    /// GameManagementイベントシステムの動作テスト
-    /// EventManagerとGameManagerServiceの連携を検証
+    /// GameManagement繧､繝吶Φ繝医す繧ｹ繝・Β縺ｮ蜍穂ｽ懊ユ繧ｹ繝・
+    /// EventManager縺ｨGameManagerService縺ｮ騾｣謳ｺ繧呈､懆ｨｼ
     /// </summary>
     [TestFixture]
     public class GameManagementEventSystemTests
@@ -25,18 +25,18 @@ namespace asterivo.Unity60.Tests.Features.GameManagement
         [SetUp]
         public void Setup()
         {
-            // ServiceLocatorをクリア
+            // ServiceLocator繧偵け繝ｪ繧｢
             ServiceLocator.Clear();
 
-            // EventManagerを登録
+            // EventManager繧堤匳骭ｲ
             _eventManager = new EventManager();
             ServiceLocator.Register<IEventManager>(_eventManager);
 
-            // GameManagerServiceを登録
+            // GameManagerService繧堤匳骭ｲ
             _gameManager = new GameManagerService();
             ServiceLocator.Register<IGameManager>(_gameManager);
 
-            // イベントレシーバー初期化
+            // 繧､繝吶Φ繝医Ξ繧ｷ繝ｼ繝舌・蛻晄悄蛹・
             _receivedEvents = new List<object>();
             _eventCounts = new Dictionary<string, int>();
         }
@@ -442,3 +442,5 @@ namespace asterivo.Unity60.Tests.Features.GameManagement
 
     #endregion
 }
+
+

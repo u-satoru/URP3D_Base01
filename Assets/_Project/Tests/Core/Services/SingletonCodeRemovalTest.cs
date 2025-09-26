@@ -1,15 +1,15 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 
 namespace asterivo.Unity60.Tests.Core.Services
 {
     /// <summary>
-    /// Step 3.11: 最終クリーンアップ システムのテスト
-    /// SingletonCodeRemover の機能テスト
+    /// Step 3.11: 譛邨ゅけ繝ｪ繝ｼ繝ｳ繧｢繝・・ 繧ｷ繧ｹ繝・Β縺ｮ繝・せ繝・
+    /// SingletonCodeRemover 縺ｮ讖溯・繝・せ繝・
     /// </summary>
     public class SingletonCodeRemovalTest
     {
@@ -20,25 +20,25 @@ namespace asterivo.Unity60.Tests.Core.Services
         [SetUp]
         public void Setup()
         {
-            // テスト用のSingletonCodeRemoverを作成
+            // 繝・せ繝育畑縺ｮSingletonCodeRemover繧剃ｽ懈・
             removerObject = new GameObject("SingletonCodeRemoverTest");
             remover = removerObject.AddComponent<SingletonCodeRemover>();
 
-            // 元の状態を保存
+            // 蜈・・迥ｶ諷九ｒ菫晏ｭ・
             originalCleanupState = PlayerPrefs.GetInt("SingletonCodeRemover_Completed", 0) == 1;
             
-            // テスト用にリセット
+            // 繝・せ繝育畑縺ｫ繝ｪ繧ｻ繝・ヨ
             remover.ResetCleanupState();
         }
 
         [TearDown]
         public void TearDown()
         {
-            // 元の状態を復元
+            // 蜈・・迥ｶ諷九ｒ蠕ｩ蜈・
             PlayerPrefs.SetInt("SingletonCodeRemover_Completed", originalCleanupState ? 1 : 0);
             PlayerPrefs.Save();
 
-            // テストオブジェクトをクリーンアップ
+            // 繝・せ繝医が繝悶ず繧ｧ繧ｯ繝医ｒ繧ｯ繝ｪ繝ｼ繝ｳ繧｢繝・・
             if (removerObject != null)
             {
                 Object.DestroyImmediate(removerObject);
@@ -60,7 +60,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             remover.ExecuteCleanup();
             yield return new WaitForSeconds(0.1f);
 
-            // Assert - デフォルトでは確認が必要で、実際のクリーンアップは実行されない
+            // Assert - 繝・ヵ繧ｩ繝ｫ繝医〒縺ｯ遒ｺ隱阪′蠢・ｦ√〒縲∝ｮ滄圀縺ｮ繧ｯ繝ｪ繝ｼ繝ｳ繧｢繝・・縺ｯ螳溯｡後＆繧後↑縺・
             LogAssert.Expect(LogType.Warning, new System.Text.RegularExpressions.Regex(".*Manual confirmation required.*"));
         }
 
@@ -71,7 +71,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             remover.ExecuteCleanupConfirmed();
             yield return new WaitForSeconds(0.1f);
 
-            // Assert - クリーンアップが完了することを確認
+            // Assert - 繧ｯ繝ｪ繝ｼ繝ｳ繧｢繝・・縺悟ｮ御ｺ・☆繧九％縺ｨ繧堤｢ｺ隱・
             LogAssert.Expect(LogType.Log, new System.Text.RegularExpressions.Regex(".*Singleton Code Removal Completed.*"));
         }
 
@@ -94,7 +94,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         [UnityTest]
         public IEnumerator SingletonCodeRemover_CleanupValidation_ShouldVerifySystemState()
         {
-            // Arrange - システムを完全移行状態にセットアップ
+            // Arrange - 繧ｷ繧ｹ繝・Β繧貞ｮ悟・遘ｻ陦檎憾諷九↓繧ｻ繝・ヨ繧｢繝・・
             asterivo.Unity60.Core.FeatureFlags.UseServiceLocator = true;
             asterivo.Unity60.Core.FeatureFlags.DisableLegacySingletons = true;
             asterivo.Unity60.Core.FeatureFlags.EnableMigrationWarnings = false;
@@ -106,7 +106,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             remover.ExecuteCleanupConfirmed();
             yield return new WaitForSeconds(0.1f);
 
-            // Assert - システムが健全な状態になることを確認
+            // Assert - 繧ｷ繧ｹ繝・Β縺悟▼蜈ｨ縺ｪ迥ｶ諷九↓縺ｪ繧九％縺ｨ繧堤｢ｺ隱・
             var healthStatus = EmergencyRollback.CheckSystemHealth();
             Assert.IsTrue(healthStatus.IsHealthy || healthStatus.HealthScore >= 70, 
                 $"System should be healthy after cleanup, score: {healthStatus.HealthScore}");
@@ -119,7 +119,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             remover.ExecuteCleanupConfirmed();
             yield return new WaitForSeconds(0.1f);
 
-            // Assert - バックアップ記録が作成されることを確認
+            // Assert - 繝舌ャ繧ｯ繧｢繝・・險倬鹸縺御ｽ懈・縺輔ｌ繧九％縺ｨ繧堤｢ｺ隱・
             string backupTimestamp = PlayerPrefs.GetString("CleanupBackup_Timestamp", "");
             Assert.IsNotEmpty(backupTimestamp, "Backup timestamp should be recorded");
 
@@ -134,7 +134,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             remover.ExecuteCleanupConfirmed();
             yield return new WaitForSeconds(0.1f);
 
-            // Assert - 各Managerのクリーンアップ記録が作成されることを確認
+            // Assert - 蜷Мanager縺ｮ繧ｯ繝ｪ繝ｼ繝ｳ繧｢繝・・險倬鹸縺御ｽ懈・縺輔ｌ繧九％縺ｨ繧堤｢ｺ隱・
             string[] expectedManagers = { "AudioManager", "SpatialAudioManager", "EffectManager" };
             
             foreach (var manager in expectedManagers)
@@ -150,14 +150,14 @@ namespace asterivo.Unity60.Tests.Core.Services
         [Test]
         public void SingletonCodeRemover_ResetCleanupState_ShouldClearState()
         {
-            // Arrange - 完了状態をシミュレート
+            // Arrange - 螳御ｺ・憾諷九ｒ繧ｷ繝溘Η繝ｬ繝ｼ繝・
             PlayerPrefs.SetInt("SingletonCodeRemover_Completed", 1);
             PlayerPrefs.SetString("SingletonCodeRemover_LastTime", "2024-01-01 12:00:00");
 
             // Act
             remover.ResetCleanupState();
 
-            // Assert - 状態がリセットされることを確認
+            // Assert - 迥ｶ諷九′繝ｪ繧ｻ繝・ヨ縺輔ｌ繧九％縺ｨ繧堤｢ｺ隱・
             bool completed = PlayerPrefs.GetInt("SingletonCodeRemover_Completed", 0) == 1;
             string lastTime = PlayerPrefs.GetString("SingletonCodeRemover_LastTime", "");
             
@@ -168,12 +168,12 @@ namespace asterivo.Unity60.Tests.Core.Services
         [UnityTest]
         public IEnumerator IntegrationTest_Day5ToCleanup_ShouldWorkSeamlessly()
         {
-            // Arrange - Day 5完了状態をシミュレート
+            // Arrange - Day 5螳御ｺ・憾諷九ｒ繧ｷ繝溘Η繝ｬ繝ｼ繝・
             FeatureFlags.EnableMigrationWarnings = false;
             FeatureFlags.DisableLegacySingletons = true;
             FeatureFlags.UseServiceLocator = true;
 
-            // SingletonDisableSchedulerも作成
+            // SingletonDisableScheduler繧ゆｽ懈・
             var schedulerObj = new GameObject("TestScheduler");
             var scheduler = schedulerObj.AddComponent<SingletonDisableScheduler>();
             
@@ -183,11 +183,11 @@ namespace asterivo.Unity60.Tests.Core.Services
                 scheduler.AdvanceToDay5();
                 yield return new WaitForSeconds(0.1f);
 
-                // Act - クリーンアップ実行
+                // Act - 繧ｯ繝ｪ繝ｼ繝ｳ繧｢繝・・螳溯｡・
                 remover.ExecuteCleanupConfirmed();
                 yield return new WaitForSeconds(0.1f);
 
-                // Assert - 統合的に動作することを確認
+                // Assert - 邨ｱ蜷育噪縺ｫ蜍穂ｽ懊☆繧九％縺ｨ繧堤｢ｺ隱・
                 Assert.AreEqual(100f, scheduler.GetScheduleProgress(), "Scheduler should show 100% progress");
                 
                 LogAssert.Expect(LogType.Log, new System.Text.RegularExpressions.Regex(".*Cleanup completed.*"));
@@ -204,7 +204,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         [UnityTest]
         public IEnumerator SingletonCodeRemover_FinalValidation_ShouldRunMigrationValidator()
         {
-            // Arrange - MigrationValidatorを作成
+            // Arrange - MigrationValidator繧剃ｽ懈・
             var validatorObj = new GameObject("TestValidator");
             var validator = validatorObj.AddComponent<MigrationValidator>();
             
@@ -214,7 +214,7 @@ namespace asterivo.Unity60.Tests.Core.Services
                 remover.ExecuteCleanupConfirmed();
                 yield return new WaitForSeconds(0.1f);
 
-                // Assert - MigrationValidatorが実行されることを確認
+                // Assert - MigrationValidator縺悟ｮ溯｡後＆繧後ｋ縺薙→繧堤｢ｺ隱・
                 LogAssert.Expect(LogType.Log, new System.Text.RegularExpressions.Regex(".*Migration validation completed.*"));
             }
             finally
@@ -229,7 +229,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         [UnityTest]
         public IEnumerator SingletonCodeRemover_FeatureFlagsValidation_ShouldCheckFinalState()
         {
-            // Arrange - 完全移行状態をセットアップ
+            // Arrange - 螳悟・遘ｻ陦檎憾諷九ｒ繧ｻ繝・ヨ繧｢繝・・
             FeatureFlags.UseServiceLocator = true;
             FeatureFlags.DisableLegacySingletons = true;
             FeatureFlags.EnableMigrationWarnings = false;
@@ -241,23 +241,25 @@ namespace asterivo.Unity60.Tests.Core.Services
             remover.ExecuteCleanupConfirmed();
             yield return new WaitForSeconds(0.1f);
 
-            // Assert - FeatureFlagsの最終状態が正しいことを確認
+            // Assert - FeatureFlags縺ｮ譛邨ら憾諷九′豁｣縺励＞縺薙→繧堤｢ｺ隱・
             LogAssert.Expect(LogType.Log, new System.Text.RegularExpressions.Regex(".*FeatureFlags in expected final state.*"));
         }
 
         [UnityTest]
         public IEnumerator SingletonCodeRemover_ErrorHandling_ShouldHandleIncompleteSetup()
         {
-            // Arrange - 不完全な状態をセットアップ（Day 5未完了）
-            FeatureFlags.EnableMigrationWarnings = true; // まだ警告が有効
-            FeatureFlags.DisableLegacySingletons = false; // まだSingletonが有効
+            // Arrange - 荳榊ｮ悟・縺ｪ迥ｶ諷九ｒ繧ｻ繝・ヨ繧｢繝・・・・ay 5譛ｪ螳御ｺ・ｼ・
+            FeatureFlags.EnableMigrationWarnings = true; // 縺ｾ縺隴ｦ蜻翫′譛牙柑
+            FeatureFlags.DisableLegacySingletons = false; // 縺ｾ縺Singleton縺梧怏蜉ｹ
 
             // Act
             remover.ExecuteCleanupConfirmed();
             yield return new WaitForSeconds(0.1f);
 
-            // Assert - 警告やエラーが適切に報告されることを確認
+            // Assert - 隴ｦ蜻翫ｄ繧ｨ繝ｩ繝ｼ縺碁←蛻・↓蝣ｱ蜻翫＆繧後ｋ縺薙→繧堤｢ｺ隱・
             LogAssert.Expect(LogType.Warning, new System.Text.RegularExpressions.Regex(".*not in expected final state.*"));
         }
     }
 }
+
+

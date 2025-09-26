@@ -1,17 +1,17 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Audio;
 using MigrationMonitorService = asterivo.Unity60.Core.Services.MigrationMonitor;
 
 namespace asterivo.Unity60.Tests.Core.Services
 {
     /// <summary>
-    /// Legacy Singleton警告システムの包括的テスト
-    /// Step 3.9: Legacy Singleton警告システムの検証
+    /// Legacy Singleton隴ｦ蜻翫す繧ｹ繝・Β縺ｮ蛹・峡逧・ユ繧ｹ繝・
+    /// Step 3.9: Legacy Singleton隴ｦ蜻翫す繧ｹ繝・Β縺ｮ讀懆ｨｼ
     /// </summary>
     public class LegacySingletonWarningSystemTest
     {
@@ -23,15 +23,15 @@ namespace asterivo.Unity60.Tests.Core.Services
         [SetUp]
         public void Setup()
         {
-            // 元のFeatureFlags設定を保存
+            // 蜈・・FeatureFlags險ｭ螳壹ｒ菫晏ｭ・
             originalEnableMigrationWarnings = asterivo.Unity60.Core.FeatureFlags.EnableMigrationWarnings;
             originalDisableLegacySingletons = asterivo.Unity60.Core.FeatureFlags.DisableLegacySingletons;
 
-            // テスト用のMigrationMonitorを作成
+            // 繝・せ繝育畑縺ｮMigrationMonitor繧剃ｽ懈・
             migrationMonitorObject = new GameObject("MigrationMonitorTest");
             migrationMonitor = migrationMonitorObject.AddComponent<MigrationMonitorService>();
 
-            // テスト用の初期設定
+            // 繝・せ繝育畑縺ｮ蛻晄悄險ｭ螳・
             asterivo.Unity60.Core.FeatureFlags.EnableMigrationWarnings = true;
             asterivo.Unity60.Core.FeatureFlags.DisableLegacySingletons = false;
         }
@@ -39,17 +39,17 @@ namespace asterivo.Unity60.Tests.Core.Services
         [TearDown]
         public void TearDown()
         {
-            // FeatureFlags設定を復元
+            // FeatureFlags險ｭ螳壹ｒ蠕ｩ蜈・
             asterivo.Unity60.Core.FeatureFlags.EnableMigrationWarnings = originalEnableMigrationWarnings;
             asterivo.Unity60.Core.FeatureFlags.DisableLegacySingletons = originalDisableLegacySingletons;
 
-            // テストオブジェクトをクリーンアップ
+            // 繝・せ繝医が繝悶ず繧ｧ繧ｯ繝医ｒ繧ｯ繝ｪ繝ｼ繝ｳ繧｢繝・・
             if (migrationMonitorObject != null)
             {
                 Object.DestroyImmediate(migrationMonitorObject);
             }
 
-            // MigrationMonitor統計をリセット
+            // MigrationMonitor邨ｱ險医ｒ繝ｪ繧ｻ繝・ヨ
             if (migrationMonitor != null)
             {
                 migrationMonitor.ResetStatistics();
@@ -281,3 +281,5 @@ namespace asterivo.Unity60.Tests.Core.Services
         }
     }
 }
+
+

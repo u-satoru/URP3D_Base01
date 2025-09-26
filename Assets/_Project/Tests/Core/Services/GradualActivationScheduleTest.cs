@@ -1,14 +1,14 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Debug;
 
 namespace asterivo.Unity60.Tests.Core.Services
 {
     /// <summary>
-    /// Step 3.7: 段階的機能有効化スケジュールの包括テスト
-    /// MigrationScheduler、FeatureFlagScheduler、MigrationProgressTrackerの統合動作をテスト
+    /// Step 3.7: 谿ｵ髫守噪讖溯・譛牙柑蛹悶せ繧ｱ繧ｸ繝･繝ｼ繝ｫ縺ｮ蛹・峡繝・せ繝・
+    /// MigrationScheduler縲：eatureFlagScheduler縲｀igrationProgressTracker縺ｮ邨ｱ蜷亥虚菴懊ｒ繝・せ繝・
     /// </summary>
     public class GradualActivationScheduleTest : MonoBehaviour
     {
@@ -16,7 +16,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         [SerializeField] private bool runTestOnStart = false;
         [SerializeField] private bool enableDetailedLogs = true;
         [SerializeField] private bool testAutomaticMode = false;
-        [SerializeField] private float acceleratedTimeMultiplier = 100f; // テスト時間を短縮
+        [SerializeField] private float acceleratedTimeMultiplier = 100f; // 繝・せ繝域凾髢薙ｒ遏ｭ邵ｮ
 
         [Header("Test Results")]
         [SerializeField] private bool migrationSchedulerTestPassed;
@@ -41,7 +41,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         #region Test Execution
 
         /// <summary>
-        /// 全段階的有効化スケジュールテストの実行
+        /// 蜈ｨ谿ｵ髫守噪譛牙柑蛹悶せ繧ｱ繧ｸ繝･繝ｼ繝ｫ繝・せ繝医・螳溯｡・
         /// </summary>
         [ContextMenu("Run All Schedule Tests")]
         public void RunAllScheduleTestsSync()
@@ -50,42 +50,42 @@ namespace asterivo.Unity60.Tests.Core.Services
         }
 
         /// <summary>
-        /// 全テストの非同期実行
+        /// 蜈ｨ繝・せ繝医・髱槫酔譛溷ｮ溯｡・
         /// </summary>
         private IEnumerator RunAllScheduleTests()
         {
             LogTest("=== Starting Gradual Activation Schedule Tests ===");
 
-            // テスト結果をリセット
+            // 繝・せ繝育ｵ先棡繧偵Μ繧ｻ繝・ヨ
             ResetTestResults();
 
-            // コンポーネントの初期化
+            // 繧ｳ繝ｳ繝昴・繝阪Φ繝医・蛻晄悄蛹・
             yield return StartCoroutine(InitializeComponents());
 
-            // 各テストを順番に実行
+            // 蜷・ユ繧ｹ繝医ｒ鬆・分縺ｫ螳溯｡・
             yield return StartCoroutine(TestMigrationScheduler());
             yield return StartCoroutine(TestFeatureFlagScheduler());
             yield return StartCoroutine(TestProgressTracker());
             yield return StartCoroutine(TestIntegratedSchedule());
 
-            // 総合評価
+            // 邱丞粋隧穂ｾ｡
             allTestsPassed = migrationSchedulerTestPassed && featureFlagSchedulerTestPassed && 
                            progressTrackerTestPassed && integrationTestPassed;
 
-            // 結果報告
+            // 邨先棡蝣ｱ蜻・
             ReportTestResults();
 
             LogTest("=== Gradual Activation Schedule Tests Completed ===");
         }
 
         /// <summary>
-        /// コンポーネントの初期化
+        /// 繧ｳ繝ｳ繝昴・繝阪Φ繝医・蛻晄悄蛹・
         /// </summary>
         private IEnumerator InitializeComponents()
         {
             LogTest("Initializing test components...");
 
-            // コンポーネントの取得または作成
+            // 繧ｳ繝ｳ繝昴・繝阪Φ繝医・蜿門ｾ励∪縺溘・菴懈・
             migrationScheduler = GetComponent<MigrationScheduler>();
             if (migrationScheduler == null)
             {
@@ -104,7 +104,7 @@ namespace asterivo.Unity60.Tests.Core.Services
                 progressTracker = gameObject.AddComponent<MigrationProgressTracker>();
             }
 
-            // 初期化の完了を待機
+            // 蛻晄悄蛹悶・螳御ｺ・ｒ蠕・ｩ・
             yield return new WaitForSeconds(0.5f);
 
             LogTest("Components initialized successfully");
@@ -115,7 +115,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         #region Individual Component Tests
 
         /// <summary>
-        /// MigrationSchedulerのテスト
+        /// MigrationScheduler縺ｮ繝・せ繝・
         /// </summary>
         private IEnumerator TestMigrationScheduler()
         {
@@ -127,17 +127,17 @@ namespace asterivo.Unity60.Tests.Core.Services
 
             try
             {
-                // 初期状態の確認
+                // 蛻晄悄迥ｶ諷九・遒ｺ隱・
                 var initialStatus = migrationScheduler.GetCurrentStatus();
                 initialStateValid = initialStatus.currentPhase != MigrationScheduler.MigrationPhase.NotStarted;
 
-                // スケジュールの開始
+                // 繧ｹ繧ｱ繧ｸ繝･繝ｼ繝ｫ縺ｮ髢句ｧ・
                 migrationScheduler.StartSchedule();
             }
             catch (System.Exception ex)
             {
                 migrationSchedulerTestPassed = false;
-                LogTest($"[TEST 1] MigrationScheduler: ❌ FAILED - {ex.Message}");
+                LogTest($"[TEST 1] MigrationScheduler: 笶・FAILED - {ex.Message}");
                 yield break;
             }
 
@@ -145,17 +145,17 @@ namespace asterivo.Unity60.Tests.Core.Services
 
             try
             {
-                // 開始後の状態確認
+                // 髢句ｧ句ｾ後・迥ｶ諷狗｢ｺ隱・
                 var startStatus = migrationScheduler.GetCurrentStatus();
                 startStateValid = startStatus.currentPhase == MigrationScheduler.MigrationPhase.Day1_2_Staging;
 
-                // 手動でのフェーズ進行テスト
+                // 謇句虚縺ｧ縺ｮ繝輔ぉ繝ｼ繧ｺ騾ｲ陦後ユ繧ｹ繝・
                 migrationScheduler.AdvanceToNextPhase();
             }
             catch (System.Exception ex)
             {
                 migrationSchedulerTestPassed = false;
-                LogTest($"[TEST 1] MigrationScheduler: ❌ FAILED - {ex.Message}");
+                LogTest($"[TEST 1] MigrationScheduler: 笶・FAILED - {ex.Message}");
                 yield break;
             }
 
@@ -170,21 +170,21 @@ namespace asterivo.Unity60.Tests.Core.Services
             catch (System.Exception ex)
             {
                 migrationSchedulerTestPassed = false;
-                LogTest($"[TEST 1] MigrationScheduler: ❌ FAILED - {ex.Message}");
+                LogTest($"[TEST 1] MigrationScheduler: 笶・FAILED - {ex.Message}");
                 yield break;
             }
 
-            // 結果判定
+            // 邨先棡蛻､螳・
             migrationSchedulerTestPassed = initialStateValid && startStateValid && advanceStateValid;
 
-            LogTest($"[TEST 1] MigrationScheduler: {(migrationSchedulerTestPassed ? "✅ PASSED" : "❌ FAILED")}");
-            LogTest($"  - Initial State: {(initialStateValid ? "✅" : "❌")}");
-            LogTest($"  - Start State: {(startStateValid ? "✅" : "❌")}");  
-            LogTest($"  - Advance State: {(advanceStateValid ? "✅" : "❌")}");
+            LogTest($"[TEST 1] MigrationScheduler: {(migrationSchedulerTestPassed ? "笨・PASSED" : "笶・FAILED")}");
+            LogTest($"  - Initial State: {(initialStateValid ? "笨・ : "笶・)}");
+            LogTest($"  - Start State: {(startStateValid ? "笨・ : "笶・)}");  
+            LogTest($"  - Advance State: {(advanceStateValid ? "笨・ : "笶・)}");
         }
 
         /// <summary>
-        /// FeatureFlagSchedulerのテスト
+        /// FeatureFlagScheduler縺ｮ繝・せ繝・
         /// </summary>
         private IEnumerator TestFeatureFlagScheduler()
         {
@@ -199,12 +199,12 @@ namespace asterivo.Unity60.Tests.Core.Services
 
             try
             {
-                // 初期フラグ状態の記録
+                // 蛻晄悄繝輔Λ繧ｰ迥ｶ諷九・險倬鹸
                 bool initialAudioService = asterivo.Unity60.Core.FeatureFlags.UseNewAudioService;
                 bool initialSpatialService = asterivo.Unity60.Core.FeatureFlags.UseNewSpatialService;
                 bool initialStealthService = asterivo.Unity60.Core.FeatureFlags.UseNewStealthService;
 
-                // Day 1-2 設定をテスト
+                // Day 1-2 險ｭ螳壹ｒ繝・せ繝・
                 var day12Config = new MigrationScheduler.PhaseConfiguration
                 {
                     phase = MigrationScheduler.MigrationPhase.Day1_2_Staging,
@@ -221,7 +221,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             catch (System.Exception ex)
             {
                 featureFlagSchedulerTestPassed = false;
-                LogTest($"[TEST 2] FeatureFlagScheduler: ❌ FAILED - {ex.Message}");
+                LogTest($"[TEST 2] FeatureFlagScheduler: 笶・FAILED - {ex.Message}");
                 yield break;
             }
 
@@ -229,12 +229,12 @@ namespace asterivo.Unity60.Tests.Core.Services
 
             try
             {
-                // フラグ状態の確認
+                // 繝輔Λ繧ｰ迥ｶ諷九・遒ｺ隱・
                 audioServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewAudioService == true;
                 spatialServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewSpatialService == false;
                 stealthServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewStealthService == false;
 
-                // Day 4 設定をテスト
+                // Day 4 險ｭ螳壹ｒ繝・せ繝・
                 var day4Config = new MigrationScheduler.PhaseConfiguration
                 {
                     phase = MigrationScheduler.MigrationPhase.Day4_StealthEnabled,
@@ -251,7 +251,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             catch (System.Exception ex)
             {
                 featureFlagSchedulerTestPassed = false;
-                LogTest($"[TEST 2] FeatureFlagScheduler: ❌ FAILED - {ex.Message}");
+                LogTest($"[TEST 2] FeatureFlagScheduler: 笶・FAILED - {ex.Message}");
                 yield break;
             }
 
@@ -259,17 +259,17 @@ namespace asterivo.Unity60.Tests.Core.Services
 
             try
             {
-                // 最終状態の確認
+                // 譛邨ら憾諷九・遒ｺ隱・
                 finalAudioServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewAudioService == true;
                 finalSpatialServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewSpatialService == true;
                 finalStealthServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewStealthService == true;
 
-                // フラグ状態の確認
+                // 繝輔Λ繧ｰ迥ｶ諷九・遒ｺ隱・
                 audioServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewAudioService == true;
                 spatialServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewSpatialService == false;
                 stealthServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewStealthService == false;
 
-                // Day 4 設定をテスト
+                // Day 4 險ｭ螳壹ｒ繝・せ繝・
                 var day4Config = new MigrationScheduler.PhaseConfiguration
                 {
                     phase = MigrationScheduler.MigrationPhase.Day4_StealthEnabled,
@@ -286,32 +286,32 @@ namespace asterivo.Unity60.Tests.Core.Services
             catch (System.Exception ex)
             {
                 featureFlagSchedulerTestPassed = false;
-                LogTest($"[TEST 2] FeatureFlagScheduler: ❌ FAILED - {ex.Message}");
+                LogTest($"[TEST 2] FeatureFlagScheduler: 笶・FAILED - {ex.Message}");
                 yield break;
             }
 
             yield return new WaitForSeconds(0.2f);
 
-            // 最終状態の確認
+            // 譛邨ら憾諷九・遒ｺ隱・
             finalAudioServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewAudioService == true;
             finalSpatialServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewSpatialService == true;
             finalStealthServiceSet = asterivo.Unity60.Core.FeatureFlags.UseNewStealthService == true;
 
-            // 結果判定
+            // 邨先棡蛻､螳・
             featureFlagSchedulerTestPassed = audioServiceSet && spatialServiceSet && stealthServiceSet &&
                                            finalAudioServiceSet && finalSpatialServiceSet && finalStealthServiceSet;
 
-            LogTest($"[TEST 2] FeatureFlagScheduler: {(featureFlagSchedulerTestPassed ? "✅ PASSED" : "❌ FAILED")}");
-            LogTest($"  - Day1-2 Audio: {(audioServiceSet ? "✅" : "❌")}");
-            LogTest($"  - Day1-2 Spatial: {(spatialServiceSet ? "✅" : "❌")}");
-            LogTest($"  - Day1-2 Stealth: {(stealthServiceSet ? "✅" : "❌")}");
-            LogTest($"  - Day4 Audio: {(finalAudioServiceSet ? "✅" : "❌")}");
-            LogTest($"  - Day4 Spatial: {(finalSpatialServiceSet ? "✅" : "❌")}");
-            LogTest($"  - Day4 Stealth: {(finalStealthServiceSet ? "✅" : "❌")}");
+            LogTest($"[TEST 2] FeatureFlagScheduler: {(featureFlagSchedulerTestPassed ? "笨・PASSED" : "笶・FAILED")}");
+            LogTest($"  - Day1-2 Audio: {(audioServiceSet ? "笨・ : "笶・)}");
+            LogTest($"  - Day1-2 Spatial: {(spatialServiceSet ? "笨・ : "笶・)}");
+            LogTest($"  - Day1-2 Stealth: {(stealthServiceSet ? "笨・ : "笶・)}");
+            LogTest($"  - Day4 Audio: {(finalAudioServiceSet ? "笨・ : "笶・)}");
+            LogTest($"  - Day4 Spatial: {(finalSpatialServiceSet ? "笨・ : "笶・)}");
+            LogTest($"  - Day4 Stealth: {(finalStealthServiceSet ? "笨・ : "笶・)}");
         }
 
         /// <summary>
-        /// MigrationProgressTrackerのテスト
+        /// MigrationProgressTracker縺ｮ繝・せ繝・
         /// </summary>
         private IEnumerator TestProgressTracker()
         {
@@ -322,13 +322,13 @@ namespace asterivo.Unity60.Tests.Core.Services
 
             try
             {
-                // フェーズ開始の記録テスト
+                // 繝輔ぉ繝ｼ繧ｺ髢句ｧ九・險倬鹸繝・せ繝・
                 progressTracker.RecordPhaseStart(MigrationScheduler.MigrationPhase.Day1_2_Staging);
             }
             catch (System.Exception ex)
             {
                 progressTrackerTestPassed = false;
-                LogTest($"[TEST 3] MigrationProgressTracker: ❌ FAILED - {ex.Message}");
+                LogTest($"[TEST 3] MigrationProgressTracker: 笶・FAILED - {ex.Message}");
                 yield break;
             }
 
@@ -336,7 +336,7 @@ namespace asterivo.Unity60.Tests.Core.Services
 
             try
             {
-                // フェーズ遷移の記録テスト  
+                // 繝輔ぉ繝ｼ繧ｺ驕ｷ遘ｻ縺ｮ險倬鹸繝・せ繝・ 
                 progressTracker.RecordPhaseTransition(
                     MigrationScheduler.MigrationPhase.Day1_2_Staging,
                     MigrationScheduler.MigrationPhase.Day3_SpatialEnabled
@@ -345,7 +345,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             catch (System.Exception ex)
             {
                 progressTrackerTestPassed = false;
-                LogTest($"[TEST 3] MigrationProgressTracker: ❌ FAILED - {ex.Message}");
+                LogTest($"[TEST 3] MigrationProgressTracker: 笶・FAILED - {ex.Message}");
                 yield break;
             }
 
@@ -353,28 +353,28 @@ namespace asterivo.Unity60.Tests.Core.Services
 
             try
             {
-                // 検証機能のテスト
+                // 讀懆ｨｼ讖溯・縺ｮ繝・せ繝・
                 var validation = progressTracker.ValidateCurrentPhase();
                 validationWorked = validation.timestamp > 0;
 
-                // 成功率の確認
+                // 謌仙粥邇・・遒ｺ隱・
                 float successRate = progressTracker.GetOverallSuccessRate();
                 successRateValid = successRate >= 0f && successRate <= 1f;
-                LogTest($"  - Validation: {(validationWorked ? "✅" : "❌")}");
-                LogTest($"  - Success Rate: {(successRateValid ? "✅" : "❌")} ({successRate:P1})");
+                LogTest($"  - Validation: {(validationWorked ? "笨・ : "笶・)}");
+                LogTest($"  - Success Rate: {(successRateValid ? "笨・ : "笶・)} ({successRate:P1})");
             }
             catch (System.Exception ex)
             {
                 progressTrackerTestPassed = false;
-                LogTest($"[TEST 3] MigrationProgressTracker: ❌ FAILED - {ex.Message}");
+                LogTest($"[TEST 3] MigrationProgressTracker: 笶・FAILED - {ex.Message}");
             }
         }
 
         /// <summary>
-        /// 統合スケジュールのテスト
+        /// 邨ｱ蜷医せ繧ｱ繧ｸ繝･繝ｼ繝ｫ縺ｮ繝・せ繝・
         /// </summary>
         /// <summary>
-        /// 統合スケジュールのテスト
+        /// 邨ｱ蜷医せ繧ｱ繧ｸ繝･繝ｼ繝ｫ縺ｮ繝・せ繝・
         /// </summary>
         private IEnumerator TestIntegratedSchedule()
         {
@@ -383,39 +383,39 @@ namespace asterivo.Unity60.Tests.Core.Services
             bool hasError = false;
             System.Exception caughtException = null;
 
-            // 統合テストの実行 - yield return は try-catch の外で実行
+            // 邨ｱ蜷医ユ繧ｹ繝医・螳溯｡・- yield return 縺ｯ try-catch 縺ｮ螟悶〒螳溯｡・
             yield return StartCoroutine(RunIntegratedScheduleTest());
-            // integrationTestPassedはRunIntegratedScheduleTest内で設定される
+            // integrationTestPassed縺ｯRunIntegratedScheduleTest蜀・〒險ｭ螳壹＆繧後ｋ
 
             try
             {
-                // エラーチェック処理
+                // 繧ｨ繝ｩ繝ｼ繝√ぉ繝・け蜃ｦ逅・
                 if (caughtException != null)
                 {
                     throw caughtException;
                 }
 
-                LogTest($"[TEST 4] Integrated Schedule: {(integrationTestPassed ? "✅ PASSED" : "❌ FAILED")}");
+                LogTest($"[TEST 4] Integrated Schedule: {(integrationTestPassed ? "笨・PASSED" : "笶・FAILED")}");
             }
             catch (System.Exception ex)
             {
                 integrationTestPassed = false;
-                LogTest($"[TEST 4] Integrated Schedule: ❌ FAILED - {ex.Message}");
+                LogTest($"[TEST 4] Integrated Schedule: 笶・FAILED - {ex.Message}");
             }
         }
 
         /// <summary>
-        /// 統合スケジュールテストの実行
+        /// 邨ｱ蜷医せ繧ｱ繧ｸ繝･繝ｼ繝ｫ繝・せ繝医・螳溯｡・
         /// </summary>
         private IEnumerator RunIntegratedScheduleTest()
         {
             LogTest("Running integrated schedule test...");
 
-            // スケジュールのリセット
+            // 繧ｹ繧ｱ繧ｸ繝･繝ｼ繝ｫ縺ｮ繝ｪ繧ｻ繝・ヨ
             migrationScheduler.StartSchedule();
             yield return new WaitForSeconds(0.1f);
 
-            // 各フェーズを順番に進行
+            // 蜷・ヵ繧ｧ繝ｼ繧ｺ繧帝・分縺ｫ騾ｲ陦・
             var phases = new[]
             {
                 MigrationScheduler.MigrationPhase.Day1_2_Staging,
@@ -430,40 +430,40 @@ namespace asterivo.Unity60.Tests.Core.Services
             {
                 LogTest($"Testing phase: {targetPhase}");
 
-                // フェーズに進行
+                // 繝輔ぉ繝ｼ繧ｺ縺ｫ騾ｲ陦・
                 migrationScheduler.AdvanceToNextPhase();
                 yield return new WaitForSeconds(0.1f);
 
-                // 現在の状態を確認
+                // 迴ｾ蝨ｨ縺ｮ迥ｶ諷九ｒ遒ｺ隱・
                 var status = migrationScheduler.GetCurrentStatus();
                 if (status.currentPhase != targetPhase)
                 {
-                    LogTest($"❌ Phase mismatch: expected {targetPhase}, got {status.currentPhase}");
+                    LogTest($"笶・Phase mismatch: expected {targetPhase}, got {status.currentPhase}");
                     allPhasesPassed = false;
                     continue;
                 }
 
-                // FeatureFlagsの状態を確認
+                // FeatureFlags縺ｮ迥ｶ諷九ｒ遒ｺ隱・
                 bool flagsValid = ValidateFeatureFlagsForPhase(targetPhase);
                 if (!flagsValid)
                 {
-                    LogTest($"❌ FeatureFlags invalid for phase {targetPhase}");
+                    LogTest($"笶・FeatureFlags invalid for phase {targetPhase}");
                     allPhasesPassed = false;
                 }
 
-                // 進行状況の検証
+                // 騾ｲ陦檎憾豕√・讀懆ｨｼ
                 var validation = progressTracker.ValidateCurrentPhase();
                 if (validation.timestamp <= 0)
                 {
-                    LogTest($"❌ Progress tracking failed for phase {targetPhase}");
+                    LogTest($"笶・Progress tracking failed for phase {targetPhase}");
                     allPhasesPassed = false;
                 }
 
-                LogTest($"✅ Phase {targetPhase} completed successfully");
+                LogTest($"笨・Phase {targetPhase} completed successfully");
             }
 
             yield return new WaitForSeconds(0.1f);
-            integrationTestPassed = allPhasesPassed; // 結果をフィールドに設定
+            integrationTestPassed = allPhasesPassed; // 邨先棡繧偵ヵ繧｣繝ｼ繝ｫ繝峨↓險ｭ螳・
         }
 
         #endregion
@@ -471,10 +471,10 @@ namespace asterivo.Unity60.Tests.Core.Services
         #region Validation Helpers
 
         /// <summary>
-        /// 指定フェーズに対するFeatureFlagsの状態を検証
+        /// 謖・ｮ壹ヵ繧ｧ繝ｼ繧ｺ縺ｫ蟇ｾ縺吶ｋFeatureFlags縺ｮ迥ｶ諷九ｒ讀懆ｨｼ
         /// </summary>
-        /// <param name="phase">検証するフェーズ</param>
-        /// <returns>検証結果</returns>
+        /// <param name="phase">讀懆ｨｼ縺吶ｋ繝輔ぉ繝ｼ繧ｺ</param>
+        /// <returns>讀懆ｨｼ邨先棡</returns>
         private bool ValidateFeatureFlagsForPhase(MigrationScheduler.MigrationPhase phase)
         {
             switch (phase)
@@ -505,7 +505,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         #region Test Management
 
         /// <summary>
-        /// テスト結果のリセット
+        /// 繝・せ繝育ｵ先棡縺ｮ繝ｪ繧ｻ繝・ヨ
         /// </summary>
         private void ResetTestResults()
         {
@@ -517,24 +517,24 @@ namespace asterivo.Unity60.Tests.Core.Services
         }
 
         /// <summary>
-        /// テスト結果の報告
+        /// 繝・せ繝育ｵ先棡縺ｮ蝣ｱ蜻・
         /// </summary>
         private void ReportTestResults()
         {
             LogTest("=== Schedule Test Results ===");
-            LogTest($"MigrationScheduler: {(migrationSchedulerTestPassed ? "✅ PASSED" : "❌ FAILED")}");
-            LogTest($"FeatureFlagScheduler: {(featureFlagSchedulerTestPassed ? "✅ PASSED" : "❌ FAILED")}");
-            LogTest($"MigrationProgressTracker: {(progressTrackerTestPassed ? "✅ PASSED" : "❌ FAILED")}");
-            LogTest($"Integration Test: {(integrationTestPassed ? "✅ PASSED" : "❌ FAILED")}");
-            LogTest($"Overall Result: {(allTestsPassed ? "🎉 ALL TESTS PASSED" : "❌ SOME TESTS FAILED")}");
+            LogTest($"MigrationScheduler: {(migrationSchedulerTestPassed ? "笨・PASSED" : "笶・FAILED")}");
+            LogTest($"FeatureFlagScheduler: {(featureFlagSchedulerTestPassed ? "笨・PASSED" : "笶・FAILED")}");
+            LogTest($"MigrationProgressTracker: {(progressTrackerTestPassed ? "笨・PASSED" : "笶・FAILED")}");
+            LogTest($"Integration Test: {(integrationTestPassed ? "笨・PASSED" : "笶・FAILED")}");
+            LogTest($"Overall Result: {(allTestsPassed ? "脂 ALL TESTS PASSED" : "笶・SOME TESTS FAILED")}");
 
             if (allTestsPassed)
             {
-                EventLogger.LogStatic("🎉 [SCHEDULE TEST] Step 3.7 Gradual Activation Schedule is working correctly!");
+                EventLogger.LogStatic("脂 [SCHEDULE TEST] Step 3.7 Gradual Activation Schedule is working correctly!");
             }
             else
             {
-                EventLogger.LogErrorStatic("❌ [SCHEDULE TEST] Some Step 3.7 schedule components need attention.");
+                EventLogger.LogErrorStatic("笶・[SCHEDULE TEST] Some Step 3.7 schedule components need attention.");
             }
         }
 
@@ -543,7 +543,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         #region Individual Tests
 
         /// <summary>
-        /// MigrationSchedulerのみテスト
+        /// MigrationScheduler縺ｮ縺ｿ繝・せ繝・
         /// </summary>
         [ContextMenu("Test MigrationScheduler Only")]
         public void TestMigrationSchedulerOnly()
@@ -552,7 +552,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         }
 
         /// <summary>
-        /// FeatureFlagSchedulerのみテスト
+        /// FeatureFlagScheduler縺ｮ縺ｿ繝・せ繝・
         /// </summary>
         [ContextMenu("Test FeatureFlagScheduler Only")]
         public void TestFeatureFlagSchedulerOnly()
@@ -561,7 +561,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         }
 
         /// <summary>
-        /// MigrationProgressTrackerのみテスト
+        /// MigrationProgressTracker縺ｮ縺ｿ繝・せ繝・
         /// </summary>
         [ContextMenu("Test ProgressTracker Only")]
         public void TestProgressTrackerOnly()
@@ -570,7 +570,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         }
 
         /// <summary>
-        /// 現在のFeatureFlags状態をレポート
+        /// 迴ｾ蝨ｨ縺ｮFeatureFlags迥ｶ諷九ｒ繝ｬ繝昴・繝・
         /// </summary>
         [ContextMenu("Report Current FeatureFlags")]
         public void ReportCurrentFeatureFlags()
@@ -585,7 +585,7 @@ namespace asterivo.Unity60.Tests.Core.Services
         }
 
         /// <summary>
-        /// 手動でのスケジュール進行テスト
+        /// 謇句虚縺ｧ縺ｮ繧ｹ繧ｱ繧ｸ繝･繝ｼ繝ｫ騾ｲ陦後ユ繧ｹ繝・
         /// </summary>
         [ContextMenu("Manual Schedule Progression")]
         public void ManualScheduleProgression()
@@ -595,11 +595,11 @@ namespace asterivo.Unity60.Tests.Core.Services
         }
 
         /// <summary>
-        /// 手動進行の実行
+        /// 謇句虚騾ｲ陦後・螳溯｡・
         /// </summary>
         private IEnumerator RunManualProgression()
         {
-            // 各フェーズを手動で進行
+            // 蜷・ヵ繧ｧ繝ｼ繧ｺ繧呈焔蜍輔〒騾ｲ陦・
             migrationScheduler.StartSchedule();
             LogTest("Phase 1: Day 1-2 Staging started");
             yield return new WaitForSeconds(1f);
@@ -619,7 +619,7 @@ namespace asterivo.Unity60.Tests.Core.Services
             migrationScheduler.AdvanceToNextPhase();
             LogTest("Schedule completed!");
 
-            // 最終状態レポート
+            // 譛邨ら憾諷九Ξ繝昴・繝・
             ReportCurrentFeatureFlags();
             progressTracker.GenerateProgressReport();
         }
@@ -629,9 +629,9 @@ namespace asterivo.Unity60.Tests.Core.Services
         #region Logging
 
         /// <summary>
-        /// テストログの出力
+        /// 繝・せ繝医Ο繧ｰ縺ｮ蜃ｺ蜉・
         /// </summary>
-        /// <param name="message">メッセージ</param>
+        /// <param name="message">繝｡繝・そ繝ｼ繧ｸ</param>
         private void LogTest(string message)
         {
             if (enableDetailedLogs)
@@ -643,3 +643,5 @@ namespace asterivo.Unity60.Tests.Core.Services
         #endregion
     }
 }
+
+

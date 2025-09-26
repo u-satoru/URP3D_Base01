@@ -1,6 +1,6 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Features.Templates.Stealth.Events;
 using asterivo.Unity60.Features.Templates.Stealth.Environment;
@@ -9,8 +9,8 @@ using asterivo.Unity60.Features.Templates.Stealth.Environment;
 namespace asterivo.Unity60.Features.Templates.Stealth.Services
 {
     /// <summary>
-    /// ステルスシステムの中央制御サービス実装
-    /// ServiceLocatorパターンに準拠し、既存のDetectionSystemと統合
+    /// 繧ｹ繝・Ν繧ｹ繧ｷ繧ｹ繝・Β縺ｮ荳ｭ螟ｮ蛻ｶ蠕｡繧ｵ繝ｼ繝薙せ螳溯｣・
+    /// ServiceLocator繝代ち繝ｼ繝ｳ縺ｫ貅匁侠縺励∵里蟄倥・DetectionSystem縺ｨ邨ｱ蜷・
     /// </summary>
     public class StealthService : MonoBehaviour, IStealthService
     {
@@ -78,7 +78,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
 
         private void InitializeComponents()
         {
-            // VisibilityCalculatorの初期化
+            // VisibilityCalculator縺ｮ蛻晄悄蛹・
             // TODO: VisibilityCalculator type needs to be created
             // _visibilityCalculator = GetComponent<VisibilityCalculator>();
             // if (_visibilityCalculator == null)
@@ -86,7 +86,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
             //     _visibilityCalculator = gameObject.AddComponent<VisibilityCalculator>();
             // }
 
-            // プレイヤートランスフォームの自動検出
+            // 繝励Ξ繧､繝､繝ｼ繝医Λ繝ｳ繧ｹ繝輔か繝ｼ繝縺ｮ閾ｪ蜍墓､懷・
             if (_playerTransform == null)
             {
                 var player = GameObject.FindGameObjectWithTag("Player");
@@ -94,14 +94,14 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
                     _playerTransform = player.transform;
             }
 
-            // DetectionConfigurationの自動取得
+            // DetectionConfiguration縺ｮ閾ｪ蜍募叙蠕・
             // TODO: DetectionConfiguration type needs to be created
             // if (_detectionConfig == null)
             // {
             //     _detectionConfig = Resources.Load<DetectionConfiguration>("StealthDetectionConfig");
             // }
 
-            // 統計情報の初期化
+            // 邨ｱ險域ュ蝣ｱ縺ｮ蛻晄悄蛹・
             _statistics = new StealthStatistics
             {
                 AverageVisibilityFactor = 1.0f,
@@ -111,7 +111,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
 
         private void InitializeEvents()
         {
-            // GameEventの初期化
+            // GameEvent縺ｮ蛻晄悄蛹・
             _playerVisibilityChangedEvent = ScriptableObject.CreateInstance<GameEvent<float>>();
             _playerVisibilityChangedEvent.name = "PlayerVisibilityChangedEvent";
 
@@ -124,13 +124,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
 
         private void SubscribeToEvents()
         {
-            // AI検出システムからのイベントを購読
-            // 既存のイベントシステムと統合
+            // AI讀懷・繧ｷ繧ｹ繝・Β縺九ｉ縺ｮ繧､繝吶Φ繝医ｒ雉ｼ隱ｭ
+            // 譌｢蟄倥・繧､繝吶Φ繝医す繧ｹ繝・Β縺ｨ邨ｱ蜷・
         }
 
         private void UnsubscribeFromEvents()
         {
-            // イベント購読の解除
+            // 繧､繝吶Φ繝郁ｳｼ隱ｭ縺ｮ隗｣髯､
         }
         #endregion
 
@@ -143,7 +143,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
             // if (_visibilityCalculator == null) return _ambientLightLevel; // TODO: VisibilityCalculator needs to be created
             return _ambientLightLevel; // Temporary direct return
 
-            // 既存のVisibilityCalculatorを活用した光量計算
+            // 譌｢蟄倥・VisibilityCalculator繧呈ｴｻ逕ｨ縺励◆蜈蛾㍼險育ｮ・
             var lightSources = FindObjectsOfType<Light>();
             float totalLight = _ambientLightLevel;
 
@@ -153,7 +153,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
                 {
                     float distance = Vector3.Distance(position, light.transform.position);
 
-                    // 光源の種類に応じた計算
+                    // 蜈画ｺ舌・遞ｮ鬘槭↓蠢懊§縺溯ｨ育ｮ・
                     if (light.type == LightType.Point)
                     {
                         float intensity = Mathf.Clamp01(1.0f - (distance / light.range));
@@ -182,16 +182,16 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
             float previousFactor = _currentVisibilityFactor;
             _currentVisibilityFactor = Mathf.Clamp01(visibilityFactor);
 
-            // 隠蔽ゾーンの効果を適用
+            // 髫阡ｽ繧ｾ繝ｼ繝ｳ縺ｮ蜉ｹ譫懊ｒ驕ｩ逕ｨ
             if (_currentConcealmentZone != null && _currentConcealmentZone.IsActive)
             {
                 _currentVisibilityFactor *= (1.0f - _currentConcealmentZone.ConcealmentStrength);
             }
 
-            // 統計情報の更新
+            // 邨ｱ險域ュ蝣ｱ縺ｮ譖ｴ譁ｰ
             UpdateVisibilityStatistics();
 
-            // イベント発行（変化があった場合のみ）
+            // 繧､繝吶Φ繝育匱陦鯉ｼ亥､牙喧縺後≠縺｣縺溷ｴ蜷医・縺ｿ・・
             if (Mathf.Abs(_currentVisibilityFactor - previousFactor) > 0.01f)
             {
                 _playerVisibilityChangedEvent?.Raise(_currentVisibilityFactor);
@@ -206,7 +206,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
             float previousLevel = _currentNoiseLevel;
             _currentNoiseLevel = Mathf.Clamp01(noiseLevel);
 
-            // イベント発行（変化があった場合のみ）
+            // 繧､繝吶Φ繝育匱陦鯉ｼ亥､牙喧縺後≠縺｣縺溷ｴ蜷医・縺ｿ・・
             if (Mathf.Abs(_currentNoiseLevel - previousLevel) > 0.01f)
             {
                 _playerNoiseEvent?.Raise(_currentNoiseLevel);
@@ -218,7 +218,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
 
         private void UpdateVisibilityStatistics()
         {
-            // 移動平均でVisibilityFactorを更新
+            // 遘ｻ蜍募ｹｳ蝮・〒VisibilityFactor繧呈峩譁ｰ
             _statistics.AverageVisibilityFactor =
                 (_statistics.AverageVisibilityFactor + _currentVisibilityFactor) / 2.0f;
         }
@@ -234,7 +234,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
 
             _activeConcealmentZones.Add(concealmentZone);
 
-            // 最も強力な隠蔽ゾーンをアクティブにする
+            // 譛繧ょｼｷ蜉帙↑髫阡ｽ繧ｾ繝ｼ繝ｳ繧偵い繧ｯ繝・ぅ繝悶↓縺吶ｋ
             UpdateActiveConcealmentZone();
 
             _statistics.ConcealmentZonesUsed++;
@@ -249,7 +249,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
 
             _activeConcealmentZones.Remove(concealmentZone);
 
-            // アクティブゾーンの更新
+            // 繧｢繧ｯ繝・ぅ繝悶だ繝ｼ繝ｳ縺ｮ譖ｴ譁ｰ
             UpdateActiveConcealmentZone();
 
             if (_enableDebugLogs)
@@ -272,7 +272,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
 
             _currentConcealmentZone = bestZone;
 
-            // 視認性の再計算をトリガー
+            // 隕冶ｪ肴ｧ縺ｮ蜀崎ｨ育ｮ励ｒ繝医Μ繧ｬ繝ｼ
             UpdatePlayerVisibility(_currentVisibilityFactor);
         }
         #endregion
@@ -305,7 +305,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
 
         public void CreateDistraction(Vector3 position, float noiseLevel)
         {
-            // 陽動音の発生
+            // 髯ｽ蜍暮浹縺ｮ逋ｺ逕・
             var distractionData = new StealthDetectionData
             {
                 Position = position,
@@ -395,13 +395,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
 
         private void OnStealthModeActivated()
         {
-            // ステルスモード開始時の処理
+            // 繧ｹ繝・Ν繧ｹ繝｢繝ｼ繝蛾幕蟋区凾縺ｮ蜃ｦ逅・
             _statistics.TotalStealthTime = Time.time;
         }
 
         private void OnStealthModeDeactivated()
         {
-            // ステルスモード終了時の処理
+            // 繧ｹ繝・Ν繧ｹ繝｢繝ｼ繝臥ｵゆｺ・凾縺ｮ蜃ｦ逅・
             if (_statistics.TotalStealthTime > 0)
             {
                 _statistics.TotalStealthTime = Time.time - _statistics.TotalStealthTime;
@@ -412,7 +412,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
         {
             if (_isStealthModeActive && _statistics.TotalStealthTime > 0)
             {
-                // アクティブ中は現在時間での統計を返す
+                // 繧｢繧ｯ繝・ぅ繝紋ｸｭ縺ｯ迴ｾ蝨ｨ譎る俣縺ｧ縺ｮ邨ｱ險医ｒ霑斐☆
                 var currentStats = _statistics;
                 currentStats.TotalStealthTime = Time.time - _statistics.TotalStealthTime;
                 return currentStats;
@@ -427,7 +427,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
         {
             if (!IsInitialized || !_isStealthModeActive) return;
 
-            // プレイヤー位置での光量を定期的に更新
+            // 繝励Ξ繧､繝､繝ｼ菴咲ｽｮ縺ｧ縺ｮ蜈蛾㍼繧貞ｮ壽悄逧・↓譖ｴ譁ｰ
             if (_playerTransform != null)
             {
                 float lightLevel = CalculateLightLevel(_playerTransform.position);
@@ -444,7 +444,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
         {
             if (!_enableDebugLogs || _playerTransform == null) return;
 
-            // デバッグ用ギズモの描画
+            // 繝・ヰ繝・げ逕ｨ繧ｮ繧ｺ繝｢縺ｮ謠冗判
             Gizmos.color = Color.Lerp(Color.green, Color.red, _currentVisibilityFactor);
             Gizmos.DrawWireSphere(_playerTransform.position, 1.0f);
 
@@ -458,22 +458,24 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Services
     }
 
     /// <summary>
-    /// 環境オブジェクトとの相互作用インターフェース
+    /// 迺ｰ蠅・が繝悶ず繧ｧ繧ｯ繝医→縺ｮ逶ｸ莠剃ｽ懃畑繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ
     /// </summary>
     public interface IStealthInteractable
     {
         /// <summary>
-        /// 相互作用を実行
+        /// 逶ｸ莠剃ｽ懃畑繧貞ｮ溯｡・
         /// </summary>
-        /// <param name="interactionType">相互作用の種類</param>
-        /// <returns>成功したかどうか</returns>
+        /// <param name="interactionType">逶ｸ莠剃ｽ懃畑縺ｮ遞ｮ鬘・/param>
+        /// <returns>謌仙粥縺励◆縺九←縺・°</returns>
         bool Interact(StealthInteractionType interactionType);
 
         /// <summary>
-        /// この相互作用が現在可能かどうか
+        /// 縺薙・逶ｸ莠剃ｽ懃畑縺檎樟蝨ｨ蜿ｯ閭ｽ縺九←縺・°
         /// </summary>
-        /// <param name="interactionType">相互作用の種類</param>
-        /// <returns>可能かどうか</returns>
+        /// <param name="interactionType">逶ｸ莠剃ｽ懃畑縺ｮ遞ｮ鬘・/param>
+        /// <returns>蜿ｯ閭ｽ縺九←縺・°</returns>
         bool CanInteract(StealthInteractionType interactionType);
     }
 }
+
+

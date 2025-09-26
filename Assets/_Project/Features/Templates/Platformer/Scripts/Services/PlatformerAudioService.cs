@@ -1,71 +1,71 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.Platformer.Settings;
 
 namespace asterivo.Unity60.Features.Templates.Platformer.Services
 {
     /// <summary>
-    /// Platformer Audio Service：プラットフォーマー音響システムの実装
-    /// ServiceLocator + Event駆動アーキテクチャによる疎結合設計
-    /// Learn & Grow価値実現：音響体験による学習効果・没入感向上
+    /// Platformer Audio Service・壹・繝ｩ繝・ヨ繝輔か繝ｼ繝槭・髻ｳ髻ｿ繧ｷ繧ｹ繝・Β縺ｮ螳溯｣・
+    /// ServiceLocator + Event鬧・虚繧｢繝ｼ繧ｭ繝・け繝√Ε縺ｫ繧医ｋ逍守ｵ仙粋險ｭ險・
+    /// Learn & Grow萓｡蛟､螳溽樟・夐浹髻ｿ菴馴ｨ薙↓繧医ｋ蟄ｦ鄙貞柑譫懊・豐｡蜈･諢溷髄荳・
     /// </summary>
     public class PlatformerAudioService : IPlatformerAudioService
     {
-        // 設定・状態管理
+        // 險ｭ螳壹・迥ｶ諷狗ｮ｡逅・
         private PlatformerAudioSettings _settings;
         private bool _isInitialized = false;
         private bool _isMuted = false;
         private bool _is3DAudioEnabled = true;
 
-        // オーディオコンポーネント管理
+        // 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｳ繝ｳ繝昴・繝阪Φ繝育ｮ｡逅・
         private AudioSource _bgmSource;
         private AudioListener _audioListener;
         private GameObject _audioManagerObject;
 
-        // オーディオプール（ObjectPool最適化パターン活用）
+        // 繧ｪ繝ｼ繝・ぅ繧ｪ繝励・繝ｫ・・bjectPool譛驕ｩ蛹悶ヱ繧ｿ繝ｼ繝ｳ豢ｻ逕ｨ・・
         private Queue<AudioSource> _audioSourcePool;
         private List<AudioSource> _activeAudioSources;
         private readonly int _poolSize = 20;
 
-        // 音量制御
+        // 髻ｳ驥丞宛蠕｡
         private float _masterVolume = 1f;
         private float _bgmVolume = 0.7f;
         private float _sfxVolume = 0.8f;
         private float _ambientVolume = 0.5f;
         private float _uiVolume = 0.9f;
 
-        // 環境音・UI音響
+        // 迺ｰ蠅・浹繝ｻUI髻ｳ髻ｿ
         private AudioSource _ambientSource;
         private AudioSource _uiSource;
 
-        // 足音・移動音管理
+        // 雜ｳ髻ｳ繝ｻ遘ｻ蜍暮浹邂｡逅・
         private Dictionary<string, AudioClip[]> _surfaceFootsteps;
         private float _lastFootstepTime = 0f;
 
-        // SFX重複防止・クールダウン管理
+        // SFX驥崎､・亟豁｢繝ｻ繧ｯ繝ｼ繝ｫ繝繧ｦ繝ｳ邂｡逅・
         private Dictionary<AudioClip, float> _sfxCooldowns;
         private readonly float _defaultCooldown = 0.1f;
 
-        // 3D音響・エフェクト制御
+        // 3D髻ｳ髻ｿ繝ｻ繧ｨ繝輔ぉ繧ｯ繝亥宛蠕｡
         private bool _slowMotionActive = false;
         private bool _underwaterActive = false;
         private string _currentAudioZone = "";
 
-        // イベント
+        // 繧､繝吶Φ繝・
         public event Action<string> OnBGMChanged;
         public event Action<bool> OnMuteChanged;
         public event Action<float> OnVolumeChanged;
         public event Action<string> OnAudioZoneChanged;
         public event Action<AudioClip, Vector3> OnSFXPlayed;
 
-        // IPlatformerService実装プロパティ
+        // IPlatformerService螳溯｣・・繝ｭ繝代ユ繧｣
         public bool IsInitialized => _isInitialized;
         public bool IsEnabled { get; private set; } = false;
 
-        // 追加プロパティ
+        // 霑ｽ蜉繝励Ο繝代ユ繧｣
         public bool IsMuted => _isMuted;
         public bool Is3DAudioEnabled => _is3DAudioEnabled;
         public float MasterVolume
@@ -75,17 +75,17 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// コンストラクタ：ServiceLocator統合初期化
+        /// 繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ・售erviceLocator邨ｱ蜷亥・譛溷喧
         /// </summary>
         public PlatformerAudioService(PlatformerAudioSettings settings)
         {
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
-            InitializeInternal(); // コンストラクタでは内部初期化を呼び出し
+            InitializeInternal(); // 繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ縺ｧ縺ｯ蜀・Κ蛻晄悄蛹悶ｒ蜻ｼ縺ｳ蜃ｺ縺・
         }
 
         /// <summary>
-        /// IPlatformerService: 音響システム初期化
-        /// ServiceLocator統合対応
+        /// IPlatformerService: 髻ｳ髻ｿ繧ｷ繧ｹ繝・Β蛻晄悄蛹・
+        /// ServiceLocator邨ｱ蜷亥ｯｾ蠢・
         /// </summary>
         public void Initialize()
         {
@@ -94,32 +94,32 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 内部初期化処理
+        /// 蜀・Κ蛻晄悄蛹門・逅・
         /// </summary>
         private void InitializeInternal()
         {
             try
             {
-                // AudioManagerオブジェクト作成
+                // AudioManager繧ｪ繝悶ず繧ｧ繧ｯ繝井ｽ懈・
                 _audioManagerObject = new GameObject("PlatformerAudioManager");
                 GameObject.DontDestroyOnLoad(_audioManagerObject);
 
-                // 基本設定適用
+                // 蝓ｺ譛ｬ險ｭ螳夐←逕ｨ
                 _masterVolume = _settings.MasterVolume;
                 _bgmVolume = _settings.MusicVolume;
                 _sfxVolume = _settings.SfxVolume;
                 _ambientVolume = _settings.AmbientVolume;
 
-                // AudioSource初期化
+                // AudioSource蛻晄悄蛹・
                 InitializeAudioSources();
 
-                // オーディオプール初期化
+                // 繧ｪ繝ｼ繝・ぅ繧ｪ繝励・繝ｫ蛻晄悄蛹・
                 InitializeAudioPool();
 
-                // 足音辞書初期化
+                // 雜ｳ髻ｳ霎樊嶌蛻晄悄蛹・
                 InitializeFootstepDictionary();
 
-                // SFXクールダウン辞書初期化
+                // SFX繧ｯ繝ｼ繝ｫ繝繧ｦ繝ｳ霎樊嶌蛻晄悄蛹・
                 _sfxCooldowns = new Dictionary<AudioClip, float>();
 
                 _isInitialized = true;
@@ -133,31 +133,31 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// AudioSource コンポーネント初期化
+        /// AudioSource 繧ｳ繝ｳ繝昴・繝阪Φ繝亥・譛溷喧
         /// </summary>
         private void InitializeAudioSources()
         {
-            // BGM用AudioSource
+            // BGM逕ｨAudioSource
             _bgmSource = _audioManagerObject.AddComponent<AudioSource>();
             _bgmSource.loop = true;
             _bgmSource.playOnAwake = false;
             _bgmSource.priority = 128;
             _bgmSource.volume = _bgmVolume;
 
-            // 環境音用AudioSource
+            // 迺ｰ蠅・浹逕ｨAudioSource
             _ambientSource = _audioManagerObject.AddComponent<AudioSource>();
             _ambientSource.loop = true;
             _ambientSource.playOnAwake = false;
             _ambientSource.priority = 200;
             _ambientSource.volume = _ambientVolume;
 
-            // UI音用AudioSource
+            // UI髻ｳ逕ｨAudioSource
             _uiSource = _audioManagerObject.AddComponent<AudioSource>();
             _uiSource.playOnAwake = false;
             _uiSource.priority = 100;
             _uiSource.volume = _uiVolume;
 
-            // AudioListener取得または作成
+            // AudioListener蜿門ｾ励∪縺溘・菴懈・
             _audioListener = UnityEngine.Camera.main?.GetComponent<AudioListener>();
             if (_audioListener == null)
             {
@@ -168,7 +168,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// オーディオプール初期化（ObjectPool最適化パターン）
+        /// 繧ｪ繝ｼ繝・ぅ繧ｪ繝励・繝ｫ蛻晄悄蛹厄ｼ・bjectPool譛驕ｩ蛹悶ヱ繧ｿ繝ｼ繝ｳ・・
         /// </summary>
         private void InitializeAudioPool()
         {
@@ -185,22 +185,22 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 足音辞書初期化
+        /// 雜ｳ髻ｳ霎樊嶌蛻晄悄蛹・
         /// </summary>
         private void InitializeFootstepDictionary()
         {
             _surfaceFootsteps = new Dictionary<string, AudioClip[]>();
-            // 実際の実装では、設定ファイルから足音音源を読み込み
-            // 現在は基本設定として空の辞書を初期化
+            // 螳滄圀縺ｮ螳溯｣・〒縺ｯ縲∬ｨｭ螳壹ヵ繧｡繧､繝ｫ縺九ｉ雜ｳ髻ｳ髻ｳ貅舌ｒ隱ｭ縺ｿ霎ｼ縺ｿ
+            // 迴ｾ蝨ｨ縺ｯ蝓ｺ譛ｬ險ｭ螳壹→縺励※遨ｺ縺ｮ霎樊嶌繧貞・譛溷喧
         }
 
-        #region BGM管理
+        #region BGM邂｡逅・
 
-        // IPlatformerAudioService インターフェース準拠メソッド（パラメータなし）
+        // IPlatformerAudioService 繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ貅匁侠繝｡繧ｽ繝・ラ・医ヱ繝ｩ繝｡繝ｼ繧ｿ縺ｪ縺暦ｼ・
         public void PlayBackgroundMusic()
         {
-            // デフォルトBGMがある場合の実装（設定から取得）
-            // 現在は何もしない（設定拡張時に実装）
+            // 繝・ヵ繧ｩ繝ｫ繝・GM縺後≠繧句ｴ蜷医・螳溯｣・ｼ郁ｨｭ螳壹°繧牙叙蠕暦ｼ・
+            // 迴ｾ蝨ｨ縺ｯ菴輔ｂ縺励↑縺・ｼ郁ｨｭ螳壽僑蠑ｵ譎ゅ↓螳溯｣・ｼ・
             Debug.LogWarning("[PlatformerAudioService] PlayBackgroundMusic() requires AudioClip parameter or default BGM in settings");
         }
 
@@ -210,7 +210,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
             if (_bgmSource.isPlaying)
             {
-                // クロスフェード実装
+                // 繧ｯ繝ｭ繧ｹ繝輔ぉ繝ｼ繝牙ｮ溯｣・
                 _audioManagerObject.GetComponent<MonoBehaviour>()?.StartCoroutine(CrossfadeBGM(clip, loop, fadeInDuration));
             }
             else
@@ -228,10 +228,10 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
             OnBGMChanged?.Invoke(clip.name);
         }
 
-        // IPlatformerAudioService インターフェース準拠メソッド（パラメータなし）
+        // IPlatformerAudioService 繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ貅匁侠繝｡繧ｽ繝・ラ・医ヱ繝ｩ繝｡繝ｼ繧ｿ縺ｪ縺暦ｼ・
         public void StopBackgroundMusic()
         {
-            StopBackgroundMusic(1f); // デフォルトフェード時間で呼び出し
+            StopBackgroundMusic(1f); // 繝・ヵ繧ｩ繝ｫ繝医ヵ繧ｧ繝ｼ繝画凾髢薙〒蜻ｼ縺ｳ蜃ｺ縺・
         }
 
         public void StopBackgroundMusic(float fadeOutDuration = 1f)
@@ -269,42 +269,42 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
         #endregion
 
-        #region SFX管理
+        #region SFX邂｡逅・
 
         public void PlaySFX(AudioClip clip, Vector3 position = default, float volume = 1f, float pitch = 1f)
         {
             if (clip == null || _isMuted) return;
 
-            // SFXクールダウンチェック
+            // SFX繧ｯ繝ｼ繝ｫ繝繧ｦ繝ｳ繝√ぉ繝・け
             if (IsSFXOnCooldown(clip)) return;
 
             var audioSource = GetPooledAudioSource();
             if (audioSource == null) return;
 
-            // 3D位置設定
+            // 3D菴咲ｽｮ險ｭ螳・
             if (position != default && _is3DAudioEnabled)
             {
                 audioSource.transform.position = position;
-                audioSource.spatialBlend = 1f; // 3D音響
+                audioSource.spatialBlend = 1f; // 3D髻ｳ髻ｿ
             }
             else
             {
-                audioSource.spatialBlend = 0f; // 2D音響
+                audioSource.spatialBlend = 0f; // 2D髻ｳ髻ｿ
             }
 
-            // 音響パラメータ設定
+            // 髻ｳ髻ｿ繝代Λ繝｡繝ｼ繧ｿ險ｭ螳・
             audioSource.clip = clip;
             audioSource.volume = volume * _sfxVolume * _masterVolume;
             audioSource.pitch = pitch;
             audioSource.Play();
 
-            // クールダウン設定
+            // 繧ｯ繝ｼ繝ｫ繝繧ｦ繝ｳ險ｭ螳・
             SetSFXCooldown(clip);
 
-            // イベント通知
+            // 繧､繝吶Φ繝磯夂衍
             OnSFXPlayed?.Invoke(clip, position);
 
-            // 自動回収
+            // 閾ｪ蜍募屓蜿・
             _audioManagerObject.GetComponent<MonoBehaviour>()?.StartCoroutine(ReturnToPoolAfterPlay(audioSource));
         }
 
@@ -315,7 +315,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
         public void PlayPlayerSFX(AudioClip clip, float volume = 1f, float pitch = 1f)
         {
-            // プレイヤー位置での2D音響
+            // 繝励Ξ繧､繝､繝ｼ菴咲ｽｮ縺ｧ縺ｮ2D髻ｳ髻ｿ
             PlaySFX(clip, default, volume, pitch);
         }
 
@@ -335,9 +335,9 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
         #endregion
 
-        #region プラットフォーマー特化音響
+        #region 繝励Λ繝・ヨ繝輔か繝ｼ繝槭・迚ｹ蛹夜浹髻ｿ
 
-        // IPlatformerAudioService インターフェース準拠メソッド（パラメータなし）
+        // IPlatformerAudioService 繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ貅匁侠繝｡繧ｽ繝・ラ・医ヱ繝ｩ繝｡繝ｼ繧ｿ縺ｪ縺暦ｼ・
         public void PlayJumpSound()
         {
             PlayJumpSound(Vector3.zero, 1f);
@@ -353,7 +353,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
             }
         }
 
-        // IPlatformerAudioService インターフェース準拠メソッド（パラメータなし）
+        // IPlatformerAudioService 繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ貅匁侠繝｡繧ｽ繝・ラ・医ヱ繝ｩ繝｡繝ｼ繧ｿ縺ｪ縺暦ｼ・
         public void PlayLandSound()
         {
             PlayLandingSound(Vector3.zero, 1f);
@@ -371,10 +371,10 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
         public void PlayFootstepSound(Vector3 position, float intensity = 1f, string surfaceType = "default")
         {
-            // 足音間隔制御
+            // 雜ｳ髻ｳ髢馴囈蛻ｶ蠕｡
             if (Time.time - _lastFootstepTime < 0.3f) return;
 
-            // 表面タイプ対応足音（将来拡張）
+            // 陦ｨ髱｢繧ｿ繧､繝怜ｯｾ蠢懆ｶｳ髻ｳ・亥ｰ・擂諡｡蠑ｵ・・
             AudioClip footstepClip = GetFootstepClip(surfaceType);
             if (footstepClip != null)
             {
@@ -385,7 +385,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
             }
         }
 
-        // IPlatformerAudioService インターフェース準拠メソッド（パラメータなし）
+        // IPlatformerAudioService 繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ貅匁侠繝｡繧ｽ繝・ラ・医ヱ繝ｩ繝｡繝ｼ繧ｿ縺ｪ縺暦ｼ・
         public void PlayCollectibleSound()
         {
             PlayCollectibleSound(Vector3.zero, 1);
@@ -401,7 +401,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
             }
         }
 
-        // IPlatformerAudioService インターフェース準拠メソッド（パラメータなし）
+        // IPlatformerAudioService 繧､繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ貅匁侠繝｡繧ｽ繝・ラ・医ヱ繝ｩ繝｡繝ｼ繧ｿ縺ｪ縺暦ｼ・
         public void PlayDamageSound()
         {
             PlayDamageSound(Vector3.zero, 1f);
@@ -419,8 +419,8 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
         public void PlayHealSound(Vector3 position, float healAmount)
         {
-            // 回復音（設定に追加が必要）
-            if (_settings.CollectibleSound != null) // 暫定的に収集音を使用
+            // 蝗槫ｾｩ髻ｳ・郁ｨｭ螳壹↓霑ｽ蜉縺悟ｿ・ｦ・ｼ・
+            if (_settings.CollectibleSound != null) // 證ｫ螳夂噪縺ｫ蜿朱寔髻ｳ繧剃ｽｿ逕ｨ
             {
                 float volume = 0.6f;
                 float pitch = UnityEngine.Random.Range(0.9f, 1.1f);
@@ -430,7 +430,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
         #endregion
 
-        #region 環境音・UI音響
+        #region 迺ｰ蠅・浹繝ｻUI髻ｳ髻ｿ
 
         public void PlayAmbientLoop(AudioClip clip, float volume = 0.5f)
         {
@@ -476,22 +476,22 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
         public void PlayMenuNavigateSound()
         {
-            // UI効果音（設定に追加が必要）
+            // UI蜉ｹ譫憺浹・郁ｨｭ螳壹↓霑ｽ蜉縺悟ｿ・ｦ・ｼ・
         }
 
         public void PlayMenuSelectSound()
         {
-            // UI効果音（設定に追加が必要）
+            // UI蜉ｹ譫憺浹・郁ｨｭ螳壹↓霑ｽ蜉縺悟ｿ・ｦ・ｼ・
         }
 
         public void PlayMenuCancelSound()
         {
-            // UI効果音（設定に追加が必要）
+            // UI蜉ｹ譫憺浹・郁ｨｭ螳壹↓霑ｽ蜉縺悟ｿ・ｦ・ｼ・
         }
 
         #endregion
 
-        #region 3D音響・オーディオゾーン
+        #region 3D髻ｳ髻ｿ繝ｻ繧ｪ繝ｼ繝・ぅ繧ｪ繧ｾ繝ｼ繝ｳ
 
         public void EnterAudioZone(string zoneName, AudioClip ambientClip = null, float reverbLevel = 0f)
         {
@@ -502,8 +502,8 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
                 PlayAmbientLoop(ambientClip, 0.5f);
             }
 
-            // リバーブエフェクト設定（Unity Audio Mixer使用推奨）
-            // 現在は基本実装
+            // 繝ｪ繝舌・繝悶お繝輔ぉ繧ｯ繝郁ｨｭ螳夲ｼ・nity Audio Mixer菴ｿ逕ｨ謗ｨ螂ｨ・・
+            // 迴ｾ蝨ｨ縺ｯ蝓ｺ譛ｬ螳溯｣・
 
             OnAudioZoneChanged?.Invoke(zoneName);
         }
@@ -529,7 +529,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
         #endregion
 
-        #region 動的音響制御
+        #region 蜍慕噪髻ｳ髻ｿ蛻ｶ蠕｡
 
         public void SetSlowMotionEffect(bool enabled, float timeScale = 0.5f)
         {
@@ -537,7 +537,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
             if (enabled)
             {
-                // 全AudioSourceのピッチを下げる
+                // 蜈ｨAudioSource縺ｮ繝斐ャ繝√ｒ荳九￡繧・
                 foreach (var source in _activeAudioSources)
                 {
                     if (source != null && source.isPlaying)
@@ -553,7 +553,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
             }
             else
             {
-                // ピッチを元に戻す
+                // 繝斐ャ繝√ｒ蜈・↓謌ｻ縺・
                 foreach (var source in _activeAudioSources)
                 {
                     if (source != null)
@@ -573,15 +573,15 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         {
             _underwaterActive = enabled;
 
-            // ローパスフィルター効果（AudioMixer推奨）
+            // 繝ｭ繝ｼ繝代せ繝輔ぅ繝ｫ繧ｿ繝ｼ蜉ｹ譫懶ｼ・udioMixer謗ｨ螂ｨ・・
             if (enabled)
             {
-                // 水中効果：音量減衰・ローパスフィルター
+                // 豌ｴ荳ｭ蜉ｹ譫懶ｼ夐浹驥乗ｸ幄｡ｰ繝ｻ繝ｭ繝ｼ繝代せ繝輔ぅ繝ｫ繧ｿ繝ｼ
                 _masterVolume *= 0.7f;
             }
             else
             {
-                // 通常状態に復元
+                // 騾壼ｸｸ迥ｶ諷九↓蠕ｩ蜈・
                 _masterVolume = _settings.MasterVolume;
             }
 
@@ -590,13 +590,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
         public void SetEchoEffect(bool enabled, float echoDelay = 0.1f)
         {
-            // エコーエフェクト（AudioMixer + EchoFilter推奨）
-            // 基本実装として記録
+            // 繧ｨ繧ｳ繝ｼ繧ｨ繝輔ぉ繧ｯ繝茨ｼ・udioMixer + EchoFilter謗ｨ螂ｨ・・
+            // 蝓ｺ譛ｬ螳溯｣・→縺励※險倬鹸
         }
 
         #endregion
 
-        #region 音響設定・状態
+        #region 髻ｳ髻ｿ險ｭ螳壹・迥ｶ諷・
 
         public void UpdateSettings(object settings)
         {
@@ -649,7 +649,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
         #endregion
 
-        #region デバッグ・診断
+        #region 繝・ヰ繝・げ繝ｻ險ｺ譁ｭ
 
         public void ShowAudioInfo()
         {
@@ -667,7 +667,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
         public void ValidateAudioSources()
         {
-            // アクティブソースの検証
+            // 繧｢繧ｯ繝・ぅ繝悶た繝ｼ繧ｹ縺ｮ讀懆ｨｼ
             _activeAudioSources.RemoveAll(source => source == null || !source.isPlaying);
         }
 
@@ -679,11 +679,11 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
         #endregion
 
-        #region オーディオプール管理
+        #region 繧ｪ繝ｼ繝・ぅ繧ｪ繝励・繝ｫ邂｡逅・
 
         public void PreloadAudioClips(AudioClip[] clips)
         {
-            // オーディオクリップのプリロード実装
+            // 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｯ繝ｪ繝・・縺ｮ繝励Μ繝ｭ繝ｼ繝牙ｮ溯｣・
             foreach (var clip in clips)
             {
                 if (clip != null)
@@ -695,7 +695,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
         public void ClearAudioPool()
         {
-            // アクティブソースを停止してプールに戻す
+            // 繧｢繧ｯ繝・ぅ繝悶た繝ｼ繧ｹ繧貞●豁｢縺励※繝励・繝ｫ縺ｫ謌ｻ縺・
             foreach (var source in _activeAudioSources)
             {
                 if (source != null)
@@ -721,7 +721,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
                 return source;
             }
 
-            // プールが空の場合、一時的に新しいソースを作成
+            // 繝励・繝ｫ縺檎ｩｺ縺ｮ蝣ｴ蜷医∽ｸ譎ら噪縺ｫ譁ｰ縺励＞繧ｽ繝ｼ繧ｹ繧剃ｽ懈・
             var newSource = _audioManagerObject.AddComponent<AudioSource>();
             newSource.playOnAwake = false;
             newSource.priority = 150;
@@ -747,7 +747,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
         #endregion
 
-        #region ヘルパーメソッド
+        #region 繝倥Ν繝代・繝｡繧ｽ繝・ラ
 
         private bool IsSFXOnCooldown(AudioClip clip)
         {
@@ -769,17 +769,17 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
             {
                 return clips[UnityEngine.Random.Range(0, clips.Length)];
             }
-            return null; // デフォルト足音がある場合はそれを返す
+            return null; // 繝・ヵ繧ｩ繝ｫ繝郁ｶｳ髻ｳ縺後≠繧句ｴ蜷医・縺昴ｌ繧定ｿ斐☆
         }
 
         private IEnumerator CrossfadeBGM(AudioClip newClip, bool loop, float duration)
         {
             float halfDuration = duration * 0.5f;
 
-            // 現在のBGMをフェードアウト
+            // 迴ｾ蝨ｨ縺ｮBGM繧偵ヵ繧ｧ繝ｼ繝峨い繧ｦ繝・
             yield return FadeOut(_bgmSource, halfDuration, false);
 
-            // 新しいBGMを設定してフェードイン
+            // 譁ｰ縺励＞BGM繧定ｨｭ螳壹＠縺ｦ繝輔ぉ繝ｼ繝峨う繝ｳ
             _bgmSource.clip = newClip;
             _bgmSource.loop = loop;
             _bgmSource.Play();
@@ -824,10 +824,10 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
         #endregion
 
-        #region IPlatformerService実装
+        #region IPlatformerService螳溯｣・
 
         /// <summary>
-        /// IPlatformerService: サービス有効化
+        /// IPlatformerService: 繧ｵ繝ｼ繝薙せ譛牙柑蛹・
         /// </summary>
         public void Enable()
         {
@@ -843,7 +843,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// IPlatformerService: サービス無効化
+        /// IPlatformerService: 繧ｵ繝ｼ繝薙せ辟｡蜉ｹ蛹・
         /// </summary>
         public void Disable()
         {
@@ -853,18 +853,18 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// IPlatformerService: サービス状態リセット
+        /// IPlatformerService: 繧ｵ繝ｼ繝薙せ迥ｶ諷九Μ繧ｻ繝・ヨ
         /// </summary>
         public void Reset()
         {
             Debug.Log("[PlatformerAudioService] Resetting audio service");
 
-            // 全オーディオ停止
+            // 蜈ｨ繧ｪ繝ｼ繝・ぅ繧ｪ蛛懈ｭ｢
             StopBackgroundMusic(0f);
             StopAmbientLoop(0f);
             ClearAudioPool();
 
-            // 設定を初期状態に戻す
+            // 險ｭ螳壹ｒ蛻晄悄迥ｶ諷九↓謌ｻ縺・
             if (_settings != null)
             {
                 _masterVolume = _settings.MasterVolume;
@@ -874,13 +874,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
                 UpdateAllVolumes();
             }
 
-            // 状態リセット
+            // 迥ｶ諷九Μ繧ｻ繝・ヨ
             _slowMotionActive = false;
             _underwaterActive = false;
             _currentAudioZone = "";
             _isMuted = false;
 
-            // 有効状態を維持
+            // 譛牙柑迥ｶ諷九ｒ邯ｭ謖・
             if (_isInitialized)
             {
                 IsEnabled = true;
@@ -888,13 +888,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// IPlatformerService: ServiceLocator統合検証
+        /// IPlatformerService: ServiceLocator邨ｱ蜷域､懆ｨｼ
         /// </summary>
         public bool VerifyServiceLocatorIntegration()
         {
             try
             {
-                // ServiceLocator統合状態の検証
+                // ServiceLocator邨ｱ蜷育憾諷九・讀懆ｨｼ
                 bool hasValidSettings = _settings != null;
                 bool hasAudioManager = _audioManagerObject != null;
                 bool hasRequiredSources = _bgmSource != null && _ambientSource != null && _uiSource != null;
@@ -922,7 +922,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// IPlatformerService: サービス実行状態更新
+        /// IPlatformerService: 繧ｵ繝ｼ繝薙せ螳溯｡檎憾諷区峩譁ｰ
         /// </summary>
         public void UpdateService(float deltaTime)
         {
@@ -930,13 +930,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
             try
             {
-                // アクティブオーディオソースの検証・クリーンアップ
+                // 繧｢繧ｯ繝・ぅ繝悶が繝ｼ繝・ぅ繧ｪ繧ｽ繝ｼ繧ｹ縺ｮ讀懆ｨｼ繝ｻ繧ｯ繝ｪ繝ｼ繝ｳ繧｢繝・・
                 ValidateAudioSources();
 
-                // SFXクールダウンの更新
+                // SFX繧ｯ繝ｼ繝ｫ繝繧ｦ繝ｳ縺ｮ譖ｴ譁ｰ
                 UpdateSFXCooldowns();
 
-                // 3D音響位置の更新（必要に応じて）
+                // 3D髻ｳ髻ｿ菴咲ｽｮ縺ｮ譖ｴ譁ｰ・亥ｿ・ｦ√↓蠢懊§縺ｦ・・
                 Update3DAudioPositions();
             }
             catch (Exception ex)
@@ -946,15 +946,15 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// SFXクールダウンの更新
+        /// SFX繧ｯ繝ｼ繝ｫ繝繧ｦ繝ｳ縺ｮ譖ｴ譁ｰ
         /// </summary>
         private void UpdateSFXCooldowns()
         {
-            // 期限切れクールダウンをクリーンアップ
+            // 譛滄剞蛻・ｌ繧ｯ繝ｼ繝ｫ繝繧ｦ繝ｳ繧偵け繝ｪ繝ｼ繝ｳ繧｢繝・・
             var expiredKeys = new List<AudioClip>();
             foreach (var kvp in _sfxCooldowns)
             {
-                if (Time.time - kvp.Value > _defaultCooldown * 2f) // 余裕をもって削除
+                if (Time.time - kvp.Value > _defaultCooldown * 2f) // 菴呵｣輔ｒ繧ゅ▲縺ｦ蜑企勁
                 {
                     expiredKeys.Add(kvp.Key);
                 }
@@ -967,33 +967,33 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 3D音響位置の更新
+        /// 3D髻ｳ髻ｿ菴咲ｽｮ縺ｮ譖ｴ譁ｰ
         /// </summary>
         private void Update3DAudioPositions()
         {
-            // 必要に応じて3D AudioSourceの位置を動的に更新
-            // 現在は基本実装（将来の拡張ポイント）
+            // 蠢・ｦ√↓蠢懊§縺ｦ3D AudioSource縺ｮ菴咲ｽｮ繧貞虚逧・↓譖ｴ譁ｰ
+            // 迴ｾ蝨ｨ縺ｯ蝓ｺ譛ｬ螳溯｣・ｼ亥ｰ・擂縺ｮ諡｡蠑ｵ繝昴う繝ｳ繝茨ｼ・
         }
 
         #endregion
 
-        #region IDisposable実装
+        #region IDisposable螳溯｣・
 
         public void Dispose()
         {
             try
             {
-                // イベント購読解除
+                // 繧､繝吶Φ繝郁ｳｼ隱ｭ隗｣髯､
                 OnBGMChanged = null;
                 OnMuteChanged = null;
                 OnVolumeChanged = null;
                 OnAudioZoneChanged = null;
                 OnSFXPlayed = null;
 
-                // オーディオソース停止・クリーンアップ
+                // 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｽ繝ｼ繧ｹ蛛懈ｭ｢繝ｻ繧ｯ繝ｪ繝ｼ繝ｳ繧｢繝・・
                 ClearAudioPool();
 
-                // オブジェクト破棄
+                // 繧ｪ繝悶ず繧ｧ繧ｯ繝育ｴ譽・
                 if (_audioManagerObject != null)
                 {
                     GameObject.DestroyImmediate(_audioManagerObject);
@@ -1012,3 +1012,5 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         #endregion
     }
 }
+
+

@@ -1,10 +1,10 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Components;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Data;
 using asterivo.Unity60.Features.Templates.Stealth.Data;
@@ -566,7 +566,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         }
 
         /// <summary>
-        /// 設定の適用
+        /// 險ｭ螳壹・驕ｩ逕ｨ
         /// </summary>
         public void ApplyConfiguration(StealthEnvironmentConfig config)
         {
@@ -639,3 +639,5 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         #endregion
     }
 }
+
+

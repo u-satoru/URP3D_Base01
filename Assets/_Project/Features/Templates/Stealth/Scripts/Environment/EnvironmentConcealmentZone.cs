@@ -1,15 +1,15 @@
-using UnityEngine;
+﻿using UnityEngine;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Features.Templates.Stealth.Services;
 using asterivo.Unity60.Features.Templates.Stealth.Events;
 
 namespace asterivo.Unity60.Features.Templates.Stealth.Environment
 {
     /// <summary>
-    /// 環境隠蔽ゾーンコンポーネント
-    /// プレイヤーが隠れることができる環境エリアを定義
-    /// 草むら、ロッカー、コンテナ、影などの隠蔽ポイント
+    /// 迺ｰ蠅・國阡ｽ繧ｾ繝ｼ繝ｳ繧ｳ繝ｳ繝昴・繝阪Φ繝・
+    /// 繝励Ξ繧､繝､繝ｼ縺碁國繧後ｋ縺薙→縺後〒縺阪ｋ迺ｰ蠅・お繝ｪ繧｢繧貞ｮ夂ｾｩ
+    /// 闕峨・繧峨√Ο繝・き繝ｼ縲√さ繝ｳ繝・リ縲∝ｽｱ縺ｪ縺ｩ縺ｮ髫阡ｽ繝昴う繝ｳ繝・
     /// </summary>
     [RequireComponent(typeof(Collider))]
     public class EnvironmentConcealmentZone : MonoBehaviour, IConcealmentZone
@@ -25,17 +25,17 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         private bool _isActive = true;
 
         [SerializeField]
-        private bool _requiresPlayerAction = false; // ロッカーなどは入る操作が必要
+        private bool _requiresPlayerAction = false; // 繝ｭ繝・き繝ｼ縺ｪ縺ｩ縺ｯ蜈･繧区桃菴懊′蠢・ｦ・
 
         [Header("Zone Behavior")]
         [SerializeField]
-        private float _entryDelay = 0.0f; // 隠蔽効果が発動するまでの遅延
+        private float _entryDelay = 0.0f; // 髫阡ｽ蜉ｹ譫懊′逋ｺ蜍輔☆繧九∪縺ｧ縺ｮ驕・ｻｶ
 
         [SerializeField]
-        private float _exitDelay = 0.5f; // 隠蔽効果が切れるまでの遅延
+        private float _exitDelay = 0.5f; // 髫阡ｽ蜉ｹ譫懊′蛻・ｌ繧九∪縺ｧ縺ｮ驕・ｻｶ
 
         [SerializeField]
-        private bool _hidePlayerModel = false; // プレイヤーモデルを非表示にするか
+        private bool _hidePlayerModel = false; // 繝励Ξ繧､繝､繝ｼ繝｢繝・Ν繧帝撼陦ｨ遉ｺ縺ｫ縺吶ｋ縺・
 
         [Header("Visual and Audio Effects")]
         [SerializeField]
@@ -138,13 +138,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
                 return;
             }
 
-            // トリガーとして設定
+            // 繝医Μ繧ｬ繝ｼ縺ｨ縺励※險ｭ螳・
             _zoneCollider.isTrigger = true;
         }
 
         private void InitializeServices()
         {
-            // ServiceLocatorからStealthServiceを取得
+            // ServiceLocator縺九ｉStealthService繧貞叙蠕・
             _stealthService = ServiceLocator.GetService<IStealthService>();
             if (_stealthService == null)
             {
@@ -154,7 +154,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
 
         private void InitializeEvents()
         {
-            // イベントの初期化
+            // 繧､繝吶Φ繝医・蛻晄悄蛹・
             _concealmentEvent = ScriptableObject.CreateInstance<PlayerConcealmentEvent>();
             _concealmentEvent.name = $"ConcealmentEvent_{gameObject.name}";
         }
@@ -165,10 +165,10 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         {
             if (obj == null) return false;
 
-            // レイヤーマスクチェック
+            // 繝ｬ繧､繝､繝ｼ繝槭せ繧ｯ繝√ぉ繝・け
             if (((1 << obj.layer) & _playerLayerMask) == 0) return false;
 
-            // タグチェック
+            // 繧ｿ繧ｰ繝√ぉ繝・け
             if (!string.IsNullOrEmpty(_playerTag) && !obj.CompareTag(_playerTag)) return false;
 
             return true;
@@ -178,7 +178,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         {
             if (_requiresPlayerAction)
             {
-                // プレイヤーのアクションが必要な場合（ロッカーなど）
+                // 繝励Ξ繧､繝､繝ｼ縺ｮ繧｢繧ｯ繧ｷ繝ｧ繝ｳ縺悟ｿ・ｦ√↑蝣ｴ蜷茨ｼ医Ο繝・き繝ｼ縺ｪ縺ｩ・・
                 ShowInteractionPrompt();
                 return;
             }
@@ -200,16 +200,16 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
             _currentPlayer = player;
             _entryTime = Time.time;
 
-            // プレイヤーレンダラーの取得
+            // 繝励Ξ繧､繝､繝ｼ繝ｬ繝ｳ繝繝ｩ繝ｼ縺ｮ蜿門ｾ・
             _playerRenderer = player.GetComponent<Renderer>();
 
-            // StealthServiceに通知
+            // StealthService縺ｫ騾夂衍
             _stealthService?.EnterConcealmentZone(this);
 
-            // エフェクトの再生
+            // 繧ｨ繝輔ぉ繧ｯ繝医・蜀咲函
             PlayEntryEffects();
 
-            // イベント発行
+            // 繧､繝吶Φ繝育匱陦・
             RaiseConcealmentEvent(true);
 
             if (_enableDebugLogs)
@@ -222,25 +222,25 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
 
             _playerInZone = false;
 
-            // StealthServiceに通知
+            // StealthService縺ｫ騾夂衍
             _stealthService?.ExitConcealmentZone(this);
 
-            // プレイヤーモデルの表示を復元
+            // 繝励Ξ繧､繝､繝ｼ繝｢繝・Ν縺ｮ陦ｨ遉ｺ繧貞ｾｩ蜈・
             if (_hidePlayerModel && _playerRenderer != null)
             {
                 _playerRenderer.enabled = true;
             }
 
-            // エフェクトの再生
+            // 繧ｨ繝輔ぉ繧ｯ繝医・蜀咲函
             PlayExitEffects();
 
-            // イベント発行
+            // 繧､繝吶Φ繝育匱陦・
             RaiseConcealmentEvent(false);
 
             if (_enableDebugLogs)
                 Debug.Log($"[{gameObject.name}] Player exited concealment zone: {_zoneType}");
 
-            // リセット
+            // 繝ｪ繧ｻ繝・ヨ
             _currentPlayer = null;
             _playerRenderer = null;
         }
@@ -249,14 +249,14 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         {
             if (Time.time - _entryTime >= _entryDelay)
             {
-                // 遅延時間が経過したら隠蔽効果を発動
+                // 驕・ｻｶ譎る俣縺檎ｵ碁℃縺励◆繧蛾國阡ｽ蜉ｹ譫懊ｒ逋ｺ蜍・
                 ActivateConcealmentEffects();
             }
         }
 
         private void ActivateConcealmentEffects()
         {
-            // プレイヤーモデルの非表示
+            // 繝励Ξ繧､繝､繝ｼ繝｢繝・Ν縺ｮ髱櫁｡ｨ遉ｺ
             if (_hidePlayerModel && _playerRenderer != null)
             {
                 _playerRenderer.enabled = false;
@@ -270,14 +270,14 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         #region Player Interaction (for zones requiring action)
         private void ShowInteractionPrompt()
         {
-            // UI表示やプロンプト表示の処理
-            // これは後でUI/UXシステムで実装
+            // UI陦ｨ遉ｺ繧・・繝ｭ繝ｳ繝励ヨ陦ｨ遉ｺ縺ｮ蜃ｦ逅・
+            // 縺薙ｌ縺ｯ蠕後〒UI/UX繧ｷ繧ｹ繝・Β縺ｧ螳溯｣・
             if (_enableDebugLogs)
                 Debug.Log($"[{gameObject.name}] Interaction prompt shown for {_zoneType}");
         }
 
         /// <summary>
-        /// プレイヤーアクションによる隠蔽開始（ロッカーなど）
+        /// 繝励Ξ繧､繝､繝ｼ繧｢繧ｯ繧ｷ繝ｧ繝ｳ縺ｫ繧医ｋ髫阡ｽ髢句ｧ具ｼ医Ο繝・き繝ｼ縺ｪ縺ｩ・・
         /// </summary>
         public void ActivateByPlayerAction(GameObject player)
         {
@@ -288,7 +288,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         }
 
         /// <summary>
-        /// プレイヤーアクションによる隠蔽終了
+        /// 繝励Ξ繧､繝､繝ｼ繧｢繧ｯ繧ｷ繝ｧ繝ｳ縺ｫ繧医ｋ髫阡ｽ邨ゆｺ・
         /// </summary>
         public void DeactivateByPlayerAction()
         {
@@ -301,13 +301,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         #region Effects and Audio
         private void PlayEntryEffects()
         {
-            // パーティクルエフェクト
+            // 繝代・繝・ぅ繧ｯ繝ｫ繧ｨ繝輔ぉ繧ｯ繝・
             if (_entryEffect != null)
             {
                 _entryEffect.Play();
             }
 
-            // オーディオエフェクト
+            // 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｨ繝輔ぉ繧ｯ繝・
             if (_entrySound != null)
             {
                 AudioSource.PlayClipAtPoint(_entrySound, transform.position);
@@ -316,13 +316,13 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
 
         private void PlayExitEffects()
         {
-            // パーティクルエフェクト
+            // 繝代・繝・ぅ繧ｯ繝ｫ繧ｨ繝輔ぉ繧ｯ繝・
             if (_exitEffect != null)
             {
                 _exitEffect.Play();
             }
 
-            // オーディオエフェクト
+            // 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｨ繝輔ぉ繧ｯ繝・
             if (_exitSound != null)
             {
                 AudioSource.PlayClipAtPoint(_exitSound, transform.position);
@@ -350,9 +350,9 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
 
         #region Public Interface
         /// <summary>
-        /// 隠蔽ゾーンの有効/無効を切り替え
+        /// 髫阡ｽ繧ｾ繝ｼ繝ｳ縺ｮ譛牙柑/辟｡蜉ｹ繧貞・繧頑崛縺・
         /// </summary>
-        /// <param name="active">有効にするかどうか</param>
+        /// <param name="active">譛牙柑縺ｫ縺吶ｋ縺九←縺・°</param>
         public void SetActive(bool active)
         {
             bool wasActive = _isActive;
@@ -360,7 +360,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
 
             if (wasActive && !_isActive && _playerInZone)
             {
-                // 無効化された場合、プレイヤーが中にいても隠蔽効果を停止
+                // 辟｡蜉ｹ蛹悶＆繧後◆蝣ｴ蜷医√・繝ｬ繧､繝､繝ｼ縺御ｸｭ縺ｫ縺・※繧る國阡ｽ蜉ｹ譫懊ｒ蛛懈ｭ｢
                 StopConcealmentProcess();
             }
 
@@ -369,9 +369,9 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         }
 
         /// <summary>
-        /// 隠蔽強度を動的に変更
+        /// 髫阡ｽ蠑ｷ蠎ｦ繧貞虚逧・↓螟画峩
         /// </summary>
-        /// <param name="newStrength">新しい隠蔽強度 (0.0 - 1.0)</param>
+        /// <param name="newStrength">譁ｰ縺励＞髫阡ｽ蠑ｷ蠎ｦ (0.0 - 1.0)</param>
         public void SetConcealmentStrength(float newStrength)
         {
             _concealmentStrength = Mathf.Clamp01(newStrength);
@@ -381,12 +381,12 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         }
 
         /// <summary>
-        /// 現在プレイヤーがゾーン内にいるかどうか
+        /// 迴ｾ蝨ｨ繝励Ξ繧､繝､繝ｼ縺後だ繝ｼ繝ｳ蜀・↓縺・ｋ縺九←縺・°
         /// </summary>
         public bool HasPlayerInside => _playerInZone;
 
         /// <summary>
-        /// ゾーン内のプレイヤーオブジェクト
+        /// 繧ｾ繝ｼ繝ｳ蜀・・繝励Ξ繧､繝､繝ｼ繧ｪ繝悶ず繧ｧ繧ｯ繝・
         /// </summary>
         public GameObject CurrentPlayer => _currentPlayer;
         #endregion
@@ -428,7 +428,7 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
                 }
             }
 
-            // 隠蔽強度の可視化
+            // 髫阡ｽ蠑ｷ蠎ｦ縺ｮ蜿ｯ隕門喧
             if (_playerInZone)
             {
                 Gizmos.color = Color.green;
@@ -441,3 +441,5 @@ namespace asterivo.Unity60.Features.Templates.Stealth.Environment
         #endregion
     }
 }
+
+

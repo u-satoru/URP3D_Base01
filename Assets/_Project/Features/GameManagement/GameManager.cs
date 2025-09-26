@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Debug = UnityEngine.Debug;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
@@ -9,9 +9,9 @@ using System.Collections;
 using System.Collections.Generic;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Core.Components;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Helpers;
-using asterivo.Unity60.Core.Audio; // GameState enum用
+using asterivo.Unity60.Core.Audio; // GameState enum逕ｨ
 
 namespace asterivo.Unity60.Features.GameManagement
 {
@@ -130,14 +130,14 @@ namespace asterivo.Unity60.Features.GameManagement
             
             if (validateEventConnections)
             {
-                // 基本的な重要イベントの検証
+                // 蝓ｺ譛ｬ逧・↑驥崎ｦ√う繝吶Φ繝医・讀懆ｨｼ
                 if (gameStateChangedEvent == null)
                 {
                     LogError("Game State Changed Event is not assigned!");
                     isValid = false;
                 }
                 
-                // 包括的なイベント接続検証
+                // 蛹・峡逧・↑繧､繝吶Φ繝域磁邯壽､懆ｨｼ
                 // var validationResult = EventConnectionValidator.ValidateAllEventConnections(true); // TODO: EventConnectionValidator not available
                 // Temporary: Skip validation
                 bool validationPassed = true;
@@ -264,7 +264,7 @@ public void OnEventRaised(object value)
                 return null;
             }
 
-            // IHealthTargetを実装するコンポーネントを検索
+            // IHealthTarget繧貞ｮ溯｣・☆繧九さ繝ｳ繝昴・繝阪Φ繝医ｒ讀懃ｴ｢
             var healthTargetComponents = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None);
             IHealthTarget playerHealth = null;
             
@@ -359,3 +359,5 @@ public void OnEventRaised(object value)
         // Coroutine management no longer required here
     }
 }
+
+

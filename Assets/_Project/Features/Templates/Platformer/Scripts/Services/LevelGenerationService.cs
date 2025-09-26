@@ -1,60 +1,60 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using asterivo.Unity60.Core;
-using asterivo.Unity60.Core.Services;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
 using asterivo.Unity60.Features.Templates.Platformer.Settings;
 
 namespace asterivo.Unity60.Features.Templates.Platformer.Services
 {
     /// <summary>
-    /// Level Generation Service：プラットフォーマーレベル生成・配置・動的調整システム
-    /// ServiceLocator統合：レベル生成・プロシージャル配置・パフォーマンス最適化・Learn & Grow価値実現
-    /// Event駆動通信：レベル生成・配置完了・チャンク管理の疎結合通知
+    /// Level Generation Service・壹・繝ｩ繝・ヨ繝輔か繝ｼ繝槭・繝ｬ繝吶Ν逕滓・繝ｻ驟咲ｽｮ繝ｻ蜍慕噪隱ｿ謨ｴ繧ｷ繧ｹ繝・Β
+    /// ServiceLocator邨ｱ蜷茨ｼ壹Ξ繝吶Ν逕滓・繝ｻ繝励Ο繧ｷ繝ｼ繧ｸ繝｣繝ｫ驟咲ｽｮ繝ｻ繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ譛驕ｩ蛹悶・Learn & Grow萓｡蛟､螳溽樟
+    /// Event鬧・虚騾壻ｿ｡・壹Ξ繝吶Ν逕滓・繝ｻ驟咲ｽｮ螳御ｺ・・繝√Ε繝ｳ繧ｯ邂｡逅・・逍守ｵ仙粋騾夂衍
     /// </summary>
     public class LevelGenerationService : ILevelGenerationService
     {
-        // 設定データ
+        // 險ｭ螳壹ョ繝ｼ繧ｿ
         private PlatformerLevelSettings _settings;
 
-        // レベル生成状態
+        // 繝ｬ繝吶Ν逕滓・迥ｶ諷・
         private int _currentLevelNumber = 0;
         private bool _isLevelGenerated = false;
         private bool _isGenerating = false;
 
-        // チャンク管理
+        // 繝√Ε繝ｳ繧ｯ邂｡逅・
         private readonly Dictionary<Vector2Int, LevelChunkData> _activeChunks = new Dictionary<Vector2Int, LevelChunkData>();
         private readonly Queue<LevelChunkData> _chunkPool = new Queue<LevelChunkData>();
 
-        // プロシージャル生成
+        // 繝励Ο繧ｷ繝ｼ繧ｸ繝｣繝ｫ逕滓・
         private System.Random _levelRandom;
         private Vector3 _playerPosition = Vector3.zero;
         private float _generatedDistance = 0f;
 
-        // パフォーマンス統計
+        // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ邨ｱ險・
         private int _chunksGenerated = 0;
         private int _chunksDestroyed = 0;
         private float _generationTime = 0f;
 
-        // Event駆動通信（疎結合）
+        // Event鬧・虚騾壻ｿ｡・育鮪邨仙粋・・
         private GameEvent<LevelGenerationEventData> _onLevelGenerated;
         private GameEvent<ChunkEventData> _onChunkGenerated;
         private GameEvent<ChunkEventData> _onChunkDestroyed;
         private GameEvent<LevelProgressEventData> _onLevelProgress;
 
-        // ServiceLocator連携フラグ
+        // ServiceLocator騾｣謳ｺ繝輔Λ繧ｰ
         private bool _isInitialized = false;
 
         // ==================================================
-        // IPlatformerService 基底インターフェース実装
+        // IPlatformerService 蝓ｺ蠎輔う繝ｳ繧ｿ繝ｼ繝輔ぉ繝ｼ繧ｹ螳溯｣・
         // ==================================================
 
-        // IPlatformerServiceで必要なプロパティ
+        // IPlatformerService縺ｧ蠢・ｦ√↑繝励Ο繝代ユ繧｣
         public bool IsInitialized { get; private set; } = false;
         public bool IsEnabled { get; private set; } = false;
 
-        // プロパティ公開
+        // 繝励Ο繝代ユ繧｣蜈ｬ髢・
         public int CurrentLevelNumber => _currentLevelNumber;
         public bool IsLevelGenerated => _isLevelGenerated;
         public bool IsGenerating => _isGenerating;
@@ -62,20 +62,20 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         public float GenerationProgress => _generatedDistance / (_settings.LevelLength * _settings.ProceduralGeneration.ChunkSize);
 
         /// <summary>
-        /// コンストラクタ：設定ベース初期化
+        /// 繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ・夊ｨｭ螳壹・繝ｼ繧ｹ蛻晄悄蛹・
         /// </summary>
         public LevelGenerationService(PlatformerLevelSettings settings)
         {
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            // Event駆動通信の初期化
+            // Event鬧・虚騾壻ｿ｡縺ｮ蛻晄悄蛹・
             InitializeEventChannels();
 
             Debug.Log("[LevelGenerationService] Initialized with ServiceLocator + Event-driven architecture.");
         }
 
         /// <summary>
-        /// レベル生成：Event駆動通知 + ServiceLocator連携
+        /// 繝ｬ繝吶Ν逕滓・・哘vent鬧・虚騾夂衍 + ServiceLocator騾｣謳ｺ
         /// </summary>
         public void GenerateLevel(int levelNumber)
         {
@@ -90,7 +90,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
             try
             {
-                // ランダムシード設定
+                // 繝ｩ繝ｳ繝繝繧ｷ繝ｼ繝芽ｨｭ螳・
                 int seed = _settings.ProceduralGeneration.Seed == 0 ?
                     UnityEngine.Random.Range(1, int.MaxValue) :
                     _settings.ProceduralGeneration.Seed + levelNumber;
@@ -98,24 +98,24 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
                 var startTime = Time.realtimeSinceStartup;
 
-                // 既存レベルクリア
+                // 譌｢蟄倥Ξ繝吶Ν繧ｯ繝ｪ繧｢
                 ClearCurrentLevel();
 
-                // ServiceLocator経由でゲームマネージャーと連携
+                // ServiceLocator邨檎罰縺ｧ繧ｲ繝ｼ繝繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｨ騾｣謳ｺ
                 var gameManager = ServiceLocator.GetService<IPlatformerGameManager>();
                 var physicsService = ServiceLocator.GetService<IPlatformerPhysicsService>();
 
-                // 初期チャンク生成
+                // 蛻晄悄繝√Ε繝ｳ繧ｯ逕滓・
                 GenerateInitialChunks();
 
-                // コレクタブルアイテム配置
+                // 繧ｳ繝ｬ繧ｯ繧ｿ繝悶Ν繧｢繧､繝・Β驟咲ｽｮ
                 PlaceCollectibles();
 
                 _generationTime = Time.realtimeSinceStartup - startTime;
                 _isLevelGenerated = true;
                 _isGenerating = false;
 
-                // Event駆動通信：レベル生成完了通知
+                // Event鬧・虚騾壻ｿ｡・壹Ξ繝吶Ν逕滓・螳御ｺ・夂衍
                 var eventData = new LevelGenerationEventData
                 {
                     LevelNumber = levelNumber,
@@ -138,7 +138,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 現在レベルクリア：リソース解放とプール活用
+        /// 迴ｾ蝨ｨ繝ｬ繝吶Ν繧ｯ繝ｪ繧｢・壹Μ繧ｽ繝ｼ繧ｹ隗｣謾ｾ縺ｨ繝励・繝ｫ豢ｻ逕ｨ
         /// </summary>
         public void ClearCurrentLevel()
         {
@@ -155,24 +155,24 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// プレイヤー位置更新：動的チャンク管理
+        /// 繝励Ξ繧､繝､繝ｼ菴咲ｽｮ譖ｴ譁ｰ・壼虚逧・メ繝｣繝ｳ繧ｯ邂｡逅・
         /// </summary>
         public void UpdatePlayerPosition(Vector3 playerPosition)
         {
             _playerPosition = playerPosition;
 
-            // プロシージャル生成：前方プリロード
+            // 繝励Ο繧ｷ繝ｼ繧ｸ繝｣繝ｫ逕滓・・壼燕譁ｹ繝励Μ繝ｭ繝ｼ繝・
             float preloadDistance = _playerPosition.x + _settings.ProceduralGeneration.PreloadDistance;
             if (preloadDistance > _generatedDistance)
             {
                 GenerateForwardChunks(preloadDistance);
             }
 
-            // パフォーマンス最適化：後方アンロード
+            // 繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ譛驕ｩ蛹厄ｼ壼ｾ梧婿繧｢繝ｳ繝ｭ繝ｼ繝・
             float unloadDistance = _playerPosition.x - _settings.ProceduralGeneration.UnloadDistance;
             UnloadDistantChunks(unloadDistance);
 
-            // 進捗通知
+            // 騾ｲ謐鈴夂衍
             var progressData = new LevelProgressEventData
             {
                 PlayerPosition = playerPosition,
@@ -183,7 +183,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 初期チャンク生成：基本レベル構造
+        /// 蛻晄悄繝√Ε繝ｳ繧ｯ逕滓・・壼渕譛ｬ繝ｬ繝吶Ν讒矩
         /// </summary>
         private void GenerateInitialChunks()
         {
@@ -200,7 +200,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 前方チャンク生成：プロシージャル拡張
+        /// 蜑肴婿繝√Ε繝ｳ繧ｯ逕滓・・壹・繝ｭ繧ｷ繝ｼ繧ｸ繝｣繝ｫ諡｡蠑ｵ
         /// </summary>
         private void GenerateForwardChunks(float targetDistance)
         {
@@ -222,7 +222,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// チャンク生成：プラットフォーム・ハザード・コレクタブル配置
+        /// 繝√Ε繝ｳ繧ｯ逕滓・・壹・繝ｩ繝・ヨ繝輔か繝ｼ繝繝ｻ繝上じ繝ｼ繝峨・繧ｳ繝ｬ繧ｯ繧ｿ繝悶Ν驟咲ｽｮ
         /// </summary>
         private void GenerateChunk(Vector2Int chunkCoord)
         {
@@ -234,10 +234,10 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
                 chunkCoord.y * _settings.ProceduralGeneration.ChunkSize
             );
 
-            // プラットフォーム生成
+            // 繝励Λ繝・ヨ繝輔か繝ｼ繝逕滓・
             GeneratePlatforms(chunk);
 
-            // ハザード配置
+            // 繝上じ繝ｼ繝蛾・鄂ｮ
             if (_settings.HazardGeneration.HazardDensity > 0)
             {
                 GenerateHazards(chunk);
@@ -246,7 +246,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
             _activeChunks[chunkCoord] = chunk;
             _chunksGenerated++;
 
-            // Event駆動通信：チャンク生成通知
+            // Event鬧・虚騾壻ｿ｡・壹メ繝｣繝ｳ繧ｯ逕滓・騾夂衍
             var eventData = new ChunkEventData
             {
                 ChunkCoordinate = chunkCoord,
@@ -263,7 +263,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// プラットフォーム生成：物理演算ベースの配置
+        /// 繝励Λ繝・ヨ繝輔か繝ｼ繝逕滓・・夂黄逅・ｼ皮ｮ励・繝ｼ繧ｹ縺ｮ驟咲ｽｮ
         /// </summary>
         private void GeneratePlatforms(LevelChunkData chunk)
         {
@@ -291,7 +291,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// ハザード生成：難易度連動配置
+        /// 繝上じ繝ｼ繝臥函謌撰ｼ夐屮譏灘ｺｦ騾｣蜍暮・鄂ｮ
         /// </summary>
         private void GenerateHazards(LevelChunkData chunk)
         {
@@ -323,7 +323,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// コレクタブルアイテム配置：CollectionServiceとの統合
+        /// 繧ｳ繝ｬ繧ｯ繧ｿ繝悶Ν繧｢繧､繝・Β驟咲ｽｮ・咾ollectionService縺ｨ縺ｮ邨ｱ蜷・
         /// </summary>
         private void PlaceCollectibles()
         {
@@ -353,7 +353,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// 遠距離チャンクアンロード：メモリ最適化
+        /// 驕霍晞屬繝√Ε繝ｳ繧ｯ繧｢繝ｳ繝ｭ繝ｼ繝会ｼ壹Γ繝｢繝ｪ譛驕ｩ蛹・
         /// </summary>
         private void UnloadDistantChunks(float unloadDistance)
         {
@@ -381,11 +381,11 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// チャンク破棄：オブジェクトプール活用
+        /// 繝√Ε繝ｳ繧ｯ遐ｴ譽・ｼ壹が繝悶ず繧ｧ繧ｯ繝医・繝ｼ繝ｫ豢ｻ逕ｨ
         /// </summary>
         private void DestroyChunk(LevelChunkData chunk)
         {
-            // Event駆動通信：チャンク破棄通知
+            // Event鬧・虚騾壻ｿ｡・壹メ繝｣繝ｳ繧ｯ遐ｴ譽・夂衍
             var eventData = new ChunkEventData
             {
                 ChunkCoordinate = chunk.Coordinate,
@@ -395,14 +395,14 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
             };
             _onChunkDestroyed?.Raise(eventData);
 
-            // オブジェクトプール活用
+            // 繧ｪ繝悶ず繧ｧ繧ｯ繝医・繝ｼ繝ｫ豢ｻ逕ｨ
             chunk.Reset();
             _chunkPool.Enqueue(chunk);
             _chunksDestroyed++;
         }
 
         /// <summary>
-        /// プールからチャンク取得：メモリ効率化
+        /// 繝励・繝ｫ縺九ｉ繝√Ε繝ｳ繧ｯ蜿門ｾ暦ｼ壹Γ繝｢繝ｪ蜉ｹ邇・喧
         /// </summary>
         private LevelChunkData GetPooledChunk()
         {
@@ -414,7 +414,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// プラットフォームタイプ決定：確率ベース
+        /// 繝励Λ繝・ヨ繝輔か繝ｼ繝繧ｿ繧､繝玲ｱｺ螳夲ｼ夂｢ｺ邇・・繝ｼ繧ｹ
         /// </summary>
         private PlatformType DeterminePlatformType(PlatformerLevelSettings.PlatformGenerationSettings settings)
         {
@@ -429,7 +429,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// ハザードタイプ決定：確率ベース
+        /// 繝上じ繝ｼ繝峨ち繧､繝玲ｱｺ螳夲ｼ夂｢ｺ邇・・繝ｼ繧ｹ
         /// </summary>
         private HazardType DetermineHazardType(PlatformerLevelSettings.HazardGenerationSettings settings)
         {
@@ -449,7 +449,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// アイテムスコア計算：リスク報酬バランス
+        /// 繧｢繧､繝・Β繧ｹ繧ｳ繧｢險育ｮ暦ｼ壹Μ繧ｹ繧ｯ蝣ｱ驟ｬ繝舌Λ繝ｳ繧ｹ
         /// </summary>
         private int CalculateItemScore(PlatformerLevelSettings.CollectiblePlacementSettings settings)
         {
@@ -458,14 +458,14 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
             if (_levelRandom.NextDouble() < settings.RareItemRate)
             {
-                baseScore *= 5; // レアアイテム
+                baseScore *= 5; // 繝ｬ繧｢繧｢繧､繝・Β
             }
 
             return Mathf.RoundToInt(baseScore * riskMultiplier * _settings.DifficultyScale);
         }
 
         /// <summary>
-        /// アイテム位置生成：配置最適化
+        /// 繧｢繧､繝・Β菴咲ｽｮ逕滓・・夐・鄂ｮ譛驕ｩ蛹・
         /// </summary>
         private Vector3 GenerateItemPosition()
         {
@@ -477,13 +477,13 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// Event駆動通信チャネル初期化
+        /// Event鬧・虚騾壻ｿ｡繝√Ε繝阪Ν蛻晄悄蛹・
         /// </summary>
         private void InitializeEventChannels()
         {
-            // NOTE: 実際の実装では、これらのEventChannelはScriptableObjectとして
-            // プロジェクト内で作成・管理される
-            // ここでは構造を示すためのプレースホルダー
+            // NOTE: 螳滄圀縺ｮ螳溯｣・〒縺ｯ縲√％繧後ｉ縺ｮEventChannel縺ｯScriptableObject縺ｨ縺励※
+            // 繝励Ο繧ｸ繧ｧ繧ｯ繝亥・縺ｧ菴懈・繝ｻ邂｡逅・＆繧後ｋ
+            // 縺薙％縺ｧ縺ｯ讒矩繧堤､ｺ縺吶◆繧√・繝励Ξ繝ｼ繧ｹ繝帙Ν繝繝ｼ
 
             // _onLevelGenerated = Resources.Load<GameEvent<LevelGenerationEventData>>("Events/OnLevelGenerated");
             // _onChunkGenerated = Resources.Load<GameEvent<ChunkEventData>>("Events/OnChunkGenerated");
@@ -494,7 +494,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// ServiceLocator統合検証
+        /// ServiceLocator邨ｱ蜷域､懆ｨｼ
         /// </summary>
         public bool VerifyServiceLocatorIntegration()
         {
@@ -558,12 +558,12 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         public void UpdateService(float deltaTime)
         {
             if (!IsEnabled) return;
-            // サービス更新処理（必要に応じて実装）
-            // 例：動的レベル調整、パフォーマンス監視など
+            // 繧ｵ繝ｼ繝薙せ譖ｴ譁ｰ蜃ｦ逅・ｼ亥ｿ・ｦ√↓蠢懊§縺ｦ螳溯｣・ｼ・
+            // 萓具ｼ壼虚逧・Ξ繝吶Ν隱ｿ謨ｴ縲√ヱ繝輔か繝ｼ繝槭Φ繧ｹ逶｣隕悶↑縺ｩ
         }
 
         /// <summary>
-        /// 設定更新：ランタイム設定変更対応
+        /// 險ｭ螳壽峩譁ｰ・壹Λ繝ｳ繧ｿ繧､繝險ｭ螳壼､画峩蟇ｾ蠢・
         /// </summary>
         public void UpdateSettings(PlatformerLevelSettings newSettings)
         {
@@ -572,14 +572,14 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
         }
 
         /// <summary>
-        /// リソース解放：IDisposable実装
+        /// 繝ｪ繧ｽ繝ｼ繧ｹ隗｣謾ｾ・唔Disposable螳溯｣・
         /// </summary>
         public void Dispose()
         {
             ClearCurrentLevel();
             _chunkPool.Clear();
 
-            // Event購読解除（実装時に必要）
+            // Event雉ｼ隱ｭ隗｣髯､・亥ｮ溯｣・凾縺ｫ蠢・ｦ・ｼ・
             // if (_onLevelGenerated != null) _onLevelGenerated.RemoveAllListeners();
 
             Debug.Log("[LevelGenerationService] Disposed successfully.");
@@ -587,7 +587,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
 
 #if UNITY_EDITOR
         /// <summary>
-        /// エディタ用診断情報：開発支援機能
+        /// 繧ｨ繝・ぅ繧ｿ逕ｨ險ｺ譁ｭ諠・ｱ・夐幕逋ｺ謾ｯ謠ｴ讖溯・
         /// </summary>
         [ContextMenu("Show Level Generation Debug Info")]
         public void ShowLevelGenerationDebugInfo()
@@ -608,7 +608,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
     }
 
     /// <summary>
-    /// レベル生成イベントデータ構造
+    /// 繝ｬ繝吶Ν逕滓・繧､繝吶Φ繝医ョ繝ｼ繧ｿ讒矩
     /// </summary>
     [System.Serializable]
     public struct LevelGenerationEventData
@@ -621,7 +621,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
     }
 
     /// <summary>
-    /// チャンクイベントデータ構造
+    /// 繝√Ε繝ｳ繧ｯ繧､繝吶Φ繝医ョ繝ｼ繧ｿ讒矩
     /// </summary>
     [System.Serializable]
     public struct ChunkEventData
@@ -633,7 +633,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
     }
 
     /// <summary>
-    /// レベル進捗イベントデータ構造
+    /// 繝ｬ繝吶Ν騾ｲ謐励う繝吶Φ繝医ョ繝ｼ繧ｿ讒矩
     /// </summary>
     [System.Serializable]
     public struct LevelProgressEventData
@@ -644,7 +644,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
     }
 
     /// <summary>
-    /// レベルチャンクデータ構造
+    /// 繝ｬ繝吶Ν繝√Ε繝ｳ繧ｯ繝・・繧ｿ讒矩
     /// </summary>
     [System.Serializable]
     public class LevelChunkData
@@ -666,7 +666,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
     }
 
     /// <summary>
-    /// プラットフォームデータ構造
+    /// 繝励Λ繝・ヨ繝輔か繝ｼ繝繝・・繧ｿ讒矩
     /// </summary>
     [System.Serializable]
     public struct PlatformData
@@ -677,7 +677,7 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
     }
 
     /// <summary>
-    /// ハザードデータ構造
+    /// 繝上じ繝ｼ繝峨ョ繝ｼ繧ｿ讒矩
     /// </summary>
     [System.Serializable]
     public struct HazardData
@@ -687,22 +687,24 @@ namespace asterivo.Unity60.Features.Templates.Platformer.Services
     }
 
     /// <summary>
-    /// プラットフォームタイプ列挙
+    /// 繝励Λ繝・ヨ繝輔か繝ｼ繝繧ｿ繧､繝怜・謖・
     /// </summary>
     public enum PlatformType
     {
-        Static,     // 静的プラットフォーム
-        Moving,     // 移動プラットフォーム
-        Falling     // 落下プラットフォーム
+        Static,     // 髱咏噪繝励Λ繝・ヨ繝輔か繝ｼ繝
+        Moving,     // 遘ｻ蜍輔・繝ｩ繝・ヨ繝輔か繝ｼ繝
+        Falling     // 關ｽ荳九・繝ｩ繝・ヨ繝輔か繝ｼ繝
     }
 
     /// <summary>
-    /// ハザードタイプ列挙
+    /// 繝上じ繝ｼ繝峨ち繧､繝怜・謖・
     /// </summary>
     public enum HazardType
     {
-        Spike,      // スパイク
-        Lava,       // 溶岩
-        Enemy       // 敵
+        Spike,      // 繧ｹ繝代う繧ｯ
+        Lava,       // 貅ｶ蟯ｩ
+        Enemy       // 謨ｵ
     }
 }
+
+

@@ -1,9 +1,9 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using System.Collections;
-using asterivo.Unity60.Core.Services;
-using asterivo.Unity60.Core.Services.Interfaces;
+using asterivo.Unity60.Core;
+using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Types;
 using asterivo.Unity60.Core.Commands;
 using asterivo.Unity60.Features.GameManagement;
@@ -13,8 +13,8 @@ using asterivo.Unity60.Features.GameManagement.Interfaces;
 namespace asterivo.Unity60.Tests.Features.GameManagement
 {
     /// <summary>
-    /// GameManagerAdapterのテスト
-    /// レガシー互換性と新サービスとのブリッジ機能を検証
+    /// GameManagerAdapter縺ｮ繝・せ繝・
+    /// 繝ｬ繧ｬ繧ｷ繝ｼ莠呈鋤諤ｧ縺ｨ譁ｰ繧ｵ繝ｼ繝薙せ縺ｨ縺ｮ繝悶Μ繝・ず讖溯・繧呈､懆ｨｼ
     /// </summary>
     [TestFixture]
     public class GameManagerAdapterTests
@@ -27,18 +27,18 @@ namespace asterivo.Unity60.Tests.Features.GameManagement
         [SetUp]
         public void Setup()
         {
-            // ServiceLocatorをクリア
+            // ServiceLocator繧偵け繝ｪ繧｢
             ServiceLocator.Clear();
 
-            // MockEventManagerを登録
+            // MockEventManager繧堤匳骭ｲ
             _mockEventManager = new MockEventManager();
             ServiceLocator.Register<IEventManager>(_mockEventManager);
 
-            // GameManagerServiceを登録
+            // GameManagerService繧堤匳骭ｲ
             _gameManagerService = new GameManagerService();
             ServiceLocator.Register<IGameManager>(_gameManagerService);
 
-            // GameManagerAdapterを持つGameObjectを作成
+            // GameManagerAdapter繧呈戟縺､GameObject繧剃ｽ懈・
             _testObject = new GameObject("TestAdapter");
             _adapter = _testObject.AddComponent<GameManagerAdapter>();
         }
@@ -387,3 +387,5 @@ namespace asterivo.Unity60.Tests.Features.GameManagement
 
     #endregion
 }
+
+
