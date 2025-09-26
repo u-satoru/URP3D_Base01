@@ -5,7 +5,7 @@ using System;
 // using asterivo.Unity60.Core.Helpers;
 using asterivo.Unity60.Core;
 
-namespace asterivo.Unity60.Core.Debug
+namespace asterivo.Unity60.Core
 {
     /// <summary>
     /// 荳ｭ螟ｮ繧､繝吶Φ繝医Ο繧ｮ繝ｳ繧ｰ繧ｷ繧ｹ繝・Β・・erviceLocator遘ｻ陦檎沿・・    /// ServiceLocator繝代ち繝ｼ繝ｳ縺ｧ繧､繝吶Φ繝医Ο繧ｰ邂｡逅・∈縺ｮ繧｢繧ｯ繧ｻ繧ｹ繧呈署萓帙☆繧・    /// 

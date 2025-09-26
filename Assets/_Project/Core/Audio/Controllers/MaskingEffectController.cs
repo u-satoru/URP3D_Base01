@@ -5,9 +5,9 @@ using System.Linq;
 using asterivo.Unity60.Core.Audio.Data;
 using asterivo.Unity60.Core.Audio.Events;
 using asterivo.Unity60.Core.Events;
-// using asterivo.Unity60.Core.Debug; // TODO: Fix namespace issue
+// Debug functionality is now in Core namespace
 using asterivo.Unity60.Core;
-// using asterivo.Unity60.Core.Shared; // TODO: Fix namespace issue
+// AudioConstants is now in Core namespace
 using Sirenix.OdinInspector;
 
 namespace asterivo.Unity60.Core.Audio.Controllers

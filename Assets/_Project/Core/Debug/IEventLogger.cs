@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace asterivo.Unity60.Core.Debug
+namespace asterivo.Unity60.Core
 {
     /// <summary>
     /// EventLoggerサービスのインターフェース

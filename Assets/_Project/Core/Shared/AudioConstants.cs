@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace asterivo.Unity60.Core.Shared
+namespace asterivo.Unity60.Core
 {
     /// <summary>
     /// 音響システム全体で使用する定数定義
