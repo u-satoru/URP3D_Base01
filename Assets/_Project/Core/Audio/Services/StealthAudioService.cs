@@ -277,11 +277,10 @@ namespace asterivo.Unity60.Core.Audio.Services
             
             string bgmName = level switch
             {
-                AlertLevel.None => "Normal",
-                AlertLevel.Low => "Suspicious", 
-                AlertLevel.Medium => "Alert",
-                AlertLevel.High => "Combat",
-                AlertLevel.Combat => "Combat",
+                AlertLevel.Relaxed => "Normal",
+                AlertLevel.Suspicious => "Suspicious",
+                AlertLevel.Investigating => "Alert",
+                AlertLevel.Alert => "Combat",
                 _ => "Normal"
             };
             

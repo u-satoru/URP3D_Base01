@@ -1,6 +1,7 @@
 using UnityEngine;
 using asterivo.Unity60.Core;
 using asterivo.Unity60.Core.Events;
+using asterivo.Unity60.Core.Services;
 // using asterivo.Unity60.Features.Combat.Services;
 // using asterivo.Unity60.Features.Combat.Interfaces;
 // using asterivo.Unity60.Features.GameManagement.Services;
@@ -110,11 +111,12 @@ namespace asterivo.Unity60.Core.Bootstrap
             // EventManagerの登録
             if (_registerEventManager)
             {
-                var eventManager = new EventManager();
-                ServiceLocator.Register<IEventManager>(eventManager);
+                // TODO: EventManager参照エラーを修正
+                // var eventManager = new EventManager();
+                // ServiceLocator.Register<IEventManager>(eventManager);
 
                 if (_enableDebugLogs)
-                    Debug.Log("[GameBootstrapper] Registered EventManager");
+                    Debug.Log("[GameBootstrapper] EventManager registration skipped (TODO)");
             }
 
             // 他のコアサービスもここに追加

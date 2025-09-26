@@ -1,15 +1,15 @@
 [Licensing::Module] Trying to connect to existing licensing client channel...
-[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-26T12:34:58.6773368Z"
+[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-26T12:46:43.5569315Z"
 [Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 58148, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
 [Licensing::Module] Error: LicensingClient has failed validation; ignoring
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.17.3+a4e98f1
-  Session Id:              488585dd3d0d46ed9d6506761a6e09fd
+  Session Id:              458ff58fbc764594897cbf9974c0ec42
   Correlation Id:          bd66d0544daaeda4aa42da274a244b57
-  External correlation Id: 5015295385303672585
+  External correlation Id: 649119537285208288
   Machine Id:              6v8irZboPhn9pIeIA+kbS+sqP0M=
-[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.02s, handshake: 0.08s)
-[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-26T12:34:58.7730544Z"
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.01s, handshake: 0.07s)
+[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-26T12:46:43.6443497Z"
 [Licensing::Module] Error: Access token is unavailable; failed to update
 [Licensing::Client] Successfully updated license
 Built from '6000.0/staging' branch; Version is '6000.0.42f1 (feb9a7235030) revision 16693671'; Using compiler version '193933523'; Build Type 'Release'
@@ -66,22 +66,22 @@ D:/UnityProjects/URP3D_Base01
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [9556]  Target information:
+Player connection [55956]  Target information:
 
-Player connection [9556]  * "[IP] 172.22.208.1 [Port] 55504 [Flags] 2 [Guid] 770349195 [EditorId] 770349195 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [55956]  * "[IP] 172.22.208.1 [Port] 55504 [Flags] 2 [Guid] 2705291440 [EditorId] 2705291440 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [9556]  * "[IP] 172.28.0.1 [Port] 55504 [Flags] 2 [Guid] 770349195 [EditorId] 770349195 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [55956]  * "[IP] 172.28.0.1 [Port] 55504 [Flags] 2 [Guid] 2705291440 [EditorId] 2705291440 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [9556]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 770349195 [EditorId] 770349195 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [55956]  * "[IP] 172.21.112.1 [Port] 55504 [Flags] 2 [Guid] 2705291440 [EditorId] 2705291440 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [9556]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 770349195 [EditorId] 770349195 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [55956]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 2705291440 [EditorId] 2705291440 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
 Unable to join player connection multicast group (err: 10013).
-Player connection [9556] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [55956] Host joined alternative multi-casting on [225.0.0.222:34997]...
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
 [Physics::Module] Id: 0xdecafbad
-[Package Manager] Connected to IPC stream "Upm-61444" after 0.4 seconds.
+[Package Manager] Connected to IPC stream "Upm-41068" after 0.3 seconds.
 Library Redirect Path: Library/
 [Package Manager] Restoring resolved packages state from cache
 [Licensing::Client] Successfully resolved entitlement details
@@ -230,8 +230,8 @@ Default GameObject BitMask: UI already registered
 [Physics::Module] Threading Mode: Multi-Threaded
 [Subsystems] No new subsystems found in resolved package list.
 Package Manager log level set to [2]
-[Package Manager] Done registering packages in 0.31 seconds
-Refreshing native plugins compatible for Editor in 2.30 ms, found 3 plugins.
+[Package Manager] Done registering packages in 0.18 seconds
+Refreshing native plugins compatible for Editor in 2.05 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.0.42f1 (feb9a7235030)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Resources/UnitySubsystems
@@ -248,7 +248,7 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56444
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56068
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 ImportWorker Server TCP listen port: 0
@@ -261,46 +261,46 @@ Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 [Licensing::Client] Successfully resolved entitlement details
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
-Registered in 0.040362 seconds.
-- Loaded All Assemblies, in  0.703 seconds
+Registered in 0.043220 seconds.
+- Loaded All Assemblies, in  0.660 seconds
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 [usbmuxd] Send listen message
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 750 ms
+Android Extension - Scanning For ADB Devices 590 ms
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.270 seconds
-Domain Reload Profiling: 1966ms
-	BeginReloadAssembly (235ms)
+- Finished resetting the current domain, in  1.105 seconds
+Domain Reload Profiling: 1759ms
+	BeginReloadAssembly (179ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (52ms)
-	RebuildNativeTypeToScriptingClass (17ms)
-	initialDomainReloadingComplete (117ms)
-	LoadAllAssembliesAndSetupDomain (274ms)
-		LoadAssemblies (231ms)
+	RebuildCommonClasses (61ms)
+	RebuildNativeTypeToScriptingClass (16ms)
+	initialDomainReloadingComplete (136ms)
+	LoadAllAssembliesAndSetupDomain (261ms)
+		LoadAssemblies (176ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (267ms)
-			TypeCache.Refresh (265ms)
-				TypeCache.ScanAssembly (247ms)
+		AnalyzeDomain (255ms)
+			TypeCache.Refresh (252ms)
+				TypeCache.ScanAssembly (235ms)
 			BuildScriptInfoCaches (0ms)
 			ResolveRequiredComponents (1ms)
-	FinalizeReload (1270ms)
+	FinalizeReload (1106ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1217ms)
+		SetupLoadedEditorAssemblies (1060ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (901ms)
-			SetLoadedEditorAssemblies (8ms)
-			BeforeProcessingInitializeOnLoad (65ms)
-			ProcessInitializeOnLoadAttributes (161ms)
-			ProcessInitializeOnLoadMethodAttributes (83ms)
+			InitializePlatformSupportModulesInManaged (707ms)
+			SetLoadedEditorAssemblies (5ms)
+			BeforeProcessingInitializeOnLoad (68ms)
+			ProcessInitializeOnLoadAttributes (184ms)
+			ProcessInitializeOnLoadMethodAttributes (96ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -569,18 +569,18 @@ The GUID inside 'Assets/Resources.meta' cannot be extracted by the YAML Parser. 
 The GUID inside 'Assets/Resources/DOTweenSettings.asset.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
 YAML Parsing error 'Parser Failure at line 7: Expect ':' between key and value within mapping'
 YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
+YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
+The contents of 'Assets/_Project/Features/Templates/Common/Prefabs/UI/BasicUICanvas.prefab.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
 YAML Parsing error 'Parser Failure at line 8: Expect ':' between key and value within mapping'
+The contents of 'Assets/_Project/Tests/Features/StateManagement/StateManagementIntegrationTest.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
+The contents of 'Assets/_Project/Features/StateManagement/StateManager.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
 YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
 YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
 The contents of 'Assets/_Project/Features/StateManagement/StateManagementBootstrapper.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
 The contents of 'Assets/_Project/Tests/Features/StateManagement.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
-The contents of 'Assets/_Project/Features/Templates/Common/Prefabs/UI/BasicUICanvas.prefab.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
 YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
-YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
-The contents of 'Assets/_Project/Tests/Features/StateManagement/StateManagementIntegrationTest.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
 The contents of 'Assets/_Project/Tests/Features/StateManagement/StateManagementTests.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
 The contents of 'Assets/_Project/Core/Interfaces/IStateService.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
-The contents of 'Assets/_Project/Features/StateManagement/StateManager.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
 The .meta file Assets/_Project/Core/Interfaces/IStateService.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 The .meta file Assets/_Project/Features/StateManagement/StateManagementBootstrapper.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 The .meta file Assets/_Project/Features/StateManagement/StateManager.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
@@ -605,6 +605,55 @@ UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface/<>c__DisplayC
 UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface:EmitExceptionAsError<UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus> (System.Func`1<UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus>,UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus)
 UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface:CompileScripts (UnityEditor.Scripting.ScriptCompilation.EditorScriptCompilationOptions,UnityEditor.BuildTarget,int,string[])
 
+warn: Unity.AspNetCore.NamedPipeSupport.NamedPipeServer[0]
+      Exception occured while accepting client connection: System.IO.IOException: パイプを閉じています。
+         at System.IO.Pipes.NamedPipeServerStream.WaitForConnectionCoreAsync(CancellationToken cancellationToken)
+         at System.IO.Pipes.NamedPipeServerStream.WaitForConnectionAsync(CancellationToken cancellationToken)
+         at Unity.AspNetCore.NamedPipeSupport.NamedPipeServer.AcceptLoop(Boolean useNamedPipeMessageSemantic)
+         at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+         at Unity.AspNetCore.NamedPipeSupport.NamedPipeServer.AcceptLoop(Boolean useNamedPipeMessageSemantic)
+         at Unity.AspNetCore.NamedPipeSupport.NamedPipeServer..ctor(String pipeName, NamedPipeListenerOptions options, ILogger`1 logger)
+         at Unity.AspNetCore.NamedPipeSupport.NamedPipeListener..ctor(NamedPipeEndpoint endpoint, ILoggerFactory loggerFactory, NamedPipeListenerOptions namedPipeListenerOptions)
+         at Unity.AspNetCore.NamedPipeSupport.NamedPipeListenerFactory.BindAsync(EndPoint _, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass30_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+         at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass30_0`1.<StartAsync>g__OnBind|0(ListenOptions options, CancellationToken onBindCancellationToken)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.EndpointsStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.EndpointsStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(IEnumerable`1 listenOptions, AddressBindContext context, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(IEnumerable`1 listenOptions, AddressBindContext context, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+         at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+         at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+         at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.Builder.WebApplication.StartAsync(CancellationToken cancellationToken)
+         at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+         at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+         at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+         at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.Run(IHost host)
+         at Microsoft.AspNetCore.Builder.WebApplication.Run(String url)
+         at Program.<Main>$(String[] args)
+      --- End of stack trace from previous location ---
+         at Unity.AspNetCore.NamedPipeSupport.NamedPipeServer.AcceptLoop(Boolean useNamedPipeMessageSemantic)
 info: Microsoft.Hosting.Lifetime[14]
       Now listening on: http://localhost:80
 info: Microsoft.Hosting.Lifetime[0]
@@ -620,8 +669,8 @@ info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 56.1554ms
-Refreshing native plugins compatible for Editor in 1.23 ms, found 3 plugins.
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 80.0367ms
+Refreshing native plugins compatible for Editor in 1.25 ms, found 3 plugins.
 Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
 WorkingDir: D:/UnityProjects/URP3D_Base01
 info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
@@ -639,11 +688,11 @@ info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
 info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 133.2267ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 170.6963ms
 DisplayProgressbar: Compiling Scripts
-ExitCode: 3 Duration: 1s235ms
+ExitCode: 3 Duration: 1s384ms
 [1263/1745  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
-[1585/1745  0s] Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.dll (+2 others)
+[1585/1745  1s] Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.dll (+2 others)
 ##### CommandLine
 "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.rsp2"
 ##### Contents of Library\Bee\artifacts\1900b0aE.dag\asterivo.Unity60.Core.rsp
@@ -1320,23 +1369,53 @@ Assets\_Project\Core\Interfaces\IStealthMechanicsService.cs(122,13): warning CS0
 
 Assets\_Project\Core\Audio\Services\AudioService.cs(53,34): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
 
+Assets\_Project\Core\Bootstrap\GameEventBridge.cs(58,37): error CS0246: The type or namespace name 'EventManager' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\_Project\Core\Bootstrap\GameBootstrapper.cs(114,40): error CS0246: The type or namespace name 'EventManager' could not be found (are you missing a using directive or an assembly reference?)
+
 Assets\_Project\Core\Audio\AmbientManagerV2.cs(160,17): error CS0103: The name 'audioUpdateService' does not exist in the current context
 
 Assets\_Project\Core\Audio\AmbientManagerV2.cs(160,47): error CS0103: The name 'audioUpdateService' does not exist in the current context
 
-Assets\_Project\Core\Bootstrap\GameEventBridge.cs(57,37): error CS0246: The type or namespace name 'EventManager' could not be found (are you missing a using directive or an assembly reference?)
-
-Assets\_Project\Core\Audio\AudioManager.cs(133,57): error CS0311: The type 'asterivo.Unity60.Core.Audio.Interfaces.ISpatialAudioService' cannot be used as type parameter 'T' in the generic type or method 'ServiceHelper.GetServiceWithFallback<T>()'. There is no implicit reference conversion from 'asterivo.Unity60.Core.Audio.Interfaces.ISpatialAudioService' to 'UnityEngine.Object'.
-
 Assets\_Project\Core\Audio\AmbientManager.cs(170,43): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
 
 Assets\_Project\Core\Audio\AmbientManager.cs(189,61): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+
+Assets\_Project\Core\Bootstrap\GameBootstrapper.cs(214,35): error CS0452: The type 'T' must be a reference type in order to use it as parameter 'T' in the generic type or method 'ServiceLocator.Get<T>()'
 
 Assets\_Project\Core\Audio\AmbientManagerV2.cs(212,13): error CS0103: The name 'environmentSources' does not exist in the current context
 
 Assets\_Project\Core\Audio\AmbientManagerV2.cs(226,17): error CS0103: The name 'environmentSources' does not exist in the current context
 
 Assets\_Project\Core\Audio\AmbientManagerV2.cs(228,49): error CS0103: The name 'environmentSources' does not exist in the current context
+
+Assets\_Project\Core\Bootstrap\GameBootstrapper.cs(227,35): error CS0452: The type 'T' must be a reference type in order to use it as parameter 'T' in the generic type or method 'ServiceLocator.TryGet<T>(out T)'
+
+Assets\_Project\Core\Bootstrap\GameBootstrapperPrefab.cs(31,40): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(586,36): error CS0103: The name 'environmentSources' does not exist in the current context
+
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(620,36): error CS0103: The name 'environmentSources' does not exist in the current context
+
+Assets\_Project\Core\Audio\AudioManager.cs(133,57): error CS0311: The type 'asterivo.Unity60.Core.Audio.Interfaces.ISpatialAudioService' cannot be used as type parameter 'T' in the generic type or method 'ServiceHelper.GetServiceWithFallback<T>()'. There is no implicit reference conversion from 'asterivo.Unity60.Core.Audio.Interfaces.ISpatialAudioService' to 'UnityEngine.Object'.
+
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(668,36): error CS0103: The name 'environmentSources' does not exist in the current context
+
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(740,17): error CS0103: The name 'availableSource' does not exist in the current context
+
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(754,51): error CS0103: The name 'environmentCollection' does not exist in the current context
+
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(754,74): error CS0103: The name 'availableSource' does not exist in the current context
+
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(760,76): error CS0103: The name 'availableSource' does not exist in the current context
+
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(768,35): error CS0103: The name 'layersToRemove' does not exist in the current context
+
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(740,13): warning CS0162: Unreachable code detected
+
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(824,36): error CS0103: The name 'environmentSources' does not exist in the current context
+
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(838,20): error CS0103: The name 'environmentSources' does not exist in the current context
 
 Assets\_Project\Core\Audio\AudioManagerAdapter.cs(90,21): error CS0103: The name 'bgmManager' does not exist in the current context
 
@@ -1356,17 +1435,13 @@ Assets\_Project\Core\Audio\BGMManager.cs(161,17): error CS0103: The name 'starti
 
 Assets\_Project\Core\Audio\BGMManager.cs(163,36): error CS0103: The name 'startingTrack' does not exist in the current context
 
-Assets\_Project\Core\Bootstrap\GameBootstrapper.cs(113,40): error CS0246: The type or namespace name 'EventManager' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Core\Audio\BGMManager.cs(730,33): error CS0103: The name 'suitableWeather' does not exist in the current context
 
-Assets\_Project\Core\Bootstrap\GameBootstrapper.cs(213,35): error CS0452: The type 'T' must be a reference type in order to use it as parameter 'T' in the generic type or method 'ServiceLocator.Get<T>()'
+Assets\_Project\Core\Audio\BGMManager.cs(730,84): error CS0103: The name 'suitableWeather' does not exist in the current context
 
-Assets\_Project\Core\Bootstrap\GameBootstrapper.cs(226,35): error CS0452: The type 'T' must be a reference type in order to use it as parameter 'T' in the generic type or method 'ServiceLocator.TryGet<T>(out T)'
+Assets\_Project\Core\Audio\BGMManager.cs(731,30): error CS0103: The name 'suitableTimeOfDay' does not exist in the current context
 
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(586,36): error CS0103: The name 'environmentSources' does not exist in the current context
-
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(620,36): error CS0103: The name 'environmentSources' does not exist in the current context
-
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(668,36): error CS0103: The name 'environmentSources' does not exist in the current context
+Assets\_Project\Core\Audio\BGMManager.cs(731,83): error CS0103: The name 'suitableTimeOfDay' does not exist in the current context
 
 Assets\_Project\Core\Audio\BGMManager.cs(298,18): error CS0103: The name 'bgmCategories' does not exist in the current context
 
@@ -1378,29 +1453,11 @@ Assets\_Project\Core\Audio\BGMManager.cs(309,20): error CS0103: The name 'suitab
 
 Assets\_Project\Core\Audio\BGMManager.cs(309,51): error CS0103: The name 'suitableTracks' does not exist in the current context
 
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(740,17): error CS0103: The name 'availableSource' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManager.cs(454,17): error CS0103: The name 'targetClip' does not exist in the current context
 
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(754,51): error CS0103: The name 'environmentCollection' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManager.cs(456,31): error CS0103: The name 'targetClip' does not exist in the current context
 
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(754,74): error CS0103: The name 'availableSource' does not exist in the current context
-
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(760,76): error CS0103: The name 'availableSource' does not exist in the current context
-
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(768,35): error CS0103: The name 'layersToRemove' does not exist in the current context
-
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(740,13): warning CS0162: Unreachable code detected
-
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(824,36): error CS0103: The name 'environmentSources' does not exist in the current context
-
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(838,20): error CS0103: The name 'environmentSources' does not exist in the current context
-
-Assets\_Project\Core\Audio\BGMManager.cs(730,33): error CS0103: The name 'suitableWeather' does not exist in the current context
-
-Assets\_Project\Core\Audio\BGMManager.cs(730,84): error CS0103: The name 'suitableWeather' does not exist in the current context
-
-Assets\_Project\Core\Audio\BGMManager.cs(731,30): error CS0103: The name 'suitableTimeOfDay' does not exist in the current context
-
-Assets\_Project\Core\Audio\BGMManager.cs(731,83): error CS0103: The name 'suitableTimeOfDay' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManager.cs(484,73): error CS0103: The name 'targetClip' does not exist in the current context
 
 Assets\_Project\Core\Audio\BGMManager.cs(324,48): error CS1061: 'BGMTrack' does not contain a definition for 'suitableWeather' and no accessible extension method 'suitableWeather' accepting a first argument of type 'BGMTrack' could be found (are you missing a using directive or an assembly reference?)
 
@@ -1410,21 +1467,13 @@ Assets\_Project\Core\Audio\BGMManager.cs(327,45): error CS1061: 'BGMTrack' does 
 
 Assets\_Project\Core\Audio\BGMManager.cs(328,47): error CS1061: 'BGMTrack' does not contain a definition for 'suitableTimeOfDay' and no accessible extension method 'suitableTimeOfDay' accepting a first argument of type 'BGMTrack' could be found (are you missing a using directive or an assembly reference?)
 
-Assets\_Project\Core\Audio\Commands\PlaySoundCommandDefinition.cs(48,17): error CS0103: The name 'CommandPool' does not exist in the current context
-
-Assets\_Project\Core\Bootstrap\GameBootstrapperPrefab.cs(31,40): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
-
 Assets\_Project\Core\Audio\BGMManager.cs(414,34): error CS0103: The name 'tempSource' does not exist in the current context
+
+Assets\_Project\Core\Audio\Commands\PlaySoundCommandDefinition.cs(48,17): error CS0103: The name 'CommandPool' does not exist in the current context
 
 Assets\_Project\Core\Audio\BGMManager.cs(595,20): error CS0201: Only assignment, call, increment, decrement, await, and new object expressions can be used as a statement
 
 Assets\_Project\Core\Audio\BGMManager.cs(589,21): error CS0161: 'BGMManager.IsPlaying(string)': not all code paths return a value
-
-Assets\_Project\Core\Audio\AmbientManager.cs(454,17): error CS0103: The name 'targetClip' does not exist in the current context
-
-Assets\_Project\Core\Audio\AmbientManager.cs(456,31): error CS0103: The name 'targetClip' does not exist in the current context
-
-Assets\_Project\Core\Audio\AmbientManager.cs(484,73): error CS0103: The name 'targetClip' does not exist in the current context
 
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(160,13): error CS0103: The name 'weatherSources' does not exist in the current context
 
@@ -1434,7 +1483,15 @@ Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(176,38): erro
 
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(346,36): error CS0103: The name 'weatherSources' does not exist in the current context
 
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(93,13): error CS0103: The name 'activePreset' does not exist in the current context
+
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(380,36): error CS0103: The name 'weatherSources' does not exist in the current context
+
+Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(408,36): error CS0103: The name 'weatherSources' does not exist in the current context
+
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(104,52): error CS0103: The name 'activePreset' does not exist in the current context
+
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(105,53): error CS0103: The name 'activePreset' does not exist in the current context
 
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(236,13): error CS0103: The name 'timeSources' does not exist in the current context
 
@@ -1442,7 +1499,13 @@ Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(250,17): error C
 
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(252,38): error CS0103: The name 'timeSources' does not exist in the current context
 
-Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(408,36): error CS0103: The name 'weatherSources' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(118,40): error CS0103: The name 'activePreset' does not exist in the current context
+
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(138,17): error CS0103: The name 'detectedEnvironment' does not exist in the current context
+
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(140,35): error CS0103: The name 'detectedEnvironment' does not exist in the current context
+
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(154,42): error CS0103: The name 'nearbyColliders' does not exist in the current context
 
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(506,47): error CS0103: The name 'weatherCollection' does not exist in the current context
 
@@ -1458,13 +1521,11 @@ Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(486,36): error C
 
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(514,36): error CS0103: The name 'timeSources' does not exist in the current context
 
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(93,13): error CS0103: The name 'activePreset' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(240,13): warning CS0162: Unreachable code detected
 
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(104,52): error CS0103: The name 'activePreset' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(260,13): error CS0103: The name 'activePreset' does not exist in the current context
 
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(105,53): error CS0103: The name 'activePreset' does not exist in the current context
-
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(118,40): error CS0103: The name 'activePreset' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(292,13): error CS0103: The name 'weatherChangeEvent' does not exist in the current context
 
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(658,17): error CS0103: The name 'availableSource' does not exist in the current context
 
@@ -1478,50 +1539,28 @@ Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(688,35): error C
 
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(658,13): warning CS0162: Unreachable code detected
 
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(138,17): error CS0103: The name 'detectedEnvironment' does not exist in the current context
-
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(140,35): error CS0103: The name 'detectedEnvironment' does not exist in the current context
-
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(746,36): error CS0103: The name 'timeSources' does not exist in the current context
 
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(760,20): error CS0103: The name 'timeSources' does not exist in the current context
 
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(154,42): error CS0103: The name 'nearbyColliders' does not exist in the current context
-
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(842,34): error CS0103: The name 'transitionCurve' does not exist in the current context
 
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(240,13): warning CS0162: Unreachable code detected
+Assets\_Project\Core\Audio\Services\StealthAudioService.cs(639,47): error CS0103: The name 'StealthAudioEventType' does not exist in the current context
 
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(260,13): error CS0103: The name 'activePreset' does not exist in the current context
+Assets\_Project\Core\Audio\Services\StealthAudioService.cs(639,93): error CS0103: The name 'StealthAudioEventType' does not exist in the current context
 
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(292,13): error CS0103: The name 'weatherChangeEvent' does not exist in the current context
+Assets\_Project\Core\Audio\Services\StealthAudioService.cs(640,13): error CS0103: The name 'PlayAudio' does not exist in the current context
 
 Assets\_Project\Core\Audio\Controllers\MaskingEffectController.cs(731,52): error CS0103: The name 'hasAudibleVolume' does not exist in the current context
 
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(280,28): error CS0117: 'AlertLevel' does not contain a definition for 'None'
-
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(281,28): error CS0117: 'AlertLevel' does not contain a definition for 'Low'
-
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(282,28): error CS0117: 'AlertLevel' does not contain a definition for 'Medium'
-
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(283,28): error CS0117: 'AlertLevel' does not contain a definition for 'High'
-
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(284,28): error CS0117: 'AlertLevel' does not contain a definition for 'Combat'
-
 Assets\_Project\Core\Audio\Controllers\MaskingEffectController.cs(923,23): error CS0161: 'MaskingEffectController.GetOriginalVolume(AudioSource)': not all code paths return a value
-
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(640,47): error CS0103: The name 'StealthAudioEventType' does not exist in the current context
-
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(640,93): error CS0103: The name 'StealthAudioEventType' does not exist in the current context
-
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(641,13): error CS0103: The name 'PlayAudio' does not exist in the current context
 
 Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(23,41): warning CS0414: The field 'DynamicAudioEnvironment.ambientVolumeParam' is assigned but its value is never used
 
 Assets\_Project\Core\Camera\CameraService.cs(52,40): warning CS0414: The field 'CameraService.transitionDuration' is assigned but its value is never used
 
 Assets\_Project\Core\Events\Commands\CommandGameEvent.cs(25,39): warning CS0414: The field 'CommandGameEvent.logCommandExecution' is assigned but its value is never used
-*** Tundra build failed (1.16 seconds), 2 items updated, 1745 evaluated
+*** Tundra build failed (1.33 seconds), 2 items updated, 1745 evaluated
 ## Script Compilation Error for: Csc Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.dll (+2 others)
 ## CmdLine: "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.rsp" "@Library/Bee/artifacts/1900b0aE.dag/asterivo.Unity60.Core.rsp2"
 ## Output:
@@ -1531,15 +1570,30 @@ Assets\_Project\Core\Interfaces\IStealthMechanicsService.cs(110,14): warning CS0
 Assets\_Project\Core\Interfaces\IStealthMechanicsService.cs(116,14): warning CS0108: 'IStealthMechanicsService.NeedsUpdate' hides inherited member 'IUpdatableService.NeedsUpdate'. Use the new keyword if hiding was intended.
 Assets\_Project\Core\Interfaces\IStealthMechanicsService.cs(122,13): warning CS0108: 'IStealthMechanicsService.UpdatePriority' hides inherited member 'IUpdatableService.UpdatePriority'. Use the new keyword if hiding was intended.
 Assets\_Project\Core\Audio\Services\AudioService.cs(53,34): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+Assets\_Project\Core\Bootstrap\GameEventBridge.cs(58,37): error CS0246: The type or namespace name 'EventManager' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Core\Bootstrap\GameBootstrapper.cs(114,40): error CS0246: The type or namespace name 'EventManager' could not be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Core\Audio\AmbientManagerV2.cs(160,17): error CS0103: The name 'audioUpdateService' does not exist in the current context
 Assets\_Project\Core\Audio\AmbientManagerV2.cs(160,47): error CS0103: The name 'audioUpdateService' does not exist in the current context
-Assets\_Project\Core\Bootstrap\GameEventBridge.cs(57,37): error CS0246: The type or namespace name 'EventManager' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Core\Audio\AudioManager.cs(133,57): error CS0311: The type 'asterivo.Unity60.Core.Audio.Interfaces.ISpatialAudioService' cannot be used as type parameter 'T' in the generic type or method 'ServiceHelper.GetServiceWithFallback<T>()'. There is no implicit reference conversion from 'asterivo.Unity60.Core.Audio.Interfaces.ISpatialAudioService' to 'UnityEngine.Object'.
 Assets\_Project\Core\Audio\AmbientManager.cs(170,43): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
 Assets\_Project\Core\Audio\AmbientManager.cs(189,61): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+Assets\_Project\Core\Bootstrap\GameBootstrapper.cs(214,35): error CS0452: The type 'T' must be a reference type in order to use it as parameter 'T' in the generic type or method 'ServiceLocator.Get<T>()'
 Assets\_Project\Core\Audio\AmbientManagerV2.cs(212,13): error CS0103: The name 'environmentSources' does not exist in the current context
 Assets\_Project\Core\Audio\AmbientManagerV2.cs(226,17): error CS0103: The name 'environmentSources' does not exist in the current context
 Assets\_Project\Core\Audio\AmbientManagerV2.cs(228,49): error CS0103: The name 'environmentSources' does not exist in the current context
+Assets\_Project\Core\Bootstrap\GameBootstrapper.cs(227,35): error CS0452: The type 'T' must be a reference type in order to use it as parameter 'T' in the generic type or method 'ServiceLocator.TryGet<T>(out T)'
+Assets\_Project\Core\Bootstrap\GameBootstrapperPrefab.cs(31,40): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(586,36): error CS0103: The name 'environmentSources' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(620,36): error CS0103: The name 'environmentSources' does not exist in the current context
+Assets\_Project\Core\Audio\AudioManager.cs(133,57): error CS0311: The type 'asterivo.Unity60.Core.Audio.Interfaces.ISpatialAudioService' cannot be used as type parameter 'T' in the generic type or method 'ServiceHelper.GetServiceWithFallback<T>()'. There is no implicit reference conversion from 'asterivo.Unity60.Core.Audio.Interfaces.ISpatialAudioService' to 'UnityEngine.Object'.
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(668,36): error CS0103: The name 'environmentSources' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(740,17): error CS0103: The name 'availableSource' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(754,51): error CS0103: The name 'environmentCollection' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(754,74): error CS0103: The name 'availableSource' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(760,76): error CS0103: The name 'availableSource' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(768,35): error CS0103: The name 'layersToRemove' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(740,13): warning CS0162: Unreachable code detected
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(824,36): error CS0103: The name 'environmentSources' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(838,20): error CS0103: The name 'environmentSources' does not exist in the current context
 Assets\_Project\Core\Audio\AudioManagerAdapter.cs(90,21): error CS0103: The name 'bgmManager' does not exist in the current context
 Assets\_Project\Core\Audio\AudioManagerAdapter.cs(93,21): error CS0103: The name 'bgmManager' does not exist in the current context
 Assets\_Project\Core\Audio\AudioManagerAdapter.cs(112,21): error CS0103: The name 'bgmManager' does not exist in the current context
@@ -1549,50 +1603,42 @@ Assets\_Project\Core\Audio\BGMManager.cs(102,40): error CS0103: The name 'tensio
 Assets\_Project\Core\Audio\BGMManager.cs(105,44): error CS0103: The name 'explorationBGM' does not exist in the current context
 Assets\_Project\Core\Audio\BGMManager.cs(161,17): error CS0103: The name 'startingTrack' does not exist in the current context
 Assets\_Project\Core\Audio\BGMManager.cs(163,36): error CS0103: The name 'startingTrack' does not exist in the current context
-Assets\_Project\Core\Bootstrap\GameBootstrapper.cs(113,40): error CS0246: The type or namespace name 'EventManager' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Core\Bootstrap\GameBootstrapper.cs(213,35): error CS0452: The type 'T' must be a reference type in order to use it as parameter 'T' in the generic type or method 'ServiceLocator.Get<T>()'
-Assets\_Project\Core\Bootstrap\GameBootstrapper.cs(226,35): error CS0452: The type 'T' must be a reference type in order to use it as parameter 'T' in the generic type or method 'ServiceLocator.TryGet<T>(out T)'
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(586,36): error CS0103: The name 'environmentSources' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(620,36): error CS0103: The name 'environmentSources' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(668,36): error CS0103: The name 'environmentSources' does not exist in the current context
+Assets\_Project\Core\Audio\BGMManager.cs(730,33): error CS0103: The name 'suitableWeather' does not exist in the current context
+Assets\_Project\Core\Audio\BGMManager.cs(730,84): error CS0103: The name 'suitableWeather' does not exist in the current context
+Assets\_Project\Core\Audio\BGMManager.cs(731,30): error CS0103: The name 'suitableTimeOfDay' does not exist in the current context
+Assets\_Project\Core\Audio\BGMManager.cs(731,83): error CS0103: The name 'suitableTimeOfDay' does not exist in the current context
 Assets\_Project\Core\Audio\BGMManager.cs(298,18): error CS0103: The name 'bgmCategories' does not exist in the current context
 Assets\_Project\Core\Audio\BGMManager.cs(306,17): error CS0103: The name 'suitableTracks' does not exist in the current context
 Assets\_Project\Core\Audio\BGMManager.cs(307,17): error CS0103: The name 'suitableTracks' does not exist in the current context
 Assets\_Project\Core\Audio\BGMManager.cs(309,20): error CS0103: The name 'suitableTracks' does not exist in the current context
 Assets\_Project\Core\Audio\BGMManager.cs(309,51): error CS0103: The name 'suitableTracks' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(740,17): error CS0103: The name 'availableSource' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(754,51): error CS0103: The name 'environmentCollection' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(754,74): error CS0103: The name 'availableSource' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(760,76): error CS0103: The name 'availableSource' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(768,35): error CS0103: The name 'layersToRemove' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(740,13): warning CS0162: Unreachable code detected
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(824,36): error CS0103: The name 'environmentSources' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(838,20): error CS0103: The name 'environmentSources' does not exist in the current context
-Assets\_Project\Core\Audio\BGMManager.cs(730,33): error CS0103: The name 'suitableWeather' does not exist in the current context
-Assets\_Project\Core\Audio\BGMManager.cs(730,84): error CS0103: The name 'suitableWeather' does not exist in the current context
-Assets\_Project\Core\Audio\BGMManager.cs(731,30): error CS0103: The name 'suitableTimeOfDay' does not exist in the current context
-Assets\_Project\Core\Audio\BGMManager.cs(731,83): error CS0103: The name 'suitableTimeOfDay' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManager.cs(454,17): error CS0103: The name 'targetClip' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManager.cs(456,31): error CS0103: The name 'targetClip' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManager.cs(484,73): error CS0103: The name 'targetClip' does not exist in the current context
 Assets\_Project\Core\Audio\BGMManager.cs(324,48): error CS1061: 'BGMTrack' does not contain a definition for 'suitableWeather' and no accessible extension method 'suitableWeather' accepting a first argument of type 'BGMTrack' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Core\Audio\BGMManager.cs(325,47): error CS1061: 'BGMTrack' does not contain a definition for 'suitableWeather' and no accessible extension method 'suitableWeather' accepting a first argument of type 'BGMTrack' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Core\Audio\BGMManager.cs(327,45): error CS1061: 'BGMTrack' does not contain a definition for 'suitableTimeOfDay' and no accessible extension method 'suitableTimeOfDay' accepting a first argument of type 'BGMTrack' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Core\Audio\BGMManager.cs(328,47): error CS1061: 'BGMTrack' does not contain a definition for 'suitableTimeOfDay' and no accessible extension method 'suitableTimeOfDay' accepting a first argument of type 'BGMTrack' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Core\Audio\Commands\PlaySoundCommandDefinition.cs(48,17): error CS0103: The name 'CommandPool' does not exist in the current context
-Assets\_Project\Core\Bootstrap\GameBootstrapperPrefab.cs(31,40): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 Assets\_Project\Core\Audio\BGMManager.cs(414,34): error CS0103: The name 'tempSource' does not exist in the current context
+Assets\_Project\Core\Audio\Commands\PlaySoundCommandDefinition.cs(48,17): error CS0103: The name 'CommandPool' does not exist in the current context
 Assets\_Project\Core\Audio\BGMManager.cs(595,20): error CS0201: Only assignment, call, increment, decrement, await, and new object expressions can be used as a statement
 Assets\_Project\Core\Audio\BGMManager.cs(589,21): error CS0161: 'BGMManager.IsPlaying(string)': not all code paths return a value
-Assets\_Project\Core\Audio\AmbientManager.cs(454,17): error CS0103: The name 'targetClip' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManager.cs(456,31): error CS0103: The name 'targetClip' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManager.cs(484,73): error CS0103: The name 'targetClip' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(160,13): error CS0103: The name 'weatherSources' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(174,17): error CS0103: The name 'weatherSources' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(176,38): error CS0103: The name 'weatherSources' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(346,36): error CS0103: The name 'weatherSources' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(93,13): error CS0103: The name 'activePreset' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(380,36): error CS0103: The name 'weatherSources' does not exist in the current context
+Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(408,36): error CS0103: The name 'weatherSources' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(104,52): error CS0103: The name 'activePreset' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(105,53): error CS0103: The name 'activePreset' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(236,13): error CS0103: The name 'timeSources' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(250,17): error CS0103: The name 'timeSources' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(252,38): error CS0103: The name 'timeSources' does not exist in the current context
-Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(408,36): error CS0103: The name 'weatherSources' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(118,40): error CS0103: The name 'activePreset' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(138,17): error CS0103: The name 'detectedEnvironment' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(140,35): error CS0103: The name 'detectedEnvironment' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(154,42): error CS0103: The name 'nearbyColliders' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(506,47): error CS0103: The name 'weatherCollection' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(488,13): warning CS0162: Unreachable code detected
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(580,36): error CS0103: The name 'weatherSources' does not exist in the current context
@@ -1600,35 +1646,23 @@ Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(594,20): erro
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(452,36): error CS0103: The name 'timeSources' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(486,36): error CS0103: The name 'timeSources' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(514,36): error CS0103: The name 'timeSources' does not exist in the current context
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(93,13): error CS0103: The name 'activePreset' does not exist in the current context
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(104,52): error CS0103: The name 'activePreset' does not exist in the current context
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(105,53): error CS0103: The name 'activePreset' does not exist in the current context
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(118,40): error CS0103: The name 'activePreset' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(240,13): warning CS0162: Unreachable code detected
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(260,13): error CS0103: The name 'activePreset' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(292,13): error CS0103: The name 'weatherChangeEvent' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(658,17): error CS0103: The name 'availableSource' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(674,44): error CS0103: The name 'timeCollection' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(674,60): error CS0103: The name 'availableSource' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(680,69): error CS0103: The name 'availableSource' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(688,35): error CS0103: The name 'layersToRemove' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(658,13): warning CS0162: Unreachable code detected
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(138,17): error CS0103: The name 'detectedEnvironment' does not exist in the current context
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(140,35): error CS0103: The name 'detectedEnvironment' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(746,36): error CS0103: The name 'timeSources' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(760,20): error CS0103: The name 'timeSources' does not exist in the current context
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(154,42): error CS0103: The name 'nearbyColliders' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(842,34): error CS0103: The name 'transitionCurve' does not exist in the current context
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(240,13): warning CS0162: Unreachable code detected
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(260,13): error CS0103: The name 'activePreset' does not exist in the current context
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(292,13): error CS0103: The name 'weatherChangeEvent' does not exist in the current context
+Assets\_Project\Core\Audio\Services\StealthAudioService.cs(639,47): error CS0103: The name 'StealthAudioEventType' does not exist in the current context
+Assets\_Project\Core\Audio\Services\StealthAudioService.cs(639,93): error CS0103: The name 'StealthAudioEventType' does not exist in the current context
+Assets\_Project\Core\Audio\Services\StealthAudioService.cs(640,13): error CS0103: The name 'PlayAudio' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\MaskingEffectController.cs(731,52): error CS0103: The name 'hasAudibleVolume' does not exist in the current context
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(280,28): error CS0117: 'AlertLevel' does not contain a definition for 'None'
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(281,28): error CS0117: 'AlertLevel' does not contain a definition for 'Low'
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(282,28): error CS0117: 'AlertLevel' does not contain a definition for 'Medium'
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(283,28): error CS0117: 'AlertLevel' does not contain a definition for 'High'
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(284,28): error CS0117: 'AlertLevel' does not contain a definition for 'Combat'
 Assets\_Project\Core\Audio\Controllers\MaskingEffectController.cs(923,23): error CS0161: 'MaskingEffectController.GetOriginalVolume(AudioSource)': not all code paths return a value
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(640,47): error CS0103: The name 'StealthAudioEventType' does not exist in the current context
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(640,93): error CS0103: The name 'StealthAudioEventType' does not exist in the current context
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(641,13): error CS0103: The name 'PlayAudio' does not exist in the current context
 Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(23,41): warning CS0414: The field 'DynamicAudioEnvironment.ambientVolumeParam' is assigned but its value is never used
 Assets\_Project\Core\Camera\CameraService.cs(52,40): warning CS0414: The field 'CameraService.transitionDuration' is assigned but its value is never used
 Assets\_Project\Core\Events\Commands\CommandGameEvent.cs(25,39): warning CS0414: The field 'CommandGameEvent.logCommandExecution' is assigned but its value is never used
@@ -1639,15 +1673,30 @@ Assets\_Project\Core\Interfaces\IStealthMechanicsService.cs(110,14): warning CS0
 Assets\_Project\Core\Interfaces\IStealthMechanicsService.cs(116,14): warning CS0108: 'IStealthMechanicsService.NeedsUpdate' hides inherited member 'IUpdatableService.NeedsUpdate'. Use the new keyword if hiding was intended.
 Assets\_Project\Core\Interfaces\IStealthMechanicsService.cs(122,13): warning CS0108: 'IStealthMechanicsService.UpdatePriority' hides inherited member 'IUpdatableService.UpdatePriority'. Use the new keyword if hiding was intended.
 Assets\_Project\Core\Audio\Services\AudioService.cs(53,34): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+Assets\_Project\Core\Bootstrap\GameEventBridge.cs(58,37): error CS0246: The type or namespace name 'EventManager' could not be found (are you missing a using directive or an assembly reference?)
+Assets\_Project\Core\Bootstrap\GameBootstrapper.cs(114,40): error CS0246: The type or namespace name 'EventManager' could not be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Core\Audio\AmbientManagerV2.cs(160,17): error CS0103: The name 'audioUpdateService' does not exist in the current context
 Assets\_Project\Core\Audio\AmbientManagerV2.cs(160,47): error CS0103: The name 'audioUpdateService' does not exist in the current context
-Assets\_Project\Core\Bootstrap\GameEventBridge.cs(57,37): error CS0246: The type or namespace name 'EventManager' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Core\Audio\AudioManager.cs(133,57): error CS0311: The type 'asterivo.Unity60.Core.Audio.Interfaces.ISpatialAudioService' cannot be used as type parameter 'T' in the generic type or method 'ServiceHelper.GetServiceWithFallback<T>()'. There is no implicit reference conversion from 'asterivo.Unity60.Core.Audio.Interfaces.ISpatialAudioService' to 'UnityEngine.Object'.
 Assets\_Project\Core\Audio\AmbientManager.cs(170,43): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
 Assets\_Project\Core\Audio\AmbientManager.cs(189,61): warning CS0618: 'SpatialAudioManager' is obsolete: 'Use SpatialAudioService instead. This class will be removed in future versions.'
+Assets\_Project\Core\Bootstrap\GameBootstrapper.cs(214,35): error CS0452: The type 'T' must be a reference type in order to use it as parameter 'T' in the generic type or method 'ServiceLocator.Get<T>()'
 Assets\_Project\Core\Audio\AmbientManagerV2.cs(212,13): error CS0103: The name 'environmentSources' does not exist in the current context
 Assets\_Project\Core\Audio\AmbientManagerV2.cs(226,17): error CS0103: The name 'environmentSources' does not exist in the current context
 Assets\_Project\Core\Audio\AmbientManagerV2.cs(228,49): error CS0103: The name 'environmentSources' does not exist in the current context
+Assets\_Project\Core\Bootstrap\GameBootstrapper.cs(227,35): error CS0452: The type 'T' must be a reference type in order to use it as parameter 'T' in the generic type or method 'ServiceLocator.TryGet<T>(out T)'
+Assets\_Project\Core\Bootstrap\GameBootstrapperPrefab.cs(31,40): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(586,36): error CS0103: The name 'environmentSources' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(620,36): error CS0103: The name 'environmentSources' does not exist in the current context
+Assets\_Project\Core\Audio\AudioManager.cs(133,57): error CS0311: The type 'asterivo.Unity60.Core.Audio.Interfaces.ISpatialAudioService' cannot be used as type parameter 'T' in the generic type or method 'ServiceHelper.GetServiceWithFallback<T>()'. There is no implicit reference conversion from 'asterivo.Unity60.Core.Audio.Interfaces.ISpatialAudioService' to 'UnityEngine.Object'.
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(668,36): error CS0103: The name 'environmentSources' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(740,17): error CS0103: The name 'availableSource' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(754,51): error CS0103: The name 'environmentCollection' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(754,74): error CS0103: The name 'availableSource' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(760,76): error CS0103: The name 'availableSource' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(768,35): error CS0103: The name 'layersToRemove' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(740,13): warning CS0162: Unreachable code detected
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(824,36): error CS0103: The name 'environmentSources' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManagerV2.cs(838,20): error CS0103: The name 'environmentSources' does not exist in the current context
 Assets\_Project\Core\Audio\AudioManagerAdapter.cs(90,21): error CS0103: The name 'bgmManager' does not exist in the current context
 Assets\_Project\Core\Audio\AudioManagerAdapter.cs(93,21): error CS0103: The name 'bgmManager' does not exist in the current context
 Assets\_Project\Core\Audio\AudioManagerAdapter.cs(112,21): error CS0103: The name 'bgmManager' does not exist in the current context
@@ -1657,50 +1706,42 @@ Assets\_Project\Core\Audio\BGMManager.cs(102,40): error CS0103: The name 'tensio
 Assets\_Project\Core\Audio\BGMManager.cs(105,44): error CS0103: The name 'explorationBGM' does not exist in the current context
 Assets\_Project\Core\Audio\BGMManager.cs(161,17): error CS0103: The name 'startingTrack' does not exist in the current context
 Assets\_Project\Core\Audio\BGMManager.cs(163,36): error CS0103: The name 'startingTrack' does not exist in the current context
-Assets\_Project\Core\Bootstrap\GameBootstrapper.cs(113,40): error CS0246: The type or namespace name 'EventManager' could not be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Core\Bootstrap\GameBootstrapper.cs(213,35): error CS0452: The type 'T' must be a reference type in order to use it as parameter 'T' in the generic type or method 'ServiceLocator.Get<T>()'
-Assets\_Project\Core\Bootstrap\GameBootstrapper.cs(226,35): error CS0452: The type 'T' must be a reference type in order to use it as parameter 'T' in the generic type or method 'ServiceLocator.TryGet<T>(out T)'
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(586,36): error CS0103: The name 'environmentSources' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(620,36): error CS0103: The name 'environmentSources' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(668,36): error CS0103: The name 'environmentSources' does not exist in the current context
+Assets\_Project\Core\Audio\BGMManager.cs(730,33): error CS0103: The name 'suitableWeather' does not exist in the current context
+Assets\_Project\Core\Audio\BGMManager.cs(730,84): error CS0103: The name 'suitableWeather' does not exist in the current context
+Assets\_Project\Core\Audio\BGMManager.cs(731,30): error CS0103: The name 'suitableTimeOfDay' does not exist in the current context
+Assets\_Project\Core\Audio\BGMManager.cs(731,83): error CS0103: The name 'suitableTimeOfDay' does not exist in the current context
 Assets\_Project\Core\Audio\BGMManager.cs(298,18): error CS0103: The name 'bgmCategories' does not exist in the current context
 Assets\_Project\Core\Audio\BGMManager.cs(306,17): error CS0103: The name 'suitableTracks' does not exist in the current context
 Assets\_Project\Core\Audio\BGMManager.cs(307,17): error CS0103: The name 'suitableTracks' does not exist in the current context
 Assets\_Project\Core\Audio\BGMManager.cs(309,20): error CS0103: The name 'suitableTracks' does not exist in the current context
 Assets\_Project\Core\Audio\BGMManager.cs(309,51): error CS0103: The name 'suitableTracks' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(740,17): error CS0103: The name 'availableSource' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(754,51): error CS0103: The name 'environmentCollection' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(754,74): error CS0103: The name 'availableSource' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(760,76): error CS0103: The name 'availableSource' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(768,35): error CS0103: The name 'layersToRemove' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(740,13): warning CS0162: Unreachable code detected
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(824,36): error CS0103: The name 'environmentSources' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManagerV2.cs(838,20): error CS0103: The name 'environmentSources' does not exist in the current context
-Assets\_Project\Core\Audio\BGMManager.cs(730,33): error CS0103: The name 'suitableWeather' does not exist in the current context
-Assets\_Project\Core\Audio\BGMManager.cs(730,84): error CS0103: The name 'suitableWeather' does not exist in the current context
-Assets\_Project\Core\Audio\BGMManager.cs(731,30): error CS0103: The name 'suitableTimeOfDay' does not exist in the current context
-Assets\_Project\Core\Audio\BGMManager.cs(731,83): error CS0103: The name 'suitableTimeOfDay' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManager.cs(454,17): error CS0103: The name 'targetClip' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManager.cs(456,31): error CS0103: The name 'targetClip' does not exist in the current context
+Assets\_Project\Core\Audio\AmbientManager.cs(484,73): error CS0103: The name 'targetClip' does not exist in the current context
 Assets\_Project\Core\Audio\BGMManager.cs(324,48): error CS1061: 'BGMTrack' does not contain a definition for 'suitableWeather' and no accessible extension method 'suitableWeather' accepting a first argument of type 'BGMTrack' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Core\Audio\BGMManager.cs(325,47): error CS1061: 'BGMTrack' does not contain a definition for 'suitableWeather' and no accessible extension method 'suitableWeather' accepting a first argument of type 'BGMTrack' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Core\Audio\BGMManager.cs(327,45): error CS1061: 'BGMTrack' does not contain a definition for 'suitableTimeOfDay' and no accessible extension method 'suitableTimeOfDay' accepting a first argument of type 'BGMTrack' could be found (are you missing a using directive or an assembly reference?)
 Assets\_Project\Core\Audio\BGMManager.cs(328,47): error CS1061: 'BGMTrack' does not contain a definition for 'suitableTimeOfDay' and no accessible extension method 'suitableTimeOfDay' accepting a first argument of type 'BGMTrack' could be found (are you missing a using directive or an assembly reference?)
-Assets\_Project\Core\Audio\Commands\PlaySoundCommandDefinition.cs(48,17): error CS0103: The name 'CommandPool' does not exist in the current context
-Assets\_Project\Core\Bootstrap\GameBootstrapperPrefab.cs(31,40): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
 Assets\_Project\Core\Audio\BGMManager.cs(414,34): error CS0103: The name 'tempSource' does not exist in the current context
+Assets\_Project\Core\Audio\Commands\PlaySoundCommandDefinition.cs(48,17): error CS0103: The name 'CommandPool' does not exist in the current context
 Assets\_Project\Core\Audio\BGMManager.cs(595,20): error CS0201: Only assignment, call, increment, decrement, await, and new object expressions can be used as a statement
 Assets\_Project\Core\Audio\BGMManager.cs(589,21): error CS0161: 'BGMManager.IsPlaying(string)': not all code paths return a value
-Assets\_Project\Core\Audio\AmbientManager.cs(454,17): error CS0103: The name 'targetClip' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManager.cs(456,31): error CS0103: The name 'targetClip' does not exist in the current context
-Assets\_Project\Core\Audio\AmbientManager.cs(484,73): error CS0103: The name 'targetClip' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(160,13): error CS0103: The name 'weatherSources' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(174,17): error CS0103: The name 'weatherSources' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(176,38): error CS0103: The name 'weatherSources' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(346,36): error CS0103: The name 'weatherSources' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(93,13): error CS0103: The name 'activePreset' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(380,36): error CS0103: The name 'weatherSources' does not exist in the current context
+Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(408,36): error CS0103: The name 'weatherSources' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(104,52): error CS0103: The name 'activePreset' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(105,53): error CS0103: The name 'activePreset' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(236,13): error CS0103: The name 'timeSources' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(250,17): error CS0103: The name 'timeSources' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(252,38): error CS0103: The name 'timeSources' does not exist in the current context
-Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(408,36): error CS0103: The name 'weatherSources' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(118,40): error CS0103: The name 'activePreset' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(138,17): error CS0103: The name 'detectedEnvironment' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(140,35): error CS0103: The name 'detectedEnvironment' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(154,42): error CS0103: The name 'nearbyColliders' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(506,47): error CS0103: The name 'weatherCollection' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(488,13): warning CS0162: Unreachable code detected
 Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(580,36): error CS0103: The name 'weatherSources' does not exist in the current context
@@ -1708,38 +1749,26 @@ Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs(594,20): erro
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(452,36): error CS0103: The name 'timeSources' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(486,36): error CS0103: The name 'timeSources' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(514,36): error CS0103: The name 'timeSources' does not exist in the current context
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(93,13): error CS0103: The name 'activePreset' does not exist in the current context
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(104,52): error CS0103: The name 'activePreset' does not exist in the current context
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(105,53): error CS0103: The name 'activePreset' does not exist in the current context
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(118,40): error CS0103: The name 'activePreset' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(240,13): warning CS0162: Unreachable code detected
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(260,13): error CS0103: The name 'activePreset' does not exist in the current context
+Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(292,13): error CS0103: The name 'weatherChangeEvent' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(658,17): error CS0103: The name 'availableSource' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(674,44): error CS0103: The name 'timeCollection' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(674,60): error CS0103: The name 'availableSource' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(680,69): error CS0103: The name 'availableSource' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(688,35): error CS0103: The name 'layersToRemove' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(658,13): warning CS0162: Unreachable code detected
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(138,17): error CS0103: The name 'detectedEnvironment' does not exist in the current context
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(140,35): error CS0103: The name 'detectedEnvironment' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(746,36): error CS0103: The name 'timeSources' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(760,20): error CS0103: The name 'timeSources' does not exist in the current context
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(154,42): error CS0103: The name 'nearbyColliders' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs(842,34): error CS0103: The name 'transitionCurve' does not exist in the current context
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(240,13): warning CS0162: Unreachable code detected
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(260,13): error CS0103: The name 'activePreset' does not exist in the current context
-Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(292,13): error CS0103: The name 'weatherChangeEvent' does not exist in the current context
+Assets\_Project\Core\Audio\Services\StealthAudioService.cs(639,47): error CS0103: The name 'StealthAudioEventType' does not exist in the current context
+Assets\_Project\Core\Audio\Services\StealthAudioService.cs(639,93): error CS0103: The name 'StealthAudioEventType' does not exist in the current context
+Assets\_Project\Core\Audio\Services\StealthAudioService.cs(640,13): error CS0103: The name 'PlayAudio' does not exist in the current context
 Assets\_Project\Core\Audio\Controllers\MaskingEffectController.cs(731,52): error CS0103: The name 'hasAudibleVolume' does not exist in the current context
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(280,28): error CS0117: 'AlertLevel' does not contain a definition for 'None'
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(281,28): error CS0117: 'AlertLevel' does not contain a definition for 'Low'
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(282,28): error CS0117: 'AlertLevel' does not contain a definition for 'Medium'
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(283,28): error CS0117: 'AlertLevel' does not contain a definition for 'High'
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(284,28): error CS0117: 'AlertLevel' does not contain a definition for 'Combat'
 Assets\_Project\Core\Audio\Controllers\MaskingEffectController.cs(923,23): error CS0161: 'MaskingEffectController.GetOriginalVolume(AudioSource)': not all code paths return a value
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(640,47): error CS0103: The name 'StealthAudioEventType' does not exist in the current context
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(640,93): error CS0103: The name 'StealthAudioEventType' does not exist in the current context
-Assets\_Project\Core\Audio\Services\StealthAudioService.cs(641,13): error CS0103: The name 'PlayAudio' does not exist in the current context
 Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs(23,41): warning CS0414: The field 'DynamicAudioEnvironment.ambientVolumeParam' is assigned but its value is never used
 Assets\_Project\Core\Camera\CameraService.cs(52,40): warning CS0414: The field 'CameraService.transitionDuration' is assigned but its value is never used
 Assets\_Project\Core\Events\Commands\CommandGameEvent.cs(25,39): warning CS0414: The field 'CommandGameEvent.logCommandExecution' is assigned but its value is never used
-AssetDatabase: script compilation time: 1.950252s
+AssetDatabase: script compilation time: 2.211436s
 Scripts have compiler errors.
 Exiting without the bug reporter. Application will terminate with return code 1
