@@ -13,7 +13,7 @@ using Sirenix.OdinInspector;
 namespace asterivo.Unity60.Core.Audio.Services
 {
     /// <summary>
-    /// AudioManagerのService化実裁E    /// Singletonパターンを使わず、ServiceLocator経由でアクセス
+    /// AudioManager縺ｮService蛹門ｮ溯｣・    /// Singleton繝代ち繝ｼ繝ｳ繧剃ｽｿ繧上★縲ヾerviceLocator邨檎罰縺ｧ繧｢繧ｯ繧ｻ繧ｹ
     /// </summary>
     public class AudioService : MonoBehaviour, IAudioService, IInitializable
     {
@@ -60,8 +60,8 @@ namespace asterivo.Unity60.Core.Audio.Services
         [SerializeField, ReadOnly] private float currentTensionLevel;
         [SerializeField, ReadOnly] private bool isStealthModeActive;
 
-        // IInitializable実装
-        public int Priority => 10; // オーディオシステムは早めに初期化
+        // IInitializable螳溯｣・
+        public int Priority => 10; // 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β縺ｯ譌ｩ繧√↓蛻晄悄蛹・
         public bool IsInitialized { get; private set; }
 
         private bool isPaused = false;
@@ -72,7 +72,7 @@ namespace asterivo.Unity60.Core.Audio.Services
 
         private void Awake()
         {
-            // ServiceLocatorに登録
+            // ServiceLocator縺ｫ逋ｻ骭ｲ
             if (FeatureFlags.UseServiceLocator)
             {
                 ServiceLocator.RegisterService<IAudioService>(this);
@@ -91,7 +91,7 @@ namespace asterivo.Unity60.Core.Audio.Services
 
         private void OnDestroy()
         {
-            // ServiceLocatorから登録解除
+            // ServiceLocator縺九ｉ逋ｻ骭ｲ隗｣髯､
             if (FeatureFlags.UseServiceLocator)
             {
                 ServiceLocator.UnregisterService<IAudioService>();
@@ -135,10 +135,10 @@ namespace asterivo.Unity60.Core.Audio.Services
                 return;
             }
 
-            // 効果音として再生
+            // 蜉ｹ譫憺浹縺ｨ縺励※蜀咲函
             if (effectManager != null)
             {
-                // EffectManagerのPlayEffectは(string, Vector3, float)の頁E                effectManager.PlayEffect(soundId, position, volume * effectVolume * masterVolume);
+                // EffectManager縺ｮPlayEffect縺ｯ(string, Vector3, float)縺ｮ鬆・                effectManager.PlayEffect(soundId, position, volume * effectVolume * masterVolume);
             }
         }
 
@@ -146,7 +146,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         {
             if (effectManager != null)
             {
-                // EffectManagerにはStopEffectがなぁE��め、StopAllEffectsを使用
+                // EffectManager縺ｫ縺ｯStopEffect縺後↑縺・・ｽ・ｽ繧√ヾtopAllEffects繧剃ｽｿ逕ｨ
                 effectManager.StopAllEffects();
             }
         }
@@ -154,7 +154,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         public void StopAllSounds()
         {
             if (bgmManager != null) bgmManager.StopBGM(0f);
-            if (ambientManager != null) ambientManager.PauseAll(); // AmbientManagerにはStopメソチE��がなぁE            if (effectManager != null) effectManager.StopAllEffects();
+            if (ambientManager != null) ambientManager.PauseAll(); // AmbientManager縺ｫ縺ｯStop繝｡繧ｽ繝・・ｽ・ｽ縺後↑縺・            if (effectManager != null) effectManager.StopAllEffects();
         }
 
         public float GetMasterVolume()
@@ -235,11 +235,11 @@ namespace asterivo.Unity60.Core.Audio.Services
             if (string.IsNullOrEmpty(soundId))
                 return false;
                 
-            // EffectManagerでのチェチE��
+            // EffectManager縺ｧ縺ｮ繝√ぉ繝・・ｽ・ｽ
             if (effectManager != null && effectManager.IsPlaying(soundId))
                 return true;
                 
-            // BGMManagerでのチェチE��
+            // BGMManager縺ｧ縺ｮ繝√ぉ繝・・ｽ・ｽ
             if (bgmManager != null && bgmManager.IsPlaying(soundId))
                 return true;
                 
@@ -252,20 +252,20 @@ namespace asterivo.Unity60.Core.Audio.Services
             
             isPaused = true;
             
-            // BGMの一時停止�E�音量を保存してからゼロに�E�E            if (bgmManager != null)
+            // BGM縺ｮ荳譎ょ●豁｢・ｽE・ｽ髻ｳ驥上ｒ菫晏ｭ倥＠縺ｦ縺九ｉ繧ｼ繝ｭ縺ｫ・ｽE・ｽE            if (bgmManager != null)
             {
-                // 現在の音量を保孁E                pausedBGMVolume = bgmVolume;
+                // 迴ｾ蝨ｨ縺ｮ髻ｳ驥上ｒ菫晏ｭ・                pausedBGMVolume = bgmVolume;
                 bgmManager.SetMasterVolume(0f);
             }
             
-            // アンビエント�E一時停止
+            // 繧｢繝ｳ繝薙お繝ｳ繝茨ｿｽE荳譎ょ●豁｢
             if (ambientManager != null)
             {
                 pausedAmbientVolume = ambientVolume;
                 ambientManager.SetMasterVolume(0f);
             }
             
-            // 効果音の停止�E�一時停止ではなく停止�E�E            if (effectManager != null)
+            // 蜉ｹ譫憺浹縺ｮ蛛懈ｭ｢・ｽE・ｽ荳譎ょ●豁｢縺ｧ縺ｯ縺ｪ縺丞●豁｢・ｽE・ｽE            if (effectManager != null)
             {
                 effectManager.StopAllEffects();
             }
@@ -282,20 +282,20 @@ namespace asterivo.Unity60.Core.Audio.Services
             
             isPaused = false;
             
-            // BGMの再開�E�保存された音量で再開�E�E            if (bgmManager != null)
+            // BGM縺ｮ蜀埼幕・ｽE・ｽ菫晏ｭ倥＆繧後◆髻ｳ驥上〒蜀埼幕・ｽE・ｽE            if (bgmManager != null)
             {
                 bgmManager.SetMasterVolume(pausedBGMVolume > 0 ? pausedBGMVolume : bgmVolume);
                 pausedBGMVolume = 0f;
             }
             
-            // アンビエント�E再開
+            // 繧｢繝ｳ繝薙お繝ｳ繝茨ｿｽE蜀埼幕
             if (ambientManager != null)
             {
                 ambientManager.SetMasterVolume(pausedAmbientVolume > 0 ? pausedAmbientVolume : ambientVolume);
                 pausedAmbientVolume = 0f;
             }
             
-            // 効果音は停止されたため、新しい音が�E生されるまで征E��E            
+            // 蜉ｹ譫憺浹縺ｯ蛛懈ｭ｢縺輔ｌ縺溘◆繧√∵眠縺励＞髻ｳ縺鯉ｿｽE逕溘＆繧後ｋ縺ｾ縺ｧ蠕・・ｽ・ｽE            
             if (FeatureFlags.EnableDebugLogging)
             {
                 ServiceHelper.Log("[AudioService] Audio resumed");
@@ -320,13 +320,13 @@ namespace asterivo.Unity60.Core.Audio.Services
 
         private void InitializeSubsystems()
         {
-            // 空間音響マネージャーの初期化！Eingleton依存を削除�E�E            // TODO: SpatialAudioManagerがISpatialAudioServiceを実裁E��る忁E��がある
+            // 遨ｺ髢馴浹髻ｿ繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｮ蛻晄悄蛹厄ｼ・ingleton萓晏ｭ倥ｒ蜑企勁・ｽE・ｽE            // TODO: SpatialAudioManager縺栗SpatialAudioService繧貞ｮ溯｣・・ｽ・ｽ繧句ｿ・・ｽ・ｽ縺後≠繧・
             // if (spatialAudio != null && FeatureFlags.UseServiceLocator)
             // {
             //     ServiceLocator.RegisterService<ISpatialAudioService>(spatialAudio);
             // }
 
-            // スチE��スオーチE��オコーチE��ネ�Eターの初期匁E            // TODO: StealthAudioCoordinatorがIStealthAudioServiceを実裁E��る忁E��がある
+            // 繧ｹ繝・・ｽ・ｽ繧ｹ繧ｪ繝ｼ繝・・ｽ・ｽ繧ｪ繧ｳ繝ｼ繝・・ｽ・ｽ繝搾ｿｽE繧ｿ繝ｼ縺ｮ蛻晄悄蛹・            // TODO: StealthAudioCoordinator縺栗StealthAudioService繧貞ｮ溯｣・・ｽ・ｽ繧句ｿ・・ｽ・ｽ縺後≠繧・
             // if (stealthCoordinator != null && FeatureFlags.UseServiceLocator)
             // {
             //     ServiceLocator.RegisterService<IStealthAudioService>(stealthCoordinator);
@@ -355,13 +355,13 @@ namespace asterivo.Unity60.Core.Audio.Services
         #region Public API
 
         /// <summary>
-        /// BGMを�E甁E        /// </summary>
+        /// BGM繧抵ｿｽE逕・        /// </summary>
         public void PlayBGM(string bgmName, float fadeTime = 1f)
         {
             if (bgmManager != null)
             {
-                // BGMCategoryを使灁E��E��がある
-                // TODO: bgmNameからBGMCategoryへの変換ロジチE��が忁E��E                // BGM名からBGMCategoryへの変換
+                // BGMCategory繧剃ｽｿ轣・・ｽ・ｽE・ｽ・ｽ縺後≠繧・
+                // TODO: bgmName縺九ｉBGMCategory縺ｸ縺ｮ螟画鋤繝ｭ繧ｸ繝・・ｽ・ｽ縺悟ｿ・・ｽ・ｽE                // BGM蜷阪°繧隠GMCategory縺ｸ縺ｮ螟画鋤
                 var category = bgmManager.GetCategoryFromName(bgmName);
                 bgmManager.PlayBGMCategory(category, fadeTime <= 0);
                 
@@ -373,7 +373,7 @@ namespace asterivo.Unity60.Core.Audio.Services
         }
 
         /// <summary>
-        /// アンビエントサウンドを更新�E�EmbientManagerにはPlayAmbientメソチE��がなぁE��E        /// </summary>
+        /// 繧｢繝ｳ繝薙お繝ｳ繝医し繧ｦ繝ｳ繝峨ｒ譖ｴ譁ｰ・ｽE・ｽEmbientManager縺ｫ縺ｯPlayAmbient繝｡繧ｽ繝・・ｽ・ｽ縺後↑縺・・ｽ・ｽE        /// </summary>
         public void UpdateAmbient(EnvironmentType environment, WeatherType weather, TimeOfDay timeOfDay)
         {
             if (ambientManager != null)
@@ -383,13 +383,13 @@ namespace asterivo.Unity60.Core.Audio.Services
         }
 
         /// <summary>
-        /// ゲーム状態を更新
+        /// 繧ｲ繝ｼ繝迥ｶ諷九ｒ譖ｴ譁ｰ
         /// </summary>
         public void UpdateGameState(GameState newState)
         {
             currentGameState = newState;
             
-            // ゲーム状態に応じた音響調整
+            // 繧ｲ繝ｼ繝迥ｶ諷九↓蠢懊§縺滄浹髻ｿ隱ｿ謨ｴ
             switch (newState)
             {
                 case GameState.MainMenu:
@@ -408,4 +408,5 @@ namespace asterivo.Unity60.Core.Audio.Services
     }
 }
 
-// GameState enumはAudioManager.csで定義されている
+// GameState enum縺ｯAudioManager.cs縺ｧ螳夂ｾｩ縺輔ｌ縺ｦ縺・ｋ
+

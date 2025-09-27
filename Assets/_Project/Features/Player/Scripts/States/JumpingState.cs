@@ -4,7 +4,7 @@ using UnityEngine;
 namespace asterivo.Unity60.Features.Player.States
 {
     /// <summary>
-    /// プレイヤーのジャンプ状態を管琁E��るクラス、E    /// </summary>
+    /// 繝励Ξ繧､繝､繝ｼ縺ｮ繧ｸ繝｣繝ｳ繝礼憾諷九ｒ邂｡逅・・ｽ・ｽ繧九け繝ｩ繧ｹ縲・    /// </summary>
     public class JumpingState : IPlayerState
     {
         private Vector3 _playerVelocity;
@@ -13,8 +13,8 @@ namespace asterivo.Unity60.Features.Player.States
         private float _gravityValue = -9.81f;
 
         /// <summary>
-        /// 状態が開始されたときに呼び出されます、E        /// プレイヤーに上方向�E速度を与えてジャンプさせます、E        /// </summary>
-        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
+        /// 迥ｶ諷九′髢句ｧ九＆繧後◆縺ｨ縺阪↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・        /// 繝励Ξ繧､繝､繝ｼ縺ｫ荳頑婿蜷托ｿｽE騾溷ｺｦ繧剃ｸ弱∴縺ｦ繧ｸ繝｣繝ｳ繝励＆縺帙∪縺吶・        /// </summary>
+        /// <param name="stateMachine">繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・・ｽE繝茨ｿｽE繧ｷ繝ｳ縲・/param>
         public void Enter(DetailedPlayerStateMachine stateMachine)
         {
             _isGrounded = false;
@@ -27,15 +27,15 @@ namespace asterivo.Unity60.Features.Player.States
         }
 
         /// <summary>
-        /// 状態が終亁E��たときに呼び出されます、E        /// </summary>
-        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
+        /// 迥ｶ諷九′邨ゆｺ・・ｽ・ｽ縺溘→縺阪↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・        /// </summary>
+        /// <param name="stateMachine">繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・・ｽE繝茨ｿｽE繧ｷ繝ｳ縲・/param>
         public void Exit(DetailedPlayerStateMachine stateMachine)
         {
         }
 
         /// <summary>
-        /// 毎フレーム呼び出されます、E        /// 着地判定を行います、E        /// </summary>
-        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
+        /// 豈弱ヵ繝ｬ繝ｼ繝蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・        /// 逹蝨ｰ蛻､螳壹ｒ陦後＞縺ｾ縺吶・        /// </summary>
+        /// <param name="stateMachine">繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・・ｽE繝茨ｿｽE繧ｷ繝ｳ縲・/param>
         public void Update(DetailedPlayerStateMachine stateMachine)
         {
             _isGrounded = stateMachine.CharacterController.isGrounded;
@@ -46,8 +46,8 @@ namespace asterivo.Unity60.Features.Player.States
         }
 
         /// <summary>
-        /// 固定フレームレートで呼び出されます、E        /// 重力を適用し、�Eレイヤーを移動させます、E        /// </summary>
-        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
+        /// 蝗ｺ螳壹ヵ繝ｬ繝ｼ繝繝ｬ繝ｼ繝医〒蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・        /// 驥榊鴨繧帝←逕ｨ縺励・ｿｽE繝ｬ繧､繝､繝ｼ繧堤ｧｻ蜍輔＆縺帙∪縺吶・        /// </summary>
+        /// <param name="stateMachine">繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・・ｽE繝茨ｿｽE繧ｷ繝ｳ縲・/param>
         public void FixedUpdate(DetailedPlayerStateMachine stateMachine)
         {
             if (stateMachine.CharacterController == null) return;
@@ -57,13 +57,14 @@ namespace asterivo.Unity60.Features.Player.States
         }
 
         /// <summary>
-        /// プレイヤーの入力を処琁E��ます。（この状態では入力�E無視されます！E        /// </summary>
-        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
-        /// <param name="moveInput">移動�E力、E/param>
-        /// <param name="jumpInput">ジャンプ�E力、E/param>
+        /// 繝励Ξ繧､繝､繝ｼ縺ｮ蜈･蜉帙ｒ蜃ｦ逅・・ｽ・ｽ縺ｾ縺吶ゑｼ医％縺ｮ迥ｶ諷九〒縺ｯ蜈･蜉幢ｿｽE辟｡隕悶＆繧後∪縺呻ｼ・        /// </summary>
+        /// <param name="stateMachine">繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・・ｽE繝茨ｿｽE繧ｷ繝ｳ縲・/param>
+        /// <param name="moveInput">遘ｻ蜍包ｿｽE蜉帙・/param>
+        /// <param name="jumpInput">繧ｸ繝｣繝ｳ繝暦ｿｽE蜉帙・/param>
         public void HandleInput(DetailedPlayerStateMachine stateMachine, Vector2 moveInput, bool jumpInput)
         {
-            // ジャンプ中は他の入力を受け付けない
+            // 繧ｸ繝｣繝ｳ繝嶺ｸｭ縺ｯ莉悶・蜈･蜉帙ｒ蜿励￠莉倥￠縺ｪ縺・
         }
     }
 }
+

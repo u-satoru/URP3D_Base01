@@ -1,10 +1,34 @@
-$files = Get-ChildItem -Path . -Recurse -File -Include @("*.cs", "*.asmdef", "*.json", "*.md", "*.txt", "*.xml", "*.shader", "*.cginc", "*.hlsl", "*.glsl", "*.uss", "*.uxml")
-foreach ($file in $files) {
-    $bytes = Get-Content -Path $file.FullName -Encoding Byte -TotalCount 3
-    if ($bytes.Count -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) {
-        Write-Host "Converting $($file.FullName) from UTF-8-BOM to UTF-8"
-        $content = Get-Content -Path $file.FullName -Raw
-        Set-Content -Path $file.FullName -Value $content -Encoding UTF8
+# convert_files_to_utf8.ps1
+$filesToConvert = @(
+    "D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\AmbientManager.cs",
+    "D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\AudioManager.cs",
+    "D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\BGMManager.cs",
+    "D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\Controllers\MaskingEffectController.cs",
+    "D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs",
+    "D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs",
+    "D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs",
+    "D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\Services\AudioService.cs",
+    "D:\UnityProjects\URP3D_Base01\Assets\_Project\Features\Player\Scripts\States\CoverState.cs",
+    "D:\UnityProjects\URP3D_Base01\Assets\_Project\Features\Player\Scripts\States\JumpingState.cs",
+    "D:\UnityProjects\URP3D_Base01\Assets\_Project\Features\Player\Scripts\States\ProneState.cs",
+    "D:\UnityProjects\URP3D_Base01\Assets\_Project\Features\Player\Scripts\States\RollingState.cs",
+    "D:\UnityProjects\URP3D_Base01\Assets\_Project\Features\Player\Scripts\States\WalkingState.cs"
+)
+
+# Create a UTF-8 encoding object without a BOM
+$utf8WithoutBom = New-Object System.Text.UTF8Encoding($false)
+
+foreach ($file in $filesToConvert) {
+    try {
+        Write-Host "Converting $file..."
+        # Read the file assuming the system's default ANSI encoding (like Shift-JIS on Japanese Windows)
+        $content = Get-Content -Path $file -Encoding Default -Raw
+        # Write the content back as UTF-8 without BOM using the custom encoding object
+        [System.IO.File]::WriteAllLines($file, $content, $utf8WithoutBom)
+        Write-Host "Successfully converted $file to UTF-8 (No BOM)." -ForegroundColor Green
+    } catch {
+        Write-Host "Error converting file $file`: $_" -ForegroundColor Red
     }
 }
-Write-Host "Conversion check complete."
+
+Write-Host "Conversion process complete."

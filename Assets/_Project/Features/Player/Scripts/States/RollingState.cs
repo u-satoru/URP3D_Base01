@@ -6,15 +6,15 @@ using asterivo.Unity60.Player;
 namespace asterivo.Unity60.Features.Player.States
 {
     /// <summary>
-    /// プレイヤーのローリング状態を管琁E��るクラス、E    /// こ�E状態では、�Eレイヤーは一定時間前方に移動し、外部からの入力を受け付けません、E    /// </summary>
+    /// 繝励Ξ繧､繝､繝ｼ縺ｮ繝ｭ繝ｼ繝ｪ繝ｳ繧ｰ迥ｶ諷九ｒ邂｡逅・・ｽ・ｽ繧九け繝ｩ繧ｹ縲・    /// 縺難ｿｽE迥ｶ諷九〒縺ｯ縲・ｿｽE繝ｬ繧､繝､繝ｼ縺ｯ荳螳壽凾髢灘燕譁ｹ縺ｫ遘ｻ蜍輔＠縲∝､夜Κ縺九ｉ縺ｮ蜈･蜉帙ｒ蜿励￠莉倥￠縺ｾ縺帙ｓ縲・    /// </summary>
     public class RollingState : IPlayerState
     {
         private float rollSpeed = 8f;
         private float rollDuration = 1.0f;
 
         /// <summary>
-        /// 状態が開始されたときに呼び出されます、E        /// ローリングのタイマ�Eを開始し、アニメーションをトリガーします、E        /// </summary>
-        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
+        /// 迥ｶ諷九′髢句ｧ九＆繧後◆縺ｨ縺阪↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・        /// 繝ｭ繝ｼ繝ｪ繝ｳ繧ｰ縺ｮ繧ｿ繧､繝橸ｿｽE繧帝幕蟋九＠縲√い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ繧偵ヨ繝ｪ繧ｬ繝ｼ縺励∪縺吶・        /// </summary>
+        /// <param name="stateMachine">繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・・ｽE繝茨ｿｽE繧ｷ繝ｳ縲・/param>
         public void Enter(DetailedPlayerStateMachine stateMachine)
         {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -22,8 +22,8 @@ namespace asterivo.Unity60.Features.Player.States
 #endif
             stateMachine.StartCoroutine(RollTimer(stateMachine));
             
-            // アニメーターを取得してローリングアニメーションを開始
-            // TODO: DetailedPlayerStateMachineにAnimatorプロパティを追加するか、イベント経由でアニメーション制御する必要あり
+            // 繧｢繝九Γ繝ｼ繧ｿ繝ｼ繧貞叙蠕励＠縺ｦ繝ｭ繝ｼ繝ｪ繝ｳ繧ｰ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ繧帝幕蟋・
+            // TODO: DetailedPlayerStateMachine縺ｫAnimator繝励Ο繝代ユ繧｣繧定ｿｽ蜉縺吶ｋ縺九√う繝吶Φ繝育ｵ檎罰縺ｧ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ蛻ｶ蠕｡縺吶ｋ蠢・ｦ√≠繧・
             // Animator animator = stateMachine.GetComponent<Animator>();
             // if (animator != null)
             // {
@@ -31,8 +31,8 @@ namespace asterivo.Unity60.Features.Player.States
             //     animator.SetBool("IsRolling", true);
             // }
 
-            // ローリング中は無敵時間を設定（例：ダメージを受けない）
-            // TODO: HealthComponentが実装されたら有効化
+            // 繝ｭ繝ｼ繝ｪ繝ｳ繧ｰ荳ｭ縺ｯ辟｡謨ｵ譎る俣繧定ｨｭ螳夲ｼ井ｾ具ｼ壹ム繝｡繝ｼ繧ｸ繧貞女縺代↑縺・ｼ・
+            // TODO: HealthComponent縺悟ｮ溯｣・＆繧後◆繧画怏蜉ｹ蛹・
             // var healthComponent = stateMachine.GetComponent<HealthComponent>();
             // if (healthComponent != null)
             // {
@@ -41,16 +41,16 @@ namespace asterivo.Unity60.Features.Player.States
         }
 
         /// <summary>
-        /// 状態が終亁E��たときに呼び出されます、E        /// </summary>
-        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
+        /// 迥ｶ諷九′邨ゆｺ・・ｽ・ｽ縺溘→縺阪↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・        /// </summary>
+        /// <param name="stateMachine">繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・・ｽE繝茨ｿｽE繧ｷ繝ｳ縲・/param>
         public void Exit(DetailedPlayerStateMachine stateMachine)
         {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log("Exiting Rolling State");
 #endif
             
-            // アニメーションフラグをリセット
-            // TODO: DetailedPlayerStateMachineにAnimatorプロパティを追加するか、イベント経由でアニメーション制御する必要あり
+            // 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ繝輔Λ繧ｰ繧偵Μ繧ｻ繝・ヨ
+            // TODO: DetailedPlayerStateMachine縺ｫAnimator繝励Ο繝代ユ繧｣繧定ｿｽ蜉縺吶ｋ縺九√う繝吶Φ繝育ｵ檎罰縺ｧ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ蛻ｶ蠕｡縺吶ｋ蠢・ｦ√≠繧・
             // Animator animator = stateMachine.GetComponent<Animator>();
             // if (animator != null)
             // {
@@ -59,8 +59,8 @@ namespace asterivo.Unity60.Features.Player.States
         }
 
         /// <summary>
-        /// 毎フレーム呼び出されます、E        /// ローリングによる移動�E琁E��適用します、E        /// </summary>
-        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
+        /// 豈弱ヵ繝ｬ繝ｼ繝蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・        /// 繝ｭ繝ｼ繝ｪ繝ｳ繧ｰ縺ｫ繧医ｋ遘ｻ蜍包ｿｽE逅・・ｽ・ｽ驕ｩ逕ｨ縺励∪縺吶・        /// </summary>
+        /// <param name="stateMachine">繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・・ｽE繝茨ｿｽE繧ｷ繝ｳ縲・/param>
         public void Update(DetailedPlayerStateMachine stateMachine)
         {
             if (stateMachine.CharacterController == null) return;
@@ -76,26 +76,26 @@ namespace asterivo.Unity60.Features.Player.States
         }
 
         /// <summary>
-        /// 固定フレームレートで呼び出されます。物琁E��算�E更新に使用されます、E        /// こ�E状態では使用されません、E        /// </summary>
-        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
+        /// 蝗ｺ螳壹ヵ繝ｬ繝ｼ繝繝ｬ繝ｼ繝医〒蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶ら黄逅・・ｽ・ｽ邂暦ｿｽE譖ｴ譁ｰ縺ｫ菴ｿ逕ｨ縺輔ｌ縺ｾ縺吶・        /// 縺難ｿｽE迥ｶ諷九〒縺ｯ菴ｿ逕ｨ縺輔ｌ縺ｾ縺帙ｓ縲・        /// </summary>
+        /// <param name="stateMachine">繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・・ｽE繝茨ｿｽE繧ｷ繝ｳ縲・/param>
         public void FixedUpdate(DetailedPlayerStateMachine stateMachine)
         {
             // Not used
         }
 
         /// <summary>
-        /// プレイヤーの入力を処琁E��ます、E        /// ローリング中は入力を無視します、E        /// </summary>
-        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
-        /// <param name="moveInput">移動�E力、E/param>
-        /// <param name="jumpInput">ジャンプ�E力、E/param>
+        /// 繝励Ξ繧､繝､繝ｼ縺ｮ蜈･蜉帙ｒ蜃ｦ逅・・ｽ・ｽ縺ｾ縺吶・        /// 繝ｭ繝ｼ繝ｪ繝ｳ繧ｰ荳ｭ縺ｯ蜈･蜉帙ｒ辟｡隕悶＠縺ｾ縺吶・        /// </summary>
+        /// <param name="stateMachine">繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・・ｽE繝茨ｿｽE繧ｷ繝ｳ縲・/param>
+        /// <param name="moveInput">遘ｻ蜍包ｿｽE蜉帙・/param>
+        /// <param name="jumpInput">繧ｸ繝｣繝ｳ繝暦ｿｽE蜉帙・/param>
         public void HandleInput(DetailedPlayerStateMachine stateMachine, Vector2 moveInput, bool jumpInput)
         {
             // Ignore input during roll
         }
 
         /// <summary>
-        /// ローリングの継続時間を管琁E��、終亁E��に歩行状態に遷移します、E        /// </summary>
-        /// <param name="stateMachine">プレイヤーのスチE�Eト�Eシン、E/param>
+        /// 繝ｭ繝ｼ繝ｪ繝ｳ繧ｰ縺ｮ邯咏ｶ壽凾髢薙ｒ邂｡逅・・ｽ・ｽ縲∫ｵゆｺ・・ｽ・ｽ縺ｫ豁ｩ陦檎憾諷九↓驕ｷ遘ｻ縺励∪縺吶・        /// </summary>
+        /// <param name="stateMachine">繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繝・・ｽE繝茨ｿｽE繧ｷ繝ｳ縲・/param>
         private IEnumerator RollTimer(DetailedPlayerStateMachine stateMachine)
         {
             yield return new WaitForSeconds(rollDuration);
@@ -103,3 +103,4 @@ namespace asterivo.Unity60.Features.Player.States
         }
     }
 }
+

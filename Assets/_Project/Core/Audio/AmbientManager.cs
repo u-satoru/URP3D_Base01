@@ -15,8 +15,8 @@ using Sirenix.OdinInspector;
 namespace asterivo.Unity60.Core.Audio
 {
     /// <summary>
-    /// 環墁E��マネージャー
-    /// ステルスゲームに特化したマスキング効果付き環境音システム
+    /// 迺ｰ蠅・・ｽ・ｽ繝槭ロ繝ｼ繧ｸ繝｣繝ｼ
+    /// 繧ｹ繝・Ν繧ｹ繧ｲ繝ｼ繝縺ｫ迚ｹ蛹悶＠縺溘・繧ｹ繧ｭ繝ｳ繧ｰ蜉ｹ譫應ｻ倥″迺ｰ蠅・浹繧ｷ繧ｹ繝・Β
     /// </summary>
     public class AmbientManager : MonoBehaviour
     {
@@ -63,19 +63,19 @@ namespace asterivo.Unity60.Core.Audio
         [SerializeField, ReadOnly] private float masterVolume = 1f;
         [SerializeField, ReadOnly] private int activeAmbientSources = 0;
 
-        // オーディオソース管理
+        // 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｽ繝ｼ繧ｹ邂｡逅・
         private AudioSource[] ambientSources;
         private List<AmbientLayer> activeLayers = new List<AmbientLayer>();
         private Dictionary<EnvironmentType, AmbientSoundCollection> environmentSoundLookup;
         private Dictionary<WeatherType, WeatherAmbientCollection> weatherSoundLookup;
         private Dictionary<TimeOfDay, TimeAmbientCollection> timeSoundLookup;
 
-        // システム連携
+        // 繧ｷ繧ｹ繝・Β騾｣謳ｺ
         private StealthAudioCoordinator stealthCoordinator;
         private SpatialAudioManager spatialAudioManager;
         private Transform listenerTransform;
 
-        // 遷移制御
+        // 驕ｷ遘ｻ蛻ｶ蠕｡
         private Coroutine environmentTransition;
         private Coroutine weatherTransition;
 
@@ -105,14 +105,14 @@ namespace asterivo.Unity60.Core.Audio
         #region Initialization
 
         /// <summary>
-        /// 環墁E��マネージャーの初期匁E        /// </summary>
+        /// 迺ｰ蠅・・ｽ・ｽ繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｮ蛻晄悄蛹・        /// </summary>
         private void InitializeAmbientManager()
         {
             ambientSources = new AudioSource[ambientSourceCount];
         }
 
         /// <summary>
-        /// オーディオソースのセットアップ
+        /// 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｽ繝ｼ繧ｹ縺ｮ繧ｻ繝・ヨ繧｢繝・・
         /// </summary>
         private void SetupAudioSources()
         {
@@ -124,33 +124,33 @@ namespace asterivo.Unity60.Core.Audio
                 var source = sourceGO.AddComponent<AudioSource>();
                 source.playOnAwake = false;
                 source.loop = true;
-                source.spatialBlend = 0f; // 環墁E��は通常2D
+                source.spatialBlend = 0f; // 迺ｰ蠅・・ｽ・ｽ縺ｯ騾壼ｸｸ2D
                 source.outputAudioMixerGroup = ambientMixerGroup;
-                source.priority = 128; // 低優先度
+                source.priority = 128; // 菴主━蜈亥ｺｦ
 
                 ambientSources[i] = source;
             }
         }
 
         /// <summary>
-        /// システム参照の検索
+        /// 繧ｷ繧ｹ繝・Β蜿ら・縺ｮ讀懃ｴ｢
         /// </summary>
         /// <summary>
-        /// システム参照の検索
-        /// Phase 3移行パターン: ServiceLocator優先、Singletonフォールバック
+        /// 繧ｷ繧ｹ繝・Β蜿ら・縺ｮ讀懃ｴ｢
+        /// Phase 3遘ｻ陦後ヱ繧ｿ繝ｼ繝ｳ: ServiceLocator蜆ｪ蜈医ヾingleton繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ
         /// </summary>
         private void FindSystemReferences()
         {
             if (stealthCoordinator == null)
                 stealthCoordinator = FindFirstObjectByType<StealthAudioCoordinator>();
 
-            // SpatialAudioManager取征E ServiceLocator優先、Singletonフォールバック
+            // SpatialAudioManager蜿門ｾ・ ServiceLocator蜆ｪ蜈医ヾingleton繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ
             if (spatialAudioManager == null)
             {
                 spatialAudioManager = GetSpatialAudioManager();
             }
 
-            // リスナーの検索
+            // 繝ｪ繧ｹ繝翫・縺ｮ讀懃ｴ｢
             var audioListener = FindFirstObjectByType<AudioListener>();
             if (audioListener != null)
             {
@@ -159,10 +159,10 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// ServiceLocator優先でSpatialAudioManagerを取征E        /// Phase 3移行パターンの実裁E        /// </summary>
+        /// ServiceLocator蜆ｪ蜈医〒SpatialAudioManager繧貞叙蠕・        /// Phase 3遘ｻ陦後ヱ繧ｿ繝ｼ繝ｳ縺ｮ螳溯｣・        /// </summary>
         private SpatialAudioManager GetSpatialAudioManager()
         {
-            // ServiceLocator経由での取得を試みめE            if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator)
+            // ServiceLocator邨檎罰縺ｧ縺ｮ蜿門ｾ励ｒ隧ｦ縺ｿ繧・            if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator)
             {
                 try
                 {
@@ -185,7 +185,7 @@ namespace asterivo.Unity60.Core.Audio
                 }
             }
             
-            // ✁EServiceLocator専用実裁E- 直接SpatialAudioManagerを検索
+            // 笨・ServiceLocator蟆ら畑螳溯｣・- 逶ｴ謗･SpatialAudioManager繧呈､懃ｴ｢
             var spatialAudioManager = FindFirstObjectByType<SpatialAudioManager>();
             if (spatialAudioManager != null)
             {
@@ -207,11 +207,11 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// ルートレイヤー辞書の構築
+        /// 繝ｫ繝ｼ繝医Ξ繧､繝､繝ｼ霎樊嶌縺ｮ讒狗ｯ・
         /// </summary>
         private void BuildLookupDictionaries()
         {
-            // 環墁E��辞書
+            // 迺ｰ蠅・・ｽ・ｽ霎樊嶌
             environmentSoundLookup = new Dictionary<EnvironmentType, AmbientSoundCollection>();
             foreach (var collection in environmentSounds)
             {
@@ -221,7 +221,7 @@ namespace asterivo.Unity60.Core.Audio
                 }
             }
 
-            // 天候音辞書
+            // 螟ｩ蛟咎浹霎樊嶌
             weatherSoundLookup = new Dictionary<WeatherType, WeatherAmbientCollection>();
             foreach (var collection in weatherSounds)
             {
@@ -231,7 +231,7 @@ namespace asterivo.Unity60.Core.Audio
                 }
             }
 
-            // 時間帯音辞書
+            // 譎る俣蟶ｯ髻ｳ霎樊嶌
             timeSoundLookup = new Dictionary<TimeOfDay, TimeAmbientCollection>();
             foreach (var collection in timeSounds)
             {
@@ -243,7 +243,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 初期環墁E��の開姁E        /// </summary>
+        /// 蛻晄悄迺ｰ蠅・・ｽ・ｽ縺ｮ髢句ｧ・        /// </summary>
         private void StartInitialAmbient()
         {
             UpdateForEnvironment(currentEnvironment, currentWeather, currentTimeOfDay);
@@ -254,7 +254,7 @@ namespace asterivo.Unity60.Core.Audio
         #region Public Interface
 
         /// <summary>
-        /// 環墁E��応じた環墁E��更新
+        /// 迺ｰ蠅・・ｽ・ｽ蠢懊§縺溽腸蠅・・ｽ・ｽ譖ｴ譁ｰ
         /// </summary>
         public void UpdateForEnvironment(EnvironmentType environment, WeatherType weather, TimeOfDay timeOfDay)
         {
@@ -285,17 +285,17 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// ステルス状態に応じた更新
+        /// 繧ｹ繝・Ν繧ｹ迥ｶ諷九↓蠢懊§縺滓峩譁ｰ
         /// </summary>
         public void UpdateForStealthState(bool stealthModeActive)
         {
             isStealthModeActive = stealthModeActive;
 
-            // ステルス状態に応じた音量調整は UpdateVolumeForStealthState で処理
+            // 繧ｹ繝・Ν繧ｹ迥ｶ諷九↓蠢懊§縺滄浹驥剰ｪｿ謨ｴ縺ｯ UpdateVolumeForStealthState 縺ｧ蜃ｦ逅・
         }
 
         /// <summary>
-        /// マスター音量の設定
+        /// 繝槭せ繧ｿ繝ｼ髻ｳ驥上・險ｭ螳・
         /// </summary>
         public void SetMasterVolume(float volume)
         {
@@ -304,7 +304,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 全環墁E��の一時停止
+        /// 蜈ｨ迺ｰ蠅・・ｽ・ｽ縺ｮ荳譎ょ●豁｢
         /// </summary>
         public void PauseAll()
         {
@@ -318,7 +318,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 全環墁E��の再開
+        /// 蜈ｨ迺ｰ蠅・・ｽ・ｽ縺ｮ蜀埼幕
         /// </summary>
         public void ResumeAll()
         {
@@ -329,7 +329,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 特定位置での環墁E��マスキング強度を取征E        /// </summary>
+        /// 迚ｹ螳壻ｽ咲ｽｮ縺ｧ縺ｮ迺ｰ蠅・・ｽ・ｽ繝槭せ繧ｭ繝ｳ繧ｰ蠑ｷ蠎ｦ繧貞叙蠕・        /// </summary>
         public float GetMaskingStrengthAtPosition(Vector3 position)
         {
             float totalMasking = 0f;
@@ -355,7 +355,7 @@ namespace asterivo.Unity60.Core.Audio
         #region Environment Transitions
 
         /// <summary>
-        /// 環墁E��の遷移
+        /// 迺ｰ蠅・・ｽ・ｽ縺ｮ驕ｷ遘ｻ
         /// </summary>
         private void TransitionEnvironmentAmbient()
         {
@@ -368,7 +368,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 天候音の遷移
+        /// 螟ｩ蛟咎浹縺ｮ驕ｷ遘ｻ
         /// </summary>
         private void TransitionWeatherAmbient()
         {
@@ -381,7 +381,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 環境音遷移のコルーチン
+        /// 迺ｰ蠅・浹驕ｷ遘ｻ縺ｮ繧ｳ繝ｫ繝ｼ繝√Φ
         /// </summary>
         private IEnumerator EnvironmentTransitionCoroutine()
         {
@@ -389,7 +389,7 @@ namespace asterivo.Unity60.Core.Audio
             
             if (targetCollection != null)
             {
-                // 新しい環墁E��イヤーを準備
+                // 譁ｰ縺励＞迺ｰ蠅・・ｽ・ｽ繧､繝､繝ｼ繧呈ｺ門ｙ
                 var newLayer = new AmbientLayer
                 {
                     collection = targetCollection,
@@ -399,7 +399,7 @@ namespace asterivo.Unity60.Core.Audio
                     providesStealthMasking = targetCollection.providesStealthMasking
                 };
 
-                // 利用可能なソースを検索
+                // 蛻ｩ逕ｨ蜿ｯ閭ｽ縺ｪ繧ｽ繝ｼ繧ｹ繧呈､懃ｴ｢
                 var availableSource = GetAvailableAmbientSource();
                 if (availableSource != null)
                 {
@@ -411,7 +411,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 天候遷移のコルーチン
+        /// 螟ｩ蛟咎・遘ｻ縺ｮ繧ｳ繝ｫ繝ｼ繝√Φ
         /// </summary>
         private IEnumerator WeatherTransitionCoroutine()
         {
@@ -425,7 +425,7 @@ namespace asterivo.Unity60.Core.Audio
                     layerType = AmbientLayerType.Weather,
                     targetVolume = targetCollection.intensity,
                     maskingStrength = targetCollection.maskingEffect,
-                    providesStealthMasking = true // 天候は通常マスキング効果あり
+                    providesStealthMasking = true // 螟ｩ蛟吶・騾壼ｸｸ繝槭せ繧ｭ繝ｳ繧ｰ蜉ｹ譫懊≠繧・
                 };
 
                 var availableSource = GetAvailableAmbientSource();
@@ -439,10 +439,10 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 新しいレイヤーへのクロスフェーチE        /// </summary>
+        /// 譁ｰ縺励＞繝ｬ繧､繝､繝ｼ縺ｸ縺ｮ繧ｯ繝ｭ繧ｹ繝輔ぉ繝ｼ繝・        /// </summary>
         private IEnumerator CrossfadeToNewLayer(AudioSource source, AmbientLayer newLayer, float transitionTime)
         {
-            // 古いレイヤーのフェードアウト（同じタイプがあれば）
+            // 蜿､縺・Ξ繧､繝､繝ｼ縺ｮ繝輔ぉ繝ｼ繝峨い繧ｦ繝茨ｼ亥酔縺倥ち繧､繝励′縺ゅｌ縺ｰ・・
             var existingLayer = activeLayers.Find(layer => layer.layerType == newLayer.layerType);
             if (existingLayer != null)
             {
@@ -450,14 +450,14 @@ namespace asterivo.Unity60.Core.Audio
                 activeLayers.Remove(existingLayer);
             }
 
-            // 新しいレイヤーの設宁E            AudioClip targetClip = GetClipFromLayer(newLayer);
+            // 譁ｰ縺励＞繝ｬ繧､繝､繝ｼ縺ｮ險ｭ螳・            AudioClip targetClip = GetClipFromLayer(newLayer);
             if (targetClip != null)
             {
                 source.clip = targetClip;
                 source.volume = 0f;
                 source.Play();
 
-                // フェードイン
+                // 繝輔ぉ繝ｼ繝峨う繝ｳ
                 float currentTime = 0f;
                 float targetVolume = CalculateLayerVolume(newLayer);
 
@@ -473,12 +473,12 @@ namespace asterivo.Unity60.Core.Audio
                 newLayer.audioSource = source;
                 activeLayers.Add(newLayer);
 
-                // イベント発衁E                if (newLayer.providesStealthMasking)
+                // 繧､繝吶Φ繝育匱陦・                if (newLayer.providesStealthMasking)
                 {
                     ambientMaskingActivatedEvent?.Raise();
                 }
 
-                // ステルス音響イベントの発火
+                // 繧ｹ繝・Ν繧ｹ髻ｳ髻ｿ繧､繝吶Φ繝医・逋ｺ轣ｫ
                 if (ambientSoundTriggeredEvent != null)
                 {
                     var eventData = AudioEventData.CreateAmbientDefault(targetClip.name);
@@ -491,7 +491,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// レイヤーのフェードアウチE        /// </summary>
+        /// 繝ｬ繧､繝､繝ｼ縺ｮ繝輔ぉ繝ｼ繝峨い繧ｦ繝・        /// </summary>
         private IEnumerator FadeOutLayer(AmbientLayer layer, float fadeTime)
         {
             if (layer.audioSource == null) yield break;
@@ -516,12 +516,12 @@ namespace asterivo.Unity60.Core.Audio
         #region Volume and Masking Control
 
         /// <summary>
-        /// レイヤーの音量計箁E        /// </summary>
+        /// 繝ｬ繧､繝､繝ｼ縺ｮ髻ｳ驥剰ｨ育ｮ・        /// </summary>
         private float CalculateLayerVolume(AmbientLayer layer)
         {
             float volume = layer.targetVolume * masterVolume;
 
-            // ステルスモード時の調整
+            // 繧ｹ繝・Ν繧ｹ繝｢繝ｼ繝画凾縺ｮ隱ｿ謨ｴ
             if (isStealthModeActive && stealthCoordinator != null)
             {
                 volume *= stealthCoordinator.GetCategoryVolumeMultiplier(AudioCategory.Ambient);
@@ -531,7 +531,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// ステルス状態に応じた音量更新
+        /// 繧ｹ繝・Ν繧ｹ迥ｶ諷九↓蠢懊§縺滄浹驥乗峩譁ｰ
         /// </summary>
         private void UpdateVolumeForStealthState()
         {
@@ -541,7 +541,7 @@ namespace asterivo.Unity60.Core.Audio
                 {
                     float targetVolume = CalculateLayerVolume(layer);
                     
-                    // スムーズな音量変化
+                    // 繧ｹ繝繝ｼ繧ｺ縺ｪ髻ｳ驥丞､牙喧
                     if (Mathf.Abs(layer.audioSource.volume - targetVolume) > 0.01f)
                     {
                         layer.audioSource.volume = Mathf.Lerp(
@@ -555,7 +555,7 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 全ソースの音量更新
+        /// 蜈ｨ繧ｽ繝ｼ繧ｹ縺ｮ髻ｳ驥乗峩譁ｰ
         /// </summary>
         private void UpdateAllSourceVolumes()
         {
@@ -569,12 +569,12 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// マスキング効果の更新
+        /// 繝槭せ繧ｭ繝ｳ繧ｰ蜉ｹ譫懊・譖ｴ譁ｰ
         /// </summary>
         private void UpdateMaskingEffects()
         {
-            // マスキング効果の動的計算と適用
-            // 実際は StealthAudioCoordinator との連携で行う
+            // 繝槭せ繧ｭ繝ｳ繧ｰ蜉ｹ譫懊・蜍慕噪險育ｮ励→驕ｩ逕ｨ
+            // 螳滄圀縺ｯ StealthAudioCoordinator 縺ｨ縺ｮ騾｣謳ｺ縺ｧ陦後≧
         }
 
         #endregion
@@ -582,10 +582,10 @@ namespace asterivo.Unity60.Core.Audio
         #region Helper Methods
 
         /// <summary>
-        /// 利用可能な環墁E��ソースを取征E        /// </summary>
+        /// 蛻ｩ逕ｨ蜿ｯ閭ｽ縺ｪ迺ｰ蠅・・ｽ・ｽ繧ｽ繝ｼ繧ｹ繧貞叙蠕・        /// </summary>
         private AudioSource GetAvailableAmbientSource()
         {
-            // 使用中でなぁE��ースを検索
+            // 菴ｿ逕ｨ荳ｭ縺ｧ縺ｪ縺・・ｽ・ｽ繝ｼ繧ｹ繧呈､懃ｴ｢
             foreach (var source in ambientSources)
             {
                 if (!source.isPlaying)
@@ -594,12 +594,12 @@ namespace asterivo.Unity60.Core.Audio
                 }
             }
 
-            // 全て使用中の場合は最も古いものを置き換え
+            // 蜈ｨ縺ｦ菴ｿ逕ｨ荳ｭ縺ｮ蝣ｴ蜷医・譛繧ょ商縺・ｂ縺ｮ繧堤ｽｮ縺肴鋤縺・
             return ambientSources[0];
         }
 
         /// <summary>
-        /// レイヤーからクリップを取得
+        /// 繝ｬ繧､繝､繝ｼ縺九ｉ繧ｯ繝ｪ繝・・繧貞叙蠕・
         /// </summary>
         private AudioClip GetClipFromLayer(AmbientLayer layer)
         {
@@ -624,19 +624,19 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 時間帯ベースの環境音更新
+        /// 譎る俣蟶ｯ繝吶・繧ｹ縺ｮ迺ｰ蠅・浹譖ｴ譁ｰ
         /// </summary>
         private void UpdateTimeBasedAmbient()
         {
             var timeCollection = timeSoundLookup.GetValueOrDefault(currentTimeOfDay);
             if (timeCollection != null)
             {
-                // 時間帯の環墁E��は低優先度で背景に追加
+                // 譎る俣蟶ｯ縺ｮ迺ｰ蠅・・ｽ・ｽ縺ｯ菴主━蜈亥ｺｦ縺ｧ閭梧勹縺ｫ霑ｽ蜉
                 var timeLayer = new AmbientLayer
                 {
                     collection = timeCollection,
                     layerType = AmbientLayerType.TimeOfDay,
-                    targetVolume = timeCollection.baseVolume * 0.5f, // 時間帯音は控えめに
+                    targetVolume = timeCollection.baseVolume * 0.5f, // 譎る俣蟶ｯ髻ｳ縺ｯ謗ｧ縺医ａ縺ｫ
                     maskingStrength = 0.1f,
                     providesStealthMasking = false
                 };
@@ -684,7 +684,7 @@ namespace asterivo.Unity60.Core.Audio
         {
             if (listenerTransform != null)
             {
-                // マスキング篁E��の表示
+                // 繝槭せ繧ｭ繝ｳ繧ｰ遽・・ｽ・ｽ縺ｮ陦ｨ遉ｺ
                 Gizmos.color = new Color(0f, 1f, 0f, 0.2f);
                 Gizmos.DrawSphere(listenerTransform.position, maskingRadius);
                 
@@ -700,7 +700,7 @@ namespace asterivo.Unity60.Core.Audio
     #region Supporting Types
 
     /// <summary>
-    /// 環墁E��レイヤーの種顁E    /// </summary>
+    /// 迺ｰ蠅・・ｽ・ｽ繝ｬ繧､繝､繝ｼ縺ｮ遞ｮ鬘・    /// </summary>
     public enum AmbientLayerType
     {
         Environment,
@@ -709,7 +709,7 @@ namespace asterivo.Unity60.Core.Audio
     }
 
     /// <summary>
-    /// アクチE��ブな環墁E��レイヤー
+    /// 繧｢繧ｯ繝・・ｽ・ｽ繝悶↑迺ｰ蠅・・ｽ・ｽ繝ｬ繧､繝､繝ｼ
     /// </summary>
     [System.Serializable]
     public class AmbientLayer
@@ -723,7 +723,7 @@ namespace asterivo.Unity60.Core.Audio
     }
 
     /// <summary>
-    /// 環墁E��コレクション
+    /// 迺ｰ蠅・・ｽ・ｽ繧ｳ繝ｬ繧ｯ繧ｷ繝ｧ繝ｳ
     /// </summary>
     [System.Serializable]
     public class AmbientSoundCollection
@@ -743,7 +743,7 @@ namespace asterivo.Unity60.Core.Audio
     }
 
     /// <summary>
-    /// 天候環墁E��コレクション
+    /// 螟ｩ蛟咏腸蠅・・ｽ・ｽ繧ｳ繝ｬ繧ｯ繧ｷ繝ｧ繝ｳ
     /// </summary>
     [System.Serializable]
     public class WeatherAmbientCollection
@@ -755,7 +755,7 @@ namespace asterivo.Unity60.Core.Audio
     }
 
     /// <summary>
-    /// 時間帯環墁E��コレクション
+    /// 譎る俣蟶ｯ迺ｰ蠅・・ｽ・ｽ繧ｳ繝ｬ繧ｯ繧ｷ繝ｧ繝ｳ
     /// </summary>
     [System.Serializable]
     public class TimeAmbientCollection
@@ -774,3 +774,4 @@ namespace asterivo.Unity60.Core.Audio
 
     #endregion
 }
+

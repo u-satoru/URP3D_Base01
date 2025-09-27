@@ -55,7 +55,7 @@ namespace asterivo.Unity60.Core.Bootstrap
             else
             {
                 Debug.LogWarning("[GameEventBridge] EventManager not found in ServiceLocator. Creating new instance.");
-                _eventManager = new EventManager();
+                _eventManager = new asterivo.Unity60.Core.Services.EventManager();
                 ServiceLocator.Register<IEventManager>(_eventManager);
             }
         }
