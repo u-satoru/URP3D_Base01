@@ -77,7 +77,8 @@ namespace asterivo.Unity60.Core.Audio
 
         private void Update()
         {
-            // 笨・ServiceLocator蟆ら畑螳溯｣・- AudioUpdateService繧貞叙蠕・            var audioUpdateService = GetAudioUpdateService();
+            // ServiceLocator実装 - AudioUpdateServiceを取得
+            var audioUpdateService = GetAudioUpdateService();
             if (audioUpdateService != null && audioUpdateService.IsCoordinatedUpdateEnabled)
             {
                 return; // 蜊碑ｪｿ譖ｴ譁ｰ繧ｷ繧ｹ繝・Β縺悟・逅・☆繧九◆繧√せ繧ｭ繝・・

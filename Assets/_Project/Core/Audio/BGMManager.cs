@@ -21,9 +21,12 @@ namespace asterivo.Unity60.Core.Audio
         [TabGroup("BGM Manager", "Track Categories")]
         [Header("BGM Track Categories")]
         [SerializeField, Required] private BGMTrack[] menuBGM;
-        [SerializeField, Required] private BGMTrack[] ambientBGM;        // 平常晁E        [SerializeField, Required] private BGMTrack[] tensionBGM;        // 警戒時
+        [SerializeField, Required] private BGMTrack[] ambientBGM;        // 平常時
+        [SerializeField, Required] private BGMTrack[] tensionBGM;        // 警戒時
         [SerializeField, Required] private BGMTrack[] combatBGM;         // 戦闘時
-        [SerializeField] private BGMTrack[] stealthSuccessBGM;           // スチE��ス成功晁E        [SerializeField] private BGMTrack[] explorationBGM;              // 探索晁E
+        [SerializeField] private BGMTrack[] stealthSuccessBGM;           // ステルス成功時
+        [SerializeField] private BGMTrack[] explorationBGM;              // 探索時
+
         [TabGroup("BGM Manager", "Dynamic Control")]
         [Header("Dynamic Control Settings")]
         [SerializeField, Range(0.5f, 5f)] private float crossfadeDuration = 2f;

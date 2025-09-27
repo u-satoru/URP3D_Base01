@@ -86,7 +86,8 @@ namespace asterivo.Unity60.Core.Audio
             }
             else
             {
-                // 笨・ServiceLocator蟆ら畑螳溯｣・- BGMManager繧担erviceLocator邨檎罰縺ｧ蜿門ｾ・                var bgmManager = ServiceHelper.GetServiceWithFallback<BGMManager>();
+                // ServiceLocator実装 - BGMManagerをServiceLocator経由で取得
+                var bgmManager = ServiceHelper.GetServiceWithFallback<BGMManager>();
                 if (bgmManager != null)
                 {
                     // TODO: bgmName縺九ｉBGMCategory縺ｸ縺ｮ螟画鋤繝ｭ繧ｸ繝・け縺悟ｿ・ｦ・                    // 迴ｾ蝨ｨ縺ｯ繝・ヵ繧ｩ繝ｫ繝医き繝・ざ繝ｪ繧剃ｽｿ逕ｨ
@@ -108,7 +109,8 @@ namespace asterivo.Unity60.Core.Audio
             }
             else
             {
-                // 笨・ServiceLocator蟆ら畑螳溯｣・- BGMManager繧堤峩謗･蜿門ｾ・                var bgmManager = ServiceHelper.GetServiceWithFallback<BGMManager>();
+                // ServiceLocator実装 - BGMManagerを直接取得
+                var bgmManager = ServiceHelper.GetServiceWithFallback<BGMManager>();
                 if (bgmManager != null)
                 {
                     bgmManager.StopBGM(fadeTime);

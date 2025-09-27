@@ -1,0 +1,33 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-27T00:12:30.8659536Z"
+[Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 58148, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
+[Licensing::Module] Error: LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.17.3+a4e98f1
+  Session Id:              652ddf43a22d4f249ff3f3c268f2690f
+  Correlation Id:          bd66d0544daaeda4aa42da274a244b57
+  External correlation Id: 2166287332234765224
+  Machine Id:              6v8irZboPhn9pIeIA+kbS+sqP0M=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.04s, handshake: 0.16s)
+[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-27T00:12:31.0646065Z"
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully updated license
+Built from '6000.0/staging' branch; Version is '6000.0.42f1 (feb9a7235030) revision 16693671'; Using compiler version '193933523'; Build Type 'Release'
+OS: 'Windows 11  (10.0.26100) 64bit Professional' Language: 'ja' Physical Memory: 65279 MB
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Serial number assigned to: "4398760-UnityPersXXXX"
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+[Licensing::Client] Successfully resolved entitlement details
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Unity.exe
+-batchmode
+-quit
+-projectPath
+D:UnityProjectsURP3D_Base01
+-logFile
+D:UnityProjectsURP3D_Base01Assets_ProjectLogsbatch_compile_.txt
+-executeMethod
+UnityEditor.EditorApplication.Exit
+Couldn't set project path to: D:/UnityProjects/URP3D_Base01/D:UnityProjectsURP3D_Base01
+Exiting without the bug reporter. Application will terminate with return code 1

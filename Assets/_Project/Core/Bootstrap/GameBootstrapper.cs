@@ -205,7 +205,7 @@ namespace asterivo.Unity60.Core.Bootstrap
         /// <summary>
         /// サービスの取得（便利メソッド）
         /// </summary>
-        public static T GetService<T>() where T : IService
+        public static T GetService<T>() where T : class, IService
         {
             if (!_isInitialized)
             {
@@ -218,7 +218,7 @@ namespace asterivo.Unity60.Core.Bootstrap
         /// <summary>
         /// サービスの取得（安全版）
         /// </summary>
-        public static bool TryGetService<T>(out T service) where T : IService
+        public static bool TryGetService<T>(out T service) where T : class, IService
         {
             if (!_isInitialized)
             {
