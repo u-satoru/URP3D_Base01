@@ -414,16 +414,16 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         [System.Serializable]
         private class WeatherAmbientCollection
         {
-            [Header("蝓ｺ譛ｬ險ｭ螳・)]
+            [Header("Base Settings")]
             public string collectionName = "Weather Ambient";
             public WeatherType weatherType = WeatherType.Clear;
             public float baseVolume = 0.7f;
             public bool enableRandomization = true;
             
-            [Header("繧ｪ繝ｼ繝・ぅ繧ｪ繧ｯ繝ｪ繝・・")]
+            [Header("Audio Clips")]
             public AudioClip[] ambientClips = new AudioClip[0];
             
-            [Header("髻ｳ髻ｿ繝代Λ繝｡繝ｼ繧ｿ")]
+            [Header("Audio Parameters")]
             [Range(0.5f, 2f)] public float pitchVariation = 0.1f;
             [Range(0f, 1f)] public float volumeVariation = 0.2f;
             [Range(0f, 10f)] public float fadeInTime = 2f;

@@ -1,0 +1,242 @@
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\AmbientManager.cs ---
+L18: /// 環境音マネージャー
+L108: /// 環境音マネージャーの初期化        /// </summary>
+L127: source.spatialBlend = 0f; // 環境音は通常2D
+L214: // 環境音辞書
+L246: /// 初期環境音の開始        /// </summary>
+L257: /// 環境に応じた環境音更新
+L307: /// 全環境音の一時停止
+L321: /// 全環境音の再開
+L332: /// 特定位置での環境音マスキング強度を取得        /// </summary>
+L358: /// 環境音の遷移
+L392: // 新しい環境音レイヤーを準備
+L585: /// 利用可能な環境音ソースを取得        /// </summary>
+L588: // 使用中でないソースを検索
+L634: // 時間帯の環境音は低優先度で背景に追加
+L687: // マスキング強度の表示
+L703: /// 環境音レイヤーの種類    /// </summary>
+L712: /// アクティブな環境音レイヤー
+L726: /// 環境音コレクション
+L746: /// 天候環境音コレクション
+L758: /// 時間帯環境音コレクション
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\AudioManager.cs ---
+L73: // 現在状態
+L116: /// IInitializable実装 - オーディオマネージャーの初期化
+L161: /// 必要なコンポーネントの検証
+L195: // TODO: AudioUpdateCoordinator用のインターフェースを作成後に有効化
+L207: // 専用のGameObjectを作成してAudioUpdateCoordinatorを追加
+L228: /// ゲーム状態に応じたオーディオ制御
+L244: // 環境音の更新
+L250: // 動的環境システムとの連携
+L253: // DynamicAudioEnvironment の既存機能を利用
+L262: /// 環境状態に応じた音響制御
+L266: // 環境に応じたBGM調整
+L272: // 環境音の調整
+L326: /// マスター音量の設定
+L335: /// BGM音量の設定
+L344: /// 環境音音量の設定
+L353: /// 効果音音量の設定
+L362: /// ステルス音響音量の設定
+L383: /// ステルスモードの強制設定
+L413: /// オーディオシステムの一時停止
+L423: /// オーディオシステムの再開
+L461: // 個別停止機能がないため、すべて停止
+L491: /// アンビエントボリュームを取得
+L499: /// エフェクトボリュームを取得
+L507: /// カテゴリ別のボリュームを設定
+L539: // EffectManagerには個別の状態チェック機能がないため、仮実装
+L540: // TODO: 個別サウンドの再生状態トラッキング機能を追加
+L588: // エディタでの値変更時に音量を即座に適用
+L603: /// 音響システム状態の構造体
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\BGMManager.cs ---
+L16: /// ステルスゲーム特化のBGMマネージャー
+L58: // 環境対応システム
+L63: // システム連携
+L67: // 現在状態        private Dictionary<BGMCategory, BGMTrack[]> bgmCategories;
+L113: /// オーディオソースのセットアップ
+L137: /// オーディオソースの共通設定        /// </summary>
+L148: /// システム参照の検索
+L160: /// デフォルトBGMの開始        /// </summary>
+L195: /// 環境に応じたBGM更新
+L203: // 環境変化に応じたBGM調整
+L252: /// マスター音量の設定        /// </summary>
+L307: // 環境・天候・時間帯に適したトラックを優先選択            var suitableTracks = FilterTracksByContext(tracks);
+L316: /// 現在のコンテキストに適したトラックをフィルタリング
+L349: // 既存再生を停止
+L353: // 新しいトラックを設定・再生
+L369: /// スムーズなBGM切り替え        /// </summary>
+L393: // クロスフェード用ソースに新しいトラックを設定            crossfadeBGMSource.clip = newTrack.clip;
+L415: // ソースを入れ替え            var tempSource = primaryBGMSource;
+L419: // 古いソースを停止
+L463: /// ターゲット音量の計算        /// </summary>
+L468: // ステルスモード時の音量調整
+L474: // 環境による音量調整
+L487: // 環境による調整
+L510: /// ソース音量の更新
+L521: /// ステルス状態に応じた音量更新
+L542: /// 環境変化に応じた調整を適用
+L548: // リアルタイムでの環境調整
+L551: // 必要に応じて音響フィルターの調整
+L557: /// 環境音響フィルターの適用
+L562: // 実装は具体的な要件に応じて
+L584: /// 現在のBGMが再生中か確認        /// </summary>
+L591: /// 指定したBGM名が現在再生中か確認        /// </summary>
+L597: // BGM名でのマッチング（簡略実装）            return currentTrack.clip != null &&
+L611: /// 現在のBGMトラック情報を取得        /// </summary>
+L633: /// BGM名からBGMカテゴリへの変換
+L708: /// BGMトラック情報
+L725: [Range(0f, 1f)] public float tensionLevel = 0f;           // この曲が適用される緊張度
+L726: public bool allowInStealthMode = true;                    // ステルス中に再生可能か
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\Controllers\MaskingEffectController.cs ---
+L16: /// ステルスゲーム用マスキング効果制御システム
+L17: /// AmbientManagerから分離されたマスキング効果専用コントローラー
+L46: // システム参照
+L93: /// システム参照の検索
+L187: // キャッシュを更新
+L204: /// 全マスキング効果の停止
+L210: // 全AudioSourceのマスキング効果をリセット
+L235: /// マスキング検出の開始        /// </summary>
+L246: // 協調更新システムに登録（イベント駆動）                        coordinator.OnAudioSystemSync += OnAudioSystemSync;
+L266: // フォールバック（従来の検出システム）
+L274: /// マスキング検出の停止
+L311: /// マスキング検出のメインコルーチン
+L354: /// AudioSourceがマスキング対象として有効かチェック
+L358: // タグチェック
+L361: // レイヤーチェック
+L364: // 音量チェック（非常に小さい音は除外）            bool hasAudibleVolume = audioSource.volume > AudioConstants.MIN_AUDIBLE_VOLUME;
+L381: // 最も強いマスキング効果を取得                currentMaskingStrength = trackingAudioSources.Max(source => source.maskingStrength);
+L397: // 状態変更時のイベント発火
+L410: // マスキング音響検出イベント            if (isMaskingActive && maskingSoundDetectedEvent != null)
+L425: /// 手動マスキング効果のコルーチン
+L461: /// AudioSourceの元の音量を取得        /// </summary>
+L464: // 元の音量を保存していないため、現在の音量を基準とする
+L465: // 実際のプロジェクトでは、AudioSourceの元データを保持する仕組みが必要            return Mathf.Max(audioSource.volume, 0.1f);
+L469: /// AudioSourceの音量を元に戻す        /// </summary>
+L564: // アクティブなマスキングソースの可視化
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs ---
+L17: /// 時間帯に依存する環境音制御システム
+L18: /// AmbientManagerから分離された時間音響専用コントローラー
+L31: [SerializeField, ShowIf("enableAutomaticTimeUpdates")] private float timeUpdateInterval = 60f; // 1分間隔でチェック
+L51: // システム参照
+L96: // フォールバック（従来のInvokeRepeating）
+L161: /// リスナーの検索
+L218: /// 全体の停止
+L273: /// 遷移中かどうかを取得        /// </summary>
+L281: /// システム時刻に基づく時間帯チェック
+L298: /// システム時刻から時間帯を判定        /// </summary>
+L330: // 利用可能なオーディオソースを探す            AudioSource availableSource = GetAvailableTimeSource();
+L338: // 新しい時間レイヤーを作成
+L345: // 古いレイヤーをフェードアウト            var layersToRemove = new List<TimeAmbientLayer>(activeTimeLayers);
+L382: return timeSources[0]; // 全て使用中の場合は最初のものを使用
+L386: /// 時間レイヤーの作成
+L458: /// 全音量の更新
+L481: /// 時間環境音レイヤー
+L497: // 時間変更が検出された場合のみ処理            if (syncData.timeChanged && syncData.currentTimeOfDay != currentTimeOfDay)
+L503: // ステルス状態に応じた音量調整
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs ---
+L17: /// AmbientManagerから分離された天気音響専用コントローラー
+L124: /// リスナーの検索
+L140: /// 天気の変更
+L165: /// 全体の停止
+L229: /// 天気遷移のコルーチン
+L254: // 新しい天気レイヤーを作成
+L299: return weatherSources[0]; // 全て使用中の場合は最初のものを使用
+L303: /// 天気レイヤーの作成
+L377: /// 全音量の更新
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs ---
+L365: /// デフォルトプリセットを作成
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\Services\AudioService.cs ---
+L149: // EffectManagerにはStopEffectがないため、StopAllEffectsを使用
+L157: if (ambientManager != null) ambientManager.PauseAll(); // AmbientManagerにはStopメソッドがない            if (effectManager != null) effectManager.StopAllEffects();
+L238: // EffectManagerでのチェック
+L242: // BGMManagerでのチェック
+L255: // BGMの一時停止（音量を保存してからゼロに）            if (bgmManager != null)
+L261: // アンビエントの一時停止
+L268: // 効果音の停止（一時停止ではなく停止）            if (effectManager != null)
+L285: // BGMの再開（保存された音量で再開）            if (bgmManager != null)
+L291: // アンビエントの再開
+L298: // 効果音は停止されたため、新しい音が再生されるまで待つ
+L323: // 空間音響マネージャーの初期化（Singleton依存を削除）            // TODO: SpatialAudioManagerがISpatialAudioServiceを実装する必要がある
+L329: // ステルスオーディオコーディネーターの初期化            // TODO: StealthAudioCoordinatorがIStealthAudioServiceを実装する必要がある
+L358: /// BGMを再生        /// </summary>
+L363: // BGMCategoryを使用する必要がある
+L364: // TODO: bgmNameからBGMCategoryへの変換ロジックが必要                // BGM名からBGMCategoryへの変換
+L376: /// アンビエントサウンドを更新（AmbientManagerにはPlayAmbientメソッドがない）        /// </summary>
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Features\Player\Scripts\States\CoverState.cs ---
+L8: /// プレイヤーがカバー（物陰に隠れている）状態を管理するクラス。    /// </summary>
+L16: /// 状態が開始されたときに呼び出されます。        /// カバーシステムにカバー開始を通知し、姿勢を更新します。        /// </summary>
+L17: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L32: /// 状態が終了したときに呼び出されます。        /// カバーシステムにカバー終了を通知します。        /// </summary>
+L33: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L45: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L49: /// 固定フレームレートで呼び出されます。        /// カバー中の左右移動を処理します。        /// </summary>
+L50: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L55: // カバー中の移動ロジック（覗き見中は移動制限）            if (!isPeeking && Mathf.Abs(_moveInput.x) > 0.1f)
+L66: /// プレイヤーの入力を処理し、カバー解除や覗き見などのアクションを実行します。        /// </summary>
+L67: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L68: /// <param name="moveInput">移動入力。</param>
+L69: /// <param name="jumpInput">ジャンプ入力（この状態ではカバー解除に使用）。</param>
+L74: // ジャンプ入力でカバー解除
+L77: // 後方への標準的なカバー解除
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Features\Player\Scripts\States\JumpingState.cs ---
+L7: /// プレイヤーのジャンプ状態を管理するクラス。    /// </summary>
+L16: /// 状態が開始されたときに呼び出されます。        /// プレイヤーに上方向の速度を与えてジャンプさせます。        /// </summary>
+L17: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L30: /// 状態が終了したときに呼び出されます。        /// </summary>
+L31: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L38: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L49: /// 固定フレームレートで呼び出されます。        /// 重力を適用し、プレイヤーを移動させます。        /// </summary>
+L50: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L60: /// プレイヤーの入力を処理します。（この状態では入力は無視されます）        /// </summary>
+L61: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L62: /// <param name="moveInput">移動入力。</param>
+L63: /// <param name="jumpInput">ジャンプ入力。</param>
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Features\Player\Scripts\States\ProneState.cs ---
+L6: /// プレイヤーの伏せ（匍匐）状態を管理するクラス。    /// </summary>
+L16: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L36: /// 状態が終了したときに呼び出されます。        /// キャラクターの高さを元の高さに戻します。        /// </summary>
+L37: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L52: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L56: /// 固定フレームレートで呼び出されます。        /// 入力に基づいてキャラクターの移動を処理します。        /// </summary>
+L57: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L75: /// プレイヤーの入力を処理し、他の状態への遷移を判断します。        /// </summary>
+L76: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L77: /// <param name="moveInput">移動入力。</param>
+L78: /// <param name="jumpInput">ジャンプ入力（この状態では立ち上がりに使用）。</param>
+L83: // ジャンプ入力で匍匐解除（立ち上がり）            if (jumpInput)
+L99: // 障害物がある場合はしゃがみ状態へ
+L113: /// プレイヤーが立ち上がれるかどうか（頭上に障害物がないか）を確認します。        /// </summary>
+L114: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L115: /// <returns>立ち上がれる場合はtrue、そうでない場合はfalse。</returns>
+L126: /// プレイヤーがしゃがみ状態になれるかどうかを確認します。        /// </summary>
+L127: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L128: /// <returns>しゃがめる場合はtrue、そうでない場合はfalse。</returns>
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Features\Player\Scripts\States\RollingState.cs ---
+L9: /// プレイヤーのローリング状態を管理するクラス。    /// この状態では、プレイヤーは一定時間前方に移動し、外部からの入力を受け付けません。    /// </summary>
+L16: /// 状態が開始されたときに呼び出されます。        /// ローリングのタイマーを開始し、アニメーションをトリガーします。        /// </summary>
+L17: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L44: /// 状態が終了したときに呼び出されます。        /// </summary>
+L45: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L62: /// 毎フレーム呼び出されます。        /// ローリングによる移動処理を適用します。        /// </summary>
+L63: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L79: /// 固定フレームレートで呼び出されます。物理計算の更新に使用されます。        /// この状態では使用されません。        /// </summary>
+L80: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L87: /// プレイヤーの入力を処理します。        /// ローリング中は入力を無視します。        /// </summary>
+L88: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L89: /// <param name="moveInput">移動入力。</param>
+L90: /// <param name="jumpInput">ジャンプ入力。</param>
+L97: /// ローリングの継続時間を管理し、終了時に歩行状態に遷移します。        /// </summary>
+L98: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Features\Player\Scripts\States\WalkingState.cs ---
+L6: /// プレイヤーの歩行状態を管理するクラス。    /// </summary>
+L14: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L24: /// 状態が終了したときに呼び出されます。        /// 移動入力をリセットします。        /// </summary>
+L25: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L33: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L39: /// 固定フレームレートで呼び出されます。        /// 入力に基づいてキャラクターの移動を処理します。        /// </summary>
+L40: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L60: /// プレイヤーの入力を処理し、他の状態への遷移を判断します。        /// </summary>
+L61: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L62: /// <param name="moveInput">移動入力。</param>
+L63: /// <param name="jumpInput">ジャンプ入力。</param>
+L80: // State transitions - スプリント入力でRunning状態に遷移

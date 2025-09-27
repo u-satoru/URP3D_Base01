@@ -1,0 +1,20 @@
+{
+    "name": "asterivo.Unity60.Core.Bootstrap",
+    "rootNamespace": "asterivo.Unity60.Core.Bootstrap",
+    "references": [
+        "asterivo.Unity60.Core",
+        "asterivo.Unity60.Core.Services",
+        "asterivo.Unity60.Core.Events",
+        "Unity.InputSystem",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -105,7 +105,8 @@ namespace asterivo.Unity60.Core.Audio
         #region Initialization
 
         /// <summary>
-        /// 迺ｰ蠅・・ｽ・ｽ繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｮ蛻晄悄蛹・        /// </summary>
+        /// 迺ｰ蠅・・ｽ・ｽ繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｮ蛻晄悄蛹・
+        /// </summary>
         private void InitializeAmbientManager()
         {
             ambientSources = new AudioSource[ambientSourceCount];
@@ -134,9 +135,6 @@ namespace asterivo.Unity60.Core.Audio
 
         /// <summary>
         /// 繧ｷ繧ｹ繝・Β蜿ら・縺ｮ讀懃ｴ｢
-        /// </summary>
-        /// <summary>
-        /// 繧ｷ繧ｹ繝・Β蜿ら・縺ｮ讀懃ｴ｢
         /// Phase 3遘ｻ陦後ヱ繧ｿ繝ｼ繝ｳ: ServiceLocator蜆ｪ蜈医ヾingleton繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ
         /// </summary>
         private void FindSystemReferences()
@@ -157,12 +155,15 @@ namespace asterivo.Unity60.Core.Audio
                 listenerTransform = audioListener.transform;
             }
         }
-        
+
         /// <summary>
-        /// ServiceLocator蜆ｪ蜈医〒SpatialAudioManager繧貞叙蠕・        /// Phase 3遘ｻ陦後ヱ繧ｿ繝ｼ繝ｳ縺ｮ螳溯｣・        /// </summary>
+        /// ServiceLocator蜆ｪ蜈医〒SpatialAudioManager繧貞叙蠕・
+        /// Phase 3遘ｻ陦後ヱ繧ｿ繝ｼ繝ｳ縺ｮ螳溯｣・
+        /// </summary>
         private SpatialAudioManager GetSpatialAudioManager()
         {
-            // ServiceLocator邨檎罰縺ｧ縺ｮ蜿門ｾ励ｒ隧ｦ縺ｿ繧・            if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator)
+            // ServiceLocator邨檎罰縺ｧ縺ｮ蜿門ｾ励ｒ隧ｦ縺ｿ繧・
+            if (asterivo.Unity60.Core.FeatureFlags.UseServiceLocator)
             {
                 try
                 {
@@ -184,7 +185,7 @@ namespace asterivo.Unity60.Core.Audio
                     }
                 }
             }
-            
+
             // 笨・ServiceLocator蟆ら畑螳溯｣・- 逶ｴ謗･SpatialAudioManager繧呈､懃ｴ｢
             var spatialAudioManager = FindFirstObjectByType<SpatialAudioManager>();
             if (spatialAudioManager != null)
@@ -202,7 +203,7 @@ namespace asterivo.Unity60.Core.Audio
                     eventLogger.LogError("[AmbientManager] No SpatialAudioManager available and legacy singletons are disabled");
                 }
             }
-            
+
             return null;
         }
 
@@ -243,7 +244,8 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 蛻晄悄迺ｰ蠅・・ｽ・ｽ縺ｮ髢句ｧ・        /// </summary>
+        /// 蛻晄悄迺ｰ蠅・・ｽ・ｽ縺ｮ髢句ｧ・
+        /// </summary>
         private void StartInitialAmbient()
         {
             UpdateForEnvironment(currentEnvironment, currentWeather, currentTimeOfDay);
@@ -329,7 +331,8 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 迚ｹ螳壻ｽ咲ｽｮ縺ｧ縺ｮ迺ｰ蠅・・ｽ・ｽ繝槭せ繧ｭ繝ｳ繧ｰ蠑ｷ蠎ｦ繧貞叙蠕・        /// </summary>
+        /// 迚ｹ螳壻ｽ咲ｽｮ縺ｧ縺ｮ迺ｰ蠅・・ｽ・ｽ繝槭せ繧ｭ繝ｳ繧ｰ蠑ｷ蠎ｦ繧貞叙蠕・
+        /// </summary>
         public float GetMaskingStrengthAtPosition(Vector3 position)
         {
             float totalMasking = 0f;
@@ -386,7 +389,7 @@ namespace asterivo.Unity60.Core.Audio
         private IEnumerator EnvironmentTransitionCoroutine()
         {
             var targetCollection = environmentSoundLookup.GetValueOrDefault(currentEnvironment);
-            
+
             if (targetCollection != null)
             {
                 // 譁ｰ縺励＞迺ｰ蠅・・ｽ・ｽ繧､繝､繝ｼ繧呈ｺ門ｙ
@@ -416,7 +419,7 @@ namespace asterivo.Unity60.Core.Audio
         private IEnumerator WeatherTransitionCoroutine()
         {
             var targetCollection = weatherSoundLookup.GetValueOrDefault(currentWeather);
-            
+
             if (targetCollection != null && targetCollection.weatherClip != null)
             {
                 var newLayer = new AmbientLayer
@@ -439,7 +442,8 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 譁ｰ縺励＞繝ｬ繧､繝､繝ｼ縺ｸ縺ｮ繧ｯ繝ｭ繧ｹ繝輔ぉ繝ｼ繝・        /// </summary>
+        /// 譁ｰ縺励＞繝ｬ繧､繝､繝ｼ縺ｸ縺ｮ繧ｯ繝ｭ繧ｹ繝輔ぉ繝ｼ繝・
+        /// </summary>
         private IEnumerator CrossfadeToNewLayer(AudioSource source, AmbientLayer newLayer, float transitionTime)
         {
             // 蜿､縺・Ξ繧､繝､繝ｼ縺ｮ繝輔ぉ繝ｼ繝峨い繧ｦ繝茨ｼ亥酔縺倥ち繧､繝励′縺ゅｌ縺ｰ・・
@@ -450,7 +454,8 @@ namespace asterivo.Unity60.Core.Audio
                 activeLayers.Remove(existingLayer);
             }
 
-            // 譁ｰ縺励＞繝ｬ繧､繝､繝ｼ縺ｮ險ｭ螳・            AudioClip targetClip = GetClipFromLayer(newLayer);
+            // 譁ｰ縺励＞繝ｬ繧､繝､繝ｼ縺ｮ險ｭ螳・
+            AudioClip targetClip = GetClipFromLayer(newLayer);
             if (targetClip != null)
             {
                 source.clip = targetClip;
@@ -473,7 +478,8 @@ namespace asterivo.Unity60.Core.Audio
                 newLayer.audioSource = source;
                 activeLayers.Add(newLayer);
 
-                // 繧､繝吶Φ繝育匱陦・                if (newLayer.providesStealthMasking)
+                // 繧､繝吶Φ繝育匱陦・
+                if (newLayer.providesStealthMasking)
                 {
                     ambientMaskingActivatedEvent?.Raise();
                 }
@@ -491,7 +497,8 @@ namespace asterivo.Unity60.Core.Audio
         }
 
         /// <summary>
-        /// 繝ｬ繧､繝､繝ｼ縺ｮ繝輔ぉ繝ｼ繝峨い繧ｦ繝・        /// </summary>
+        /// 繝ｬ繧､繝､繝ｼ縺ｮ繝輔ぉ繝ｼ繝峨い繧ｦ繝・
+        /// </summary>
         private IEnumerator FadeOutLayer(AmbientLayer layer, float fadeTime)
         {
             if (layer.audioSource == null) yield break;
@@ -516,7 +523,8 @@ namespace asterivo.Unity60.Core.Audio
         #region Volume and Masking Control
 
         /// <summary>
-        /// 繝ｬ繧､繝､繝ｼ縺ｮ髻ｳ驥剰ｨ育ｮ・        /// </summary>
+        /// 繝ｬ繧､繝､繝ｼ縺ｮ髻ｳ驥剰ｨ育ｮ・
+        /// </summary>
         private float CalculateLayerVolume(AmbientLayer layer)
         {
             float volume = layer.targetVolume * masterVolume;
@@ -540,13 +548,13 @@ namespace asterivo.Unity60.Core.Audio
                 if (layer.audioSource != null && layer.audioSource.isPlaying)
                 {
                     float targetVolume = CalculateLayerVolume(layer);
-                    
+
                     // 繧ｹ繝繝ｼ繧ｺ縺ｪ髻ｳ驥丞､牙喧
                     if (Mathf.Abs(layer.audioSource.volume - targetVolume) > 0.01f)
                     {
                         layer.audioSource.volume = Mathf.Lerp(
-                            layer.audioSource.volume, 
-                            targetVolume, 
+                            layer.audioSource.volume,
+                            targetVolume,
                             Time.deltaTime * 2f
                         );
                     }
@@ -582,7 +590,8 @@ namespace asterivo.Unity60.Core.Audio
         #region Helper Methods
 
         /// <summary>
-        /// 蛻ｩ逕ｨ蜿ｯ閭ｽ縺ｪ迺ｰ蠅・・ｽ・ｽ繧ｽ繝ｼ繧ｹ繧貞叙蠕・        /// </summary>
+        /// 蛻ｩ逕ｨ蜿ｯ閭ｽ縺ｪ迺ｰ蠅・・ｽ・ｽ繧ｽ繝ｼ繧ｹ繧貞叙蠕・
+        /// </summary>
         private AudioSource GetAvailableAmbientSource()
         {
             // 菴ｿ逕ｨ荳ｭ縺ｧ縺ｪ縺・・ｽ・ｽ繝ｼ繧ｹ繧呈､懃ｴ｢
@@ -609,12 +618,12 @@ namespace asterivo.Unity60.Core.Audio
                     if (layer.collection is AmbientSoundCollection envCollection)
                         return envCollection.GetRandomClip();
                     break;
-                    
+
                 case AmbientLayerType.Weather:
                     if (layer.collection is WeatherAmbientCollection weatherCollection)
                         return weatherCollection.weatherClip;
                     break;
-                    
+
                 case AmbientLayerType.TimeOfDay:
                     if (layer.collection is TimeAmbientCollection timeCollection)
                         return timeCollection.GetRandomClip();
@@ -687,7 +696,7 @@ namespace asterivo.Unity60.Core.Audio
                 // 繝槭せ繧ｭ繝ｳ繧ｰ遽・・ｽ・ｽ縺ｮ陦ｨ遉ｺ
                 Gizmos.color = new Color(0f, 1f, 0f, 0.2f);
                 Gizmos.DrawSphere(listenerTransform.position, maskingRadius);
-                
+
                 Gizmos.color = Color.green;
                 Gizmos.DrawWireSphere(listenerTransform.position, maskingRadius);
             }
@@ -700,7 +709,8 @@ namespace asterivo.Unity60.Core.Audio
     #region Supporting Types
 
     /// <summary>
-    /// 迺ｰ蠅・・ｽ・ｽ繝ｬ繧､繝､繝ｼ縺ｮ遞ｮ鬘・    /// </summary>
+    /// 迺ｰ蠅・・ｽ・ｽ繝ｬ繧､繝､繝ｼ縺ｮ遞ｮ鬘・
+    /// </summary>
     public enum AmbientLayerType
     {
         Environment,
@@ -736,8 +746,8 @@ namespace asterivo.Unity60.Core.Audio
 
         public AudioClip GetRandomClip()
         {
-            return ambientClips != null && ambientClips.Length > 0 
-                ? ambientClips[Random.Range(0, ambientClips.Length)] 
+            return ambientClips != null && ambientClips.Length > 0
+                ? ambientClips[Random.Range(0, ambientClips.Length)]
                 : null;
         }
     }
@@ -766,8 +776,8 @@ namespace asterivo.Unity60.Core.Audio
 
         public AudioClip GetRandomClip()
         {
-            return timeClips != null && timeClips.Length > 0 
-                ? timeClips[Random.Range(0, timeClips.Length)] 
+            return timeClips != null && timeClips.Length > 0
+                ? timeClips[Random.Range(0, timeClips.Length)]
                 : null;
         }
     }

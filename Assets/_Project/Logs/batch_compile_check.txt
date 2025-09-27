@@ -1,0 +1,647 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-homul" at "2025-09-27T10:09:47.6828275Z"
+[Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 52408, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
+[Licensing::Module] Error: LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.17.3+a4e98f1
+  Session Id:              89bad861f6804ac88011f1a54f75d7cf
+  Correlation Id:          343ea833664ed82686814e4e784e41a6
+  External correlation Id: 3294649021297481536
+  Machine Id:              6v8irZboPhn9pIeIA+kbS+sqP0M=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-homul" (connect: 0.00s, validation: 0.04s, handshake: 0.06s)
+[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-homul-notifications" at "2025-09-27T10:09:47.7853476Z"
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully updated license
+Built from '6000.0/staging' branch; Version is '6000.0.42f1 (feb9a7235030) revision 16693671'; Using compiler version '193933523'; Build Type 'Release'
+OS: 'Windows 11  (10.0.26100) 64bit Professional' Language: 'ja' Physical Memory: 65279 MB
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Serial number assigned to: "4398760-UnityPersXXXX"
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+[Licensing::Client] Successfully resolved entitlement details
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Unity.exe
+-batchmode
+-nographics
+-projectPath
+D:\UnityProjects\URP3D_Base01
+-executeMethod
+UnityEditor.Compilation.CompilationPipeline.RequestScriptCompilation
+-logFile
+D:\UnityProjects\URP3D_Base01\Assets\_Project\Logs\batch_compile_check.txt
+-quit
+Successfully changed project path to: D:\UnityProjects\URP3D_Base01
+D:/UnityProjects/URP3D_Base01
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [46956]  Target information:
+
+Player connection [46956]  * "[IP] 172.22.80.1 [Port] 55504 [Flags] 2 [Guid] 44842587 [EditorId] 44842587 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [46956]  * "[IP] 172.18.16.1 [Port] 55504 [Flags] 2 [Guid] 44842587 [EditorId] 44842587 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [46956]  * "[IP] 192.168.11.4 [Port] 55504 [Flags] 2 [Guid] 44842587 [EditorId] 44842587 [Version] 1048832 [Id] WindowsEditor(7,Gtune) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [46956] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [46956] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Package Manager] Connected to IPC stream "Upm-45704" after 0.3 seconds.
+Library Redirect Path: Library/
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 131 packages:
+  Packages from [https://package.openupm.com]:
+    com.ivanmurzak.unity.mcp@0.17.2 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.ivanmurzak.unity.mcp@0aed32c79aeb)
+    extensions.unity.playerprefsex@2.0.2 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\extensions.unity.playerprefsex@8b239ea85918)
+    org.nuget.microsoft.bcl.memory@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.bcl.memory@f5fe8bb7e67a)
+    org.nuget.microsoft.aspnetcore.signalr.client@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.aspnetcore.signalr.client@a86eea3ba40c)
+    org.nuget.microsoft.aspnetcore.signalr.protocols.json@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.aspnetcore.signalr.protocols.json@7346f7beb63c)
+    org.nuget.microsoft.codeanalysis.csharp@4.13.0 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.codeanalysis.csharp@fbf1792dd5d9)
+    org.nuget.microsoft.extensions.caching.abstractions@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.caching.abstractions@6c0cf7a75258)
+    org.nuget.microsoft.extensions.dependencyinjection.abstractions@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.dependencyinjection.abstractions@011670b187e9)
+    org.nuget.microsoft.extensions.hosting@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.hosting@e0f63acf4cef)
+    org.nuget.microsoft.extensions.hosting.abstractions@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.hosting.abstractions@539aee7477d4)
+    org.nuget.microsoft.extensions.logging.abstractions@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.logging.abstractions@daf01cbf05d5)
+    org.nuget.r3@1.3.0 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.r3@c98887a6d128)
+    org.nuget.system.text.json@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.system.text.json@01fd1dd45451)
+    org.nuget.microsoft.bcl.asyncinterfaces@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.bcl.asyncinterfaces@328a307bd65b)
+    org.nuget.system.io.pipelines@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.system.io.pipelines@3dcaa702d1e6)
+    org.nuget.system.text.encodings.web@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.system.text.encodings.web@89d932c5e257)
+    org.nuget.system.buffers@4.5.1 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.system.buffers@39a4cf9613da)
+    org.nuget.system.memory@4.5.5 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.system.memory@af94ea770eb0)
+    org.nuget.system.runtime.compilerservices.unsafe@6.0.0 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.system.runtime.compilerservices.unsafe@14aa1e6c3671)
+    org.nuget.system.threading.tasks.extensions@4.5.4 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.system.threading.tasks.extensions@84d916e784b5)
+    org.nuget.system.componentmodel.annotations@5.0.0 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.system.componentmodel.annotations@852d9dc7d0d6)
+    org.nuget.system.diagnostics.diagnosticsource@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.system.diagnostics.diagnosticsource@62a170ca77fc)
+    org.nuget.microsoft.extensions.configuration.abstractions@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.configuration.abstractions@e21dc58ce365)
+    org.nuget.microsoft.extensions.diagnostics.abstractions@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.diagnostics.abstractions@c4c80eb75c3b)
+    org.nuget.microsoft.extensions.fileproviders.abstractions@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.fileproviders.abstractions@723cf52f3914)
+    org.nuget.microsoft.extensions.configuration.binder@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.configuration.binder@0cb486168647)
+    org.nuget.microsoft.extensions.configuration.commandline@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.configuration.commandline@6ae895ecf5f4)
+    org.nuget.microsoft.extensions.configuration.environmentvariables@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.configuration.environmentvariables@e66b934a027f)
+    org.nuget.microsoft.extensions.configuration.fileextensions@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.configuration.fileextensions@21707577d1c5)
+    org.nuget.microsoft.extensions.configuration.json@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.configuration.json@54a5e544db95)
+    org.nuget.microsoft.extensions.configuration.usersecrets@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.configuration.usersecrets@53eab4a1db06)
+    org.nuget.microsoft.extensions.configuration@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.configuration@bbb7247b77b4)
+    org.nuget.microsoft.extensions.dependencyinjection@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.dependencyinjection@50cfd603eb43)
+    org.nuget.microsoft.extensions.diagnostics@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.diagnostics@c9545f1b64fe)
+    org.nuget.microsoft.extensions.fileproviders.physical@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.fileproviders.physical@b72baee772c5)
+    org.nuget.microsoft.extensions.logging.configuration@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.logging.configuration@33d3931ef0da)
+    org.nuget.microsoft.extensions.logging.console@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.logging.console@9de8c751ad18)
+    org.nuget.microsoft.extensions.logging.debug@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.logging.debug@9f73ed06cda6)
+    org.nuget.microsoft.extensions.logging.eventlog@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.logging.eventlog@01fb44e5b97c)
+    org.nuget.microsoft.extensions.logging.eventsource@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.logging.eventsource@6e863a197263)
+    org.nuget.microsoft.extensions.logging@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.logging@c95ee2e3b656)
+    org.nuget.microsoft.extensions.options@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.options@f565c4ae8670)
+    org.nuget.microsoft.extensions.primitives@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.primitives@5acfa8ed796f)
+    org.nuget.microsoft.codeanalysis.common@4.13.0 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.codeanalysis.common@539d14f6adc6)
+    org.nuget.microsoft.codeanalysis.analyzers@3.11.0 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.codeanalysis.analyzers@bcf103d84432)
+    org.nuget.system.collections.immutable@8.0.0 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.system.collections.immutable@4b10e09672b9)
+    org.nuget.system.numerics.vectors@4.5.0 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.system.numerics.vectors@3ec3aba0569e)
+    org.nuget.system.reflection.metadata@8.0.0 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.system.reflection.metadata@991c4ddb0507)
+    org.nuget.system.text.encoding.codepages@7.0.0 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.system.text.encoding.codepages@cd3f9f70f07b)
+    org.nuget.microsoft.aspnetcore.signalr.common@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.aspnetcore.signalr.common@cc6efc54bfbd)
+    org.nuget.microsoft.aspnetcore.signalr.client.core@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.aspnetcore.signalr.client.core@c1f82ba9f34c)
+    org.nuget.microsoft.aspnetcore.http.connections.client@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.aspnetcore.http.connections.client@08716afd0d30)
+    org.nuget.system.diagnostics.eventlog@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.system.diagnostics.eventlog@ccc5190fc16a)
+    org.nuget.microsoft.extensions.options.configurationextensions@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.options.configurationextensions@2777478771a1)
+    org.nuget.microsoft.extensions.filesystemglobbing@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.filesystemglobbing@150d01d49708)
+    org.nuget.microsoft.aspnetcore.connections.abstractions@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.aspnetcore.connections.abstractions@e143c66e4224)
+    org.nuget.microsoft.aspnetcore.http.connections.common@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.aspnetcore.http.connections.common@6b5cac1e4a4d)
+    org.nuget.system.net.serversentevents@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.system.net.serversentevents@97059ddf5d40)
+    org.nuget.microsoft.bcl.timeprovider@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.bcl.timeprovider@62a55c3d57cf)
+    org.nuget.system.threading.channels@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.system.threading.channels@38066e88c197)
+    org.nuget.system.security.principal.windows@5.0.0 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.system.security.principal.windows@2b7d41cd03cc)
+    org.nuget.microsoft.extensions.features@9.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\org.nuget.microsoft.extensions.features@66b9e13a7b74)
+  Packages from [https://packages.unity.com]:
+    com.unity.addressables@2.3.16 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.addressables@1d7f6a740e58)
+    com.unity.addressables.android@1.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.addressables.android@7f2b35c560c4)
+    com.unity.ai.navigation@2.0.9 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.ai.navigation@5218e4bf7edc)
+    com.unity.animation.rigging@1.3.1 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.animation.rigging@e106d1f78228)
+    com.unity.cinemachine@3.1.4 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.cinemachine@b66fdb7cd1f2)
+    com.unity.collab-proxy@2.9.3 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.collab-proxy@ab839cc7d2ad)
+    com.unity.ide.rider@3.0.38 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.ide.rider@1f60b3138684)
+    com.unity.ide.visualstudio@2.0.23 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.ide.visualstudio@198cdf337d13)
+    com.unity.inputsystem@1.13.1 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.inputsystem@e2c83221d2dc)
+    com.unity.localization@1.5.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.localization@7eec7ebf749d)
+    com.unity.probuilder@6.0.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.probuilder@9b6693f09f97)
+    com.unity.test-framework@1.4.6 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.test-framework@5ac417e07314)
+    com.unity.testtools.codecoverage@1.2.7 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.testtools.codecoverage@e4e5058206c0)
+    com.unity.timeline@1.8.9 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.timeline@6b9e48457ddb)
+    com.unity.visualscripting@1.9.8 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.visualscripting@b4d700247d4b)
+    com.unity.settings-manager@2.0.1 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.settings-manager@56a930affa1e)
+    com.unity.ext.nunit@2.0.5 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.ext.nunit@60ef35ffd3cd)
+    com.unity.nuget.newtonsoft-json@3.2.1 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.nuget.newtonsoft-json@74deb55db2a0)
+    com.unity.splines@2.7.2 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.splines@d3e1e500c9a0)
+    com.unity.burst@1.8.19 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.burst@7a907cf5a459)
+    com.unity.profiling.core@1.0.2 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.profiling.core@aac7b93912bc)
+    com.unity.scriptablebuildpipeline@2.2.11 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.scriptablebuildpipeline@8e62a84f8b2e)
+    com.unity.searcher@4.9.3 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.searcher@1e17ce91558d)
+    com.unity.mathematics@1.3.2 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.mathematics@8017b507cc74)
+    com.unity.collections@2.5.1 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.collections@56bff8827a7e)
+    com.unity.nuget.mono-cecil@1.11.4 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.nuget.mono-cecil@d6f9955a5d5f)
+    com.unity.test-framework.performance@3.0.3 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.test-framework.performance@fb0dc592af8b)
+  Built-in packages:
+    com.unity.multiplayer.center@1.0.0 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.multiplayer.center@f3fb577b3546)
+    com.unity.render-pipelines.universal@17.0.4 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.render-pipelines.universal@087c6d6dbb7d)
+    com.unity.ugui@2.0.0 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.ugui@9496653a3df6)
+    com.unity.modules.accessibility@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.accessibility)
+    com.unity.modules.ai@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.ai)
+    com.unity.modules.androidjni@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.androidjni)
+    com.unity.modules.animation@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.animation)
+    com.unity.modules.assetbundle@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.assetbundle)
+    com.unity.modules.audio@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.audio)
+    com.unity.modules.cloth@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.cloth)
+    com.unity.modules.director@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.director)
+    com.unity.modules.imageconversion@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.imageconversion)
+    com.unity.modules.imgui@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.imgui)
+    com.unity.modules.jsonserialize@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.jsonserialize)
+    com.unity.modules.particlesystem@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.particlesystem)
+    com.unity.modules.physics@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.physics)
+    com.unity.modules.physics2d@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.physics2d)
+    com.unity.modules.screencapture@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.screencapture)
+    com.unity.modules.terrain@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.terrain)
+    com.unity.modules.terrainphysics@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.terrainphysics)
+    com.unity.modules.tilemap@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.tilemap)
+    com.unity.modules.ui@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.ui)
+    com.unity.modules.uielements@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.uielements)
+    com.unity.modules.umbra@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.umbra)
+    com.unity.modules.unityanalytics@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unityanalytics)
+    com.unity.modules.unitywebrequest@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequest)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequestassetbundle)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequestaudio)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequesttexture)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequestwww)
+    com.unity.modules.vehicles@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.vehicles)
+    com.unity.modules.video@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.video)
+    com.unity.modules.vr@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.vr)
+    com.unity.modules.wind@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.wind)
+    com.unity.modules.xr@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.xr)
+    com.unity.modules.subsystems@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.subsystems)
+    com.unity.modules.hierarchycore@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.hierarchycore)
+    com.unity.render-pipelines.core@17.0.4 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.render-pipelines.core@1c27dfa04d8a)
+    com.unity.shadergraph@17.0.4 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.shadergraph@608f316e1f48)
+    com.unity.render-pipelines.universal-config@17.0.3 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.render-pipelines.universal-config@fa63c96d3e1a)
+    com.unity.rendering.light-transport@1.0.1 (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.unity.rendering.light-transport@307bc27a498f)
+  Git packages:
+    com.cysharp.unitask@https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask (location: D:\UnityProjects\URP3D_Base01\Library\PackageCache\com.cysharp.unitask@0dda4ba29591)
+Default GameObject BitMask: UI already registered
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+[Subsystems] No new subsystems found in resolved package list.
+Package Manager log level set to [2]
+[Package Manager] Done registering packages in 0.22 seconds
+Artifact Garbage Collection - Removed 1 unused hashed content filesRefreshing native plugins compatible for Editor in 2.38 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 6000.0.42f1 (feb9a7235030)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/UnityProjects/URP3D_Base01/Assets
+Forcing GfxDevice: Null
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+NullGfxDevice:
+    Version:  NULL 1.0 [1.0]
+    Renderer: Null Device
+    Vendor:   Unity Technologies
+Shader Hidden/ProbeVolume/VoxelizeScene is not supported: GPU does not support conservative rasterization
+[Licensing::Client] Successfully resolved entitlement details
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56704
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+[Licensing::Client] Successfully resolved entitlement details
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+[Licensing::Client] Successfully resolved entitlement details
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.42f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
+Registered in 0.037883 seconds.
+- Loaded All Assemblies, in  0.551 seconds
+[usbmuxd] Start listen thread
+[usbmuxd] Listen thread started
+[usbmuxd] Send listen message
+Native extension for iOS target not found
+Native extension for Android target not found
+Android Extension - Scanning For ADB Devices 2317 ms
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  2.729 seconds
+Domain Reload Profiling: 3275ms
+	BeginReloadAssembly (187ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (41ms)
+	RebuildNativeTypeToScriptingClass (12ms)
+	initialDomainReloadingComplete (100ms)
+	LoadAllAssembliesAndSetupDomain (205ms)
+		LoadAssemblies (179ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (200ms)
+			TypeCache.Refresh (198ms)
+				TypeCache.ScanAssembly (183ms)
+			BuildScriptInfoCaches (0ms)
+			ResolveRequiredComponents (1ms)
+	FinalizeReload (2730ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (2682ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (2440ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (54ms)
+			ProcessInitializeOnLoadAttributes (118ms)
+			ProcessInitializeOnLoadMethodAttributes (66ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+The GUID inside 'Assets/_Project.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/_ThirdParty.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/DemiLib.dll.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/DemiLib.xml.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/DemiEditor.dll.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/DemiEditor.xml.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/blackSquare.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/blackSquareAlpha10.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/blackSquareAlpha15.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/blackSquareAlpha25.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/blackSquareAlpha50.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/blackSquareAlpha80.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/blueSquare.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/circle.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/circle_dashedBorderEmpty.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/greenSquare.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/grid_bright.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/grid_dark.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_alert.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_alignB.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_alignBC.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_alignBL.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_alignBR.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_alignCC.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_alignCL.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_alignCR.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_alignHC.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_alignL.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_alignR.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_alignT.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_alignTC.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_alignTL.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_alignTR.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_alignVC.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_camera.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_camera_border.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_cog.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_cog_border.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_comment.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_comment_border.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_delete.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_demigiant.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_distributeHAlignT.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_distributeVAlignL.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_doing.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_end.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_flipV.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_foldout_closed.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_foldout_open.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_heart.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_heart_border.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_light.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_light_border.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_lock.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_lock_open.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_nodeArrow.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_ok.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_optionsDropdown.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_play.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_play_border.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_skull.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_skull_border.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_star.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_star_border.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_todo.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_ui.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_ui_border.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_visibility.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/ico_visibility_off.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/orangeSquare.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_atlas.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_audio.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_bundle.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_cog.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_cross.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_demigiant.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_folder.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_fonts.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_heart.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_materials.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_models.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_particles.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_play.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_prefab.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_scripts.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_shaders.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_skull.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_star.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_terrains.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/project/ico_textures.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/purpleSquare.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/redSquare.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareBorder.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareBorderAlpha15.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareBorderCurved.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareBorderCurved02.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareBorderCurved02_darkBorders.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareBorderCurved_darkBorders.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareBorderCurved_darkBordersAlpha.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareBorderCurvedAlpha.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareBorderCurvedEmpty.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareBorderCurvedEmpty02.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareBorderCurvedEmptyThick.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareBorderEmpty.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareBorderEmpty01.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareBorderEmpty02.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareBorderEmpty03.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareBorderThickEmpty.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareBorderThickerEmpty.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareCorners03.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/squareCornersEmpty02.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/tileBars_empty.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/tileBars_slanted.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/tileBars_slanted_alpha.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/tileCheckerboard.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/transparentSquare.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/whiteDot.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/whiteDot_darkBorder.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/whiteDot_whiteBorderAlpha.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/whiteSquare.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/whiteSquare_fadeOut_bt.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/whiteSquareAlpha10.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/whiteSquareAlpha15.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/whiteSquareAlpha25.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/whiteSquareAlpha50.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/whiteSquareAlpha80.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/whiteSquareCurved.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/whiteSquareCurved02.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DemiLib/Core/Editor/Imgs/yellowSquare.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/DOTween.dll.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/DOTween.XML.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/Editor.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/Editor/DOTweenEditor.dll.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/Editor/DOTweenEditor.XML.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/Editor/Imgs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/Editor/Imgs/DOTweenIcon.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/Editor/Imgs/DOTweenMiniIcon.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/Editor/Imgs/Footer.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/Editor/Imgs/Footer_dark.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/Editor/Imgs/Header.jpg.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/Modules.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/Modules/DOTweenModuleAudio.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/Modules/DOTweenModuleEPOOutline.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/Modules/DOTweenModulePhysics.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/Modules/DOTweenModulePhysics2D.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/Modules/DOTweenModuleSprite.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/Modules/DOTweenModuleUI.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/Modules/DOTweenModuleUnityVersion.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/Modules/DOTweenModuleUtils.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTween/readme.txt.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro Examples.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro Examples/DOTweenAnimation_Advanced.unity.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro Examples/DOTweenAnimation_AdvancedSettings.lighting.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro Examples/DOTweenAnimation_Basics.unity.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro Examples/DOTweenAnimation_BasicsSettings.lighting.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro Examples/DOTweenPath.unity.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro Examples/DOTweenPathSettings.lighting.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro Examples/Examples Assets.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro Examples/Examples Assets/dotweenpro_logo.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro/DOTweenAnimation.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro/DOTweenDeAudio.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro/DOTweenDeUnityExtended.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro/DOTweenPro.dll.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro/DOTweenPro.XML.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro/DOTweenProShortcuts.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro/DOTweenTextMeshPro.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro/DOTweenTk2d.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro/Editor.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro/Editor/DOTweenAnimationInspector.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro/Editor/DOTweenPreviewManager.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro/Editor/DOTweenProEditor.dll.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro/Editor/DOTweenProEditor.XML.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/DOTweenPro/readme.txt.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Demigiant/readme_DOTweenPro.txt.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/link.xml.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/NoEditor.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/NoEditor/Sirenix.Serialization.dll.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/NoEditor/Sirenix.Utilities.dll.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/NoEmitAndNoEditor.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/NoEmitAndNoEditor/Sirenix.Serialization.dll.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/NoEmitAndNoEditor/Sirenix.Utilities.dll.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.xml.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.xml.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinValidator.Editor.dll.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinValidator.Editor.xml.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/Sirenix.Reflection.Editor.dll.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.Config.xml.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.dll.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.xml.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.dll.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.xml.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.xml.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Demos.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Assets.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Assets/Editor.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Assets/Editor/Bootstrap License.txt.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Assets/Editor/ConfigData.bytes.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Assets/Editor/Hidden.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Assets/Editor/Hidden/ExtractSpriteShader.shader.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Assets/Editor/Hidden/GUIUtilShader.shader.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Assets/Editor/Hidden/LazyEditorIconShader.shader.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Assets/Editor/Hidden/SdfIconShader.shader.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Assets/Editor/OdinPathLookup.asset.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Assets/Editor/SdfIconAtlas.png.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Config.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Config/Editor.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Config/Editor/AOTGenerationConfig.asset.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Config/Editor/ColorPaletteManager.asset.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Config/Editor/GeneralDrawerConfig.asset.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Config/Editor/ImportSettingsConfig.asset.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Config/Editor/InspectorConfig.asset.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Config/Editor/OdinModuleConfig.asset.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Config/Editor/TypeRegistryUserConfig.asset.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Config/Resources.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Config/Resources/Sirenix.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Config/Resources/Sirenix/GlobalSerializationConfig.asset.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Modules.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Modules/Unity.Addressables.data.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Modules/Unity.Addressables.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Modules/Unity.Addressables/manifest.txt.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Modules/Unity.Entities.data.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Modules/Unity.Localization.data.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Modules/Unity.Localization.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Modules/Unity.Localization/manifest.txt.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Modules/Unity.Mathematics.data.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Modules/Unity.Mathematics.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Inspector/Modules/Unity.Mathematics/manifest.txt.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Validator.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Validator/Assets.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Validator/Assets/Editor.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Validator/Assets/Editor/Hidden.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Validator/Assets/Editor/Hidden/ValidatorSpinningShader.shader.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Validator/Editor.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Validator/Editor/Config.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Validator/Editor/Config/AutomationConfig.asset.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Validator/Editor/Config/GlobalValidationConfig.asset.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Validator/Editor/Config/RuleConfig.asset.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Validator/Editor/Profiles.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Validator/Editor/Profiles/Main Profile.asset.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Validator/EnsureCorrectOdinVersion.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Odin Validator/Readme.txt.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Plugins/Sirenix/Readme.txt.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Resources.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Resources/DOTweenSettings.asset.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
+YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
+YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
+YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
+YAML Parsing error 'Parser Failure at line 8: Expect ':' between key and value within mapping'
+YAML Parsing error 'Parser Failure at line 7: Expect ':' between key and value within mapping'
+YAML Parsing error 'Parser Failure at line 11: Expect ':' between key and value within mapping'
+The contents of 'Assets/_Project/Tests/Features/StateManagement/StateManagementTests.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
+The contents of 'Assets/_Project/Tests/Features/StateManagement/StateManagementIntegrationTest.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
+The contents of 'Assets/_Project/Features/StateManagement/StateManagementBootstrapper.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
+The contents of 'Assets/_Project/Tests/Features/StateManagement.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
+The contents of 'Assets/_Project/Core/Interfaces/IStateService.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
+The contents of 'Assets/_Project/Features/Templates/Common/Prefabs/UI/BasicUICanvas.prefab.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
+The contents of 'Assets/_Project/Features/StateManagement/StateManager.cs.meta' could not be parsed. Please ensure that this file is a valid YAML formatted file.
+'Assets/_Project/Logs/batch_compile_check.txt' Amount of processed bytes '96463' does not match file size '30814'
+The .meta file Assets/_Project/Core/Interfaces/IStateService.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+The .meta file Assets/_Project/Features/StateManagement/StateManagementBootstrapper.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+The .meta file Assets/_Project/Features/StateManagement/StateManager.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+The .meta file Assets/_Project/Features/Templates/Common/Prefabs/UI/BasicUICanvas.prefab.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+The .meta file Assets/_Project/Tests/Features/StateManagement.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+The .meta file Assets/_Project/Tests/Features/StateManagement/StateManagementIntegrationTest.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+The .meta file Assets/_Project/Tests/Features/StateManagement/StateManagementTests.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
+Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
+[ScriptCompilation] Requested script compilation because: Assembly Definition File(s) changed
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
+Assembly for Assembly Definition File 'Assets/_Project/Core/Optimization/asterivo.Unity60.Optimization.asmdef' will not be compiled, because it has no scripts associated with it.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:LogFormat (UnityEngine.LogType,string,object[])
+UnityEngine.Debug:LogWarningFormat (string,object[])
+UnityEditor.Scripting.ScriptCompilation.EditorCompilation:WarnIfThereAreAssembliesWithoutAnyScripts (UnityEditor.Scripting.ScriptCompilation.ScriptAssemblySettings,UnityEditor.Scripting.ScriptCompilation.ScriptAssembly[])
+UnityEditor.Scripting.ScriptCompilation.EditorCompilation:CompileScriptsWithSettings (UnityEditor.Scripting.ScriptCompilation.ScriptAssemblySettings)
+UnityEditor.Scripting.ScriptCompilation.EditorCompilation:CompileScripts (UnityEditor.Scripting.ScriptCompilation.EditorScriptCompilationOptions,UnityEditor.BuildTarget,int,string[])
+UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface/<>c__DisplayClass21_0:<CompileScripts>b__0 ()
+UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface:EmitExceptionAsError<UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus> (System.Func`1<UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus>,UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus)
+UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface:CompileScripts (UnityEditor.Scripting.ScriptCompilation.EditorScriptCompilationOptions,UnityEditor.BuildTarget,int,string[])
+
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:80
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: D:\UnityProjects\URP3D_Base01\
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 50.3370ms
+Refreshing native plugins compatible for Editor in 1.59 ms, found 3 plugins.
+Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: D:/UnityProjects/URP3D_Base01
+ExitCode: 4 Duration: 0s73ms
+[             ] Require frontend run.  Library/Bee/1900b0aE.dag couldn't be loaded
+DisplayProgressbar: Compiling Scripts
+Starting: C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Tools\netcorerun\netcorerun.exe "C:\Program Files\Unity\Hub\Editor\6000.0.42f1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1900b0aE.dag.json" "Library/Bee/1900b0aE-inputdata.json" "Library\Bee\buildprogram0.traceevents"
+WorkingDir: D:/UnityProjects/URP3D_Base01
+ExitCode: -532462766 Duration: 6s955ms
+One or more cyclic dependencies detected between assemblies: Assembly-CSharp-Editor-firstpass, Assembly-CSharp-Editor, Assembly-CSharp-firstpass, Assembly-CSharp, Assets/_Project/Features/AI/Scripts/asterivo.Unity60.AI.asmdef, Assets/_Project/Core/Constants/asterivo.Unity60.Core.Constants.asmdef, Assets/_Project/Core/Editor/asterivo.Unity60.Core.Editor.asmdef, Assets/_Project/Core/Input/asterivo.Unity60.Core.Input.asmdef, Assets/_Project/Core/Lifecycle/asterivo.Unity60.Core.Lifecycle.asmdef, Assets/_Project/Core/Services/asterivo.Unity60.Core.Services.asmdef, Assets/_Project/Core/Patterns/StateMachine/Editor/asterivo.Unity60.Core.StateMachine.Editor.asmdef, Assets/_Project/Core/asterivo.Unity60.Core.asmdef, Assets/_Project/Features/AI/Visual/asterivo.Unity60.Features.AI.Visual.asmdef, Assets/_Project/Features/AI/asterivo.Unity60.Features.AI.asmdef, Assets/_Project/Features/ActionRPG/asterivo.Unity60.Features.ActionRPG.asmdef, Assets/_Project/Features/Camera/asterivo.Unity60.Features.Camera.asmdef, Assets/_Project/Features/Combat/asterivo.Unity60.Features.Combat.asmdef, Assets/_Project/Features/GameManagement/asterivo.Unity60.Features.GameManagement.asmdef, Assets/_Project/Features/Player/Audio/asterivo.Unity60.Features.Player.Audio.asmdef, Assets/_Project/Features/Player/asterivo.Unity60.Features.Player.asmdef, Assets/_Project/Features/StateManagement/asterivo.Unity60.Features.StateManagement.asmdef, Assets/_Project/Features/Templates/ActionRPG/asterivo.Unity60.Features.Templates.ActionRPG.asmdef, Assets/_Project/Features/Templates/Common/asterivo.Unity60.Features.Templates.Common.asmdef, Assets/_Project/Features/Templates/FPS/Scripts/asterivo.Unity60.Features.Templates.FPS.asmdef, Assets/_Project/Features/Templates/Platformer/Scripts/asterivo.Unity60.Features.Templates.Platformer.asmdef, Assets/_Project/Features/Templates/Stealth/Scripts/asterivo.Unity60.Features.Templates.Stealth.asmdef, Assets/_Project/Features/Templates/SurvivalHorror/asterivo.Unity60.Features.Templates.SurvivalHorror.asmdef, Assets/_Project/Features/Templates/TPS/asterivo.Unity60.Features.Templates.TPS.asmdef, Assets/_Project/Features/UI/asterivo.Unity60.Features.UI.asmdef, Assets/_Project/Features/Validation/asterivo.Unity60.Features.Validation.asmdef, Assets/_Project/Features/Player/Scripts/asterivo.Unity60.Player.asmdef, Assets/_Project/Features/Stealth/Scripts/asterivo.Unity60.Stealth.asmdef, Assets/_Project/Tests/Core/Editor/Setup/asterivo.Unity60.Tests.Core.Editor.Setup.asmdef, Assets/_Project/Tests/Core/Editor/asterivo.Unity60.Tests.Core.Editor.asmdef, Assets/_Project/Tests/Core/Services/asterivo.Unity60.Tests.Core.Services.asmdef, Assets/_Project/Tests/Integration/asterivo.Unity60.Tests.Integration.asmdef, Assets/_Project/Tests/Performance/asterivo.Unity60.Tests.Performance.asmdef, Assets/_Project/Tests/Runtime/asterivo.Unity60.Tests.Runtime.asmdef, Assets/_Project/Tests/asterivo.Unity60.Tests.asmdef
+   at ScriptCompilationBuildProgram.ScriptCompilation.OrderByDependencies(AssemblyData[] assemblies)
+   at ScriptCompilationBuildProgram.ScriptCompilation.SetupScriptCompilation(AssemblyData[] inputAssemblies2, String dagName, ScriptCompilationData scd)
+   at ScriptCompilationBuildProgram.ScriptCompilationBuildProgram.Main(String[] args)
+   --- End of inner exception stack trace ---
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Span`1& arguments, Signature sig, Boolean constructor, Boolean wrapExceptions)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.MethodBase.Invoke(Object obj, Object[] parameters)
+   at Program.Main(String[] args)
+AssetDatabase: script compilation time: 8.114830s
+The GUID inside 'Assets/_Project.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+'Assets/_Project/Logs/batch_compile_check.txt' Amount of processed bytes '106642' does not match file size '102640'
+Scripts have compiler errors.
+Exiting without the bug reporter. Application will terminate with return code 1

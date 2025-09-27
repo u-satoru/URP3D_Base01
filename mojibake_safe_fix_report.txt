@@ -1,0 +1,242 @@
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\AmbientManager.cs ---
+L18: 
+L108: 
+L127: [SerializeField, ReadOnly] private int activeAmbientSources = 0;
+L214: 
+L246: 
+L257: source.priority = 128; // 菴主━蜈亥ｺｦ
+L307: var audioListener = FindFirstObjectByType<AudioListener>();
+L321: /// <summary>
+L332: 
+L358: 
+L392: 
+L585: 
+L588: 
+L634: 
+L687: float distanceFactor = 1f - (distance / maskingRadius);
+L703: 
+L712: 
+L726: 
+L746: 
+L758: 
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\AudioManager.cs ---
+L73: // SpatialAudioService縺ｯServiceLocator邨檎罰縺ｧ蜿門ｾ・(Obsolete SpatialAudioManager縺九ｉ遘ｻ陦・
+L116: 
+L161: 
+L195: }
+L207: 
+L228: 
+L244: 
+L250: 
+L253: spatialAudioService = ServiceLocator.GetService<ISpatialAudioService>();
+L262: 
+L266: 
+L272: 
+L326: 
+L335: {
+L344: 
+L353: }
+L362: 
+L383: 
+L413: // 専用のGameObjectを作成してAudioUpdateCoordinatorを追加
+L423: if (FeatureFlags.EnableDebugLogging)
+L461: {
+L491: {
+L499: // 動的環境システムとの連携
+L507: var (env, weather, time) = dynamicEnvironment.GetCurrentState();
+L539: }
+L540: 
+L588: 
+L603: ambientManager.SetMasterVolume(ambientVolume);
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\BGMManager.cs ---
+L16: 
+L58: 
+L63: [SerializeField, Range(0.5f, 5f)] private float crossfadeDuration = 2f;
+L67: [SerializeField, Range(0.1f, 1f)] private float stealthVolumeReduction = 0.3f;
+L113: 
+L137: private Coroutine activeTransition;
+L148: 
+L160: 
+L195: private void InitializeBGMManager()
+L203: {
+L252: 
+L307: 
+L316: 
+L349: /// 邱雁ｼｵ蠎ｦ縺ｫ蠢懊§縺檻GM譖ｴ譁ｰ
+L353: public void UpdateForTensionLevel(float tensionLevel, bool stealthModeActive = false)
+L369: if (targetTrack != null && targetTrack != currentTrack)
+L393: public void UpdateForEnvironment(EnvironmentType environment, WeatherType weather, TimeOfDay timeOfDay)
+L415: }
+L419: /// <summary>
+L463: public void StopBGM(float fadeOutTime = 0f)
+L468: 
+L474: 
+L487: {
+L510: 
+L521: /// </summary>
+L542: 
+L548: 
+L551: 
+L557: #region BGM Selection and Playback
+L562: 
+L584: 
+L591: /// <summary>
+L597: private BGMTrack SelectBGMByCategory(BGMCategory category)
+L611: 
+L633: /// </summary>
+L708: 
+L725: bgmChangeEvent?.RaiseAtPosition(track.trackName, transform.position);
+L726: 
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\Controllers\MaskingEffectController.cs ---
+L16: 
+L17: using asterivo.Unity60.Core;
+L46: 
+L93: private Transform playerTransform;
+L187: /// </summary>
+L204: 
+L210: 
+L235: /// 繧ｰ繝ｭ繝ｼ繝舌Ν繝槭せ繧ｭ繝ｳ繧ｰ蠑ｷ蠎ｦ縺ｮ險ｭ螳・
+L246: 
+L266: 
+L274: 
+L311: return 0f;
+L354: 
+L358: 
+L361: {
+L364: 
+L381: 
+L397: {
+L410: 
+L425: if (kvp.Key != null)
+L461: 
+L464: 
+L465: 
+L469: /// マスキング検出の開始        /// </summary>
+L564: 
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\Controllers\TimeAmbientController.cs ---
+L17: using asterivo.Unity60.Core;
+L18: 
+L31: /// <summary>
+L51: [SerializeField] private AudioMixerGroup timeMixerGroup;
+L96: 
+L161: catch (System.Exception ex)
+L218: 
+L273: source.loop = true;
+L281: }
+L298: 
+L330: 
+L338: 
+L345: 
+L382: 
+L386: 
+L458: 
+L481: /// 荳譎ょ●豁｢
+L497: source.Pause();
+L503: }
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\Controllers\WeatherAmbientController.cs ---
+L17: // using asterivo.Unity60.Core.Shared;
+L124: 
+L140: 
+L165: 
+L229: {
+L254: 
+L299: }
+L303: weatherTransition = StartCoroutine(WeatherTransitionCoroutine(newWeather));
+L377: /// </summary>
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\DynamicAudioEnvironment.cs ---
+L365: ChangeWeatherRandomly();
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Core\Audio\Services\AudioService.cs ---
+L149: // ServiceLocator縺ｫ逋ｻ骭ｲ
+L157: 
+L238: 
+L242: 
+L255: #region IAudioService Implementation
+L261: {
+L268: 
+L285: }
+L291: {
+L298: 
+L323: return masterVolume;
+L329: public float GetBGMVolume()
+L358: 
+L363: masterVolume = Mathf.Clamp01(volume);
+L364: 
+L376: 
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Features\Player\Scripts\States\CoverState.cs ---
+L8: 
+L16: 
+L17: public class CoverState : IPlayerState
+L32: 
+L33: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L45: }
+L49: if (stateMachine.StealthMovement != null)
+L50: 
+L55: }
+L66: 
+L67: public void Exit(DetailedPlayerStateMachine stateMachine)
+L68: 
+L69: {
+L74: 
+L77: }
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Features\Player\Scripts\States\JumpingState.cs ---
+L7: namespace asterivo.Unity60.Features.Player.States
+L16: 
+L17: {
+L30: 
+L31: /// 状態が開始されたときに呼び出されます。        /// プレイヤーに上方向の速度を与えてジャンプさせます。        /// </summary>
+L38: 
+L49: stateMachine.StealthMovement.SetStance(Core.Data.MovementStance.Standing);
+L50: 
+L60: 
+L61: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L62: 
+L63: public void Exit(DetailedPlayerStateMachine stateMachine)
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Features\Player\Scripts\States\ProneState.cs ---
+L6: 
+L16: 
+L36: 
+L37: if (stateMachine.CharacterController != null)
+L52: 
+L56: 
+L57: if (stateMachine.StealthMovement != null)
+L75: public void Exit(DetailedPlayerStateMachine stateMachine)
+L76: 
+L77: {
+L78: 
+L83: stateMachine.CharacterController.height = originalHeight;
+L99: /// <summary>
+L113: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L114: 
+L115: public void FixedUpdate(DetailedPlayerStateMachine stateMachine)
+L126: 
+L127: moveDirection.y = 0;
+L128: 
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Features\Player\Scripts\States\RollingState.cs ---
+L9: 
+L16: 
+L17: /// プレイヤーのローリング状態を管理するクラス。    /// この状態では、プレイヤーは一定時間前方に移動し、外部からの入力を受け付けません。    /// </summary>
+L44: 
+L45: stateMachine.StartCoroutine(RollTimer(stateMachine));
+L62: 
+L63: // }
+L79: // }
+L80: 
+L87: /// 状態が終了したときに呼び出されます。        /// </summary>
+L88: 
+L89: /// <param name="stateMachine">プレイヤーのステートマシン。</param>
+L90: 
+L97: Debug.Log("Exiting Rolling State");
+L98: 
+--- File Corrected: D:\UnityProjects\URP3D_Base01\Assets\_Project\Features\Player\Scripts\States\WalkingState.cs ---
+L6: 
+L14: 
+L24: 
+L25: /// 迥ｶ諷九′髢句ｧ九＆繧後◆縺ｨ縺阪↓蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・        /// 繝励Ξ繧､繝､繝ｼ縺ｮ蟋ｿ蜍｢繧堤ｫ倶ｽ阪↓險ｭ螳壹＠縺ｾ縺吶・        /// </summary>
+L33: if (stateMachine.StealthMovement != null)
+L39: }
+L40: 
+L60: 
+L61: /// <summary>
+L62: 
+L63: /// 豈弱ヵ繝ｬ繝ｼ繝蜻ｼ縺ｳ蜃ｺ縺輔ｌ縺ｾ縺吶・        /// </summary>
+L80: 
