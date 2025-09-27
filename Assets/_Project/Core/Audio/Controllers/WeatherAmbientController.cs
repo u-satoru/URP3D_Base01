@@ -37,7 +37,8 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         [SerializeField, ReadOnly] private bool isTransitioning = false;
         [SerializeField, ReadOnly] private float masterVolume = AudioConstants.DEFAULT_AMBIENT_VOLUME;
 
-        // 冁E��状慁E        private AudioSource[] weatherSources;
+        // 内部状態
+        private AudioSource[] weatherSources;
         private Dictionary<WeatherType, WeatherAmbientCollection> weatherSoundLookup;
         private List<WeatherAmbientLayer> activeWeatherLayers = new List<WeatherAmbientLayer>();
         private Coroutine weatherTransition;

@@ -42,7 +42,8 @@ namespace asterivo.Unity60.Core.Audio.Controllers
         [SerializeField, ReadOnly] private float masterVolume = AudioConstants.DEFAULT_AMBIENT_VOLUME;
         [SerializeField, ReadOnly] private float nextUpdateTime;
 
-        // 冁E��状慁E        private AudioSource[] timeSources;
+        // 内部状態
+        private AudioSource[] timeSources;
         private Dictionary<TimeOfDay, TimeAmbientCollection> timeSoundLookup;
         private List<TimeAmbientLayer> activeTimeLayers = new List<TimeAmbientLayer>();
         private Coroutine timeTransition;
