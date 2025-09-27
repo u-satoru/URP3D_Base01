@@ -8,8 +8,40 @@ using System;
 namespace asterivo.Unity60.Core
 {
     /// <summary>
-    /// Monitoring system for Singleton to ServiceLocator migration.
-    /// Phase 3 migration plan Step 3.2 implementation.
+    /// Singleton→ServiceLocator移行統合監視システム
+    ///
+    /// Unity 6における3層アーキテクチャ移行プロセスを包括的に監視・分析する
+    /// Phase 3移行計画の中核システムです。リアルタイム進捗追跡、パフォーマンス測定、
+    /// 安全性評価、緊急時ロールバック支援を統合的に提供します。
+    ///
+    /// 【監視範囲】
+    /// - 5つの主要サービス移行状況（Audio/Spatial/Effect/Update/Stealth）
+    /// - Singleton使用頻度とServiceLocator使用頻度の比較分析
+    /// - フレームタイム監視による性能劣化検出
+    /// - 移行プロセス中の警告・エラー事象追跡
+    ///
+    /// 【アーキテクチャ統合】
+    /// - FeatureFlagsとの密接連携による動的制御
+    /// - ServiceLocatorとの統計データ交換
+    /// - Odin Inspector TabGroupによる分類UI表示
+    /// - エディタ・ランタイム両対応の診断機能
+    ///
+    /// 【安全性保証】
+    /// - IsMigrationSafe()による移行可否の自動判定
+    /// - パフォーマンス閾値（25FPS）による安全性確保
+    /// - Singleton使用率50%未満での移行推奨
+    /// - 緊急時ロールバック機能との統合
+    ///
+    /// 【データ収集戦略】
+    /// - 60フレーム履歴によるパフォーマンス移動平均
+    /// - 使用統計のType別詳細分類
+    /// - 最新20件の移行イベント履歴保持
+    /// - タイムスタンプ付きトレーサビリティ
+    ///
+    /// 【プロダクション対応】
+    /// - 本番環境での継続監視とレポート生成
+    /// - A/Bテスト用の移行率調整支援
+    /// - 障害時の詳細診断情報提供
     /// </summary>
     public class MigrationMonitor : MonoBehaviour
     {
@@ -192,8 +224,33 @@ namespace asterivo.Unity60.Core
         }
 
         /// <summary>
-        /// Log Singleton usage
+        /// Singleton使用状況ログ・警告システム
+        ///
+        /// レガシーSingletonパターンの使用を検出・記録し、移行進捗の阻害要因を
+        /// 特定します。使用頻度統計、位置情報、タイムスタンプを包括的に記録し、
+        /// 移行計画の最適化に必要なデータを提供します。
+        ///
+        /// 【記録データ】
+        /// - singletonUsageCount: Type別使用回数統計
+        /// - singletonCallCount: 総Singleton呼び出し回数
+        /// - lastUsageTime: 最終使用時刻（Type@Location形式）
+        /// - 警告履歴: totalWarningCount、lastWarningTime
+        ///
+        /// 【警告トリガー】
+        /// - FeatureFlags.EnableDebugLoggingによる制御
+        /// - Debug.LogWarning()による即座警告表示
+        /// - LogMigrationEvent()による履歴記録
+        ///
+        /// 【統計活用】
+        /// - パフォーマンス比率計算（performanceRatio）
+        /// - 移行安全性評価（IsMigrationSafe）
+        /// - レポート生成での詳細分析
+        ///
+        /// 【呼び出し元】
+        /// レガシーManager.Instanceアクセス箇所から手動または自動呼び出し
         /// </summary>
+        /// <param name="singletonType">使用されたSingletonの型情報</param>
+        /// <param name="location">使用箇所の識別子（クラス名.メソッド名等）</param>
         public void LogSingletonUsage(Type singletonType, string location)
         {
             if (singletonType == null) return;
@@ -327,8 +384,35 @@ namespace asterivo.Unity60.Core
         }
 
         /// <summary>
-        /// Evaluate migration safety
+        /// 移行安全性総合評価システム
+        ///
+        /// ServiceLocator移行の実行可否を多角的に評価し、安全な移行タイミングを
+        /// 判定します。基盤システム状態、パフォーマンス指標、使用統計を総合的に
+        /// 分析し、移行失敗リスクを最小化するための意思決定支援を提供します。
+        ///
+        /// 【評価項目】
+        /// 1. 基盤システム準備状況
+        ///    - FeatureFlags.UseServiceLocator: ServiceLocator基盤の有効性
+        ///    - FeatureFlags.EnableMigrationMonitoring: 監視システムの稼働状況
+        ///
+        /// 2. パフォーマンス安全性
+        ///    - 平均フレームタイム閾値: 40ms以下（25FPS以上）
+        ///    - フレーム安定性: 60フレーム移動平均による評価
+        ///
+        /// 3. 使用パターン分析
+        ///    - Singleton使用率: 50%未満を安全水準と設定
+        ///    - ServiceLocator移行率: 高い値ほど安全
+        ///
+        /// 【判定ロジック】
+        /// 全評価項目がtrueの場合のみ安全と判定（AND条件）
+        /// 1つでもfalseの場合は移行延期を推奨
+        ///
+        /// 【活用場面】
+        /// - 自動移行フェーズ遷移の可否判定
+        /// - GenerateMigrationReport()での安全性表示
+        /// - 緊急時ロールバック要否の判断材料
         /// </summary>
+        /// <returns>移行実行が安全な場合true、リスクが高い場合false</returns>
         public bool IsMigrationSafe()
         {
             // Basic safety checks

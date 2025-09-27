@@ -6,15 +6,50 @@ using System.Collections.Generic;
 namespace asterivo.Unity60.Core
 {
     /// <summary>
-    /// Phase 3 Enhanced Feature Flag System
-    /// Manages gradual migration, performance monitoring, and rollback functionality
+    /// Phase 3 拡張機能フラグシステム
+    ///
+    /// Unity 6における3層アーキテクチャへの段階的移行を安全に管理する
+    /// 高度な機能フラグシステムです。ServiceLocatorパターンへの移行、
+    /// パフォーマンス監視、緊急時ロールバック機能を統合的に提供します。
+    ///
+    /// 【核心機能】
+    /// - 段階的移行管理: Singletonパターンから3層アーキテクチャへの安全な移行
+    /// - リアルタイム監視: パフォーマンス測定と移行プロセスの監視
+    /// - 緊急時対応: 自動・手動ロールバック機能による障害回復
+    /// - 設定検証: 機能フラグ間の依存関係と一貫性の自動チェック
+    /// - バックアップ管理: 設定変更履歴の記録と復元機能
+    ///
+    /// 【アーキテクチャ設計】
+    /// - PlayerPrefsベースの永続化: Unity再起動後も設定を保持
+    /// - 階層化された機能フラグ: Base/Migration/Gradual/Emergency層構造
+    /// - スレッドセーフ: 静的クラス設計による同期的アクセス保証
+    /// - Zero-Dependency: Coreシステム間の循環依存を回避
+    ///
+    /// 【移行フェーズ管理】
+    /// - Phase 0: 完全Singletonモード（緊急時用）
+    /// - Phase 1: ServiceLocator基盤構築
+    /// - Phase 2: 個別コンポーネント移行開始
+    /// - Phase 3: 完全移行とSingleton無効化
+    ///
+    /// 【プロダクション対応】
+    /// - 本番環境での段階的ロールアウト
+    /// - A/Bテスト用の動的フラグ切り替え
+    /// - 障害時の即座復旧メカニズム
     /// </summary>
     public static class FeatureFlags
     {
-        // ========== Existing Base Flags ==========
+        // ========== 基盤機能フラグ (Existing Base Flags) ==========
 
         /// <summary>
-        /// Use new audio system
+        /// 新オーディオシステム有効化フラグ
+        ///
+        /// Unity 6対応の改良されたオーディオシステムの使用を制御します。
+        /// 3D空間オーディオ、NPCの聴覚センサー、動的環境サウンドを含む
+        /// 包括的な音響システムの有効/無効を切り替えます。
+        ///
+        /// 【デフォルト値】: false（段階的移行のため）
+        /// 【連動フラグ】: UseEventDrivenAudio, UseNewAudioUpdateSystem
+        /// 【影響範囲】: AudioManager, SpatialAudioManager, DynamicAudioEnvironment
         /// </summary>
         public static bool UseNewAudioSystem
         {
@@ -23,7 +58,17 @@ namespace asterivo.Unity60.Core
         }
 
         /// <summary>
-        /// Use Service Locator pattern
+        /// ServiceLocatorパターン有効化フラグ（最重要）
+        ///
+        /// 3層アーキテクチャの中核となるServiceLocatorパターンの有効性を制御します。
+        /// DIフレームワークを使用せずに軽量で高速な依存関係管理を提供し、
+        /// Singletonパターンから完全に脱却するための基盤フラグです。
+        ///
+        /// 【デフォルト値】: true（移行完了済み前提）
+        /// 【重要度】: CRITICAL - 他の全移行フラグの前提条件
+        /// 【影響範囲】: 全サービスクラス、ServiceHelper、全Managerクラス
+        /// 【パフォーマンス】: ConcurrentDictionary&lt;Type, object&gt;によるO(1)サービス取得
+        /// 【依存関係】: このフラグがfalseの場合、全移行フラグが無効化される
         /// </summary>
         public static bool UseServiceLocator
         {
@@ -116,7 +161,19 @@ namespace asterivo.Unity60.Core
         }
 
         /// <summary>
-        /// Completely disable access to Legacy Singletons
+        /// レガシーSingleton完全無効化フラグ（最終段階）
+        ///
+        /// 従来のSingletonパターンへのアクセスを完全に無効化し、
+        /// 3層アーキテクチャへの移行を最終完了させるクリティカルフラグです。
+        /// プロダクション環境での段階的ロールアウトの最終ステップとして使用されます。
+        ///
+        /// 【デフォルト値】: false（安全な段階的移行のため）
+        /// 【重要度】: CRITICAL - アーキテクチャ移行の最終段階
+        /// 【前提条件】: UseServiceLocator=true, Phase3サービス全有効化
+        /// 【影響範囲】: 全レガシーManagerクラス、Singletonアクセスポイント
+        /// 【競合関係】: AllowSingletonFallbackと相互排他
+        /// 【復旧方法】: EmergencyRollback()による即座復旧
+        /// 【リスク】: 不完全移行時の障害発生可能性
         /// </summary>
         public static bool DisableLegacySingletons
         {
@@ -154,7 +211,18 @@ namespace asterivo.Unity60.Core
         }
 
         /// <summary>
-        /// Allow Singleton usage (for emergency rollback)
+        /// Singleton緊急フォールバック許可フラグ
+        ///
+        /// ServiceLocator移行時の緊急時におけるSingletonパターンへの
+        /// フォールバック機能を制御します。プロダクション環境での
+        /// 障害発生時の安全網として機能します。
+        ///
+        /// 【デフォルト値】: false（移行完了済み前提）
+        /// 【用途】: 緊急時ロールバック、災害復旧、開発時デバッグ
+        /// 【連動機能】: ServiceHelper.GetServiceWithFallback()で使用
+        /// 【パフォーマンス影響】: FindFirstObjectByType()による線形検索実行
+        /// 【制約】: DisableLegacySingletonsと競合（相互排他）
+        /// 【セキュリティ】: trueの場合、アーキテクチャ制約が緩和される
         /// </summary>
         public static bool AllowSingletonFallback
         {
@@ -221,8 +289,26 @@ namespace asterivo.Unity60.Core
         // ========== Phase 3 Utility Methods ==========
 
         /// <summary>
-        /// Unified flag management with change logging
+        /// 統一フラグ管理・変更ログ機能
+        ///
+        /// 全機能フラグの設定変更を統一的に管理し、変更履歴の記録、
+        /// デバッグログ出力、移行監視システムとの連携を自動実行します。
+        ///
+        /// 【実行フロー】
+        /// 1. 現在値との差分チェック（PlayerPrefs.GetInt使用）
+        /// 2. 値変更時のPlayerPrefs更新（1/0のint形式）
+        /// 3. EnableDebugLoggingフラグに基づくログ出力
+        /// 4. EnableMigrationMonitoringフラグに基づく履歴記録
+        ///
+        /// 【パフォーマンス特性】
+        /// - 同値設定時: 即座リターン（PlayerPrefs書き込み回避）
+        /// - 変更時: PlayerPrefs I/O + ログ処理
+        /// - 履歴管理: 最新10件保持（メモリ効率化）
+        ///
+        /// 【呼び出し元】: 全フラグプロパティのsetterから統一的に使用
         /// </summary>
+        /// <param name="key">PlayerPrefs保存キー（"FeatureFlag_"プレフィックス付き）</param>
+        /// <param name="value">設定する真偽値</param>
         private static void SetFlag(string key, bool value)
         {
             bool oldValue = PlayerPrefs.GetInt(key, 0) == 1;
@@ -273,8 +359,39 @@ namespace asterivo.Unity60.Core
         }
 
         /// <summary>
-        /// Set gradual migration phase preset
+        /// 段階的移行フェーズ設定（プリセット一括適用）
+        ///
+        /// ServiceLocatorパターンへの段階的移行を安全に管理するため、
+        /// 事前定義されたフェーズプリセットを一括適用します。各フェーズは
+        /// 移行リスクを最小化する慎重な設定組み合わせで構成されています。
+        ///
+        /// 【フェーズ構成】
+        /// - Phase 0: 完全Singletonモード（緊急時・初期状態）
+        ///   - 全ServiceLocator機能無効化
+        ///   - AllowSingletonFallback=true（完全後方互換）
+        ///   - 移行フラグ全リセット
+        ///
+        /// - Phase 1: ServiceLocator基盤構築
+        ///   - UseServiceLocator=true（基盤有効化）
+        ///   - 監視・測定機能有効化
+        ///   - オーディオシステムは従来通り
+        ///
+        /// - Phase 2: AudioManager移行開始
+        ///   - MigrateAudioManager=true（個別移行開始）
+        ///   - UseNewAudioSystem=true
+        ///   - 監視システム維持
+        ///
+        /// - Phase 3: 完全移行完了
+        ///   - 全新サービス有効化
+        ///   - 全移行フラグ有効化
+        ///   - AllowSingletonFallback=false（厳格化）
+        ///
+        /// 【安全性確保】
+        /// - PlayerPrefs.Save()による設定確定
+        /// - LogCurrentFlags()による設定確認
+        /// - 不正フェーズ番号の警告処理
         /// </summary>
+        /// <param name="phase">移行フェーズ番号（0-3）</param>
         public static void SetMigrationPhase(int phase)
         {
             switch (phase)
@@ -352,7 +469,30 @@ namespace asterivo.Unity60.Core
         }
 
         /// <summary>
-        /// Emergency rollback (revert all to Singleton settings)
+        /// 緊急時ロールバック実行（Singletonモードへ完全復帰）
+        ///
+        /// プロダクション環境での重大障害発生時に、全設定をSingletonモードに
+        /// 即座復帰させる緊急時復旧機能です。ServiceLocator移行に起因する
+        /// システム障害の迅速解決を目的とした最終手段として提供されます。
+        ///
+        /// 【実行内容】
+        /// 1. SetMigrationPhase(0)による全設定の完全リセット
+        /// 2. 緊急ロールバック実行時刻の記録（PlayerPrefs永続化）
+        /// 3. 警告ログとエラーログによる実行履歴の明確化
+        /// 4. PlayerPrefs.Save()による設定の即座確定
+        ///
+        /// 【復旧スコープ】
+        /// - 全ServiceLocator関連フラグの無効化
+        /// - 全移行フラグのリセット
+        /// - AllowSingletonFallback=trueによる旧システム復活
+        /// - 監視・測定機能の維持（障害分析のため）
+        ///
+        /// 【使用タイミング】
+        /// - プロダクション環境での重大システム障害
+        /// - ServiceLocator移行に起因するクリティカルエラー
+        /// - 自動ロールバック機能の手動実行
+        ///
+        /// 【注意】: 開発データの消失はないが、移行進捗は失われる
         /// </summary>
         public static void EmergencyRollback()
         {
