@@ -3,8 +3,48 @@ using asterivo.Unity60.Core.Events;
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// Interface for game event management service
-    /// Provides centralized event handling and registration
+    /// GameEventレジストリ管理サービスインターフェース（ScriptableObject統合・3層アーキテクチャ対応）
+    ///
+    /// Unity 6における3層アーキテクチャのCore層GameEvent基盤において、
+    /// ScriptableObjectベースのGameEventを一元登録・管理する中核インターフェースです。
+    /// ServiceLocatorパターンとIService統合により、
+    /// 高性能なGameEvent検索、型安全な登録、デバッグ支援機能を実現します。
+    ///
+    /// 【ScriptableObject統合GameEvent管理】
+    /// - GameEvent Registry: ScriptableObjectアセットの中央登録・検索
+    /// - Asset-Based Events: Inspectorでの直感的GameEvent設定
+    /// - Runtime Registration: 動的GameEvent生成と登録システム
+    /// - Type Safety: ジェネリック型による型安全なGameEvent管理
+    ///
+    /// 【ServiceLocator統合アーキテクチャ】
+    /// - Central Registry Hub: ServiceLocator.Get&lt;IGameEventManager&gt;()による統一アクセス
+    /// - Cross-Layer Management: Core/Feature/Template層での統一GameEvent管理
+    /// - Singleton Alternative: ServiceLocatorによる依存性注入とライフサイクル管理
+    /// - Mock Support: ユニットテスト用モックレジストリ登録対応
+    ///
+    /// 【高性能GameEvent検索システム】
+    /// - Dictionary-Based Lookup: O(1)パフォーマンスでのGameEvent名前解決
+    /// - Generic Type Caching: 型情報によるGameEvent高速検索
+    /// - Memory Efficient: 弱参照によるメモリリーク防止
+    /// - Batch Operations: 複数GameEventの効率的一括処理
+    ///
+    /// 【3層アーキテクチャ統合設計】
+    /// - Core Layer Foundation: GameEventの基盤レジストリ機能提供
+    /// - Feature Layer Integration: 具体機能でのGameEvent登録・使用
+    /// - Template Layer Configuration: ジャンル特化GameEvent設定
+    /// - Designer Friendly: ScriptableObjectによるノンプログラマー対応
+    ///
+    /// 【デバッグ・統計機能】
+    /// - Event Statistics: 登録数、発行回数、パフォーマンス統計
+    /// - Event Logging: 開発時のイベントフロー追跡
+    /// - Registration Validation: 重複登録・型不整合の検出
+    /// - Runtime Inspection: エディタでのリアルタイムGameEvent状態表示
+    ///
+    /// 【使用パターンとベストプラクティス】
+    /// - Asset-Based Setup: ProjectSettings/GameEvents/フォルダでの事前登録
+    /// - Runtime Discovery: GetEvent&lt;T&gt;()による型安全なGameEvent取得
+    /// - Event-Driven UI: UIコンポーネントとGameEventの自動連携
+    /// - Game State Integration: ゲーム状態変更のGameEvent自動発行
     /// </summary>
     public interface IGameEventManager : IService
     {

@@ -13,7 +13,42 @@ using Sirenix.OdinInspector;
 namespace asterivo.Unity60.Core.Audio.Services
 {
     /// <summary>
-    /// AudioManager縺ｮService蛹門ｮ溯｣・    /// Singleton繝代ち繝ｼ繝ｳ繧剃ｽｿ繧上★縲ヾerviceLocator邨檎罰縺ｧ繧｢繧ｯ繧ｻ繧ｹ
+    /// 統合オーディオサービス（ServiceLocator対応）
+    ///
+    /// Unity 6における3層アーキテクチャのCore層統合音響システムにおいて、
+    /// BGM・アンビエント・効果音・ステルス音響の統一管理を行う中核サービスです。
+    /// ServiceLocatorパターンによるIAudioService実装により、
+    /// Singletonパターンを排除した現代的な依存性管理を実現します。
+    ///
+    /// 【統合音響管理機能】
+    /// - BGM制御: BGMManagerとの連携による背景音楽の動的制御
+    /// - アンビエント制御: AmbientManagerによる環境音・天候音響管理
+    /// - 効果音制御: EffectManagerによる3D空間効果音の統合処理
+    /// - ステルス統合: StealthAudioCoordinatorとの連携による特殊音響制御
+    ///
+    /// 【AudioMixer統合システム】
+    /// - マスター音量制御: 全カテゴリの統一音量管理
+    /// - カテゴリ別音量: BGM/アンビエント/効果音/ステルス別の細分化制御
+    /// - デシベル変換: リニア値からデシベル値への適切な音響変換
+    /// - リアルタイム調整: 実行時の動的音量変更とミキサーパラメータ反映
+    ///
+    /// 【ServiceLocator統合】
+    /// - サービス登録: IAudioServiceインターフェース経由の統一アクセス
+    /// - 初期化制御: IInitializableによる優先度付き初期化管理
+    /// - 依存性解決: 他サービスとの疎結合な連携システム
+    /// - ライフサイクル管理: 適切な登録・解除によるメモリリーク防止
+    ///
+    /// 【ゲーム状態連動】
+    /// - 状態別音響: GameState変更に応じた自動音響切り替え
+    /// - 一時停止制御: ポーズ・レジューム機能の統合管理
+    /// - 設定永続化: 音量設定の保存・読み込み対応
+    /// - イベント通知: GameEventによる音響状態変更通知
+    ///
+    /// 【パフォーマンス最適化】
+    /// - 遅延初期化: 必要時のみの重い処理実行
+    /// - 条件分岐最適化: FeatureFlags活用による機能選択的有効化
+    /// - メモリ効率: 適切なコンポーネント参照管理
+    /// - 例外安全: null安全性とエラーハンドリングの徹底
     /// </summary>
     public class AudioService : MonoBehaviour, IAudioService, IInitializable
     {
@@ -60,8 +95,8 @@ namespace asterivo.Unity60.Core.Audio.Services
         [SerializeField, ReadOnly] private float currentTensionLevel;
         [SerializeField, ReadOnly] private bool isStealthModeActive;
 
-        // IInitializable螳溯｣・
-        public int Priority => 10; // 繧ｪ繝ｼ繝・ぅ繧ｪ繧ｷ繧ｹ繝・Β縺ｯ譌ｩ繧√↓蛻晄悄蛹・
+        // IInitializable実装
+        public int Priority => 10; // オーディオシステムは早めに初期化
         public bool IsInitialized { get; private set; }
 
         private bool isPaused = false;
@@ -72,7 +107,7 @@ namespace asterivo.Unity60.Core.Audio.Services
 
         private void Awake()
         {
-            // ServiceLocator縺ｫ逋ｻ骭ｲ
+            // ServiceLocatorに登録
             if (FeatureFlags.UseServiceLocator)
             {
                 ServiceLocator.RegisterService<IAudioService>(this);
@@ -91,7 +126,7 @@ namespace asterivo.Unity60.Core.Audio.Services
 
         private void OnDestroy()
         {
-            // ServiceLocator縺九ｉ逋ｻ骭ｲ隗｣髯､
+            // ServiceLocatorから登録解除
             if (FeatureFlags.UseServiceLocator)
             {
                 ServiceLocator.UnregisterService<IAudioService>();
@@ -135,10 +170,11 @@ namespace asterivo.Unity60.Core.Audio.Services
                 return;
             }
 
-            // 蜉ｹ譫憺浹縺ｨ縺励※蜀咲函
+            // 効果音として再生
             if (effectManager != null)
             {
-                // EffectManager縺ｮPlayEffect縺ｯ(string, Vector3, float)縺ｮ鬆・                effectManager.PlayEffect(soundId, position, volume * effectVolume * masterVolume);
+                // EffectManagerのPlayEffectは(string, Vector3, float)の署名
+                effectManager.PlayEffect(soundId, position, volume * effectVolume * masterVolume);
             }
         }
 

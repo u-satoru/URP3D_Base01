@@ -9,148 +9,154 @@ using asterivo.Unity60.Core.Data;
 namespace asterivo.Unity60.Core.Audio
 {
     /// <summary>
-    /// 蜍慕噪髻ｳ髻ｿ迺ｰ蠅・す繧ｹ繝・Β
-    /// 譎る俣蟶ｯ縲∝､ｩ蛟吶∝ｴ謇縺ｫ繧医ｋ髻ｳ髻ｿ迺ｰ蠅・・蜍慕噪螟牙喧繧堤ｮ｡逅・   /// </summary>
+    /// 動的オーディオ環境管理クラス
+    /// </summary>
     public class DynamicAudioEnvironment : MonoBehaviour
     {
         [Header("Environment State")]
         [SerializeField] private EnvironmentType currentEnvironment = EnvironmentType.Indoor;
         [SerializeField] private TimeOfDay currentTimeOfDay = TimeOfDay.Day;
         [SerializeField] private WeatherType currentWeather = WeatherType.Clear;
-        
+
         [Header("Audio Mixer Integration")]
         [SerializeField] private AudioMixer environmentMixer;
         [SerializeField] private string ambientVolumeParam = "AmbientVolume";
         [SerializeField] private string reverbParam = "ReverbWetMix";
         [SerializeField] private string lowPassParam = "LowPassFreq";
-        
+
         [Header("Masking Effects")]
         [SerializeField] private float baseAmbientMasking = 0.1f;
         [SerializeField] private AnimationCurve maskingByWeather = AnimationCurve.EaseInOut(0f, 0f, 1f, 0.8f);
         [SerializeField] private AnimationCurve maskingByTimeOfDay = AnimationCurve.EaseInOut(0f, 0.2f, 1f, 0.05f);
-        
+
         [Header("Environment Presets")]
         [SerializeField] private EnvironmentPreset[] environmentPresets;
-        
+
         [Header("Dynamic Weather")]
         [SerializeField] private bool enableDynamicWeather = true;
-        [SerializeField] private float weatherChangeInterval = 60f; // 遘・        [SerializeField] private AudioEvent weatherChangeEvent;
-        
+        [SerializeField] private float weatherChangeInterval = 60f; // 遷移間隔
+        [SerializeField] private AudioEvent weatherChangeEvent;
+
         [Header("Ambient Sound Sources")]
         [SerializeField] private AudioSource ambientAudioSource;
         [SerializeField] private SoundDataSO[] dayAmbientSounds;
         [SerializeField] private SoundDataSO[] nightAmbientSounds;
         [SerializeField] private SoundDataSO[] rainAmbientSounds;
-        
-        // 迴ｾ蝨ｨ驕ｩ逕ｨ荳ｭ縺ｮ迺ｰ蠅・ｮ・        private EnvironmentPreset activePreset;
+
+        // 現在の環境プリセット
+        private EnvironmentPreset activePreset;
         private float currentMaskingLevel;
         private float weatherChangeTimer;
-        
-        // 髻ｳ髻ｿ迺ｰ蠅・・螟牙喧繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ
+
+        // 環境遷移用コルーチン
         private Coroutine environmentTransition;
-        
-        // 繝ｪ繧ｹ繝翫・菴咲ｽｮ霑ｽ霍｡
+
+        // AudioListenerのTransform
         private Transform audioListener;
-        
-        // 繧､繝吶Φ繝磯夂衍
+
+        // 環境変化通知用イベント
         public System.Action<EnvironmentType> OnEnvironmentChanged;
         public System.Action<WeatherType> OnWeatherChanged;
         public System.Action<TimeOfDay> OnTimeOfDayChanged;
-        
+
         #region Unity Lifecycle
-        
+
         private void Awake()
         {
             FindAudioListener();
             InitializeEnvironment();
         }
-        
+
         private void Start()
         {
             ApplyEnvironmentSettings();
             StartAmbientSounds();
         }
-        
+
         private void Update()
         {
             if (enableDynamicWeather)
             {
                 UpdateDynamicWeather();
             }
-            
+
             UpdateMaskingLevels();
             UpdateEnvironmentBasedOnPosition();
         }
-        
+
         #endregion
-        
+
         #region Environment Management
-        
+
         /// <summary>
-        /// 迺ｰ蠅・す繧ｹ繝・Β縺ｮ蛻晄悄蛹・       /// </summary>
+        /// 環境の初期化
+        /// </summary>
         private void InitializeEnvironment()
         {
             activePreset = GetPresetForEnvironment(currentEnvironment);
         }
-        
+
         /// <summary>
-        /// 迺ｰ蠅・ｮ壹ｒ驕ｩ逕ｨ
+        /// 環境設定の適用
         /// </summary>
         private void ApplyEnvironmentSettings()
         {
             if (environmentMixer == null) return;
-            
-            // Audio Mixer縺ｮ繝代Λ繝｡繝ｼ繧ｿ繧定ｨｭ螳・           environmentMixer.SetFloat(ambientVolumeParam, activePreset.ambientVolume);
+
+            // Audio Mixerに環境設定を適用
+            environmentMixer.SetFloat(ambientVolumeParam, activePreset.ambientVolume);
             environmentMixer.SetFloat(reverbParam, activePreset.reverbLevel);
             environmentMixer.SetFloat(lowPassParam, activePreset.lowPassFrequency);
-            
-            // 繝槭せ繧ｭ繝ｳ繧ｰ繝ｬ繝吶Ν縺ｮ譖ｴ譁ｰ
+
+            // マスキングレベルの更新
             UpdateMaskingLevels();
         }
-        
+
         /// <summary>
-        /// 繝槭せ繧ｭ繝ｳ繧ｰ繝ｬ繝吶Ν縺ｮ譖ｴ譁ｰ
+        /// マスキングレベルの更新
         /// </summary>
         private void UpdateMaskingLevels()
         {
             float weatherMasking = maskingByWeather.Evaluate((float)currentWeather / 3f);
             float timeMasking = maskingByTimeOfDay.Evaluate((float)currentTimeOfDay / 3f);
             float environmentMasking = activePreset.maskingMultiplier;
-            
-            currentMaskingLevel = baseAmbientMasking + 
-                                 (weatherMasking * 0.4f) + 
-                                 (timeMasking * 0.2f) * 
+
+            currentMaskingLevel = baseAmbientMasking +
+                                 (weatherMasking * 0.4f) +
+                                 (timeMasking * 0.2f) *
                                  environmentMasking;
-            
-            // SpatialAudioManager縺ｫ繝槭せ繧ｭ繝ｳ繧ｰ繝ｬ繝吶Ν繧帝夂衍
+
+            // SpatialAudioManagerへのマスキングレベルの適用
             NotifyMaskingChange();
         }
-        
+
         /// <summary>
-        /// 菴咲ｽｮ縺ｫ蝓ｺ縺･縺冗腸蠅・眠
+        /// 環境の位置に基づく更新
         /// </summary>
         private void UpdateEnvironmentBasedOnPosition()
         {
             if (audioListener == null) return;
-            
-            // 迺ｰ蠅・ｮ夲ｼ井ｾ具ｼ壼ｮ､蜀・螻句､厄ｼ峨ｒ讀懷・            EnvironmentType detectedEnvironment = DetectEnvironmentAtPosition(audioListener.position);
-            
+
+            // 現在の環境を検出
+            EnvironmentType detectedEnvironment = DetectEnvironmentAtPosition(audioListener.position);
+
             if (detectedEnvironment != currentEnvironment)
             {
                 ChangeEnvironment(detectedEnvironment);
             }
         }
-        
+
         /// <summary>
-        /// 謖・ｮ壻ｽ咲ｽｮ縺ｧ縺ｮ迺ｰ蠅・挨繧呈､懷・
+        /// 環境の検出
         /// </summary>
         private EnvironmentType DetectEnvironmentAtPosition(Vector3 position)
         {
-            // 螟ｩ莠輔′縺ゅｋ縺九メ繧ｧ繝・け
+            // 3D空間での環境検出
             if (Physics.Raycast(position, Vector3.up, 20f))
             {
-                // 縺輔ｉ縺ｫ隧ｳ邏ｰ縺ｪ迺ｰ蠅・ｮ・                Collider[] nearbyColliders = Physics.OverlapSphere(position, 5f);
-                
+                // 地面の種類を判定
+                Collider[] nearbyColliders = Physics.OverlapSphere(position, 5f);
+
                 foreach (var collider in nearbyColliders)
                 {
                     if (collider.CompareTag("Cave"))
@@ -160,63 +166,63 @@ namespace asterivo.Unity60.Core.Audio
                     if (collider.CompareTag("Water"))
                         return EnvironmentType.Underwater;
                 }
-                
+
                 return EnvironmentType.Indoor;
             }
-            
+
             return EnvironmentType.Outdoor;
         }
-        
+
         #endregion
-        
+
         #region Weather System
-        
+
         /// <summary>
-        /// 蜍慕噪螟ｩ蛟吶す繧ｷ繧ｹ繝・Β縺ｮ譖ｴ譁ｰ
+        /// 動的天候システムの更新
         /// </summary>
         private void UpdateDynamicWeather()
         {
             weatherChangeTimer += Time.deltaTime;
-            
+
             if (weatherChangeTimer >= weatherChangeInterval)
             {
                 ChangeWeatherRandomly();
                 weatherChangeTimer = 0f;
             }
         }
-        
+
         /// <summary>
-        /// 繝ｩ繝ｳ繝繝縺ｫ螟ｩ蛟吶ｒ螟画峩
+        /// 天候をランダムに変更
         /// </summary>
         private void ChangeWeatherRandomly()
         {
             WeatherType[] weatherTypes = System.Enum.GetValues(typeof(WeatherType)) as WeatherType[];
             WeatherType newWeather = weatherTypes[Random.Range(0, weatherTypes.Length)];
-            
+
             if (newWeather != currentWeather)
             {
                 ChangeWeather(newWeather);
             }
         }
-        
+
         #endregion
-        
+
         #region Ambient Sound Management
-        
+
         /// <summary>
-        /// 繧｢繝ｳ繝薙お繝ｳ繝医し繧ｦ繝ｳ繝峨・髢句ｧ・
+        /// 環境音の再生を開始
         /// </summary>
         private void StartAmbientSounds()
         {
             if (ambientAudioSource == null) return;
-            
+
             SoundDataSO[] ambientSounds = GetAmbientSoundsForCurrentState();
-            
+
             if (ambientSounds != null && ambientSounds.Length > 0)
             {
                 var selectedSound = ambientSounds[Random.Range(0, ambientSounds.Length)];
                 var clip = selectedSound.GetRandomClip();
-                
+
                 if (clip != null)
                 {
                     ambientAudioSource.clip = clip;
@@ -226,117 +232,121 @@ namespace asterivo.Unity60.Core.Audio
                 }
             }
         }
-        
+
         /// <summary>
-        /// 迴ｾ蝨ｨ縺ｮ迥ｶ諷九↓蟇ｾ蠢懊☆繧九い繝ｳ繝薙お繝ｳ繝医し繧ｦ繝ｳ繝峨ｒ蜿門ｾ・       /// </summary>
+        /// 現在の状態に基づく環境音の取得
+        /// </summary>
         private SoundDataSO[] GetAmbientSoundsForCurrentState()
         {
-            // 螟ｩ蛟吝━蜈・            if (currentWeather == WeatherType.Rain && rainAmbientSounds.Length > 0)
+            // 雨の環境音を取得
+            if (currentWeather == WeatherType.Rain && rainAmbientSounds.Length > 0)
             {
                 return rainAmbientSounds;
             }
-            
-            // 譎る俣蟶ｯ縺ｫ繧医ｋ驕ｸ謚・
+
+            // 森の環境音を取得
             return currentTimeOfDay switch
             {
                 TimeOfDay.Night => nightAmbientSounds,
                 _ => dayAmbientSounds
             };
         }
-        
+
         #endregion
-        
+
         #region Public Interface
-        
+
         /// <summary>
-        /// 迺ｰ蠅・､画峩
+        /// 環境の変更
         /// </summary>
         public void ChangeEnvironment(EnvironmentType newEnvironment)
         {
             if (newEnvironment == currentEnvironment) return;
-            
+
             EnvironmentType previousEnvironment = currentEnvironment;
             currentEnvironment = newEnvironment;
             activePreset = GetPresetForEnvironment(newEnvironment);
-            
-            // 繧ｹ繝繝ｼ繧ｺ縺ｪ迺ｰ蠅・・遘ｻ
+
+            // 環境の遷移を開始
             if (environmentTransition != null)
             {
                 StopCoroutine(environmentTransition);
             }
             environmentTransition = StartCoroutine(TransitionEnvironment());
-            
+
             OnEnvironmentChanged?.Invoke(newEnvironment);
-            
-            #if UNITY_EDITOR || DEVELOPMENT_BUILD
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             ProjectDebug.Log($"<color=blue>[DynamicAudioEnvironment]</color> Environment changed: {previousEnvironment} 竊・{newEnvironment}");
 #endif
-            #endif
+#endif
         }
-        
+
         /// <summary>
-        /// 螟ｩ蛟吶ｒ螟画峩
+        /// 天候の変更
         /// </summary>
         public void ChangeWeather(WeatherType newWeather)
         {
             if (newWeather == currentWeather) return;
-            
+
             WeatherType previousWeather = currentWeather;
             currentWeather = newWeather;
-            
+
             UpdateMaskingLevels();
-            StartAmbientSounds(); // 繧｢繝ｳ繝薙お繝ｳ繝医し繧ｦ繝ｳ繝峨ｒ蜀埼幕
-            
+            StartAmbientSounds(); // 環境音の再生を開始
+
             OnWeatherChanged?.Invoke(newWeather);
             weatherChangeEvent?.RaiseAtPosition("WeatherChange", transform.position);
-            
-            #if UNITY_EDITOR || DEVELOPMENT_BUILD
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             ProjectDebug.Log($"<color=blue>[DynamicAudioEnvironment]</color> Weather changed: {previousWeather} 竊・{newWeather}");
 #endif
-            #endif
+#endif
         }
-        
+
         /// <summary>
-        /// 譎る俣蟶ｯ繧貞､画峩
+        /// 環境の変更
         /// </summary>
         public void ChangeTimeOfDay(TimeOfDay newTimeOfDay)
         {
             if (newTimeOfDay == currentTimeOfDay) return;
-            
+
             TimeOfDay previousTime = currentTimeOfDay;
             currentTimeOfDay = newTimeOfDay;
-            
+
             UpdateMaskingLevels();
-            StartAmbientSounds(); // 繧｢繝ｳ繝薙お繝ｳ繝医し繧ｦ繝ｳ繝峨ｒ蜀埼幕
-            
+            StartAmbientSounds(); // 環境音の再生を開始
+
             OnTimeOfDayChanged?.Invoke(newTimeOfDay);
-            
-            #if UNITY_EDITOR || DEVELOPMENT_BUILD
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             ProjectDebug.Log($"<color=blue>[DynamicAudioEnvironment]</color> Time of day changed: {previousTime} 竊・{newTimeOfDay}");
 #endif
-            #endif
+#endif
         }
-        
+
         /// <summary>
-        /// 迴ｾ蝨ｨ縺ｮ繝槭せ繧ｭ繝ｳ繧ｰ繝ｬ繝吶Ν繧貞叙蠕・       /// </summary>
+        /// 現在のマスキングレベルの取得
+        /// </summary>
         public float GetCurrentMaskingLevel() => currentMaskingLevel;
-        
+
         /// <summary>
-        /// 迴ｾ蝨ｨ縺ｮ迺ｰ蠅・ｱ繧貞叙蠕・       /// </summary>
+        /// 現在の環境、天候、時間帯の取得
+        /// </summary>
         public (EnvironmentType env, WeatherType weather, TimeOfDay time) GetCurrentState()
         {
             return (currentEnvironment, currentWeather, currentTimeOfDay);
         }
-        
+
         #endregion
-        
+
         #region Private Methods
-        
+
         /// <summary>
-        /// AudioListener繧呈､懃ｴ｢
+        /// AudioListenerの取得
         /// </summary>
         private void FindAudioListener()
         {
@@ -346,9 +356,10 @@ namespace asterivo.Unity60.Core.Audio
                 audioListener = listener.transform;
             }
         }
-        
+
         /// <summary>
-        /// 迺ｰ蠅・・繝ｪ繧ｻ繝・ヨ繧貞叙蠕・       /// </summary>
+        /// 環境に基づくプリセットの取得
+        /// </summary>
         private EnvironmentPreset GetPresetForEnvironment(EnvironmentType environment)
         {
             foreach (var preset in environmentPresets)
@@ -360,9 +371,9 @@ namespace asterivo.Unity60.Core.Audio
             }
             return CreateDefaultPreset();
         }
-        
+
         /// <summary>
-        /// 繝・ヵ繧ｩ繝ｫ繝医・繝ｪ繧ｻ繝・・ｽ・ｽ繧剃ｽ懈・
+        /// デフォルトの環境プリセットの作成
         /// </summary>
         private EnvironmentPreset CreateDefaultPreset()
         {
@@ -375,47 +386,45 @@ namespace asterivo.Unity60.Core.Audio
                 maskingMultiplier = 1f
             };
         }
-        
+
         /// <summary>
-        /// 繝槭せ繧ｭ繝ｳ繧ｰ螟牙喧縺ｮ騾夂衍
+        /// マスキングレベルの変更通知
         /// </summary>
         private void NotifyMaskingChange()
         {
-            // SpatialAudioManager縺ｪ縺ｩ莉悶・繧ｷ繧ｷ繧ｹ繝・Β縺ｫ騾夂衍
-            // 螳溯｣・・蜈ｷ菴鍋噪縺ｪ騾｣謳ｺ譁ｹ豕輔↓萓晏ｭ・
+            // SpatialAudioManagerにマスキングレベルの変更を通知
+            // 複数のリスナーに対して通知を行う
         }
-        
+
         /// <summary>
-        /// 迺ｰ蠅・・遘ｻ縺ｮ繧ｳ繝ｫ繝ｼ繝√Φ
+        /// 環境の遷移を開始
         /// </summary>
         private System.Collections.IEnumerator TransitionEnvironment()
         {
             float duration = 2f;
             float elapsed = 0f;
-            
+
             while (elapsed < duration)
             {
                 elapsed += Time.deltaTime;
                 float t = elapsed / duration;
-                
-                // 迺ｰ蠅・ｮ壹ｒ谿ｵ髫守噪縺ｫ驕ｩ逕ｨ
+
+                // 環境の遷移を適用
                 ApplyEnvironmentSettings();
-                
+
                 yield return null;
             }
-            
+
             environmentTransition = null;
         }
-        
+
         #endregion
     }
-    
+
     #region Supporting Classes and Enums
-    
+
     /// <summary>
-    
-    /// <summary>
-    /// 迺ｰ蠅・・繝ｪ繧ｻ繝・ヨ
+    /// 環境プリセット
     /// </summary>
     [System.Serializable]
     public struct EnvironmentPreset
@@ -426,7 +435,20 @@ namespace asterivo.Unity60.Core.Audio
         [Range(80f, 22000f)] public float lowPassFrequency;
         [Range(0f, 2f)] public float maskingMultiplier;
     }
-    
+
+    /// <summary>
+    /// 環境プリセット
+    /// </summary>
+    [System.Serializable]
+    public struct EnvironmentPreset
+    {
+        public EnvironmentType environmentType;
+        [Range(-80f, 0f)] public float ambientVolume;
+        [Range(0f, 1f)] public float reverbLevel;
+        [Range(80f, 22000f)] public float lowPassFrequency;
+        [Range(0f, 2f)] public float maskingMultiplier;
+    }
+
     #endregion
 }
 

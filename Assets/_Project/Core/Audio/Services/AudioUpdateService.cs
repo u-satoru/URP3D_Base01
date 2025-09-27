@@ -16,8 +16,54 @@ using Sirenix.OdinInspector;
 namespace asterivo.Unity60.Core.Audio.Services
 {
     /// <summary>
-    /// オーディオシステム全体の統一更新サービス
-    /// Service Locatorパターンを使用した疎結合実装
+    /// オーディオシステム統一更新・協調制御サービス
+    ///
+    /// Unity 6における3層アーキテクチャのCore層統合音響協調システムにおいて、
+    /// 複数のオーディオコントローラーとサービスの協調更新・最適化を統括管理する中核サービスです。
+    /// ServiceLocatorパターンとイベント駆動アーキテクチャにより、
+    /// 高パフォーマンスな統一オーディオ更新システムを実現します。
+    ///
+    /// 【統一更新システム】
+    /// - 協調更新ループ: 全オーディオシステムの同期的バッチ更新
+    /// - 優先度管理: IAudioUpdatable実装による優先度付き更新制御
+    /// - フレーム分散: maxUpdatablesPerFrameによる処理負荷分散
+    /// - 動的間隔調整: updateInterval設定による更新頻度最適化
+    ///
+    /// 【空間音響最適化】
+    /// - 空間グリッドキャッシュ: spatialGridSizeベースの効率的AudioSource管理
+    /// - 近傍検索最適化: O(1)アクセスによる高速音源検索
+    /// - 距離フィルタリング: maxAudioDetectionRange内の音源のみ追跡
+    /// - レイヤーマスク制御: audioSourceLayerMaskによる選択的処理
+    ///
+    /// 【システム協調制御】
+    /// - WeatherAmbientController: 天候変化時の最適化更新
+    /// - TimeAmbientController: 時間変化・ステルス状態連動更新
+    /// - MaskingEffectController: 近傍音源へのバッチマスキング適用
+    /// - StealthAudioCoordinator: ステルス状態変更時の協調通知
+    ///
+    /// 【同期データ管理】
+    /// - AudioSystemSyncData: 全システム共通状態データの一元管理
+    /// - リアルタイム計算: プレイヤー位置・時間・天候・音量の動的取得
+    /// - 変更検知: 前フレーム比較による効率的更新判定
+    /// - イベント通知: OnAudioSystemSyncによる状態変更ブロードキャスト
+    ///
+    /// 【パフォーマンス監視】
+    /// - 更新時間計測: currentUpdateTimeによるリアルタイム性能監視
+    /// - 統計情報提供: AudioCoordinatorStatsによる詳細性能データ
+    /// - キャッシュ効率: spatialCacheSize・trackedAudioSources監視
+    /// - メモリ最適化: Dictionary/HashSet活用による効率的データ構造
+    ///
+    /// 【ServiceLocator統合】
+    /// - サービス登録: IAudioUpdateServiceインターフェース実装
+    /// - 初期化優先度: 15（AudioService後、SpatialAudioService前）
+    /// - 依存性管理: 他オーディオサービスとの疎結合統合
+    /// - FeatureFlag制御: useNewUpdateSystemによる機能有効化制御
+    ///
+    /// 【エディタ支援機能】
+    /// - ギズモ可視化: 検出範囲・空間グリッド・追跡音源の視覚表示
+    /// - デバッグボタン: キャッシュ再構築・更新切り替えの実行時制御
+    /// - パフォーマンス表示: Inspector上でのリアルタイム統計表示
+    /// - 開発者支援: 複雑な協調システムの状態把握支援
     /// </summary>
     public class AudioUpdateService : MonoBehaviour, IAudioUpdateService, IInitializable
     {

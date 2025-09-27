@@ -3,8 +3,66 @@ using UnityEngine;
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// Interface for camera management service
-    /// Provides centralized camera control and state management
+    /// 統合カメラ管理サービスインターフェース（Cinemachine統合・3層アーキテクチャ対応）
+    ///
+    /// Unity 6における3層アーキテクチャのCore層カメラ基盤において、
+    /// Cinemachine Virtual Cameraの統合管理とTemplate層互換性を実現する中核インターフェースです。
+    /// ServiceLocatorパターンとIService統合により、
+    /// 動的カメラ切り替え、状態管理、高度なカメラエフェクトを一元制御します。
+    ///
+    /// 【Cinemachine統合カメラシステム】
+    /// - Virtual Camera Management: First/Third/Aim/Cover モードの動的切り替え
+    /// - Brain Integration: Cinemachine Brainによる滑らかなカメラブレンド
+    /// - Priority Control: カメラ優先度による自動切り替えシステム
+    /// - Timeline Support: Cinemachine Timelineでのカットシーンカメラワーク
+    ///
+    /// 【多視点カメラ制御システム】
+    /// - First Person: 一人称視点によるFPS/ホラーゲーム対応
+    /// - Third Person: 三人称視点によるTPS/アクション対応
+    /// - Aim Mode: 精密エイムカメラによるシューティング対応
+    /// - Cover Mode: カバーシステム連動カメラによる戦術的ゲームプレイ
+    ///
+    /// 【ServiceLocator統合設計】
+    /// - Central Camera Hub: ServiceLocator.Get&lt;ICameraManager&gt;()による統一アクセス
+    /// - Cross-Layer Control: Core/Feature/Template層での統一カメラ制御
+    /// - Singleton Alternative: ServiceLocatorによる依存性注入とライフサイクル管理
+    /// - Mock Support: ユニットテスト用モックカメラサービス登録対応
+    ///
+    /// 【Template層互換性システム】
+    /// - TPS Template: TPSWeaponManager連動のリコイル・シェイク効果
+    /// - Stealth Template: 隠密行動に最適化されたカメラワーク
+    /// - FPS Template: 高精度エイムとクイック視点切り替え
+    /// - Horror Template: 恐怖演出強化のカメラエフェクト
+    ///
+    /// 【高度なカメラエフェクト】
+    /// - Screen Shake: 爆発・衝撃による画面振動エフェクト
+    /// - Recoil System: 武器発砲時のリアルなリコイル表現
+    /// - Smooth Damping: 移動・回転の自然な減衰制御
+    /// - FOV Control: 視野角動的変更によるズーム・広角効果
+    ///
+    /// 【パフォーマンス最適化】
+    /// - Efficient Transitions: Cinemachine最適化による滑らかな遷移
+    /// - LOD Integration: 距離に応じたカメラ品質の動的調整
+    /// - Memory Management: カメラ状態の軽量管理とメモリ効率化
+    /// - Update Optimization: 必要時のみのカメラパラメータ更新
+    ///
+    /// 【リアルタイムカメラ制御】
+    /// - Dynamic Parameters: 距離・高さ・FOVのリアルタイム調整
+    /// - Target Management: Follow/LookAtターゲットの動的変更
+    /// - State Queries: 現在カメラモードの即座判定
+    /// - Position Access: カメラ位置・回転の高速取得
+    ///
+    /// 【ゲームジャンル最適化】
+    /// - Action Games: 高速移動対応の応答性重視設定
+    /// - Stealth Games: 慎重な移動に最適な精密制御
+    /// - Horror Games: 恐怖演出強化の特殊エフェクト
+    /// - Shooting Games: エイム精度向上の専門設定
+    ///
+    /// 【開発支援機能】
+    /// - Camera Debug: エディタでのカメラ状態可視化
+    /// - Parameter Validation: カメラ設定値の自動検証
+    /// - Performance Metrics: カメラシステムのパフォーマンス監視
+    /// - Template Integration: 各ジャンルテンプレートとの自動連携
     /// </summary>
     public interface ICameraManager : IService
     {

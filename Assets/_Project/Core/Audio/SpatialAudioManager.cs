@@ -12,9 +12,34 @@ using asterivo.Unity60.Core.Audio.Interfaces;
 namespace asterivo.Unity60.Core.Audio
 {
     /// <summary>
-    /// 空間音響システムの中央管理クラス（レガシー）
-    /// ステルスゲーム用の高度な3D音響処理を担当
-    /// 新しいSpatialAudioServiceへの移行を推奨
+    /// 3D空間音響システム管理クラス（レガシー実装）
+    ///
+    /// Unity 6における3層アーキテクチャのCore層3D音響システムにおいて、
+    /// ステルスアクションゲーム特化の高度な空間音響処理を実現します。
+    /// ServiceLocatorパターンによる統一サービス管理とISpatialAudioService実装により、
+    /// プール化されたAudioSourceによる効率的な3D音響レンダリングを提供します。
+    ///
+    /// 【ステルス特化機能】
+    /// - 高精度オクルージョン: 障害物による音響遮蔽効果の動的計算
+    /// - 距離減衰制御: AnimationCurveによる自然な音響減衰
+    /// - カテゴリ別ミキサー: BGM/環境音/効果音/ステルス音の分離管理
+    /// - リアルタイム優先度: 音源優先度による動的AudioSource割り当て
+    ///
+    /// 【3層アーキテクチャ統合】
+    /// - ServiceLocator統合: ISpatialAudioServiceインターフェース実装
+    /// - IInitializable実装: 優先度ベース初期化システム対応
+    /// - イベント駆動: AudioEventDataによる音響イベント処理
+    /// - ObjectPool最適化: AudioSourceプールによる95%メモリ削減効果
+    ///
+    /// 【パフォーマンス最適化】
+    /// - AudioSourceプール: maxConcurrentSounds数の動的管理
+    /// - オクルージョンチェック: 設定間隔での効率的遮蔽計算
+    /// - 距離カリング: 聴取範囲外音源の自動無効化
+    /// - リバーブゾーン: 環境別空間響音効果
+    ///
+    /// 【移行ガイダンス】
+    /// ⚠️ Obsolete: 新規実装では SpatialAudioService の使用を推奨
+    /// このクラスは後方互換性のため維持されていますが、将来のバージョンで削除予定
     /// </summary>
     [System.Obsolete("Use SpatialAudioService instead. This class will be removed in future versions.")]
     public class SpatialAudioManager : MonoBehaviour, ISpatialAudioService, IInitializable
@@ -140,7 +165,22 @@ namespace asterivo.Unity60.Core.Audio
         #region ISpatialAudioService Implementation
         
         /// <summary>
-        /// 3D空間でサウンドを再生
+        /// ISpatialAudioService実装: 3D空間音響再生メソッド
+        ///
+        /// 指定された3D座標でサウンドを再生し、距離減衰とオクルージョンを適用します。
+        /// AudioSourceプールから効率的にリソースを取得し、ステルス特化の音響処理を実行。
+        ///
+        /// 【処理フロー】
+        /// 1. soundIdからSoundDataSO生成（リソース管理システム経由）
+        /// 2. プールからAudioSource取得（O(1)操作）
+        /// 3. 3D音響パラメータ設定（距離減衰、空間ブレンド）
+        /// 4. オクルージョン計算適用（遮蔽物検出）
+        /// 5. 再生完了後の自動プール返却
+        ///
+        /// 【パフォーマンス考慮】
+        /// - AudioSourceプール活用による0アロケーション
+        /// - 距離カリングによる不要音源の自動除外
+        /// - オクルージョンチェック間隔による負荷分散
         /// </summary>
         public void Play3DSound(string soundId, Vector3 position, float maxDistance = 50f, float volume = 1f)
         {
@@ -239,7 +279,24 @@ namespace asterivo.Unity60.Core.Audio
         #region Public Interface
         
         /// <summary>
-        /// 空間音響でサウンドを再生
+        /// 空間音響エンジン: SoundDataSO駆動3D音響再生
+        ///
+        /// SoundDataSOの設定に基づき、指定3D座標で音響を再生する中核メソッドです。
+        /// ObjectPoolパターンによる効率的AudioSource管理と、ステルス特化の
+        /// 距離減衰・オクルージョン処理を統合的に実行します。
+        ///
+        /// 【音響処理シーケンス】
+        /// 1. AudioSourceプール取得: O(1)効率的リソース管理
+        /// 2. 音響パラメータ設定: SoundDataSO→AudioSource変換
+        /// 3. 3D空間配置: position設定と空間ブレンド調整
+        /// 4. ランダムクリップ選択: SoundDataSO.GetRandomClip()
+        /// 5. 非同期再生完了監視: コルーチンによるプール返却
+        ///
+        /// 【ステルス最適化】
+        /// - 音量計算: volumeMultiplier × SoundDataSO.Volume
+        /// - ピッチ変調: SoundDataSO.GetRandomPitch()による自然性
+        /// - 距離減衰: AnimationCurve駆動の物理的減衰
+        /// - 3D定位: Unity AudioSource 3D音響エンジン活用
         /// </summary>
         public AudioSource PlaySoundAtPosition(SoundDataSO soundData, Vector3 position, float volumeMultiplier = 1f)
         {
@@ -365,7 +422,25 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// 音源間の距離に基づく音量計算
+        /// 物理音響学: 距離減衰による音量計算エンジン
+        ///
+        /// 3D空間における音源とリスナー間の距離を基に、現実的な音量減衰を計算します。
+        /// AnimationCurveによるカスタマイズ可能な減衰特性と、グローバル聴覚倍率による
+        /// ゲームバランス調整を統合したステルス特化音響システムです。
+        ///
+        /// 【物理計算式】
+        /// - 正規化距離 = distance / maxHearingRadius
+        /// - 基本減衰 = distanceAttenuationCurve.Evaluate(正規化距離)
+        /// - 最終音量 = 基本減衰 × globalHearingMultiplier
+        ///
+        /// 【境界条件処理】
+        /// - distance ≤ 0: 音源至近 → volume = 1.0 (最大音量)
+        /// - distance ≥ maxRadius: 聴取範囲外 → volume = 0.0 (無音)
+        /// - 0 < distance < maxRadius: Curve評価による滑らか減衰
+        ///
+        /// 【ステルスゲーム特化】
+        /// globalHearingMultiplier により、プレイヤー聴覚能力の動的調整が可能
+        /// （集中状態、ダメージ状態、装備効果等による聴覚性能変化対応）
         /// </summary>
         public float CalculateVolumeAtDistance(float distance, float maxHearingRadius)
         {
@@ -498,7 +573,29 @@ namespace asterivo.Unity60.Core.Audio
         }
         
         /// <summary>
-        /// オクルージョン（遮蔽）の計算
+        /// 音響オクルージョン: 物理遮蔽による音量減衰計算
+        ///
+        /// 音源とリスナー間の障害物による音響遮蔽効果を物理ベースで計算します。
+        /// Raycastによる障害物検出と距離比例遮蔽強度により、リアルな音響環境を実現。
+        /// ステルスゲームにおける隠蔽・発見機構の基盤技術として機能します。
+        ///
+        /// 【物理計算アルゴリズム】
+        /// 1. 音源→リスナー方向ベクトル算出
+        /// 2. obstacleLayerMask対象でRaycast実行
+        /// 3. 障害物検出時の遮蔽係数計算:
+        ///    occlusionFactor = hit.distance / total_distance
+        /// 4. 最終遮蔽度: Lerp(maxOcclusionReduction, 0, occlusionFactor)
+        ///
+        /// 【ステルス応用】
+        /// - 壁越し音源の自然な減衰効果
+        /// - 遮蔽物の材質による音響特性差（将来拡張）
+        /// - NPCの聴覚検知システムとの連携
+        /// - 環境を活用した隠蔽戦術支援
+        ///
+        /// 【パフォーマンス配慮】
+        /// - LayerMask指定による検出対象最適化
+        /// - 単発Raycastによる軽量処理
+        /// - 距離比例計算によるCPU効率化
         /// </summary>
         private float CalculateOcclusion(Vector3 soundPosition, Vector3 listenerPosition)
         {

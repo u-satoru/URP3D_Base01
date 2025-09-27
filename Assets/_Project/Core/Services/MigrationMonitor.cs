@@ -9,8 +9,49 @@ using asterivo.Unity60.Core.Services;
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// Legacy Singleton使用状況を監視し、移行進捗を追跡する
-    /// Step 3.9: Legacy Singleton警告システムの一部
+    /// Singleton→ServiceLocator移行監視統合サービス実装クラス
+    ///
+    /// Unity 6における3層アーキテクチャ移行プロセスの中核として、
+    /// Legacy Singletonパターンの使用状況を詳細に監視・追跡し、
+    /// ServiceLocatorパターンへの安全な移行を支援する専門監視サービスです。
+    /// リアルタイム監視、統計収集、安全性評価、移行推奨機能を統合提供します。
+    ///
+    /// 【核心機能】
+    /// - Singleton使用監視: Legacy Singletonアクセスのリアルタイム検出・記録
+    /// - ServiceLocator監視: 新パターン使用の肯定的追跡
+    /// - 移行進捗測定: Phase 1-3の段階的進捗の定量的評価
+    /// - 安全性評価: 重要サービス登録状況と使用量に基づく安全性判定
+    /// - 統計レポート: 詳細な使用パターン分析と移行推奨事項生成
+    /// - 永続化機能: PlayerPrefsによる統計データの永続保存
+    ///
+    /// 【アーキテクチャ移行支援】
+    /// - Phase 1監視: DisableLegacySingletons フラグ状態追跡
+    /// - Phase 2監視: UseServiceLocator フラグと実際の使用状況追跡
+    /// - Phase 3監視: Legacy使用量減少とServiceLocator普及度測定
+    /// - 安全性確保: 移行中の重要サービス可用性保証
+    ///
+    /// 【監視対象パターン】
+    /// - Legacy Singleton: AudioManager.Instance, GameManager.Instance等
+    /// - ServiceLocator: ServiceLocator.GetService<T>()パターン
+    /// - 重要サービス: AudioService, SpatialAudioService, CommandPoolService等
+    ///
+    /// 【データ収集・分析】
+    /// - 使用統計: アクセス回数、頻度、使用パターンの詳細記録
+    /// - イベント履歴: 最新100件のアクセスイベント保持
+    /// - 時系列分析: 初回・最終アクセス時刻による使用期間追跡
+    /// - スタックトレース: デバッグ用の呼び出し元特定情報
+    ///
+    /// 【移行品質保証】
+    /// - 進捗可視化: 0.0-1.0スケールでの移行完了度表示
+    /// - 安全性評価: 重要サービス80%登録 + Legacy使用50回未満基準
+    /// - 推奨事項生成: 使用量に基づく優先度付き移行計画提案
+    /// - リアルタイム警告: EnableMigrationWarnings時の即座警告
+    ///
+    /// 【開発支援機能】
+    /// - Context Menu: Unity Editor右クリック메뉴による即座レポート生成
+    /// - リアルタイムログ: 開発中の移行状況即座確認
+    /// - 統計リセット: 移行テスト時の統計クリーンアップ
+    /// - 永続化統計: セッション跨ぎでの長期移行追跡
     /// </summary>
     public class MigrationMonitor : MonoBehaviour
     {
@@ -470,38 +511,95 @@ namespace asterivo.Unity60.Core.Services
     }
     
     /// <summary>
-    /// Singleton使用情報を格納するクラス
+    /// Singleton使用統計情報データ構造体
+    ///
+    /// 特定のSingletonクラスの使用統計を詳細に記録するデータコンテナ。
+    /// MigrationMonitorによる長期的な使用パターン分析と移行計画策定に使用されます。
+    ///
+    /// 【統計データ要素】
+    /// - SingletonType: 監視対象Singletonクラスの型情報
+    /// - AccessMethod: アクセスパターン（例: "Instance", "GetInstance()"）
+    /// - FirstAccessTime: 初回検出時刻（監視開始基準点）
+    /// - LastAccessTime: 最終アクセス時刻（最新活動指標）
+    /// - AccessCount: 累積アクセス回数（使用頻度指標）
+    ///
+    /// 【分析用途】
+    /// - 移行優先度決定: AccessCountによる高使用Singleton特定
+    /// - 使用期間分析: First～Last時刻による活用期間測定
+    /// - パターン分析: AccessMethodによる使用方法の分類
+    /// - 進捗追跡: 時系列でのアクセス減少傾向監視
     /// </summary>
     [System.Serializable]
     public class SingletonUsageInfo
     {
+        /// <summary>監視対象Singletonクラスの型情報</summary>
         public Type SingletonType;
+        /// <summary>アクセス方法パターン（例: "Instance", "GetInstance()"）</summary>
         public string AccessMethod;
+        /// <summary>初回検出時刻（監視開始基準点）</summary>
         public DateTime FirstAccessTime;
+        /// <summary>最終アクセス時刻（最新活動指標）</summary>
         public DateTime LastAccessTime;
+        /// <summary>累積アクセス回数（使用頻度指標）</summary>
         public int AccessCount;
     }
-    
+
     /// <summary>
-    /// Singleton使用イベントを格納するクラス
+    /// Singleton使用イベント記録データ構造体
+    ///
+    /// 個別のSingletonアクセスイベントを詳細に記録するデータコンテナ。
+    /// リアルタイム監視とデバッグ支援のため、最新100件のイベント履歴を保持します。
+    ///
+    /// 【イベントデータ要素】
+    /// - Timestamp: イベント発生時刻（精密なタイムライン分析用）
+    /// - SingletonType: アクセスされたSingletonクラス名
+    /// - AccessMethod: 具体的なアクセス方法（メソッド名、プロパティ名）
+    /// - StackTrace: 呼び出し元トレース（デバッグ時のみ記録）
+    ///
+    /// 【活用場面】
+    /// - リアルタイム監視: 即座のLegacy使用検出と警告
+    /// - デバッグ支援: StackTraceによる使用箇所特定
+    /// - パターン分析: 時系列でのアクセスパターン把握
+    /// - 移行検証: 変更後のLegacy使用消失確認
     /// </summary>
     [System.Serializable]
     public class SingletonUsageEvent
     {
+        /// <summary>イベント発生時刻（精密なタイムライン分析用）</summary>
         public DateTime Timestamp;
+        /// <summary>アクセスされたSingletonクラス名</summary>
         public string SingletonType;
+        /// <summary>具体的なアクセス方法（メソッド名、プロパティ名）</summary>
         public string AccessMethod;
+        /// <summary>呼び出し元トレース（デバッグ時のみ記録）</summary>
         public string StackTrace;
     }
-    
+
     /// <summary>
-    /// ServiceLocator使用イベントを格納するクラス
+    /// ServiceLocator使用イベント記録データ構造体
+    ///
+    /// ServiceLocatorパターンの使用を肯定的に追跡するデータコンテナ。
+    /// 移行の成功指標として、新パターンの普及状況を定量的に測定します。
+    ///
+    /// 【イベントデータ要素】
+    /// - Timestamp: ServiceLocatorアクセス時刻
+    /// - ServiceType: 取得されたサービスインターフェース名
+    /// - AccessMethod: ServiceLocator使用パターン（通常"GetService<T>()"）
+    ///
+    /// 【移行指標としての活用】
+    /// - 成功測定: ServiceLocator使用増加による移行成功確認
+    /// - パターン分析: 各サービスの使用頻度と普及度測定
+    /// - 安全性確認: 重要サービスの正常アクセス継続確認
+    /// - 移行完了判定: Legacy使用ゼロ + ServiceLocator使用継続
     /// </summary>
     [System.Serializable]
     public class ServiceLocatorUsageEvent
     {
+        /// <summary>ServiceLocatorアクセス時刻</summary>
         public DateTime Timestamp;
+        /// <summary>取得されたサービスインターフェース名</summary>
         public string ServiceType;
+        /// <summary>ServiceLocator使用パターン（通常"GetService<T>()"）</summary>
         public string AccessMethod;
     }
 }

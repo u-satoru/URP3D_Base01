@@ -13,9 +13,36 @@ using Sirenix.OdinInspector;
 namespace asterivo.Unity60.Core.Audio
 {
     /// <summary>
-    /// Stealth gameplay and general audio coordination control
-    /// Integration with NPC auditory sensor system
-    /// ServiceLocator compatible version
+    /// ステルス特化オーディオ協調システム
+    ///
+    /// Unity 6における3層アーキテクチャのCore層ステルス音響システムにおいて、
+    /// プレイヤーの隠蔽行動とNPCの聴覚検知システムを統合調整する中核クラスです。
+    /// ServiceLocatorパターンによるIStealthAudioService実装により、
+    /// ゲームプレイ状況に応じた動的音響制御とマスキング効果を実現します。
+    ///
+    /// 【ステルス特化機能】
+    /// - 聴覚マスキング: 環境音・天候・時間帯による音響隠蔽効果
+    /// - 動的音量制御: ステルス状況に応じたカテゴリ別音量自動調整
+    /// - NPCセンサー統合: AI聴覚システムとの双方向連携
+    /// - 重要行動検知: 鍵開け・ハッキング等の緊張アクション感知
+    ///
+    /// 【音響マスキングシステム】
+    /// - 環境マスキング: BGM/効果音/環境音による複合マスキング効果
+    /// - 距離減衰マスキング: プレイヤー行動音の物理的隠蔽計算
+    /// - 天候/時間マスキング: AnimationCurve駆動の条件別マスキング
+    /// - カテゴリ別マスキング: 音響種別による個別マスキング倍率
+    ///
+    /// 【AIセンサー統合】
+    /// - 聴覚検知通知: NPCへの音響イベント伝達システム
+    /// - 警戒レベル連動: AI状態に応じた音響環境動的変更
+    /// - 発見確率計算: マスキング効果を考慮した検知可能性算出
+    /// - 集団AI協調: 複数NPCの聴覚情報共有システム
+    ///
+    /// 【パフォーマンス最適化】
+    /// - ServiceLocator統合: IStealthAudioServiceインターフェース実装
+    /// - 範囲限定処理: playerHidingRadius内のAI検知効率化
+    /// - 状態キャッシング: 前フレーム状態比較による変更時のみ処理
+    /// - イベント駆動更新: GameEvent連携による必要時のみ音響調整
     /// </summary>
     public class StealthAudioCoordinator : MonoBehaviour, IStealthAudioService
     {

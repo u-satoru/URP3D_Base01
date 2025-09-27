@@ -7,22 +7,135 @@ using asterivo.Unity60.Core.Services;
 namespace asterivo.Unity60.Core.Services
 {
     /// <summary>
-    /// サービス段階的移行ヘルパークラス
-    /// Step 3.6 で作成された段階的更新パターンの汎用化
+    /// サービス段階的移行統合ヘルパー実装クラス
+    ///
+    /// Unity 6における3層アーキテクチャ移行プロセスにおいて、
+    /// Singleton→ServiceLocator移行を安全かつ段階的に実行するための
+    /// 汎用ヘルパー機能を提供する静的ユーティリティクラスです。
+    /// Step 3.6で確立された段階的更新パターンを全サービスに適用可能な
+    /// 統一インターフェースとして汎用化しています。
+    ///
+    /// 【核心機能】
+    /// - 段階的サービス取得: ServiceLocator優先→レガシーフォールバック戦略
+    /// - 移行状態診断: FeatureFlags・ServiceLocator・レガシーシステムの総合診断
+    /// - 推奨設定判定: 現在状況に基づく最適な移行戦略の自動提案
+    /// - 便利メソッド群: 簡易取得・状態確認・可用性チェックの統合API
+    ///
+    /// 【段階的移行戦略】
+    /// 1. ServiceLocator優先取得: FeatureFlags.UseServiceLocator確認後の新システム利用
+    /// 2. レガシーフォールバック: ServiceLocator失敗時のSingleton/FindFirstObjectByType利用
+    /// 3. 安全性制御: FeatureFlags.AllowSingletonFallbackによる段階的制御
+    /// 4. 監視統合: FeatureFlags.EnableMigrationMonitoringによる移行追跡
+    ///
+    /// 【対応サービス】
+    /// - IAudioService: 基本音響サービスの段階的移行
+    /// - IStealthAudioService: ステルス音響サービスの段階的移行
+    /// - 拡張可能設計: 新サービス型の追加に対応した汎用パターン
+    ///
+    /// 【結果追跡】
+    /// - MigrationResult&lt;T&gt;: 取得結果・使用システム・エラー情報の詳細記録
+    /// - IsUsingServiceLocator: 新旧システム識別による移行進捗追跡
+    /// - ErrorMessage: 失敗時の詳細エラー情報による問題診断支援
+    ///
+    /// 【統合設計】
+    /// - FeatureFlags連携: 段階的移行制御フラグとの密結合統合
+    /// - EventLogger統合: 移行状況の構造化ログ出力
+    /// - 例外安全: try-catch包囲による移行プロセスの安定性保証
+    /// - パフォーマンス最適化: 最小限のオーバーヘッドでの移行機能提供
     /// </summary>
     public static class ServiceMigrationHelper
     {
         /// <summary>
-        /// 段階的更新の結果データ
+        /// サービス移行結果データ記録クラス
+        ///
+        /// Singleton→ServiceLocator移行プロセスにおけるサービス取得結果の
+        /// 詳細情報を構造化して記録・管理する汎用結果データクラスです。
+        /// 移行状況の追跡、エラー診断、システム最適化に必要な情報を統合提供します。
+        ///
+        /// 【記録データ】
+        /// - Service: 取得されたサービスインスタンス（成功時）
+        /// - IsUsingServiceLocator: 新システム（ServiceLocator）使用の可否
+        /// - IsSuccessful: 取得成功の可否（核心判定フィールド）
+        /// - ServiceTypeName: 取得されたサービスの具体型名（診断用）
+        /// - ErrorMessage: 失敗時の詳細エラー情報（問題解決支援）
+        ///
+        /// 【用途】
+        /// - 移行進捗追跡: 新旧システム使用比率の可視化
+        /// - エラー診断支援: 失敗原因の詳細記録と分析
+        /// - パフォーマンス監視: 取得システム別の成功率測定
+        /// - システム最適化: 移行パターンの改善点特定
+        ///
+        /// 【設計特徴】
+        /// - ジェネリック型制約: where T : class による参照型限定
+        /// - 失敗時デフォルト: コンストラクタでの安全な初期状態設定
+        /// - 構造化エラー: 文字列ベースの詳細エラー情報記録
+        /// - 軽量設計: 最小限のメモリ占有によるパフォーマンス確保
         /// </summary>
         public class MigrationResult<T> where T : class
         {
+            /// <summary>
+            /// 取得されたサービスインスタンス
+            ///
+            /// 移行プロセスで成功時に取得されたサービスオブジェクトを保持します。
+            /// ServiceLocator経由またはレガシーシステム経由で取得された実際のサービス実装を格納し、
+            /// 呼び出し元での直接利用を可能にします。失敗時はnullが設定されます。
+            /// </summary>
             public T Service { get; set; }
+
+            /// <summary>
+            /// ServiceLocatorシステム使用フラグ
+            ///
+            /// 取得されたサービスが新システム（ServiceLocator）経由で取得されたかを示します。
+            /// true: ServiceLocator経由取得（推奨される新システム）
+            /// false: レガシーシステム経由取得（Singleton/FindFirstObjectByType）
+            /// 移行進捗の追跡と新旧システム使用比率の測定に使用されます。
+            /// </summary>
             public bool IsUsingServiceLocator { get; set; }
+
+            /// <summary>
+            /// サービス取得成功フラグ
+            ///
+            /// サービス取得プロセス全体の成功・失敗を示す核心判定フィールドです。
+            /// true: サービス取得成功（Serviceプロパティに有効なインスタンス格納）
+            /// false: サービス取得失敗（ErrorMessageに詳細エラー情報格納）
+            /// 呼び出し元での結果判定とエラーハンドリングの基盤として機能します。
+            /// </summary>
             public bool IsSuccessful { get; set; }
+
+            /// <summary>
+            /// 取得サービスの具体型名
+            ///
+            /// 実際に取得されたサービス実装の型名を文字列で記録します。
+            /// 成功時: Service.GetType().Name（例: "AudioManager", "StealthAudioCoordinator"）
+            /// 失敗時: "Unknown"（デフォルト値）
+            /// デバッグ、ログ出力、システム診断での実装識別に使用されます。
+            /// </summary>
             public string ServiceTypeName { get; set; }
+
+            /// <summary>
+            /// 失敗時の詳細エラーメッセージ
+            ///
+            /// サービス取得に失敗した場合の具体的なエラー情報を記録します。
+            /// 成功時: 空文字列
+            /// 失敗時: 例外メッセージまたは失敗理由の詳細説明
+            /// エラー診断、問題解決支援、ユーザーへの適切な情報提供に使用されます。
+            /// </summary>
             public string ErrorMessage { get; set; }
 
+            /// <summary>
+            /// MigrationResultインスタンスの安全な初期化コンストラクタ
+            ///
+            /// 失敗状態をデフォルトとした安全な初期状態を設定します。
+            /// 移行プロセスでの例外安全性を確保し、未初期化状態による
+            /// 予期せぬ動作を防止します。
+            ///
+            /// 【初期設定値】
+            /// - IsSuccessful: false（失敗状態デフォルト、成功時に明示的にtrueに変更）
+            /// - ServiceTypeName: "Unknown"（型名未確定状態、成功時に実際の型名に変更）
+            /// - ErrorMessage: string.Empty（エラーなし状態、失敗時に詳細情報設定）
+            /// - Service: null（参照型のデフォルト値、成功時に実際のインスタンス設定）
+            /// - IsUsingServiceLocator: false（boolean型のデフォルト値、取得時に実際の値設定）
+            /// </summary>
             public MigrationResult()
             {
                 IsSuccessful = false;
