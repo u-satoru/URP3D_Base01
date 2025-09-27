@@ -111,12 +111,11 @@ namespace asterivo.Unity60.Core.Bootstrap
             // EventManagerの登録
             if (_registerEventManager)
             {
-                // TODO: EventManager参照エラーを修正
-                // var eventManager = new EventManager();
-                // ServiceLocator.Register<IEventManager>(eventManager);
+                var eventManager = new EventManager();
+                ServiceLocator.Register<IEventManager>(eventManager);
 
                 if (_enableDebugLogs)
-                    Debug.Log("[GameBootstrapper] EventManager registration skipped (TODO)");
+                    Debug.Log("[GameBootstrapper] Registered EventManager");
             }
 
             // 他のコアサービスもここに追加

@@ -725,7 +725,9 @@ namespace asterivo.Unity60.Core.Audio
         [Range(0f, 1f)] public float tensionLevel = 0f;           // こ�E曲が適用される緊張度
         public bool allowInStealthMode = true;                    // スチE��ス中に再生可能ぁE
         [Header("Environmental Context")]
-        public EnvironmentType[] suitableEnvironments;            // 適用環墁E        public WeatherType[] suitableWeather;                     // 適用天倁E        public TimeOfDay[] suitableTimeOfDay;                     // 適用時間帯
+        public EnvironmentType[] suitableEnvironments;            // 適用環境
+        public WeatherType[] suitableWeather;                     // 適用天候
+        public TimeOfDay[] suitableTimeOfDay;                     // 適用時間帯
 
         public bool IsValidForCurrentConditions(EnvironmentType env, WeatherType weather, TimeOfDay time)
         {
